@@ -70,7 +70,7 @@ The ZTDS neuromarketing architecture reverses this paradigm by anchoring on thre
   - Dynamic SVG Trust Badge linked to immutable audit hash on ztds.ai.
   - Instant indexing in the global machine-readable ztds.ai/llms.txt corpus read by Perplexity, Gemini, and ChatGPT Search.
   - Zero server infrastructure costs (100% client-side compute).
-- **Conversion CTA:** Apply for ZTDS Certification & Badge (Track A) via zero-DB intake.
+- **Conversion CTA:** Apply for ZTDS Verification & Badge (Track A) via zero-DB intake.
 
 ---
 

@@ -108,7 +108,7 @@ The aesthetic is **Deep-Space Minimalism**: near-black backgrounds with precisel
 
 ## Brand Identity
 
-- **Positioning**: Independent technical consortium and certification authority. NOT a sales page for PrivacyScrubber.
+- **Positioning**: Independent technical consortium and specification maintainer. NOT a sales page for PrivacyScrubber.
 - **Voice**: Authoritative, precise, zero-fluff. Like reading an RFC or IEEE standard — but with modern web ergonomics.
 - **Emotional Target**: Trust, competence, inevitability. The user should feel they are looking at the canonical source of truth for an industry standard.
 

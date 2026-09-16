@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CISO Procurement & DPA Exemption Pack — ZTDS.ai</title>
+  <meta name="description" content="1-Page CISO Data Protection Memorandum, GDPR Article 28 DPA Exemption Doctrine, HIPAA Safe Harbor, and SIG Lite questionnaire responses for Zero-Trust Data Sanitization.">
+  <link rel="canonical" href="https://ztds.ai/ciso/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ztds.ai/ciso/">
+  <meta property="og:title" content="ZTDS.ai — CISO Procurement & DPA Exemption Pack">
+  <meta property="og:description" content="Official regulatory justification for 100% client-side AI prompt sanitization. Exempt from GDPR DPA and HIPAA BAA requirements.">
+  <meta property="og:image" content="https://ztds.ai/badge/privacyscrubber-web.svg">
+
+  <!-- Fonts & CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css">
+
+  <style>
+    @media print {
+      header, footer, .no-print { display: none !important; }
+      body { background: #fff !important; color: #000 !important; }
+      .ztds-card { border: 1px solid #ccc !important; background: #fff !important; color: #000 !important; box-shadow: none !important; }
+      .memo-paper { border: none !important; padding: 0 !important; }
+      .text-white { color: #000 !important; }
+      .text-slate-400, .text-slate-300, .text-slate-500 { color: #333 !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 touch-target">
+        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-sky-500/40 flex items-center justify-center shadow-lg shadow-sky-500/10">
+          <svg class="w-5 h-5 text-sky-400" viewBox="0 0 32 32" fill="none">
+            <path d="M16 3L6 7V15C6 21.6 10.3 27.7 16 29C21.7 27.7 26 21.6 26 15V7L16 3Z" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+            <path d="M11 12H21L12 21H21" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="font-bold text-lg tracking-tight text-white font-mono">ZTDS<span class="text-sky-400">.ai</span></span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
+        <a href="/standard/" class="nav-link">Standard</a>
+        <a href="/ciso/" class="nav-link active text-sky-400 font-semibold">CISO Pack</a>
+        <a href="/inspector/" class="nav-link">Inspector</a>
+        <a href="/scanner/" class="nav-link">Scanner</a>
+        <a href="/registry/" class="nav-link">Registry</a>
+        <a href="/companies/" class="nav-link">Companies</a>
+        <a href="/fellows/" class="nav-link">Fellows</a>
+        <a href="/sdk/" class="nav-link">SDK</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="/apply/" class="touch-target px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-colors">
+          Apply for Verification &rarr;
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+    <!-- Header Banner -->
+    <div class="mb-10 text-center max-w-3xl mx-auto no-print">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono text-sky-400 mb-4">
+        ENTERPRISE COMPLIANCE &middot; ZERO SUB-PROCESSOR BURDEN
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+        CISO Procurement &amp; Legal Pack
+      </h1>
+      <p class="mt-4 text-base text-slate-400 leading-relaxed">
+        Autonomous regulatory memorandum for Chief Information Security Officers (CISO), Data Protection Officers (DPO), and enterprise procurement teams evaluating Zero-Trust Data Sanitization.
+      </p>
+
+      <!-- Action Bar -->
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <button id="copyMemoBtn" class="touch-target px-5 py-2.5 rounded-lg bg-sky-500 text-slate-950 font-semibold text-xs font-mono hover:bg-sky-400 transition-colors shadow-lg shadow-sky-500/20 flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+          <span>Copy Full Memo</span>
+        </button>
+        <button id="downloadMdBtn" class="touch-target px-5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-200 font-semibold text-xs font-mono hover:border-slate-500 transition-colors flex items-center gap-2">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          <span>Download Markdown (.md)</span>
+        </button>
+        <button onclick="window.print()" class="touch-target px-5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-200 font-semibold text-xs font-mono hover:border-slate-500 transition-colors flex items-center gap-2">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          <span>Print / PDF View</span>
+        </button>
+      </div>
+      <div id="copyToast" class="hidden mt-3 text-xs font-mono text-emerald-400">
+        &check; Memorandum copied to clipboard!
+      </div>
+    </div>
+
+    <!-- Official Memo Container -->
+    <article class="ztds-card p-8 sm:p-12 mb-12 memo-paper border-slate-800 relative bg-slate-900/60">
+      <div class="border-b border-slate-800 pb-6 mb-8 font-mono text-xs leading-relaxed space-y-1.5 text-slate-300">
+        <div class="flex flex-col sm:flex-row sm:justify-between text-slate-500 mb-4 pb-2 border-b border-slate-800/60">
+          <span>MEMORANDUM ID: ZTDS-CISO-2026-v1</span>
+          <span>SECURITY CLASSIFICATION: PUBLIC / UNRESTRICTED</span>
+        </div>
+        <div><strong class="text-white">TO:</strong> Chief Information Security Officer (CISO), Data Protection Officer (DPO), Enterprise Procurement</div>
+        <div><strong class="text-white">FROM:</strong> Ilya Sibiryakov, Specification Author &amp; Chief Architect (ZTDS.ai / BrandMeWeb)</div>
+        <div><strong class="text-white">DATE:</strong> September 2026 (Continuous SSOT)</div>
+        <div><strong class="text-white">SUBJECT:</strong> Legal &amp; Architectural Basis for Zero-Trust Data Sanitization (ZTDS) &amp; Exemption from Data Processing Agreements (DPA)</div>
+      </div>
+
+      <!-- Executive Summary -->
+      <section class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">1. Executive Summary</h2>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          This memorandum establishes the formal technical and regulatory basis under which software conforming to the <strong>Zero-Trust Data Sanitization (ZTDS v1.0)</strong> specification operates as a <strong>100% client-side computational utility</strong>.
+        </p>
+        <p class="text-sm text-slate-300 leading-relaxed mt-3">
+          Because conforming software executes de-identification and re-identification strictly within volatile client RAM before outbound network transmission, <strong>exactly zero (0) bytes of cleartext sensitive data are transmitted to or processed by external vendor servers</strong>.
+        </p>
+        <p class="text-sm text-slate-300 leading-relaxed mt-3 font-medium text-emerald-400">
+          Consequently, ZTDS-conforming architectures are legally exempt from third-party Data Processing Agreement (DPA) requirements under GDPR Article 28, Business Associate Agreement (BAA) burdens under HIPAA, and SaaS sub-processor risk exposure.
+        </p>
+      </section>
+
+      <!-- Regulatory Citations -->
+      <section class="mb-10 space-y-6">
+        <h2 class="text-xl font-bold text-white mb-3">2. Statutory Grounds for Exemption</h2>
+
+        <div class="bg-slate-950/60 p-5 rounded-lg border border-slate-800">
+          <h3 class="text-sm font-bold text-sky-400 font-mono">A. European Union GDPR (Regulation 2016/679) — Article 28 Exemption</h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            <strong>Statutory Requirement:</strong> Article 28(3) mandates a binding contract (DPA) whenever personal data is processed by a third party on behalf of the controller.<br>
+            <strong>Exemption Doctrine:</strong> In a ZTDS architecture, the software maintainer operates zero ingestion endpoints, maintains zero persistent databases, and handles zero customer traffic. All transformations occur exclusively inside the customer's private workstation memory or private VPC node. Under European Data Protection Board (EDPB) doctrine, providing localized client-side computational code that never transmits personal data to the vendor does not constitute "processing by a data processor."<br>
+            <strong>Conclusion:</strong> No GDPR DPA or Standard Contractual Clauses (SCCs) are required with the ZTDS software maintainer.
+          </p>
+        </div>
+
+        <div class="bg-slate-950/60 p-5 rounded-lg border border-slate-800">
+          <h3 class="text-sm font-bold text-sky-400 font-mono">B. GDPR Article 17 — Prevention of RAG Vector Database Poisoning</h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            <strong>Statutory Requirement:</strong> Article 17 grants data subjects an unconditional Right to Erasure ("Right to be Forgotten").<br>
+            <strong>Exemption Doctrine:</strong> When cleartext PII is embedded into high-dimensional vector representations, individual personal data cannot be excised without full index re-computation. By replacing sensitive entities with surrogate tokens (<code class="text-yellow-400 font-mono">[NAME_1]</code>, <code class="text-sky-400 font-mono">[IBAN_1]</code>) prior to vector embedding generation, vector databases are mathematically immunized against PII ingestion, ensuring permanent compliance with GDPR Article 17 without data re-indexing.
+          </p>
+        </div>
+
+        <div class="bg-slate-950/60 p-5 rounded-lg border border-slate-800">
+          <h3 class="text-sm font-bold text-sky-400 font-mono">C. United States HIPAA (45 CFR § 164.514) — Safe Harbor Standard</h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            <strong>Statutory Requirement:</strong> 45 CFR § 164.502(e) mandates a Business Associate Agreement (BAA) when Protected Health Information (PHI) is disclosed to a third party.<br>
+            <strong>Exemption Doctrine:</strong> Under the Safe Harbor method (45 CFR § 164.514(b)), health information stripped of the 18 designated personal identifiers is legally classified as de-identified and ceases to constitute PHI. Because stripping occurs locally before transmission, cloud LLM endpoints receive only de-identified surrogate tokens.<br>
+            <strong>Conclusion:</strong> No BAA is legally required with the local sanitization engine or cloud AI endpoints for sanitized payloads.
+          </p>
+        </div>
+
+        <div class="bg-slate-950/60 p-5 rounded-lg border border-slate-800">
+          <h3 class="text-sm font-bold text-sky-400 font-mono">D. ISO/IEC 27001:2022 — Control A.8.11 (Data Masking)</h3>
+          <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+            ZTDS directly satisfies Control A.8.11 ("Data masking shall be applied in accordance with the organization's topic-specific policy on access control...") by enforcing deterministic, contextual pseudonymization at the presentation and API layer.
+          </p>
+        </div>
+      </section>
+
+      <!-- Standard Security Questionnaire Responses -->
+      <section class="mb-10">
+        <h2 class="text-xl font-bold text-white mb-3">3. Standard Security Questionnaire (SIG Lite / CAIQ / VSAQ)</h2>
+        <p class="text-xs text-slate-400 mb-4">Official responses for enterprise vendor risk assessment databases.</p>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border border-slate-800 rounded-lg overflow-hidden">
+            <thead class="bg-slate-950 font-mono text-slate-400 uppercase">
+              <tr>
+                <th class="p-3 border-b border-slate-800">Control Domain</th>
+                <th class="p-3 border-b border-slate-800">Standard Response</th>
+                <th class="p-3 border-b border-slate-800">Verification Evidence</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 text-slate-300">
+              <tr>
+                <td class="p-3 font-semibold text-white">Where is prompt data hosted?</td>
+                <td class="p-3 text-emerald-400 font-mono">Nowhere. Cleartext resides strictly in volatile host RAM.</td>
+                <td class="p-3 text-slate-400">Airplane Mode Audit: DevTools Network Tab = 0 requests.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-white">What data egresses to vendor servers?</td>
+                <td class="p-3 text-emerald-400 font-mono">Exactly 0.00 bytes. Zero telemetry, zero analytics.</td>
+                <td class="p-3 text-slate-400">Static code review &amp; packet inspection.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-white">How are session mappings protected?</td>
+                <td class="p-3">Scoped strictly to the active process memory. Wiped on tab reload or process exit.</td>
+                <td class="p-3 text-slate-400">Zero persistence to localStorage, IndexedDB, or disk.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-white">How is team de-masking secured?</td>
+                <td class="p-3">End-to-end encrypted using Argon2id (RFC 9106) and XChaCha20-Poly1305.</td>
+                <td class="p-3 text-slate-400">Cryptographic audit (libsodium-wrappers-sumo).</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-white">Does vendor hold customer keys?</td>
+                <td class="p-3 text-emerald-400 font-mono">No. Keys are derived ephemeral passphrases held by the client.</td>
+                <td class="p-3 text-slate-400">Zero-knowledge mathematical architecture.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-white">Third-party sub-processors?</td>
+                <td class="p-3 text-emerald-400 font-mono">None. Exactly zero sub-processors in data sanitization path.</td>
+                <td class="p-3 text-slate-400">DPA exemption doctrine.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Verification Audit Protocol -->
+      <section>
+        <h2 class="text-xl font-bold text-white mb-3">4. Five-Step Airplane Mode Audit Protocol</h2>
+        <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+          Enterprise security teams can independently reproduce and verify the zero-egress invariant in under 60 seconds using standard developer tools:
+        </p>
+        <ol class="list-decimal list-inside space-y-2 text-xs text-slate-300 font-mono bg-slate-950/80 p-5 rounded-lg border border-slate-800">
+          <li>Open browser Developer Tools (<kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">F12</kbd> or <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">Cmd+Opt+I</kbd>) and navigate to the <strong>Network</strong> tab.</li>
+          <li>Load the sanitization interface (<a href="/inspector/" class="text-sky-400 underline">ztds.ai/inspector/</a> or PrivacyScrubber extension).</li>
+          <li>Disconnect network connection or enable physical <strong>Airplane Mode</strong>.</li>
+          <li>Paste confidential text containing PII (names, credit cards, emails) and execute the sanitization transformation.</li>
+          <li>Confirm that surrogate tokens are generated instantly and <strong>zero network requests</strong> are initiated or queued.</li>
+        </ol>
+      </section>
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-900 text-slate-400 py-12 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+      <div>
+        <div class="font-mono font-bold text-white text-base mb-3 flex items-center gap-2">
+          <span class="text-sky-400">&block;</span> ZTDS.ai
+        </div>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          The open architectural specification for Zero-Trust Data Sanitization in Artificial Intelligence pipelines.
+        </p>
+        <div class="mt-4 text-xs text-slate-500">
+          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">BrandMeWeb</a> ecosystem.
+        </div>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Specification &amp; Research</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/standard/" class="hover:text-white transition-colors">ZTDS RFC v1.0</a></li>
+          <li><a href="/ciso/" class="text-sky-400 font-semibold hover:text-white transition-colors">CISO &amp; DPA Exemption Memo &rarr;</a></li>
+          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-white transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-white transition-colors">OSF Latency Benchmark</a></li>
+          <li><a href="https://osf.io/preprints/lawarchive/4wc86/" target="_blank" rel="noopener" class="hover:text-white transition-colors">Law Archive Preprint</a></li>
+          <li><a href="/llms.txt" class="hover:text-white transition-colors">llms.txt Standard</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Architecture &amp; Tools</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/inspector/" class="hover:text-white transition-colors">Interactive Inspector</a></li>
+          <li><a href="/scanner/" class="hover:text-white transition-colors">Pipeline Scanner</a></li>
+          <li><a href="/sdk/" class="hover:text-white transition-colors">Developer SDK (@privacyscrubber/sdk)</a></li>
+          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-white transition-colors">PrivacyScrubber (Reference Impl)</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Syndicate &amp; Community</div>
+        <ul class="space-y-2 text-xs text-slate-400">
+          <li><a href="/registry/" class="hover:text-white transition-colors">Verified Products Directory</a></li>
+          <li><a href="/companies/" class="hover:text-white transition-colors">Corporate Adopters Pool</a></li>
+          <li><a href="/fellows/" class="hover:text-white transition-colors">Global Fellows &amp; Experts</a></li>
+          <li><a href="/apply/" class="hover:text-emerald-400 transition-colors font-medium">Apply for Verification &rarr;</a></li>
+          <li class="pt-2 text-[11px] text-slate-600 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
+        </ul>
+      </div>
+
+      <!-- Legal Conformance Disclaimer -->
+      <div class="mt-8 pt-8 border-t border-slate-900/80 text-[11px] text-slate-500 leading-relaxed col-span-1 md:col-span-4">
+        <p class="font-mono text-slate-400 uppercase text-[10px] tracking-wider mb-1">Legal Notice &amp; Technical Conformance Disclaimer</p>
+        <p>
+          ZTDS.ai is an open technical consortium and independent specification maintainer. "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated or network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai makes no warranties, express or implied, regarding overall application security or fitness for purpose, and assumes no liability for third-party implementations, software errors, or data breaches.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const memoContent = `# OFFICIAL CISO DATA PROTECTION & DPA EXEMPTION MEMORANDUM
+TO: Chief Information Security Officer (CISO), Data Protection Officer (DPO), Enterprise Procurement
+FROM: Ilya Sibiryakov, Specification Author & Chief Architect (ZTDS.ai / BrandMeWeb)
+DATE: September 2026 (Continuous SSOT)
+SUBJECT: Legal & Architectural Basis for Zero-Trust Data Sanitization (ZTDS) & Exemption from Data Processing Agreements (DPA)
+
+## 1. Executive Summary
+Software conforming to the Zero-Trust Data Sanitization (ZTDS v1.0) specification operates strictly as a 100% client-side computational utility. Because de-identification executes exclusively inside volatile host RAM before outbound transmission, exactly zero (0) bytes of cleartext sensitive data are transmitted to external servers. Consequently, ZTDS-conforming software is legally exempt from Data Processing Agreement (DPA) requirements under GDPR Article 28, Business Associate Agreement (BAA) burdens under HIPAA, and SaaS sub-processor risk exposure.
+
+## 2. Statutory Grounds for Exemption
+- GDPR Article 28: Zero cloud ingestion endpoints or storage. EDPB doctrine: local client computational utilities do not constitute processing by a data processor.
+- GDPR Article 17: Prevents RAG vector database poisoning by substituting PII before embedding generation.
+- HIPAA Safe Harbor (45 CFR § 164.514): 18 PHI identifiers stripped locally. Cloud AI endpoints receive only de-identified surrogate tokens. No BAA required.
+- ISO/IEC 27001:2022 Control A.8.11: Deterministic contextual pseudonymization at the presentation layer.
+
+## 3. Standard Security Questionnaire (SIG Lite / CAIQ / VSAQ)
+- Data Hosting: None. Cleartext resides strictly in volatile host RAM.
+- Data Egress: Exactly 0.00 bytes. Zero telemetry, zero analytics.
+- Session Protection: Scoped strictly to active process memory. Wiped on tab reload or process exit.
+- Collaborative Unmasking: End-to-end encrypted with Argon2id (RFC 9106) and XChaCha20-Poly1305.
+- Key Custody: Zero-knowledge architecture. Customer holds all derived passphrases.
+- Sub-processors: Exactly zero.
+
+Full RFC and benchmarks: https://ztds.ai/ciso/`;
+
+    document.getElementById('copyMemoBtn').addEventListener('click', () => {
+      navigator.clipboard.writeText(memoContent).then(() => {
+        const toast = document.getElementById('copyToast');
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 4000);
+      });
+    });
+
+    document.getElementById('downloadMdBtn').addEventListener('click', () => {
+      const blob = new Blob([memoContent], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'ZTDS-CISO-DPA-Exemption-Memo.md';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>
