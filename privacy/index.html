@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zero-Telemetry Privacy Declaration — ZTDS.ai</title>
+  <meta name="description" content="Official Zero-Telemetry Privacy Manifest for ZTDS.ai. Mathematically verified client-side privacy, zero tracking cookies, zero external telemetry, and GDPR Recital 26 compliance.">
+  <link rel="canonical" href="https://ztds.ai/privacy/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://ztds.ai/privacy/#webpage",
+        "url": "https://ztds.ai/privacy/",
+        "name": "Zero-Telemetry Privacy Declaration — ZTDS.ai",
+        "description": "Official Zero-Telemetry Privacy Manifest for ZTDS.ai. Mathematically verified client-side privacy, zero tracking cookies, zero external telemetry, and GDPR Recital 26 compliance.",
+        "isPartOf": { "@id": "https://ztds.ai/#website" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ztds.ai/" },
+          { "@type": "ListItem", "position": 2, "name": "Legal & Trust", "item": "https://ztds.ai/privacy/" },
+          { "@type": "ListItem", "position": 3, "name": "Zero-Telemetry Privacy", "item": "https://ztds.ai/privacy/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 touch-target">
+        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-sky-500/40 flex items-center justify-center shadow-lg shadow-sky-500/10">
+          <svg class="w-5 h-5 text-sky-400" viewBox="0 0 32 32" fill="none">
+            <path d="M16 3L6 7V15C6 21.6 10.3 27.7 16 29C21.7 27.7 26 21.6 26 15V7L16 3Z" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+            <path d="M11 12H21L12 21H21" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="font-bold text-lg tracking-tight text-white font-mono">ZTDS<span class="text-sky-400">.ai</span></span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
+        <a href="/standard/" class="nav-link">Standard</a>
+        <a href="/ciso/" class="nav-link text-sky-400 font-semibold hover:text-sky-300">CISO Pack</a>
+        <a href="/inspector/" class="nav-link">Inspector</a>
+        <a href="/scanner/" class="nav-link">Scanner</a>
+        <a href="/registry/" class="nav-link">Registry</a>
+        <a href="/companies/" class="nav-link">Companies</a>
+        <a href="/fellows/" class="nav-link">Fellows</a>
+        <a href="/sdk/" class="nav-link">SDK</a>
+        <a href="/privacy/" class="nav-link active">Privacy</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="/apply/" class="hidden sm:inline-flex touch-target px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-colors">
+          Apply for Badge &rarr;
+        </a>
+        <!-- Mobile Hamburger Button -->
+        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 hover:text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Slide-Over Drawer -->
+  <div id="mobile-backdrop" class="mobile-nav-backdrop"></div>
+  <aside id="mobile-drawer" class="mobile-nav-drawer">
+    <div class="flex items-center justify-between pb-6 border-b border-slate-800">
+      <div class="flex items-center gap-2.5">
+        <div class="w-7 h-7 rounded bg-slate-900 border border-sky-500/40 flex items-center justify-center">
+          <span class="text-sky-400 font-mono font-bold text-sm">Z</span>
+        </div>
+        <span class="font-bold font-mono text-white">ZTDS<span class="text-sky-400">.ai</span></span>
+      </div>
+      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 text-slate-400 hover:text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="py-4 space-y-1">
+      <div class="px-2 pt-2 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Core Architecture</div>
+      <a href="/standard/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Standard (RFC v1.0)</a>
+      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-sm text-sky-400 hover:bg-slate-900">CISO Procurement Pack</a>
+      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Pipeline Inspector</a>
+      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Perimeter Scanner</a>
+      <a href="/sdk/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Developer Engine &amp; SDK</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Ecosystem &amp; Trust</div>
+      <a href="/registry/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Certified Implementations</a>
+      <a href="/companies/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Corporate Members</a>
+      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Global Fellows</a>
+      <a href="/badge/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Trust Badge Generator</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Institutional</div>
+      <a href="/governance/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Governance &amp; Charter</a>
+      <a href="/security/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Security &amp; CVD</a>
+      <a href="/privacy/" class="block px-3 py-2 rounded-lg text-sm text-white bg-slate-900 font-semibold">Zero-Telemetry Privacy</a>
+      <a href="/terms/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Standards, Patents &amp; Terms</a>
+    </div>
+    <div class="mt-auto pt-6 border-t border-slate-800">
+      <a href="/apply/" class="block w-full py-2.5 px-4 text-center rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-semibold hover:bg-emerald-500/25">
+        Apply for Certification &rarr;
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <!-- Hero Header -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-14 border-b border-slate-800/80">
+      <div class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-4">
+        <a href="/" class="hover:text-white">Home</a>
+        <span>/</span>
+        <span class="text-slate-500">Legal &amp; Trust</span>
+        <span>/</span>
+        <span class="text-sky-400">Zero-Telemetry Privacy Manifest</span>
+      </div>
+
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/60 text-xs font-mono text-emerald-300 mb-6">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        RFC-8821 &sect;4 COMPLIANT &middot; HARDENED CLIENT-SIDE PRIVACY &middot; AUDITED ED25519
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+        Zero-Telemetry Privacy Declaration
+      </h1>
+      <p class="mt-4 text-base sm:text-lg text-slate-400 max-w-3xl leading-relaxed">
+        Mathematically verified client-side boundary: zero tracking cookies, zero third-party telemetry, and zero external data collection across all documentation, tools, and interactive runtime sandboxes.
+      </p>
+
+      <!-- Key Telemetry Strip -->
+      <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="ztds-card p-4 border-emerald-500/30">
+          <div class="font-mono text-xs text-slate-400">Cookies Set</div>
+          <div class="mt-1 text-base sm:text-xl font-bold text-emerald-400 font-mono">0 (Zero)</div>
+          <div class="text-[11px] text-slate-500 font-mono">Set-Cookie: nil</div>
+        </div>
+        <div class="ztds-card p-4 border-emerald-500/30">
+          <div class="font-mono text-xs text-slate-400">External Trackers</div>
+          <div class="mt-1 text-base sm:text-xl font-bold text-emerald-400 font-mono">0 (Zero)</div>
+          <div class="text-[11px] text-slate-500 font-mono">connect-src: 'self'</div>
+        </div>
+        <div class="ztds-card p-4">
+          <div class="font-mono text-xs text-slate-400">Local Execution</div>
+          <div class="mt-1 text-base sm:text-xl font-bold text-sky-400 font-mono">100% Client WASM</div>
+          <div class="text-[11px] text-slate-500">Linear Memory Sandbox</div>
+        </div>
+        <div class="ztds-card p-4">
+          <div class="font-mono text-xs text-slate-400">Subprocessor DPA</div>
+          <div class="mt-1 text-base sm:text-xl font-bold text-purple-400 font-mono">Not Required</div>
+          <div class="text-[11px] text-slate-500">GDPR Recital 26 Safe Harbor</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dogfooding Declaration -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-800/80">
+      <div class="ztds-card p-6 sm:p-8 border-sky-500/40 bg-sky-950/10">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg bg-sky-500/10 border border-sky-500/30 flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="font-mono text-xs text-sky-400 font-semibold mb-1">100% INVARIANT COMPLIANT &middot; INVARIANT 1 VERIFIED</div>
+            <h2 class="text-xl font-bold text-white mb-2">ZTDS Dogfooding Policy: Standard Invariants Applied Directly</h2>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              ZTDS.ai strictly practices what it standardizes. The specification portal, verification suites, and developer interactive runtimes operate under <strong>Invariant 1 (Zero External Egress)</strong> and strict <strong>Zero-Knowledge Client Architecture</strong>. All payload computation resolves inside your browser's local sandbox; absolutely nothing is stored on or proxied through consortium servers.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Four Zero-Data Guarantees -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-800/80">
+      <div class="max-w-3xl mb-8">
+        <h2 class="text-2xl font-bold text-white tracking-tight">Four Zero-Data Guarantees</h2>
+        <p class="mt-3 text-slate-300 leading-relaxed text-sm sm:text-base">
+          Formal institutional commitments audited for deterministic non-retention and passive boundary defense.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="ztds-card p-6">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="font-mono text-xs px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/30">GUARANTEE 01</span>
+            <h3 class="text-base font-bold text-white">No External Analytics or Pixels</h3>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            We do NOT load Google Analytics, Meta Pixel, Hotjar, Segment, or any third-party behavioral trackers. Network sockets are strictly constrained to origin domain assets.
+          </p>
+        </div>
+
+        <div class="ztds-card p-6">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="font-mono text-xs px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/30">GUARANTEE 02</span>
+            <h3 class="text-base font-bold text-white">100% Cookie-Free Architecture</h3>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            ZTDS.ai issues zero HTTP cookies, zero LocalStorage tokens for advertising, and zero browser fingerprinting scripts. There is no cookie banner because there are no cookies.
+          </p>
+        </div>
+
+        <div class="ztds-card p-6">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="font-mono text-xs px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 font-bold border border-sky-500/30">GUARANTEE 03</span>
+            <h3 class="text-base font-bold text-white">Ephemeral RAM Execution</h3>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            Any sample payload sanitized in the interactive Inspector executes purely within volatile WebAssembly linear memory. When you reload or close the browser tab, the memory is purged with zero persistent footprint.
+          </p>
+        </div>
+
+        <div class="ztds-card p-6">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="font-mono text-xs px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 font-bold border border-purple-500/30">GUARANTEE 04</span>
+            <h3 class="text-base font-bold text-white">Zero Subprocessor Chain (GDPR Art. 28)</h3>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            Because ZTDS.ai never receives or processes personal data on its servers, the consortium does not act as a "data processor" under GDPR Article 4(8). Enterprise legal teams are not required to execute Data Processing Agreements (DPAs).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content Security Policy Inspection -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-800/80">
+      <div class="max-w-3xl mb-6">
+        <h2 class="text-2xl font-bold text-white tracking-tight">Enforced Content Security Policy (CSP Level 3)</h2>
+        <p class="mt-2 text-slate-400 text-sm">
+          Cryptographically enforced HTTP headers configured at edge routing to prevent data exfiltration.
+        </p>
+      </div>
+
+      <div class="ztds-card overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs font-mono">
+            <thead class="bg-slate-900/80 border-b border-slate-800 text-slate-400 uppercase">
+              <tr>
+                <th class="py-3 px-4">Directive</th>
+                <th class="py-3 px-4">Policy Value</th>
+                <th class="py-3 px-4">Security Rationale</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60 text-slate-300">
+              <tr>
+                <td class="py-3 px-4 text-sky-400 font-semibold">default-src</td>
+                <td class="py-3 px-4">'self'</td>
+                <td class="py-3 px-4 text-slate-400">Strict origin boundary for all unspecified resource loads.</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 text-sky-400 font-semibold">connect-src</td>
+                <td class="py-3 px-4">'self'</td>
+                <td class="py-3 px-4 text-slate-400">Zero third-party API or socket connections allowed; stops telemetry exfiltration.</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 text-sky-400 font-semibold">script-src</td>
+                <td class="py-3 px-4">'self' 'unsafe-inline' https://cdn.tailwindcss.com</td>
+                <td class="py-3 px-4 text-slate-400">Guarantees deterministic local execution; disallows unverified remote scripts.</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 text-sky-400 font-semibold">frame-ancestors</td>
+                <td class="py-3 px-4">'none'</td>
+                <td class="py-3 px-4 text-slate-400">Prevents UI clickjacking attacks via iframe embedding.</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 text-sky-400 font-semibold">form-action</td>
+                <td class="py-3 px-4">'self'</td>
+                <td class="py-3 px-4 text-slate-400">Blocks off-site form submissions and phishing redirects.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Verification in Airplane Mode -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="ztds-card p-6 sm:p-8">
+        <h2 class="text-xl font-bold text-white mb-2">Empirical Verification: The Airplane Mode Audit</h2>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
+          Don't take our word for it. You can empirically prove the Zero-Telemetry invariant in 3 simple steps:
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
+          <div class="p-4 rounded-lg bg-slate-900 border border-slate-800">
+            <span class="text-sky-400 font-bold block mb-1">Step 1: Open DevTools</span>
+            <p class="text-slate-400">Press F12 &rarr; select the Network tab &rarr; check "Preserve log".</p>
+          </div>
+          <div class="p-4 rounded-lg bg-slate-900 border border-slate-800">
+            <span class="text-emerald-400 font-bold block mb-1">Step 2: Turn on Airplane Mode</span>
+            <p class="text-slate-400">Disconnect your Wi-Fi or set network throttling to "Offline".</p>
+          </div>
+          <div class="p-4 rounded-lg bg-slate-900 border border-slate-800">
+            <span class="text-purple-400 font-bold block mb-1">Step 3: Run Sanitizer</span>
+            <p class="text-slate-400">Observe that sanitization executes with zero failed requests and 0 bytes egress.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="mt-auto border-t border-slate-800/80 bg-slate-950/90 py-12 text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-5 gap-8">
+      <div class="md:col-span-1">
+        <div class="flex items-center gap-2 font-mono font-bold text-white text-base">
+          <span class="text-sky-400">&bull;</span> ZTDS.ai
+        </div>
+        <p class="mt-2 text-xs text-slate-400 leading-relaxed">
+          The open architectural specification for Zero-Trust Data Sanitization in Artificial Intelligence pipelines.
+        </p>
+        <div class="mt-4 text-xs text-slate-500">
+          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">BrandMeWeb</a> ecosystem.
+        </div>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Specification</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/standard/" class="hover:text-white transition-colors">ZTDS RFC v1.0</a></li>
+          <li><a href="/ciso/" class="text-sky-400 font-semibold hover:text-white transition-colors">CISO &amp; DPA Memo &rarr;</a></li>
+          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-white transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-white transition-colors">OSF Benchmark</a></li>
+          <li><a href="/llms.txt" class="hover:text-white transition-colors">llms.txt Standard</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Architecture &amp; Tools</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/inspector/" class="hover:text-white transition-colors">Interactive Inspector</a></li>
+          <li><a href="/scanner/" class="hover:text-white transition-colors">Perimeter Scanner</a></li>
+          <li><a href="/sdk/" class="hover:text-white transition-colors">Developer SDK</a></li>
+          <li><a href="/badge/" class="hover:text-white transition-colors">Trust Badge Generator</a></li>
+          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-white transition-colors">PrivacyScrubber (Reference)</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Consortium &amp; Trust</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/governance/" class="hover:text-white transition-colors">Governance &amp; Charter</a></li>
+          <li><a href="/security/" class="hover:text-white transition-colors">Security &amp; CVD</a></li>
+          <li><a href="/privacy/" class="text-sky-400 font-semibold hover:text-white transition-colors">Zero-Telemetry Privacy</a></li>
+          <li><a href="/terms/" class="hover:text-white transition-colors">Standards, Patents &amp; Terms</a></li>
+          <li><a href="/.well-known/security.txt" class="hover:text-white transition-colors">RFC 9116 security.txt</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Community</div>
+        <ul class="space-y-2 text-xs text-slate-400">
+          <li><a href="/registry/" class="hover:text-white transition-colors">Verified Registry</a></li>
+          <li><a href="/companies/" class="hover:text-white transition-colors">Corporate Members</a></li>
+          <li><a href="/fellows/" class="hover:text-white transition-colors">Global Fellows</a></li>
+          <li><a href="/apply/" class="hover:text-emerald-400 transition-colors font-medium">Apply for Badge &rarr;</a></li>
+          <li class="pt-2 text-[11px] text-slate-600 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
+        </ul>
+      </div>
+
+      <!-- Legal Conformance Disclaimer -->
+      <div class="mt-8 pt-8 border-t border-slate-900/80 text-[11px] text-slate-500 leading-relaxed col-span-1 md:col-span-5">
+        <p class="font-mono text-slate-400 uppercase text-[10px] tracking-wider mb-1">Legal Notice &amp; Technical Conformance Disclaimer</p>
+        <p>
+          ZTDS.ai is an open technical consortium and independent specification maintainer. "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated or network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai makes no warranties, express or implied, regarding overall application security or fitness for purpose, and assumes no liability for third-party implementations, software errors, or data breaches.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+</body>
+</html>

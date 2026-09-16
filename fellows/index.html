@@ -53,15 +53,65 @@
         <a href="/companies/" class="nav-link">Companies</a>
         <a href="/fellows/" class="nav-link active">Fellows</a>
         <a href="/sdk/" class="nav-link">SDK</a>
+        <a href="/governance/" class="nav-link">Governance</a>
       </nav>
 
       <div class="flex items-center gap-3">
-        <a href="/apply/?track=fellow" class="touch-target px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-colors">
+        <a href="/apply/?track=fellow" class="hidden sm:inline-flex touch-target px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-colors">
           Nominate a Fellow &rarr;
         </a>
+        <!-- Mobile Hamburger Button -->
+        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 hover:text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- Mobile Slide-Over Drawer -->
+  <div id="mobile-backdrop" class="mobile-nav-backdrop"></div>
+  <aside id="mobile-drawer" class="mobile-nav-drawer">
+    <div class="flex items-center justify-between pb-6 border-b border-slate-800">
+      <div class="flex items-center gap-2.5">
+        <div class="w-7 h-7 rounded bg-slate-900 border border-sky-500/40 flex items-center justify-center">
+          <span class="text-sky-400 font-mono font-bold text-sm">Z</span>
+        </div>
+        <span class="font-bold font-mono text-white">ZTDS<span class="text-sky-400">.ai</span></span>
+      </div>
+      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 text-slate-400 hover:text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="py-4 space-y-1">
+      <div class="px-2 pt-2 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Core Architecture</div>
+      <a href="/standard/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Standard (RFC v1.0)</a>
+      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-sm text-sky-400 hover:bg-slate-900">CISO Procurement Pack</a>
+      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Pipeline Inspector</a>
+      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Perimeter Scanner</a>
+      <a href="/sdk/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Developer Engine &amp; SDK</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Ecosystem &amp; Trust</div>
+      <a href="/registry/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Certified Implementations</a>
+      <a href="/companies/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Corporate Members</a>
+      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-sm text-white bg-slate-900 font-semibold">Global Fellows</a>
+      <a href="/badge/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Trust Badge Generator</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Institutional</div>
+      <a href="/governance/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Governance &amp; Charter</a>
+      <a href="/security/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Security &amp; CVD</a>
+      <a href="/privacy/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Zero-Telemetry Privacy</a>
+      <a href="/terms/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Standards, Patents &amp; Terms</a>
+    </div>
+    <div class="mt-auto pt-6 border-t border-slate-800">
+      <a href="/apply/" class="block w-full py-2.5 px-4 text-center rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-semibold hover:bg-emerald-500/25">
+        Apply for Certification &rarr;
+      </a>
+    </div>
+  </aside>
 
   <!-- Hero Section -->
   <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
@@ -170,7 +220,7 @@
 
   <!-- Footer -->
   <footer class="bg-slate-950 border-t border-slate-900 text-slate-400 py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-5 gap-8 text-sm">
       <div>
         <div class="font-mono font-bold text-white text-base mb-3 flex items-center gap-2">
           <span class="text-sky-400">&block;</span> ZTDS.ai
@@ -201,7 +251,19 @@
           <li><a href="/inspector/" class="hover:text-white transition-colors">Interactive Inspector</a></li>
           <li><a href="/scanner/" class="hover:text-white transition-colors">Pipeline Scanner</a></li>
           <li><a href="/sdk/" class="hover:text-white transition-colors">Developer SDK (@privacyscrubber/sdk)</a></li>
+          <li><a href="/badge/" class="hover:text-white transition-colors">Trust Badge Generator</a></li>
           <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-white transition-colors">PrivacyScrubber (Reference Impl)</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Consortium &amp; Trust</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/governance/" class="hover:text-white transition-colors">Governance &amp; Charter</a></li>
+          <li><a href="/security/" class="hover:text-white transition-colors">Security &amp; CVD</a></li>
+          <li><a href="/privacy/" class="hover:text-white transition-colors">Zero-Telemetry Privacy</a></li>
+          <li><a href="/terms/" class="hover:text-white transition-colors">Standards, Patents &amp; Terms</a></li>
+          <li><a href="/.well-known/security.txt" class="hover:text-white transition-colors">RFC 9116 security.txt</a></li>
         </ul>
       </div>
 
@@ -217,7 +279,7 @@
       </div>
 
       <!-- Legal Conformance Disclaimer -->
-      <div class="mt-8 pt-8 border-t border-slate-900/80 text-[11px] text-slate-500 leading-relaxed col-span-1 md:col-span-4">
+      <div class="mt-8 pt-8 border-t border-slate-900/80 text-[11px] text-slate-500 leading-relaxed col-span-1 md:col-span-5">
         <p class="font-mono text-slate-400 uppercase text-[10px] tracking-wider mb-1">Legal Notice &amp; Technical Conformance Disclaimer</p>
         <p>
           ZTDS.ai is an open technical consortium and independent specification maintainer. "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated or network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai makes no warranties, express or implied, regarding overall application security or fitness for purpose, and assumes no liability for third-party implementations, software errors, or data breaches.
@@ -226,5 +288,6 @@
     </div>
   </footer>
 
+  <script src="/nav.js"></script>
 </body>
 </html>

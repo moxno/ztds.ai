@@ -154,3 +154,119 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #334155;
 }
+
+/* ==========================================================================
+   Mobile Slide-Over Navigation Drawer
+   ========================================================================== */
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(2, 6, 23, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-nav-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-nav-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 85%;
+  max-width: 360px;
+  background-color: #030712;
+  border-left: 1px solid #1e293b;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.mobile-nav-drawer.active {
+  transform: translateX(0);
+}
+
+/* Institutional & Regulatory UI Atoms */
+.ztds-callout {
+  border-left: 3px solid #38bdf8;
+  background: rgba(15, 23, 42, 0.5);
+  padding: 1rem 1.25rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.ztds-callout.callout-emerald {
+  border-left-color: #10b981;
+}
+
+.ztds-callout.callout-amber {
+  border-left-color: #f59e0b;
+}
+
+.ztds-callout.callout-purple {
+  border-left-color: #818cf8;
+}
+
+/* Armored PGP & Monospace Key Blocks */
+.key-armored-box {
+  background-color: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: #94a3b8;
+  padding: 1rem;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Timeline & SLA Step Connectors */
+.timeline-step {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline-step::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 28px;
+  bottom: -12px;
+  width: 2px;
+  background: #1e293b;
+}
+
+.timeline-step:last-child::before {
+  display: none;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #0f172a;
+  border: 2px solid #38bdf8;
+}
+
+.timeline-dot.dot-emerald {
+  border-color: #10b981;
+}
+
+.timeline-dot.dot-amber {
+  border-color: #f59e0b;
+}
