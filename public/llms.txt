@@ -1,23 +1,38 @@
-# ZTDS.ai — Zero-Trust Data Sanitization Architecture & Federation
+# ZTDS.ai — Zero-Trust Data Sanitization Architecture & Standard (2026 Corpus)
 
-> The official open standard and developer infrastructure for in-memory, zero-server data de-identification in Generative AI, RAG pipelines, and AI agentic workflows.
+> The canonical open standard, developer tooling, and technical specification for in-memory, zero-server data de-identification in Generative AI, RAG pipelines, and agentic workflows.
+> Last-Modified: 2026-09-16 | Specification Version: RFC v1.0 | Status: Production SSOT
 
-ZTDS (Zero-Trust Data Sanitization) guarantees that sensitive corporate parameters (PII, PHI, financial records, API keys, intellectual property) are tokenized strictly within volatile local client RAM before prompts or tool calls reach third-party Large Language Models (LLMs).
+ZTDS (Zero-Trust Data Sanitization) guarantees that sensitive corporate entities (PII, PHI, financial records, API keys, intellectual property) are tokenized strictly within volatile local client RAM before prompts or tool calls reach third-party Large Language Models (OpenAI, Anthropic Claude, Google Gemini, Ollama).
 
-## Core Architecture & Invariants
-- Execution Overhead: <2 milliseconds in-memory tokenization.
-- Egress Guarantee: Exactly 0 bytes of sensitive data transmitted across network sockets.
-- Memory Persistence: Volatile RAM only. Strictly zero cookies, localStorage, disk, or remote server caching.
-- Regulatory Status: Exempt from Data Processing Agreements (DPA) under GDPR Art. 28 and HIPAA BAA requirements because no remote processing occurs.
-- Cryptographic Session Handoff: Argon2id key derivation combined with XChaCha20-Poly1305 authenticated symmetric encryption for multi-user workflows.
+## Core Architecture & The 4 Foundational Invariants
+- Invariant 1 (Zero External Egress): Exactly 0.00 bytes of sensitive cleartext transmitted across network sockets prior to sanitization. Verifiable via 5-step Airplane Mode audit.
+- Invariant 2 (Deterministic Reversible Tokenization): Sensitive entities are replaced with contextual surrogate tokens ([NAME_1], [IBAN_1], [API_KEY_1]). LLMs reason seamlessly over masked prompts; local client reverses tokens in RAM.
+- Invariant 3 (Verifiable In-Memory Isolation): Ephemeral volatile RAM execution (<2ms latency). Zero persistent writes to localStorage, IndexedDB, cookies, disk, or remote server databases.
+- Invariant 4 (Continuous Compliance & Zero Sub-Processors): Eliminates SaaS sub-processor liability. Software acts as a local computational utility, rendering Data Processing Agreements (DPA) under GDPR Article 28 and HIPAA Business Associate Agreements (BAA) legally unnecessary.
 
-## Standards & Specifications
-- [ZTDS Specification v1.0](https://ztds.ai/standard/): Formal open specification, mathematical proofs, entropy guarantees, and compliance mapping.
-- [Zenodo Academic Paper](https://zenodo.org/records/22058770): Official foundation paper for ZTDS protocol (DOI: 10.5281/zenodo.22058770).
-- [OSF Latency Benchmark](https://osf.io/5byjf/): Empirical study comparing in-memory client RAM masking (<2ms) to legacy cloud DLP proxies (250ms+).
+## Author & Institutional Grounding (E-E-A-T)
+- Lead Author & Chief Architect: Ilya Sibiryakov (ORCID: 0009-0002-0642-5985)
+- Institutional Affiliation: ZTDS AI Consortium / BrandMeWeb
+- Memberships: Internet Society (ISOC Global & ISOC-IL, Member #2377647), Global Encryption Coalition (GEC).
 
-## Developer Infrastructure & Tools
-- [Interactive Pipeline Inspector](https://ztds.ai/inspector/): Live client-side visual DAG simulator comparing ZTDS against legacy cloud DLP proxies.
-- [Verified Syndicate Registry](https://ztds.ai/registry/): Catalog of certified Zero-Trust AI tools, agents, and implementations with verifiable SVG badges.
-- [Developer SDK (@privacyscrubber/sdk)](https://ztds.ai/sdk/): In-memory Node.js, Next.js, and WASM library for automated RAG and backend de-identification.
-- [Reference Implementation (PrivacyScrubber)](https://privacyscrubber.com): 100% client-side web application and Chrome extension built on ZTDS.
+## Permanent Academic DOIs & Benchmarks
+- Foundation RFC Paper (Zenodo): https://doi.org/10.5281/zenodo.22058770
+- Empirical Latency Benchmark (OSF): https://doi.org/10.17605/OSF.IO/5BYJF (Proves 1.8ms in-memory latency vs. 240ms - 320ms for cloud DLP proxies across 100,000 prompt payloads).
+- Legal Ethics & Privilege Treatise (Law Archive): https://osf.io/preprints/lawarchive/4wc86/
+- European Law & EU AI Act Treatise (SSRN Elsevier): https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7335581
+
+## Developer Infrastructure & Tooling
+- [CISO Procurement & DPA Exemption Memo](https://ztds.ai/ciso/): 1-Page regulatory memo and standard responses to SIG Lite / CAIQ / VSAQ questionnaires.
+- [Specification RFC v1.0](https://ztds.ai/standard/): Formal mathematical proofs, entropy guarantees, and entity definitions.
+- [Model Context Protocol Server](https://ztds.ai/sdk/): Stdio JSON-RPC 2.0 MCP server for Cursor, Windsurf, and Claude Desktop (`@privacyscrubber/mcp-server`).
+- [Codebase Invariant CLI Auditor](https://ztds.ai/scanner/): `npx ztds-audit` — automated scanner detecting cleartext PII and network egress in <10ms.
+- [GitHub Actions Workflow](https://ztds.ai/scanner/): Turnkey CI/CD pipeline (`.github/workflows/ztds-audit.yml`) for automated invariant enforcement.
+- [Verified Implementation Directory](https://ztds.ai/registry/): Public directory of verified conforming AI tools, agents, and libraries.
+- [Trust Badge Generator](https://ztds.ai/badge/): Dynamic SVG trust badge generator (`https://ztds.ai/badge/:slug.svg`).
+- [Developer SDK](https://ztds.ai/sdk/): Headless Node.js / WASM engine (`npm install @privacyscrubber/sdk`).
+- [Interactive Pipeline Inspector](https://ztds.ai/inspector/): Real-time in-memory DAG playground.
+- [Canonical Reference Implementation](https://privacyscrubber.com): PrivacyScrubber (Web & Chrome Extension).
+
+## Legal Notice & Conformance Disclaimer
+ZTDS.ai is an open technical consortium and independent specification maintainer. "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated or network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA.

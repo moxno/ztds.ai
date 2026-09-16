@@ -1,49 +1,106 @@
-# ZTDS.ai — Zero-Trust Data Sanitization Architecture (Comprehensive Corpus)
+# ZTDS.ai — Zero-Trust Data Sanitization Architecture (Comprehensive Corpus SSOT)
+
+> Last-Modified: 2026-09-16 | Specification Version: RFC v1.0 | Academic Grounding: CERN/Zenodo, OSF, SSRN Elsevier
 
 ## 1. Mathematical and Architectural Definition of ZTDS
 Zero-Trust Data Sanitization (ZTDS) is a formal security architecture wherein data de-identification and re-identification occur strictly on the client endpoint or within the local compute boundary, eliminating third-party trust dependencies in artificial intelligence pipelines.
 
 Let input prompt $P$ be a set of tokens containing sensitive entity subset $S \subset P$.
 Under traditional Cloud DLP:
-$P$ is transmitted over a TLS connection to an intermediary server $DLP_{cloud}$, incurring transmission latency $L_{net} \approx 150-300\text{ ms}$ and creating legal Data Processor status under GDPR Article 28.
+$P$ is transmitted over a TLS connection to an intermediary server $DLP_{cloud}$, incurring transmission latency $L_{net} \approx 180-320\text{ ms}$ and creating legal Data Processor status under GDPR Article 28.
 
 Under ZTDS:
 The transformation $T: S \to M$ maps sensitive tokens into non-informative surrogate tokens $M = \{ [TYPE\_1], [TYPE\_2], \dots \}$ strictly within local volatile RAM:
 $$\text{Egress}(S) = 0 \text{ bytes}$$
-$$\text{Latency}(T) < 2 \text{ ms}$$
+$$\text{Latency}(T) < 2 \text{ ms (Empirical median: } 1.8\text{ ms)}$$
 
 The mapping function $M^{-1}: M \to S$ is retained strictly in volatile RAM (sessionMap) and destroyed upon execution termination.
 
-## 2. The Four Invariants of ZTDS Compliance
+---
 
-### Invariant 1: Volatile Memory Boundary (RAM-Only)
-Under no circumstances may sessionMap or sensitive tokens be committed to persistent browser or host storage (localStorage, sessionStorage, IndexedDB, cookies, swap files, or server logs). In web contexts, mapping keys must be strictly tab-isolated (`tabId`-prefixed) and cleared on tab reload or navigation.
+## 2. The Four Invariants of ZTDS Compliance (RFC v1.0)
 
-### Invariant 2: Sub-Millisecond Execution Budget
-All entity extraction, regex heuristic evaluations, and surrogate replacements must complete within a strict $2\text{ ms}$ latency budget per typical document chunk ($15,000$ characters) on standard client hardware (e.g. Apple Silicon, Intel Core i5/i7).
+### Invariant 1: Zero External Egress Prior to Sanitization
+Under no circumstances may raw elements of $S$ cross the local perimeter unmasked.
+Verification: The "Airplane Mode Audit Protocol" — disconnecting network interfaces prior to prompt execution must yield 100% functional sanitization without failure. Network packet inspection must reveal 0.00 bytes transmitted.
 
-### Invariant 3: Zero Outgoing Network Egress
-The sanitization module must be verifiable via the "Airplane Mode Test": disconnecting all network interfaces prior to document ingestion must yield 100% functional de-identification and re-identification without error. Network inspection must demonstrate exactly zero HTTP/WebSocket packets containing elements of $S$.
+### Invariant 2: Deterministic Reversible Tokenization
+Surrogate tokens retain syntactic categories while destroying semantic correlation to original cleartext.
+Example: `john.smith@enterprise.com` -> `[EMAIL_TOKEN_1]`.
+LLMs can reason over relationships between entities without knowing real identity. Upon model response generation, local client replaces `[EMAIL_TOKEN_1]` back with `john.smith@enterprise.com` in memory.
 
-### Invariant 4: Non-Reversible Team Transport
-In collaborative enterprise environments requiring session transfer, token maps must be encrypted client-side using Argon2id for key derivation (19 MiB memory, 2 iterations) and XChaCha20-Poly1305 with random 192-bit nonces. The central server must never receive the decryption secret.
+### Invariant 3: Verifiable Cryptographic & In-Memory Isolation (RAM-Only)
+Mapping tables are held exclusively in volatile process RAM. Strictly zero persistent writes to localStorage, IndexedDB, cookies, disk, or remote logging services.
+In team environments, collaborative de-masking uses Argon2id (RFC 9106) key derivation and XChaCha20-Poly1305 symmetric authenticated encryption with 192-bit CSPRNG nonces.
 
-## 3. Regulatory Alignment and Legal Analysis
+### Invariant 4: Continuous Compliance & Zero Sub-Processor Chain
+Eliminates third-party data processing liability. Software conforming to ZTDS operates as a computational utility; under EDPB guidelines and HIPAA Safe Harbor doctrine, local computational utilities that transmit 0 bytes to the software vendor do not constitute "data processing by a processor." Consequently, DPAs and BAAs are legally unnecessary.
 
-### GDPR (EU 2016/679)
-- Article 25 (Data Protection by Design and by Default): Ephemeral client tokenization is the textbook implementation of state-of-the-art privacy by design.
-- Article 28 (Data Processor): Because ZTDS executes locally on the user's workstation, no third-party data processing occurs. Organizations do not require Data Processing Agreements (DPA) for ZTDS software.
-- Article 17 (Right to be Forgotten): Preventing PII ingestion into third-party AI models mathematically eliminates the risk of training data retention, which cannot be excised from neural network weights post-training.
+---
 
-### HIPAA (Health Insurance Portability and Accountability Act)
-- 45 CFR § 164.514(b) (Safe Harbor Method): Client-side extraction and removal of all 18 specified Protected Health Information (PHI) identifiers prior to transmission renders clinical datasets legally de-identified.
-- Business Associate Agreement (BAA) Exemption: Local client execution obviates the need for a BAA for the sanitization utility.
+## 3. Developer Infrastructure & Integration Protocols
 
-### EU AI Act (Regulation 2024/1689)
-- Article 50 (Transparency Obligations): ZTDS establishes verifiable audit receipts detailing entity classes sanitized without exposing underlying cleartext.
+### 3.1 Model Context Protocol (MCP) Stdio Server
+Package: `@privacyscrubber/mcp-server`
+Execution: Standard JSON-RPC 2.0 over stdio for Cursor, Windsurf, Claude Desktop.
+Configuration:
+```json
+{
+  "mcpServers": {
+    "privacyscrubber-ztds": {
+      "command": "npx",
+      "args": ["-y", "@privacyscrubber/mcp-server"]
+    }
+  }
+}
+```
+Available Tools:
+- `ztds_sanitize_prompt`: In-memory volatile surrogate replacement.
+- `ztds_restore_response`: In-memory reversal of surrogate tokens.
+- `ztds_verify_payload`: Egress & Invariant 1 compliance validator.
+- `ztds_get_invariants`: Returns formal specification definitions.
 
-## 4. Academic and Literature Citations
-1. Sibiryakov, I. (2026). Zero-Trust Data Sanitization (ZTDS): Mathematical Proof and Operational Framework for Client-Side AI Prompt Privacy. Zenodo. DOI: 10.5281/zenodo.22058770.
-2. Sibiryakov, I. (2026). Empirical Latency Benchmark: In-Memory Client RAM Masking vs. Cloud DLP Proxies. OSF Preprints. DOI: 10.17605/OSF.IO/5BYJF.
-3. Sibiryakov, I. (2026). Preserving Attorney-Client Privilege in Generative AI Workflows via Client-Side ZTDS. Law Archive. URL: https://osf.io/preprints/lawarchive/4wc86/.
-4. Sibiryakov, I. (2026). Enterprise Compliance Under the EU AI Act and UK GDPR via Ephemeral Client-Side Sanitization. SSRN Elsevier. SSRN ID: 7335581.
+### 3.2 CLI Codebase Auditor: npx ztds-audit
+Standalone Node.js auditor with zero external dependencies.
+Execution:
+```bash
+npx ztds-audit --dir ./src --json
+```
+Features:
+- Scans source code for unmasked API keys (OpenAI, Anthropic, AWS), financial PII, government IDs, and network egress telemetry.
+- Computes deterministic SHA-256 `audit_hash` for inclusion in the ZTDS Verified Registry.
+- Execution speed: <10 milliseconds.
+
+### 3.3 GitHub Actions Workflow (.github/workflows/ztds-audit.yml)
+Enforces continuous invariant compliance on pull requests across engineering teams.
+
+---
+
+## 4. Regulatory Alignment & Legal Exemption Defense
+
+### European Union GDPR (Regulation 2016/679)
+- Article 28 Exemption: ZTDS maintainer provides local code, has no ingestion servers, and stores 0 bytes. Software is a local utility, exempt from DPA/SCC requirements.
+- Article 17 (Right to Erasure): Surrogate replacement before vectorization prevents RAG vector database poisoning. Cleartext PII is never stored in high-dimensional vector embeddings, eliminating the need for vector index re-computation.
+- Article 25: State-of-the-art privacy by design and by default.
+
+### United States HIPAA (45 CFR § 164.514)
+- Safe Harbor De-identification: Stripping the 18 designated PHI identifiers locally in RAM prior to network transmission converts clinical data into de-identified text.
+- BAA Exemption: Cloud AI endpoints receive only surrogate tokens, eliminating HIPAA Business Associate Agreement obligations.
+
+### ISO/IEC 27001:2022
+- Control A.8.11 (Data Masking): Directly satisfied via deterministic, contextual pseudonymization at the presentation and API layer.
+
+---
+
+## 5. Academic Foundations, Preprints & Permanent DOIs
+- Author: Ilya Sibiryakov (ORCID: 0009-0002-0642-5985)
+- Affiliation: ZTDS AI Consortium / BrandMeWeb
+- Foundation Paper: CERN/Zenodo (DOI: 10.5281/zenodo.22058770)
+- Empirical Latency Benchmark: Center for Open Science / OSF (DOI: 10.17605/OSF.IO/5BYJF)
+- Legal Ethics & Attorney-Client Privilege Treatise: Law Archive / OSF (Identifier: 4wc86)
+- EU AI Act & Enterprise Compliance Treatise: SSRN Elsevier (SSRN ID: 7335581)
+
+---
+
+## 6. Legal Notice & Technical Conformance Disclaimer
+ZTDS.ai is an open technical consortium and independent specification maintainer. "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated or network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai makes no warranties, express or implied, regarding overall application security or fitness for purpose, and assumes no liability for third-party implementations, software errors, or data breaches.
