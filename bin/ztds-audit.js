@@ -200,7 +200,7 @@ if (IS_JSON) {
 }
 
 // Terminal Print UI
-console.log('\n\x1b[1m\x1b[36m&block; ZTDS.ai In-Memory Codebase Auditor\x1b[0m \x1b[90m(RFC v1.0 Conformance)\x1b[0m');
+console.log('\n\x1b[1m\x1b[36m[ZTDS]\x1b[0m \x1b[1mZTDS.ai In-Memory Codebase Auditor\x1b[0m \x1b[90m(RFC v1.0 Conformance)\x1b[0m');
 console.log('\x1b[90m----------------------------------------------------------------------\x1b[0m');
 console.log(`Directory:     \x1b[37m${TARGET_DIR}\x1b[0m`);
 console.log(`Files Scanned: \x1b[37m${files.length} files in ${durationMs}ms\x1b[0m`);
