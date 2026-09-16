@@ -1,0 +1,23 @@
+# ZTDS.ai — Zero-Trust Data Sanitization Architecture & Federation
+
+> The official open standard and developer infrastructure for in-memory, zero-server data de-identification in Generative AI, RAG pipelines, and AI agentic workflows.
+
+ZTDS (Zero-Trust Data Sanitization) guarantees that sensitive corporate parameters (PII, PHI, financial records, API keys, intellectual property) are tokenized strictly within volatile local client RAM before prompts or tool calls reach third-party Large Language Models (LLMs).
+
+## Core Architecture & Invariants
+- Execution Overhead: <2 milliseconds in-memory tokenization.
+- Egress Guarantee: Exactly 0 bytes of sensitive data transmitted across network sockets.
+- Memory Persistence: Volatile RAM only. Strictly zero cookies, localStorage, disk, or remote server caching.
+- Regulatory Status: Exempt from Data Processing Agreements (DPA) under GDPR Art. 28 and HIPAA BAA requirements because no remote processing occurs.
+- Cryptographic Session Handoff: Argon2id key derivation combined with XChaCha20-Poly1305 authenticated symmetric encryption for multi-user workflows.
+
+## Standards & Specifications
+- [ZTDS Specification v1.0](https://ztds.ai/standard/): Formal open specification, mathematical proofs, entropy guarantees, and compliance mapping.
+- [Zenodo Academic Paper](https://zenodo.org/records/22058770): Official foundation paper for ZTDS protocol (DOI: 10.5281/zenodo.22058770).
+- [OSF Latency Benchmark](https://osf.io/5byjf/): Empirical study comparing in-memory client RAM masking (<2ms) to legacy cloud DLP proxies (250ms+).
+
+## Developer Infrastructure & Tools
+- [Interactive Pipeline Inspector](https://ztds.ai/inspector/): Live client-side visual DAG simulator comparing ZTDS against legacy cloud DLP proxies.
+- [Verified Syndicate Registry](https://ztds.ai/registry/): Catalog of certified Zero-Trust AI tools, agents, and implementations with verifiable SVG badges.
+- [Developer SDK (@privacyscrubber/sdk)](https://ztds.ai/sdk/): In-memory Node.js, Next.js, and WASM library for automated RAG and backend de-identification.
+- [Reference Implementation (PrivacyScrubber)](https://privacyscrubber.com): 100% client-side web application and Chrome extension built on ZTDS.

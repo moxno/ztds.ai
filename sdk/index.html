@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZTDS Developer SDK — In-Memory PII Sanitization for AI Pipelines</title>
+  <meta name="description" content="Sub-millisecond in-memory PII de-identification library for Node.js, WASM, LangChain, and RAG vector databases. Zero network egress.">
+  <link rel="canonical" href="https://ztds.ai/sdk/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 touch-target">
+        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-sky-500/40 flex items-center justify-center">
+          <svg class="w-5 h-5 text-sky-400" viewBox="0 0 32 32" fill="none">
+            <path d="M16 3L6 7V15C6 21.6 10.3 27.7 16 29C21.7 27.7 26 21.6 26 15V7L16 3Z" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+            <path d="M11 12H21L12 21H21" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="font-bold text-lg tracking-tight text-white font-mono">ZTDS<span class="text-sky-400">.ai</span></span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
+        <a href="/standard/" class="nav-link">Standard</a>
+        <a href="/inspector/" class="nav-link">Inspector</a>
+        <a href="/scanner/" class="nav-link">Scanner</a>
+        <a href="/registry/" class="nav-link">Registry</a>
+        <a href="/companies/" class="nav-link">Companies</a>
+        <a href="/fellows/" class="nav-link">Fellows</a>
+        <a href="/sdk/" class="nav-link active">SDK</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="/apply/" class="touch-target px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-colors">
+          Apply for Badge &rarr;
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+    <div class="mb-12">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono text-sky-400 mb-4">
+        HEADLESS NODE.JS &middot; WASM ENGINE &middot; MCP SERVER
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+        ZTDS Developer Engine
+      </h1>
+      <p class="mt-4 text-base sm:text-lg text-slate-400 leading-relaxed max-w-3xl">
+        Embed sub-millisecond, client-side data sanitization directly into your backend microservices, RAG ingestion pipelines, and AI agentic loops. Never send raw PII to third-party model providers.
+      </p>
+
+      <!-- Quick Install Box -->
+      <div class="mt-6 ztds-terminal p-4 flex items-center justify-between max-w-xl">
+        <span class="text-xs text-sky-300 font-mono select-all">npm install @privacyscrubber/sdk</span>
+        <button onclick="navigator.clipboard.writeText('npm install @privacyscrubber/sdk')" class="text-xs text-slate-400 hover:text-white font-mono uppercase font-bold">Copy</button>
+      </div>
+    </div>
+
+    <!-- Code Integration Examples -->
+    <section class="space-y-8 mb-16">
+      <h2 class="text-xl font-bold text-white border-b border-slate-800 pb-2">Integration Patterns</h2>
+
+      <!-- Node / Express Pattern -->
+      <div class="ztds-card p-6">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-sky-400 font-mono">1. Node.js / RAG Ingestion Pipeline</h3>
+          <span class="text-xs text-slate-500 font-mono">&lt;1ms in-memory</span>
+        </div>
+        <pre class="ztds-terminal p-4 text-xs font-mono leading-relaxed overflow-x-auto text-slate-300"><code>const { ZTDSEngine } = require('@privacyscrubber/sdk');
+
+// Initialize headless engine with Healthcare / GDPR profile
+const ztds = new ZTDSEngine({
+  profile: 'healthcare_hipaa',
+  mode: 'volatile_ram'
+});
+
+// 1. Sanitize raw prompt before vector embedding
+const { sanitizedText, sessionMap } = ztds.sanitize(rawMedicalDocument);
+
+// 2. Safely query third-party LLM (OpenAI / Claude)
+const completion = await openai.chat.completions.create({
+  model: 'gpt-4o',
+  messages: [{ role: 'user', content: sanitizedText }]
+});
+
+// 3. 1-Click Reverse De-tokenization in local memory
+const finalResponse = ztds.reveal(completion.choices[0].message.content, sessionMap);
+console.log("Safe clinical insight:", finalResponse);</code></pre>
+      </div>
+
+      <!-- MCP Integration Pattern -->
+      <div class="ztds-card p-6">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-emerald-400 font-mono">2. Model Context Protocol (MCP) for Cursor / Claude</h3>
+          <span class="text-xs text-slate-500 font-mono">Stdio JSON-RPC</span>
+        </div>
+        <pre class="ztds-terminal p-4 text-xs font-mono leading-relaxed overflow-x-auto text-slate-300"><code>// Add to ~/Library/Application Support/Claude/claude_desktop_config.json
+{
+  "mcpServers": {
+    "privacyscrubber-ztds": {
+      "command": "npx",
+      "args": ["-y", "@privacyscrubber/mcp-server"],
+      "env": {
+        "ZTDS_INSPECTION_MODE": "enforce_airgap"
+      }
+    }
+  }
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- Pricing / Checkout Section -->
+    <section id="pricing" class="ztds-card p-8 md:p-12 border-slate-800 bg-slate-900/50">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Developer SDK Licensing</h2>
+        <p class="text-sm text-slate-400 mt-2">Zero-server architecture. Zero seat limits. Unlimited internal backend nodes.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <!-- Monthly Plan -->
+        <div class="ztds-card p-6 border-slate-700 flex flex-col justify-between">
+          <div>
+            <h3 class="text-lg font-bold text-white">Developer Monthly</h3>
+            <div class="mt-4 flex items-baseline">
+              <span class="text-3xl sm:text-4xl font-extrabold font-mono text-white">$199</span>
+              <span class="text-xs text-slate-400 font-mono ml-2">/ month</span>
+            </div>
+            <p class="text-xs text-slate-400 mt-3">Agile teams integrating ZTDS into production microservices.</p>
+            <ul class="mt-6 space-y-2 text-xs text-slate-300 font-mono">
+              <li class="flex items-center gap-2">&check; All 25 Industry Profiles</li>
+              <li class="flex items-center gap-2">&check; Headless Node.js &amp; WASM Engine</li>
+              <li class="flex items-center gap-2">&check; Unlimited Backend Microservices</li>
+              <li class="flex items-center gap-2">&check; &lt;1ms In-Memory Latency</li>
+              <li class="flex items-center gap-2">&check; Priority GitHub Issues &amp; Patch SLA</li>
+            </ul>
+          </div>
+          <div class="mt-8">
+            <a href="https://privacyscrubber.com/pricing/" class="touch-target w-full rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs font-mono transition-colors">
+              Deploy Monthly ($199/mo) &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Annual Plan (Early Adopter) -->
+        <div class="ztds-card p-6 border-emerald-500/40 bg-emerald-950/10 flex flex-col justify-between relative">
+          <div class="absolute -top-3 right-4 bg-emerald-500 text-slate-950 text-[10px] font-mono font-bold px-2 py-0.5 rounded">
+            SAVE ~17% ($398 OFF)
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-white">Developer Annual</h3>
+            <div class="mt-4 flex items-baseline">
+              <span class="text-3xl sm:text-4xl font-extrabold font-mono text-emerald-400">$1,990</span>
+              <span class="text-xs text-slate-400 font-mono ml-2">/ year</span>
+            </div>
+            <p class="text-xs text-slate-400 mt-3">Enterprise startups deploying air-gapped RAG and agent architectures.</p>
+            <ul class="mt-6 space-y-2 text-xs text-slate-300 font-mono">
+              <li class="flex items-center gap-2">&check; Everything in Monthly Tier</li>
+              <li class="flex items-center gap-2">&check; Official ZTDS Verified Registry Badge</li>
+              <li class="flex items-center gap-2">&check; Entity Inclusion in <code class="text-emerald-300">ztds.ai/llms.txt</code></li>
+              <li class="flex items-center gap-2">&check; CISO Vendor Procurement Memo Pack</li>
+              <li class="flex items-center gap-2">&check; On-Premise Air-Gapped Deployment License</li>
+            </ul>
+          </div>
+          <div class="mt-8">
+            <a href="https://privacyscrubber.com/pricing/" class="touch-target w-full rounded-lg bg-gradient-to-r from-emerald-500 to-teal-400 hover:opacity-95 text-slate-950 font-bold text-xs font-mono transition-opacity">
+              Deploy Annual ($1,990/yr) &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-900 text-slate-400 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+      <div>
+        <div class="font-mono font-bold text-white text-base mb-3 flex items-center gap-2">
+          <span class="text-sky-400">&block;</span> ZTDS.ai
+        </div>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          The open architectural specification for Zero-Trust Data Sanitization in Artificial Intelligence pipelines.
+        </p>
+        <div class="mt-4 text-xs text-slate-500">
+          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">BrandMeWeb</a> ecosystem.
+        </div>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Specification &amp; Research</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/standard/" class="hover:text-white transition-colors">ZTDS RFC v1.0</a></li>
+          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-white transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-white transition-colors">OSF Latency Benchmark</a></li>
+          <li><a href="https://osf.io/preprints/lawarchive/4wc86/" target="_blank" rel="noopener" class="hover:text-white transition-colors">Law Archive Preprint</a></li>
+          <li><a href="/llms.txt" class="hover:text-white transition-colors">llms.txt Standard</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Architecture &amp; Tools</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/inspector/" class="hover:text-white transition-colors">Interactive Inspector</a></li>
+          <li><a href="/scanner/" class="hover:text-white transition-colors">Pipeline Scanner</a></li>
+          <li><a href="/sdk/" class="text-sky-400 font-semibold hover:text-white transition-colors">Developer SDK (@privacyscrubber/sdk)</a></li>
+          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-white transition-colors">PrivacyScrubber (Reference Impl)</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Syndicate &amp; Community</div>
+        <ul class="space-y-2 text-xs text-slate-400">
+          <li><a href="/registry/" class="hover:text-white transition-colors">Verified Products Directory</a></li>
+          <li><a href="/companies/" class="hover:text-white transition-colors">Corporate Adopters Pool</a></li>
+          <li><a href="/fellows/" class="hover:text-white transition-colors">Global Fellows &amp; Experts</a></li>
+          <li><a href="/apply/" class="hover:text-emerald-400 transition-colors font-medium">Apply for Certification &rarr;</a></li>
+          <li class="pt-2 text-[11px] text-slate-600 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

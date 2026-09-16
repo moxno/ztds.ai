@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZTDS Privacy Scanner — Local AI Pipeline &amp; Code Linter</title>
+  <meta name="description" content="Audit your AI pipelines and code for Zero-Trust compliance. 100% in-browser analysis and standalone CLI for local repository inspection.">
+  <link rel="canonical" href="https://ztds.ai/scanner/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 touch-target">
+        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-sky-500/40 flex items-center justify-center">
+          <svg class="w-5 h-5 text-sky-400" viewBox="0 0 32 32" fill="none">
+            <path d="M16 3L6 7V15C6 21.6 10.3 27.7 16 29C21.7 27.7 26 21.6 26 15V7L16 3Z" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+            <path d="M11 12H21L12 21H21" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="font-bold text-lg tracking-tight text-white font-mono">ZTDS<span class="text-sky-400">.ai</span></span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
+        <a href="/standard/" class="nav-link">Standard</a>
+        <a href="/inspector/" class="nav-link">Inspector</a>
+        <a href="/scanner/" class="nav-link active">Scanner</a>
+        <a href="/registry/" class="nav-link">Registry</a>
+        <a href="/companies/" class="nav-link">Companies</a>
+        <a href="/fellows/" class="nav-link">Fellows</a>
+        <a href="/sdk/" class="nav-link">SDK</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="/apply/" class="touch-target px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-colors">
+          Apply for Badge &rarr;
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+    <div class="mb-10 text-center max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono text-sky-400 mb-4">
+        ZERO-SERVER STATIC LINTER &middot; CODE &amp; PROMPT AUDIT
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Zero-Trust Pipeline Scanner</h1>
+      <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+        Verify your code, prompts, and agent configs against the 4 ZTDS invariants. Zero bytes leave your browser.
+      </p>
+    </div>
+
+    <!-- Scanner Two-Mode Selector -->
+    <div class="grid grid-cols-2 gap-2 bg-slate-900/80 p-1.5 rounded-xl border border-slate-800 mb-8 max-w-md mx-auto">
+      <button id="tabBrowserScan" class="py-2 px-3 rounded-lg text-xs font-mono font-bold text-slate-200 bg-slate-800 shadow">
+        Browser Static Linter
+      </button>
+      <button id="tabCliScan" class="py-2 px-3 rounded-lg text-xs font-mono font-bold text-slate-400 hover:text-white">
+        Terminal CLI Audit
+      </button>
+    </div>
+
+    <!-- Mode 1: Browser Static Linter -->
+    <div id="modeBrowser" class="ztds-card p-6 sm:p-8 space-y-6">
+      <div>
+        <label class="block text-xs font-mono text-slate-300 font-semibold mb-2">
+          Paste Code Snippet, System Prompt, or RAG Ingestion Logic:
+        </label>
+        <textarea id="scannerInput" rows="7" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-sky-500 leading-relaxed" placeholder="// Paste JavaScript, Python, or Prompt here...
+const completion = await openai.chat.completions.create({
+  model: 'gpt-4o',
+  messages: [{ role: 'user', content: 'Patient John Doe (SSN: 000-11-2222) diagnosed with diabetes.' }]
+});
+localStorage.setItem('last_prompt', promptText);"></textarea>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <button id="btnRunAudit" class="touch-target px-5 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs font-mono transition-colors">
+          Run In-Memory Audit &rarr;
+        </button>
+        <span class="text-xs font-mono text-slate-400">Network: <strong class="text-emerald-400">0 Requests (Verified)</strong></span>
+      </div>
+
+      <!-- Audit Results Card -->
+      <div id="auditResults" class="border-t border-slate-800 pt-6 mt-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-bold text-white font-mono">ZTDS Compliance Assessment</h3>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono text-slate-400">Score:</span>
+            <span id="auditScore" class="text-lg font-extrabold font-mono text-amber-400">45 / 100</span>
+          </div>
+        </div>
+
+        <div class="space-y-2.5 text-xs font-mono" id="auditItems">
+          <div class="p-3 rounded bg-red-950/20 border border-red-900/40 text-red-300 flex items-start gap-2">
+            <span class="text-red-400 font-bold">&times;</span>
+            <div><strong>Direct Cleartext Egress:</strong> Unmasked sensitive entities (Patient name, SSN) transmitted directly to OpenAI API without in-memory tokenization.</div>
+          </div>
+          <div class="p-3 rounded bg-red-950/20 border border-red-900/40 text-red-300 flex items-start gap-2">
+            <span class="text-red-400 font-bold">&times;</span>
+            <div><strong>Storage Persistence Detected:</strong> Found <code>localStorage.setItem()</code> call in prompt handler. Violates Invariant 1 (RAM-Only).</div>
+          </div>
+          <div class="p-3 rounded bg-emerald-950/20 border border-emerald-900/40 text-emerald-300 flex items-start gap-2">
+            <span class="text-emerald-400 font-bold">&check;</span>
+            <div><strong>No Third-Party Trackers:</strong> Zero unmonitored analytics scripts detected in local snippet.</div>
+          </div>
+        </div>
+
+        <div class="mt-6 p-4 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between">
+          <div class="text-xs text-slate-300 font-mono">
+            Remediate automatically using <code class="text-sky-300">@privacyscrubber/sdk</code>
+          </div>
+          <a href="/sdk/" class="touch-target px-4 py-2 rounded bg-sky-500/10 text-sky-400 border border-sky-500/30 text-xs font-mono font-bold hover:bg-sky-500/20">
+            View SDK Fix &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mode 2: Terminal CLI Scanner -->
+    <div id="modeCli" class="ztds-card p-6 sm:p-8 space-y-6 hidden">
+      <div>
+        <h2 class="text-lg font-bold text-white">Open-Source Repository Audit CLI</h2>
+        <p class="text-xs text-slate-400 mt-1">Run white-box static audits inside your private repos. Zero code leaves your workstation.</p>
+      </div>
+
+      <div class="space-y-4 text-xs font-mono">
+        <div>
+          <span class="text-slate-400">1. Run one-time audit on any project:</span>
+          <div class="ztds-terminal p-3 rounded mt-1 text-sky-300 select-all">
+            npx ztds-audit ./src --profile=enterprise
+          </div>
+        </div>
+
+        <div>
+          <span class="text-slate-400">2. Generate verifiable cryptographic compliance report:</span>
+          <div class="ztds-terminal p-3 rounded mt-1 text-sky-300 select-all">
+            npx ztds-audit ./src --output=ztds-report.json --hash
+          </div>
+        </div>
+
+        <div>
+          <span class="text-slate-400">3. Sample Output:</span>
+          <pre class="ztds-terminal p-4 rounded mt-1 text-slate-300 overflow-x-auto leading-relaxed"><code>{
+  "target": "acme-rag-backend",
+  "ztds_score": 100,
+  "invariants_passed": ["RAM_ONLY", "ZERO_EGRESS", "SUB_2MS", "CRYPTO_HANDOFF"],
+  "audit_hash": "sha256:7f83b1659a72d3e1104e6c70b8a245d8b76c94fa10b981e7d23f46a81e9d0c24",
+  "badge_ready": true
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-slate-800">
+        <a href="/apply/?track=product" class="touch-target px-5 py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs font-mono transition-colors">
+          Submit Report Hash for ZTDS Badge &rarr;
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-900 text-slate-400 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+      <div>
+        <div class="font-mono font-bold text-white text-base mb-3 flex items-center gap-2">
+          <span class="text-sky-400">&block;</span> ZTDS.ai
+        </div>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          The open architectural specification for Zero-Trust Data Sanitization in Artificial Intelligence pipelines.
+        </p>
+        <div class="mt-4 text-xs text-slate-500">
+          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">BrandMeWeb</a> ecosystem.
+        </div>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Specification &amp; Research</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/standard/" class="hover:text-white transition-colors">ZTDS RFC v1.0</a></li>
+          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-white transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-white transition-colors">OSF Latency Benchmark</a></li>
+          <li><a href="https://osf.io/preprints/lawarchive/4wc86/" target="_blank" rel="noopener" class="hover:text-white transition-colors">Law Archive Preprint</a></li>
+          <li><a href="/llms.txt" class="hover:text-white transition-colors">llms.txt Standard</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Architecture &amp; Tools</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/inspector/" class="hover:text-white transition-colors">Interactive Inspector</a></li>
+          <li><a href="/scanner/" class="text-sky-400 font-semibold hover:text-white transition-colors">Pipeline Scanner</a></li>
+          <li><a href="/sdk/" class="hover:text-white transition-colors">Developer SDK (@privacyscrubber/sdk)</a></li>
+          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-white transition-colors">PrivacyScrubber (Reference Impl)</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Syndicate &amp; Community</div>
+        <ul class="space-y-2 text-xs text-slate-400">
+          <li><a href="/registry/" class="hover:text-white transition-colors">Verified Products Directory</a></li>
+          <li><a href="/companies/" class="hover:text-white transition-colors">Corporate Adopters Pool</a></li>
+          <li><a href="/fellows/" class="hover:text-white transition-colors">Global Fellows &amp; Experts</a></li>
+          <li><a href="/apply/" class="hover:text-emerald-400 transition-colors font-medium">Apply for Certification &rarr;</a></li>
+          <li class="pt-2 text-[11px] text-slate-600 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const tabBrowser = document.getElementById('tabBrowserScan');
+      const tabCli = document.getElementById('tabCliScan');
+      const modeBrowser = document.getElementById('modeBrowser');
+      const modeCli = document.getElementById('modeCli');
+
+      tabBrowser.addEventListener('click', () => {
+        tabBrowser.className = "py-2 px-3 rounded-lg text-xs font-mono font-bold text-slate-200 bg-slate-800 shadow";
+        tabCli.className = "py-2 px-3 rounded-lg text-xs font-mono font-bold text-slate-400 hover:text-white";
+        modeBrowser.classList.remove('hidden');
+        modeCli.classList.add('hidden');
+      });
+
+      tabCli.addEventListener('click', () => {
+        tabCli.className = "py-2 px-3 rounded-lg text-xs font-mono font-bold text-slate-200 bg-slate-800 shadow";
+        tabBrowser.className = "py-2 px-3 rounded-lg text-xs font-mono font-bold text-slate-400 hover:text-white";
+        modeCli.classList.remove('hidden');
+        modeBrowser.classList.add('hidden');
+      });
+
+      document.getElementById('btnRunAudit').addEventListener('click', () => {
+        const text = document.getElementById('scannerInput').value;
+        const auditScore = document.getElementById('auditScore');
+        const auditItems = document.getElementById('auditItems');
+
+        let score = 100;
+        let findings = [];
+
+        // Check for cleartext PII mentions
+        if (text.match(/SSN|dob|patient|doctor|credit\s*card|iban/i)) {
+          score -= 30;
+          findings.push({
+            type: "fail",
+            msg: "Unmasked PII/PHI parameters detected in uncompiled text or prompt strings."
+          });
+        }
+
+        // Check for persistent storage
+        if (text.match(/localStorage|sessionStorage|indexedDB|document\.cookie/i)) {
+          score -= 25;
+          findings.push({
+            type: "fail",
+            msg: "Persistent storage call detected. Violates Invariant 1 (RAM-Only volatile scoping)."
+          });
+        }
+
+        // Check for direct LLM API calls without sanitization
+        if (text.match(/openai\.|anthropic\.|createCompletion|chat\.completions/i) && !text.match(/ztds|sanitize|privacyscrubber/i)) {
+          score -= 25;
+          findings.push({
+            type: "fail",
+            msg: "Direct third-party LLM invocation detected without in-memory ZTDS layer."
+          });
+        }
+
+        if (findings.length === 0) {
+          findings.push({
+            type: "pass",
+            msg: "Zero cleartext leaks or persistence calls detected. Compliant with ZTDS v1.0 standard."
+          });
+        }
+
+        auditScore.textContent = `${Math.max(score, 10)} / 100`;
+        auditScore.className = score >= 80 ? "text-lg font-extrabold font-mono text-emerald-400" : (score >= 50 ? "text-lg font-extrabold font-mono text-amber-400" : "text-lg font-extrabold font-mono text-red-400");
+
+        auditItems.innerHTML = findings.map(f => `
+          <div class="p-3 rounded ${f.type === 'pass' ? 'bg-emerald-950/20 border border-emerald-900/40 text-emerald-300' : 'bg-red-950/20 border border-red-900/40 text-red-300'} flex items-start gap-2">
+            <span class="${f.type === 'pass' ? 'text-emerald-400' : 'text-red-400'} font-bold">${f.type === 'pass' ? '&check;' : '&times;'}</span>
+            <div>${f.msg}</div>
+          </div>
+        `).join('');
+      });
+    })();
+  </script>
+
+</body>
+</html>

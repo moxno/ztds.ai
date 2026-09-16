@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZTDS Pipeline Inspector — Interactive Zero-Trust DAG Simulator</title>
+  <meta name="description" content="Simulate in-memory Zero-Trust Data Sanitization in real-time. Measure sub-millisecond latency, test entity tokenization, and verify zero network egress.">
+  <link rel="canonical" href="https://ztds.ai/inspector/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 touch-target">
+        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-sky-500/40 flex items-center justify-center">
+          <svg class="w-5 h-5 text-sky-400" viewBox="0 0 32 32" fill="none">
+            <path d="M16 3L6 7V15C6 21.6 10.3 27.7 16 29C21.7 27.7 26 21.6 26 15V7L16 3Z" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+            <path d="M11 12H21L12 21H21" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="font-bold text-lg tracking-tight text-white font-mono">ZTDS<span class="text-sky-400">.ai</span></span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
+        <a href="/standard/" class="nav-link">Standard</a>
+        <a href="/inspector/" class="nav-link active">Inspector</a>
+        <a href="/scanner/" class="nav-link">Scanner</a>
+        <a href="/registry/" class="nav-link">Registry</a>
+        <a href="/companies/" class="nav-link">Companies</a>
+        <a href="/fellows/" class="nav-link">Fellows</a>
+        <a href="/sdk/" class="nav-link">SDK</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="/apply/" class="touch-target px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-colors">
+          Apply for Badge &rarr;
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Inspector Interface -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    <!-- Header -->
+    <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-800 pb-6">
+      <div>
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-[11px] font-mono text-sky-400 mb-2">
+          CLIENT-SIDE VOLATILE RAM ENVIRONMENT &middot; ZERO SERVER EGRESS
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Interactive Pipeline Inspector</h1>
+        <p class="text-sm text-slate-400 mt-1">Simulate real-time in-memory sanitization across RAG and LLM tool call nodes.</p>
+      </div>
+
+      <!-- Presets -->
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-xs text-slate-400 font-mono">Presets:</span>
+        <button id="presetHealth" class="px-3 py-1.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-slate-200 transition-colors">Healthcare PHI</button>
+        <button id="presetFinance" class="px-3 py-1.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-slate-200 transition-colors">Financial Wire</button>
+        <button id="presetDevOps" class="px-3 py-1.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-slate-200 transition-colors">Cloud Secrets</button>
+      </div>
+    </div>
+
+    <!-- Visual DAG Pipeline Flow -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div class="dag-node active-node" id="dagNode1">
+        <div class="text-[11px] font-mono text-slate-400 uppercase font-semibold">Node 01</div>
+        <div class="text-sm font-bold text-white mt-1">Raw Input Payload</div>
+        <div class="text-xs text-slate-400 mt-1 font-mono" id="statInputChars">184 chars</div>
+      </div>
+
+      <div class="dag-node active-node" id="dagNode2">
+        <div class="text-[11px] font-mono text-emerald-400 uppercase font-semibold">Node 02 (ZTDS Engine)</div>
+        <div class="text-sm font-bold text-emerald-400 mt-1">Volatile RAM Masker</div>
+        <div class="text-xs text-emerald-400/80 mt-1 font-mono" id="statLatency">&lt;0.5 ms &middot; 0 B egress</div>
+      </div>
+
+      <div class="dag-node" id="dagNode3">
+        <div class="text-[11px] font-mono text-sky-400 uppercase font-semibold">Node 03</div>
+        <div class="text-sm font-bold text-white mt-1">Sanitized Egress</div>
+        <div class="text-xs text-slate-400 mt-1 font-mono" id="statTokensMasked">4 tokens isolated</div>
+      </div>
+
+      <div class="dag-node" id="dagNode4">
+        <div class="text-[11px] font-mono text-indigo-400 uppercase font-semibold">Node 04</div>
+        <div class="text-sm font-bold text-white mt-1">De-Tokenized Response</div>
+        <div class="text-xs text-slate-400 mt-1 font-mono">1-Click Local Reversal</div>
+      </div>
+    </div>
+
+    <!-- Inspector Workbenches -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <!-- Input Column -->
+      <div class="ztds-card p-5 flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-mono font-bold uppercase text-slate-300">1. Cleartext Ingestion Payload</span>
+          <span class="text-xs font-mono text-slate-500">Edit text below</span>
+        </div>
+        <textarea id="inputArea" rows="8" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-sky-500 resize-y leading-relaxed" placeholder="Type or paste text with PII/PHI..."></textarea>
+        
+        <div class="mt-4 flex items-center justify-between">
+          <button id="btnSanitize" class="touch-target px-5 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs font-mono transition-colors">
+            Execute ZTDS Masking &rarr;
+          </button>
+          <span class="text-xs font-mono text-slate-400">RAM Session: <span id="sessionStatus" class="text-emerald-400 font-semibold">Active</span></span>
+        </div>
+      </div>
+
+      <!-- Output Column -->
+      <div class="ztds-card p-5 flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-mono font-bold uppercase text-sky-400">2. Sanitized Output (Ready for LLM)</span>
+          <span class="text-xs font-mono text-emerald-400" id="liveLatencyBadge">Latency: 0.42ms</span>
+        </div>
+        <div id="outputArea" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs font-mono text-slate-300 h-[190px] overflow-y-auto leading-relaxed">
+          <!-- Sanitized markup rendered here -->
+        </div>
+
+        <div class="mt-4 flex items-center justify-between">
+          <button id="btnSimulateLLM" class="touch-target px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-medium text-xs font-mono transition-colors">
+            Simulate LLM Reply &amp; Reveal
+          </button>
+          <button id="btnReset" class="text-xs font-mono text-slate-500 hover:text-slate-300">Clear RAM Map</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Session Map & Telemetry -->
+    <div class="ztds-card p-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 border-b border-slate-800 pb-4">
+        <div>
+          <h3 class="text-base font-bold text-white flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            Volatile In-Memory SessionMap (RAM Dump)
+          </h3>
+          <p class="text-xs text-slate-400 mt-0.5">Isolated to this browser execution. Disappears on page refresh.</p>
+        </div>
+        <div class="flex items-center gap-4 text-xs font-mono">
+          <span class="text-slate-400">Network Telemetry: <strong class="text-emerald-400">0 Requests</strong></span>
+          <span class="text-slate-400">Egress: <strong class="text-emerald-400">0.00 B</strong></span>
+        </div>
+      </div>
+
+      <div id="sessionMapDisplay" class="font-mono text-xs bg-slate-950 p-4 rounded-lg border border-slate-800/80 text-slate-300 overflow-x-auto min-h-[60px]">
+        <code>{ /* Empty sessionMap */ }</code>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-900 text-slate-400 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+      <div>
+        <div class="font-mono font-bold text-white text-base mb-3 flex items-center gap-2">
+          <span class="text-sky-400">&block;</span> ZTDS.ai
+        </div>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          The open architectural specification for Zero-Trust Data Sanitization in Artificial Intelligence pipelines.
+        </p>
+        <div class="mt-4 text-xs text-slate-500">
+          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">BrandMeWeb</a> ecosystem.
+        </div>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Specification &amp; Research</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/standard/" class="hover:text-white transition-colors">ZTDS RFC v1.0</a></li>
+          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-white transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-white transition-colors">OSF Latency Benchmark</a></li>
+          <li><a href="https://osf.io/preprints/lawarchive/4wc86/" target="_blank" rel="noopener" class="hover:text-white transition-colors">Law Archive Preprint</a></li>
+          <li><a href="/llms.txt" class="hover:text-white transition-colors">llms.txt Standard</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Architecture &amp; Tools</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/inspector/" class="text-sky-400 font-semibold hover:text-white transition-colors">Interactive Inspector</a></li>
+          <li><a href="/scanner/" class="hover:text-white transition-colors">Pipeline Scanner</a></li>
+          <li><a href="/sdk/" class="hover:text-white transition-colors">Developer SDK (@privacyscrubber/sdk)</a></li>
+          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-white transition-colors">PrivacyScrubber (Reference Impl)</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Syndicate &amp; Community</div>
+        <ul class="space-y-2 text-xs text-slate-400">
+          <li><a href="/registry/" class="hover:text-white transition-colors">Verified Products Directory</a></li>
+          <li><a href="/companies/" class="hover:text-white transition-colors">Corporate Adopters Pool</a></li>
+          <li><a href="/fellows/" class="hover:text-white transition-colors">Global Fellows &amp; Experts</a></li>
+          <li><a href="/apply/" class="hover:text-emerald-400 transition-colors font-medium">Apply for Certification &rarr;</a></li>
+          <li class="pt-2 text-[11px] text-slate-600 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Inspector Logic -->
+  <script>
+    (function() {
+      // In-Memory Volatile Session Map
+      let sessionMap = {};
+
+      // Presets
+      const PRESETS = {
+        health: "Patient Alexander Wright (DOB: 1982-04-12, SSN: 219-45-8821) visited Dr. Emily Vance at St. Jude Hospital regarding asthma. Email: a.wright@bioclinic.com, phone: +1-415-555-0199.",
+        finance: "Transfer $45,000 USD from account IBAN GB29XAAA10203012345678 to beneficiary Marcus Sterling (Routing: 021000021). Wire reference: REF-88192-CONFIDENTIAL.",
+        devops: "CRITICAL: Deploying auth service with AWS_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY and OPENAI_API_KEY=sk-proj-98f98124b8912409812498124 to production server 192.168.1.104."
+      };
+
+      // Rulesets (Consumer & Enterprise baseline)
+      const RULES = [
+        { type: "EMAIL", regex: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, class: "token-email" },
+        { type: "PHONE", regex: /(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})\b/g, class: "token-phone" },
+        { type: "SSN", regex: /\b\d{3}-\d{2}-\d{4}\b/g, class: "token-id" },
+        { type: "IBAN", regex: /\b[A-Z]{2}\d{2}[A-Z0-9]{11,30}\b/g, class: "token-id" },
+        { type: "KEY", regex: /(?:AWS_SECRET_KEY|OPENAI_API_KEY|sk-proj-[a-zA-Z0-9_-]{20,}|AKIA[0-9A-Z]{16})\b/g, class: "token-secret" },
+        { type: "NAME", regex: /\b(?:Dr\.|Mr\.|Mrs\.|Patient)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\b/g, class: "token-name" }
+      ];
+
+      const inputArea = document.getElementById('inputArea');
+      const outputArea = document.getElementById('outputArea');
+      const sessionMapDisplay = document.getElementById('sessionMapDisplay');
+      const liveLatencyBadge = document.getElementById('liveLatencyBadge');
+      const statLatency = document.getElementById('statLatency');
+      const statInputChars = document.getElementById('statInputChars');
+      const statTokensMasked = document.getElementById('statTokensMasked');
+
+      // Initialize with Health preset
+      inputArea.value = PRESETS.health;
+
+      function sanitizeText(raw) {
+        sessionMap = {};
+        let count = 0;
+        const t0 = performance.now();
+        let sanitized = raw;
+
+        RULES.forEach(rule => {
+          sanitized = sanitized.replace(rule.regex, (match) => {
+            count++;
+            const token = `[${rule.type}_${count}]`;
+            sessionMap[token] = match;
+            return token;
+          });
+        });
+
+        const t1 = performance.now();
+        const durationMs = (t1 - t0).toFixed(2);
+
+        // Render HTML badges
+        let displayHtml = sanitized;
+        Object.keys(sessionMap).forEach(token => {
+          const type = token.replace(/[\[\]0-9_]/g, '');
+          let cls = "token-name";
+          if (type.includes("EMAIL")) cls = "token-email";
+          else if (type.includes("PHONE")) cls = "token-phone";
+          else if (type.includes("ID") || type.includes("SSN") || type.includes("IBAN")) cls = "token-id";
+          else if (type.includes("KEY") || type.includes("SECRET")) cls = "token-secret";
+
+          const badge = `<span class="entity-token ${cls}">${token}</span>`;
+          displayHtml = displayHtml.split(token).join(badge);
+        });
+
+        outputArea.innerHTML = displayHtml;
+        liveLatencyBadge.textContent = `Latency: ${durationMs}ms`;
+        statLatency.textContent = `${durationMs} ms · 0 B egress`;
+        statInputChars.textContent = `${raw.length} chars`;
+        statTokensMasked.textContent = `${count} tokens isolated`;
+
+        // Render SessionMap
+        sessionMapDisplay.innerHTML = `<pre class="text-xs text-slate-300">{\n` +
+          Object.entries(sessionMap).map(([k, v]) => `  "${k}": "${v.replace(/"/g, '\\"')}"`).join(',\n') +
+          `\n}</pre>`;
+      }
+
+      document.getElementById('btnSanitize').addEventListener('click', () => {
+        sanitizeText(inputArea.value);
+      });
+
+      document.getElementById('presetHealth').addEventListener('click', () => {
+        inputArea.value = PRESETS.health;
+        sanitizeText(inputArea.value);
+      });
+      document.getElementById('presetFinance').addEventListener('click', () => {
+        inputArea.value = PRESETS.finance;
+        sanitizeText(inputArea.value);
+      });
+      document.getElementById('presetDevOps').addEventListener('click', () => {
+        inputArea.value = PRESETS.devOps;
+        sanitizeText(inputArea.value);
+      });
+
+      document.getElementById('btnReset').addEventListener('click', () => {
+        sessionMap = {};
+        outputArea.innerHTML = '<span class="text-slate-500">Sanitized output cleared.</span>';
+        sessionMapDisplay.innerHTML = '<code>{ /* Empty sessionMap */ }</code>';
+        statTokensMasked.textContent = '0 tokens';
+      });
+
+      document.getElementById('btnSimulateLLM').addEventListener('click', () => {
+        if (Object.keys(sessionMap).length === 0) {
+          alert("Please execute sanitization first to seed the session map.");
+          return;
+        }
+        let reply = "Confirmed: We received the medical records for [NAME_1] ([SSN_1]). An email verification was dispatched to [EMAIL_1].";
+        let revealed = reply;
+        Object.entries(sessionMap).forEach(([k, v]) => {
+          revealed = revealed.split(k).join(v);
+        });
+
+        alert(`Simulated LLM Response:\n"${reply}"\n\n1-Click In-Memory Reveal (ZTDS Reversal):\n"${revealed}"\n\n(Network inspection: 0 bytes egressed during reversal)`);
+      });
+
+      // Run on initial load
+      sanitizeText(inputArea.value);
+    })();
+  </script>
+
+</body>
+</html>

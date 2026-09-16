@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZTDS.ai — Zero-Trust Data Sanitization Architecture & Specification</title>
+  <meta name="description" content="Open architectural standard and developer engine for in-memory, zero-server data de-identification in Generative AI and RAG pipelines.">
+  <link rel="canonical" href="https://ztds.ai/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ztds.ai/">
+  <meta property="og:title" content="ZTDS.ai — Zero-Trust Data Sanitization Architecture">
+  <meta property="og:description" content="The in-memory security standard for Generative AI. 0 bytes egress, <2ms latency, DPA-exempt.">
+  <meta property="og:image" content="https://ztds.ai/badge/privacyscrubber-web.svg">
+
+  <!-- Fonts & CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://ztds.ai/#organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai",
+        "logo": "https://ztds.ai/favicon.svg",
+        "sameAs": [
+          "https://github.com/moxno/PrivacyScrubber",
+          "https://zenodo.org/records/22058770",
+          "https://osf.io/5byjf/"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://ztds.ai/#website",
+        "url": "https://ztds.ai",
+        "name": "ZTDS.ai",
+        "publisher": { "@id": "https://ztds.ai/#organization" }
+      },
+      {
+        "@type": "TechArticle",
+        "headline": "Zero-Trust Data Sanitization (ZTDS) Specification v1.0",
+        "description": "The client-side in-memory security standard for Generative AI, RAG pipelines, and AI Agents.",
+        "author": {
+          "@type": "Person",
+          "name": "Ilya Sibiryakov",
+          "url": "https://orcid.org/0009-0002-0642-5985"
+        },
+        "publisher": { "@id": "https://ztds.ai/#organization" }
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 touch-target">
+        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-sky-500/40 flex items-center justify-center shadow-lg shadow-sky-500/10">
+          <svg class="w-5 h-5 text-sky-400" viewBox="0 0 32 32" fill="none">
+            <path d="M16 3L6 7V15C6 21.6 10.3 27.7 16 29C21.7 27.7 26 21.6 26 15V7L16 3Z" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+            <path d="M11 12H21L12 21H21" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="font-bold text-lg tracking-tight text-white font-mono">ZTDS<span class="text-sky-400">.ai</span></span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
+        <a href="/standard/" class="nav-link">Standard</a>
+        <a href="/inspector/" class="nav-link">Inspector</a>
+        <a href="/scanner/" class="nav-link">Scanner</a>
+        <a href="/registry/" class="nav-link">Registry</a>
+        <a href="/companies/" class="nav-link">Companies</a>
+        <a href="/fellows/" class="nav-link">Fellows</a>
+        <a href="/sdk/" class="nav-link">SDK</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="/apply/" class="touch-target px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-colors">
+          Apply for Badge &rarr;
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="flex-grow">
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/60 text-xs font-mono text-sky-300 mb-8 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        OPEN SPECIFICATION v1.0 &middot; ZERO-SERVER ARCHITECTURE
+      </div>
+
+      <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-tight sm:leading-none">
+        The In-Memory Security Standard for <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400">Generative AI</span>
+      </h1>
+
+      <p class="mt-6 text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
+        Zero-Trust Data Sanitization (ZTDS) executes PII de-identification strictly inside volatile client RAM before prompts or tool calls reach LLMs. Sub-2ms execution. Exactly 0 bytes of sensitive data transmitted. Fully DPA-exempt.
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+        <a href="/inspector/" class="touch-target px-6 py-3 rounded-lg bg-gradient-to-r from-sky-500 to-emerald-500 text-slate-950 font-semibold text-sm hover:opacity-95 shadow-lg shadow-sky-500/20 transition-opacity">
+          Launch Pipeline Inspector
+        </a>
+        <a href="/standard/" class="touch-target px-6 py-3 rounded-lg bg-slate-900 border border-slate-700 text-slate-200 font-semibold text-sm hover:border-slate-500 transition-colors">
+          Read Specification RFC
+        </a>
+      </div>
+
+      <!-- Trust Metrics Bar -->
+      <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        <div class="ztds-card p-4 text-center">
+          <div class="text-2xl font-bold font-mono text-emerald-400">&lt;2 ms</div>
+          <div class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-semibold">Local RAM Latency</div>
+        </div>
+        <div class="ztds-card p-4 text-center">
+          <div class="text-2xl font-bold font-mono text-sky-400">0 Bytes</div>
+          <div class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-semibold">Network Egress</div>
+        </div>
+        <div class="ztds-card p-4 text-center">
+          <div class="text-2xl font-bold font-mono text-teal-300">DPA Exempt</div>
+          <div class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-semibold">GDPR Art. 28 / HIPAA</div>
+        </div>
+        <div class="ztds-card p-4 text-center">
+          <div class="text-2xl font-bold font-mono text-indigo-400">Argon2id</div>
+          <div class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-semibold">+ XChaCha20 Transport</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Live Preview Component -->
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+      <div class="ztds-card overflow-hidden border border-slate-800">
+        <div class="bg-slate-900/80 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
+            <span class="text-xs font-mono text-slate-400 ml-2">zt-inspector-preview &middot; RAM-only V8 Runtime</span>
+          </div>
+          <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Airplane Mode Verified</span>
+        </div>
+
+        <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-950/60">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-xs font-mono uppercase text-slate-400 font-semibold">Input Cleartext Payload</label>
+              <span class="text-xs text-slate-500">Auto-detected PII</span>
+            </div>
+            <div class="ztds-terminal p-3 h-48 text-xs font-mono leading-relaxed overflow-y-auto" id="sampleInput">
+              Patient John Doe (SSN: 987-65-4321, email: j.doe@hospital.org) diagnosed with severe hypertension. Doctor Sarah Jenkins MD prescribed Lisinopril 20mg daily. Routing inquiry to OpenAI GPT-4.
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-xs font-mono uppercase text-sky-400 font-semibold">ZTDS Sanitized Egress Prompt</label>
+              <span class="text-xs font-mono text-emerald-400" id="latencyPill">Execution: 0.8ms</span>
+            </div>
+            <div class="ztds-terminal p-3 h-48 text-xs font-mono leading-relaxed overflow-y-auto text-slate-300" id="sampleOutput">
+              Patient <span class="entity-token token-name">[NAME_1]</span> (SSN: <span class="entity-token token-id">[SSN_1]</span>, email: <span class="entity-token token-email">[EMAIL_1]</span>) diagnosed with severe hypertension. Doctor <span class="entity-token token-name">[NAME_2]</span> prescribed Lisinopril 20mg daily. Routing inquiry to OpenAI GPT-4.
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-slate-900/60 px-6 py-4 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-4 text-xs font-mono text-slate-400">
+            <span>RAM Session Map: <span class="text-emerald-400 font-semibold">4 Isolated Tokens</span></span>
+            <span>Outgoing Network Calls: <span class="text-emerald-400 font-semibold">0</span></span>
+          </div>
+          <a href="/inspector/" class="text-xs font-mono text-sky-400 hover:text-sky-300 font-medium">
+            Open Full DAG Visualizer &rarr;
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-900">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">The Architectural Difference</h2>
+        <p class="text-sm text-slate-400 mt-2">Why legacy Cloud DLP proxies fail modern enterprise AI security requirements.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Legacy Cloud DLP -->
+        <div class="ztds-card p-6 border-red-900/40 bg-red-950/5">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold text-red-400">Legacy Cloud DLP Proxy</h3>
+            <span class="text-xs font-mono px-2 py-0.5 rounded bg-red-500/10 text-red-400 border border-red-500/20">Blind Trust</span>
+          </div>
+          <ul class="space-y-3 text-sm text-slate-300">
+            <li class="flex items-start gap-2">
+              <span class="text-red-400 font-bold">&times;</span>
+              <span><strong>Data Egress:</strong> Cleartext transmitted over WAN to third-party vendor servers.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-400 font-bold">&times;</span>
+              <span><strong>Latency Overhead:</strong> 150ms &ndash; 300ms network roundtrips destroy interactive agent UX.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-400 font-bold">&times;</span>
+              <span><strong>Regulatory Burden:</strong> Vendor becomes a Data Processor; requires custom DPA, BAA, and security questionnaires.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-400 font-bold">&times;</span>
+              <span><strong>Vector Poisoning:</strong> PII leaks into RAG embeddings permanently violate GDPR Art. 17 (Right to be Forgotten).</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- ZTDS In-Memory -->
+        <div class="ztds-card p-6 border-emerald-900/40 bg-emerald-950/5">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold text-emerald-400">ZTDS In-Memory Architecture</h3>
+            <span class="text-xs font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Zero-Trust</span>
+          </div>
+          <ul class="space-y-3 text-sm text-slate-300">
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">&check;</span>
+              <span><strong>0-Byte Egress:</strong> Sanitization executes strictly in volatile client RAM before socket write.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">&check;</span>
+              <span><strong>Sub-Millisecond Speed:</strong> &lt;2ms in-memory regex evaluation (<a href="https://osf.io/5byjf/" class="text-sky-400 underline">OSF Benchmark</a>).</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">&check;</span>
+              <span><strong>DPA Exemption:</strong> Zero server processing means zero Data Processor status under GDPR Art. 28.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">&check;</span>
+              <span><strong>RAG Immunization:</strong> Chunks tokenized before embedding guarantee mathematical compliance with right-to-erasure.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Neuromarketing Persona Solutions Section -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-slate-900">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono text-sky-400 mb-3">
+          BUILT FOR MODERN ROLES &middot; ZERO COMPROMISE
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          How ZTDS Solves Your Exact Operational Reality
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-3 leading-relaxed">
+          Whether you are signing off on enterprise vendor risk, engineering high-throughput AI agents, or trying to close enterprise SaaS deals faster, ZTDS delivers immediate mathematical certainty.
+        </p>
+      </div>
+
+      <!-- 3 Persona Cards Matrix -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Persona 1: CISO & Legal -->
+        <div class="ztds-card p-6 sm:p-7 flex flex-col justify-between border-slate-800 hover:border-sky-500/50 relative overflow-hidden group">
+          <div class="absolute -right-8 -top-8 w-28 h-28 bg-sky-500/10 rounded-full blur-xl pointer-events-none group-hover:bg-sky-500/20 transition-colors"></div>
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-2.5 py-1 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20 text-xs font-mono font-bold">
+                CISO &amp; Legal Counsel
+              </span>
+              <span class="text-xs font-mono text-slate-500">0-Day Approval</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2 leading-snug">
+              Eliminate 6-Week Security Reviews &amp; Vendor DPAs
+            </h3>
+            <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+              Stop blocking employee AI productivity or signing risky vendor Data Processing Agreements. Zero server egress means zero vendor processing liability.
+            </p>
+            <ul class="space-y-2.5 text-xs text-slate-300 mb-6">
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">&check;</span>
+                <span><strong>GDPR Art. 28 DPA Exemption:</strong> Zero server storage or intermediary processing mathematically relieves vendor processor status.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">&check;</span>
+                <span><strong>Airplane Mode Audit:</strong> Disconnect Wi-Fi and verify full de-identification in 30 seconds with 0 outgoing packets.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">&check;</span>
+                <span><strong>RAG Immunization:</strong> Guarantees customer PII never poisons high-dimensional vector embeddings or LLM training pools.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+            <a href="/standard/" class="text-xs font-mono text-sky-400 hover:text-sky-300 font-semibold flex items-center gap-1">
+              Read Standard RFC &rarr;
+            </a>
+            <a href="/companies/" class="text-xs font-mono text-slate-500 hover:text-slate-300">
+              View Adopters
+            </a>
+          </div>
+        </div>
+
+        <!-- Persona 2: AI Engineers & DevSecOps -->
+        <div class="ztds-card p-6 sm:p-7 flex flex-col justify-between border-slate-800 hover:border-emerald-500/50 relative overflow-hidden group">
+          <div class="absolute -right-8 -top-8 w-28 h-28 bg-emerald-500/10 rounded-full blur-xl pointer-events-none group-hover:bg-emerald-500/20 transition-colors"></div>
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono font-bold">
+                AI Engineers &amp; DevSecOps
+              </span>
+              <span class="text-xs font-mono text-emerald-400">&lt;2ms Latency</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2 leading-snug">
+              Sub-2ms Sanitization Without Breaking Token Stream Context
+            </h3>
+            <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+              Cloud DLP proxies inject 250ms of network latency and break streaming tokens. ZTDS runs purely in-process inside V8/WASM memory with zero latency penalty.
+            </p>
+            <ul class="space-y-2.5 text-xs text-slate-300 mb-6">
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">&check;</span>
+                <span><strong>Sub-Millisecond Speed:</strong> &lt;2ms in-memory regex execution preserves high-frequency agent tool calling.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">&check;</span>
+                <span><strong>Lossless Reverse Unmasking:</strong> LLM response tokens <code class="text-sky-300 font-mono">[NAME_1]</code> are restored to originals in local RAM.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">&check;</span>
+                <span><strong>Drop-In SDK &amp; MCP Server:</strong> One-line integration for Node.js, Express, LangChain, Cursor, and Claude Desktop.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+            <a href="/sdk/" class="text-xs font-mono text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1">
+              Developer SDK Docs &rarr;
+            </a>
+            <a href="/inspector/" class="text-xs font-mono text-slate-500 hover:text-slate-300">
+              Test Inspector
+            </a>
+          </div>
+        </div>
+
+        <!-- Persona 3: AI SaaS Founders & Product Teams -->
+        <div class="ztds-card p-6 sm:p-7 flex flex-col justify-between border-slate-800 hover:border-indigo-500/50 relative overflow-hidden group">
+          <div class="absolute -right-8 -top-8 w-28 h-28 bg-indigo-500/10 rounded-full blur-xl pointer-events-none group-hover:bg-indigo-500/20 transition-colors"></div>
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="px-2.5 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-mono font-bold">
+                AI SaaS Founders &amp; Leaders
+              </span>
+              <span class="text-xs font-mono text-indigo-400">10x Deal Velocity</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2 leading-snug">
+              Unlock Enterprise Procurement Deals on Day 1
+            </h3>
+            <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+              Don't lose enterprise contracts to 4-month security questionnaires. Display the verified ZTDS Trust Badge and give CISOs mathematical proof of privacy.
+            </p>
+            <ul class="space-y-2.5 text-xs text-slate-300 mb-6">
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">&check;</span>
+                <span><strong>Dynamic Trust Badge:</strong> Embed the verifiable SVG badge on your pricing and security landing pages.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">&check;</span>
+                <span><strong>Inclusion in llms.txt Directory:</strong> Get indexed by Perplexity, Gemini, and AI search engines as a verified privacy-safe tool.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">&check;</span>
+                <span><strong>Zero Infrastructure Cost:</strong> No cloud proxy bills, no latency SLAs to manage, and zero data breach exposure.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+            <a href="/apply/" class="text-xs font-mono text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1">
+              Apply for Badge &rarr;
+            </a>
+            <a href="/registry/" class="text-xs font-mono text-slate-500 hover:text-slate-300">
+              View Registry
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The 4 Core Invariants -->
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-900">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">The 4 Invariants of ZTDS</h2>
+        <p class="text-sm text-slate-400 mt-2">Every compliant implementation must cryptographically and empirically adhere to these rules.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="ztds-card p-6">
+          <div class="font-mono text-xs text-sky-400 font-bold mb-2">INVARIANT 01</div>
+          <h3 class="text-base font-bold text-white mb-2">Volatile Memory Boundary</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            The session token map resides strictly in volatile host RAM. Under no circumstances may mapping pairs be persisted to localStorage, cookies, IndexedDB, or swap space.
+          </p>
+        </div>
+
+        <div class="ztds-card p-6">
+          <div class="font-mono text-xs text-emerald-400 font-bold mb-2">INVARIANT 02</div>
+          <h3 class="text-base font-bold text-white mb-2">Sub-2ms Latency Ceiling</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Total parsing, entity extraction, and token substitution must complete within 2 milliseconds per 15,000-character block, ensuring zero perceptual friction for developers and users.
+          </p>
+        </div>
+
+        <div class="ztds-card p-6">
+          <div class="font-mono text-xs text-indigo-400 font-bold mb-2">INVARIANT 03</div>
+          <h3 class="text-base font-bold text-white mb-2">Zero Network Transmission</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            The sanitization engine must pass the Airplane Mode Standard: complete de-identification and reverse re-identification functional with all network adapters disabled.
+          </p>
+        </div>
+
+        <div class="ztds-card p-6">
+          <div class="font-mono text-xs text-teal-300 font-bold mb-2">INVARIANT 04</div>
+          <h3 class="text-base font-bold text-white mb-2">Cryptographic Transport Handoff</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            When teams require collaborative unmasking, token maps must be encrypted using Argon2id key derivation and XChaCha20-Poly1305 symmetric authenticated encryption.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Syndicate Federation CTA -->
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="ztds-card p-8 md:p-12 text-center bg-gradient-to-b from-slate-900 to-slate-950 border-slate-700">
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">Join the ZTDS Syndicate</h2>
+        <p class="text-slate-300 mt-4 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+          Verify your AI agent or SaaS platform against the ZTDS specification. Earn the dynamic ZTDS Verified Trust Badge, accumulate organic backlinks, and get included in the global <code class="text-sky-300 font-mono">llms.txt</code> knowledge base.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <a href="/apply/" class="touch-target px-6 py-3 rounded-lg bg-emerald-500 text-slate-950 font-semibold text-sm hover:bg-emerald-400 transition-colors">
+            Apply for Certification &rarr;
+          </a>
+          <a href="/registry/" class="touch-target px-6 py-3 rounded-lg bg-slate-800 border border-slate-700 text-slate-200 font-semibold text-sm hover:bg-slate-700 transition-colors">
+            Explore Verified Directory
+          </a>
+          <a href="/sdk/" class="touch-target px-6 py-3 rounded-lg bg-slate-900 border border-slate-700 text-sky-400 font-semibold text-sm hover:border-sky-500 transition-colors">
+            Get Developer SDK ($199/mo)
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-900 text-slate-400 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+      <div>
+        <div class="font-mono font-bold text-white text-base mb-3 flex items-center gap-2">
+          <span class="text-sky-400">&block;</span> ZTDS.ai
+        </div>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          The open architectural specification for Zero-Trust Data Sanitization in Artificial Intelligence pipelines.
+        </p>
+        <div class="mt-4 text-xs text-slate-500">
+          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">BrandMeWeb</a> ecosystem.
+        </div>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Specification &amp; Research</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/standard/" class="hover:text-white transition-colors">ZTDS RFC v1.0</a></li>
+          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-white transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-white transition-colors">OSF Latency Benchmark</a></li>
+          <li><a href="https://osf.io/preprints/lawarchive/4wc86/" target="_blank" rel="noopener" class="hover:text-white transition-colors">Law Archive Preprint</a></li>
+          <li><a href="/llms.txt" class="hover:text-white transition-colors">llms.txt Standard</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Architecture &amp; Tools</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/inspector/" class="hover:text-white transition-colors">Interactive Inspector</a></li>
+          <li><a href="/scanner/" class="hover:text-white transition-colors">Pipeline Scanner</a></li>
+          <li><a href="/sdk/" class="hover:text-white transition-colors">Developer SDK (@privacyscrubber/sdk)</a></li>
+          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-white transition-colors">PrivacyScrubber (Reference Impl)</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Syndicate &amp; Community</div>
+        <ul class="space-y-2 text-xs text-slate-400">
+          <li><a href="/registry/" class="hover:text-white transition-colors">Verified Products Directory</a></li>
+          <li><a href="/companies/" class="hover:text-white transition-colors">Corporate Adopters Pool</a></li>
+          <li><a href="/fellows/" class="hover:text-white transition-colors">Global Fellows &amp; Experts</a></li>
+          <li><a href="/apply/" class="hover:text-emerald-400 transition-colors font-medium">Apply for Certification &rarr;</a></li>
+          <li class="pt-2 text-[11px] text-slate-600 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

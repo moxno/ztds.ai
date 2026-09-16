@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZTDS Specification v1.0 — Zero-Trust Data Sanitization RFC</title>
+  <meta name="description" content="The formal open specification, mathematical proofs, and compliance invariants for Zero-Trust Data Sanitization in AI workflows.">
+  <link rel="canonical" href="https://ztds.ai/standard/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Zero-Trust Data Sanitization (ZTDS) Specification v1.0",
+    "url": "https://ztds.ai/standard/",
+    "author": {
+      "@type": "Person",
+      "name": "Ilya Sibiryakov",
+      "url": "https://orcid.org/0009-0002-0642-5985"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "ZTDS AI Consortium",
+      "url": "https://ztds.ai"
+    },
+    "citation": [
+      "https://doi.org/10.5281/zenodo.22058770",
+      "https://doi.org/10.17605/OSF.IO/5BYJF"
+    ]
+  }
+  </script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 touch-target">
+        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-sky-500/40 flex items-center justify-center">
+          <svg class="w-5 h-5 text-sky-400" viewBox="0 0 32 32" fill="none">
+            <path d="M16 3L6 7V15C6 21.6 10.3 27.7 16 29C21.7 27.7 26 21.6 26 15V7L16 3Z" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+            <path d="M11 12H21L12 21H21" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="font-bold text-lg tracking-tight text-white font-mono">ZTDS<span class="text-sky-400">.ai</span></span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
+        <a href="/standard/" class="nav-link active">Standard</a>
+        <a href="/inspector/" class="nav-link">Inspector</a>
+        <a href="/scanner/" class="nav-link">Scanner</a>
+        <a href="/registry/" class="nav-link">Registry</a>
+        <a href="/companies/" class="nav-link">Companies</a>
+        <a href="/fellows/" class="nav-link">Fellows</a>
+        <a href="/sdk/" class="nav-link">SDK</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="/apply/" class="touch-target px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-colors">
+          Apply for Badge &rarr;
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="mb-8 border-b border-slate-800 pb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono text-sky-400 mb-4">
+        RFC DOCUMENT ID: ZTDS-SPEC-2026-V1 &middot; STATUS: STANDARD
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+        Zero-Trust Data Sanitization Specification (v1.0)
+      </h1>
+      <p class="mt-4 text-base sm:text-lg text-slate-400 leading-relaxed">
+        A Formal Standard for In-Memory Client-Side De-Identification, Mathematical Egress Elimination, and Cryptographic Session Handoff in Artificial Intelligence Architectures.
+      </p>
+
+      <div class="mt-6 flex flex-wrap items-center gap-4 text-xs font-mono text-slate-400">
+        <span>Author: <strong class="text-slate-200">Ilya Sibiryakov</strong></span>
+        <span>Published: <strong class="text-slate-200">2026-09-15</strong></span>
+        <span>DOI: <a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="text-sky-400 underline">10.5281/zenodo.22058770</a></span>
+      </div>
+    </div>
+
+    <!-- Article Prose -->
+    <article class="prose prose-invert max-w-none text-slate-300 text-sm leading-relaxed space-y-8">
+      <section>
+        <h2 class="text-xl font-bold text-white border-b border-slate-800 pb-2">1. Scope and Problem Statement</h2>
+        <p>
+          Legacy Data Loss Prevention (DLP) solutions rely on centralized cloud proxies that intercept traffic between enterprise clients and Large Language Model (LLM) APIs. Under European Union GDPR Article 28, this intermediary processing designates the DLP vendor as a formal Data Processor, requiring extensive Data Processing Agreements (DPA), vendor risk audits, and recurring egress latency penalties of 150ms to 300ms.
+        </p>
+        <p>
+          Furthermore, sensitive data ingested into Retrieval-Augmented Generation (RAG) vector embeddings violates GDPR Article 17 (Right to be Forgotten), as high-dimensional vector representations cannot be excised without full database re-indexing. ZTDS solves this by enforcing in-memory client-side data de-identification prior to network transmission.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-white border-b border-slate-800 pb-2">2. The 4 Non-Negotiable Invariants</h2>
+        <div class="space-y-4 mt-4">
+          <div class="ztds-card p-4">
+            <h3 class="text-base font-bold text-sky-400">Invariant 1: Volatile Memory Scoping (RAM-Only)</h3>
+            <p class="text-xs text-slate-300 mt-1">
+              All mapping pairs between sensitive entities and non-informative tokens (e.g. <code>{"[NAME_1]": "John Doe"}</code>) MUST be held strictly in volatile RAM. Persisting session maps to cookies, localStorage, IndexedDB, or swap space constitutes a compliance violation. In web browsers, maps must be isolated per tab ID.
+            </p>
+          </div>
+
+          <div class="ztds-card p-4">
+            <h3 class="text-base font-bold text-emerald-400">Invariant 2: Sub-2ms Latency Budget</h3>
+            <p class="text-xs text-slate-300 mt-1">
+              Deterministic parsing, regex heuristic matching, and token replacement MUST execute within a maximum budget of 2 milliseconds per 15,000-character payload on standard consumer hardware.
+            </p>
+          </div>
+
+          <div class="ztds-card p-4">
+            <h3 class="text-base font-bold text-indigo-400">Invariant 3: Zero Network Egress (Airplane Mode Test)</h3>
+            <p class="text-xs text-slate-300 mt-1">
+              The sanitization engine MUST be capable of complete autonomous operation with all physical and wireless network adapters severed. Network packet inspection during sanitization must record exactly 0 bytes transmitted.
+            </p>
+          </div>
+
+          <div class="ztds-card p-4">
+            <h3 class="text-base font-bold text-teal-300">Invariant 4: Cryptographic Transport Security</h3>
+            <p class="text-xs text-slate-300 mt-1">
+              Multi-user collaborative handoff of token maps must enforce client-side authenticated encryption using <strong>Argon2id</strong> (memory: 19 MiB, iterations: 2) for key derivation and <strong>XChaCha20-Poly1305</strong> (256-bit key, 192-bit random nonce). Cleartext keys must never touch central relays.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-white border-b border-slate-800 pb-2">3. Tokenization Taxonomy & Syntax</h2>
+        <p>
+          ZTDS standardizes structured bracketed tokens that preserve grammatical context while removing informational entropy:
+        </p>
+        <ul class="list-disc pl-5 space-y-1 text-xs">
+          <li><code>[NAME_N]</code> &mdash; Personal names, physician identifiers, executive titles</li>
+          <li><code>[EMAIL_N]</code> &mdash; Corporate and personal email addresses</li>
+          <li><code>[PHONE_N]</code> &mdash; Universal international and domestic telephone numbers</li>
+          <li><code>[ID_N]</code> &mdash; National IDs, SSN, Tax numbers, passport numbers</li>
+          <li><code>[SECRET_N]</code> &mdash; API keys, AWS credentials, JWT tokens, private certificates</li>
+          <li><code>[FINANCIAL_N]</code> &mdash; Credit card PANs, IBANs, bank routing numbers</li>
+        </ul>
+        <p class="mt-3">
+          To prevent LLM tokenization mutations (e.g. <code>[NAME_1]</code> translated or broken by BPE encoders), de-tokenizers must implement fuzzy token recovery regexes: <code>/[\[\(\{<]NAME[ _-]?(\d+)[\]\}\)>]/gi</code>.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-white border-b border-slate-800 pb-2">4. Regulatory & GRC Cross-Mapping</h2>
+        <div class="overflow-x-auto mt-4">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-slate-800 text-slate-400">
+                <th class="py-2 font-mono">Framework</th>
+                <th class="py-2 font-mono">Article / Section</th>
+                <th class="py-2 font-mono">ZTDS Implementation</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60">
+              <tr>
+                <td class="py-2 font-semibold text-white">EU GDPR</td>
+                <td class="py-2 text-slate-400">Article 28 (DPA)</td>
+                <td class="py-2 text-emerald-400">Exempt (0 server processing)</td>
+              </tr>
+              <tr>
+                <td class="py-2 font-semibold text-white">EU GDPR</td>
+                <td class="py-2 text-slate-400">Article 17 (Right to Erasure)</td>
+                <td class="py-2 text-emerald-400">RAG vectors contain 0 cleartext PII</td>
+              </tr>
+              <tr>
+                <td class="py-2 font-semibold text-white">HIPAA</td>
+                <td class="py-2 text-slate-400">45 CFR § 164.514(b)</td>
+                <td class="py-2 text-emerald-400">Safe Harbor 18 PHI de-identification</td>
+              </tr>
+              <tr>
+                <td class="py-2 font-semibold text-white">SOC 2 Type II</td>
+                <td class="py-2 text-slate-400">CC6.7 (Data Transmission)</td>
+                <td class="py-2 text-emerald-400">Eliminates unencrypted PII egress</td>
+              </tr>
+              <tr>
+                <td class="py-2 font-semibold text-white">EU AI Act</td>
+                <td class="py-2 text-slate-400">Article 50 (Transparency)</td>
+                <td class="py-2 text-emerald-400">Cryptographic audit receipts generated</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-white border-b border-slate-800 pb-2">5. Academic Citations</h2>
+        <div class="space-y-3 mt-4 text-xs font-mono">
+          <div class="p-3 bg-slate-900/80 rounded border border-slate-800">
+            Sibiryakov, I. (2026). Zero-Trust Data Sanitization (ZTDS): Mathematical Proof and Operational Framework for Client-Side AI Prompt Privacy. <em>Zenodo</em>. DOI: <a href="https://doi.org/10.5281/zenodo.22058770" target="_blank" rel="noopener" class="text-sky-400 underline">10.5281/zenodo.22058770</a>
+          </div>
+          <div class="p-3 bg-slate-900/80 rounded border border-slate-800">
+            Sibiryakov, I. (2026). Empirical Latency Benchmark: In-Memory Client RAM Masking vs. Cloud DLP Proxies. <em>OSF Preprints</em>. DOI: <a href="https://doi.org/10.17605/OSF.IO/5BYJF" target="_blank" rel="noopener" class="text-sky-400 underline">10.17605/OSF.IO/5BYJF</a>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-900 text-slate-400 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+      <div>
+        <div class="font-mono font-bold text-white text-base mb-3 flex items-center gap-2">
+          <span class="text-sky-400">&block;</span> ZTDS.ai
+        </div>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          The open architectural specification for Zero-Trust Data Sanitization in Artificial Intelligence pipelines.
+        </p>
+        <div class="mt-4 text-xs text-slate-500">
+          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">BrandMeWeb</a> ecosystem.
+        </div>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Specification &amp; Research</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/standard/" class="text-sky-400 font-semibold hover:text-white transition-colors">ZTDS RFC v1.0</a></li>
+          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-white transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-white transition-colors">OSF Latency Benchmark</a></li>
+          <li><a href="https://osf.io/preprints/lawarchive/4wc86/" target="_blank" rel="noopener" class="hover:text-white transition-colors">Law Archive Preprint</a></li>
+          <li><a href="/llms.txt" class="hover:text-white transition-colors">llms.txt Standard</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Architecture &amp; Tools</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/inspector/" class="hover:text-white transition-colors">Interactive Inspector</a></li>
+          <li><a href="/scanner/" class="hover:text-white transition-colors">Pipeline Scanner</a></li>
+          <li><a href="/sdk/" class="hover:text-white transition-colors">Developer SDK (@privacyscrubber/sdk)</a></li>
+          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-white transition-colors">PrivacyScrubber (Reference Impl)</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Syndicate &amp; Community</div>
+        <ul class="space-y-2 text-xs text-slate-400">
+          <li><a href="/registry/" class="hover:text-white transition-colors">Verified Products Directory</a></li>
+          <li><a href="/companies/" class="hover:text-white transition-colors">Corporate Adopters Pool</a></li>
+          <li><a href="/fellows/" class="hover:text-white transition-colors">Global Fellows &amp; Experts</a></li>
+          <li><a href="/apply/" class="hover:text-emerald-400 transition-colors font-medium">Apply for Certification &rarr;</a></li>
+          <li class="pt-2 text-[11px] text-slate-600 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

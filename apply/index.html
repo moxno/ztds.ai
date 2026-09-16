@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZTDS Application &amp; Verification Portal — Badges, Partners, Fellows</title>
+  <meta name="description" content="Apply for ZTDS Level 1 product certification, register as a corporate adopter, or nominate a contributor to the Zero-Trust AI standard.">
+  <link rel="canonical" href="https://ztds.ai/apply/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 touch-target">
+        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-sky-500/40 flex items-center justify-center">
+          <svg class="w-5 h-5 text-sky-400" viewBox="0 0 32 32" fill="none">
+            <path d="M16 3L6 7V15C6 21.6 10.3 27.7 16 29C21.7 27.7 26 21.6 26 15V7L16 3Z" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+            <path d="M11 12H21L12 21H21" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="font-bold text-lg tracking-tight text-white font-mono">ZTDS<span class="text-sky-400">.ai</span></span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
+        <a href="/standard/" class="nav-link">Standard</a>
+        <a href="/inspector/" class="nav-link">Inspector</a>
+        <a href="/scanner/" class="nav-link">Scanner</a>
+        <a href="/registry/" class="nav-link">Registry</a>
+        <a href="/companies/" class="nav-link">Companies</a>
+        <a href="/fellows/" class="nav-link">Fellows</a>
+        <a href="/sdk/" class="nav-link">SDK</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="/apply/" class="touch-target px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-colors">
+          Apply for Badge &rarr;
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Intake Portal Form -->
+  <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+    <div class="mb-10 text-center max-w-2xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono text-sky-400 mb-4">
+        OFFICIAL VERIFICATION &amp; NOMINATION PORTAL
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Apply for ZTDS Accreditation</h1>
+      <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+        Select your track below to verify an AI product, register an enterprise as an adopter, or nominate a contributor.
+      </p>
+    </div>
+
+    <!-- 3-Track Tab Switcher -->
+    <div class="grid grid-cols-3 gap-2 bg-slate-900/80 p-1.5 rounded-xl border border-slate-800 mb-8 max-w-xl mx-auto">
+      <button id="tabProduct" class="py-2.5 px-3 rounded-lg text-xs font-mono font-bold transition-all text-slate-200 bg-slate-800 shadow">
+        1. Product Badge
+      </button>
+      <button id="tabCompany" class="py-2.5 px-3 rounded-lg text-xs font-mono font-bold transition-all text-slate-400 hover:text-white">
+        2. Company Pool
+      </button>
+      <button id="tabFellow" class="py-2.5 px-3 rounded-lg text-xs font-mono font-bold transition-all text-slate-400 hover:text-white">
+        3. Fellow Nominee
+      </button>
+    </div>
+
+    <!-- The Form Container -->
+    <div class="ztds-card p-6 sm:p-10">
+      <form id="applyForm" action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
+        <!-- Web3Forms Key -->
+        <input type="hidden" name="access_key" value="99aa0991-62fa-48b0-8f9f-5c94293f0b24">
+        <input type="hidden" name="subject" id="formSubject" value="[ZTDS.ai] New Product Verification Application">
+        <input type="hidden" name="from_name" value="ZTDS Accreditation Portal">
+        <input type="hidden" name="track_type" id="trackTypeInput" value="product">
+
+        <!-- Track 1: Product Fields -->
+        <div id="sectionProduct" class="space-y-5">
+          <div class="border-b border-slate-800 pb-4 mb-4">
+            <h2 class="text-base font-bold text-sky-400">Track A: AI Tool / Agent Verification &amp; Badge</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Submit your software to earn the official ZTDS Verified Badge and get indexed in llms.txt.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Product Name *</label>
+              <input type="text" name="product_name" id="productName" required class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-sky-500" placeholder="e.g. DocuSecure AI">
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Product URL *</label>
+              <input type="url" name="product_url" required class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-sky-500" placeholder="https://example.com">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">GitHub / Code Repository URL</label>
+              <input type="url" name="repo_url" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-sky-500" placeholder="https://github.com/org/repo">
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Architecture Type</label>
+              <select name="architecture" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-sky-500">
+                <option value="wasm_client">Client-Side WASM / In-Memory</option>
+                <option value="mcp_server">Local Stdio MCP Server</option>
+                <option value="airgap_node">On-Premise Air-Gapped Engine</option>
+                <option value="extension">Browser Extension MV3</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Dynamic Badge Live Preview -->
+          <div class="p-4 rounded-lg bg-slate-950 border border-slate-800 mt-4">
+            <div class="text-[11px] font-mono text-slate-400 uppercase font-semibold mb-2">Instant Dynamic Badge Preview:</div>
+            <div class="flex items-center gap-4">
+              <img src="/badge/default.svg" id="badgePreviewImg" alt="Badge Preview" class="h-6">
+              <span class="text-xs font-mono text-emerald-400" id="badgePreviewText">Ready to issue for your product</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 2: Company Fields -->
+        <div id="sectionCompany" class="space-y-5 hidden">
+          <div class="border-b border-slate-800 pb-4 mb-4">
+            <h2 class="text-base font-bold text-emerald-400">Track B: Corporate Adopter Registration</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Showcase your organization in the verified enterprise pool and eliminate customer DPA friction.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Organization Name *</label>
+              <input type="text" name="company_name" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-sky-500" placeholder="e.g. Apex Legal LLP">
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Website URL *</label>
+              <input type="url" name="company_url" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-sky-500" placeholder="https://apexlegal.example">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Industry Vertical</label>
+              <select name="company_industry" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-sky-500">
+                <option value="legal">Legal &amp; Law Firms</option>
+                <option value="healthcare">Healthcare &amp; Clinical Trials</option>
+                <option value="fintech">FinTech &amp; Wealth Management</option>
+                <option value="devops">DevSecOps &amp; Cloud Infrastructure</option>
+                <option value="marketing">Digital Marketing &amp; SEO</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Employees Using ZTDS</label>
+              <input type="text" name="team_size" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-sky-500" placeholder="e.g. 50+ seats">
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 3: Fellow Fields -->
+        <div id="sectionFellow" class="space-y-5 hidden">
+          <div class="border-b border-slate-800 pb-4 mb-4">
+            <h2 class="text-base font-bold text-indigo-400">Track C: Global Contributor / Fellow Nomination</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Recognize researchers, CISOs, DPOs, and developers advancing client-side AI privacy.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Full Name &amp; Title *</label>
+              <input type="text" name="fellow_name" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-sky-500" placeholder="e.g. Dr. Sarah Chen, CISO">
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Organization / Affiliation</label>
+              <input type="text" name="fellow_affiliation" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-sky-500" placeholder="e.g. CyberSec Institute">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">LinkedIn / ORCID / GitHub URL *</label>
+              <input type="url" name="fellow_profile_url" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-sky-500" placeholder="https://linkedin.com/in/...">
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Nomination Role</label>
+              <select name="fellow_role" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-sky-500">
+                <option value="research_fellow">Research Fellow (Academic / Math)</option>
+                <option value="invited_expert">Invited Expert (CISO / DPO)</option>
+                <option value="core_contributor">Core Contributor (Open Source / Code)</option>
+                <option value="ambassador">Ambassador (Advocacy / Speaking)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Universal Contact Fields -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-slate-800">
+          <div>
+            <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Contact Email *</label>
+            <input type="email" name="email" required class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-sky-500" placeholder="you@example.com">
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Additional Context / Notes</label>
+            <input type="text" name="notes" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-sky-500" placeholder="Brief note or pull request link">
+          </div>
+        </div>
+
+        <div class="pt-4 flex items-center justify-between">
+          <button type="submit" id="btnSubmit" class="touch-target px-6 py-3 rounded-lg bg-gradient-to-r from-sky-500 to-emerald-500 hover:opacity-95 text-slate-950 font-bold text-xs font-mono transition-opacity">
+            Submit Application &rarr;
+          </button>
+          <span class="text-[11px] font-mono text-slate-500">Zero-Server &middot; Dispatched directly to Accreditation Review</span>
+        </div>
+      </form>
+    </div>
+
+    <!-- Alternative GitOps Box -->
+    <div class="mt-8 text-center text-xs font-mono text-slate-400">
+      Prefer Git? Open a Pull Request directly on <a href="https://github.com/moxno/PrivacyScrubber" target="_blank" rel="noopener" class="text-sky-400 underline">GitHub (ztds-ai/data/registry.json)</a>.
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-900 text-slate-400 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+      <div>
+        <div class="font-mono font-bold text-white text-base mb-3 flex items-center gap-2">
+          <span class="text-sky-400">&block;</span> ZTDS.ai
+        </div>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          The open architectural specification for Zero-Trust Data Sanitization in Artificial Intelligence pipelines.
+        </p>
+        <div class="mt-4 text-xs text-slate-500">
+          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">BrandMeWeb</a> ecosystem.
+        </div>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Specification &amp; Research</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/standard/" class="hover:text-white transition-colors">ZTDS RFC v1.0</a></li>
+          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-white transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-white transition-colors">OSF Latency Benchmark</a></li>
+          <li><a href="https://osf.io/preprints/lawarchive/4wc86/" target="_blank" rel="noopener" class="hover:text-white transition-colors">Law Archive Preprint</a></li>
+          <li><a href="/llms.txt" class="hover:text-white transition-colors">llms.txt Standard</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Architecture &amp; Tools</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/inspector/" class="hover:text-white transition-colors">Interactive Inspector</a></li>
+          <li><a href="/scanner/" class="hover:text-white transition-colors">Pipeline Scanner</a></li>
+          <li><a href="/sdk/" class="hover:text-white transition-colors">Developer SDK (@privacyscrubber/sdk)</a></li>
+          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-white transition-colors">PrivacyScrubber (Reference Impl)</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Syndicate &amp; Community</div>
+        <ul class="space-y-2 text-xs text-slate-400">
+          <li><a href="/registry/" class="hover:text-white transition-colors">Verified Products Directory</a></li>
+          <li><a href="/companies/" class="hover:text-white transition-colors">Corporate Adopters Pool</a></li>
+          <li><a href="/fellows/" class="hover:text-white transition-colors">Global Fellows &amp; Experts</a></li>
+          <li><a href="/apply/" class="text-emerald-400 font-semibold transition-colors">Apply for Certification &rarr;</a></li>
+          <li class="pt-2 text-[11px] text-slate-600 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Tab Logic & Live Badge Preview Script -->
+  <script>
+    (function() {
+      const tabProduct = document.getElementById('tabProduct');
+      const tabCompany = document.getElementById('tabCompany');
+      const tabFellow = document.getElementById('tabFellow');
+
+      const secProduct = document.getElementById('sectionProduct');
+      const secCompany = document.getElementById('sectionCompany');
+      const secFellow = document.getElementById('sectionFellow');
+
+      const trackInput = document.getElementById('trackTypeInput');
+      const formSubject = document.getElementById('formSubject');
+      const productName = document.getElementById('productName');
+      const badgePreviewText = document.getElementById('badgePreviewText');
+
+      function switchTrack(track) {
+        // Reset tabs
+        [tabProduct, tabCompany, tabFellow].forEach(t => {
+          t.className = "py-2.5 px-3 rounded-lg text-xs font-mono font-bold transition-all text-slate-400 hover:text-white";
+        });
+        [secProduct, secCompany, secFellow].forEach(s => s.classList.add('hidden'));
+
+        if (track === 'company') {
+          tabCompany.className = "py-2.5 px-3 rounded-lg text-xs font-mono font-bold transition-all text-slate-200 bg-slate-800 shadow";
+          secCompany.classList.remove('hidden');
+          trackInput.value = 'company';
+          formSubject.value = '[ZTDS.ai] Corporate Adopter Registration';
+        } else if (track === 'fellow') {
+          tabFellow.className = "py-2.5 px-3 rounded-lg text-xs font-mono font-bold transition-all text-slate-200 bg-slate-800 shadow";
+          secFellow.classList.remove('hidden');
+          trackInput.value = 'fellow';
+          formSubject.value = '[ZTDS.ai] Fellow / Contributor Nomination';
+        } else {
+          tabProduct.className = "py-2.5 px-3 rounded-lg text-xs font-mono font-bold transition-all text-slate-200 bg-slate-800 shadow";
+          secProduct.classList.remove('hidden');
+          trackInput.value = 'product';
+          formSubject.value = '[ZTDS.ai] Product Verification Application';
+        }
+      }
+
+      tabProduct.addEventListener('click', () => switchTrack('product'));
+      tabCompany.addEventListener('click', () => switchTrack('company'));
+      tabFellow.addEventListener('click', () => switchTrack('fellow'));
+
+      // URL param support
+      const params = new URLSearchParams(window.location.search);
+      const urlTrack = params.get('track');
+      if (urlTrack) switchTrack(urlTrack);
+
+      // Live Badge Preview
+      if (productName) {
+        productName.addEventListener('input', () => {
+          const val = productName.value.trim();
+          if (val) {
+            badgePreviewText.textContent = `Live preview for "${val}"`;
+          } else {
+            badgePreviewText.textContent = "Ready to issue for your product";
+          }
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>

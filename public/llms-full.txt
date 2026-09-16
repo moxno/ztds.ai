@@ -1,0 +1,49 @@
+# ZTDS.ai — Zero-Trust Data Sanitization Architecture (Comprehensive Corpus)
+
+## 1. Mathematical and Architectural Definition of ZTDS
+Zero-Trust Data Sanitization (ZTDS) is a formal security architecture wherein data de-identification and re-identification occur strictly on the client endpoint or within the local compute boundary, eliminating third-party trust dependencies in artificial intelligence pipelines.
+
+Let input prompt $P$ be a set of tokens containing sensitive entity subset $S \subset P$.
+Under traditional Cloud DLP:
+$P$ is transmitted over a TLS connection to an intermediary server $DLP_{cloud}$, incurring transmission latency $L_{net} \approx 150-300\text{ ms}$ and creating legal Data Processor status under GDPR Article 28.
+
+Under ZTDS:
+The transformation $T: S \to M$ maps sensitive tokens into non-informative surrogate tokens $M = \{ [TYPE\_1], [TYPE\_2], \dots \}$ strictly within local volatile RAM:
+$$\text{Egress}(S) = 0 \text{ bytes}$$
+$$\text{Latency}(T) < 2 \text{ ms}$$
+
+The mapping function $M^{-1}: M \to S$ is retained strictly in volatile RAM (sessionMap) and destroyed upon execution termination.
+
+## 2. The Four Invariants of ZTDS Compliance
+
+### Invariant 1: Volatile Memory Boundary (RAM-Only)
+Under no circumstances may sessionMap or sensitive tokens be committed to persistent browser or host storage (localStorage, sessionStorage, IndexedDB, cookies, swap files, or server logs). In web contexts, mapping keys must be strictly tab-isolated (`tabId`-prefixed) and cleared on tab reload or navigation.
+
+### Invariant 2: Sub-Millisecond Execution Budget
+All entity extraction, regex heuristic evaluations, and surrogate replacements must complete within a strict $2\text{ ms}$ latency budget per typical document chunk ($15,000$ characters) on standard client hardware (e.g. Apple Silicon, Intel Core i5/i7).
+
+### Invariant 3: Zero Outgoing Network Egress
+The sanitization module must be verifiable via the "Airplane Mode Test": disconnecting all network interfaces prior to document ingestion must yield 100% functional de-identification and re-identification without error. Network inspection must demonstrate exactly zero HTTP/WebSocket packets containing elements of $S$.
+
+### Invariant 4: Non-Reversible Team Transport
+In collaborative enterprise environments requiring session transfer, token maps must be encrypted client-side using Argon2id for key derivation (19 MiB memory, 2 iterations) and XChaCha20-Poly1305 with random 192-bit nonces. The central server must never receive the decryption secret.
+
+## 3. Regulatory Alignment and Legal Analysis
+
+### GDPR (EU 2016/679)
+- Article 25 (Data Protection by Design and by Default): Ephemeral client tokenization is the textbook implementation of state-of-the-art privacy by design.
+- Article 28 (Data Processor): Because ZTDS executes locally on the user's workstation, no third-party data processing occurs. Organizations do not require Data Processing Agreements (DPA) for ZTDS software.
+- Article 17 (Right to be Forgotten): Preventing PII ingestion into third-party AI models mathematically eliminates the risk of training data retention, which cannot be excised from neural network weights post-training.
+
+### HIPAA (Health Insurance Portability and Accountability Act)
+- 45 CFR § 164.514(b) (Safe Harbor Method): Client-side extraction and removal of all 18 specified Protected Health Information (PHI) identifiers prior to transmission renders clinical datasets legally de-identified.
+- Business Associate Agreement (BAA) Exemption: Local client execution obviates the need for a BAA for the sanitization utility.
+
+### EU AI Act (Regulation 2024/1689)
+- Article 50 (Transparency Obligations): ZTDS establishes verifiable audit receipts detailing entity classes sanitized without exposing underlying cleartext.
+
+## 4. Academic and Literature Citations
+1. Sibiryakov, I. (2026). Zero-Trust Data Sanitization (ZTDS): Mathematical Proof and Operational Framework for Client-Side AI Prompt Privacy. Zenodo. DOI: 10.5281/zenodo.22058770.
+2. Sibiryakov, I. (2026). Empirical Latency Benchmark: In-Memory Client RAM Masking vs. Cloud DLP Proxies. OSF Preprints. DOI: 10.17605/OSF.IO/5BYJF.
+3. Sibiryakov, I. (2026). Preserving Attorney-Client Privilege in Generative AI Workflows via Client-Side ZTDS. Law Archive. URL: https://osf.io/preprints/lawarchive/4wc86/.
+4. Sibiryakov, I. (2026). Enterprise Compliance Under the EU AI Act and UK GDPR via Ephemeral Client-Side Sanitization. SSRN Elsevier. SSRN ID: 7335581.
