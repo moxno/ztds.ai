@@ -113,8 +113,8 @@ console.log("Safe clinical insight:", finalResponse);</code></pre>
 {
   "mcpServers": {
     "privacyscrubber-ztds": {
-      "command": "node",
-      "args": ["/absolute/path/to/packages/mcp-server/index.js"]
+      "command": "npx",
+      "args": ["-y", "@privacyscrubber/mcp-server"]
     }
   }
 }</code></pre>
@@ -152,64 +152,53 @@ console.log("Safe clinical insight:", finalResponse);</code></pre>
           <button onclick="navigator.clipboard.writeText('npx ztds-audit --dir ./src --json')" class="text-xs text-slate-400 hover:text-white font-mono uppercase font-bold">Copy</button>
         </div>
       </div>
+    </section>
 
-    <!-- Pricing / Checkout Section -->
-    <section id="pricing" class="ztds-card p-8 md:p-12 border-slate-800 bg-slate-900/50">
-      <div class="text-center max-w-2xl mx-auto mb-10">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Developer SDK Licensing</h2>
-        <p class="text-sm text-slate-400 mt-2">Zero-server architecture. Zero seat limits. Unlimited internal backend nodes.</p>
-      </div>
+    <!-- Reference Implementation & Commercial Solutions -->
+    <section class="ztds-card p-8 md:p-12 border-slate-800 bg-slate-900/50">
+      <div class="max-w-3xl mx-auto text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono text-emerald-400 mb-4">
+          CANONICAL PIONEER IMPLEMENTATION
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Commercial Licensing &amp; Enterprise Support</h2>
+        <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+          ZTDS.ai is an independent, vendor-neutral specification maintainer and does not sell software licenses directly. Commercial enterprise SDK access, high-volume production support, teams management, and on-premise air-gapped deployments are provided through the specification's canonical founding implementation: <strong>PrivacyScrubber</strong>.
+        </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-        <!-- Monthly Plan -->
-        <div class="ztds-card p-6 border-slate-700 flex flex-col justify-between">
-          <div>
-            <h3 class="text-lg font-bold text-white">Developer Monthly</h3>
-            <div class="mt-4 flex items-baseline">
-              <span class="text-3xl sm:text-4xl font-extrabold font-mono text-white">$199</span>
-              <span class="text-xs text-slate-400 font-mono ml-2">/ month</span>
-            </div>
-            <p class="text-xs text-slate-400 mt-3">Agile teams integrating ZTDS into production microservices.</p>
-            <ul class="mt-6 space-y-2 text-xs text-slate-300 font-mono">
-              <li class="flex items-center gap-2">&check; All 25 Industry Profiles</li>
-              <li class="flex items-center gap-2">&check; Headless Node.js &amp; WASM Engine</li>
-              <li class="flex items-center gap-2">&check; Unlimited Backend Microservices</li>
-              <li class="flex items-center gap-2">&check; &lt;1ms In-Memory Latency</li>
-              <li class="flex items-center gap-2">&check; Priority GitHub Issues &amp; Patch SLA</li>
-            </ul>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+          <div class="bg-slate-950 p-5 rounded-lg border border-slate-800">
+            <h3 class="text-sm font-bold text-white font-mono flex items-center justify-between">
+              <span>PrivacyScrubber TEAMS</span>
+              <span class="text-xs text-sky-400 font-normal">$99 / mo</span>
+            </h3>
+            <p class="text-xs text-slate-400 mt-2">
+              For teams up to 15 members. Browser extensions, shared encrypted dictionaries (Argon2id), and 1-click team-wide prompt sanitization for ChatGPT and Claude.
+            </p>
           </div>
-          <div class="mt-8">
-            <a href="https://privacyscrubber.com/pricing/" class="touch-target w-full rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs font-mono transition-colors">
-              Deploy Monthly ($199/mo) &rarr;
-            </a>
+
+          <div class="bg-slate-950 p-5 rounded-lg border border-slate-800">
+            <h3 class="text-sm font-bold text-white font-mono flex items-center justify-between">
+              <span>Developer Engine SDK</span>
+              <span class="text-xs text-emerald-400 font-normal">Commercial License</span>
+            </h3>
+            <p class="text-xs text-slate-400 mt-2">
+              All 25 industry PII/PHI profiles (Healthcare HIPAA, Finance IBAN/PCI-DSS, Legal), headless WASM engine, and zero-DPA enterprise exemption memo.
+            </p>
           </div>
         </div>
 
-        <!-- Annual Plan (Early Adopter) -->
-        <div class="ztds-card p-6 border-emerald-500/40 bg-emerald-950/10 flex flex-col justify-between relative">
-          <div class="absolute -top-3 right-4 bg-emerald-500 text-slate-950 text-[10px] font-mono font-bold px-2 py-0.5 rounded">
-            SAVE ~17% ($398 OFF)
-          </div>
-          <div>
-            <h3 class="text-lg font-bold text-white">Developer Annual</h3>
-            <div class="mt-4 flex items-baseline">
-              <span class="text-3xl sm:text-4xl font-extrabold font-mono text-emerald-400">$1,990</span>
-              <span class="text-xs text-slate-400 font-mono ml-2">/ year</span>
-            </div>
-            <p class="text-xs text-slate-400 mt-3">Enterprise startups deploying air-gapped RAG and agent architectures.</p>
-            <ul class="mt-6 space-y-2 text-xs text-slate-300 font-mono">
-              <li class="flex items-center gap-2">&check; Everything in Monthly Tier</li>
-              <li class="flex items-center gap-2">&check; Official ZTDS Verified Registry Badge</li>
-              <li class="flex items-center gap-2">&check; Entity Inclusion in <code class="text-emerald-300">ztds.ai/llms.txt</code></li>
-              <li class="flex items-center gap-2">&check; CISO Vendor Procurement Memo Pack</li>
-              <li class="flex items-center gap-2">&check; On-Premise Air-Gapped Deployment License</li>
-            </ul>
-          </div>
-          <div class="mt-8">
-            <a href="https://privacyscrubber.com/pricing/" class="touch-target w-full rounded-lg bg-gradient-to-r from-emerald-500 to-teal-400 hover:opacity-95 text-slate-950 font-bold text-xs font-mono transition-opacity">
-              Deploy Annual ($1,990/yr) &rarr;
-            </a>
-          </div>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="touch-target px-6 py-3 rounded-lg bg-gradient-to-r from-sky-500 to-emerald-500 text-slate-950 font-bold text-xs font-mono hover:opacity-95 transition-opacity flex items-center gap-2">
+            <span>Explore Solutions on PrivacyScrubber.com</span>
+            <span>&rarr;</span>
+          </a>
+          <a href="https://github.com/moxno/PrivacyScrubber" target="_blank" rel="noopener" class="touch-target px-5 py-3 rounded-lg bg-slate-900 border border-slate-700 text-slate-200 font-semibold text-xs font-mono hover:border-slate-500 transition-colors flex items-center gap-2">
+            <svg class="w-4 h-4 text-slate-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            <span>GitHub Repository</span>
+          </a>
+          <a href="/ciso/" class="touch-target px-5 py-3 rounded-lg bg-slate-900 border border-slate-700 text-sky-400 font-semibold text-xs font-mono hover:border-slate-500 transition-colors">
+            CISO DPA Exemption Memo &rarr;
+          </a>
         </div>
       </div>
     </section>
