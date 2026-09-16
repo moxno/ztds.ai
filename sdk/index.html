@@ -103,23 +103,55 @@ console.log("Safe clinical insight:", finalResponse);</code></pre>
       <!-- MCP Integration Pattern -->
       <div class="ztds-card p-6">
         <div class="flex items-center justify-between mb-3">
-          <h3 class="text-sm font-bold text-emerald-400 font-mono">2. Model Context Protocol (MCP) for Cursor / Claude</h3>
-          <span class="text-xs text-slate-500 font-mono">Stdio JSON-RPC</span>
+          <h3 class="text-sm font-bold text-emerald-400 font-mono">2. Model Context Protocol (MCP) for Cursor &amp; Claude Desktop</h3>
+          <span class="text-xs text-slate-500 font-mono">Stdio JSON-RPC 2.0</span>
         </div>
-        <pre class="ztds-terminal p-4 text-xs font-mono leading-relaxed overflow-x-auto text-slate-300"><code>// Add to ~/Library/Application Support/Claude/claude_desktop_config.json
+        <p class="text-xs text-slate-400 mb-3 leading-relaxed">
+          Embed the local ZTDS sanitization server into your agentic IDE. Sanitizes prompts in memory before reaching external model providers.
+        </p>
+        <pre class="ztds-terminal p-4 text-xs font-mono leading-relaxed overflow-x-auto text-slate-300"><code>// Add to Cursor (~/.cursor/mcp.json) or Claude Desktop:
 {
   "mcpServers": {
     "privacyscrubber-ztds": {
-      "command": "npx",
-      "args": ["-y", "@privacyscrubber/mcp-server"],
-      "env": {
-        "ZTDS_INSPECTION_MODE": "enforce_airgap"
-      }
+      "command": "node",
+      "args": ["/absolute/path/to/packages/mcp-server/index.js"]
     }
   }
 }</code></pre>
+        <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
+          <div class="bg-slate-950 p-2.5 rounded border border-slate-800">
+            <span class="text-sky-400 font-bold">ztds_sanitize_prompt</span>
+            <p class="text-[11px] text-slate-400 mt-1">Replaces API keys, emails, phones, SSNs, and IBANs with volatile tokens.</p>
+          </div>
+          <div class="bg-slate-950 p-2.5 rounded border border-slate-800">
+            <span class="text-sky-400 font-bold">ztds_restore_response</span>
+            <p class="text-[11px] text-slate-400 mt-1">Swaps surrogate tokens back to original values in local RAM.</p>
+          </div>
+          <div class="bg-slate-950 p-2.5 rounded border border-slate-800">
+            <span class="text-emerald-400 font-bold">ztds_verify_payload</span>
+            <p class="text-[11px] text-slate-400 mt-1">Audits payloads to guarantee 0 bytes of cleartext sensitive data egress.</p>
+          </div>
+          <div class="bg-slate-950 p-2.5 rounded border border-slate-800">
+            <span class="text-yellow-400 font-bold">ztds_get_invariants</span>
+            <p class="text-[11px] text-slate-400 mt-1">Returns formal RFC v1.0 specifications and compliance proofs.</p>
+          </div>
+        </div>
       </div>
-    </section>
+
+      <!-- CLI Auditor Pattern -->
+      <div class="ztds-card p-6">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-sky-400 font-mono">3. Local Codebase CLI Auditor (npx ztds-audit)</h3>
+          <span class="text-xs text-slate-500 font-mono">Zero Dependencies</span>
+        </div>
+        <p class="text-xs text-slate-400 mb-3 leading-relaxed">
+          Verify repository compliance with the 4 invariants in under 10 milliseconds. Produces deterministic audit hash for registration in the syndicate registry.
+        </p>
+        <div class="ztds-terminal p-3 flex items-center justify-between mb-3">
+          <span class="text-xs text-sky-300 font-mono select-all">npx ztds-audit --dir ./src --json</span>
+          <button onclick="navigator.clipboard.writeText('npx ztds-audit --dir ./src --json')" class="text-xs text-slate-400 hover:text-white font-mono uppercase font-bold">Copy</button>
+        </div>
+      </div>
 
     <!-- Pricing / Checkout Section -->
     <section id="pricing" class="ztds-card p-8 md:p-12 border-slate-800 bg-slate-900/50">

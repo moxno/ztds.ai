@@ -1,0 +1,38 @@
+name: ZTDS Zero-Trust Invariant Audit
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    # Weekly integrity audit
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+
+jobs:
+  ztds-audit:
+    name: Verify ZTDS RFC v1.0 Invariants
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run ZTDS Zero-Trust Codebase Audit
+        run: |
+          node bin/ztds-audit.js --json > ztds-report.json
+          cat ztds-report.json
+
+      - name: Upload Conformance Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ztds-audit-report
+          path: ztds-report.json
+          retention-days: 30
