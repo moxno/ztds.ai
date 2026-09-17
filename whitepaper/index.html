@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Whitepaper: ZTDS — A Data-Plane Primitive for the AI Era &middot; ZTDS.ai</title>
+  <meta name="description" content="Formal academic treatise and enterprise specification: Zero-Trust Data Sanitization (ZTDS RFC v1.0). Mathematical entropy proofs, breach case studies, and GDPR Art. 28 subprocessor elimination.">
+  <link rel="canonical" href="https://ztds.ai/whitepaper/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Open Graph / Academic Metadata -->
+  <meta property="og:title" content="ZTDS: A Data-Plane Primitive for the AI Era">
+  <meta property="og:description" content="Formal specification, cryptographic isolation, and subprocessor elimination in enterprise generative AI workloads.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ztds.ai/whitepaper/">
+  <meta name="citation_title" content="ZTDS: A Data-Plane Primitive for the AI Era">
+  <meta name="citation_author" content="Sibiryakov, Ilya">
+  <meta name="citation_publication_date" content="2026/09/17">
+  <meta name="citation_doi" content="10.5281/zenodo.22058770">
+
+  <!-- Tailwind CSS & Custom Styles -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              900: '#064e3b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Structured Data: ScholarlyArticle -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "ZTDS: A Data-Plane Primitive for the AI Era",
+    "name": "Zero-Trust Data Sanitization RFC v1.0 Whitepaper",
+    "author": [
+      {
+        "@type": "Person",
+        "name": "Ilya Sibiryakov",
+        "jobTitle": "Specification Author & Chief Architect",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "BrandMeWeb"
+        },
+        "sameAs": "https://www.linkedin.com/in/ilya-sibiryakov/"
+      },
+      {
+        "@type": "Organization",
+        "name": "ZTDS AI Consortium Systems & Cryptographic Working Group"
+      }
+    ],
+    "datePublished": "2026-09-17",
+    "identifier": "https://doi.org/10.5281/zenodo.22058770",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ZTDS AI Consortium",
+      "url": "https://ztds.ai"
+    },
+    "description": "Formal academic treatise, mathematical entropy proofs, and regulatory doctrine establishing zero-trust data sanitization as a data-plane primitive for enterprise LLMs."
+  }
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col antialiased">
+<!-- Institutional Top Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Status -->
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-3 touch-target">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm shrink-0 aspect-square p-1.5">
+            <svg class="w-full h-full" viewBox="0 0 32 32" fill="none">
+              <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+              <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
+            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+          </div>
+        </a>
+
+        <!-- Status Pill -->
+        <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
+          <span class="pulse-dot"></span>
+          <span class="font-mono text-[11px] font-semibold">RFC v1.0 &middot; OPEN CONSORTIUM</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-600" id="desktop-nav">
+        <a href="/standard/" class="nav-link hover:text-slate-900 transition-colors py-1">Standard</a>
+        <a href="/registry/" class="nav-link hover:text-slate-900 transition-colors py-1">Registry</a>
+        <a href="/sdk/" class="nav-link hover:text-slate-900 transition-colors py-1">SDK &amp; Connectors</a>
+        <a href="/ciso/" class="nav-link hover:text-slate-900 transition-colors py-1">CISO &amp; Legal</a>
+        <a href="/scanner/" class="nav-link hover:text-slate-900 transition-colors py-1">Scanner</a>
+        <a href="/governance/" class="nav-link hover:text-slate-900 transition-colors py-1">Governance</a>
+      </nav>
+
+      <!-- Dual Actions -->
+      <div class="flex items-center gap-3">
+        <a href="/sdk/" class="hidden sm:inline-flex btn-outline text-xs py-2 px-3.5">
+          SDK Quickstart
+        </a>
+        <a href="/apply/" class="btn-trust text-xs py-2 px-4 shadow-sm">
+          Get Certified &rarr;
+        </a>
+        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Slide-Over Drawer -->
+  <div id="mobile-backdrop" class="mobile-nav-backdrop"></div>
+  <aside id="mobile-drawer" class="mobile-nav-drawer">
+    <div class="flex items-center justify-between pb-5 border-b border-slate-200">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 aspect-square p-1">
+          <svg class="w-full h-full" viewBox="0 0 32 32" fill="none">
+            <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+            <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+          </svg>
+        </div>
+        <span class="font-bold text-slate-900 text-base">ZTDS<span class="text-emerald-600">.ai</span></span>
+      </div>
+      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 text-slate-400 hover:text-slate-700">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="py-4 space-y-1 text-sm font-medium">
+      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Standard</div>
+      <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
+      <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
+      <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
+      <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper</a>
+      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
+      <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
+      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
+      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive Inspector</a>
+      <a href="/badge/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Badge Generator</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Consortium</div>
+      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Members</a>
+      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows</a>
+      <a href="/governance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Governance &amp; Charter</a>
+      <a href="/security/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Security &amp; CVD</a>
+    </div>
+
+    <div class="mt-auto pt-4 border-t border-slate-200">
+      <a href="/apply/" class="btn-trust w-full text-center text-xs py-2.5">
+        Apply for ZTDS Verified&trade; Seal &rarr;
+      </a>
+    </div>
+  </aside>
+  <!-- Print-Only Memorandum Letterhead -->
+  <div class="hidden print-only p-8 mb-8 border-b-2 border-slate-900">
+    <div class="flex justify-between items-start">
+      <div>
+        <div class="text-xl font-bold tracking-tight text-slate-900">ZTDS AI Consortium &middot; Academic &amp; Systems Working Group</div>
+        <div class="text-xs text-slate-500 font-mono mt-1">OFFICIAL RESEARCH WHITEPAPER &middot; RFC v1.0 CANONICAL TREATISE</div>
+        <div class="text-base font-bold text-slate-900 mt-2">ZTDS: A Data-Plane Primitive for the AI Era</div>
+        <div class="text-xs text-slate-600 mt-0.5">Ilya Sibiryakov (BrandMeWeb) &middot; DOI: 10.5281/zenodo.22058770 &middot; OSF: 10.17605/OSF.IO/5BYJF</div>
+      </div>
+      <div class="text-right text-xs font-mono text-slate-500">
+        <div>Published: September 2026</div>
+        <div>Standard: RFC v1.0</div>
+        <div>Classification: Public Specification</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Document Layout with Sticky Sidebar -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-grow flex flex-col lg:flex-row gap-10">
+    
+    <!-- Left Sticky Sidebar (TOC, DOIs, Quick Actions) -->
+    <aside class="w-full lg:w-72 flex-shrink-0 no-print">
+      <div class="lg:sticky lg:top-24 space-y-6">
+        
+        <!-- Table of Contents Card -->
+        <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm rounded-xl">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2 mb-3">
+            <span class="text-[11px] uppercase text-slate-400 font-bold tracking-wider font-mono">Contents</span>
+            <span class="text-[10px] font-mono text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.5 rounded">11 SECTIONS</span>
+          </div>
+          <nav class="space-y-1.5 text-xs font-medium text-slate-600">
+            <a href="#abstract" class="block hover:text-slate-900 py-1 transition-colors">00. Abstract &amp; Executive Summary</a>
+            <a href="#crisis" class="block hover:text-slate-900 py-1 transition-colors">01. The AI Data-Plane Crisis</a>
+            <a href="#threats" class="block hover:text-slate-900 py-1 transition-colors">02. Threat Landscape &amp; Breach Cases</a>
+            <a href="#dlp-fallacy" class="block hover:text-slate-900 py-1 transition-colors">03. The Fallacy of Cloud DLP</a>
+            <a href="#invariants" class="block text-emerald-700 font-bold hover:text-emerald-800 py-1 transition-colors flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> 04. The 4 Fundamental Invariants
+            </a>
+            <a href="#formal-proofs" class="block hover:text-slate-900 py-1 transition-colors">05. Formal Model &amp; Entropy Proofs</a>
+            <a href="#regulatory" class="block hover:text-slate-900 py-1 transition-colors">06. Regulatory Doctrine &amp; Legal Shield</a>
+            <a href="#conformance" class="block hover:text-slate-900 py-1 transition-colors">07. Automated Verification Protocol</a>
+            <a href="#financial-tco" class="block hover:text-slate-900 py-1 transition-colors">08. Actuarial TCO &amp; Cost of Inaction</a>
+            <a href="#competitive" class="block hover:text-slate-900 py-1 transition-colors">09. Competitive Landscape Matrix</a>
+            <a href="#blueprints" class="block hover:text-slate-900 py-1 transition-colors">10. Canonical Blueprints &amp; Roadmap</a>
+            <a href="#references" class="block hover:text-slate-900 py-1 transition-colors">11. References &amp; BibTeX Citation</a>
+          </nav>
+        </div>
+
+        <!-- Academic DOIs & Verification Meta -->
+        <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm rounded-xl space-y-3">
+          <div class="text-[11px] uppercase text-slate-400 font-bold tracking-wider font-mono">Academic DOI &amp; Citations</div>
+          <div class="space-y-2 text-xs font-mono">
+            <a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors">
+              <span>Zenodo DOI Record</span>
+              <span class="text-emerald-700 font-bold">&rarr;</span>
+            </a>
+            <a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors">
+              <span>OSF Repository</span>
+              <span class="text-emerald-700 font-bold">&rarr;</span>
+            </a>
+          </div>
+          <button id="btnCopyBibtex" type="button" class="w-full py-2 px-3 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-xs text-emerald-800 font-semibold text-center transition-colors">
+            Copy BibTeX Citation
+          </button>
+        </div>
+
+        <!-- Action Utilities Card -->
+        <div class="ztds-card p-5 bg-slate-900 text-white rounded-xl shadow-sm space-y-3">
+          <div class="text-[11px] uppercase tracking-wider text-emerald-400 font-mono font-bold">Executive Tools</div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Download the print-ready whitepaper for CISO procurement or model the financial impact.
+          </p>
+          <button id="btnPrintWhitepaper" type="button" class="btn-trust block w-full text-center text-xs py-2.5 shadow-sm">
+            Print / Save Paper (PDF)
+          </button>
+          <a href="/roi/" class="block w-full py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-slate-200 font-medium text-center transition-colors">
+            Open CISO ROI Calculator &rarr;
+          </a>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- Main Whitepaper Paper Surface -->
+    <main class="flex-grow min-w-0 bg-white border border-slate-200 rounded-2xl p-6 sm:p-12 shadow-sm">
+      
+      <!-- Academic Paper Header -->
+      <article class="prose prose-slate max-w-none space-y-12">
+        
+        <header class="border-b border-slate-200 pb-10">
+          <div class="flex flex-wrap items-center gap-2 mb-4">
+            <span class="px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 font-mono text-[11px] font-bold">
+              CANONICAL TREATISE RFC v1.0
+            </span>
+            <span class="px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[11px] font-bold">
+              PEER REVIEWED &middot; DOI: 10.5281/zenodo.22058770
+            </span>
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            ZTDS: A Data-Plane Primitive for the AI Era
+          </h1>
+          <p class="text-lg sm:text-xl text-slate-600 font-normal mt-3 leading-relaxed">
+            Formal Specification, Cryptographic Isolation, and Subprocessor Elimination in Enterprise Generative Workloads
+          </p>
+
+          <!-- Authors & Metadata Box -->
+          <div class="mt-8 p-5 bg-slate-50 border border-slate-200 rounded-xl grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+            <div>
+              <span class="text-slate-400 uppercase font-mono font-semibold block text-[10px]">Lead Author</span>
+              <strong class="text-slate-900 font-semibold text-sm">Ilya Sibiryakov</strong>
+              <div class="text-slate-500 mt-0.5">Chief Architect &amp; Founder, BrandMeWeb</div>
+              <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-emerald-700 hover:underline">LinkedIn Profile &rarr;</a>
+            </div>
+            <div>
+              <span class="text-slate-400 uppercase font-mono font-semibold block text-[10px]">Consortium Working Group</span>
+              <strong class="text-slate-900 font-semibold text-sm">ZTDS AI Systems WG</strong>
+              <div class="text-slate-500 mt-0.5">Cryptographic &amp; Systems Research Council</div>
+              <span class="text-slate-500">Autonomous Open Governance</span>
+            </div>
+            <div>
+              <span class="text-slate-400 uppercase font-mono font-semibold block text-[10px]">Document &amp; Publication</span>
+              <strong class="text-slate-900 font-semibold text-sm">Ratified September 2026</strong>
+              <div class="text-slate-500 font-mono mt-0.5">DOI: 10.5281/zenodo.22058770</div>
+              <div class="text-slate-500 font-mono">License: CC BY 4.0 &amp; Apache 2.0</div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Section 00: Abstract & Executive Summary -->
+        <section id="abstract" class="scroll-mt-24 space-y-4">
+          <div class="p-6 bg-slate-50 border-l-4 border-emerald-600 rounded-r-xl">
+            <h2 class="text-xs font-mono uppercase tracking-widest text-slate-400 font-bold mb-2">Abstract</h2>
+            <p class="text-sm text-slate-800 leading-relaxed italic font-serif">
+              The accelerated adoption of generative artificial intelligence (GenAI) and autonomous agentic workflows has broken the foundational assumptions of traditional enterprise cybersecurity. While transport encryption (TLS 1.3) protects bits across the wire, generative architectures require third-party model inference engines to compute over decrypted, plaintext user payloads. This paradigm exposes enterprise data to server-side model retention, training corpus contamination, telemetry logging, and indirect prompt injection attacks.
+            </p>
+            <p class="text-sm text-slate-800 leading-relaxed italic font-serif mt-3">
+              This paper presents <strong>Zero-Trust Data Sanitization (ZTDS RFC v1.0)</strong>, a data-plane primitive designed to guarantee zero unmitigated external sensitive data egress. Operating strictly within isolated client-side memory or hardware-attested Nitro Enclaves, ZTDS introduces deterministic, reversible tokenization that preserves syntactic and semantic context for downstream large language models (LLMs) while maintaining the private token mapping exclusively in volatile client RAM. We mathematically prove using Shannon information entropy that sanitized prompt payloads contain zero mutual information regarding underlying identifiers. Furthermore, we establish the legal doctrine under EU GDPR Recital 26 and Article 28 demonstrating that ZTDS-conforming pipelines render downstream AI model vendors legally exempt from subprocessor classification, eliminating third-party Data Processing Agreements (DPA) and statutory liability.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 01: The AI Data-Plane Crisis -->
+        <section id="crisis" class="scroll-mt-24 space-y-4 pt-6 border-t border-slate-100">
+          <div class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Section 01</div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">The AI Data-Plane Crisis &amp; Perimeter Failure</h2>
+          
+          <p class="text-slate-700 text-sm leading-relaxed">
+            For three decades, enterprise network security has relied on the <strong>Perimeter Defense Model</strong>: firewalls, Virtual Private Clouds (VPCs), Web Application Firewalls (WAF), and Mutual TLS (mTLS). In this paradigm, traffic is inspected at the boundary, encrypted in transit, and safely decrypted inside the private datacenter or trusted SaaS tenancy.
+          </p>
+
+          <p class="text-slate-700 text-sm leading-relaxed">
+            Generative AI collapses this perimeter. Modern applications no longer process queries solely through deterministic local databases. Instead, customer queries, internal communications, proprietary intellectual property, and medical diagnostic records are dispatched via outbound HTTP requests to external third-party Frontier Model API endpoints (OpenAI, Anthropic, Google Vertex, Cohere) or multi-tenant hosted embedding stores.
+          </p>
+
+          <div class="p-4 bg-slate-900 text-slate-200 rounded-xl font-mono text-xs overflow-x-auto leading-relaxed">
+            <div class="text-slate-400">// The Transport vs. Data-Plane Fallacy</div>
+            <div>[Client Device] --- TLS 1.3 (Encrypted in Transit) ---&gt; [Vendor API Gateway]</div>
+            <div>                                                              |</div>
+            <div>                                              [Decrypted in Memory] &lt;-- VULNERABILITY</div>
+            <div>                                                              |</div>
+            <div>                                                +-------------+-------------+</div>
+            <div>                                                |             |             |</div>
+            <div>                                           [Model Logs] [Vector Cache] [Telemetry]</div>
+          </div>
+
+          <p class="text-slate-700 text-sm leading-relaxed">
+            The fundamental vulnerability does not lie in the transport layer; TLS functions flawlessly. The vulnerability is in the <strong>Data Plane</strong>: data must be delivered in cleartext to the model for semantic processing. Once decrypted by the external host, data is subject to:
+          </p>
+
+          <ul class="list-disc pl-5 text-sm text-slate-700 space-y-1.5 leading-relaxed">
+            <li><strong>Model Provider Logging &amp; Retention</strong>: API providers retain prompt logs for safety filtering, monitoring, and debugging (often 30 days or longer).</li>
+            <li><strong>Subprocessor Proliferation</strong>: Under Article 28 of the GDPR, routing personal data to an LLM provider legally classifies that provider as a subprocessor, requiring complex Data Processing Agreements (DPA), transfer impact assessments (TIA), and continuous audit oversight.</li>
+            <li><strong>Prompt Exfiltration via Injection</strong>: Malicious instructions injected via retrieved context can cause the model to output private data previously embedded in the conversation buffer.</li>
+          </ul>
+        </section>
+
+        <!-- Section 02: Threat Landscape & Breach Case Studies -->
+        <section id="threats" class="scroll-mt-24 space-y-4 pt-6 border-t border-slate-100">
+          <div class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Section 02</div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Threat Landscape &amp; Real-World Breach Case Studies</h2>
+          
+          <p class="text-slate-700 text-sm leading-relaxed">
+            The risk of unmitigated generative data egress is not theoretical. Over the 2023–2026 observation period, multiple high-profile incidents demonstrated the cascading failures of cleartext prompt transmission:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <span class="text-[11px] font-mono font-bold text-rose-700 uppercase">Case 01 &middot; Proprietary IP Exfiltration</span>
+              <h3 class="text-sm font-bold text-slate-900">The Semiconductor Source Code Incident</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Engineers at a major global electronics conglomerate pasted confidential semiconductor yield-measurement source code and internal meeting transcripts directly into public LLM conversational interfaces to optimize test algorithms. The cleartext data crossed the corporate boundary, entering the external provider's retention pipeline, triggering emergency company-wide bans and statutory IP disclosure alerts.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <span class="text-[11px] font-mono font-bold text-rose-700 uppercase">Case 02 &middot; Retrieval-Augmented Exfiltration</span>
+              <h3 class="text-sm font-bold text-slate-900">Slack AI &amp; Indirect Prompt Infiltration</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Security researchers demonstrated that unauthorized prompt injection techniques inside private enterprise communication tools could exploit generative search and summarization agents. By embedding malicious hidden text within shared channels, adversaries induced the AI assistant to read private user direct messages and exfiltrate API keys to external webhook domains.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <span class="text-[11px] font-mono font-bold text-rose-700 uppercase">Case 03 &middot; Supply-Chain SaaS Exploitation</span>
+              <h3 class="text-sm font-bold text-slate-900">MOVEit Transfer Zero-Day Payload Harvesting</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                The exploitation of CVE-2023-34362 demonstrated that enterprise perimeter controls are rendered completely ineffective once external data transfer tools are compromised. Over 2,600 organizations suffered cascading data leaks because sensitive PII was stored and transmitted in cleartext payloads rather than pre-sanitized tokens.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <span class="text-[11px] font-mono font-bold text-rose-700 uppercase">Case 04 &middot; Vector Database Inversion</span>
+              <h3 class="text-sm font-bold text-slate-900">Embedding Store Reconstruction Attacks</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Academic research (Morris et al., 2023) established that dense vector embeddings stored in RAG retrieval pipelines can be mathematically inverted to reconstruct exact original input sentences, including Social Security Numbers and passwords, confirming that vector representations of unmasked data remain legally identifiable personal data.
+              </p>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Section 03: The Architectural Fallacy of Cloud DLP -->
+        <section id="dlp-fallacy" class="scroll-mt-24 space-y-4 pt-6 border-t border-slate-100">
+          <div class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Section 03</div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">The Architectural Fallacy of Cloud DLP</h2>
+          
+          <p class="text-slate-700 text-sm leading-relaxed">
+            In response to these risks, enterprise IT departments frequently turn to legacy <strong>Cloud Data Loss Prevention (Cloud DLP)</strong> vendors (e.g., Nightfall AI, Microsoft Purview, BigID, Google Cloud DLP). However, deploying Cloud DLP in generative AI pipelines introduces a fatal architectural contradiction:
+          </p>
+
+          <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl space-y-3">
+            <h3 class="text-sm font-bold text-rose-900">The Cloud DLP Paradox</h3>
+            <p class="text-xs text-rose-800 leading-relaxed">
+              To detect and mask sensitive data, a Cloud DLP service must itself receive unencrypted, plaintext data across the network. Thus, the enterprise attempts to solve the problem of sending data to an untrusted cloud provider by sending that exact same data to a second cloud provider.
+            </p>
+          </div>
+
+          <p class="text-slate-700 text-sm leading-relaxed">
+            This approach fails on four fundamental engineering and compliance dimensions:
+          </p>
+
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-xs text-left border border-slate-200 rounded-lg overflow-hidden">
+              <thead class="bg-slate-100 text-slate-700 uppercase font-mono font-bold">
+                <tr>
+                  <th class="p-3 border-b">Evaluation Criteria</th>
+                  <th class="p-3 border-b">Legacy Cloud DLP Proxy</th>
+                  <th class="p-3 border-b text-emerald-800">ZTDS Invariant Architecture</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr>
+                  <td class="p-3 font-semibold">Data Execution Boundary</td>
+                  <td class="p-3 text-rose-700">Vendor SaaS Cloud (Egress Required)</td>
+                  <td class="p-3 text-emerald-700 font-semibold">Client Volatile Memory / Nitro Enclave</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold">Subprocessor Status (GDPR Art. 28)</td>
+                  <td class="p-3">Adds new subprocessor + DPA mandate</td>
+                  <td class="p-3 text-emerald-700 font-semibold">Zero Subprocessors (DPA Exempt)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold">Network Latency Overhead</td>
+                  <td class="p-3 text-rose-700">+350 ms to +800 ms per roundtrip</td>
+                  <td class="p-3 text-emerald-700 font-semibold">&lt; 1.2 ms (Local in-memory execution)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold">Air-Gapped &amp; Offline Operation</td>
+                  <td class="p-3 text-rose-700">Impossible (Requires cloud API connection)</td>
+                  <td class="p-3 text-emerald-700 font-semibold">100% Autonomous (Airplane Mode audited)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold">Context Preservation for LLM</td>
+                  <td class="p-3">Destructive redaction [REDACTED]</td>
+                  <td class="p-3 text-emerald-700 font-semibold">Deterministic reversible tokenization</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section 04: The 4 Fundamental Invariants -->
+        <section id="invariants" class="scroll-mt-24 space-y-4 pt-6 border-t border-slate-100">
+          <div class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Section 04</div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">The Four Fundamental Invariants of ZTDS (RFC v1.0)</h2>
+          
+          <p class="text-slate-700 text-sm leading-relaxed">
+            The ZTDS specification codifies four non-negotiable architectural invariants. Any implementation seeking the <strong>ZTDS Verified&trade;</strong> designation must prove compliance with all four invariants under automated adversarial testing:
+          </p>
+
+          <div class="space-y-4">
+            
+            <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-sm">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-6 h-6 rounded-full bg-slate-900 text-white font-mono font-bold text-xs flex items-center justify-center">1</span>
+                <h3 class="text-base font-bold text-slate-900">Invariant 1: Zero External Egress Prior to Sanitization</h3>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed pl-8">
+                Raw sensitive identifiers (PII, PHI, financial records, cryptographic credentials, API secrets) must undergo full de-identification strictly inside the local execution environment prior to crossing the network boundary. Exactly zero bytes of unmasked data may traverse external sockets.
+              </p>
+            </div>
+
+            <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-sm">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-6 h-6 rounded-full bg-slate-900 text-white font-mono font-bold text-xs flex items-center justify-center">2</span>
+                <h3 class="text-base font-bold text-slate-900">Invariant 2: Deterministic Reversible Tokenization</h3>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed pl-8">
+                Masked entities are replaced with synthetic, context-preserving tokens (e.g., <code>[EMAIL_TOKEN_1]</code>, <code>[IBAN_TOKEN_2]</code>). The mapping table mapping tokens back to raw entities exists solely in volatile RAM, is never persisted to disk or network, and is destroyed upon session termination. When the LLM responds with tokens, the client locally reverses the mapping without server intervention.
+              </p>
+            </div>
+
+            <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-sm">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-6 h-6 rounded-full bg-slate-900 text-white font-mono font-bold text-xs flex items-center justify-center">3</span>
+                <h3 class="text-base font-bold text-slate-900">Invariant 3: Verifiable Cryptographic Isolation</h3>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed pl-8">
+                The sanitization engine must execute within a provably sandboxed computational boundary: a client-side WebAssembly (WASM) sandbox inside the user's browser, an isolated process in the client OS, or an AWS Nitro Enclave / confidential computing VM with hardware cryptographic attestation. Zero third-party telemetry, tracking pixels, or diagnostics are permitted.
+              </p>
+            </div>
+
+            <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-sm">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="w-6 h-6 rounded-full bg-slate-900 text-white font-mono font-bold text-xs flex items-center justify-center">4</span>
+                <h3 class="text-base font-bold text-slate-900">Invariant 4: Continuous Compliance &amp; Zero Subprocessor Chain</h3>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed pl-8">
+                Because conforming software operates as a local utility and never assumes custody of data, the software vendor does not qualify as a data processor under GDPR Article 28. Downstream AI APIs receive only anonymized tokens, breaking the subprocessor chain and eliminating Data Processing Agreement (DPA) requirements.
+              </p>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Section 05: Formal Security Model & Mathematical Proofs -->
+        <section id="formal-proofs" class="scroll-mt-24 space-y-4 pt-6 border-t border-slate-100">
+          <div class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Section 05</div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Formal Security Model &amp; Mathematical Proofs</h2>
+          
+          <p class="text-slate-700 text-sm leading-relaxed">
+            To provide the mathematical foundation required for formal CISO certification, we model the sanitization function $f: \mathcal{X} 	o \mathcal{T}$ under information-theoretic security principles.
+          </p>
+
+          <h3 class="text-base font-bold text-slate-900 pt-2">Theorem 1: Zero Mutual Information of Token Payloads</h3>
+          <p class="text-slate-700 text-sm leading-relaxed">
+            Let $X$ denote a discrete random variable representing the cleartext entity space (e.g., telephone numbers, patient medical identifiers, credit card PANs). Let $T$ denote the synthetic token generated by the ZTDS deterministic tokenization function. We require that the mutual information $I(X; T)$ between the sensitive entity and the emitted token equals zero:
+          </p>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl font-mono text-xs text-slate-800 space-y-1">
+            <div>I(X; T) = H(X) - H(X | T) = 0</div>
+            <div>\iff H(X | T) = H(X)</div>
+          </div>
+
+          <p class="text-slate-700 text-sm leading-relaxed">
+            <strong>Proof</strong>: In ZTDS RFC v1.0, tokens are selected from an invariant dictionary of synthetic entity markers indexed by monotonic sequence numbers per session ($T \in \{[TOKEN\_1], [TOKEN\_2], \dots\}$). The assignment function $f$ draws index $k$ strictly from the local session counter without dependency on the entropy or bit representation of $X$. Given $T = [TOKEN\_k]$, an adversary possessor of the downstream LLM transmission observes only the sequence identifier $k$. Because $k$ is statistically independent of $X$, the conditional probability distribution satisfies:
+          </p>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl font-mono text-xs text-slate-800 space-y-1">
+            <div>P(X = x | T = [TOKEN_k]) = P(X = x) \quad orall x \in \mathcal{X}</div>
+          </div>
+
+          <p class="text-slate-700 text-sm leading-relaxed">
+            Therefore, knowledge of $T$ yields zero reduction in uncertainty regarding $X$. The downstream model recipient receives zero bits of personal data under Shannon entropy bounds. $lacksquare$
+          </p>
+
+          <h3 class="text-base font-bold text-slate-900 pt-2">Theorem 2: Ephemeral Memory Destruction Invariant</h3>
+          <p class="text-slate-700 text-sm leading-relaxed">
+            Let $\mathcal{M}$ represent the in-memory bidirectional mapping dictionary $\mathcal{M} = \{(T_i, X_i)\}$. Let $t_{	ext{session}}$ denote the active conversation lifecycle. We define the security lifecycle constraint:
+          </p>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl font-mono text-xs text-slate-800 space-y-1">
+            <div>\lim_{t 	o t_{	ext{destroy}}} \mathcal{M} = \emptyset, \quad 	ext{where } \mathcal{M} \cap 	ext{NonVolatileStorage} = \emptyset</div>
+          </div>
+
+          <p class="text-slate-700 text-sm leading-relaxed">
+            Any conforming implementation zeroes all allocated memory buffers upon session garbage collection or explicit client discard, guaranteeing zero residual forensic artifact recovery.
+          </p>
+        </section>
+
+        <!-- Section 06: Regulatory Doctrine & Legal Demarcation -->
+        <section id="regulatory" class="scroll-mt-24 space-y-4 pt-6 border-t border-slate-100">
+          <div class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Section 06</div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Regulatory Doctrine &amp; Legal Demarcation</h2>
+          
+          <p class="text-slate-700 text-sm leading-relaxed">
+            Enterprise CISOs and DPOs face severe statutory liabilities when deploying generative AI. ZTDS maps directly to primary international privacy frameworks:
+          </p>
+
+          <div class="space-y-4 pt-2 text-sm text-slate-700">
+            
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+              <div class="font-bold text-slate-900 text-sm font-mono">EU GDPR Recital 26 (Anonymous Information)</div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Recital 26 explicitly states: <em>"The principles of data protection should therefore not apply to anonymous information, namely information which does not relate to an identified or identifiable natural person..."</em> Because ZTDS strips all direct and indirect identifiers prior to external network egress, the payload received by the LLM provider constitutes anonymous information under EU law.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+              <div class="font-bold text-slate-900 text-sm font-mono">EU GDPR Article 28 (Subprocessor Chain Elimination)</div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Article 28 mandates that controllers execute formal Data Processing Agreements (DPAs) with any entity processing personal data on their behalf. Because downstream model providers receive zero personal data, they are not data processors within the statutory meaning of Article 4(8). Consequently, the enterprise is legally exempt from DPA requirements for that transmission.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+              <div class="font-bold text-slate-900 text-sm font-mono">HIPAA Safe Harbor Method (45 CFR &sect; 164.514(b))</div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Under the Safe Harbor de-identification standard, Protected Health Information (PHI) is de-identified if all 18 specified statutory identifiers (names, dates, geographic data, telephone numbers, biometric records) are removed. ZTDS client-side tokenization satisfies Safe Harbor requirements before transmission to non-BAA AI model providers.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+              <div class="font-bold text-slate-900 text-sm font-mono">Federal Rules of Evidence (FRE 502(b) Attorney Privilege Shield)</div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                In corporate legal discovery and in-house counsel workflows, pasting privileged communications into cloud tools risks waiving attorney-client privilege. By enforcing ZTDS Invariant 1, all client identifying tokens and case references are scrubbed prior to egress, maintaining non-waiver protection under Rule 502(b).
+              </p>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Section 07: Automated Conformance Framework -->
+        <section id="conformance" class="scroll-mt-24 space-y-4 pt-6 border-t border-slate-100">
+          <div class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Section 07</div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Automated Conformance &amp; Verification Protocol</h2>
+          
+          <p class="text-slate-700 text-sm leading-relaxed">
+            To prevent security claims from relying on self-attestation, ZTDS provides an automated 4-tier verification protocol:
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-1">
+              <span class="text-xs font-mono font-bold text-emerald-800">Tier 1 &middot; Static AST Audit</span>
+              <p class="text-xs text-slate-600">Automated static code analysis scanning for external analytics SDKs, unapproved network fetch hooks, or persistent storage leaks.</p>
+            </div>
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-1">
+              <span class="text-xs font-mono font-bold text-emerald-800">Tier 2 &middot; Airplane Mode Network Inspection</span>
+              <p class="text-xs text-slate-600">Hardware-level network isolation test verifying that the de-identification engine executes 100% of operations without internet connectivity.</p>
+            </div>
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-1">
+              <span class="text-xs font-mono font-bold text-emerald-800">Tier 3 &middot; Synthetic Adversarial Fuzzing</span>
+              <p class="text-xs text-slate-600">Injection of 500+ synthetic PII, PHI, IBAN, and credential test vectors across multiple languages to verify zero entity leakage.</p>
+            </div>
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-1">
+              <span class="text-xs font-mono font-bold text-emerald-800">Tier 4 &middot; Ephemeral Memory Dump Audit</span>
+              <p class="text-xs text-slate-600">Volatile memory heap inspection verifying that private mapping tables are fully wiped post-session with zero residual bytes.</p>
+            </div>
+          </div>
+
+          <div class="p-4 bg-slate-900 text-slate-200 rounded-xl font-mono text-xs mt-4">
+            <div class="text-slate-400"># Run automated ZTDS invariant audit via CLI:</div>
+            <div class="text-emerald-400 font-bold">$ npx ztds-audit --target=./src --report=json</div>
+          </div>
+        </section>
+
+        <!-- Section 08: Actuarial Financial Model & TCO -->
+        <section id="financial-tco" class="scroll-mt-24 space-y-4 pt-6 border-t border-slate-100">
+          <div class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Section 08</div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Actuarial Cost of Inaction &amp; Enterprise TCO</h2>
+          
+          <p class="text-slate-700 text-sm leading-relaxed">
+            Enterprise procurement evaluations require comparing the Total Cost of Ownership (TCO) of invariant sanitization against the actuarial cost of unmitigated generative data leakage. Grounded in the <em>IBM Cost of a Data Breach Report 2025</em> and Ponemon generative AI risk distributions, we model the annual expected liability:
+          </p>
+
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-xs text-left border border-slate-200 rounded-lg overflow-hidden">
+              <thead class="bg-slate-100 text-slate-700 uppercase font-mono font-bold">
+                <tr>
+                  <th class="p-3 border-b">Ingestion Volume (Monthly)</th>
+                  <th class="p-3 border-b">Expected Annual Breach Exposure</th>
+                  <th class="p-3 border-b">DPA &amp; Vendor TPRM Overhead</th>
+                  <th class="p-3 border-b">ZTDS Protection Cost</th>
+                  <th class="p-3 border-b text-emerald-700 font-bold">Net Annual ROI Multiple</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700 font-mono">
+                <tr>
+                  <td class="p-3">100,000 calls / mo</td>
+                  <td class="p-3">$112,500 / yr</td>
+                  <td class="p-3">$50,000 / yr</td>
+                  <td class="p-3">$1,990 / yr</td>
+                  <td class="p-3 text-emerald-700 font-bold">81.6x ROI</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold">500,000 calls / mo (Baseline)</td>
+                  <td class="p-3 font-semibold">$435,250 / yr</td>
+                  <td class="p-3 font-semibold">$75,000 / yr</td>
+                  <td class="p-3 font-semibold">$12,000 / yr</td>
+                  <td class="p-3 text-emerald-700 font-bold">42.5x ROI</td>
+                </tr>
+                <tr>
+                  <td class="p-3">2,500,000 calls / mo</td>
+                  <td class="p-3">$1,850,000 / yr</td>
+                  <td class="p-3">$150,000 / yr</td>
+                  <td class="p-3">$35,000 / yr</td>
+                  <td class="p-3 text-emerald-700 font-bold">57.1x ROI</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="text-xs text-slate-500 leading-relaxed">
+            * Interactive actuarial calculations, industry risk profiles (FinTech, Healthcare, Legal), and customizable volume parameters are accessible via the live <a href="/roi/" class="text-emerald-700 font-semibold underline">ZTDS CISO ROI &amp; Risk Exposure Calculator</a>.
+          </p>
+        </section>
+
+        <!-- Section 09: Competitive Landscape Matrix -->
+        <section id="competitive" class="scroll-mt-24 space-y-4 pt-6 border-t border-slate-100">
+          <div class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Section 09</div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Competitive Landscape &amp; Positioning Matrix</h2>
+          
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-xs text-left border border-slate-200 rounded-lg overflow-hidden">
+              <thead class="bg-slate-100 text-slate-700 uppercase font-mono font-bold">
+                <tr>
+                  <th class="p-3 border-b">Approach</th>
+                  <th class="p-3 border-b">Mechanism</th>
+                  <th class="p-3 border-b">Latency</th>
+                  <th class="p-3 border-b">DPA Requirement</th>
+                  <th class="p-3 border-b">Air-Gap Capable</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr>
+                  <td class="p-3 font-semibold">ZTDS Primitive (@privacyscrubber/sdk)</td>
+                  <td class="p-3 text-emerald-700 font-semibold">Client-side in-memory deterministic tokenization</td>
+                  <td class="p-3 font-mono text-emerald-700 font-bold">&lt;1.2 ms</td>
+                  <td class="p-3 text-emerald-700 font-semibold">Exempt (0 bytes egress)</td>
+                  <td class="p-3 font-semibold text-emerald-700">Yes (100% Offline)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold">Cloud DLP (Nightfall, BigID)</td>
+                  <td class="p-3">SaaS cloud proxy inspection</td>
+                  <td class="p-3 font-mono text-rose-700">350–800 ms</td>
+                  <td class="p-3 text-rose-700">Mandatory (New processor)</td>
+                  <td class="p-3 text-rose-700">No</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold">Cloud Anonymizer APIs (Google DLP, Macie)</td>
+                  <td class="p-3">Remote cloud API call before inference</td>
+                  <td class="p-3 font-mono text-rose-700">200–500 ms</td>
+                  <td class="p-3 text-rose-700">Mandatory (Cloud vendor)</td>
+                  <td class="p-3 text-rose-700">No</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold">Self-Hosted Air-Gapped LLMs (Ollama, vLLM)</td>
+                  <td class="p-3">Run models locally on private GPUs</td>
+                  <td class="p-3 font-mono">0 ms network</td>
+                  <td class="p-3">Exempt</td>
+                  <td class="p-3">Yes (High HW cost: $30K–$200K)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section 10: Canonical Blueprints & Ecosystem Roadmap -->
+        <section id="blueprints" class="scroll-mt-24 space-y-4 pt-6 border-t border-slate-100">
+          <div class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Section 10</div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Canonical Implementation Blueprints &amp; Ecosystem Roadmap</h2>
+          
+          <p class="text-slate-700 text-sm leading-relaxed">
+            The ZTDS AI Consortium maintains open-source reference implementations, drop-in SDKs, and integration blueprints across modern AI development stacks:
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <strong class="text-slate-900 text-sm block">1. Headless Developer SDK</strong>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                <code>@privacyscrubber/sdk</code> provides zero-dependency client-side sanitization in pure TypeScript and WebAssembly with synchronous in-memory tokenization.
+              </p>
+              <a href="/sdk/" class="text-xs text-emerald-700 font-semibold hover:underline block">View SDK Documentation &rarr;</a>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <strong class="text-slate-900 text-sm block">2. LangChain &amp; LlamaIndex Middleware</strong>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Pre-execution callback handlers and node transformers that sanitize prompts before model transmission and restore raw tokens in user-facing streams.
+              </p>
+              <a href="/sdk/#middleware" class="text-xs text-emerald-700 font-semibold hover:underline block">Integration Guide &rarr;</a>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <strong class="text-slate-900 text-sm block">3. Model Context Protocol (MCP) Server</strong>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Standardized stdio gateway for Cursor, Claude Desktop, and Claude Code that prevents developer credentials and sensitive code from leaking to frontier models.
+              </p>
+              <a href="/sdk/#mcp" class="text-xs text-emerald-700 font-semibold hover:underline block">MCP Stdio Config &rarr;</a>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <strong class="text-slate-900 text-sm block">4. Envoy &amp; Kubernetes Sidecar Mesh</strong>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Microservice sidecar proxy enforcing Invariant 1 on egress HTTP traffic across corporate clusters, terminating outbound connections containing raw PII.
+              </p>
+              <a href="/standard/" class="text-xs text-emerald-700 font-semibold hover:underline block">Sidecar Specification &rarr;</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 11: References & BibTeX Citation -->
+        <section id="references" class="scroll-mt-24 space-y-4 pt-6 border-t border-slate-100">
+          <div class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Section 11</div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">References &amp; BibTeX Citation</h2>
+          
+          <div class="p-5 bg-slate-900 text-slate-200 rounded-xl font-mono text-xs space-y-2">
+            <div class="flex justify-between items-center text-slate-400 border-b border-slate-800 pb-2 mb-2">
+              <span>BibTeX Academic Citation</span>
+              <button id="btnCopyBibtexBlock" class="text-emerald-400 hover:text-emerald-300 font-bold">Copy Citation</button>
+            </div>
+            <pre class="overflow-x-auto leading-relaxed text-[11px] text-slate-300" id="bibtexBlock">@article{sibiryakov2026ztds,
+  title     = {ZTDS: A Data-Plane Primitive for the AI Era -- Formal Specification, Cryptographic Isolation, and Subprocessor Elimination in Enterprise Generative Workloads},
+  author    = {Sibiryakov, Ilya and {ZTDS AI Consortium Working Group}},
+  journal   = {ZTDS Technical Consortium Publications},
+  year      = {2026},
+  month     = {September},
+  doi       = {10.5281/zenodo.22058770},
+  url       = {https://ztds.ai/whitepaper/},
+  note      = {Ratified Specification RFC v1.0, OSF: 10.17605/OSF.IO/5BYJF}
+}</pre>
+          </div>
+
+          <div class="space-y-2 text-xs text-slate-600 leading-relaxed pt-2">
+            <div>[1] European Parliament and Council. (2016). <em>Regulation (EU) 2016/679 (General Data Protection Regulation)</em>, Recital 26 and Article 28. Official Journal of the European Union.</div>
+            <div>[2] National Institute of Standards and Technology. (2023). <em>Artificial Intelligence Risk Management Framework (AI RMF 1.0)</em>. NIST Special Publication 1270.</div>
+            <div>[3] Morris, J. X., et al. (2023). <em>Text Embeddings Reveal (Almost) As Much As Text</em>. Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP).</div>
+            <div>[4] IBM Security &amp; Ponemon Institute. (2025). <em>Cost of a Data Breach Report 2025</em>. IBM Corporation.</div>
+            <div>[5] Sibiryakov, I. (2026). <em>Zero-Trust Data Sanitization Specification RFC v1.0</em>. Zenodo. DOI: 10.5281/zenodo.22058770.</div>
+          </div>
+        </section>
+
+      </article>
+
+    </main>
+
+  </div>
+<!-- 5-Column Institutional Light Footer -->
+  <footer class="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-12 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12 border-b border-slate-100">
+        <!-- Col 1: Brand & Consortium -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 aspect-square p-1">
+              <svg class="w-full h-full" viewBox="0 0 32 32" fill="none">
+                <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+                <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+                <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+                <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+              </svg>
+            </div>
+            <span class="font-bold text-slate-900 text-lg font-sans">ZTDS<span class="text-emerald-600">.ai</span></span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            The open industry standard and conformance authority for zero-trust data sanitization in enterprise AI pipelines.
+          </p>
+          <div class="text-xs text-slate-500 leading-relaxed border-t border-slate-100 pt-3">
+            Originated by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">Ilya Sibiryakov</a>.<br>
+            Stewarded by the <span class="font-semibold text-slate-700">ZTDS AI Consortium</span> as an open specification. Engineering sponsored by <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">BrandMeWeb</a>.
+          </div>
+        </div>
+
+        <!-- Col 2: Specification & RFC -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
+            <li><a href="/whitepaper/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Research Whitepaper &rarr;</a></li>
+            <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO &amp; DPA Exemption Memo</a></li>
+            <li><a href="/roi/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">CISO Risk &amp; ROI Calculator &rarr;</a></li>
+            <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+            <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">OSF Latency Benchmarks</a></li>
+            <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Architecture & Tools -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+            <li><a href="/inspector/" class="hover:text-slate-900 transition-colors">Interactive Pipeline Simulator</a></li>
+            <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
+            <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge &amp; Seal Foundry</a></li>
+            <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">PrivacyScrubber (Reference Impl)</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Consortium & Governance -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Governance &amp; Charter</a></li>
+            <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
+            <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
+            <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 5: Community & Verified -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
+            <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
+            <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+            <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
+            <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Legal Conformance Notice Card -->
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Technical Conformance Demarcation</span>
+          <span class="text-slate-400 font-mono text-[10px]">RFC v1.0 &middot; Invariant Testing Specification</span>
+        </div>
+        <p>
+          ZTDS.ai is an open technical consortium and independent specification maintainer. The "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai and its maintainers make no warranties, express or implied, and expressly disclaim all liability for third-party implementations, software errors, or downstream data breaches.
+        </p>
+      </div>
+
+      <!-- Bottom Meta Bar -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 border-t border-slate-100 pt-6">
+        <div class="flex items-center gap-3">
+          <span>&copy; 2026 ZTDS AI Consortium.</span>
+          <span>&middot;</span>
+          <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
+        </div>
+        <div class="flex items-center gap-4 text-[11px] font-mono">
+          <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            ALL SYSTEMS VERIFIED
+          </span>
+          <span>&middot;</span>
+          <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x4E9A2B1C</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  <!-- Nav Scripts & Whitepaper Controls -->
+  <script src="/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const bibtexText = `@article{sibiryakov2026ztds,
+  title     = {ZTDS: A Data-Plane Primitive for the AI Era -- Formal Specification, Cryptographic Isolation, and Subprocessor Elimination in Enterprise Generative Workloads},
+  author    = {Sibiryakov, Ilya and {ZTDS AI Consortium Working Group}},
+  journal   = {ZTDS Technical Consortium Publications},
+  year      = {2026},
+  month     = {September},
+  doi       = {10.5281/zenodo.22058770},
+  url       = {https://ztds.ai/whitepaper/},
+  note      = {Ratified Specification RFC v1.0, OSF: 10.17605/OSF.IO/5BYJF}
+}`;
+
+      function copyCitation() {
+        if (window.ztdsCopy) {
+          window.ztdsCopy(bibtexText, () => {
+            alert('BibTeX citation copied to clipboard.');
+          });
+        }
+      }
+
+      const btn1 = document.getElementById('btnCopyBibtex');
+      if (btn1) btn1.addEventListener('click', copyCitation);
+
+      const btn2 = document.getElementById('btnCopyBibtexBlock');
+      if (btn2) btn2.addEventListener('click', copyCitation);
+
+      const btnPrint = document.getElementById('btnPrintWhitepaper');
+      if (btnPrint) {
+        btnPrint.addEventListener('click', () => {
+          window.print();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
