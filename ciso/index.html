@@ -179,6 +179,9 @@
         <a href="/roi/" class="btn-trust text-xs py-2.5 px-4 shadow-sm flex items-center gap-2">
           <span>Interactive CISO ROI Calculator &rarr;</span>
         </a>
+        <a href="#battlecards" class="px-4 py-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 shadow-sm flex items-center gap-1.5 transition-colors">
+          <span>Battle Cards vs. Cloud DLP &darr;</span>
+        </a>
         <button id="copyMemoBtn" class="btn-navy text-xs py-2.5 px-4 shadow-sm flex items-center gap-2">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
           Copy Memorandum Text
@@ -335,7 +338,276 @@
 
     </div>
 
-  </main>
+  
+    <!-- SECTION: ENTERPRISE BATTLE CARDS VS CLOUD DLP -->
+    <section id="battlecards" class="scroll-mt-24 mb-14">
+      
+      <!-- Section Header -->
+      <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-2 font-mono uppercase tracking-wider">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Sales Enablement &amp; CISO Defense Arsenal
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Enterprise Battle Cards: ZTDS vs. Legacy Cloud DLP
+          </h2>
+          <p class="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
+            Technical objection handling, architectural fault lines, and procurement counter-arguments for CISOs comparing ZTDS against Microsoft Purview, Nightfall AI, BigID, and Cloud API proxies.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2 no-print shrink-0">
+          <button id="btnPrintBattleCard" type="button" class="btn-outline text-xs py-2 px-3.5 shadow-sm flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+            <span>Print 1-Pager (PDF)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Competitor Tab Controls -->
+      <div class="flex flex-wrap items-center gap-2 mb-6 no-print" role="tablist">
+        <button type="button" id="tabBtnPurview" class="bc-tab-btn active px-4 py-2 rounded-lg text-xs font-bold border transition-colors bg-slate-900 text-white border-slate-900 shadow-sm" data-target="panePurview">
+          Microsoft Purview (Egress Policy)
+        </button>
+        <button type="button" id="tabBtnNightfall" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm" data-target="paneNightfall">
+          Nightfall AI (Cloud SaaS)
+        </button>
+        <button type="button" id="tabBtnBigid" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm" data-target="paneBigid">
+          BigID &amp; DSPM (Discovery)
+        </button>
+        <button type="button" id="tabBtnCloudApis" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm" data-target="paneCloudApis">
+          AWS Macie &amp; Google Cloud DLP
+        </button>
+      </div>
+
+      <!-- TAB PANE 1: Microsoft Purview -->
+      <div id="panePurview" class="bc-pane space-y-6">
+        <div class="ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+            <div>
+              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
+              <h3 class="text-xl font-bold text-slate-900">Microsoft Purview (Information Protection &amp; Data Loss Prevention)</h3>
+            </div>
+            <div class="inline-flex items-center px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-mono font-bold">
+              FLAW: Gateway File Boundary Only
+            </div>
+          </div>
+
+          <!-- The Architectural Vulnerability -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <h4 class="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider">The Architectural Vulnerability</h4>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              Purview was architected for document classification (Office 365, SharePoint, Exchange) and network gateway egress blocking. It relies on static file inspection or coarse network packet inspection. In dynamic AI applications, data moves as volatile JSON string buffers in streaming API calls. Purview cannot inspect, tokenize, and synchronously de-tokenize dynamic payload streams in real time (<1.2ms) without breaking application performance and model reasoning.
+            </p>
+          </div>
+
+          <!-- Objection Handling Script Playbook -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider">CISO Objection Handling Playbook</h4>
+            
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
+              <div class="text-xs font-bold text-rose-700 flex items-center gap-2">
+                <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                <span>"We already have Microsoft E5 / Purview deployed across our entire enterprise."</span>
+              </div>
+              <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500">
+                <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
+                "Purview enforces boundary policies on files, emails, and endpoints. But in your generative AI applications, your users interact via prompt interfaces, agent tools, and API calls. Purview cannot execute inside the browser or backend Node/Python process in under 1.2 milliseconds, substitute raw PII with synthetic tokens, and restore the tokens when OpenAI or Anthropic responds. Purview is a network gatekeeper; ZTDS is an in-memory data-plane transformer. You need Purview for OneDrive, but you need ZTDS for LLM pipelines."
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
+              <div class="text-xs font-bold text-rose-700 flex items-center gap-2">
+                <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                <span>"Can't we just configure Purview to block prompts that contain sensitive data?"</span>
+              </div>
+              <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500">
+                <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
+                "Blocking prompts breaks enterprise AI adoption. If a customer support representative cannot summarize a complaint because it contains an account number, the entire AI tool becomes unusable. ZTDS allows the prompt to execute safely by swapping the account number for <code>[ACCOUNT_TOKEN_1]</code>. The model successfully reasons over the context, and your local client restores the real number in the UI. You achieve 100% compliance without halting business operations."
+              </div>
+            </div>
+
+          </div>
+
+          <!-- The One-Sentence CISO Defense -->
+          <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
+              <span class="text-xs font-semibold text-emerald-950">"Purview stops documents from leaving your network; ZTDS allows your AI applications to safely compute over sensitive data without ever letting raw PII leave the device."</span>
+            </div>
+            <a href="/roi/" class="btn-trust text-xs py-2 px-3.5 shrink-0">Model ROI &rarr;</a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB PANE 2: Nightfall AI -->
+      <div id="paneNightfall" class="bc-pane hidden space-y-6">
+        <div class="ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+            <div>
+              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
+              <h3 class="text-xl font-bold text-slate-900">Nightfall AI (Cloud-Hosted SaaS Data Loss Prevention)</h3>
+            </div>
+            <div class="inline-flex items-center px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-mono font-bold">
+              FLAW: Requires Cleartext Cloud Decryption
+            </div>
+          </div>
+
+          <!-- The Architectural Vulnerability -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <h4 class="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider">The Architectural Vulnerability</h4>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              Nightfall is a centralized multi-tenant SaaS. To inspect and mask data, your enterprise must send raw, unmasked data over the internet to Nightfall's AWS cloud via webhooks or API calls. This creates an additional GDPR Article 28 subprocessor, introduces a 350ms–800ms network latency penalty on every prompt, and concentrates all corporate secrets into a single third-party target.
+            </p>
+          </div>
+
+          <!-- Objection Handling Script Playbook -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider">CISO Objection Handling Playbook</h4>
+            
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
+              <div class="text-xs font-bold text-rose-700 flex items-center gap-2">
+                <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                <span>"Nightfall is already integrated into our Slack, Jira, and GitHub."</span>
+              </div>
+              <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500">
+                <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
+                "To scan your Slack, Nightfall requires full read access to your corporate communication history, processing and storing that data on their servers. That means Nightfall is an additional subprocessor requiring a separate DPA, SOC 2 review, and vendor risk assessment. With ZTDS, data is sanitized locally in volatile memory before outbound socket creation. Exactly zero bytes of cleartext leave your perimeter. You eliminate vendor risk instead of compounding it."
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
+              <div class="text-xs font-bold text-rose-700 flex items-center gap-2">
+                <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                <span>"Nightfall offers an AI Guardrails API for LLM prompts."</span>
+              </div>
+              <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500">
+                <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
+                "Routing every prompt to Nightfall's cloud API introduces an additional 350 to 800 milliseconds of network latency before your request even reaches OpenAI or Anthropic. If Nightfall has an outage, your entire AI feature pipeline goes down. ZTDS executes synchronously inside your application process in less than 1.2 milliseconds. It works 100% offline in Airplane Mode with zero network dependencies."
+              </div>
+            </div>
+
+          </div>
+
+          <!-- The One-Sentence CISO Defense -->
+          <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
+              <span class="text-xs font-semibold text-emerald-950">"Nightfall requires sending your private data to their cloud to filter it; ZTDS sanitizes your data locally so it never leaves your execution perimeter in the first place."</span>
+            </div>
+            <a href="/roi/" class="btn-trust text-xs py-2 px-3.5 shrink-0">Model ROI &rarr;</a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB PANE 3: BigID & DSPM -->
+      <div id="paneBigid" class="bc-pane hidden space-y-6">
+        <div class="ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+            <div>
+              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
+              <h3 class="text-xl font-bold text-slate-900">BigID / Securiti.ai (Data Security Posture Management &amp; Discovery)</h3>
+            </div>
+            <div class="inline-flex items-center px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-mono font-bold">
+              FLAW: Asynchronous Discovery at Rest Only
+            </div>
+          </div>
+
+          <!-- The Architectural Vulnerability -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <h4 class="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider">The Architectural Vulnerability</h4>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              BigID is an asynchronous cataloging tool designed for Data at Rest (scanning Snowflake, S3, databases). It tells you where sensitive data is stored. It has no data-plane runtime interceptor to protect Data in Use during real-time generative agent execution, prompt streaming, or IDE code completion.
+            </p>
+          </div>
+
+          <!-- Objection Handling Script Playbook -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider">CISO Objection Handling Playbook</h4>
+            
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
+              <div class="text-xs font-bold text-rose-700 flex items-center gap-2">
+                <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                <span>"BigID is our enterprise standard for sensitive data discovery."</span>
+              </div>
+              <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500">
+                <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
+                "BigID answers the question: 'Where is sensitive data stored across our cloud datastores?'. But BigID cannot answer: 'How do we prevent an employee or automated agent from pasting an customer's credit card number or health record into Claude right now?'. BigID is a discovery audit tool for data at rest; ZTDS is a real-time runtime data-plane primitive for data in flight. They solve fundamentally different problems."
+              </div>
+            </div>
+
+          </div>
+
+          <!-- The One-Sentence CISO Defense -->
+          <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
+              <span class="text-xs font-semibold text-emerald-950">"BigID catalogs where your data sits in databases; ZTDS actively prevents your live AI workloads from leaking sensitive payloads to third-party models."</span>
+            </div>
+            <a href="/roi/" class="btn-trust text-xs py-2 px-3.5 shrink-0">Model ROI &rarr;</a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB PANE 4: AWS Macie & Google Cloud DLP -->
+      <div id="paneCloudApis" class="bc-pane hidden space-y-6">
+        <div class="ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+            <div>
+              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
+              <h3 class="text-xl font-bold text-slate-900">Google Cloud Sensitive Data Protection &amp; AWS Macie</h3>
+            </div>
+            <div class="inline-flex items-center px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-mono font-bold">
+              FLAW: Per-Query Cloud Billing &amp; Static Redaction
+            </div>
+          </div>
+
+          <!-- The Architectural Vulnerability -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <h4 class="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider">The Architectural Vulnerability</h4>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              Hyperscaler de-identification APIs require making a remote HTTP call for every prompt before dispatching to the model. This doubles roundtrip network latency (adding 200–500ms), incurs recurring per-megabyte cloud fees that scale exponentially with RAG token volume, and performs destructive redaction (replacing words with static strings like [EMAIL]) that breaks model reasoning and cannot be reversed locally.
+            </p>
+          </div>
+
+          <!-- Objection Handling Script Playbook -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider">CISO Objection Handling Playbook</h4>
+            
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
+              <div class="text-xs font-bold text-rose-700 flex items-center gap-2">
+                <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                <span>"We can just call Google Cloud DLP API or AWS Comprehend before calling the LLM."</span>
+              </div>
+              <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500">
+                <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
+                "Calling Google Cloud DLP means your application makes two serial cloud API calls for every prompt: first to Google DLP to inspect, and then to your model provider. That adds 200–500ms of lag per interaction. Furthermore, Google Cloud charges per gigabyte of inspected payload, creating unpredictable cloud bills on large RAG contexts. Finally, destructive redaction like [REDACTED] destroys the grammatical context the model needs. ZTDS executes in-memory in <1.2ms, performs context-preserving reversible tokenization, and incurs zero marginal cloud API costs."
+              </div>
+            </div>
+
+          </div>
+
+          <!-- The One-Sentence CISO Defense -->
+          <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
+              <span class="text-xs font-semibold text-emerald-950">"Cloud DLP APIs double your network latency and charge per megabyte; ZTDS executes in local memory in &lt;1.2ms with zero marginal cloud cost."</span>
+            </div>
+            <a href="/roi/" class="btn-trust text-xs py-2 px-3.5 shrink-0">Model ROI &rarr;</a>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+</main>
 
   <!-- 5-Column Institutional Light Footer -->
   <footer class="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-12 text-sm">
@@ -487,6 +759,40 @@ Consequently, ZTDS-conforming architectures are legally exempt from third-party 
       a.download = 'ZTDS-CISO-Procurement-Memo-2026.md';
       a.click();
       URL.revokeObjectURL(url);
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabBtns = document.querySelectorAll('.bc-tab-btn');
+      const panes = document.querySelectorAll('.bc-pane');
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabBtns.forEach(b => {
+            b.classList.remove('active', 'bg-slate-900', 'text-white', 'border-slate-900');
+            b.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
+          });
+          btn.classList.add('active', 'bg-slate-900', 'text-white', 'border-slate-900');
+          btn.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
+
+          const targetId = btn.getAttribute('data-target');
+          panes.forEach(pane => {
+            if (pane.id === targetId) {
+              pane.classList.remove('hidden');
+            } else {
+              pane.classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      const printBtn = document.getElementById('btnPrintBattleCard');
+      if (printBtn) {
+        printBtn.addEventListener('click', () => {
+          window.print();
+        });
+      }
     });
   </script>
 </body>
