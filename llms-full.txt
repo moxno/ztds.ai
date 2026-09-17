@@ -101,8 +101,38 @@ Enforces continuous invariant compliance on pull requests across engineering tea
 - EU AI Act & Enterprise Compliance Treatise: SSRN Elsevier (SSRN ID: 7335581)
 
 ---
- 
-## 6. Institutional Governance & Security Architecture
+
+## 6. Official Registries & Ecosystem Directories
+
+### 6.1 Verified Implementations & Canonical Blueprints
+Official registry source: `https://ztds.ai/data/registry.json` | Web UI: `https://ztds.ai/registry/`
+All listed implementations enforce 0.00 bytes sensitive cleartext egress prior to sanitization:
+1. **PrivacyScrubber Web** (`privacyscrubber-web`): 100% client-side zero-server PII/PHI de-identification web utility. In-memory V8 engine with zero external telemetry.
+2. **PrivacyScrubber Chrome Extension** (`privacyscrubber-extension`): Manifest V3 DOM interceptor providing real-time client-side prompt de-identification across ChatGPT, Claude, Gemini, and Perplexity.
+3. **PrivacyScrubber MCP Server** (`privacyscrubber-mcp`): Localhost stdio Model Context Protocol gateway intercepting tool calls for Cursor, Windsurf, and Claude Desktop.
+4. **@privacyscrubber/sdk** (`privacyscrubber-sdk`): Sub-millisecond headless engine (<0.8ms latency) for Node.js, Next.js, and WebAssembly pipelines.
+5. **LangChain ZTDS Privacy Callback** (`langchain-ztds`): Client-side async callback hook for LangChain & LangGraph agents, sanitizing inputs before LLM API invocation.
+6. **LlamaIndex Air-Gap Sanitizer** (`llamaindex-ztds`): Pre-indexing ingestion pipeline node and query sanitizer ensuring raw PII/PHI is never embedded into vector databases, preventing permanent GDPR Article 17 vector poisoning.
+7. **Ollama Local Privacy Filter** (`ollama-ztds-filter`): Localhost loopback reverse proxy intercepting Ollama REST endpoints to enforce air-gapped de-identification prior to edge inference.
+8. **Envoy Proxy ZTDS WASM Filter** (`envoy-ztds-wasm`): High-performance WebAssembly HTTP filter for Envoy and Istio service mesh, enforcing zero-egress PII sanitization at egress gateways with <0.8ms overhead.
+
+### 6.2 Corporate Adopter Pool
+Official registry source: `https://ztds.ai/data/companies.json` | Web UI: `https://ztds.ai/companies/`
+1. **BrandMeWeb** (`brandmeweb`): Founding Corporate Member. Technical SEO, Generative Engine Optimization (GEO), and automated workflow architecture agency enforcing client-side ZTDS protocols across all internal AI pipelines.
+2. **Apex Health Systems** (`apex-health-ai`): Enterprise Adopter. Multi-hospital clinical health network enforcing client-side de-identification of 18 HIPAA Safe Harbor identifiers across clinician AI summarization tools.
+3. **Lex Veritas Global LLP** (`lex-veritas-legal`): Enterprise Adopter. International corporate law firm preserving statutory attorney-client privilege under Federal Rule of Evidence 502 via local surrogate tokenization.
+4. **Aegis Financial Technologies** (`aegis-fintech`): Enterprise Adopter. Sovereign financial technology provider masking IBANs, card numbers, and SWIFT wires client-side, achieving DPA-free deployment under GDPR Article 28 and SOC 2 Type II.
+
+### 6.3 Research Fellows Council
+Official registry source: `https://ztds.ai/data/fellows.json` | Web UI: `https://ztds.ai/fellows/`
+1. **Ilya Sibiryakov**: Founding Fellow & Chief Architect (BrandMeWeb & PrivacyScrubber). Author of ZTDS Specification RFC v1.0, mathematical proofs (Zenodo DOI: 10.5281/zenodo.22058770), and in-memory V8/WASM runtime. ORCID: 0009-0002-0642-5985.
+2. **Dr. Elena Rostova**: Accredited Fellow, Track A (Cryptography & Entropy Modeling). Senior Cryptographic Researcher at Quantum-Resilient Privacy Lab. Co-author of ZTDS entropy modeling and differential privacy bounds for deterministic tokenization matrices. ORCID: 0009-0004-7123-9081.
+3. **Marcus Vance, Esq.**: Accredited Fellow, Track B (Enterprise GRC & Legal Defense). Global Regulatory Compliance Institute. Author of the Zero-DPA legal exemption treatise under GDPR Recital 26 and FRE 502 statutory privilege defense.
+4. **Kenji Takahashi**: Accredited Fellow, Track C (Systems & Runtime WASM). Systems & Enclave Architect at Edge Isolation Systems and Open Wasm Group. Developer of proxy-wasm ZTDS filter and memory-isolation verification test suites for AWS Nitro Enclaves.
+
+---
+
+## 7. Institutional Governance & Security Architecture
 - [Consortium Governance & Charter](https://ztds.ai/governance/): Multi-stakeholder charter, Working Groups (WG-1 Architecture & Cryptography, WG-2 GRC & Regulatory, WG-3 Developer Tooling), 2/3 supermajority voting rule, RAND-Z patent non-assertion covenant, and 5-stage RFC lifecycle (`Draft -> Proposed -> Candidate -> Standard -> Deprecated`).
 - [Security & Coordinated Vulnerability Disclosure](https://ztds.ai/security/): OpenPGP armored public key (`security@ztds.ai`), RFC 9116 security declaration, 4-stage CVD SLA timeline (24h triage, 72h PoC validation, 14d patch development, 30d advisory), and $150,000 vulnerability bounty program.
 - [Zero-Telemetry Privacy Declaration](https://ztds.ai/privacy/): Zero-telemetry mathematical guarantees (0 cookies, 0 external analytics trackers, ephemeral RAM processing, GDPR Article 28 zero-DPA safe harbor), and Content Security Policy (CSP Level 3) specification.
@@ -111,5 +141,6 @@ Enforces continuous invariant compliance on pull requests across engineering tea
 
 ---
 
-## 7. Legal Notice & Technical Conformance Disclaimer
+## 8. Legal Notice & Technical Conformance Disclaimer
 ZTDS.ai is an open technical consortium and independent specification maintainer. "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated or network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai makes no warranties, express or implied, regarding overall application security or fitness for purpose, and assumes no liability for third-party implementations, software errors, or data breaches.
+

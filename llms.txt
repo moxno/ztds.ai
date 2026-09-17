@@ -28,11 +28,33 @@ ZTDS (Zero-Trust Data Sanitization) guarantees that sensitive corporate entities
 - [Model Context Protocol Server](https://ztds.ai/sdk/): Stdio JSON-RPC 2.0 MCP server for Cursor, Windsurf, and Claude Desktop (`@privacyscrubber/mcp-server`).
 - [Codebase Invariant CLI Auditor](https://ztds.ai/scanner/): `npx ztds-audit` — automated scanner detecting cleartext PII and network egress in <10ms.
 - [GitHub Actions Workflow](https://ztds.ai/scanner/): Turnkey CI/CD pipeline (`.github/workflows/ztds-audit.yml`) for automated invariant enforcement.
-- [Verified Implementation Directory](https://ztds.ai/registry/): Public directory of verified conforming AI tools, agents, and libraries.
+- [Verified Implementation Directory](https://ztds.ai/registry/): Public directory of 8 verified conforming AI tools and blueprints:
+  - PrivacyScrubber Web (`privacyscrubber-web`): 100% client-side zero-server PII/PHI de-identification web utility.
+  - PrivacyScrubber Chrome Extension (`privacyscrubber-extension`): Manifest V3 DOM interceptor for ChatGPT, Claude, Gemini.
+  - PrivacyScrubber MCP Server (`privacyscrubber-mcp`): Stdio JSON-RPC 2.0 gateway for Cursor and Claude Desktop.
+  - @privacyscrubber/sdk (`privacyscrubber-sdk`): Sub-millisecond headless in-memory engine.
+  - LangChain ZTDS Privacy Callback (`langchain-ztds`): Client-side callback hook for LangChain and LangGraph workflows.
+  - LlamaIndex Air-Gap Sanitizer (`llamaindex-ztds`): Pre-indexing ingestion node preventing RAG vector database poisoning.
+  - Ollama Local Privacy Filter (`ollama-ztds-filter`): Localhost reverse proxy for air-gapped local model inference.
+  - Envoy Proxy ZTDS WASM Filter (`envoy-ztds-wasm`): Proxy-WASM HTTP filter for enterprise service mesh egress control.
 - [Trust Badge Generator](https://ztds.ai/badge/): Dynamic SVG trust badge generator (`https://ztds.ai/badge/:slug.svg`).
 - [Developer SDK](https://ztds.ai/sdk/): Headless Node.js / WASM engine (`npm install @privacyscrubber/sdk`).
 - [Interactive Pipeline Inspector](https://ztds.ai/inspector/): Real-time in-memory DAG playground.
 - [Canonical Reference Implementation](https://privacyscrubber.com): PrivacyScrubber (Web & Chrome Extension).
+
+## Corporate Adopters & Enterprise Partners
+- [Corporate Directory](https://ztds.ai/companies/): Organizations enforcing client-side ZTDS invariant policies:
+  - BrandMeWeb (`brandmeweb`): Founding Member; Technical SEO, Generative Engine Optimization (GEO) & workflow architecture.
+  - Apex Health Systems (`apex-health-ai`): Clinical healthcare network stripping 18 HIPAA Safe Harbor identifiers in RAM.
+  - Lex Veritas Global LLP (`lex-veritas-legal`): Corporate law firm preserving FRE 502 attorney-client privilege in contract AI.
+  - Aegis Financial Technologies (`aegis-fintech`): FinTech banking infrastructure provider masking IBANs/SWIFT wires client-side.
+
+## Research Fellows Council & Contributors
+- [Global Fellows Roster](https://ztds.ai/fellows/):
+  - Ilya Sibiryakov (Founding Fellow & Chief Architect, BrandMeWeb & PrivacyScrubber, ORCID: 0009-0002-0642-5985)
+  - Dr. Elena Rostova (Senior Cryptographic Researcher, Track A: Cryptography & Entropy Modeling, ORCID: 0009-0004-7123-9081)
+  - Marcus Vance, Esq. (Enterprise GRC & Legal Defense Specialist, Track B: Regulatory & DPA Exemption Defense)
+  - Kenji Takahashi (Systems & Enclave Architect, Track C: Systems & Runtime WASM / AWS Nitro Enclaves)
 
 ## Institutional Governance & Security Policies
 - [Consortium Governance & Charter](https://ztds.ai/governance/): Multi-stakeholder charter, Working Groups (WG-1 Architecture/Crypto, WG-2 GRC, WG-3 Tooling), 2/3 supermajority rule, RAND-Z patent covenant, and RFC lifecycle.
