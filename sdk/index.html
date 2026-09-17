@@ -152,170 +152,525 @@
   </aside>
 
   <!-- Main Content -->
-  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full space-y-16">
     
-    <!-- Hero Header -->
-    <div class="mb-12 text-center max-w-3xl mx-auto">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-semibold text-blue-800 mb-4 shadow-sm">
+    <!-- Hero Header & Package Manager Switcher -->
+    <div class="text-center max-w-3xl mx-auto space-y-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-semibold text-blue-800 shadow-sm">
         <span class="w-2 h-2 rounded-full bg-blue-600"></span>
         <span>Developer Engine &middot; Apache 2.0 Dual License</span>
       </div>
       <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-        Developer SDK &amp; Connectors
+        Developer SDK &amp; Pre-Built Connectors
       </h1>
-      <p class="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
-        Integrate zero-trust data sanitization into your AI pipeline in under 5 minutes. The canonical reference implementation <strong class="text-slate-900 font-mono">@privacyscrubber/sdk</strong> executes 100% locally with &lt; 0.8ms average latency.
+      <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
+        Drop-in, client-side zero-trust data sanitization for modern AI pipelines. The canonical reference implementation <code class="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-mono font-bold">@privacyscrubber/sdk</code> executes in &lt; 0.8ms in local host process memory with 0.00 bytes socket egress.
       </p>
 
-      <!-- Quick Install Bar -->
-      <div class="mt-6 inline-flex items-center gap-3 p-2 bg-slate-900 text-white rounded-xl shadow-md font-mono text-xs max-w-md w-full justify-between">
-        <span class="text-slate-300 ml-2">npm install @privacyscrubber/sdk</span>
-        <button id="copyInstallBtn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 font-semibold transition-colors">
-          Copy
-        </button>
+      <!-- Quick Install Bar with Multi-Manager Switcher -->
+      <div class="pt-2 max-w-xl mx-auto">
+        <div class="p-1 bg-slate-100 rounded-xl flex items-center justify-center gap-1 text-xs font-mono mb-2" id="pkg-manager-tabs">
+          <button class="pkg-tab-btn px-3 py-1.5 rounded-lg bg-white text-slate-900 font-bold shadow-xs transition-all" data-mgr="npm">npm</button>
+          <button class="pkg-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 font-medium transition-all" data-mgr="pnpm">pnpm</button>
+          <button class="pkg-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 font-medium transition-all" data-mgr="yarn">yarn</button>
+          <button class="pkg-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 font-medium transition-all" data-mgr="pip">pip</button>
+        </div>
+
+        <div class="flex items-center justify-between gap-3 p-3.5 bg-slate-900 text-white rounded-xl shadow-md font-mono text-xs">
+          <div class="flex items-center gap-2 overflow-x-auto min-w-0">
+            <span class="text-slate-500 select-none">$</span>
+            <span class="text-slate-200" id="installCmdDisplay">npm install @privacyscrubber/sdk</span>
+          </div>
+          <button id="copyInstallBtn" class="shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 font-semibold transition-colors flex items-center gap-1">
+            <span id="copyInstallText">Copy</span>
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- 4 Key Advantages Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+    <!-- 4 Key Invariants / Advantages Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="ztds-card p-5 bg-white border border-slate-200 rounded-xl shadow-sm">
         <div class="text-xs font-bold uppercase text-slate-400 font-mono">Local Latency</div>
         <div class="text-2xl font-bold text-emerald-600 mt-1">&lt; 0.8 ms</div>
-        <div class="text-xs text-slate-500 mt-1">OSF Benchmark (10.17605)</div>
+        <div class="text-xs text-slate-500 mt-1">OSF Benchmark (10.17605/OSF.IO/5BYJF)</div>
       </div>
       <div class="ztds-card p-5 bg-white border border-slate-200 rounded-xl shadow-sm">
         <div class="text-xs font-bold uppercase text-slate-400 font-mono">Socket Egress</div>
         <div class="text-2xl font-bold text-slate-900 mt-1">0.00 Bytes</div>
-        <div class="text-xs text-slate-500 mt-1">Zero outbound telemetry</div>
+        <div class="text-xs text-slate-500 mt-1">Zero outbound network telemetry</div>
       </div>
       <div class="ztds-card p-5 bg-white border border-slate-200 rounded-xl shadow-sm">
         <div class="text-xs font-bold uppercase text-slate-400 font-mono">Memory Security</div>
         <div class="text-2xl font-bold text-slate-900 mt-1">Volatile RAM</div>
-        <div class="text-xs text-slate-500 mt-1">Wiped on process exit</div>
+        <div class="text-xs text-slate-500 mt-1">Wiped on process termination</div>
       </div>
       <div class="ztds-card p-5 bg-white border border-slate-200 rounded-xl shadow-sm">
-        <div class="text-xs font-bold uppercase text-slate-400 font-mono">License</div>
-        <div class="text-2xl font-bold text-blue-600 mt-1">Apache 2.0</div>
-        <div class="text-xs text-slate-500 mt-1">Commercial &amp; OSS Safe</div>
+        <div class="text-xs font-bold uppercase text-slate-400 font-mono">Legal Exemption</div>
+        <div class="text-2xl font-bold text-blue-600 mt-1">Zero-DPA</div>
+        <div class="text-xs text-slate-500 mt-1">GDPR Art. 28 computational utility</div>
       </div>
     </div>
 
-    <!-- Code Integration Showcase with Tabs -->
-    <div class="ztds-card bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden mb-16">
-      <div class="p-6 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <!-- In-Memory Data Plane Architectural Flow Diagram -->
+    <div class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
         <div>
+          <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Data Plane Primitive</div>
+          <h2 class="text-xl font-bold text-slate-900">In-Memory Execution Architecture</h2>
+        </div>
+        <span class="text-xs font-mono px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold w-fit">
+          Invariant 1 &middot; 0.00 Bytes Egress
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-stretch text-xs">
+        
+        <!-- Step 1 -->
+        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="font-mono text-[10px] text-slate-400 font-bold uppercase">Step 01 &middot; Client Host</div>
+            <div class="font-bold text-slate-900 text-sm mt-1">Raw Ingestion in RAM</div>
+            <p class="text-slate-600 text-xs mt-1.5 leading-relaxed">Cleartext PII, PHI, API secrets, or proprietary code loaded into process volatile memory before dispatch.</p>
+          </div>
+          <div class="font-mono text-[10px] px-2 py-1 rounded bg-slate-200 text-slate-800 w-fit font-semibold">Client Volatile Memory</div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="p-5 rounded-xl bg-emerald-50/70 border border-emerald-200 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="font-mono text-[10px] text-emerald-800 font-bold uppercase">Step 02 &middot; Local Tokenizer</div>
+            <div class="font-bold text-emerald-950 text-sm mt-1">In-Memory Sanitization</div>
+            <p class="text-emerald-900 text-xs mt-1.5 leading-relaxed">Generates deterministic surrogates ([NAME_1], [IBAN_1]) in &lt;0.8ms. Maps cleartext keys in volatile sessionMap.</p>
+          </div>
+          <div class="font-mono text-[10px] px-2 py-1 rounded bg-emerald-200 text-emerald-900 font-bold w-fit">&lt; 0.8ms &middot; Invariant 2</div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="font-mono text-[10px] text-slate-400 font-bold uppercase">Step 03 &middot; Egress Wire</div>
+            <div class="font-bold text-slate-900 text-sm mt-1">External AI Provider</div>
+            <p class="text-slate-600 text-xs mt-1.5 leading-relaxed">OpenAI, Claude, Gemini, or Pinecone processes sanitized context. Zero bytes cleartext cross the socket perimeter.</p>
+          </div>
+          <div class="font-mono text-[10px] px-2 py-1 rounded bg-rose-100 text-rose-800 font-bold w-fit">0 Bytes Egress Exposure</div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="p-5 rounded-xl bg-blue-50/70 border border-blue-200 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="font-mono text-[10px] text-blue-800 font-bold uppercase">Step 04 &middot; Client Host</div>
+            <div class="font-bold text-blue-950 text-sm mt-1">Local Lossless Reversal</div>
+            <p class="text-blue-900 text-xs mt-1.5 leading-relaxed">Surrogate tokens restored to cleartext locally in volatile memory. Mapping destroyed on process termination.</p>
+          </div>
+          <div class="font-mono text-[10px] px-2 py-1 rounded bg-blue-200 text-blue-900 font-bold w-fit">Zero Disk Persistence</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Code Integration Recipes Showcase with Framework Tabs -->
+    <div class="ztds-card bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden" id="connectors">
+      <div class="p-6 border-b border-slate-200 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+        <div>
+          <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Turnkey Middleware</div>
           <h2 class="text-xl font-bold text-slate-900">5-Minute Integration Recipes</h2>
-          <p class="text-xs text-slate-500 mt-1">Select your stack to view ready-to-run drop-in code.</p>
+          <p class="text-xs text-slate-500 mt-1">Select your stack to view production-ready, copy-pasteable connector code.</p>
         </div>
         
-        <div class="flex items-center gap-1.5 p-1 bg-slate-100 rounded-lg text-xs font-semibold">
-          <button class="code-tab-btn px-3 py-1.5 rounded-md bg-white text-slate-900 shadow-xs" data-tab="ts">TypeScript / Node</button>
-          <button class="code-tab-btn px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900" data-tab="python">Python</button>
-          <button class="code-tab-btn px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900" data-tab="langchain">LangChain</button>
-          <button class="code-tab-btn px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900" data-tab="mcp">MCP Stdio (Cursor)</button>
+        <div class="flex flex-wrap items-center gap-1.5 p-1 bg-slate-100 rounded-xl text-xs font-semibold" id="recipe-tabs">
+          <button class="recipe-tab-btn px-3 py-1.5 rounded-lg bg-white text-slate-900 shadow-xs font-bold" data-recipe="langchain">LangChain</button>
+          <button class="recipe-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="llamaindex">LlamaIndex (RAG)</button>
+          <button class="recipe-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="mcp">MCP (Cursor / Claude)</button>
+          <button class="recipe-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="ts">TypeScript / Node</button>
+          <button class="recipe-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="python">Python Bridge</button>
         </div>
       </div>
 
-      <!-- Code Snippet Display -->
-      <div class="code-container rounded-none border-none">
-        <div id="codeTs" class="code-block p-6 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed">
-<span class="text-slate-500">// TypeScript / Node.js 18+</span>
-<span class="text-blue-400">import</span> { ZTDSClient } <span class="text-blue-400">from</span> <span class="text-emerald-300">'@privacyscrubber/sdk'</span>;
-<span class="text-blue-400">import</span> OpenAI <span class="text-blue-400">from</span> <span class="text-emerald-300">'openai'</span>;
-
-<span class="text-blue-400">const</span> openai = <span class="text-blue-400">new</span> <span class="text-yellow-300">OpenAI</span>();
-<span class="text-blue-400">const</span> ztds = <span class="text-blue-400">new</span> <span class="text-yellow-300">ZTDSClient</span>({
-  entities: [<span class="text-emerald-300">'NAMES'</span>, <span class="text-emerald-300">'EMAILS'</span>, <span class="text-emerald-300">'PHONE_NUMBERS'</span>, <span class="text-emerald-300">'FINANCIAL_IDS'</span>, <span class="text-emerald-300">'SECRETS'</span>],
-  reversible: <span class="text-purple-400">true</span>
-});
-
-<span class="text-blue-400">async function</span> <span class="text-yellow-300">askAI</span>(userPrompt: <span class="text-blue-400">string</span>) {
-  <span class="text-slate-500">// 1. Strip sensitive data locally in client volatile memory</span>
-  <span class="text-blue-400">const</span> { safePrompt, tokenMap } = ztds.<span class="text-yellow-300">sanitize</span>(userPrompt);
-
-  <span class="text-slate-500">// 2. Send sanitized prompt to OpenAI (0 bytes cleartext PII exposed)</span>
-  <span class="text-blue-400">const</span> completion = <span class="text-blue-400">await</span> openai.chat.completions.<span class="text-yellow-300">create</span>({
-    model: <span class="text-emerald-300">'gpt-4o'</span>,
-    messages: [{ role: <span class="text-emerald-300">'user'</span>, content: safePrompt }]
-  });
-
-  <span class="text-slate-500">// 3. Re-hydrate AI response with real values locally</span>
-  <span class="text-blue-400">return</span> ztds.<span class="text-yellow-300">restore</span>(completion.choices[<span class="text-purple-400">0</span>].message.content, tokenMap);
-}
+      <!-- Code Header & Copy Row -->
+      <div class="px-6 py-3 bg-slate-800 text-slate-300 text-xs font-mono flex items-center justify-between border-b border-slate-700">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          <span class="ml-2 text-slate-400 font-bold" id="activeFileName">ztds-langchain-callback.ts</span>
         </div>
+        <button id="btnCopyActiveCode" class="text-emerald-400 hover:text-emerald-300 font-sans text-xs font-semibold px-2.5 py-1 rounded bg-slate-700 hover:bg-slate-600 transition-colors">
+          Copy Snippet
+        </button>
+      </div>
 
-        <div id="codePython" class="code-block p-6 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed hidden">
-<span class="text-slate-500"># Python 3.9+ Bridge</span>
-<span class="text-blue-400">from</span> ztds <span class="text-blue-400">import</span> ZTDSClient
-<span class="text-blue-400">import</span> openai
+      <!-- Code Content Panes -->
+      <div class="bg-slate-900 text-slate-200">
+        
+        <!-- PANE 1: LangChain -->
+        <div id="recipeLangchain" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4">
+          <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 text-slate-300 text-[11px] leading-relaxed mb-4">
+            <strong class="text-emerald-400 font-sans block mb-0.5">LangChain BaseCallbackHandler Middleware</strong>
+            Intercepts prompts and completions transparently across any LCEL chain, ChatOpenAI, ChatAnthropic, or LangGraph agent without modifying existing pipeline logic.
+          </div>
+          <pre class="text-slate-100"><code><span class="text-slate-500">// ztds-langchain-callback.ts</span>
+<span class="text-blue-400">import</span> { BaseCallbackHandler } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@langchain/core/callbacks/base"</span>;
+<span class="text-blue-400">import</span> { LLMResult } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@langchain/core/outputs"</span>;
+<span class="text-blue-400">import</span> { ZTDSEngine } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@privacyscrubber/sdk"</span>;
+<span class="text-blue-400">import</span> { ChatOpenAI } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@langchain/openai"</span>;
 
-client = ZTDSClient()
+<span class="text-blue-400">export class</span> <span class="text-yellow-300">ZTDSCallbackHandler</span> <span class="text-blue-400">extends</span> <span class="text-yellow-300">BaseCallbackHandler</span> {
+  name = <span class="text-emerald-300">"ZTDSCallbackHandler"</span>;
+  <span class="text-blue-400">private</span> engine: ZTDSEngine;
+  <span class="text-blue-400">private</span> sessionMaps: Map&lt;<span class="text-blue-400">string</span>, Record&lt;<span class="text-blue-400">string</span>, <span class="text-blue-400">string</span>&gt;&gt; = <span class="text-blue-400">new</span> Map();
 
-<span class="text-blue-400">def</span> <span class="text-yellow-300">safe_ai_call</span>(prompt: str) -&gt; str:
-    <span class="text-slate-500"># Sanitize locally</span>
-    result = client.sanitize(prompt)
-    
-    <span class="text-slate-500"># Call OpenAI</span>
-    response = openai.chat.completions.create(
-        model=<span class="text-emerald-300">"gpt-4o"</span>,
-        messages=[{<span class="text-emerald-300">"role"</span>: <span class="text-emerald-300">"user"</span>, <span class="text-emerald-300">"content"</span>: result.safe_prompt}]
-    )
-    
-    <span class="text-slate-500"># Restore locally</span>
-    <span class="text-blue-400">return</span> client.restore(response.choices[<span class="text-purple-400">0</span>].message.content, result.token_map)
-        </div>
-
-        <div id="codeLangchain" class="code-block p-6 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed hidden">
-<span class="text-slate-500">// LangChain Expression Language (LCEL) Middleware</span>
-<span class="text-blue-400">import</span> { RunnableLambda } <span class="text-blue-400">from</span> <span class="text-emerald-300">'@langchain/core/runnables'</span>;
-<span class="text-blue-400">import</span> { ZTDSClient } <span class="text-blue-400">from</span> <span class="text-emerald-300">'@privacyscrubber/sdk'</span>;
-
-<span class="text-blue-400">const</span> ztds = <span class="text-blue-400">new</span> <span class="text-yellow-300">ZTDSClient</span>();
-
-<span class="text-blue-400">const</span> sanitizeStep = <span class="text-blue-400">new</span> <span class="text-yellow-300">RunnableLambda</span>({
-  func: (input: { prompt: <span class="text-blue-400">string</span> }) =&gt; {
-    <span class="text-blue-400">const</span> { safePrompt, tokenMap } = ztds.<span class="text-yellow-300">sanitize</span>(input.prompt);
-    <span class="text-blue-400">return</span> { safePrompt, tokenMap };
+  <span class="text-blue-400">constructor</span>(profile: <span class="text-emerald-300">"general"</span> | <span class="text-emerald-300">"healthcare"</span> | <span class="text-emerald-300">"fintech"</span> | <span class="text-emerald-300">"legal"</span> = <span class="text-emerald-300">"general"</span>) {
+    <span class="text-blue-400">super</span>();
+    <span class="text-blue-400">this</span>.engine = <span class="text-blue-400">new</span> <span class="text-yellow-300">ZTDSEngine</span>({ profile });
   }
-});
+
+  <span class="text-slate-500">// 1. Intercept and sanitize prompts before network dispatch</span>
+  <span class="text-blue-400">async</span> <span class="text-yellow-300">handleLLMStart</span>(llm: { name: <span class="text-blue-400">string</span> }, prompts: <span class="text-blue-400">string</span>[], runId: <span class="text-blue-400">string</span>) {
+    <span class="text-blue-400">for</span> (<span class="text-blue-400">let</span> i = <span class="text-purple-400">0</span>; i &lt; prompts.length; i++) {
+      <span class="text-blue-400">const</span> { sanitizedPrompt, sessionMap } = <span class="text-blue-400">this</span>.engine.<span class="text-yellow-300">sanitize</span>(prompts[i]);
+      prompts[i] = sanitizedPrompt; <span class="text-slate-500">// In-place payload replacement</span>
+      <span class="text-blue-400">this</span>.sessionMaps.<span class="text-yellow-300">set</span>(runId, sessionMap);
+    }
+  }
+
+  <span class="text-slate-500">// 2. Losslessly restore cleartext strictly inside local volatile RAM</span>
+  <span class="text-blue-400">async</span> <span class="text-yellow-300">handleLLMEnd</span>(output: LLMResult, runId: <span class="text-blue-400">string</span>) {
+    <span class="text-blue-400">const</span> sessionMap = <span class="text-blue-400">this</span>.sessionMaps.<span class="text-yellow-300">get</span>(runId);
+    <span class="text-blue-400">if</span> (!sessionMap) <span class="text-blue-400">return</span>;
+
+    <span class="text-blue-400">for</span> (<span class="text-blue-400">const</span> generations <span class="text-blue-400">of</span> output.generations) {
+      <span class="text-blue-400">for</span> (<span class="text-blue-400">const</span> gen <span class="text-blue-400">of</span> generations) {
+        gen.text = <span class="text-blue-400">this</span>.engine.<span class="text-yellow-300">reveal</span>(gen.text, sessionMap);
+      }
+    }
+    <span class="text-blue-400">this</span>.sessionMaps.<span class="text-yellow-300">delete</span>(runId); <span class="text-slate-500">// Wipe sessionMap from RAM immediately</span>
+  }
+}
+
+<span class="text-slate-500">// Drop-in usage:</span>
+<span class="text-blue-400">const</span> model = <span class="text-blue-400">new</span> <span class="text-yellow-300">ChatOpenAI</span>({
+  modelName: <span class="text-emerald-300">"gpt-4o"</span>,
+  callbacks: [<span class="text-blue-400">new</span> <span class="text-yellow-300">ZTDSCallbackHandler</span>(<span class="text-emerald-300">"healthcare"</span>)]
+});</code></pre>
         </div>
 
-        <div id="codeMcp" class="code-block p-6 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed hidden">
-<span class="text-slate-500">// Cursor &amp; Claude Desktop MCP Configuration (~/.cursor/mcp.json)</span>
+        <!-- PANE 2: LlamaIndex -->
+        <div id="recipeLlamaindex" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4 hidden">
+          <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 text-slate-300 text-[11px] leading-relaxed mb-4">
+            <strong class="text-emerald-400 font-sans block mb-0.5">LlamaIndex IngestionPipeline TransformComponent</strong>
+            Immunizes vector stores (Pinecone, Qdrant, Chroma, Milvus) against permanent GDPR Article 17 vector poisoning by sanitizing documents before embedding creation.
+          </div>
+          <pre class="text-slate-100"><code><span class="text-slate-500"># ztds_llamaindex_transform.py</span>
+<span class="text-blue-400">from</span> typing <span class="text-blue-400">import</span> List, Optional
+<span class="text-blue-400">from</span> llama_index.core.schema <span class="text-blue-400">import</span> BaseNode, TransformComponent
+<span class="text-blue-400">from</span> llama_index.core.ingestion <span class="text-blue-400">import</span> IngestionPipeline
+<span class="text-blue-400">from</span> llama_index.core.node_parser <span class="text-blue-400">import</span> SentenceSplitter
+<span class="text-blue-400">from</span> privacyscrubber <span class="text-blue-400">import</span> ZTDSEngine
+
+<span class="text-blue-400">class</span> <span class="text-yellow-300">ZTDSTransformation</span>(TransformComponent):
+    <span class="text-emerald-300">"""Pre-indexing ingestion sanitizer preventing raw PII vector storage."""</span>
+    profile: str = <span class="text-emerald-300">"fintech"</span>
+
+    <span class="text-blue-400">def</span> <span class="text-yellow-300">__init__</span>(self, profile: str = <span class="text-emerald-300">"fintech"</span>):
+        super().__init__()
+        self.profile = profile
+        self._engine = ZTDSEngine(profile=self.profile)
+
+    <span class="text-blue-400">def</span> <span class="text-yellow-300">__call__</span>(self, nodes: List[BaseNode], **kwargs) -&gt; List[BaseNode]:
+        <span class="text-blue-400">for</span> node <span class="text-blue-400">in</span> nodes:
+            <span class="text-slate-500"># 1. Deterministic surrogate replacement ([IBAN_1], [SSN_1])</span>
+            sanitized_text, token_map = self._engine.sanitize(node.get_content())
+            node.set_content(sanitized_text)
+
+            <span class="text-slate-500"># 2. Add cryptographically verifiable audit tags</span>
+            node.metadata[<span class="text-emerald-300">"ztds_sanitized"</span>] = <span class="text-purple-400">True</span>
+            node.metadata[<span class="text-emerald-300">"ztds_tokens_masked"</span>] = len(token_map)
+        <span class="text-blue-400">return</span> nodes
+
+<span class="text-slate-500"># Production RAG Ingestion Pipeline</span>
+pipeline = IngestionPipeline(
+    transformations=[
+        SentenceSplitter(chunk_size=<span class="text-purple-400">512</span>, chunk_overlap=<span class="text-purple-400">32</span>),
+        ZTDSTransformation(profile=<span class="text-emerald-300">"fintech"</span>) <span class="text-slate-500"># Vector DB receives 0 bytes cleartext</span>
+    ]
+)
+nodes = pipeline.run(documents=documents)</code></pre>
+        </div>
+
+        <!-- PANE 3: MCP (Cursor / Claude) -->
+        <div id="recipeMcp" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4 hidden">
+          <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 text-slate-300 text-[11px] leading-relaxed mb-4">
+            <strong class="text-emerald-400 font-sans block mb-0.5">Model Context Protocol (MCP) Stdio Gateway</strong>
+            Standard JSON-RPC 2.0 interface for Cursor IDE, Claude Desktop, Claude Code CLI, and Windsurf running locally with zero external network connectivity.
+          </div>
+          <pre class="text-slate-100"><code><span class="text-slate-500">// ~/.cursor/mcp.json or claude_desktop_config.json</span>
 {
   <span class="text-blue-400">"mcpServers"</span>: {
-    <span class="text-blue-400">"ztds-sanitizer"</span>: {
+    <span class="text-blue-400">"privacyscrubber-ztds"</span>: {
       <span class="text-blue-400">"command"</span>: <span class="text-emerald-300">"npx"</span>,
-      <span class="text-blue-400">"args"</span>: [<span class="text-emerald-300">"-y"</span>, <span class="text-emerald-300">"@privacyscrubber/sdk"</span>, <span class="text-emerald-300">"--mcp"</span>]
+      <span class="text-blue-400">"args"</span>: [<span class="text-emerald-300">"-y"</span>, <span class="text-emerald-300">"@privacyscrubber/mcp-server@latest"</span>],
+      <span class="text-blue-400">"env"</span>: {
+        <span class="text-blue-400">"ZTDS_INVARIANTS_ENFORCE"</span>: <span class="text-emerald-300">"true"</span>,
+        <span class="text-blue-400">"ZTDS_TELEMETRY"</span>: <span class="text-emerald-300">"false"</span>
+      }
     }
   }
 }
+
+<span class="text-slate-500"># Claude Code CLI Registration:</span>
+<span class="text-slate-300">claude mcp add privacyscrubber npx -y @privacyscrubber/mcp-server@latest</span>
+
+<span class="text-slate-500">/*
+Available MCP Tools exposed to your agent:
+  - ztds_sanitize_prompt: Strips secrets, env tokens, and PII from prompts.
+  - ztds_restore_response: Restores surrogate tokens in agent outputs.
+  - ztds_verify_payload: Pre-flight audit asserting 0.00 bytes sensitive egress.
+*/</span></code></pre>
         </div>
+
+        <!-- PANE 4: TypeScript Direct -->
+        <div id="recipeTs" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4 hidden">
+          <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 text-slate-300 text-[11px] leading-relaxed mb-4">
+            <strong class="text-emerald-400 font-sans block mb-0.5">Headless In-Memory TypeScript Engine</strong>
+            Ultra-low-latency runtime for Next.js API routes, Express microservices, and Node.js backend processes with latency budget guarantees.
+          </div>
+          <pre class="text-slate-100"><code><span class="text-blue-400">import</span> { ZTDSEngine } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@privacyscrubber/sdk"</span>;
+<span class="text-blue-400">import</span> OpenAI <span class="text-blue-400">from</span> <span class="text-emerald-300">"openai"</span>;
+
+<span class="text-blue-400">const</span> openai = <span class="text-blue-400">new</span> <span class="text-yellow-300">OpenAI</span>();
+<span class="text-blue-400">const</span> ztds = <span class="text-blue-400">new</span> <span class="text-yellow-300">ZTDSEngine</span>({
+  profile: <span class="text-emerald-300">"healthcare"</span>, <span class="text-slate-500">// "general" | "healthcare" | "fintech" | "legal" | "devops"</span>
+  maxLatencyMs: <span class="text-purple-400">2.0</span>      <span class="text-slate-500">// Invariant 3: Hard abort if tokenization takes &gt;2ms</span>
+});
+
+<span class="text-blue-400">async function</span> <span class="text-yellow-300">callSecureAI</span>(userPrompt: <span class="text-blue-400">string</span>): Promise&lt;<span class="text-blue-400">string</span>&gt; {
+  <span class="text-slate-500">// 1. Strip sensitive entities in local volatile RAM (&lt;0.8ms, 0.00 bytes egress)</span>
+  <span class="text-blue-400">const</span> { sanitizedPrompt, sessionMap, latencyMs } = ztds.<span class="text-yellow-300">sanitize</span>(userPrompt);
+
+  <span class="text-slate-500">// 2. Transmit sanitized prompt to external LLM provider</span>
+  <span class="text-blue-400">const</span> completion = <span class="text-blue-400">await</span> openai.chat.completions.<span class="text-yellow-300">create</span>({
+    model: <span class="text-emerald-300">"gpt-4o"</span>,
+    messages: [{ role: <span class="text-emerald-300">"user"</span>, content: sanitizedPrompt }]
+  });
+
+  <span class="text-slate-500">// 3. Losslessly restore cleartext strictly inside local memory</span>
+  <span class="text-blue-400">const</span> rawResponse = completion.choices[<span class="text-purple-400">0</span>].message.content || <span class="text-emerald-300">""</span>;
+  <span class="text-blue-400">return</span> ztds.<span class="text-yellow-300">reveal</span>(rawResponse, sessionMap);
+}</code></pre>
+        </div>
+
+        <!-- PANE 5: Python Bridge -->
+        <div id="recipePython" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4 hidden">
+          <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 text-slate-300 text-[11px] leading-relaxed mb-4">
+            <strong class="text-emerald-400 font-sans block mb-0.5">Python 3.9+ Local Synchronous Bridge</strong>
+            High-throughput binding utilizing WebAssembly / C-FFI linear memory. Guarantees 0.00 bytes socket transmission prior to prompt sanitization.
+          </div>
+          <pre class="text-slate-100"><code><span class="text-blue-400">from</span> ztds <span class="text-blue-400">import</span> ZTDSEngine
+<span class="text-blue-400">from</span> openai <span class="text-blue-400">import</span> OpenAI
+
+client = OpenAI()
+engine = ZTDSEngine(profile=<span class="text-emerald-300">"legal"</span>)
+
+<span class="text-blue-400">def</span> <span class="text-yellow-300">safe_ai_inference</span>(raw_prompt: str) -&gt; str:
+    <span class="text-slate-500"># 1. In-memory deterministic sanitization</span>
+    res = engine.sanitize(raw_prompt)
+    print(f<span class="text-emerald-300">"Sanitized payload: {res.sanitized_prompt} in {res.latency_ms}ms"</span>)
+
+    <span class="text-slate-500"># 2. Call external model (0 bytes cleartext attorney-client privileged data)</span>
+    response = client.chat.completions.create(
+        model=<span class="text-emerald-300">"gpt-4o"</span>,
+        messages=[{<span class="text-emerald-300">"role"</span>: <span class="text-emerald-300">"user"</span>, <span class="text-emerald-300">"content"</span>: res.sanitized_prompt}]
+    )
+
+    <span class="text-slate-500"># 3. Local in-memory restoration</span>
+    <span class="text-blue-400">return</span> engine.reveal(response.choices[<span class="text-purple-400">0</span>].message.content, res.session_map)</code></pre>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- AI Framework Compatibility Matrix Table -->
+    <div class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6" id="compatibility">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+        <div>
+          <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Ecosystem Coverage</div>
+          <h2 class="text-xl font-bold text-slate-900">AI Framework Compatibility Matrix</h2>
+        </div>
+        <span class="text-xs font-mono text-slate-500">6 Supported Environments</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-xs text-left border border-slate-200 rounded-xl overflow-hidden">
+          <thead class="bg-slate-100 text-slate-700 uppercase font-mono font-bold text-[11px]">
+            <tr>
+              <th class="p-3 border-b">Framework / Tool</th>
+              <th class="p-3 border-b">Integration Method</th>
+              <th class="p-3 border-b">Latency Budget</th>
+              <th class="p-3 border-b">Token Reversibility</th>
+              <th class="p-3 border-b">Air-Gap Status</th>
+              <th class="p-3 border-b">Audit Trail</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-slate-700 font-sans">
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">LangChain &amp; LangGraph</td>
+              <td class="p-3 font-mono text-[11px]">ZTDSCallbackHandler</td>
+              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 1.1 ms</td>
+              <td class="p-3 text-emerald-700 font-semibold">Lossless Reversible</td>
+              <td class="p-3 text-emerald-700 font-semibold">100% Offline</td>
+              <td class="p-3 font-mono text-[11px]">Session Hash</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">LlamaIndex (RAG Pipelines)</td>
+              <td class="p-3 font-mono text-[11px]">ZTDSTransformation</td>
+              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 0.9 ms</td>
+              <td class="p-3 text-emerald-700 font-semibold">Vector Immunized</td>
+              <td class="p-3 text-emerald-700 font-semibold">100% Offline</td>
+              <td class="p-3 font-mono text-[11px]">SHA-256 Checksum</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">Cursor &amp; Claude Code CLI</td>
+              <td class="p-3 font-mono text-[11px]">MCP Stdio Gateway</td>
+              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 1.5 ms</td>
+              <td class="p-3 text-emerald-700 font-semibold">Interactive In-IDE</td>
+              <td class="p-3 text-emerald-700 font-semibold">Local Stdio Only</td>
+              <td class="p-3 font-mono text-[11px]">Local Audit Log</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">Ollama &amp; Local vLLM</td>
+              <td class="p-3 font-mono text-[11px]">Reverse Proxy Loopback</td>
+              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 0.8 ms</td>
+              <td class="p-3 text-emerald-700 font-semibold">Streaming Reversal</td>
+              <td class="p-3 text-emerald-700 font-semibold">Fully Air-Gapped</td>
+              <td class="p-3 font-mono text-[11px]">Invariant Proof</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">Vercel AI SDK</td>
+              <td class="p-3 font-mono text-[11px]">Stream Transform Hook</td>
+              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 1.2 ms</td>
+              <td class="p-3 text-emerald-700 font-semibold">Bidirectional Stream</td>
+              <td class="p-3 text-emerald-700 font-semibold">Edge Runtime Safe</td>
+              <td class="p-3 font-mono text-[11px]">Zero-Telemetry</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">CrewAI &amp; AutoGen</td>
+              <td class="p-3 font-mono text-[11px]">Inter-Agent Role Filter</td>
+              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 1.0 ms</td>
+              <td class="p-3 text-emerald-700 font-semibold">Per-Agent Session</td>
+              <td class="p-3 text-emerald-700 font-semibold">Localhost Only</td>
+              <td class="p-3 font-mono text-[11px]">State Isolation</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Commercial Licensing & Support Tiers -->
+    <div class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6" id="licensing">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+        <div>
+          <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Predictable Pricing SSOT</div>
+          <h2 class="text-xl font-bold text-slate-900">Licensing &amp; Commercial Distribution</h2>
+        </div>
+        <a href="/roi/" class="text-xs font-mono text-emerald-700 font-semibold hover:underline">Calculate Enterprise ROI &rarr;</a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Tier 1: OSS Core -->
+        <div class="p-6 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="text-[11px] font-mono font-bold text-slate-500 uppercase">Open Specification</div>
+            <h3 class="text-lg font-bold text-slate-900 mt-1">Open Source Core</h3>
+            <div class="text-2xl font-bold text-slate-900 font-mono mt-2">$0 <span class="text-xs font-normal text-slate-500 font-sans">/ Free Forever</span></div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">Permissive Apache 2.0 reference implementation, community regex detectors, and CLI audit tooling.</p>
+            <ul class="mt-4 space-y-2 text-xs text-slate-600">
+              <li class="flex items-center gap-2">&check; Full ZTDS RFC v1.0 Spec</li>
+              <li class="flex items-center gap-2">&check; CLI Scanner (npx ztds-audit)</li>
+              <li class="flex items-center gap-2">&check; Baseline General PII Rules</li>
+              <li class="flex items-center gap-2">&check; Community GitHub Support</li>
+            </ul>
+          </div>
+          <a href="https://github.com/moxno/PrivacyScrubber" target="_blank" rel="noopener" class="btn-outline w-full text-center text-xs py-2">
+            View on GitHub
+          </a>
+        </div>
+
+        <!-- Tier 2: Developer Annual -->
+        <div class="p-6 rounded-xl border-2 border-emerald-500 bg-emerald-50/30 flex flex-col justify-between space-y-4 shadow-sm relative">
+          <div class="absolute -top-3 right-4 px-2.5 py-0.5 rounded-full bg-emerald-600 text-white font-mono text-[10px] font-bold tracking-wider uppercase">
+            Most Popular
+          </div>
+          <div>
+            <div class="text-[11px] font-mono font-bold text-emerald-800 uppercase">Developer Pro</div>
+            <h3 class="text-lg font-bold text-slate-900 mt-1">Developer Annual SDK</h3>
+            <div class="text-2xl font-bold text-slate-900 font-mono mt-2">$1,990 <span class="text-xs font-normal text-slate-500 font-sans">/ year ($199/mo)</span></div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">Commercial license for production microservices, pre-built AI framework connectors, and verified registry listing.</p>
+            <ul class="mt-4 space-y-2 text-xs text-slate-700">
+              <li class="flex items-center gap-2">&check; Headless @privacyscrubber/sdk</li>
+              <li class="flex items-center gap-2">&check; LangChain &amp; LlamaIndex Connectors</li>
+              <li class="flex items-center gap-2">&check; Cursor &amp; Claude Code MCP Server</li>
+              <li class="flex items-center gap-2">&check; Verified Registry Badge &amp; Backlink</li>
+              <li class="flex items-center gap-2">&check; Unlimited backend microservice nodes</li>
+            </ul>
+          </div>
+          <a href="/apply/" class="btn-trust w-full text-center text-xs py-2">
+            Get Developer License &rarr;
+          </a>
+        </div>
+
+        <!-- Tier 3: Enterprise Air-Gapped -->
+        <div class="p-6 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="text-[11px] font-mono font-bold text-slate-500 uppercase">Enterprise GRC</div>
+            <h3 class="text-lg font-bold text-slate-900 mt-1">Air-Gapped &amp; Enclaves</h3>
+            <div class="text-2xl font-bold text-slate-900 font-mono mt-2">$12,000 <span class="text-xs font-normal text-slate-500 font-sans">/ year</span></div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">Sovereign confidential computing deployment, custom NER entity profiles, and turnkey CISO DPA exemption documentation.</p>
+            <ul class="mt-4 space-y-2 text-xs text-slate-600">
+              <li class="flex items-center gap-2">&check; AWS Nitro Enclaves Attestation</li>
+              <li class="flex items-center gap-2">&check; 25 High-ACV Industry Profiles</li>
+              <li class="flex items-center gap-2">&check; Turnkey Zero-DPA Compliance Pack</li>
+              <li class="flex items-center gap-2">&check; SIG Lite / CAIQ / VSAQ Responses</li>
+              <li class="flex items-center gap-2">&check; Dedicated SLA &amp; Security Support</li>
+            </ul>
+          </div>
+          <a href="/ciso/" class="btn-outline w-full text-center text-xs py-2">
+            CISO Procurement Memo
+          </a>
+        </div>
+
       </div>
     </div>
 
     <!-- Benchmark & Testing Section -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl">
-        <h3 class="text-lg font-bold text-slate-900 mb-2">Automated Codebase Pre-Audit CLI</h3>
-        <p class="text-xs text-slate-600 leading-relaxed mb-4">
-          Want to verify if your existing project satisfies the ZTDS specification before applying for certification? Run our zero-dependency CLI scanner:
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm space-y-4">
+        <div>
+          <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Automated Pre-Flight</div>
+          <h3 class="text-lg font-bold text-slate-900 mt-0.5">Codebase Invariant CLI Scanner</h3>
+        </div>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Verify whether your existing codebase satisfies the ZTDS specification before applying for certification. Executes in &lt;10ms with zero network calls:
         </p>
         <div class="p-3 bg-slate-900 text-emerald-400 rounded-lg font-mono text-xs flex items-center justify-between">
           <span>npx ztds-audit --dir ./src</span>
           <span class="text-slate-400 text-[11px]">Free CLI</span>
         </div>
-        <div class="mt-4">
+        <div>
           <a href="/scanner/" class="text-xs font-semibold text-emerald-700 hover:underline">
-            View Scanner Documentation &rarr;
+            View Perimeter Scanner Documentation &rarr;
           </a>
         </div>
       </div>
 
-      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl">
-        <h3 class="text-lg font-bold text-slate-900 mb-2">Empirical Benchmark Attestation</h3>
-        <p class="text-xs text-slate-600 leading-relaxed mb-4">
-          All throughput metrics and memory safety profiles are archived with permanent DOIs on Open Science Framework:
+      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm space-y-4">
+        <div>
+          <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Empirical Attestation</div>
+          <h3 class="text-lg font-bold text-slate-900 mt-0.5">Permanent Benchmark DOIs</h3>
+        </div>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          All throughput metrics, entropy proofs, and volatile memory safety profiles are archived with permanent DOIs on CERN/Zenodo and Open Science Framework:
         </p>
         <div class="space-y-2 text-xs font-mono text-slate-600">
           <div class="flex justify-between border-b border-slate-100 pb-1">
@@ -327,7 +682,7 @@ client = ZTDSClient()
             <strong class="text-slate-900">&lt; 4 MB</strong>
           </div>
           <div class="flex justify-between">
-            <span>OSF Repository</span>
+            <span>OSF Benchmark Archive</span>
             <a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="text-blue-600 hover:underline">DOI: 10.17605/OSF.IO/5BYJF &rarr;</a>
           </div>
         </div>
@@ -335,6 +690,8 @@ client = ZTDSClient()
     </div>
 
   </main>
+
+
 
   <!-- 5-Column Institutional Light Footer -->
   <footer class="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-12 text-sm">
@@ -447,39 +804,103 @@ client = ZTDSClient()
 
   <script src="/nav.js"></script>
   <script>
-    // Tab Switcher
-    const tabBtns = document.querySelectorAll('.code-tab-btn');
-    const codeBlocks = {
-      ts: document.getElementById('codeTs'),
-      python: document.getElementById('codePython'),
-      langchain: document.getElementById('codeLangchain'),
-      mcp: document.getElementById('codeMcp')
-    };
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Package Manager Switcher
+      const pkgTabs = document.querySelectorAll('.pkg-tab-btn');
+      const installDisplay = document.getElementById('installCmdDisplay');
+      const copyInstallBtn = document.getElementById('copyInstallBtn');
+      const copyInstallText = document.getElementById('copyInstallText');
 
-    tabBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tabBtns.forEach(b => {
-          b.className = 'code-tab-btn px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900';
-        });
-        btn.className = 'code-tab-btn px-3 py-1.5 rounded-md bg-white text-slate-900 shadow-xs';
+      const pkgCommands = {
+        npm: 'npm install @privacyscrubber/sdk',
+        pnpm: 'pnpm add @privacyscrubber/sdk',
+        yarn: 'yarn add @privacyscrubber/sdk',
+        pip: 'pip install ztds-python'
+      };
 
-        const tab = btn.getAttribute('data-tab');
-        Object.keys(codeBlocks).forEach(k => {
-          if (k === tab) {
-            codeBlocks[k].classList.remove('hidden');
-          } else {
-            codeBlocks[k].classList.add('hidden');
+      let activePkg = 'npm';
+
+      pkgTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          pkgTabs.forEach(t => {
+            t.classList.remove('bg-white', 'text-slate-900', 'font-bold', 'shadow-xs');
+            t.classList.add('text-slate-600');
+          });
+          tab.classList.add('bg-white', 'text-slate-900', 'font-bold', 'shadow-xs');
+          tab.classList.remove('text-slate-600');
+
+          activePkg = tab.getAttribute('data-mgr');
+          if (installDisplay) {
+            installDisplay.textContent = pkgCommands[activePkg] || pkgCommands.npm;
           }
         });
       });
-    });
 
-    // Copy Install command
-    document.getElementById('copyInstallBtn').addEventListener('click', function() {
-      window.ztdsCopy('npm install @privacyscrubber/sdk', () => {
-        this.innerText = 'Copied!';
-        setTimeout(() => { this.innerText = 'Copy'; }, 2000);
+      if (copyInstallBtn && copyInstallText) {
+        copyInstallBtn.addEventListener('click', () => {
+          const cmd = pkgCommands[activePkg] || pkgCommands.npm;
+          window.ztdsCopy(cmd, () => {
+            copyInstallText.textContent = 'Copied!';
+            setTimeout(() => { copyInstallText.textContent = 'Copy'; }, 2000);
+          });
+        });
+      }
+
+      // 2. Recipe Framework Tab Switcher
+      const recipeTabs = document.querySelectorAll('.recipe-tab-btn');
+      const recipePanes = document.querySelectorAll('.recipe-pane');
+      const activeFileName = document.getElementById('activeFileName');
+      const btnCopyActiveCode = document.getElementById('btnCopyActiveCode');
+
+      const fileNames = {
+        langchain: 'ztds-langchain-callback.ts',
+        llamaindex: 'ztds_llamaindex_transform.py',
+        mcp: 'mcp-config.json',
+        ts: 'secure-ai-client.ts',
+        python: 'ztds_python_bridge.py'
+      };
+
+      let currentRecipe = 'langchain';
+
+      recipeTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          recipeTabs.forEach(t => {
+            t.classList.remove('bg-white', 'text-slate-900', 'font-bold', 'shadow-xs');
+            t.classList.add('text-slate-600');
+          });
+          tab.classList.add('bg-white', 'text-slate-900', 'font-bold', 'shadow-xs');
+          tab.classList.remove('text-slate-600');
+
+          currentRecipe = tab.getAttribute('data-recipe');
+          if (activeFileName) {
+            activeFileName.textContent = fileNames[currentRecipe] || 'recipe.ts';
+          }
+
+          recipePanes.forEach(pane => {
+            if (pane.id === 'recipe' + currentRecipe.charAt(0).toUpperCase() + currentRecipe.slice(1)) {
+              pane.classList.remove('hidden');
+            } else {
+              pane.classList.add('hidden');
+            }
+          });
+        });
       });
+
+      // 3. Copy Active Snippet Button
+      if (btnCopyActiveCode) {
+        btnCopyActiveCode.addEventListener('click', () => {
+          const targetPaneId = 'recipe' + currentRecipe.charAt(0).toUpperCase() + currentRecipe.slice(1);
+          const activePane = document.getElementById(targetPaneId);
+          if (!activePane) return;
+          const codeEl = activePane.querySelector('code');
+          const codeText = codeEl ? codeEl.innerText : activePane.innerText;
+
+          window.ztdsCopy(codeText, () => {
+            btnCopyActiveCode.textContent = 'Copied!';
+            setTimeout(() => { btnCopyActiveCode.textContent = 'Copy Snippet'; }, 2000);
+          });
+        });
+      }
     });
   </script>
 </body>
