@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZTDS Enterprise CISO Pitch Deck — Zero Data Egress AI</title>
+  <meta name="description" content="Executive pitch deck for CISOs, DPOs, and Enterprise Architects: Deploying LLMs, Multi-Agent Loops, and RAG with Zero Data Egress and Zero DPA Liability.">
+  <link rel="canonical" href="https://ztds.ai/deck/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ztds.ai/deck/">
+  <meta property="og:title" content="ZTDS Enterprise CISO Pitch Deck — Zero-Trust AI Sanitization">
+  <meta property="og:description" content="Confidential briefing for enterprise CISOs: Mathematical zero-egress data sanitization for Generative AI and RAG pipelines.">
+  <meta property="og:image" content="https://ztds.ai/badge/seal-sovereign.svg">
+
+  <!-- Fonts & Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background-color: #070b14;
+      color: #f1f5f9;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+    .mono { font-family: var(--font-mono); }
+    
+    /* Slide Frame */
+    .deck-viewport {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    .slide-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .slide {
+      display: none;
+      width: 100%;
+      max-width: 1380px;
+      aspect-ratio: 16 / 9;
+      max-height: calc(100vh - 120px);
+      background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.08), transparent 45%),
+                  radial-gradient(circle at bottom left, rgba(56, 189, 248, 0.06), transparent 40%),
+                  #0c1322;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 40px rgba(16, 185, 129, 0.05);
+      border-radius: 1.25rem;
+      padding: 2.75rem 3.5rem;
+      flex-direction: column;
+      justify-content: space-between;
+      box-sizing: border-box;
+      opacity: 0;
+      transform: scale(0.985);
+      transition: opacity 0.22s ease-out, transform 0.22s ease-out;
+    }
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Print / PDF Mode */
+    @media print {
+      body {
+        background-color: #0c1322 !important;
+        color: #f1f5f9 !important;
+        overflow: visible !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .deck-viewport {
+        height: auto !important;
+      }
+      .slide-stage {
+        padding: 0 !important;
+        display: block !important;
+      }
+      .slide {
+        display: flex !important;
+        opacity: 1 !important;
+        transform: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        width: 100% !important;
+        height: 100vh !important;
+        max-width: none !important;
+        max-height: none !important;
+        border-radius: 0 !important;
+        border: none !important;
+        padding: 3rem 4rem !important;
+        box-sizing: border-box !important;
+      }
+    }
+
+    /* Notes Drawer */
+    .notes-drawer {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .notes-drawer.open {
+      transform: translateY(0);
+    }
+
+    /* Subtle custom scroll for code/text inside slides */
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-[#070b14] text-slate-100">
+
+  <div class="deck-viewport">
+    
+    <!-- Presentation Top Bar -->
+    <header class="h-14 px-6 flex items-center justify-between border-b border-white/10 bg-[#090f1d]/80 backdrop-blur-md no-print shrink-0">
+      <div class="flex items-center gap-4">
+        <a href="/" class="flex items-center gap-2.5 group">
+          <div class="w-8 h-8 rounded-lg bg-slate-900 border border-emerald-500/40 flex items-center justify-center p-1">
+            <svg class="w-full h-full" viewBox="0 0 32 32" fill="none">
+              <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+              <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+              <circle cx="16" cy="16" r="3" fill="#10b981"/>
+            </svg>
+          </div>
+          <span class="font-bold text-base tracking-tight text-white">ZTDS<span class="text-emerald-400">.ai</span></span>
+        </a>
+        <div class="h-4 w-px bg-white/10 hidden sm:block"></div>
+        <span class="text-xs font-mono uppercase tracking-widest text-slate-400 hidden sm:inline-block">CISO Executive Briefing</span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- Slide Progress Pill -->
+        <div class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-slate-300">
+          Slide <span id="current-slide-num" class="text-emerald-400 font-bold">01</span> / <span id="total-slides-num">10</span>
+        </div>
+
+        <!-- Speaker Notes Button -->
+        <button id="toggle-notes-btn" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-300 hover:text-white transition flex items-center gap-1.5" title="Toggle Presenter Notes (N)">
+          <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>Notes <kbd class="text-[10px] text-slate-500 bg-white/5 px-1 py-0.5 rounded">N</kbd></span>
+        </button>
+
+        <!-- PDF Export Button -->
+        <button onclick="window.print()" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-300 hover:text-white transition flex items-center gap-1.5" title="Print / Save as PDF">
+          <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          <span class="hidden md:inline">Export PDF</span>
+        </button>
+
+        <!-- Fullscreen Button -->
+        <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition" title="Toggle Fullscreen (F)">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Slide Stage -->
+    <main class="slide-stage">
+
+      <!-- ==================================================================== -->
+      <!-- SLIDE 1: Executive Title & Paradigm Shift -->
+      <!-- ==================================================================== -->
+      <article class="slide active" data-slide="1" data-title="Executive Briefing: Zero-Trust Data Sanitization">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider">Confidential Briefing</span>
+            <span class="text-xs font-mono text-slate-400">AICPA SOC 2 Type II Certified Standard</span>
+          </div>
+          <div class="text-xs font-mono text-slate-400">ZTDS RFC v1.0 / Enterprise Suite</div>
+        </div>
+
+        <div class="my-auto py-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-400 text-xs font-mono mb-4">
+            <span>Deterministic Client-Side Computational Standard</span>
+          </div>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight mb-4">
+            Zero-Trust Data Sanitization <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-sky-400">(ZTDS)</span> in Enterprise GenAI
+          </h1>
+          <p class="text-lg sm:text-xl text-slate-300 max-w-4xl font-normal leading-relaxed mb-8">
+            How Fortune 500 CISOs deploy Large Language Models, Multi-Agent Loops, and RAG Pipelines with <strong class="text-white font-semibold">Mathematically Provable Zero Data Egress</strong> and <strong class="text-emerald-400 font-semibold">Zero SaaS Subprocessor Liability</strong>.
+          </p>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-white/10">
+            <div class="p-3.5 rounded-xl bg-white/[0.03] border border-white/5">
+              <div class="text-[11px] font-mono uppercase text-slate-400">Data Egress</div>
+              <div class="text-xl font-bold font-mono text-emerald-400 mt-0.5">0.00 Bytes</div>
+              <div class="text-[11px] text-slate-500 mt-0.5">Client volatile RAM only</div>
+            </div>
+            <div class="p-3.5 rounded-xl bg-white/[0.03] border border-white/5">
+              <div class="text-[11px] font-mono uppercase text-slate-400">Sanitization Latency</div>
+              <div class="text-xl font-bold font-mono text-sky-400 mt-0.5">&lt; 1.8 ms</div>
+              <div class="text-[11px] text-slate-500 mt-0.5">100x faster than cloud DLP</div>
+            </div>
+            <div class="p-3.5 rounded-xl bg-white/[0.03] border border-white/5">
+              <div class="text-[11px] font-mono uppercase text-slate-400">GDPR Compliance</div>
+              <div class="text-xl font-bold font-mono text-emerald-400 mt-0.5">Art. 28 Exempt</div>
+              <div class="text-[11px] text-slate-500 mt-0.5">Zero subprocessor chain</div>
+            </div>
+            <div class="p-3.5 rounded-xl bg-white/[0.03] border border-white/5">
+              <div class="text-[11px] font-mono uppercase text-slate-400">Offline Attestation</div>
+              <div class="text-xl font-bold font-mono text-sky-400 mt-0.5">Ed25519 Token</div>
+              <div class="text-[11px] text-slate-500 mt-0.5">Zero telemetry heartbeats</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between border-t border-white/10 pt-4 text-xs text-slate-400 font-mono">
+          <div>Presenter: <span class="text-slate-200 font-semibold">Ilya Sibiryakov</span> &middot; Founder &amp; Chief Architect</div>
+          <div>Ecosystem: <span class="text-slate-200">BrandMeWeb</span> &middot; <span class="text-emerald-400">ZTDS.ai</span></div>
+        </div>
+      </article>
+
+      <!-- ==================================================================== -->
+      <!-- SLIDE 2: The Enterprise GenAI Dilemma -->
+      <!-- ==================================================================== -->
+      <article class="slide" data-slide="2" data-title="The Enterprise GenAI Dilemma: 4 Statutory Chokepoints">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded bg-amber-500/10 border border-amber-500/30 text-amber-400 font-mono text-xs font-bold uppercase tracking-wider">Statutory Risk Analysis</span>
+            <span class="text-xs font-mono text-slate-400">The Conflict Between Business Velocity &amp; CISO Fines</span>
+          </div>
+          <div class="text-xs font-mono text-slate-400">Slide 02 / 10</div>
+        </div>
+
+        <div class="my-auto py-4">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-2">
+            The 4 Regulatory &amp; Architectural Chokepoints
+          </h2>
+          <p class="text-slate-400 text-sm mb-6">
+            Connecting enterprise workflows to cloud AI or local RAG without deterministic pre-egress sanitization triggers severe statutory liabilities:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl bg-red-950/20 border border-red-500/20">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-mono text-xs font-bold text-red-400 uppercase tracking-wider">Chokepoint 01</span>
+                <span class="text-[11px] font-mono text-slate-400">EU Regulation 2016/679</span>
+              </div>
+              <h3 class="text-lg font-bold text-white mb-1">GDPR Article 28: Subprocessor Trap</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Routing cleartext prompts through cloud AI vendors or proxies legally classifies them as data processors. Requires 30-day customer notification windows, complex DPA redlines, and unlimited cross-border transfer risk.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-red-950/20 border border-red-500/20">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-mono text-xs font-bold text-red-400 uppercase tracking-wider">Chokepoint 02</span>
+                <span class="text-[11px] font-mono text-slate-400">GDPR Art. 17 / Data Erasure</span>
+              </div>
+              <h3 class="text-lg font-bold text-white mb-1">Vector Database Poisoning</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Cleartext PII converted into high-dimensional vector embeddings cannot be deleted upon user "Right to Erasure" request without destroying and re-indexing the entire multi-million vector index.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-amber-950/20 border border-amber-500/20">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">Chokepoint 03</span>
+                <span class="text-[11px] font-mono text-slate-400">EU AI Act (2024/1689)</span>
+              </div>
+              <h3 class="text-lg font-bold text-white mb-1">Article 50: Synthetic Provenance</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Mandates verifiable provenance and transparency for high-risk generative AI pipelines. Penalties for unverified sensitive data ingestion reach up to €35,000,000 or 7% of global annual turnover.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-amber-950/20 border border-amber-500/20">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">Chokepoint 04</span>
+                <span class="text-[11px] font-mono text-slate-400">US HIPAA &amp; FRE Rule 502</span>
+              </div>
+              <h3 class="text-lg font-bold text-white mb-1">Loss of Clinical &amp; Legal Privilege</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Transmitting unmasked PHI violates HIPAA Safe Harbor (45 CFR § 164.514) triggering mandatory BAA audits. Sending unredacted M&amp;A contracts or litigation notes waives Attorney-Client Work Product Privilege.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+          <span>ZTDS Resolution: Eliminates cleartext data transmission entirely.</span>
+          <span class="text-emerald-400">Result: 0 Subprocessors Added</span>
+        </div>
+      </article>
+
+      <!-- ==================================================================== -->
+      <!-- SLIDE 3: Why Existing Cloud DLP Fails -->
+      <!-- ==================================================================== -->
+      <article class="slide" data-slide="3" data-title="The Failure of Cloud DLP &amp; In-Line Proxies">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded bg-sky-500/10 border border-sky-500/30 text-sky-400 font-mono text-xs font-bold uppercase tracking-wider">Comparative Architecture</span>
+            <span class="text-xs font-mono text-slate-400">Legacy Cloud DLP vs. Zero-Trust In-Memory Engine</span>
+          </div>
+          <div class="text-xs font-mono text-slate-400">Slide 03 / 10</div>
+        </div>
+
+        <div class="my-auto py-4">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-2">
+            Why Legacy Cloud DLP Proxies Break Generative AI
+          </h2>
+          <p class="text-slate-400 text-sm mb-5">
+            Cloud DLP solutions (Netskope, Nightfall, AWS Macie) were engineered for asynchronous email archiving, not sub-second multi-agent LLM reasoning chains:
+          </p>
+
+          <div class="overflow-x-auto rounded-xl border border-white/10 bg-black/40 mb-4">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.04] text-slate-300 font-mono">
+                  <th class="py-3 px-4 font-semibold">Architectural Vector</th>
+                  <th class="py-3 px-4 font-semibold text-red-300">Legacy Cloud DLP Proxy (SaaS)</th>
+                  <th class="py-3 px-4 font-semibold text-emerald-400">ZTDS RFC v1.0 Local Engine</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5 text-slate-300">
+                <tr>
+                  <td class="py-2.5 px-4 font-semibold text-white">Execution Latency</td>
+                  <td class="py-2.5 px-4 text-red-400 font-mono">250 ms – 800 ms (Network roundtrip)</td>
+                  <td class="py-2.5 px-4 text-emerald-400 font-mono font-bold">&lt; 1.8 ms (Local CPU/RAM)</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 font-semibold text-white">Data Egress Boundary</td>
+                  <td class="py-2.5 px-4 text-red-400">Transmits cleartext to 3rd-party cloud</td>
+                  <td class="py-2.5 px-4 text-emerald-400 font-bold">0.00 Bytes (Stays in local host memory)</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 font-semibold text-white">Subprocessor Chain</td>
+                  <td class="py-2.5 px-4 text-red-400">Adds another SaaS vendor (+ DPA &amp; SOC2)</td>
+                  <td class="py-2.5 px-4 text-emerald-400 font-bold">Exempt (Self-contained computational utility)</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 font-semibold text-white">LLM Context Preservation</td>
+                  <td class="py-2.5 px-4 text-slate-400">Destructive masking (<code>[REDACTED]</code> breaks syntax)</td>
+                  <td class="py-2.5 px-4 text-emerald-400">Deterministic surrogate tokens (<code>[EMAIL_1]</code>)</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-4 font-semibold text-white">Air-Gapped / SCIF Support</td>
+                  <td class="py-2.5 px-4 text-red-400">Impossible (Requires active internet connection)</td>
+                  <td class="py-2.5 px-4 text-emerald-400 font-bold">100% Offline (Ed25519 cryptographic token)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-3 rounded-lg bg-white/[0.03] border border-white/5 flex items-center gap-3">
+            <div class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></div>
+            <span class="text-xs text-slate-300">
+              <strong class="text-white font-semibold">The 10-Agent Latency Tax:</strong> A multi-agent loop with 12 sequential LLM steps wastes <strong>6,000 ms</strong> with cloud proxies vs. <strong>21 ms</strong> with ZTDS.
+            </span>
+          </div>
+        </div>
+
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+          <span>Zero cloud proxies. Zero SaaS middleman. Zero data custody.</span>
+          <span class="text-sky-400">100x Faster Performance</span>
+        </div>
+      </article>
+
+      <!-- ==================================================================== -->
+      <!-- SLIDE 4: The Core Innovation: ZTDS RFC v1.0 Standard -->
+      <!-- ==================================================================== -->
+      <article class="slide" data-slide="4" data-title="The Standard: ZTDS RFC v1.0 &amp; 4 Invariants">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider">Formal Standard</span>
+            <span class="text-xs font-mono text-slate-400">Open Technical Consortium &amp; Mathematical Proofs</span>
+          </div>
+          <div class="text-xs font-mono text-slate-400">Slide 04 / 10</div>
+        </div>
+
+        <div class="my-auto py-4">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+              The 4 Fundamental Invariants (RFC v1.0)
+            </h2>
+            <div class="flex items-center gap-2 font-mono text-xs text-slate-400">
+              <span>DOI: 10.5281/zenodo.22058770</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div class="p-4 rounded-xl bg-slate-900/80 border border-emerald-500/30">
+              <div class="flex items-center gap-2 mb-1.5">
+                <span class="w-5 h-5 rounded bg-emerald-500/20 text-emerald-400 font-mono text-xs flex items-center justify-center font-bold">1</span>
+                <h3 class="text-sm font-bold text-white uppercase tracking-wider font-mono">Zero External Egress</h3>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed mb-2">
+                Raw PII, PHI, or intellectual property never crosses the local execution boundary in cleartext. Sanitization occurs strictly prior to socket write.
+              </p>
+              <div class="text-[11px] font-mono text-emerald-400 bg-black/40 px-2 py-1 rounded border border-emerald-500/20">
+                Formula: Δ_Egress(Cleartext) ≡ 0.00 Bytes
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900/80 border border-sky-500/30">
+              <div class="flex items-center gap-2 mb-1.5">
+                <span class="w-5 h-5 rounded bg-sky-500/20 text-sky-400 font-mono text-xs flex items-center justify-center font-bold">2</span>
+                <h3 class="text-sm font-bold text-white uppercase tracking-wider font-mono">Deterministic Tokenization</h3>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed mb-2">
+                Masked entities are replaced with bijective surrogate tokens preserving grammatical syntax, entity classes, and token distance for optimal LLM attention weights.
+              </p>
+              <div class="text-[11px] font-mono text-sky-400 bg-black/40 px-2 py-1 rounded border border-sky-500/20">
+                Map: T = M(V, C) | Scoped strictly to Thread RAM
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900/80 border border-sky-500/30">
+              <div class="flex items-center gap-2 mb-1.5">
+                <span class="w-5 h-5 rounded bg-sky-500/20 text-sky-400 font-mono text-xs flex items-center justify-center font-bold">3</span>
+                <h3 class="text-sm font-bold text-white uppercase tracking-wider font-mono">Cryptographic Isolation</h3>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed mb-2">
+                Execution is verified inside volatile RAM or hardware-attested enclaves (AWS Nitro, Apple Secure Enclave, WASM sandbox) with zero disk swapping.
+              </p>
+              <div class="text-[11px] font-mono text-sky-400 bg-black/40 px-2 py-1 rounded border border-sky-500/20">
+                Memory: Zero Persistence, Instant Auto-Zeroization
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900/80 border border-emerald-500/30">
+              <div class="flex items-center gap-2 mb-1.5">
+                <span class="w-5 h-5 rounded bg-emerald-500/20 text-emerald-400 font-mono text-xs flex items-center justify-center font-bold">4</span>
+                <h3 class="text-sm font-bold text-white uppercase tracking-wider font-mono">Continuous Compliance</h3>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed mb-2">
+                Software operates as an endpoint utility. Completely eliminates third-party subprocessor status under GDPR Article 28 and HIPAA Business Associate rules.
+              </p>
+              <div class="text-[11px] font-mono text-emerald-400 bg-black/40 px-2 py-1 rounded border border-emerald-500/20">
+                Legal Status: 100% DPA &amp; BAA Exemption
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+          <span>Published openly at ztds.ai/standard/ &middot; License: Apache 2.0 / CC BY 4.0</span>
+          <span class="text-emerald-400">Verifiable Codebase Audit</span>
+        </div>
+      </article>
+
+      <!-- ==================================================================== -->
+      <!-- SLIDE 5: Technical Engine Architecture & Latency Benchmark -->
+      <!-- ==================================================================== -->
+      <article class="slide" data-slide="5" data-title="Technical Engine Architecture &amp; Latency Benchmark">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded bg-sky-500/10 border border-sky-500/30 text-sky-400 font-mono text-xs font-bold uppercase tracking-wider">Runtime Pipeline</span>
+            <span class="text-xs font-mono text-slate-400">End-to-End In-Memory Data Flow Sequence</span>
+          </div>
+          <div class="text-xs font-mono text-slate-400">Slide 05 / 10</div>
+        </div>
+
+        <div class="my-auto py-3">
+          <h2 class="text-2xl font-extrabold text-white mb-1">
+            Sub-Millisecond Bijective In-Memory Architecture
+          </h2>
+          <p class="text-slate-400 text-xs mb-4">
+            Zero cleartext entities reach the upstream network. All de-identification and re-hydration occur within host process RAM:
+          </p>
+
+          <div class="p-4 rounded-xl bg-black/60 border border-white/10 font-mono text-xs mb-4 overflow-x-auto">
+            <div class="flex items-center justify-between gap-3 text-center min-w-[750px]">
+              <div class="flex-1 p-3 rounded-lg bg-slate-900 border border-slate-700">
+                <div class="text-[10px] uppercase text-slate-400">1. Client Ingest</div>
+                <div class="text-white font-bold mt-1">Raw User Prompt / RAG Document</div>
+                <div class="text-[10px] text-amber-400 mt-1">Contains PII / Secrets</div>
+              </div>
+              <div class="text-emerald-400 font-bold text-base">&rarr;</div>
+              <div class="flex-1 p-3 rounded-lg bg-emerald-950/40 border border-emerald-500/50">
+                <div class="text-[10px] uppercase text-emerald-400">2. ZTDS Tokenizer</div>
+                <div class="text-white font-bold mt-1">In-RAM Scan &amp; Mask</div>
+                <div class="text-[10px] text-emerald-300 mt-1 font-bold">&lt; 1.8 ms Latency</div>
+              </div>
+              <div class="text-sky-400 font-bold text-base">&rarr;</div>
+              <div class="flex-1 p-3 rounded-lg bg-sky-950/40 border border-sky-500/50">
+                <div class="text-[10px] uppercase text-sky-400">3. Upstream LLM</div>
+                <div class="text-white font-bold mt-1">OpenAI / Bedrock / Claude</div>
+                <div class="text-[10px] text-sky-300 mt-1">Zero Sensitive Entities</div>
+              </div>
+              <div class="text-emerald-400 font-bold text-base">&rarr;</div>
+              <div class="flex-1 p-3 rounded-lg bg-slate-900 border border-slate-700">
+                <div class="text-[10px] uppercase text-slate-400">4. Re-hydration</div>
+                <div class="text-white font-bold mt-1">Bijective In-RAM Swap</div>
+                <div class="text-[10px] text-slate-400 mt-1">Cleartext Output to User</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3">
+            <div class="p-3 rounded-lg bg-white/[0.03] border border-white/5">
+              <div class="text-[11px] font-mono text-slate-400">Airplane Mode Audit</div>
+              <div class="text-sm font-bold text-white mt-0.5">5-Minute Live Terminal Test</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">Turn off Wi-Fi; run audit; 100% passes.</div>
+            </div>
+            <div class="p-3 rounded-lg bg-white/[0.03] border border-white/5">
+              <div class="text-[11px] font-mono text-slate-400">Throughput Capacity</div>
+              <div class="text-sm font-bold text-emerald-400 mt-0.5">25,000+ Tokens / Sec</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">Single-core WebAssembly runtime.</div>
+            </div>
+            <div class="p-3 rounded-lg bg-white/[0.03] border border-white/5">
+              <div class="text-[11px] font-mono text-slate-400">Pre-Built Integrations</div>
+              <div class="text-sm font-bold text-sky-400 mt-0.5">LangChain, LlamaIndex, MCP</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">Drop-in middleware for existing code.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+          <span>Package: @privacyscrubber/sdk &middot; Zero runtime dependencies</span>
+          <span class="text-sky-400">WASM / Node / Python stdio</span>
+        </div>
+      </article>
+
+      <!-- ==================================================================== -->
+      <!-- SLIDE 6: Regulatory Exemption & "Zero-DPA" Legal Defense -->
+      <!-- ==================================================================== -->
+      <article class="slide" data-slide="6" data-title="Regulatory Exemption: The Zero-DPA Legal Defense">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider">CISO Legal Shield</span>
+            <span class="text-xs font-mono text-slate-400">Bypassing the 6-Month Enterprise Procurement Freeze</span>
+          </div>
+          <div class="text-xs font-mono text-slate-400">Slide 06 / 10</div>
+        </div>
+
+        <div class="my-auto py-3">
+          <h2 class="text-2xl font-extrabold text-white mb-2">
+            Why Enterprise Legal Clears ZTDS in 48 Hours
+          </h2>
+          <p class="text-slate-400 text-xs mb-4">
+            Traditional software procurement stalls over Data Processing Agreements (DPAs) and liability caps. ZTDS is legally exempt by architectural design:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+            <div class="p-4 rounded-xl bg-slate-900/60 border border-white/10">
+              <div class="text-xs font-bold font-mono text-emerald-400 uppercase mb-1">EDPB Doctrine &amp; GDPR</div>
+              <h3 class="text-sm font-bold text-white mb-1.5">Article 28 Exemption</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Under European Data Protection Board doctrine, local computational utilities executing in client volatile memory do not constitute "data processors". No DPA or Standard Contractual Clauses (SCCs) are legally required.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900/60 border border-white/10">
+              <div class="text-xs font-bold font-mono text-sky-400 uppercase mb-1">US HHS / HIPAA</div>
+              <h3 class="text-sm font-bold text-white mb-1.5">Safe Harbor De-identification</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Under 45 CFR § 164.514, clinical text stripped of the 18 designated identifiers ceases to be PHI. Because masking occurs prior to network dispatch, neither ZTDS nor the LLM handles PHI. No BAA required.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900/60 border border-white/10">
+              <div class="text-xs font-bold font-mono text-amber-400 uppercase mb-1">AICPA SOC 2 Type II</div>
+              <h3 class="text-sm font-bold text-white mb-1.5">Automated Evidence Binder</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Direct export of <code>ztds-evidence-binder.json</code> mapped to Common Criteria CC6.1 (Access), CC6.6 (Perimeter), and CC6.8 (Malicious Code) ready for Drata, Vanta, and AuditBoard ingestion.
+              </p>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-lg bg-emerald-950/30 border border-emerald-500/30 flex items-center justify-between">
+            <div class="text-xs text-slate-300">
+              <strong class="text-white">Turnkey Deliverable:</strong> Official 1-Page CISO Exemption Memorandum ready for your General Counsel and DPO sign-off.
+            </div>
+            <span class="text-xs font-mono text-emerald-400 font-bold shrink-0 ml-4">Zero DPA Overhead</span>
+          </div>
+        </div>
+
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+          <span>Reference: docs/legal/README_LEGAL_PROCUREMENT_GUIDE.md</span>
+          <span class="text-emerald-400">Zero Custody &middot; Zero Liability</span>
+        </div>
+      </article>
+
+      <!-- ==================================================================== -->
+      <!-- SLIDE 7: Air-Gapped Operation & Cryptographic Licensing (Ed25519) -->
+      <!-- ==================================================================== -->
+      <article class="slide" data-slide="7" data-title="Air-Gapped Operation &amp; Cryptographic Licensing (Ed25519)">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded bg-sky-500/10 border border-sky-500/30 text-sky-400 font-mono text-xs font-bold uppercase tracking-wider">Air-Gapped Architecture</span>
+            <span class="text-xs font-mono text-slate-400">Zero-Telemetry Asymmetric Cryptographic Enforcement</span>
+          </div>
+          <div class="text-xs font-mono text-slate-400">Slide 07 / 10</div>
+        </div>
+
+        <div class="my-auto py-3">
+          <h2 class="text-2xl font-extrabold text-white mb-2">
+            Offline Ed25519 Licensing &amp; True Air-Gapped Enclaves
+          </h2>
+          <p class="text-slate-400 text-xs mb-4">
+            Regulated SCIF environments, defense systems, and sovereign cloud VPCs strictly prohibit software that "phones home". ZTDS enforces offline cryptographic licensing:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div class="p-4 rounded-xl bg-black/60 border border-white/10 font-mono text-xs">
+              <div class="text-sky-400 font-bold mb-2">Cryptographic Token Spec (Ed25519)</div>
+              <div class="p-2.5 rounded bg-slate-900 border border-slate-700 text-slate-300 break-all mb-3 text-[11px] select-all">
+                ZTDS-LIC-v1.eyJjdXN0b21lcklkIjoiQUNNRS1DT1JQIiwidGllciI6IkVOVEVSUFJJU0VfQUlSIiwibm9kZXMiOjUsInByb2ZpbGVzIjpbIioiXX0.k9F...b9a
+              </div>
+              <ul class="space-y-1.5 text-slate-400 text-[11px]">
+                <li class="flex items-center gap-1.5"><span class="text-emerald-400">&bull;</span> In-Memory Verification: <strong>111.8 microseconds (~0.1ms)</strong></li>
+                <li class="flex items-center gap-1.5"><span class="text-emerald-400">&bull;</span> Network Egress / Heartbeats: <strong>Exactly 0.00 Bytes</strong></li>
+                <li class="flex items-center gap-1.5"><span class="text-emerald-400">&bull;</span> Native Node.js &amp; WebAssembly crypto engine</li>
+              </ul>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900/60 border border-white/10 flex flex-col justify-between">
+              <div>
+                <h3 class="text-sm font-bold text-white mb-2">Enterprise Operational Guarantees</h3>
+                <ul class="space-y-2 text-xs text-slate-300">
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-400 font-bold">&check;</span>
+                    <span><strong>Zero Pipeline Disruption:</strong> Built-in 60-day automatic grace period ensures mission-critical workflows never halt if annual renewal PO is in processing.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-400 font-bold">&check;</span>
+                    <span><strong>Tamper-Proof Integrity:</strong> Any modification to customer ID, node count, or profiles mathematically invalidates the signature.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-400 font-bold">&check;</span>
+                    <span><strong>Hardware Enclave Compatible:</strong> Deploys natively in AWS Nitro Enclaves, Azure Confidential Computing, and Kubernetes VPCs.</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="mt-3 p-2 rounded bg-white/[0.02] border border-white/5 text-[11px] font-mono text-slate-400">
+                CLI: <code>npx ztds-audit --check-license</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+          <span>Validated: test/license.test.js &middot; 1,000 runs in 111.76 ms</span>
+          <span class="text-sky-400">100% Air-Gapped</span>
+        </div>
+      </article>
+
+      <!-- ==================================================================== -->
+      <!-- SLIDE 8: 25 High-ACV Specialized Industry Profiles -->
+      <!-- ==================================================================== -->
+      <article class="slide" data-slide="8" data-title="25 High-ACV Specialized Industry Profiles">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider">Enterprise Entities</span>
+            <span class="text-xs font-mono text-slate-400">Algorithmic Heuristics Beyond Generic Regex</span>
+          </div>
+          <div class="text-xs font-mono text-slate-400">Slide 08 / 10</div>
+        </div>
+
+        <div class="my-auto py-3">
+          <h2 class="text-2xl font-extrabold text-white mb-2">
+            The 25 High-ACV Specialized Industry Profiles
+          </h2>
+          <p class="text-slate-400 text-xs mb-4">
+            Generic regex produces unacceptable false positives. ZTDS combines context heuristics with algorithmic checksum validation (Luhn, ISO 7064 Mod 97-10, Verhoeff):
+          </p>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+            <div class="p-3 rounded-xl bg-slate-900/80 border border-white/10">
+              <div class="text-[11px] font-mono text-emerald-400 font-bold mb-1">HEALTHCARE / PHI</div>
+              <ul class="text-[11px] text-slate-300 space-y-1">
+                <li>&bull; 18 HIPAA Identifiers</li>
+                <li>&bull; ICD-10 / ICD-11 Codes</li>
+                <li>&bull; Physician NPI Numbers</li>
+                <li>&bull; Clinical Trial Hashes</li>
+                <li>&bull; Genomic Identifiers</li>
+              </ul>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-900/80 border border-white/10">
+              <div class="text-[11px] font-mono text-sky-400 font-bold mb-1">FINANCIAL &amp; BANKING</div>
+              <ul class="text-[11px] text-slate-300 space-y-1">
+                <li>&bull; PCI DSS PAN (Luhn)</li>
+                <li>&bull; SWIFT / BIC Codes</li>
+                <li>&bull; IBAN Numbers (ISO 7064)</li>
+                <li>&bull; CUSIP / Bloomberg ID</li>
+                <li>&bull; SEC 13F Holding Data</li>
+              </ul>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-900/80 border border-white/10">
+              <div class="text-[11px] font-mono text-amber-400 font-bold mb-1">LEGAL &amp; M&amp;A SECRECY</div>
+              <ul class="text-[11px] text-slate-300 space-y-1">
+                <li>&bull; Acquisition Target Entities</li>
+                <li>&bull; Attorney Work Product (FRE 502)</li>
+                <li>&bull; Executive Comp Plans</li>
+                <li>&bull; Board Resolution Drafts</li>
+                <li>&bull; Subpoena Docket Hashes</li>
+              </ul>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-900/80 border border-white/10">
+              <div class="text-[11px] font-mono text-purple-400 font-bold mb-1">CLOUD &amp; INFRA SECRETS</div>
+              <ul class="text-[11px] text-slate-300 space-y-1">
+                <li>&bull; AWS IAM &amp; Secret Keys</li>
+                <li>&bull; GitHub Personal Tokens</li>
+                <li>&bull; Kubernetes JWT Tokens</li>
+                <li>&bull; Private RSA/Ed25519 Keys</li>
+                <li>&bull; Database Connection URIs</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 text-xs text-slate-300 flex items-center justify-between">
+            <span><strong>Anti-Cannibalization Model:</strong> Free standard handles basic consumer PII. The 25 high-ACV profiles require signed Enterprise tokens.</span>
+            <span class="text-emerald-400 font-mono text-[11px]">Quarterly Regulatory Taxonomy Updates</span>
+          </div>
+        </div>
+
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+          <span>Specification: docs/ZTDS_Entity_Taxonomy_and_25_Profiles_SSOT.md</span>
+          <span class="text-emerald-400">Enterprise Exclusive</span>
+        </div>
+      </article>
+
+      <!-- ==================================================================== -->
+      <!-- SLIDE 9: Commercial Licensing & TCO Comparison -->
+      <!-- ==================================================================== -->
+      <article class="slide" data-slide="9" data-title="Commercial Licensing Tiers &amp; ROI Economics">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider">Commercial Packaging</span>
+            <span class="text-xs font-mono text-slate-400">Turnkey B2B Investment &amp; TCO ROI Comparison</span>
+          </div>
+          <div class="text-xs font-mono text-slate-400">Slide 09 / 10</div>
+        </div>
+
+        <div class="my-auto py-3">
+          <h2 class="text-2xl font-extrabold text-white mb-2">
+            Commercial Subscription Tiers &amp; TCO Economics
+          </h2>
+          <p class="text-slate-400 text-xs mb-4">
+            Transparent annual flat-rate licensing without opaque consumption-based per-token penalties:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div class="p-4 rounded-xl bg-slate-900/60 border border-white/10 flex flex-col justify-between">
+              <div>
+                <div class="text-xs font-mono uppercase text-slate-400 mb-1">Developer Pro SDK</div>
+                <div class="text-2xl font-bold font-mono text-white mb-2">$1,990 <span class="text-xs text-slate-400 font-normal">/ Year</span></div>
+                <ul class="text-xs text-slate-300 space-y-1.5 mb-4">
+                  <li>&bull; Up to 5 Developer Seats &amp; Nodes</li>
+                  <li>&bull; Baseline universal consumer PII</li>
+                  <li>&bull; LangChain, LlamaIndex, MCP connectors</li>
+                  <li>&bull; Standard engineering support (48h SLA)</li>
+                </ul>
+              </div>
+              <div class="pt-2 border-t border-white/10 text-[11px] font-mono text-slate-400">AI Engineering Teams</div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-emerald-950/30 border-2 border-emerald-500/60 flex flex-col justify-between relative shadow-lg shadow-emerald-500/5">
+              <div class="absolute -top-3 right-4 px-2.5 py-0.5 rounded-full bg-emerald-500 text-black font-mono text-[10px] font-extrabold uppercase">
+                Recommended
+              </div>
+              <div>
+                <div class="text-xs font-mono uppercase text-emerald-400 mb-1">Enterprise Air-Gapped</div>
+                <div class="text-2xl font-bold font-mono text-white mb-2">$12,000 <span class="text-xs text-slate-400 font-normal">/ Year</span></div>
+                <ul class="text-xs text-slate-300 space-y-1.5 mb-4">
+                  <li>&bull; <strong>Up to 5 Production Nodes / Enclaves</strong></li>
+                  <li>&bull; <strong>Full 25 Specialized Industry Profiles</strong></li>
+                  <li>&bull; <strong>100% Disconnected Ed25519 Token</strong></li>
+                  <li>&bull; <strong>SOC 2 Type II Evidence Binder</strong></li>
+                  <li>&bull; Priority support (4h response SLA)</li>
+                </ul>
+              </div>
+              <div class="pt-2 border-t border-emerald-500/20 text-[11px] font-mono text-emerald-300">Core Enterprise VPCs</div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900/60 border border-white/10 flex flex-col justify-between">
+              <div>
+                <div class="text-xs font-mono uppercase text-sky-400 mb-1">Global Site License</div>
+                <div class="text-2xl font-bold font-mono text-white mb-2">$50,000 <span class="text-xs text-slate-400 font-normal">/ Year</span></div>
+                <ul class="text-xs text-slate-300 space-y-1.5 mb-4">
+                  <li>&bull; Unlimited global nodes &amp; enclaves</li>
+                  <li>&bull; Custom ERP/CRM profile engineering</li>
+                  <li>&bull; Direct advisory with Chief Architect</li>
+                  <li>&bull; Air-gapped source code escrow rights</li>
+                  <li>&bull; 24/7 critical incident response (1h SLA)</li>
+                </ul>
+              </div>
+              <div class="pt-2 border-t border-white/10 text-[11px] font-mono text-sky-400">Fortune 500 Enterprise</div>
+            </div>
+          </div>
+
+          <div class="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 text-xs text-slate-300 flex items-center justify-between">
+            <span><strong>TCO Comparison:</strong> In-house custom build: $350k+ in salaries. Cloud DLP SaaS: $120k+/yr + 400ms latency. ZTDS: $12k/yr turnkey.</span>
+            <span class="text-emerald-400 font-mono text-[11px]">Net 30 &middot; Schedule A</span>
+          </div>
+        </div>
+
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+          <span>Standard Form: docs/legal/ENTERPRISE_ORDER_FORM_TEMPLATE.md</span>
+          <span class="text-emerald-400">Fixed Annual Price</span>
+        </div>
+      </article>
+
+      <!-- ==================================================================== -->
+      <!-- SLIDE 10: 14-Day Enterprise Evaluation & Turnkey Onboarding -->
+      <!-- ==================================================================== -->
+      <article class="slide" data-slide="10" data-title="14-Day Enterprise Evaluation &amp; Procurement Roadmap">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider">Evaluation Protocol</span>
+            <span class="text-xs font-mono text-slate-400">Frictionless 14-Day Sandbox Pilot to Production</span>
+          </div>
+          <div class="text-xs font-mono text-slate-400">Slide 10 / 10</div>
+        </div>
+
+        <div class="my-auto py-3">
+          <h2 class="text-2xl font-extrabold text-white mb-2">
+            The 14-Day Turnkey Evaluation Roadmap
+          </h2>
+          <p class="text-slate-400 text-xs mb-4">
+            Zero technical friction and zero upfront commitment. Prove compliance inside your private network before signing:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
+            <div class="p-3.5 rounded-xl bg-slate-900/80 border border-white/10">
+              <div class="text-xs font-mono font-bold text-sky-400 mb-1">DAY 1</div>
+              <h3 class="text-sm font-bold text-white mb-1">5-Min Verification</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Run <code>npx ztds-audit</code> on your workstation. Inspect network traffic with Wireshark/DevTools. Confirm 0 bytes egress.
+              </p>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900/80 border border-emerald-500/30">
+              <div class="text-xs font-mono font-bold text-emerald-400 mb-1">DAYS 2 – 10</div>
+              <h3 class="text-sm font-bold text-white mb-1">Air-Gapped Sandbox</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Deploy 14-day evaluation license token into your staging VPC or Nitro Enclave. Benchmark 25 profiles against real payloads.
+              </p>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900/80 border border-sky-500/30">
+              <div class="text-xs font-mono font-bold text-sky-400 mb-1">DAYS 11 – 12</div>
+              <h3 class="text-sm font-bold text-white mb-1">Fast-Track Clearance</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Deliver 1-Page DPA Exemption Memo to Legal. Ingest SOC 2 Type II Evidence Binder into Drata / Vanta.
+              </p>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-500/50">
+              <div class="text-xs font-mono font-bold text-emerald-400 mb-1">DAY 14</div>
+              <h3 class="text-sm font-bold text-white mb-1">Production Token</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Execute Schedule A Order Form (Net 30 terms). Production Ed25519 token delivered via PGP within 2 business hours.
+              </p>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-gradient-to-r from-emerald-950/40 via-slate-900 to-sky-950/40 border border-emerald-500/30 flex items-center justify-between">
+            <div>
+              <div class="text-sm font-bold text-white">Initiate 14-Day Enterprise Sandbox Pilot Today</div>
+              <div class="text-xs text-slate-400 mt-0.5">Direct contact with Chief Architect Ilya Sibiryakov &middot; BrandMeWeb Ecosystem</div>
+            </div>
+            <a href="mailto:contact@ztds.ai?subject=ZTDS%20Enterprise%2014-Day%20Pilot%20Request" class="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-mono font-bold text-xs transition shrink-0 ml-4">
+              Request Sandbox Token &rarr;
+            </a>
+          </div>
+        </div>
+
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+          <span>Portal: https://ztds.ai &middot; Standard RFC v1.0 &middot; Verification: npx ztds-audit</span>
+          <span class="text-emerald-400">Zero-Trust Data Sanitization</span>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- Presentation Bottom Controls -->
+    <footer class="h-14 px-6 flex items-center justify-between border-t border-white/10 bg-[#090f1d]/80 backdrop-blur-md no-print shrink-0">
+      <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+        <span class="hidden sm:inline">Use</span>
+        <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-white">&larr;</kbd>
+        <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-white">&rarr;</kbd>
+        <span class="hidden sm:inline">or</span>
+        <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-white">Space</kbd>
+        <span class="hidden sm:inline">to navigate</span>
+      </div>
+
+      <!-- Navigation Arrows -->
+      <div class="flex items-center gap-2">
+        <button id="prev-btn" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-200 transition flex items-center gap-1">
+          &larr; Prev
+        </button>
+        <button id="next-btn" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-xs font-mono text-emerald-300 font-bold transition flex items-center gap-1">
+          Next &rarr;
+        </button>
+      </div>
+    </footer>
+
+    <!-- Presenter Notes Drawer (Slide-up) -->
+    <div id="notes-drawer" class="notes-drawer fixed bottom-0 left-0 right-0 max-h-[40vh] bg-slate-900 border-t-2 border-emerald-500 shadow-2xl p-6 transform translate-y-full overflow-y-auto z-50 text-slate-200 no-print">
+      <div class="max-w-5xl mx-auto">
+        <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-3">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-400 font-mono text-xs font-bold uppercase">Presenter Notes</span>
+            <span id="notes-slide-title" class="text-xs font-mono text-slate-400 font-semibold"></span>
+          </div>
+          <button id="close-notes-btn" class="text-slate-400 hover:text-white text-xs font-mono">Close &times;</button>
+        </div>
+        <div id="notes-content" class="text-xs leading-relaxed text-slate-300 font-sans space-y-2"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    (function() {
+      const slides = document.querySelectorAll('.slide');
+      const totalSlides = slides.length;
+      let currentIndex = 0;
+
+      const currentNumEl = document.getElementById('current-slide-num');
+      const totalNumEl = document.getElementById('total-slides-num');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const notesDrawer = document.getElementById('notes-drawer');
+      const toggleNotesBtn = document.getElementById('toggle-notes-btn');
+      const closeNotesBtn = document.getElementById('close-notes-btn');
+      const notesContentEl = document.getElementById('notes-content');
+      const notesSlideTitle = document.getElementById('notes-slide-title');
+      const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+      totalNumEl.textContent = totalSlides < 10 ? '0' + totalSlides : totalSlides;
+
+      // Speaker Notes Data mapped by slide index
+      const speakerNotes = [
+        // Slide 1
+        `<p><strong>Opening Track:</strong> "Thank you for taking this executive briefing. As CISOs, your teams are facing intense pressure to adopt Generative AI and RAG yesterday. But current solutions force you into a false choice: block productivity, or send cleartext company prompts to third-party cloud DLP vendors.</p>
+        <p>ZTDS introduces deterministic, client-side zero-trust sanitization in host volatile RAM. Zero bytes leave your environment. Let's inspect the math."</p>`,
+
+        // Slide 2
+        `<p><strong>Core Argument:</strong> "Highlight the 4 statutory chokepoints. Focus heavily on <em>Vector Database Poisoning</em>. In traditional RAG, when PII is embedded into high-dimensional vector space, you cannot delete it under GDPR Art. 17 without rebuilding the entire index at catastrophic cost.</p>
+        <p>ZTDS strips PII into surrogate tokens before vector embedding, permanently immunizing the vector database."</p>`,
+
+        // Slide 3
+        `<p><strong>Cloud DLP Critique:</strong> "Attack the 400ms latency tax. In multi-agent systems with 10-15 reasoning hops, cloud DLP adds 6+ seconds of lag. Also point out the Vendor Trust Paradox: why send your data to another SaaS vendor to protect it from OpenAI? You are simply doubling your breach surface."</p>`,
+
+        // Slide 4
+        `<p><strong>The 4 Invariants:</strong> "ZTDS is an open RFC v1.0 standard with academic DOIs on Zenodo and OSF. Emphasize Invariant 1 (0.00 bytes cleartext egress) and Invariant 2 (deterministic, reversible tokenization). The mapping table stays in client volatile RAM; zero persistent storage."</p>`,
+
+        // Slide 5
+        `<p><strong>Architecture Walkthrough:</strong> "Walk through the diagram: Ingest -> In-RAM Tokenizer (<1.8ms) -> Upstream LLM (receives synthetic tokens) -> Local De-pseudonymizer -> Output. Offer the 5-minute Airplane Mode Audit right on the call: disconnect Wi-Fi and show zero dropped packets."</p>`,
+
+        // Slide 6
+        `<p><strong>Zero-DPA Legal Defense:</strong> "This is how you get General Counsel approval in 48 hours instead of 6 months. Cite the EDPB doctrine: local computational transformation in RAM is not third-party processing. No DPA is required. Hand them our 1-page memo and SOC 2 binder for Drata/Vanta."</p>`,
+
+        // Slide 7
+        `<p><strong>Air-Gapped & Cryptography:</strong> "For defense, SCIF, or sovereign banking VPCs: zero telemetry, zero call-home sockets. Verification uses 256-bit Ed25519 asymmetric signatures taking only 111.8 microseconds. Include mention of the 60-day automatic grace period to protect against PO delays."</p>`,
+
+        // Slide 8
+        `<p><strong>25 Profiles Moat:</strong> "Explain why generic open-source regex fails: no Luhn validation, no ISO 7064 IBAN checksums, high false positive rates. The 25 enterprise profiles cover HIPAA clinical data, SWIFT/IBAN, M&A deal codenames, and cloud secrets (AWS, Kubernetes, JWT)."</p>`,
+
+        // Slide 9
+        `<p><strong>Commercial ROI:</strong> "Compare $12,000/yr Enterprise Air-Gapped against $150k+ cloud DLP and $350k+ custom in-house build. Pitch Net 30 terms, 5 cluster nodes, full 25 profiles, and 4-hour SLA. Emphasize it pays for itself in legal hours alone."</p>`,
+
+        // Slide 10
+        `<p><strong>Closing Call-to-Action:</strong> "Propose the 14-day Air-Gapped Sandbox Pilot in their staging VPC. Zero technical risk, zero upfront commitment. We deliver the evaluation token and 1-page CISO memo within 2 hours. Ask who from engineering will lead the sandbox test."</p>`
+      ];
+
+      function showSlide(index) {
+        if (index < 0) index = 0;
+        if (index >= totalSlides) index = totalSlides - 1;
+        currentIndex = index;
+
+        slides.forEach((slide, i) => {
+          if (i === currentIndex) {
+            slide.classList.add('active');
+          } else {
+            slide.classList.remove('active');
+          }
+        });
+
+        const formattedNum = (currentIndex + 1) < 10 ? '0' + (currentIndex + 1) : (currentIndex + 1);
+        currentNumEl.textContent = formattedNum;
+
+        // Update speaker notes
+        const activeSlide = slides[currentIndex];
+        notesSlideTitle.textContent = activeSlide.getAttribute('data-title') || '';
+        notesContentEl.innerHTML = speakerNotes[currentIndex] || '<p>No speaker notes recorded for this slide.</p>';
+
+        // Update Hash
+        history.replaceState(null, null, '#' + (currentIndex + 1));
+      }
+
+      function nextSlide() {
+        if (currentIndex < totalSlides - 1) {
+          showSlide(currentIndex + 1);
+        }
+      }
+
+      function prevSlide() {
+        if (currentIndex > 0) {
+          showSlide(currentIndex - 1);
+        }
+      }
+
+      function toggleNotes() {
+        notesDrawer.classList.toggle('open');
+      }
+
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          }
+        }
+      }
+
+      // Event Listeners
+      nextBtn.addEventListener('click', nextSlide);
+      prevBtn.addEventListener('click', prevSlide);
+      toggleNotesBtn.addEventListener('click', toggleNotes);
+      closeNotesBtn.addEventListener('click', () => notesDrawer.classList.remove('open'));
+      fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        switch(e.key) {
+          case 'ArrowRight':
+          case ' ':
+          case 'PageDown':
+          case 'Enter':
+            e.preventDefault();
+            nextSlide();
+            break;
+          case 'ArrowLeft':
+          case 'PageUp':
+          case 'Backspace':
+            e.preventDefault();
+            prevSlide();
+            break;
+          case 'Home':
+            e.preventDefault();
+            showSlide(0);
+            break;
+          case 'End':
+            e.preventDefault();
+            showSlide(totalSlides - 1);
+            break;
+          case 'n':
+          case 'N':
+            toggleNotes();
+            break;
+          case 'f':
+          case 'F':
+            toggleFullscreen();
+            break;
+          case 'Escape':
+            notesDrawer.classList.remove('open');
+            break;
+        }
+      });
+
+      // Handle direct hash navigation e.g. /deck/#5
+      function handleHash() {
+        const hash = window.location.hash.replace('#', '');
+        const slideNum = parseInt(hash, 10);
+        if (!isNaN(slideNum) && slideNum >= 1 && slideNum <= totalSlides) {
+          showSlide(slideNum - 1);
+        } else {
+          showSlide(0);
+        }
+      }
+
+      window.addEventListener('hashchange', handleHash);
+      handleHash();
+    })();
+  </script>
+</body>
+</html>
