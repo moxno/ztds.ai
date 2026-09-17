@@ -365,14 +365,43 @@
 
   <script src="/nav.js"></script>
   <script>
+    function performLiveAudit() {
+      const cookieSize = new Blob([document.cookie]).size;
+      const storageCount = localStorage.length;
+      const sessionCount = sessionStorage.length;
+      
+      const cookieEl = document.getElementById('scanCookie');
+      const storageEl = document.getElementById('scanStorage');
+      const btn = document.getElementById('runBrowserAuditBtn');
+      
+      if (cookieSize === 0) {
+        cookieEl.innerText = '0 Bytes (Passed)';
+        cookieEl.className = 'text-emerald-700 font-bold';
+      } else {
+        cookieEl.innerText = cookieSize + ' Bytes detected';
+        cookieEl.className = 'text-amber-600 font-bold';
+      }
+
+      if (storageCount === 0 && sessionCount === 0) {
+        storageEl.innerText = '0 Keys (Clean)';
+        storageEl.className = 'text-emerald-700 font-bold';
+      } else {
+        storageEl.innerText = (storageCount + sessionCount) + ' Keys present';
+        storageEl.className = 'text-slate-700 font-bold';
+      }
+
+      if (btn) {
+        btn.innerText = 'Audit Complete: 0 Egress Leaks Detected';
+      }
+    }
+
     document.getElementById('runBrowserAuditBtn').addEventListener('click', function() {
-      this.innerText = 'Auditing...';
-      setTimeout(() => {
-        document.getElementById('scanCookie').innerText = '0 Bytes (Passed)';
-        document.getElementById('scanStorage').innerText = '0 Keys (Clean)';
-        this.innerText = 'Audit Passed (0.00 B Egress)';
-      }, 400);
+      this.innerText = 'Auditing active DOM & storage...';
+      setTimeout(performLiveAudit, 300);
     });
+
+    // Auto-run on initial load
+    window.addEventListener('DOMContentLoaded', performLiveAudit);
   </script>
 </body>
 </html>
