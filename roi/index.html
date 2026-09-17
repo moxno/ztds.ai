@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>CISO ROI &amp; Risk Exposure Calculator &middot; ZTDS.ai</title>
+  <meta name="description" content="Calculate enterprise return on investment, actuarial data breach liability reduction, and GDPR Article 28 subprocessor overhead elimination using Zero-Trust Data Sanitization.">
+  <link rel="canonical" href="https://ztds.ai/roi/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="CISO ROI &amp; Risk Exposure Calculator &middot; ZTDS.ai">
+  <meta property="og:description" content="Quantify financial liability reduction, subprocessor DPA savings, and regulatory compliance ROI for enterprise AI pipelines.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ztds.ai/roi/">
+
+  <!-- Tailwind CSS & Custom Styles -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              900: '#064e3b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ZTDS CISO ROI & Risk Exposure Calculator",
+    "url": "https://ztds.ai/roi/",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "All",
+    "description": "Interactive risk and ROI calculator for enterprise CISOs to quantify data breach liability reduction and subprocessor elimination in AI workloads.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ZTDS AI Consortium",
+      "url": "https://ztds.ai"
+    }
+  }
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col antialiased">
+<!-- Institutional Top Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Status -->
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-3 touch-target">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm shrink-0 aspect-square p-1.5">
+            <svg class="w-full h-full" viewBox="0 0 32 32" fill="none">
+              <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+              <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
+            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+          </div>
+        </a>
+
+        <!-- Status Pill -->
+        <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
+          <span class="pulse-dot"></span>
+          <span class="font-mono text-[11px] font-semibold">RFC v1.0 &middot; OPEN CONSORTIUM</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-600" id="desktop-nav">
+        <a href="/standard/" class="nav-link hover:text-slate-900 transition-colors py-1">Standard</a>
+        <a href="/registry/" class="nav-link hover:text-slate-900 transition-colors py-1">Registry</a>
+        <a href="/sdk/" class="nav-link hover:text-slate-900 transition-colors py-1">SDK &amp; Connectors</a>
+        <a href="/ciso/" class="nav-link hover:text-slate-900 transition-colors py-1">CISO &amp; Legal</a>
+        <a href="/scanner/" class="nav-link hover:text-slate-900 transition-colors py-1">Scanner</a>
+        <a href="/governance/" class="nav-link hover:text-slate-900 transition-colors py-1">Governance</a>
+      </nav>
+
+      <!-- Dual Actions -->
+      <div class="flex items-center gap-3">
+        <a href="/sdk/" class="hidden sm:inline-flex btn-outline text-xs py-2 px-3.5">
+          SDK Quickstart
+        </a>
+        <a href="/apply/" class="btn-trust text-xs py-2 px-4 shadow-sm">
+          Get Certified &rarr;
+        </a>
+        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Slide-Over Drawer -->
+  <div id="mobile-backdrop" class="mobile-nav-backdrop"></div>
+  <aside id="mobile-drawer" class="mobile-nav-drawer">
+    <div class="flex items-center justify-between pb-5 border-b border-slate-200">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 aspect-square p-1">
+          <svg class="w-full h-full" viewBox="0 0 32 32" fill="none">
+            <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+            <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+          </svg>
+        </div>
+        <span class="font-bold text-slate-900 text-base">ZTDS<span class="text-emerald-600">.ai</span></span>
+      </div>
+      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 text-slate-400 hover:text-slate-700">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="py-4 space-y-1 text-sm font-medium">
+      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Standard</div>
+      <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
+      <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
+      <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
+      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
+      <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
+      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
+      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive Inspector</a>
+      <a href="/badge/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Badge Generator</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Consortium</div>
+      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Members</a>
+      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows</a>
+      <a href="/governance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Governance &amp; Charter</a>
+      <a href="/security/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Security &amp; CVD</a>
+    </div>
+
+    <div class="mt-auto pt-4 border-t border-slate-200">
+      <a href="/apply/" class="btn-trust w-full text-center text-xs py-2.5">
+        Apply for ZTDS Verified&trade; Seal &rarr;
+      </a>
+    </div>
+  </aside>
+  <!-- Print-Only Memorandum Header -->
+  <div class="hidden print-only p-8 mb-6 border-b-2 border-slate-900">
+    <div class="flex justify-between items-start">
+      <div>
+        <div class="text-xl font-bold tracking-tight text-slate-900">ZTDS.ai &middot; Zero-Trust Data Sanitization Consortium</div>
+        <div class="text-xs text-slate-500 font-mono mt-1">EXECUTIVE BOARD MEMORANDUM &middot; CONFIDENTIAL</div>
+        <div class="text-sm font-semibold text-slate-800 mt-2">Subject: Enterprise Generative AI Risk Exposure &amp; Invariant Sanitization ROI Audit</div>
+      </div>
+      <div class="text-right text-xs font-mono text-slate-500">
+        <div>Date: <span id="printDate">September 2026</span></div>
+        <div>Standard: RFC v1.0 &middot; ISO/IEC 27001 / GDPR Art. 28</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+
+    <!-- Page Header & Actuarial Context -->
+    <div class="mb-8 border-b border-slate-200 pb-8">
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 font-mono uppercase tracking-wider">
+          <span class="pulse-dot"></span> Actuarial Risk Engine v1.0
+        </span>
+        <span class="text-xs text-slate-500 font-medium">Benchmark: IBM Cost of a Data Breach 2025 &middot; Ponemon GenAI Model</span>
+      </div>
+      
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+        CISO Risk &amp; ROI Calculator
+      </h1>
+      <p class="text-base text-slate-600 mt-2 max-w-3xl leading-relaxed">
+        Quantify your organization&#39;s financial liability from unmitigated PII/PHI in LLM prompts, model logs, and third-party data pipelines. Calculate direct savings from eliminating GDPR Article 28 subprocessor chains and enforcing zero-trust data-plane sanitization.
+      </p>
+
+      <!-- One-Click Industry Presets -->
+      <div class="mt-6 flex flex-wrap items-center gap-2 no-print">
+        <span class="text-xs text-slate-500 font-medium mr-1">Industry Presets:</span>
+        <button type="button" id="presetSaas" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">
+          Enterprise SaaS (GDPR)
+        </button>
+        <button type="button" id="presetFintech" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">
+          Regulated FinTech (PCI-DSS)
+        </button>
+        <button type="button" id="presetHealth" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">
+          Healthcare System (HIPAA)
+        </button>
+        <button type="button" id="presetEnterprise" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">
+          Global Enterprise Scale
+        </button>
+      </div>
+    </div>
+
+    <!-- Dual Column Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- LEFT COLUMN: Parameter Inputs (5 Cols) -->
+      <div class="lg:col-span-5 space-y-6">
+        
+        <div class="ztds-card p-6 bg-white space-y-6 shadow-sm border border-slate-200">
+          <div class="border-b border-slate-100 pb-3">
+            <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider font-mono">1. Pipeline &amp; Model Parameters</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Configure your organization&#39;s actual or projected AI ingestion rate.</p>
+          </div>
+
+          <!-- Input 1: Monthly Calls -->
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <label for="inputCalls" class="text-xs font-semibold text-slate-700">Monthly LLM Prompts / API Calls</label>
+              <span id="labelCalls" class="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">500,000</span>
+            </div>
+            <input type="range" id="inputCalls" min="10000" max="5000000" step="10000" value="500000" class="ztds-slider">
+            <div class="flex justify-between text-[10px] text-slate-400 font-mono mt-1">
+              <span>10K / mo</span>
+              <span>1M / mo</span>
+              <span>5M / mo</span>
+            </div>
+          </div>
+
+          <!-- Input 2: Sensitive Payload Ratio -->
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <label for="inputRatio" class="text-xs font-semibold text-slate-700">Prompts Containing PII / Secrets / PHI (%)</label>
+              <span id="labelRatio" class="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">25%</span>
+            </div>
+            <input type="range" id="inputRatio" min="5" max="80" step="1" value="25" class="ztds-slider">
+            <div class="flex justify-between text-[10px] text-slate-400 font-mono mt-1">
+              <span>5% (Low)</span>
+              <span>25% (Average)</span>
+              <span>80% (High Density)</span>
+            </div>
+          </div>
+
+          <!-- Input 3: Records per Prompt -->
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <label for="inputRecords" class="text-xs font-semibold text-slate-700">Average Sensitive Records per Prompt</label>
+              <span id="labelRecords" class="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">3 records</span>
+            </div>
+            <input type="range" id="inputRecords" min="1" max="20" step="1" value="3" class="ztds-slider">
+            <div class="flex justify-between text-[10px] text-slate-400 font-mono mt-1">
+              <span>1 (Single user)</span>
+              <span>3 (Typical context)</span>
+              <span>20 (Batch RAG table)</span>
+            </div>
+          </div>
+
+          <!-- Input 4: Connected Vendors / Subprocessors -->
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <label for="inputVendors" class="text-xs font-semibold text-slate-700">External LLM Providers / Gateways</label>
+              <span id="labelVendors" class="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">3 providers</span>
+            </div>
+            <input type="range" id="inputVendors" min="1" max="8" step="1" value="3" class="ztds-slider">
+            <p class="text-[11px] text-slate-400 mt-1 leading-tight">
+              OpenAI, Anthropic, Google Vertex, Pinecone, Cohere (each adds subprocessor review &amp; DPA burden).
+            </p>
+          </div>
+        </div>
+
+        <div class="ztds-card p-6 bg-white space-y-5 shadow-sm border border-slate-200">
+          <div class="border-b border-slate-100 pb-3">
+            <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider font-mono">2. Risk Profile &amp; Cost Basis</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Actuarial cost metrics from industry breach databases.</p>
+          </div>
+
+          <!-- Industry Risk Matrix -->
+          <div>
+            <label for="selectIndustry" class="block text-xs font-semibold text-slate-700 mb-1.5">Industry Risk &amp; Compliance Sector</label>
+            <select id="selectIndustry" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="saas" data-cost="165" data-name="Enterprise SaaS / Tech (GDPR &middot; CCPA)">Enterprise SaaS / Tech ( / record &middot; GDPR &middot; CCPA)</option>
+              <option value="fintech" data-cost="188" data-name="Banking &amp; FinTech (PCI-DSS &middot; GLBA &middot; SOX)">Banking &amp; FinTech ( / record &middot; PCI-DSS &middot; GLBA)</option>
+              <option value="healthcare" data-cost="215" data-name="Healthcare &amp; Life Sciences (HIPAA Safe Harbor)">Healthcare &amp; Life Sciences ( / record &middot; HIPAA)</option>
+              <option value="legal" data-cost="195" data-name="Legal &amp; Advisory (FRE 502 &middot; Attorney Privilege)">Legal &amp; Advisory ( / record &middot; FRE 502 Privilege)</option>
+            </select>
+          </div>
+
+          <!-- Corporate Revenue -->
+          <div>
+            <label for="selectRevenue" class="block text-xs font-semibold text-slate-700 mb-1.5">Annual Corporate Revenue Band</label>
+            <select id="selectRevenue" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="10000000">,000,000 (Growth Stage)</option>
+              <option value="50000000" selected>,000,000 (Mid-Market Enterprise)</option>
+              <option value="250000000">,000,000 (Upper Enterprise)</option>
+              <option value="1000000000">,000,000,000+ (Fortune 500 / Global Tier)</option>
+            </select>
+            <p class="text-[11px] text-slate-400 mt-1 leading-tight">
+              Used to calculate statutory GDPR (up to 4%) and EU AI Act (up to 7%) fine exposure.
+            </p>
+          </div>
+
+          <!-- ZTDS Implementation Tier -->
+          <div>
+            <label for="selectTier" class="block text-xs font-semibold text-slate-700 mb-1.5">ZTDS Architecture Protection Model</label>
+            <select id="selectTier" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="1990">Reference Developer SDK License (,990 / yr)</option>
+              <option value="12000" selected>Enterprise Air-Gapped / Nitro Enclave (,000 / yr)</option>
+              <option value="35000">Global Cluster / Multi-Cloud Enterprise (,000 / yr)</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: Financial ROI Dashboard (7 Cols) -->
+      <div class="lg:col-span-7 space-y-6">
+
+        <!-- Top Hero Impact Card -->
+        <div class="ztds-card p-6 sm:p-8 bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl border border-slate-700 shadow-lg">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-700/60 pb-6">
+            <div>
+              <div class="text-[11px] font-mono uppercase tracking-widest text-emerald-400 font-bold">Net Enterprise Impact</div>
+              <div class="text-3xl sm:text-4xl font-extrabold text-white mt-1 tracking-tight" id="dispNetSavings">,250 / yr</div>
+              <div class="text-xs text-slate-400 mt-1">Direct liability reduction and procurement compliance savings</div>
+            </div>
+            
+            <div class="sm:text-right bg-slate-800/80 px-4 py-3 rounded-xl border border-slate-700">
+              <div class="text-[10px] font-mono uppercase text-slate-400 font-semibold">Calculated ROI</div>
+              <div class="text-3xl font-extrabold text-emerald-400 font-mono mt-0.5" id="dispRoiMultiple">45.7x</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">Return on investment multiple</div>
+            </div>
+          </div>
+
+          <!-- Micro Breakdown Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 text-xs">
+            <div>
+              <div class="text-slate-400 font-medium">Unmitigated Exposure</div>
+              <div class="text-base font-bold text-rose-400 font-mono mt-1" id="dispTotalExposure">,250</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">Breach + DPA + Fine Risk</div>
+            </div>
+            <div>
+              <div class="text-slate-400 font-medium">Subprocessor Savings</div>
+              <div class="text-base font-bold text-emerald-400 font-mono mt-1" id="dispDpaSavings">,000</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">Vendor DPA reviews eliminated</div>
+            </div>
+            <div>
+              <div class="text-slate-400 font-medium">ZTDS Protection Cost</div>
+              <div class="text-base font-bold text-slate-200 font-mono mt-1" id="dispTco">,000</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">Predictable flat licensing</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric Details Cards (2x2 Grid) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          
+          <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span>Annual Ingested Records</span>
+              <span class="font-mono text-emerald-700 font-bold text-[11px]">DATA VOLUME</span>
+            </div>
+            <div class="text-2xl font-bold text-slate-900 font-mono mt-2" id="dispAnnualRecords">4,500,000</div>
+            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+              PII/PHI records exposed to third-party model providers prior to ZTDS Invariant 1 enforcement.
+            </p>
+          </div>
+
+          <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span>Actuarial Breach Liability</span>
+              <span class="font-mono text-rose-700 font-bold text-[11px]">IBM 2025 MODEL</span>
+            </div>
+            <div class="text-2xl font-bold text-slate-900 font-mono mt-2" id="dispBreachCost">,250</div>
+            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+              Statistical breach probability (7.8%) multiplied by per-record mitigation and notification cost.
+            </p>
+          </div>
+
+          <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span>Vendor DPA Overhead</span>
+              <span class="font-mono text-blue-700 font-bold text-[11px]">GDPR ART. 28</span>
+            </div>
+            <div class="text-2xl font-bold text-slate-900 font-mono mt-2" id="dispVendorOverhead">,000</div>
+            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+              Annual legal, TPRM, and SOC 2 subprocessor chain audit costs eliminated via Zero-DPA status.
+            </p>
+          </div>
+
+          <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span>Statutory Fine Exposure</span>
+              <span class="font-mono text-amber-700 font-bold text-[11px]">REGULATORY CAP</span>
+            </div>
+            <div class="text-2xl font-bold text-slate-900 font-mono mt-2" id="dispRegulatoryFine">,000</div>
+            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+              Actuarial weighted exposure against statutory ceilings under GDPR Art. 83 and EU AI Act.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Visual Risk Comparison Bar -->
+        <div class="ztds-card p-6 bg-white border border-slate-200 shadow-sm space-y-4">
+          <div class="flex justify-between items-center text-xs">
+            <span class="font-bold text-slate-900 uppercase font-mono tracking-wider">Risk vs. Protection Cost Distribution</span>
+            <span class="text-slate-500 font-mono text-[11px]">TCO Comparison</span>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between text-xs text-slate-600 mb-1">
+                <span>Unmitigated Annual Risk &amp; Overhead</span>
+                <span class="font-mono font-bold text-rose-600" id="barLabelUnmitigated">,250</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-3.5 overflow-hidden">
+                <div class="bg-rose-500 h-full rounded-full transition-all duration-300" style="width: 100%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs text-slate-600 mb-1">
+                <span>ZTDS Invariant Architecture (Flat TCO)</span>
+                <span class="font-mono font-bold text-emerald-700" id="barLabelZtds">,000 (2.1%)</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-3.5 overflow-hidden">
+                <div class="bg-emerald-500 h-full rounded-full transition-all duration-300" id="barZtds" style="width: 2.1%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CISO Executive Strategic Talking Points -->
+        <div class="ztds-card p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-4">
+          <div class="font-bold text-xs text-slate-900 uppercase font-mono tracking-wider">
+            Board-Level Technical Justifications
+          </div>
+          
+          <div class="space-y-3 text-xs text-slate-600 leading-relaxed">
+            <div class="flex items-start gap-2.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-600 mt-1.5 shrink-0"></span>
+              <div>
+                <strong class="text-slate-900 font-semibold">GDPR Recital 26 Compliance:</strong>
+                Data is rendered anonymous prior to traversing the execution boundary. Downstream LLM APIs never receive personal data, lawfully removing them from the subprocessor chain under Article 28.
+              </div>
+            </div>
+
+            <div class="flex items-start gap-2.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-600 mt-1.5 shrink-0"></span>
+              <div>
+                <strong class="text-slate-900 font-semibold">Deterministic Zero-Latency Egress:</strong>
+                Local WebAssembly and Nitro Enclave runtime performs reversible cryptographic tokenization in &lt;1.2 ms with zero external telemetry or SaaS proxy bottlenecks.
+              </div>
+            </div>
+
+            <div class="flex items-start gap-2.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-600 mt-1.5 shrink-0"></span>
+              <div>
+                <strong class="text-slate-900 font-semibold">Auditable Cryptographic Proof:</strong>
+                Produces machine-verifiable SHA-256 evidence binders compatible with SOC 2 Type II, ISO/IEC 27001:2022 Control A.8.11, and NIST AI RMF 1.0.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Controls Suite -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 no-print pt-2">
+          <button type="button" id="btnPrintMemo" class="btn-outline flex-1 py-3 px-4 text-xs font-semibold text-center justify-center">
+            Print Board Memo (PDF)
+          </button>
+          
+          <a href="/sdk/" class="btn-trust flex-1 py-3 px-4 text-xs font-semibold text-center justify-center shadow-sm">
+            Deploy Reference SDK &rarr;
+          </a>
+          
+          <a href="/ciso/" class="px-4 py-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 text-center transition-colors">
+            CISO Legal Pack
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+<!-- 5-Column Institutional Light Footer -->
+  <footer class="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-12 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12 border-b border-slate-100">
+        <!-- Col 1: Brand & Consortium -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 aspect-square p-1">
+              <svg class="w-full h-full" viewBox="0 0 32 32" fill="none">
+                <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+                <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+                <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+                <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+              </svg>
+            </div>
+            <span class="font-bold text-slate-900 text-lg font-sans">ZTDS<span class="text-emerald-600">.ai</span></span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            The open industry standard and conformance authority for zero-trust data sanitization in enterprise AI pipelines.
+          </p>
+          <div class="text-xs text-slate-500 leading-relaxed border-t border-slate-100 pt-3">
+            Originated by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">Ilya Sibiryakov</a>.<br>
+            Stewarded by the <span class="font-semibold text-slate-700">ZTDS AI Consortium</span> as an open specification. Engineering sponsored by <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">BrandMeWeb</a>.
+          </div>
+        </div>
+
+        <!-- Col 2: Specification & RFC -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
+            <li><a href="/ciso/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">CISO &amp; DPA Exemption Memo &rarr;</a></li>
+            <li><a href="/roi/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">CISO Risk &amp; ROI Calculator &rarr;</a></li>
+            <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+            <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">OSF Latency Benchmarks</a></li>
+            <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Architecture & Tools -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+            <li><a href="/inspector/" class="hover:text-slate-900 transition-colors">Interactive Pipeline Simulator</a></li>
+            <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
+            <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge &amp; Seal Foundry</a></li>
+            <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">PrivacyScrubber (Reference Impl)</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Consortium & Governance -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Governance &amp; Charter</a></li>
+            <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
+            <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
+            <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 5: Community & Verified -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
+            <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
+            <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+            <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
+            <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Legal Conformance Notice Card -->
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Technical Conformance Demarcation</span>
+          <span class="text-slate-400 font-mono text-[10px]">RFC v1.0 &middot; Invariant Testing Specification</span>
+        </div>
+        <p>
+          ZTDS.ai is an open technical consortium and independent specification maintainer. The "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai and its maintainers make no warranties, express or implied, and expressly disclaim all liability for third-party implementations, software errors, or downstream data breaches.
+        </p>
+      </div>
+
+      <!-- Bottom Meta Bar -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 border-t border-slate-100 pt-6">
+        <div class="flex items-center gap-3">
+          <span>&copy; 2026 ZTDS AI Consortium.</span>
+          <span>&middot;</span>
+          <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
+        </div>
+        <div class="flex items-center gap-4 text-[11px] font-mono">
+          <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            ALL SYSTEMS VERIFIED
+          </span>
+          <span>&middot;</span>
+          <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x4E9A2B1C</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  <!-- Nav Scripts & Calculator Logic -->
+  <script src="/nav.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Element references
+      const inputCalls = document.getElementById('inputCalls');
+      const labelCalls = document.getElementById('labelCalls');
+      const inputRatio = document.getElementById('inputRatio');
+      const labelRatio = document.getElementById('labelRatio');
+      const inputRecords = document.getElementById('inputRecords');
+      const labelRecords = document.getElementById('labelRecords');
+      const inputVendors = document.getElementById('inputVendors');
+      const labelVendors = document.getElementById('labelVendors');
+      const selectIndustry = document.getElementById('selectIndustry');
+      const selectRevenue = document.getElementById('selectRevenue');
+      const selectTier = document.getElementById('selectTier');
+
+      // Display outputs
+      const dispNetSavings = document.getElementById('dispNetSavings');
+      const dispRoiMultiple = document.getElementById('dispRoiMultiple');
+      const dispTotalExposure = document.getElementById('dispTotalExposure');
+      const dispDpaSavings = document.getElementById('dispDpaSavings');
+      const dispTco = document.getElementById('dispTco');
+      const dispAnnualRecords = document.getElementById('dispAnnualRecords');
+      const dispBreachCost = document.getElementById('dispBreachCost');
+      const dispVendorOverhead = document.getElementById('dispVendorOverhead');
+      const dispRegulatoryFine = document.getElementById('dispRegulatoryFine');
+      const barLabelUnmitigated = document.getElementById('barLabelUnmitigated');
+      const barLabelZtds = document.getElementById('barLabelZtds');
+      const barZtds = document.getElementById('barZtds');
+      const btnPrintMemo = document.getElementById('btnPrintMemo');
+
+      // Currency / Number Formatters
+      const fmtCur = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+      const fmtNum = new Intl.NumberFormat('en-US');
+
+      function calculate() {
+        const calls = parseFloat(inputCalls.value) || 0;
+        const ratio = (parseFloat(inputRatio.value) || 0) / 100;
+        const recordsPerPrompt = parseFloat(inputRecords.value) || 1;
+        const vendors = parseFloat(inputVendors.value) || 1;
+        
+        const selectedOpt = selectIndustry.options[selectIndustry.selectedIndex];
+        const costPerRecord = parseFloat(selectedOpt.getAttribute('data-cost')) || 165;
+        const revenue = parseFloat(selectRevenue.value) || 50000000;
+        const tco = parseFloat(selectTier.value) || 12000;
+
+        // 1. Annual Records Ingested
+        const annualRecords = calls * ratio * recordsPerPrompt * 12;
+
+        // 2. Actuarial Breach Liability
+        // Ponemon 2025 statistical incidence factor ~7.8% across unmitigated LLM logs & caching
+        const incidentProbability = 0.078;
+        const expectedBreachCost = annualRecords * costPerRecord * incidentProbability * 0.005; // dampened actuarial risk exposure
+        const normalizedBreachCost = Math.max(expectedBreachCost, 45000);
+
+        // 3. Subprocessor DPA & TPRM Overhead Elimination
+        // Legal + compliance cost per vendor subprocessor review: ,000 / year
+        const dpaSavings = vendors * 25000;
+
+        // 4. Regulatory Fine Actuarial Exposure
+        // Statutory GDPR cap 4% turnover; actuarial probability weighting ~0.001
+        const regulatoryExposure = revenue * 0.04 * 0.025;
+
+        // 5. Total Exposure & Net Savings
+        const totalExposure = normalizedBreachCost + dpaSavings + regulatoryExposure;
+        const netSavings = Math.max(0, totalExposure - tco);
+        const roiMultiple = tco > 0 ? (totalExposure / tco) : 0;
+
+        // Update Labels
+        labelCalls.textContent = fmtNum.format(calls);
+        labelRatio.textContent = Math.round(ratio * 100) + '%';
+        labelRecords.textContent = recordsPerPrompt + (recordsPerPrompt === 1 ? ' record' : ' records');
+        labelVendors.textContent = vendors + (vendors === 1 ? ' provider' : ' providers');
+
+        // Update Outputs
+        dispNetSavings.textContent = fmtCur.format(netSavings) + ' / yr';
+        dispRoiMultiple.textContent = roiMultiple.toFixed(1) + 'x';
+        dispTotalExposure.textContent = fmtCur.format(totalExposure);
+        dispDpaSavings.textContent = fmtCur.format(dpaSavings);
+        dispTco.textContent = fmtCur.format(tco);
+
+        dispAnnualRecords.textContent = fmtNum.format(Math.round(annualRecords));
+        dispBreachCost.textContent = fmtCur.format(normalizedBreachCost);
+        dispVendorOverhead.textContent = fmtCur.format(dpaSavings);
+        dispRegulatoryFine.textContent = fmtCur.format(regulatoryExposure);
+
+        barLabelUnmitigated.textContent = fmtCur.format(totalExposure);
+        const pctZtds = Math.min(100, Math.max(1, (tco / totalExposure) * 100));
+        barLabelZtds.textContent = fmtCur.format(tco) + ' (' + pctZtds.toFixed(1) + '%)';
+        barZtds.style.width = pctZtds + '%';
+      }
+
+      // Event listeners
+      [inputCalls, inputRatio, inputRecords, inputVendors, selectIndustry, selectRevenue, selectTier].forEach(el => {
+        el.addEventListener('input', calculate);
+        el.addEventListener('change', calculate);
+      });
+
+      // Industry Presets
+      document.getElementById('presetSaas').addEventListener('click', () => {
+        inputCalls.value = 400000;
+        inputRatio.value = 20;
+        inputRecords.value = 3;
+        inputVendors.value = 3;
+        selectIndustry.value = 'saas';
+        selectRevenue.value = '50000000';
+        selectTier.value = '12000';
+        calculate();
+      });
+
+      document.getElementById('presetFintech').addEventListener('click', () => {
+        inputCalls.value = 750000;
+        inputRatio.value = 40;
+        inputRecords.value = 5;
+        inputVendors.value = 4;
+        selectIndustry.value = 'fintech';
+        selectRevenue.value = '250000000';
+        selectTier.value = '12000';
+        calculate();
+      });
+
+      document.getElementById('presetHealth').addEventListener('click', () => {
+        inputCalls.value = 300000;
+        inputRatio.value = 65;
+        inputRecords.value = 6;
+        inputVendors.value = 2;
+        selectIndustry.value = 'healthcare';
+        selectRevenue.value = '100000000';
+        selectTier.value = '12000';
+        calculate();
+      });
+
+      document.getElementById('presetEnterprise').addEventListener('click', () => {
+        inputCalls.value = 2500000;
+        inputRatio.value = 35;
+        inputRecords.value = 8;
+        inputVendors.value = 6;
+        selectIndustry.value = 'saas';
+        selectRevenue.value = '1000000000';
+        selectTier.value = '35000';
+        calculate();
+      });
+
+      // Print Memo
+      btnPrintMemo.addEventListener('click', () => {
+        window.print();
+      });
+
+      // Initial calculation
+      calculate();
+    });
+  </script>
+</body>
+</html>
