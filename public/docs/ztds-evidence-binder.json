@@ -1,0 +1,61 @@
+{
+  "$schema": "https://ztds.ai/schemas/evidence-binder-v1.json",
+  "audit_version": "ZTDS-RFC-v1.0",
+  "organization": "ZTDS.ai AI Security Consortium",
+  "ecosystem": "BrandMeWeb & PrivacyScrubber",
+  "chief_architect": "Ilya Sibiryakov",
+  "compliance_frameworks": [
+    "AICPA-TSC-2025-SOC2-TypeII",
+    "ISO-IEC-27001-2022-A8.11",
+    "EU-GDPR-Art28-Exempt",
+    "EU-GDPR-Art17-Vector-Immunized",
+    "US-HIPAA-Safe-Harbor-45CFR164.514"
+  ],
+  "test_execution": {
+    "timestamp": "2026-09-18T00:00:00Z",
+    "runner": "ztds-audit-cli-v1.0.0",
+    "audit_hash": "sha256:7343da5fed1858d1aabd60684097dc3e50bc88b10c68efa057c1bde365935739",
+    "conformance_result": "PASS_ALL_INVARIANTS"
+  },
+  "invariant_telemetry": {
+    "invariant_1_zero_egress": {
+      "measured_bytes_out": 0.00,
+      "unmasked_socket_frames": 0,
+      "status": "PASS"
+    },
+    "invariant_2_reversible_tokens": {
+      "token_collision_rate": 0.0000,
+      "deterministic_restoration": "CONFIRMED",
+      "status": "PASS"
+    },
+    "invariant_3_volatile_ram_isolation": {
+      "disk_write_operations": 0,
+      "persistent_storage_keys": 0,
+      "status": "PASS"
+    },
+    "invariant_4_subprocessor_exclusion": {
+      "external_vendor_apis": 0,
+      "subprocessor_count": 0,
+      "dpa_required": false,
+      "status": "PASS"
+    }
+  },
+  "cryptographic_licensing": {
+    "algorithm": "Ed25519",
+    "latency_benchmark_microseconds": 111.8,
+    "telemetry_heartbeats": 0,
+    "status": "AIR_GAPPED_VALIDATED"
+  },
+  "tsc_controls_satisfied": [
+    "CC6.1",
+    "CC6.6",
+    "CC6.7",
+    "CC7.3",
+    "C1.1",
+    "C1.2",
+    "P1.1",
+    "P4.1",
+    "A.8.11",
+    "A.8.16"
+  ]
+}
