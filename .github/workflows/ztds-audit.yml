@@ -3,12 +3,28 @@ name: ZTDS Zero-Trust Invariant Audit
 on:
   push:
     branches: [ main, master, develop ]
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+      - ".agent/**"
+      - ".agents/**"
+      - "public/llms*.txt"
   pull_request:
     branches: [ main, master ]
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+      - ".agent/**"
+      - ".agents/**"
+      - "public/llms*.txt"
   schedule:
     # Weekly integrity audit
     - cron: '0 8 * * 1'
   workflow_dispatch:
+
+concurrency:
+  group: ztds-audit-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   ztds-audit:
