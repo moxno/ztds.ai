@@ -82,17 +82,26 @@
     }
 
     /* Print / PDF Mode */
+    @page {
+      size: 16in 9in;
+      margin: 0;
+    }
     @media print {
-      body {
+      html, body {
         background-color: #0c1322 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
         color: #f1f5f9 !important;
         overflow: visible !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
       .no-print {
         display: none !important;
       }
       .deck-viewport {
         height: auto !important;
+        display: block !important;
       }
       .slide-stage {
         padding: 0 !important;
@@ -104,14 +113,17 @@
         transform: none !important;
         page-break-after: always !important;
         break-after: page !important;
-        width: 100% !important;
+        width: 100vw !important;
         height: 100vh !important;
         max-width: none !important;
         max-height: none !important;
         border-radius: 0 !important;
         border: none !important;
-        padding: 3rem 4rem !important;
+        padding: 3rem 4.5rem !important;
         box-sizing: border-box !important;
+        background-color: #0c1322 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
     }
 
