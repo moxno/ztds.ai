@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,10 +19,10 @@
   <meta name="twitter:description" content="Formal open standard for in-memory client-side de-identification, mathematical egress elimination, and cryptographic session handoff in AI architectures.">
   <meta name="twitter:image" content="https://ztds.ai/badge/privacyscrubber-web.svg">
 
-
+  <!-- Fonts & Styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/styles.css">
 
@@ -49,39 +49,55 @@
   }
   </script>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">
 
-  <!-- Navbar -->
-  <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3 touch-target">
-        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-sky-500/40 flex items-center justify-center">
-          <svg class="w-5 h-5 text-sky-400" viewBox="0 0 32 32" fill="none">
-            <path d="M16 3L6 7V15C6 21.6 10.3 27.7 16 29C21.7 27.7 26 21.6 26 15V7L16 3Z" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
-            <path d="M11 12H21L12 21H21" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+  <!-- Institutional Top Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Status -->
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-3 touch-target">
+          <div class="w-9 h-9 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm">
+            <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none">
+              <path d="M12.5 4C6 4 3 8.5 3 16C3 23.5 6 28 12.5 28V21.5C8 21.5 7.5 18.5 7.5 16C7.5 13.5 8 10.5 12.5 10.5V4Z" fill="#0f172a" stroke="#10b981" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M19.5 4C26 4 29 8.5 29 16C29 23.5 26 28 19.5 28V21.5C24 21.5 24.5 18.5 24.5 16C24.5 13.5 24 10.5 19.5 10.5V4Z" fill="#0f172a" stroke="#10b981" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M16 7.5L21.5 16L16 24.5L10.5 16Z" fill="#10b981"/>
+              <circle cx="16" cy="16" r="2.2" fill="#38bdf8"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
+            <span class="text-[10px] text-slate-500 font-medium uppercase tracking-wider">AI Security Standard</span>
+          </div>
+        </a>
+
+        <!-- Status Pill -->
+        <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
+          <span class="pulse-dot"></span>
+          <span>STATUS: RATIFIED RFC v1.0 &middot; DOI: 10.5281/zenodo.22058770</span>
         </div>
-        <span class="font-bold text-lg tracking-tight text-white font-mono">ZTDS<span class="text-sky-400">.ai</span></span>
-      </a>
+      </div>
 
-      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
-        <a href="/standard/" class="nav-link active">Standard</a>
-        <a href="/ciso/" class="nav-link text-sky-400 font-semibold hover:text-sky-300">CISO Pack</a>
-        <a href="/inspector/" class="nav-link">Inspector</a>
-        <a href="/scanner/" class="nav-link">Scanner</a>
-        <a href="/registry/" class="nav-link">Registry</a>
-        <a href="/companies/" class="nav-link">Companies</a>
-        <a href="/fellows/" class="nav-link">Fellows</a>
-        <a href="/sdk/" class="nav-link">SDK</a>
-        <a href="/governance/" class="nav-link">Governance</a>
+      <!-- Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-600">
+        <a href="/standard/" class="text-emerald-700 font-semibold">Standard</a>
+        <a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Registry</a>
+        <a href="/sdk/" class="hover:text-slate-900 transition-colors">SDK &amp; Connectors</a>
+        <a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO &amp; Legal Pack</a>
+        <a href="/scanner/" class="hover:text-slate-900 transition-colors">Scanner</a>
+        <a href="/governance/" class="hover:text-slate-900 transition-colors">Governance</a>
       </nav>
 
+      <!-- Header Actions -->
       <div class="flex items-center gap-3">
-        <a href="/apply/" class="hidden sm:inline-flex touch-target px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-colors">
-          Apply for Badge &rarr;
+        <a href="/inspector/" class="hidden sm:inline-flex btn-outline text-xs py-2 px-3.5">
+          Try DAG Inspector
         </a>
-        <!-- Mobile Hamburger Button -->
-        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 hover:text-white">
+        <a href="/apply/" class="btn-trust text-xs py-2 px-4 shadow-sm">
+          Get Certified &rarr;
+        </a>
+        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
@@ -93,255 +109,430 @@
   <!-- Mobile Slide-Over Drawer -->
   <div id="mobile-backdrop" class="mobile-nav-backdrop"></div>
   <aside id="mobile-drawer" class="mobile-nav-drawer">
-    <div class="flex items-center justify-between pb-6 border-b border-slate-800">
+    <div class="flex items-center justify-between pb-5 border-b border-slate-200">
       <div class="flex items-center gap-2.5">
-        <div class="w-7 h-7 rounded bg-slate-900 border border-sky-500/40 flex items-center justify-center">
-          <span class="text-sky-400 font-mono font-bold text-sm">Z</span>
+        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center">
+          <svg class="w-4 h-4" viewBox="0 0 32 32" fill="none">
+            <path d="M12.5 4C6 4 3 8.5 3 16C3 23.5 6 28 12.5 28V21.5C8 21.5 7.5 18.5 7.5 16C7.5 13.5 8 10.5 12.5 10.5V4Z" fill="#0f172a" stroke="#10b981" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M19.5 4C26 4 29 8.5 29 16C29 23.5 26 28 19.5 28V21.5C24 21.5 24.5 18.5 24.5 16C24.5 13.5 24 10.5 19.5 10.5V4Z" fill="#0f172a" stroke="#10b981" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M16 7.5L21.5 16L16 24.5L10.5 16Z" fill="#10b981"/>
+            <circle cx="16" cy="16" r="2.2" fill="#38bdf8"/>
+          </svg>
         </div>
-        <span class="font-bold font-mono text-white">ZTDS<span class="text-sky-400">.ai</span></span>
+        <span class="font-bold text-slate-900 text-base">ZTDS<span class="text-emerald-600">.ai</span></span>
       </div>
-      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 text-slate-400 hover:text-white">
+      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 text-slate-400 hover:text-slate-700">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
       </button>
     </div>
-    <div class="py-4 space-y-1">
-      <div class="px-2 pt-2 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Core Architecture</div>
-      <a href="/standard/" class="block px-3 py-2 rounded-lg text-sm text-white bg-slate-900 font-semibold">Standard (RFC v1.0)</a>
-      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-sm text-sky-400 hover:bg-slate-900">CISO Procurement Pack</a>
-      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Pipeline Inspector</a>
-      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Perimeter Scanner</a>
-      <a href="/sdk/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Developer Engine &amp; SDK</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Ecosystem &amp; Trust</div>
-      <a href="/registry/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Certified Implementations</a>
-      <a href="/companies/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Corporate Members</a>
-      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Global Fellows</a>
-      <a href="/badge/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Trust Badge Generator</a>
+    <div class="py-4 space-y-1 text-sm font-medium">
+      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Standard</div>
+      <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
+      <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
+      <a href="/standard/" class="block px-3 py-2 rounded-lg text-emerald-800 bg-emerald-50 font-semibold">Official RFC Specification</a>
+      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Institutional</div>
-      <a href="/governance/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Governance &amp; Charter</a>
-      <a href="/security/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Security &amp; CVD</a>
-      <a href="/privacy/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Zero-Telemetry Privacy</a>
-      <a href="/terms/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Standards, Patents &amp; Terms</a>
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
+      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
+      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive Inspector</a>
+      <a href="/badge/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Badge Generator</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Consortium</div>
+      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Members</a>
+      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows</a>
+      <a href="/governance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Governance &amp; Charter</a>
+      <a href="/security/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Security &amp; CVD</a>
     </div>
-    <div class="mt-auto pt-6 border-t border-slate-800">
-      <a href="/apply/" class="block w-full py-2.5 px-4 text-center rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-semibold hover:bg-emerald-500/25">
-        Apply for Certification &rarr;
+
+    <div class="mt-auto pt-4 border-t border-slate-200">
+      <a href="/apply/" class="btn-trust w-full text-center text-xs py-2.5">
+        Apply for ZTDS Verified™ Seal &rarr;
       </a>
     </div>
   </aside>
 
-  <!-- Content -->
-  <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="mb-8 border-b border-slate-800 pb-8">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono text-sky-400 mb-4">
-        RFC DOCUMENT ID: ZTDS-SPEC-2026-V1 &middot; STATUS: STANDARD
+  <!-- Document Layout with Sticky Sidebar -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-grow flex flex-col lg:flex-row gap-10">
+    
+    <!-- Left Sticky Sidebar (TOC & Citations) -->
+    <aside class="w-full lg:w-64 flex-shrink-0">
+      <div class="lg:sticky lg:top-24 space-y-6">
+        
+        <!-- Table of Contents -->
+        <div class="ztds-card p-5 bg-white">
+          <div class="text-[11px] uppercase text-slate-400 font-bold tracking-wider mb-3">RFC Contents</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="#metadata" class="text-slate-600 hover:text-slate-900 transition-colors block">00. Document Metadata</a></li>
+            <li><a href="#scope" class="text-slate-600 hover:text-slate-900 transition-colors block">01. Scope &amp; Problem</a></li>
+            <li><a href="#invariants" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors block flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> 02. The 4 Invariants</a></li>
+            <li><a href="#taxonomy" class="text-slate-600 hover:text-slate-900 transition-colors block">03. Token Taxonomy</a></li>
+            <li><a href="#grc" class="text-slate-600 hover:text-slate-900 transition-colors block">04. Regulatory Mapping</a></li>
+            <li><a href="#proofs" class="text-slate-600 hover:text-slate-900 transition-colors block">05. Mathematical Proofs</a></li>
+            <li><a href="#governance" class="text-slate-600 hover:text-slate-900 transition-colors block">06. GitOps Governance</a></li>
+          </ul>
+        </div>
+
+        <!-- Citation & BibTeX Box -->
+        <div class="ztds-card p-5 bg-white space-y-3">
+          <div class="text-[11px] uppercase text-emerald-800 font-bold tracking-wider">Citation &amp; DOI</div>
+          <p class="text-xs text-slate-500 leading-relaxed">Official academic citation for literature, enterprise compliance filings, and RFPs.</p>
+          <button id="btnCopyBibtex" class="w-full py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-slate-700 font-medium text-left transition-colors flex items-center justify-between">
+            <span>Copy BibTeX</span>
+            <span class="text-[10px] text-slate-400">&darr;</span>
+          </button>
+          <a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="w-full py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-slate-700 font-medium text-left transition-colors flex items-center justify-between block">
+            <span>Zenodo DOI Record</span>
+            <span class="text-[10px] text-slate-400">&rarr;</span>
+          </a>
+        </div>
+
+        <!-- Submit Amendment Box -->
+        <div class="ztds-card p-5 bg-emerald-50/50 border border-emerald-200/80">
+          <div class="text-[11px] uppercase text-emerald-800 font-bold tracking-wider mb-1">Working Group 1</div>
+          <p class="text-xs text-slate-600 leading-relaxed mb-3">Submit RFC errata, entity profile expansions, or technical amendments via GitHub PR.</p>
+          <a href="/apply/?track=fellow" class="btn-trust block w-full text-center text-xs py-2">
+            Submit Amendment &rarr;
+          </a>
+        </div>
+
       </div>
-      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-        Zero-Trust Data Sanitization Specification (v1.0)
-      </h1>
-      <p class="mt-4 text-base sm:text-lg text-slate-400 leading-relaxed">
-        A Formal Standard for In-Memory Client-Side De-Identification, Mathematical Egress Elimination, and Cryptographic Session Handoff in Artificial Intelligence Architectures.
-      </p>
+    </aside>
 
-      <div class="mt-6 flex flex-wrap items-center gap-4 text-xs font-mono text-slate-400">
-        <span>Author: <strong class="text-slate-200">Ilya Sibiryakov</strong></span>
-        <span>Published: <strong class="text-slate-200">2026-09-15</strong></span>
-        <span>DOI: <a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="text-sky-400 underline">10.5281/zenodo.22058770</a></span>
+    <!-- Main RFC Document Surface -->
+    <main class="flex-grow max-w-3xl">
+      <div class="ztds-card p-6 sm:p-10 bg-white border border-slate-200 shadow-sm">
+        
+        <!-- Document Header & Metadata -->
+        <div id="metadata" class="border-b border-slate-200 pb-8 mb-8">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-4">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> RFC DOCUMENT ID: ZTDS-SPEC-2026-V1 &middot; STATUS: STANDARD
+          </div>
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            Zero-Trust Data Sanitization Specification (RFC v1.0)
+          </h1>
+          <p class="mt-4 text-base text-slate-600 leading-relaxed">
+            A Formal Open Standard for In-Memory Client-Side De-Identification, Mathematical Egress Elimination, and Cryptographic Session Handoff in Artificial Intelligence Architectures.
+          </p>
+
+          <!-- Sovereign Metadata Grid -->
+          <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs font-sans">
+            <div>
+              <span class="text-slate-400 block text-[11px] font-medium uppercase">Author</span>
+              <span class="text-slate-900 font-semibold">Ilya Sibiryakov</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px] font-medium uppercase">Published</span>
+              <span class="text-slate-700 font-medium">2026-09-15</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px] font-medium uppercase">Zenodo DOI</span>
+              <a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="text-emerald-700 font-medium hover:underline">10.5281/zenodo</a>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px] font-medium uppercase">ORCID</span>
+              <a href="https://orcid.org/0009-0002-0642-5985" target="_blank" rel="noopener" class="text-emerald-700 font-medium hover:underline">0009-0002-0642</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Specification Body -->
+        <div class="space-y-12 text-sm leading-relaxed text-slate-700">
+          
+          <!-- Section 1 -->
+          <section id="scope">
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
+              <span class="text-emerald-600">01.</span> Scope &amp; Problem Statement
+            </h2>
+            <p class="mb-4">
+              Legacy Data Loss Prevention (DLP) solutions rely on centralized cloud proxies that intercept traffic between enterprise clients and Large Language Model (LLM) APIs. Under European Union GDPR Article 28, this intermediary processing designates the DLP vendor as a formal Data Processor, requiring extensive Data Processing Agreements (DPA), vendor risk audits, and recurring egress latency penalties of 150ms to 300ms.
+            </p>
+            <p>
+              Furthermore, sensitive data ingested into Retrieval-Augmented Generation (RAG) vector embeddings violates GDPR Article 17 (Right to Erasure), as high-dimensional vector representations cannot be excised without full database re-indexing. ZTDS solves this by enforcing in-memory client-side data de-identification prior to network transmission.
+            </p>
+          </section>
+
+          <!-- Section 2: The 4 Non-Negotiable Invariants -->
+          <section id="invariants">
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
+              <span class="text-emerald-600">02.</span> The 4 Non-Negotiable Invariants
+            </h2>
+            <p class="text-slate-600 mb-6">
+              Any software implementation or commercial agent claiming "ZTDS Verified" status MUST demonstrably adhere to all four foundational invariants:
+            </p>
+
+            <div class="space-y-4">
+              <!-- Invariant 1 -->
+              <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
+                <div class="flex items-center justify-between text-xs mb-2">
+                  <span class="text-emerald-800 font-bold uppercase tracking-wide">Invariant 1 &middot; Volatile Memory Scoping</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">MANDATORY</span>
+                </div>
+                <h3 class="text-base font-bold text-slate-900 mb-2">RAM-Only Ephemeral Lifecycle</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  All mapping pairs between sensitive entities and non-informative tokens (e.g. <code class="px-1.5 py-0.5 bg-white border border-slate-200 rounded text-slate-800 font-mono">{"[NAME_1]": "John Doe"}</code>) MUST be held strictly in volatile RAM. Persisting session maps to cookies, localStorage, IndexedDB, or swap space constitutes an immediate compliance violation. In web browsers, maps must be isolated per tab execution context.
+                </p>
+              </div>
+
+              <!-- Invariant 2 -->
+              <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
+                <div class="flex items-center justify-between text-xs mb-2">
+                  <span class="text-emerald-800 font-bold uppercase tracking-wide">Invariant 2 &middot; Latency Budget</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">MANDATORY</span>
+                </div>
+                <h3 class="text-base font-bold text-slate-900 mb-2">Sub-2ms Deterministic Execution</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  Deterministic parsing, regex heuristic matching, and token replacement MUST execute within a maximum budget of 2 milliseconds per 15,000-character payload on standard consumer hardware. The core engine must introduce zero perceptible cognitive drag on human-in-the-loop workflows.
+                </p>
+              </div>
+
+              <!-- Invariant 3 -->
+              <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
+                <div class="flex items-center justify-between text-xs mb-2">
+                  <span class="text-emerald-800 font-bold uppercase tracking-wide">Invariant 3 &middot; Egress Elimination</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">MANDATORY</span>
+                </div>
+                <h3 class="text-base font-bold text-slate-900 mb-2">The Airplane Mode Proving Test</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  The sanitization engine MUST be capable of complete autonomous operation with all physical and wireless network adapters severed. Network packet inspection during sanitization must record exactly 0 bytes transmitted. Any external telemetry beacon invalidates certification.
+                </p>
+              </div>
+
+              <!-- Invariant 4 -->
+              <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
+                <div class="flex items-center justify-between text-xs mb-2">
+                  <span class="text-emerald-800 font-bold uppercase tracking-wide">Invariant 4 &middot; Session Security</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">MANDATORY</span>
+                </div>
+                <h3 class="text-base font-bold text-slate-900 mb-2">Cryptographic Transport Handoff</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  Multi-user collaborative handoff of token maps must enforce client-side authenticated encryption using <strong>Argon2id</strong> (memory: 19 MiB, iterations: 2) for key derivation and <strong>XChaCha20-Poly1305</strong> (256-bit key, 192-bit random nonce). Cleartext keys must never touch central relays.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Section 3: Tokenization Taxonomy -->
+          <section id="taxonomy">
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
+              <span class="text-emerald-600">03.</span> Tokenization Taxonomy &amp; Syntax
+            </h2>
+            <p class="mb-4">
+              ZTDS standardizes structured bracketed tokens that preserve grammatical context while completely removing informational entropy:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
+              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <code class="text-emerald-700 font-mono font-semibold">[NAME_N]</code> &mdash; Personal names, physician identifiers, executive titles
+              </div>
+              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <code class="text-emerald-700 font-mono font-semibold">[EMAIL_N]</code> &mdash; Corporate and personal email addresses
+              </div>
+              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <code class="text-emerald-700 font-mono font-semibold">[PHONE_N]</code> &mdash; Universal international and domestic telephone numbers
+              </div>
+              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <code class="text-emerald-700 font-mono font-semibold">[ID_N]</code> &mdash; National IDs, SSN, Tax numbers, passport numbers
+              </div>
+              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <code class="text-emerald-700 font-mono font-semibold">[SECRET_N]</code> &mdash; API keys, AWS credentials, JWT tokens, private certificates
+              </div>
+              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <code class="text-emerald-700 font-mono font-semibold">[FINANCIAL_N]</code> &mdash; Credit card PANs, IBANs, bank routing numbers
+              </div>
+            </div>
+            <p class="text-xs text-slate-500">
+              To prevent LLM tokenization mutations (e.g. <code class="px-1 bg-slate-100 rounded text-slate-700 font-mono">[NAME_1]</code> translated or split across byte-pair boundaries), de-tokenizers must implement fuzzy token recovery regexes: <code class="px-1 bg-slate-100 rounded text-slate-700 font-mono">/[\[\(\{&lt;]NAME[ _-]?(\d+)[\]\}\)&gt;]/gi</code>.
+            </p>
+          </section>
+
+          <!-- Section 4: Regulatory Mapping -->
+          <section id="grc">
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
+              <span class="text-emerald-600">04.</span> Regulatory &amp; GRC Cross-Mapping
+            </h2>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="border-b border-slate-200 text-slate-500 bg-slate-50">
+                    <th class="py-3 px-3 font-semibold">Framework</th>
+                    <th class="py-3 px-3 font-semibold">Article / Section</th>
+                    <th class="py-3 px-3 font-semibold">ZTDS Conformance Mechanism</th>
+                    <th class="py-3 px-3 text-right font-semibold">Liability State</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 font-sans">
+                  <tr class="hover:bg-slate-50">
+                    <td class="py-3 px-3 text-slate-900 font-bold">EU GDPR</td>
+                    <td class="py-3 px-3 text-slate-500">Article 28 (DPA)</td>
+                    <td class="py-3 px-3 text-slate-700">0 server data processing; client execution perimeter</td>
+                    <td class="py-3 px-3 text-right text-emerald-700 font-bold">Exempt</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50">
+                    <td class="py-3 px-3 text-slate-900 font-bold">EU GDPR</td>
+                    <td class="py-3 px-3 text-slate-500">Article 17 (Right to Erasure)</td>
+                    <td class="py-3 px-3 text-slate-700">RAG vectors store 0 cleartext PII; zero re-indexing required</td>
+                    <td class="py-3 px-3 text-right text-emerald-700 font-bold">Compliant</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50">
+                    <td class="py-3 px-3 text-slate-900 font-bold">HIPAA</td>
+                    <td class="py-3 px-3 text-slate-500">45 CFR § 164.514(b)</td>
+                    <td class="py-3 px-3 text-slate-700">Safe Harbor 18 PHI identifier exclusion</td>
+                    <td class="py-3 px-3 text-right text-emerald-700 font-bold">Compliant</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50">
+                    <td class="py-3 px-3 text-slate-900 font-bold">SOC 2 Type II</td>
+                    <td class="py-3 px-3 text-slate-500">Trust Services Criteria CC6.7</td>
+                    <td class="py-3 px-3 text-slate-700">Eliminates unencrypted PII egress over public networks</td>
+                    <td class="py-3 px-3 text-right text-emerald-700 font-bold">Compliant</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50">
+                    <td class="py-3 px-3 text-slate-900 font-bold">EU AI Act</td>
+                    <td class="py-3 px-3 text-slate-500">Article 50 (Transparency)</td>
+                    <td class="py-3 px-3 text-slate-700">Reproducible SHA-256 audit receipts generated per session</td>
+                    <td class="py-3 px-3 text-right text-emerald-700 font-bold">Compliant</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Section 5: Mathematical Proofs -->
+          <section id="proofs">
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
+              <span class="text-emerald-600">05.</span> Mathematical Egress Proofs
+            </h2>
+            <p class="mb-4">
+              Let payload <span class="font-mono font-semibold">P</span> represent cleartext input and <span class="font-mono font-semibold">S</span> represent the set of confidential entities <span class="font-mono">e_i &isin; P</span>. Under the ZTDS Transformation Mapping:
+            </p>
+            <div class="p-4 bg-slate-900 text-emerald-400 rounded-xl font-mono text-xs mb-4">
+              T(P) = P \ S &cup; { [TYPE_i] }<br>
+              Egress_external(S) = 0 &forall; t &isin; [0, &infin;)
+            </div>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Because mapping pairs <span class="font-mono">{ [TYPE_i] &rarr; e_i }</span> reside entirely in client volatile memory <span class="font-mono">M_v</span>, no third-party infrastructure ever gains physical possession of cleartext keys or values. Subprocessor liability is mathematically nullified.
+            </p>
+          </section>
+
+          <!-- Section 6: GitOps Governance -->
+          <section id="governance">
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
+              <span class="text-emerald-600">06.</span> Specification Governance &amp; Working Groups
+            </h2>
+            <p class="mb-4">
+              ZTDS is maintained by the ZTDS AI Consortium under the 3-Working-Group GitOps structure:
+            </p>
+            <ul class="space-y-2.5 text-xs text-slate-700">
+              <li class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong class="text-slate-900">WG-1: Core Specification &amp; RFC Standards</strong> &mdash; Invariant definitions, mathematical proofs, RFC errata.</li>
+              <li class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong class="text-slate-900">WG-2: Registry &amp; Certification Authority</strong> &mdash; Accreditation audits, verified product certificates, SVG trust badge issuance.</li>
+              <li class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong class="text-slate-900">WG-3: Developer Engine &amp; Reference Implementations</strong> &mdash; WASM engines, MCP protocol adapters, SDK tooling.</li>
+            </ul>
+          </section>
+
+        </div>
       </div>
-    </div>
+    </main>
+  </div>
 
-    <!-- Article Prose -->
-    <article class="prose prose-invert max-w-none text-slate-300 text-sm leading-relaxed space-y-8">
-      <section>
-        <h2 class="text-xl font-bold text-white border-b border-slate-800 pb-2">1. Scope and Problem Statement</h2>
-        <p>
-          Legacy Data Loss Prevention (DLP) solutions rely on centralized cloud proxies that intercept traffic between enterprise clients and Large Language Model (LLM) APIs. Under European Union GDPR Article 28, this intermediary processing designates the DLP vendor as a formal Data Processor, requiring extensive Data Processing Agreements (DPA), vendor risk audits, and recurring egress latency penalties of 150ms to 300ms.
-        </p>
-        <p>
-          Furthermore, sensitive data ingested into Retrieval-Augmented Generation (RAG) vector embeddings violates GDPR Article 17 (Right to be Forgotten), as high-dimensional vector representations cannot be excised without full database re-indexing. ZTDS solves this by enforcing in-memory client-side data de-identification prior to network transmission.
-        </p>
-      </section>
-
-      <section>
-        <h2 class="text-xl font-bold text-white border-b border-slate-800 pb-2">2. The 4 Non-Negotiable Invariants</h2>
-        <div class="space-y-4 mt-4">
-          <div class="ztds-card p-4">
-            <h3 class="text-base font-bold text-sky-400">Invariant 1: Volatile Memory Scoping (RAM-Only)</h3>
-            <p class="text-xs text-slate-300 mt-1">
-              All mapping pairs between sensitive entities and non-informative tokens (e.g. <code>{"[NAME_1]": "John Doe"}</code>) MUST be held strictly in volatile RAM. Persisting session maps to cookies, localStorage, IndexedDB, or swap space constitutes a compliance violation. In web browsers, maps must be isolated per tab ID.
-            </p>
-          </div>
-
-          <div class="ztds-card p-4">
-            <h3 class="text-base font-bold text-emerald-400">Invariant 2: Sub-2ms Latency Budget</h3>
-            <p class="text-xs text-slate-300 mt-1">
-              Deterministic parsing, regex heuristic matching, and token replacement MUST execute within a maximum budget of 2 milliseconds per 15,000-character payload on standard consumer hardware.
-            </p>
-          </div>
-
-          <div class="ztds-card p-4">
-            <h3 class="text-base font-bold text-indigo-400">Invariant 3: Zero Network Egress (Airplane Mode Test)</h3>
-            <p class="text-xs text-slate-300 mt-1">
-              The sanitization engine MUST be capable of complete autonomous operation with all physical and wireless network adapters severed. Network packet inspection during sanitization must record exactly 0 bytes transmitted.
-            </p>
-          </div>
-
-          <div class="ztds-card p-4">
-            <h3 class="text-base font-bold text-teal-300">Invariant 4: Cryptographic Transport Security</h3>
-            <p class="text-xs text-slate-300 mt-1">
-              Multi-user collaborative handoff of token maps must enforce client-side authenticated encryption using <strong>Argon2id</strong> (memory: 19 MiB, iterations: 2) for key derivation and <strong>XChaCha20-Poly1305</strong> (256-bit key, 192-bit random nonce). Cleartext keys must never touch central relays.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2 class="text-xl font-bold text-white border-b border-slate-800 pb-2">3. Tokenization Taxonomy & Syntax</h2>
-        <p>
-          ZTDS standardizes structured bracketed tokens that preserve grammatical context while removing informational entropy:
-        </p>
-        <ul class="list-disc pl-5 space-y-1 text-xs">
-          <li><code>[NAME_N]</code> &mdash; Personal names, physician identifiers, executive titles</li>
-          <li><code>[EMAIL_N]</code> &mdash; Corporate and personal email addresses</li>
-          <li><code>[PHONE_N]</code> &mdash; Universal international and domestic telephone numbers</li>
-          <li><code>[ID_N]</code> &mdash; National IDs, SSN, Tax numbers, passport numbers</li>
-          <li><code>[SECRET_N]</code> &mdash; API keys, AWS credentials, JWT tokens, private certificates</li>
-          <li><code>[FINANCIAL_N]</code> &mdash; Credit card PANs, IBANs, bank routing numbers</li>
-        </ul>
-        <p class="mt-3">
-          To prevent LLM tokenization mutations (e.g. <code>[NAME_1]</code> translated or broken by BPE encoders), de-tokenizers must implement fuzzy token recovery regexes: <code>/[\[\(\{<]NAME[ _-]?(\d+)[\]\}\)>]/gi</code>.
-        </p>
-      </section>
-
-      <section>
-        <h2 class="text-xl font-bold text-white border-b border-slate-800 pb-2">4. Regulatory & GRC Cross-Mapping</h2>
-        <div class="overflow-x-auto mt-4">
-          <table class="w-full text-left border-collapse text-xs">
-            <thead>
-              <tr class="border-b border-slate-800 text-slate-400">
-                <th class="py-2 font-mono">Framework</th>
-                <th class="py-2 font-mono">Article / Section</th>
-                <th class="py-2 font-mono">ZTDS Implementation</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-800/60">
-              <tr>
-                <td class="py-2 font-semibold text-white">EU GDPR</td>
-                <td class="py-2 text-slate-400">Article 28 (DPA)</td>
-                <td class="py-2 text-emerald-400">Exempt (0 server processing)</td>
-              </tr>
-              <tr>
-                <td class="py-2 font-semibold text-white">EU GDPR</td>
-                <td class="py-2 text-slate-400">Article 17 (Right to Erasure)</td>
-                <td class="py-2 text-emerald-400">RAG vectors contain 0 cleartext PII</td>
-              </tr>
-              <tr>
-                <td class="py-2 font-semibold text-white">HIPAA</td>
-                <td class="py-2 text-slate-400">45 CFR § 164.514(b)</td>
-                <td class="py-2 text-emerald-400">Safe Harbor 18 PHI de-identification</td>
-              </tr>
-              <tr>
-                <td class="py-2 font-semibold text-white">SOC 2 Type II</td>
-                <td class="py-2 text-slate-400">CC6.7 (Data Transmission)</td>
-                <td class="py-2 text-emerald-400">Eliminates unencrypted PII egress</td>
-              </tr>
-              <tr>
-                <td class="py-2 font-semibold text-white">EU AI Act</td>
-                <td class="py-2 text-slate-400">Article 50 (Transparency)</td>
-                <td class="py-2 text-emerald-400">Cryptographic audit receipts generated</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section>
-        <h2 class="text-xl font-bold text-white border-b border-slate-800 pb-2">5. Academic Citations</h2>
-        <div class="space-y-3 mt-4 text-xs font-mono">
-          <div class="p-3 bg-slate-900/80 rounded border border-slate-800">
-            Sibiryakov, I. (2026). Zero-Trust Data Sanitization (ZTDS): Mathematical Proof and Operational Framework for Client-Side AI Prompt Privacy. <em>Zenodo</em>. DOI: <a href="https://doi.org/10.5281/zenodo.22058770" target="_blank" rel="noopener" class="text-sky-400 underline">10.5281/zenodo.22058770</a>
-          </div>
-          <div class="p-3 bg-slate-900/80 rounded border border-slate-800">
-            Sibiryakov, I. (2026). Empirical Latency Benchmark: In-Memory Client RAM Masking vs. Cloud DLP Proxies. <em>OSF Preprints</em>. DOI: <a href="https://doi.org/10.17605/OSF.IO/5BYJF" target="_blank" rel="noopener" class="text-sky-400 underline">10.17605/OSF.IO/5BYJF</a>
-          </div>
-        </div>
-      </section>
-    </article>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-slate-950 border-t border-slate-900 text-slate-400 py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-5 gap-8 text-sm">
+  <!-- 5-Column Institutional Light Footer -->
+  <footer class="bg-white border-t border-slate-200 text-slate-600 py-12 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-5 gap-8">
+      
+      <!-- Col 1: Brand & Consortium -->
       <div>
-        <div class="font-mono font-bold text-white text-base mb-3 flex items-center gap-2">
-          <span class="text-sky-400">&block;</span> ZTDS.ai
+        <div class="flex items-center gap-2 font-bold text-slate-900 text-base mb-3 font-sans">
+          <span class="w-2.5 h-2.5 rounded-sm bg-emerald-600 inline-block"></span>
+          ZTDS.ai
         </div>
-        <p class="text-xs text-slate-500 leading-relaxed">
-          The open architectural specification for Zero-Trust Data Sanitization in Artificial Intelligence pipelines.
+        <p class="text-xs text-slate-500 leading-relaxed mb-4">
+          The open industry standard and certification authority for zero-trust data sanitization in Artificial Intelligence pipelines.
         </p>
-        <div class="mt-4 text-xs text-slate-500">
-          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">BrandMeWeb</a> ecosystem.
+        <div class="text-xs text-slate-500">
+          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-700 hover:text-slate-900 font-medium underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-700 hover:text-slate-900 font-medium underline">BrandMeWeb</a> ecosystem.
         </div>
       </div>
 
+      <!-- Col 2: Specification & Research -->
       <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Specification &amp; Research</div>
+        <div class="font-bold text-xs uppercase text-slate-900 tracking-wider mb-3">Specification &amp; Research</div>
         <ul class="space-y-2 text-xs">
-          <li><a href="/standard/" class="text-sky-400 font-semibold hover:text-white transition-colors">ZTDS RFC v1.0</a></li>
-          <li><a href="/ciso/" class="text-sky-400 font-semibold hover:text-white transition-colors">CISO &amp; DPA Exemption Memo &rarr;</a></li>
-          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-white transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
-          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-white transition-colors">OSF Latency Benchmark</a></li>
-          <li><a href="https://osf.io/preprints/lawarchive/4wc86/" target="_blank" rel="noopener" class="hover:text-white transition-colors">Law Archive Preprint</a></li>
-          <li><a href="/llms.txt" class="hover:text-white transition-colors">llms.txt Standard</a></li>
+          <li><a href="/standard/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">ZTDS RFC v1.0</a></li>
+          <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO &amp; DPA Exemption Memo &rarr;</a></li>
+          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">OSF Latency Benchmark</a></li>
+          <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
         </ul>
       </div>
 
+      <!-- Col 3: Architecture & Tools -->
       <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Architecture &amp; Tools</div>
+        <div class="font-bold text-xs uppercase text-slate-900 tracking-wider mb-3">Architecture &amp; Tools</div>
         <ul class="space-y-2 text-xs">
-          <li><a href="/inspector/" class="hover:text-white transition-colors">Interactive Inspector</a></li>
-          <li><a href="/scanner/" class="hover:text-white transition-colors">Pipeline Scanner</a></li>
-          <li><a href="/sdk/" class="hover:text-white transition-colors">Developer SDK (@privacyscrubber/sdk)</a></li>
-          <li><a href="/badge/" class="hover:text-white transition-colors">Trust Badge Generator</a></li>
-          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-white transition-colors">PrivacyScrubber (Reference Impl)</a></li>
+          <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+          <li><a href="/inspector/" class="hover:text-slate-900 transition-colors">Interactive Pipeline Inspector</a></li>
+          <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
+          <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge Generator</a></li>
+          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">PrivacyScrubber (Reference Impl)</a></li>
         </ul>
       </div>
 
+      <!-- Col 4: Consortium & Governance -->
       <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Consortium &amp; Trust</div>
+        <div class="font-bold text-xs uppercase text-slate-900 tracking-wider mb-3">Consortium &amp; Trust</div>
         <ul class="space-y-2 text-xs">
-          <li><a href="/governance/" class="hover:text-white transition-colors">Governance &amp; Charter</a></li>
-          <li><a href="/security/" class="hover:text-white transition-colors">Security &amp; CVD</a></li>
-          <li><a href="/privacy/" class="hover:text-white transition-colors">Zero-Telemetry Privacy</a></li>
-          <li><a href="/terms/" class="hover:text-white transition-colors">Standards, Patents &amp; Terms</a></li>
-          <li><a href="/.well-known/security.txt" class="hover:text-white transition-colors">RFC 9116 security.txt</a></li>
+          <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Governance &amp; Charter</a></li>
+          <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
+          <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
+          <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+          <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
         </ul>
       </div>
 
+      <!-- Col 5: Community & Verification -->
       <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Syndicate &amp; Community</div>
-        <ul class="space-y-2 text-xs text-slate-400">
-          <li><a href="/registry/" class="hover:text-white transition-colors">Verified Products Directory</a></li>
-          <li><a href="/companies/" class="hover:text-white transition-colors">Corporate Adopters Pool</a></li>
-          <li><a href="/fellows/" class="hover:text-white transition-colors">Global Fellows &amp; Experts</a></li>
-          <li><a href="/apply/" class="hover:text-emerald-400 transition-colors font-medium">Apply for Verification &rarr;</a></li>
-          <li class="pt-2 text-[11px] text-slate-600 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
+        <div class="font-bold text-xs uppercase text-slate-900 tracking-wider mb-3">Community &amp; Verified</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
+          <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
+          <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+          <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Get Your AI Certified &rarr;</a></li>
+          <li class="pt-2 text-[11px] text-slate-400 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
         </ul>
       </div>
 
-      <!-- Legal Conformance Disclaimer -->
-      <div class="mt-8 pt-8 border-t border-slate-900/80 text-[11px] text-slate-500 leading-relaxed col-span-1 md:col-span-5">
-        <p class="font-mono text-slate-400 uppercase text-[10px] tracking-wider mb-1">Legal Notice &amp; Technical Conformance Disclaimer</p>
+      <!-- Legal Conformance Notice -->
+      <div class="mt-8 pt-8 border-t border-slate-200 text-[11px] text-slate-500 leading-relaxed col-span-1 md:col-span-5">
+        <p class="font-semibold text-slate-600 uppercase text-[10px] tracking-wider mb-1">Legal Notice &amp; Technical Conformance Disclaimer</p>
         <p>
-          ZTDS.ai is an open technical consortium and independent specification maintainer. "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated or network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai makes no warranties, express or implied, regarding overall application security or fitness for purpose, and assumes no liability for third-party implementations, software errors, or data breaches.
+          ZTDS.ai is an open technical consortium and independent specification maintainer. "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai makes no warranties, express or implied, and assumes no liability for third-party implementations, software errors, or data breaches.
         </p>
       </div>
+
     </div>
   </footer>
 
+  <!-- Scripts -->
   <script src="/nav.js"></script>
+  <script>
+    document.getElementById('btnCopyBibtex').addEventListener('click', () => {
+      const bibtex = `@techreport{sibiryakov2026ztds,
+  title={Zero-Trust Data Sanitization (ZTDS) Specification v1.0},
+  author={Sibiryakov, Ilya},
+  year={2026},
+  institution={ZTDS AI Consortium},
+  doi={10.5281/zenodo.22058770},
+  url={https://ztds.ai/standard/}
+}`;
+      window.ztdsCopy(bibtex, () => {
+        const btn = document.getElementById('btnCopyBibtex');
+        btn.innerHTML = '<span>Copied BibTeX!</span><span class="text-emerald-600 font-bold">&check;</span>';
+        setTimeout(() => {
+          btn.innerHTML = '<span>Copy BibTeX</span><span class="text-[10px] text-slate-400">&darr;</span>';
+        }, 2000);
+      });
+    });
+  </script>
 </body>
 </html>

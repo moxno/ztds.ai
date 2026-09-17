@@ -1,88 +1,95 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Security &amp; Coordinated Vulnerability Disclosure — ZTDS.ai</title>
-  <meta name="description" content="Coordinated Vulnerability Disclosure policy, armored PGP public key, RFC 9116 security.txt, and $150,000 bug bounty program for the ZTDS AI Consortium.">
+  <title>Security Policy &amp; Coordinated Vulnerability Disclosure — ZTDS.ai</title>
+  <meta name="description" content="Official Coordinated Vulnerability Disclosure (CVD) policy, RFC 9116 security.txt, 4096-bit PGP key, and $150,000 bug bounty program for ZTDS.ai.">
   <link rel="canonical" href="https://ztds.ai/security/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
   <!-- Open Graph & Social Cards -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ztds.ai/security/">
-  <meta property="og:title" content="Security &amp; Coordinated Vulnerability Disclosure (CVD) — ZTDS.ai">
-  <meta property="og:description" content="Cryptographic PGP key, RFC 9116 security.txt, 4-stage CVD SLA timeline, and $150,000 vulnerability bounty policy.">
+  <meta property="og:title" content="Security Policy &amp; Coordinated Vulnerability Disclosure — ZTDS.ai">
+  <meta property="og:description" content="RFC 9116 Coordinated Vulnerability Disclosure, armored PGP public key, 24-hour response SLA, and $150,000 bug bounty matrix.">
   <meta property="og:image" content="https://ztds.ai/badge/privacyscrubber-web.svg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Security &amp; Coordinated Vulnerability Disclosure (CVD) — ZTDS.ai">
-  <meta name="twitter:description" content="Cryptographic PGP key, RFC 9116 security.txt, 4-stage CVD SLA timeline, and $150,000 vulnerability bounty policy.">
+  <meta name="twitter:title" content="Security Policy &amp; Coordinated Vulnerability Disclosure — ZTDS.ai">
+  <meta name="twitter:description" content="RFC 9116 Coordinated Vulnerability Disclosure, armored PGP public key, 24-hour response SLA, and $150,000 bug bounty matrix.">
   <meta name="twitter:image" content="https://ztds.ai/badge/privacyscrubber-web.svg">
 
-
+  <!-- Fonts & Styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebPage",
-        "@id": "https://ztds.ai/security/#webpage",
-        "url": "https://ztds.ai/security/",
-        "name": "Security & Coordinated Vulnerability Disclosure — ZTDS.ai",
-        "description": "Coordinated Vulnerability Disclosure policy, armored PGP public key, RFC 9116 security.txt, and $150,000 bug bounty program for the ZTDS AI Consortium.",
-        "isPartOf": { "@id": "https://ztds.ai/#website" }
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ztds.ai/" },
-          { "@type": "ListItem", "position": 2, "name": "Consortium", "item": "https://ztds.ai/governance/" },
-          { "@type": "ListItem", "position": 3, "name": "Security & CVD", "item": "https://ztds.ai/security/" }
-        ]
-      }
-    ]
+    "@type": "WebPage",
+    "name": "ZTDS Security Policy & Vulnerability Disclosure",
+    "url": "https://ztds.ai/security/",
+    "description": "Coordinated vulnerability disclosure policy, PGP keys, and bug bounty framework.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ZTDS AI Consortium",
+      "url": "https://ztds.ai"
+    }
   }
   </script>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">
 
-  <!-- Header Navigation -->
-  <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3 touch-target">
-        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-sky-500/40 flex items-center justify-center shadow-lg shadow-sky-500/10">
-          <svg class="w-5 h-5 text-sky-400" viewBox="0 0 32 32" fill="none">
-            <path d="M16 3L6 7V15C6 21.6 10.3 27.7 16 29C21.7 27.7 26 21.6 26 15V7L16 3Z" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
-            <path d="M11 12H21L12 21H21" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+  <!-- Institutional Top Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Status -->
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-3 touch-target">
+          <div class="w-9 h-9 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm">
+            <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none">
+              <path d="M12.5 4C6 4 3 8.5 3 16C3 23.5 6 28 12.5 28V21.5C8 21.5 7.5 18.5 7.5 16C7.5 13.5 8 10.5 12.5 10.5V4Z" fill="#0f172a" stroke="#10b981" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M19.5 4C26 4 29 8.5 29 16C29 23.5 26 28 19.5 28V21.5C24 21.5 24.5 18.5 24.5 16C24.5 13.5 24 10.5 19.5 10.5V4Z" fill="#0f172a" stroke="#10b981" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M16 7.5L21.5 16L16 24.5L10.5 16Z" fill="#10b981"/>
+              <circle cx="16" cy="16" r="2.2" fill="#38bdf8"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
+            <span class="text-[10px] text-slate-500 font-medium uppercase tracking-wider">AI Security Standard</span>
+          </div>
+        </a>
+
+        <!-- Status Pill -->
+        <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
+          <span class="pulse-dot"></span>
+          <span>DISCLOSURE: RFC 9116 &middot; RESPONSE SLA &le; 24H &middot; BOUNTY POOL $150,000</span>
         </div>
-        <span class="font-bold text-lg tracking-tight text-white font-mono">ZTDS<span class="text-sky-400">.ai</span></span>
-      </a>
+      </div>
 
-      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
-        <a href="/standard/" class="nav-link">Standard</a>
-        <a href="/ciso/" class="nav-link text-sky-400 font-semibold hover:text-sky-300">CISO Pack</a>
-        <a href="/inspector/" class="nav-link">Inspector</a>
-        <a href="/scanner/" class="nav-link">Scanner</a>
-        <a href="/registry/" class="nav-link">Registry</a>
-        <a href="/companies/" class="nav-link">Companies</a>
-        <a href="/fellows/" class="nav-link">Fellows</a>
-        <a href="/sdk/" class="nav-link">SDK</a>
-        <a href="/security/" class="nav-link active">Security</a>
+      <!-- Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-600">
+        <a href="/standard/" class="hover:text-slate-900 transition-colors">Standard</a>
+        <a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Registry</a>
+        <a href="/sdk/" class="hover:text-slate-900 transition-colors">SDK &amp; Connectors</a>
+        <a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO &amp; Legal Pack</a>
+        <a href="/scanner/" class="hover:text-slate-900 transition-colors">Scanner</a>
+        <a href="/governance/" class="hover:text-slate-900 transition-colors">Governance</a>
       </nav>
 
+      <!-- Header Actions -->
       <div class="flex items-center gap-3">
-        <a href="/apply/" class="hidden sm:inline-flex touch-target px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-colors">
-          Apply for Badge &rarr;
+        <a href="#pgp" class="hidden sm:inline-flex btn-outline text-xs py-2 px-3.5">
+          PGP Key
         </a>
-        <!-- Mobile Hamburger Button -->
-        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 hover:text-white">
+        <a href="/apply/" class="btn-trust text-xs py-2 px-4 shadow-sm">
+          Get Certified &rarr;
+        </a>
+        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
@@ -94,118 +101,126 @@
   <!-- Mobile Slide-Over Drawer -->
   <div id="mobile-backdrop" class="mobile-nav-backdrop"></div>
   <aside id="mobile-drawer" class="mobile-nav-drawer">
-    <div class="flex items-center justify-between pb-6 border-b border-slate-800">
+    <div class="flex items-center justify-between pb-5 border-b border-slate-200">
       <div class="flex items-center gap-2.5">
-        <div class="w-7 h-7 rounded bg-slate-900 border border-sky-500/40 flex items-center justify-center">
-          <span class="text-sky-400 font-mono font-bold text-sm">Z</span>
+        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center">
+          <svg class="w-4 h-4" viewBox="0 0 32 32" fill="none">
+            <path d="M12.5 4C6 4 3 8.5 3 16C3 23.5 6 28 12.5 28V21.5C8 21.5 7.5 18.5 7.5 16C7.5 13.5 8 10.5 12.5 10.5V4Z" fill="#0f172a" stroke="#10b981" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M19.5 4C26 4 29 8.5 29 16C29 23.5 26 28 19.5 28V21.5C24 21.5 24.5 18.5 24.5 16C24.5 13.5 24 10.5 19.5 10.5V4Z" fill="#0f172a" stroke="#10b981" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M16 7.5L21.5 16L16 24.5L10.5 16Z" fill="#10b981"/>
+            <circle cx="16" cy="16" r="2.2" fill="#38bdf8"/>
+          </svg>
         </div>
-        <span class="font-bold font-mono text-white">ZTDS<span class="text-sky-400">.ai</span></span>
+        <span class="font-bold text-slate-900 text-base">ZTDS<span class="text-emerald-600">.ai</span></span>
       </div>
-      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 text-slate-400 hover:text-white">
+      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 text-slate-400 hover:text-slate-700">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
       </button>
     </div>
-    <div class="py-4 space-y-1">
-      <div class="px-2 pt-2 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Core Architecture</div>
-      <a href="/standard/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Standard (RFC v1.0)</a>
-      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-sm text-sky-400 hover:bg-slate-900">CISO Procurement Pack</a>
-      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Pipeline Inspector</a>
-      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Perimeter Scanner</a>
-      <a href="/sdk/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Developer Engine &amp; SDK</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Ecosystem &amp; Trust</div>
-      <a href="/registry/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Certified Implementations</a>
-      <a href="/companies/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Corporate Members</a>
-      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Global Fellows</a>
-      <a href="/badge/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Trust Badge Generator</a>
+    <div class="py-4 space-y-1 text-sm font-medium">
+      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Standard</div>
+      <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
+      <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
+      <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
+      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Institutional</div>
-      <a href="/governance/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Governance &amp; Charter</a>
-      <a href="/security/" class="block px-3 py-2 rounded-lg text-sm text-white bg-slate-900 font-semibold">Security &amp; CVD</a>
-      <a href="/privacy/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Zero-Telemetry Privacy</a>
-      <a href="/terms/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Standards, Patents &amp; Terms</a>
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
+      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
+      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive Inspector</a>
+      <a href="/badge/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Badge Generator</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Consortium</div>
+      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Members</a>
+      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows</a>
+      <a href="/governance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Governance &amp; Charter</a>
+      <a href="/security/" class="block px-3 py-2 rounded-lg text-emerald-800 bg-emerald-50 font-semibold">Security &amp; CVD</a>
     </div>
-    <div class="mt-auto pt-6 border-t border-slate-800">
-      <a href="/apply/" class="block w-full py-2.5 px-4 text-center rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-semibold hover:bg-emerald-500/25">
-        Apply for Certification &rarr;
+
+    <div class="mt-auto pt-4 border-t border-slate-200">
+      <a href="/apply/" class="btn-trust w-full text-center text-xs py-2.5">
+        Apply for ZTDS Verified™ Seal &rarr;
       </a>
     </div>
   </aside>
 
-  <!-- Main Content -->
+  <!-- Main Content Area -->
   <main class="flex-grow">
+    
     <!-- Hero Header -->
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-14 border-b border-slate-800/80">
-      <div class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-4">
-        <a href="/" class="hover:text-white">Home</a>
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-14 border-b border-slate-200">
+      <div class="flex items-center gap-2 text-xs font-medium text-slate-400 mb-4">
+        <a href="/" class="hover:text-slate-900">Home</a>
         <span>/</span>
-        <span class="text-slate-500">Consortium</span>
+        <a href="/governance/" class="text-slate-400 hover:text-slate-900">Consortium</a>
         <span>/</span>
-        <span class="text-sky-400">Security &amp; CVD</span>
+        <span class="text-emerald-700 font-semibold">Security &amp; CVD</span>
       </div>
 
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/60 text-xs font-mono text-sky-300 mb-6">
-        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-        RFC 9116 COMPLIANT &middot; ARMORED PGP KEY &middot; $150,000 BUG BOUNTY
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-6">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> RFC 9116 COMPLIANT &middot; ARMORED PGP KEY &middot; $150,000 BOUNTY POOL
       </div>
 
-      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
         Security &amp; Vulnerability Disclosure
       </h1>
-      <p class="mt-4 text-base sm:text-lg text-slate-400 max-w-3xl leading-relaxed">
-        The ZTDS AI Consortium enforces a rigorous Coordinated Vulnerability Disclosure (CVD) process, safe harbor protections for ethical researchers, and a dedicated bug bounty program to defend the integrity of zero-trust sanitization.
+      <p class="mt-4 text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed">
+        The ZTDS AI Consortium enforces a formal Coordinated Vulnerability Disclosure (CVD) protocol under RFC 9116, safe harbor protections for ethical researchers, and an active bug bounty program up to $150,000 to defend the zero-trust execution perimeter.
       </p>
 
       <!-- Key Telemetry Strip -->
       <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="ztds-card p-4">
-          <div class="font-mono text-xs text-slate-400">Primary Contact</div>
-          <div class="mt-1 text-sm sm:text-base font-semibold text-white font-mono">security@ztds.ai</div>
-          <div class="text-[11px] text-slate-500">PGP Encrypted Only</div>
+        <div class="ztds-card p-5 bg-white">
+          <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wider">Primary Dispatch</div>
+          <div class="mt-1 text-sm sm:text-base font-bold text-slate-900 truncate font-mono">security@ztds.ai</div>
+          <div class="text-xs text-slate-500 mt-0.5">PGP Encrypted Only</div>
         </div>
-        <div class="ztds-card p-4">
-          <div class="font-mono text-xs text-slate-400">Initial Response SLA</div>
-          <div class="mt-1 text-sm sm:text-base font-semibold text-emerald-400">&le; 24 Hours</div>
-          <div class="text-[11px] text-slate-500">Human Security Engineer</div>
+        <div class="ztds-card p-5 bg-white">
+          <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wider">Initial SLA</div>
+          <div class="mt-1 text-sm sm:text-base font-bold text-emerald-700 font-mono">&le; 24 Hours</div>
+          <div class="text-xs text-slate-500 mt-0.5">Human Security Engineer</div>
         </div>
-        <div class="ztds-card p-4">
-          <div class="font-mono text-xs text-slate-400">Maximum Bounty</div>
-          <div class="mt-1 text-sm sm:text-base font-semibold text-sky-400">$150,000 USD</div>
-          <div class="text-[11px] text-slate-500">Invariant 1 Egress Breach</div>
+        <div class="ztds-card p-5 bg-white">
+          <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wider">Max Single Bounty</div>
+          <div class="mt-1 text-sm sm:text-base font-bold text-amber-700 font-mono">$150,000 USD</div>
+          <div class="text-xs text-slate-500 mt-0.5">Invariant 1 Breach</div>
         </div>
-        <div class="ztds-card p-4">
-          <div class="font-mono text-xs text-slate-400">Standard Policy</div>
-          <div class="mt-1 text-sm sm:text-base font-semibold text-purple-400">RFC 9116</div>
-          <div class="text-[11px] text-slate-500">/.well-known/security.txt</div>
+        <div class="ztds-card p-5 bg-white">
+          <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wider">Standard Spec</div>
+          <div class="mt-1 text-sm sm:text-base font-bold text-slate-900 font-mono">RFC 9116</div>
+          <div class="text-xs text-slate-500 mt-0.5">/.well-known/security.txt</div>
         </div>
       </div>
     </section>
 
-    <!-- Section 1: Armored PGP Public Key & Fingerprint -->
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-800/80">
+    <!-- Section 1: Armored PGP Public Key -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-200" id="pgp">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h2 class="text-2xl font-bold text-white tracking-tight" id="pgp">PGP Public Encryption Key</h2>
-          <p class="mt-1 text-slate-400 text-sm">
-            All vulnerability reports containing sensitive PoCs or sample data MUST be encrypted with this key.
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <span class="text-emerald-600">01.</span> Armored PGP Public Key
+          </h2>
+          <p class="mt-1 text-slate-600 text-sm">
+            All vulnerability reports containing sensitive PoCs, payload traces, or memory dumps MUST be encrypted with this master key.
           </p>
         </div>
-        <button id="copy-pgp-btn" type="button" class="touch-target self-start sm:self-auto px-4 py-2 rounded-lg bg-slate-900 border border-slate-700 text-xs font-mono text-sky-400 hover:text-white hover:bg-slate-800 transition-colors flex items-center gap-2">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <button id="copy-pgp-btn" type="button" class="touch-target self-start sm:self-auto px-4 py-2 rounded-lg bg-white border border-slate-300 text-xs font-semibold text-slate-800 hover:bg-slate-50 transition-colors flex items-center gap-2 shadow-sm">
+          <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
           </svg>
           <span id="copy-pgp-text">Copy Armored Key</span>
         </button>
       </div>
 
-      <div class="ztds-card p-4 sm:p-6">
-        <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800 text-xs font-mono text-slate-400">
-          <span>Fingerprint: <strong class="text-white">7B2E 90A4 1F8C 4033 C872 1954 6DF2 A801 33EA 91F0</strong></span>
-          <span>4096-bit RSA / Curve25519</span>
+      <div class="ztds-card p-6 bg-white border border-slate-200 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between pb-3 mb-3 border-b border-slate-100 text-xs text-slate-600 gap-2">
+          <span>Fingerprint: <strong class="text-slate-900 font-mono">7B2E 90A4 1F8C 4033 C872 1954 6DF2 A801 33EA 91F0</strong></span>
+          <span class="text-emerald-700 font-semibold font-mono">4096-bit RSA / Curve25519</span>
         </div>
-        <pre id="pgp-key-block" class="key-armored-box">-----BEGIN PGP PUBLIC KEY BLOCK-----
+        <pre id="pgp-key-block" class="p-4 rounded-xl bg-slate-900 text-emerald-400 font-mono text-xs overflow-x-auto leading-relaxed">-----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: OpenPGP.js v5.11.0
 Comment: https://ztds.ai/security
 
@@ -219,164 +234,168 @@ K4v0a8h+1z6y+2X4u7v1t0m+Y1z8wL9v3b0Z+6X4t7b0Y1Qz9v3X8s7m+rK4v0
       </div>
     </section>
 
-    <!-- Section 2: RFC 9116 security.txt Specification -->
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-800/80">
+    <!-- Section 2: RFC 9116 Machine-Readable Policy -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-200">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h2 class="text-2xl font-bold text-white tracking-tight">RFC 9116 Machine-Readable Policy</h2>
-          <p class="mt-1 text-slate-400 text-sm">
-            Standard discovery metadata hosted at <a href="/.well-known/security.txt" class="text-sky-400 underline font-mono">/.well-known/security.txt</a>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <span class="text-emerald-600">02.</span> RFC 9116 Machine-Readable Policy
+          </h2>
+          <p class="mt-1 text-slate-600 text-sm">
+            Standard discovery metadata hosted canonically at <a href="/.well-known/security.txt" class="text-emerald-700 underline font-mono">/.well-known/security.txt</a>
           </p>
         </div>
-        <a href="/.well-known/security.txt" target="_blank" class="touch-target self-start sm:self-auto px-4 py-2 rounded-lg bg-slate-900 border border-slate-700 text-xs font-mono text-emerald-400 hover:text-white hover:bg-slate-800 transition-colors flex items-center gap-2">
+        <a href="/.well-known/security.txt" target="_blank" class="touch-target self-start sm:self-auto px-4 py-2 rounded-lg bg-white border border-slate-300 text-xs font-semibold text-slate-800 hover:bg-slate-50 transition-colors flex items-center gap-2 shadow-sm">
           <span>View Raw security.txt &rarr;</span>
         </a>
       </div>
 
-      <div class="ztds-card p-4 sm:p-6 bg-slate-950 font-mono text-xs text-slate-300 overflow-x-auto leading-relaxed">
+      <div class="ztds-card p-6 bg-slate-900 text-slate-300 rounded-xl font-mono text-xs overflow-x-auto leading-relaxed border border-slate-800">
         <div class="text-slate-500"># ZTDS.ai Coordinated Vulnerability Disclosure Policy</div>
         <div class="text-slate-500"># RFC 9116 Compliant Security Declaration</div>
         <br>
-        <div><span class="text-sky-400">Contact:</span> mailto:security@ztds.ai</div>
-        <div><span class="text-sky-400">Encryption:</span> https://ztds.ai/security#pgp</div>
-        <div><span class="text-sky-400">Canonical:</span> https://ztds.ai/.well-known/security.txt</div>
-        <div><span class="text-sky-400">Policy:</span> https://ztds.ai/security</div>
-        <div><span class="text-sky-400">Acknowledgments:</span> https://ztds.ai/fellows</div>
-        <div><span class="text-sky-400">Preferred-Languages:</span> en</div>
-        <div><span class="text-sky-400">Expires:</span> 2027-12-31T23:59:59.000Z</div>
+        <div><span class="text-emerald-400">Contact:</span> mailto:security@ztds.ai</div>
+        <div><span class="text-emerald-400">Encryption:</span> https://ztds.ai/security#pgp</div>
+        <div><span class="text-emerald-400">Canonical:</span> https://ztds.ai/.well-known/security.txt</div>
+        <div><span class="text-emerald-400">Policy:</span> https://ztds.ai/security</div>
+        <div><span class="text-emerald-400">Acknowledgments:</span> https://ztds.ai/fellows/</div>
+        <div><span class="text-emerald-400">Preferred-Languages:</span> en</div>
+        <div><span class="text-emerald-400">Expires:</span> 2027-12-31T23:59:59.000Z</div>
       </div>
     </section>
 
-    <!-- Section 3: 4-Stage Coordinated Vulnerability Disclosure SLA -->
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-800/80">
-      <div class="max-w-3xl">
-        <h2 class="text-2xl font-bold text-white tracking-tight">Coordinated Disclosure SLA</h2>
-        <p class="mt-3 text-slate-300 leading-relaxed text-sm sm:text-base">
-          We maintain strict response timelines to protect researchers and ensure immediate mitigation for downstream users.
+    <!-- Section 3: 4-Stage CVD SLA -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-200">
+      <div class="max-w-3xl mb-8">
+        <h2 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-emerald-600">03.</span> Coordinated Disclosure SLA
+        </h2>
+        <p class="mt-3 text-slate-600 leading-relaxed text-sm sm:text-base">
+          We enforce binding response and resolution timelines to protect security researchers and guarantee immediate mitigation for downstream production enclaves.
         </p>
       </div>
 
-      <div class="mt-8 space-y-8">
-        <div class="timeline-step">
-          <div class="timeline-dot dot-emerald"></div>
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
-            <h3 class="text-base font-bold text-white">Stage 1: Triage &amp; Initial Acknowledgment</h3>
-            <span class="text-xs font-mono text-emerald-400 font-semibold">&le; 24 Hours SLA</span>
-          </div>
-          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
-            Receipt confirmation sent by an on-duty security engineer. Case tracking ID assigned. Initial confidentiality perimeter established.
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <!-- Stage 1 -->
+        <div class="ztds-card p-5 bg-white border border-slate-200">
+          <div class="text-xs text-emerald-800 font-bold uppercase tracking-wider mb-1">Stage 01</div>
+          <div class="text-sm font-bold text-slate-900 mb-1">Triage &amp; Acknowledgment</div>
+          <div class="text-xs text-emerald-700 font-semibold mb-3 font-mono">&le; 24 Hours SLA</div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Receipt confirmation dispatched by an on-duty security engineer. Confidentiality perimeter established and case ID assigned.
           </p>
         </div>
 
-        <div class="timeline-step">
-          <div class="timeline-dot"></div>
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
-            <h3 class="text-base font-bold text-white">Stage 2: PoC Reproduction &amp; CVSS v3.1 Scoring</h3>
-            <span class="text-xs font-mono text-sky-400 font-semibold">&le; 72 Hours SLA</span>
-          </div>
-          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
-            Working Group 1 (Architecture &amp; Cryptography) validates the reproducible exploit in an isolated hardware testbed. Severity rating and bounty tier determined.
+        <!-- Stage 2 -->
+        <div class="ztds-card p-5 bg-white border border-slate-200">
+          <div class="text-xs text-blue-800 font-bold uppercase tracking-wider mb-1">Stage 02</div>
+          <div class="text-sm font-bold text-slate-900 mb-1">PoC Reproduction</div>
+          <div class="text-xs text-blue-700 font-semibold mb-3 font-mono">&le; 72 Hours SLA</div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Working Group 1 (Architecture &amp; Cryptography) reproduces exploit in isolated testbed. CVSS v3.1 rating and bounty tier determined.
           </p>
         </div>
 
-        <div class="timeline-step">
-          <div class="timeline-dot dot-amber"></div>
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
-            <h3 class="text-base font-bold text-white">Stage 3: Patch Verification &amp; Enclave Hardening</h3>
-            <span class="text-xs font-mono text-amber-400 font-semibold">&le; 14 Days SLA</span>
-          </div>
-          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
-            Mitigation developed, regression-tested against 50,000 synthetic PII payloads, and validated across certified WASM engines and enclaves.
+        <!-- Stage 3 -->
+        <div class="ztds-card p-5 bg-white border border-slate-200">
+          <div class="text-xs text-amber-800 font-bold uppercase tracking-wider mb-1">Stage 03</div>
+          <div class="text-sm font-bold text-slate-900 mb-1">Patch &amp; Hardening</div>
+          <div class="text-xs text-amber-700 font-semibold mb-3 font-mono">&le; 14 Days SLA</div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Mitigation developed, regression-tested against 50,000 synthetic PII payloads, and validated across certified WASM engines.
           </p>
         </div>
 
-        <div class="timeline-step">
-          <div class="timeline-dot"></div>
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
-            <h3 class="text-base font-bold text-white">Stage 4: Coordinated Advisory &amp; CVE Publication</h3>
-            <span class="text-xs font-mono text-purple-400 font-semibold">&le; 30 Days SLA</span>
-          </div>
-          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
-            Public disclosure coordinated with the reporter. CVE identifier published. Credit attributed in the ZTDS Hall of Fame and Fellows directory.
+        <!-- Stage 4 -->
+        <div class="ztds-card p-5 bg-white border border-slate-200">
+          <div class="text-xs text-purple-800 font-bold uppercase tracking-wider mb-1">Stage 04</div>
+          <div class="text-sm font-bold text-slate-900 mb-1">Advisory &amp; CVE</div>
+          <div class="text-xs text-purple-700 font-semibold mb-3 font-mono">&le; 30 Days SLA</div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Public disclosure coordinated with reporter. CVE published. Permanent credit inscribed in ZTDS Fellows &amp; Researchers Hall of Fame.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Section 4: Vulnerability Bounty Matrix -->
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-800/80">
-      <div class="max-w-3xl">
-        <h2 class="text-2xl font-bold text-white tracking-tight">Bug Bounty Reward Matrix</h2>
-        <p class="mt-3 text-slate-300 leading-relaxed text-sm sm:text-base">
-          Rewards are funded by corporate membership dues and distributed directly in USD or USDC.
+    <!-- Section 4: Vulnerability Bounty Reward Matrix -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-200">
+      <div class="max-w-3xl mb-8">
+        <h2 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-emerald-600">04.</span> Bug Bounty Reward Matrix
+        </h2>
+        <p class="mt-3 text-slate-600 leading-relaxed text-sm sm:text-base">
+          Bounties are funded through corporate consortium dues and disbursed directly in USD wire or USDC.
         </p>
       </div>
 
-      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <!-- Critical -->
-        <div class="ztds-card p-6 border-red-500/40 bg-red-950/10">
-          <div class="font-mono text-xs text-red-400 font-bold mb-1">CRITICAL (9.0 - 10.0)</div>
-          <div class="text-2xl font-extrabold text-white mb-2">$150,000</div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Invariant 1 Breach: Any reproducible mechanism transmitting unmasked PII over external network sockets prior to local sanitization, or enclave attestation compromise.
+        <div class="ztds-card p-6 bg-red-50/40 border-red-200">
+          <div class="text-xs text-red-800 font-bold uppercase tracking-wider mb-1">Critical (9.0 - 10.0)</div>
+          <div class="text-3xl font-extrabold text-slate-900 mb-2 font-mono">$150,000</div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Invariant 1 Breach: Any reproducible mechanism transmitting unmasked PII over external network sockets prior to local sanitization.
           </p>
         </div>
 
         <!-- High -->
-        <div class="ztds-card p-6 border-amber-500/40 bg-amber-950/10">
-          <div class="font-mono text-xs text-amber-400 font-bold mb-1">HIGH (7.0 - 8.9)</div>
-          <div class="text-2xl font-extrabold text-white mb-2">$50,000</div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Invariant 2 Violation: Irreversible token map corruption, cross-session memory leakage of de-identification tables, or side-channel recovery of tokenized secrets.
+        <div class="ztds-card p-6 bg-amber-50/40 border-amber-200">
+          <div class="text-xs text-amber-800 font-bold uppercase tracking-wider mb-1">High (7.0 - 8.9)</div>
+          <div class="text-3xl font-extrabold text-slate-900 mb-2 font-mono">$50,000</div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Invariant 2 Violation: Irreversible token map corruption, cross-session volatile RAM leakage of mapping tables, or secret recovery.
           </p>
         </div>
 
         <!-- Medium -->
-        <div class="ztds-card p-6 border-sky-500/40 bg-sky-950/10">
-          <div class="font-mono text-xs text-sky-400 font-bold mb-1">MEDIUM (4.0 - 6.9)</div>
-          <div class="text-2xl font-extrabold text-white mb-2">$10,000</div>
-          <p class="text-xs text-slate-300 leading-relaxed">
+        <div class="ztds-card p-6 bg-blue-50/40 border-blue-200">
+          <div class="text-xs text-blue-800 font-bold uppercase tracking-wider mb-1">Medium (4.0 - 6.9)</div>
+          <div class="text-3xl font-extrabold text-slate-900 mb-2 font-mono">$10,000</div>
+          <p class="text-xs text-slate-600 leading-relaxed">
             Local memory isolation boundary bypass within sandboxed WASM or container boundaries without external network exfiltration.
           </p>
         </div>
 
         <!-- Low -->
-        <div class="ztds-card p-6 border-slate-700">
-          <div class="font-mono text-xs text-slate-400 font-bold mb-1">LOW (0.1 - 3.9)</div>
-          <div class="text-2xl font-extrabold text-white mb-2">$2,500</div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Specification syntax ambiguity, non-security edge case regressions, or automated verification harness discrepancies.
+        <div class="ztds-card p-6 bg-slate-50 border-slate-200">
+          <div class="text-xs text-slate-600 font-bold uppercase tracking-wider mb-1">Low (0.1 - 3.9)</div>
+          <div class="text-3xl font-extrabold text-slate-900 mb-2 font-mono">$2,500</div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Specification syntax ambiguity, non-security edge case regressions, or automated verification CLI test discrepancy.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Section 5: Safe Harbor & Report Dispatch -->
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Section 5: Safe Harbor & Dispatch -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="submit">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div>
-          <h2 class="text-2xl font-bold text-white tracking-tight">Security Researcher Safe Harbor</h2>
-          <p class="mt-3 text-slate-300 text-sm leading-relaxed">
-            We consider security research conducted under this policy to be authorized. The ZTDS AI Consortium will NOT pursue civil lawsuits or initiate criminal complaints against researchers who:
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <span class="text-emerald-600">05.</span> Ethical Researcher Safe Harbor
+          </h2>
+          <p class="mt-3 text-slate-600 text-sm leading-relaxed">
+            We consider security research conducted under this policy authorized under CFAA and European cybersecurity laws. The ZTDS AI Consortium will not pursue civil lawsuits or criminal complaints against researchers who:
           </p>
-          <ul class="mt-4 space-y-2 text-xs sm:text-sm text-slate-400 list-disc list-inside">
-            <li>Engage in testing without degrading live services or violating user privacy.</li>
-            <li>Do not modify, retain, or exfiltrate non-synthetic private data.</li>
-            <li>Maintain confidentiality until the coordinated public disclosure date.</li>
+          <ul class="mt-4 space-y-2 text-xs sm:text-sm text-slate-600 list-disc list-inside">
+            <li>Engage in testing without degrading live services or accessing non-synthetic data.</li>
+            <li>Do not modify, retain, or exfiltrate private user tokens or cryptographic tables.</li>
+            <li>Maintain confidentiality until the coordinated public advisory date.</li>
           </ul>
         </div>
 
-        <div class="ztds-card p-6 text-center">
-          <h3 class="text-lg font-bold text-white mb-2">Submit a Vulnerability</h3>
-          <p class="text-xs text-slate-400 mb-6 leading-relaxed">
-            Send your PGP-encrypted report directly to our security response team or open a private report via GitHub.
+        <div class="ztds-card p-6 sm:p-8 bg-white border border-slate-200 shadow-sm text-center">
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Submit Vulnerability Report</h3>
+          <p class="text-xs text-slate-500 mb-6 leading-relaxed">
+            Send your PGP-encrypted exploit demonstration directly to our security engineering team or open a confidential GitHub advisory.
           </p>
           <div class="space-y-3">
-            <a href="mailto:security@ztds.ai" class="block w-full py-2.5 px-4 text-center rounded-lg bg-sky-500 text-slate-950 font-mono text-xs font-semibold hover:bg-sky-400 transition-colors">
+            <a href="mailto:security@ztds.ai" class="btn-trust block w-full py-2.5 px-4 text-center text-xs shadow-sm">
               Email Encrypted Report &rarr; security@ztds.ai
             </a>
-            <a href="https://github.com/moxno/PrivacyScrubber/security/advisories/new" target="_blank" rel="noopener" class="block w-full py-2.5 px-4 text-center rounded-lg bg-slate-900 border border-slate-700 text-slate-300 font-mono text-xs font-semibold hover:text-white hover:border-slate-600 transition-colors">
-              GitHub Private Vulnerability Report
+            <a href="https://github.com/moxno/PrivacyScrubber/security/advisories/new" target="_blank" rel="noopener" class="btn-outline block w-full py-2.5 px-4 text-center text-xs">
+              GitHub Confidential Advisory &rarr;
             </a>
           </div>
         </div>
@@ -384,92 +403,94 @@ K4v0a8h+1z6y+2X4u7v1t0m+Y1z8wL9v3b0Z+6X4t7b0Y1Qz9v3X8s7m+rK4v0
     </section>
   </main>
 
-  <!-- Shared Footer -->
-  <footer class="mt-auto border-t border-slate-800/80 bg-slate-950/90 py-12 text-slate-400">
+  <!-- 5-Column Institutional Light Footer -->
+  <footer class="bg-white border-t border-slate-200 text-slate-600 py-12 text-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-5 gap-8">
-      <div class="md:col-span-1">
-        <div class="flex items-center gap-2 font-mono font-bold text-white text-base">
-          <span class="text-sky-400">&bull;</span> ZTDS.ai
+      
+      <!-- Col 1: Brand & Consortium -->
+      <div>
+        <div class="flex items-center gap-2 font-bold text-slate-900 text-base mb-3 font-sans">
+          <span class="w-2.5 h-2.5 rounded-sm bg-emerald-600 inline-block"></span>
+          ZTDS.ai
         </div>
-        <p class="mt-2 text-xs text-slate-400 leading-relaxed">
-          The open architectural specification for Zero-Trust Data Sanitization in Artificial Intelligence pipelines.
+        <p class="text-xs text-slate-500 leading-relaxed mb-4">
+          The open industry standard and certification authority for zero-trust data sanitization in Artificial Intelligence pipelines.
         </p>
-        <div class="mt-4 text-xs text-slate-500">
-          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">BrandMeWeb</a> ecosystem.
+        <div class="text-xs text-slate-500">
+          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-700 hover:text-slate-900 font-medium underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-700 hover:text-slate-900 font-medium underline">BrandMeWeb</a> ecosystem.
         </div>
       </div>
 
+      <!-- Col 2: Specification & Research -->
       <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Specification</div>
+        <div class="font-bold text-xs uppercase text-slate-900 tracking-wider mb-3">Specification &amp; Research</div>
         <ul class="space-y-2 text-xs">
-          <li><a href="/standard/" class="hover:text-white transition-colors">ZTDS RFC v1.0</a></li>
-          <li><a href="/ciso/" class="text-sky-400 font-semibold hover:text-white transition-colors">CISO &amp; DPA Memo &rarr;</a></li>
-          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-white transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
-          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-white transition-colors">OSF Benchmark</a></li>
-          <li><a href="/llms.txt" class="hover:text-white transition-colors">llms.txt Standard</a></li>
+          <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0</a></li>
+          <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO &amp; DPA Exemption Memo &rarr;</a></li>
+          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">OSF Latency Benchmark</a></li>
+          <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
         </ul>
       </div>
 
+      <!-- Col 3: Architecture & Tools -->
       <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Architecture &amp; Tools</div>
+        <div class="font-bold text-xs uppercase text-slate-900 tracking-wider mb-3">Architecture &amp; Tools</div>
         <ul class="space-y-2 text-xs">
-          <li><a href="/inspector/" class="hover:text-white transition-colors">Interactive Inspector</a></li>
-          <li><a href="/scanner/" class="hover:text-white transition-colors">Perimeter Scanner</a></li>
-          <li><a href="/sdk/" class="hover:text-white transition-colors">Developer SDK</a></li>
-          <li><a href="/badge/" class="hover:text-white transition-colors">Trust Badge Generator</a></li>
-          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-white transition-colors">PrivacyScrubber (Reference)</a></li>
+          <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+          <li><a href="/inspector/" class="hover:text-slate-900 transition-colors">Interactive Pipeline Inspector</a></li>
+          <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
+          <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge Generator</a></li>
+          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">PrivacyScrubber (Reference Impl)</a></li>
         </ul>
       </div>
 
+      <!-- Col 4: Consortium & Governance -->
       <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Consortium &amp; Trust</div>
+        <div class="font-bold text-xs uppercase text-slate-900 tracking-wider mb-3">Consortium &amp; Trust</div>
         <ul class="space-y-2 text-xs">
-          <li><a href="/governance/" class="hover:text-white transition-colors">Governance &amp; Charter</a></li>
-          <li><a href="/security/" class="text-sky-400 font-semibold hover:text-white transition-colors">Security &amp; CVD</a></li>
-          <li><a href="/privacy/" class="hover:text-white transition-colors">Zero-Telemetry Privacy</a></li>
-          <li><a href="/terms/" class="hover:text-white transition-colors">Standards, Patents &amp; Terms</a></li>
-          <li><a href="/.well-known/security.txt" class="hover:text-white transition-colors">RFC 9116 security.txt</a></li>
+          <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Governance &amp; Charter</a></li>
+          <li><a href="/security/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Security &amp; CVD Policy</a></li>
+          <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
+          <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+          <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
         </ul>
       </div>
 
+      <!-- Col 5: Community & Verification -->
       <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Community</div>
-        <ul class="space-y-2 text-xs text-slate-400">
-          <li><a href="/registry/" class="hover:text-white transition-colors">Verified Registry</a></li>
-          <li><a href="/companies/" class="hover:text-white transition-colors">Corporate Members</a></li>
-          <li><a href="/fellows/" class="hover:text-white transition-colors">Global Fellows</a></li>
-          <li><a href="/apply/" class="hover:text-emerald-400 transition-colors font-medium">Apply for Badge &rarr;</a></li>
-          <li class="pt-2 text-[11px] text-slate-600 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
+        <div class="font-bold text-xs uppercase text-slate-900 tracking-wider mb-3">Community &amp; Verified</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
+          <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
+          <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+          <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Get Your AI Certified &rarr;</a></li>
+          <li class="pt-2 text-[11px] text-slate-400 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
         </ul>
       </div>
 
-      <!-- Legal Conformance Disclaimer -->
-      <div class="mt-8 pt-8 border-t border-slate-900/80 text-[11px] text-slate-500 leading-relaxed col-span-1 md:col-span-5">
-        <p class="font-mono text-slate-400 uppercase text-[10px] tracking-wider mb-1">Legal Notice &amp; Technical Conformance Disclaimer</p>
+      <!-- Legal Conformance Notice -->
+      <div class="mt-8 pt-8 border-t border-slate-200 text-[11px] text-slate-500 leading-relaxed col-span-1 md:col-span-5">
+        <p class="font-semibold text-slate-600 uppercase text-[10px] tracking-wider mb-1">Legal Notice &amp; Technical Conformance Disclaimer</p>
         <p>
-          ZTDS.ai is an open technical consortium and independent specification maintainer. "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated or network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai makes no warranties, express or implied, regarding overall application security or fitness for purpose, and assumes no liability for third-party implementations, software errors, or data breaches.
+          ZTDS.ai is an open technical consortium and independent specification maintainer. "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai makes no warranties, express or implied, and assumes no liability for third-party implementations, software errors, or data breaches.
         </p>
       </div>
+
     </div>
   </footer>
 
   <script src="/nav.js"></script>
   <script>
-    // Copy PGP Key Logic
-    const copyBtn = document.getElementById('copy-pgp-btn');
-    const copyText = document.getElementById('copy-pgp-text');
-    const keyBlock = document.getElementById('pgp-key-block');
-    if (copyBtn && keyBlock) {
-      copyBtn.addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(keyBlock.textContent);
-          copyText.textContent = 'Copied to Clipboard!';
-          setTimeout(() => { copyText.textContent = 'Copy Armored Key'; }, 2500);
-        } catch (err) {
-          copyText.textContent = 'Failed to copy';
-        }
+    document.getElementById('copy-pgp-btn').addEventListener('click', function() {
+      const keyBlock = document.getElementById('pgp-key-block').innerText;
+      window.ztdsCopy(keyBlock, () => {
+        const textSpan = document.getElementById('copy-pgp-text');
+        const origText = textSpan.innerText;
+        textSpan.innerText = 'Key Copied to Clipboard';
+        setTimeout(() => { textSpan.innerText = origText; }, 2500);
       });
-    }
+    });
   </script>
 </body>
 </html>

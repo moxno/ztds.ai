@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,10 +19,10 @@
   <meta name="twitter:description" content="Simulate in-memory Zero-Trust Data Sanitization in real-time. Measure sub-millisecond latency, test entity tokenization, and verify zero network egress.">
   <meta name="twitter:image" content="https://ztds.ai/badge/privacyscrubber-web.svg">
 
-
+  <!-- Fonts & Styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/styles.css">
 
@@ -43,39 +43,55 @@
   }
   </script>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">
 
-  <!-- Navbar -->
-  <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3 touch-target">
-        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-sky-500/40 flex items-center justify-center">
-          <svg class="w-5 h-5 text-sky-400" viewBox="0 0 32 32" fill="none">
-            <path d="M16 3L6 7V15C6 21.6 10.3 27.7 16 29C21.7 27.7 26 21.6 26 15V7L16 3Z" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
-            <path d="M11 12H21L12 21H21" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+  <!-- Institutional Top Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Status -->
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-3 touch-target">
+          <div class="w-9 h-9 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm">
+            <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none">
+              <path d="M12.5 4C6 4 3 8.5 3 16C3 23.5 6 28 12.5 28V21.5C8 21.5 7.5 18.5 7.5 16C7.5 13.5 8 10.5 12.5 10.5V4Z" fill="#0f172a" stroke="#10b981" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M19.5 4C26 4 29 8.5 29 16C29 23.5 26 28 19.5 28V21.5C24 21.5 24.5 18.5 24.5 16C24.5 13.5 24 10.5 19.5 10.5V4Z" fill="#0f172a" stroke="#10b981" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M16 7.5L21.5 16L16 24.5L10.5 16Z" fill="#10b981"/>
+              <circle cx="16" cy="16" r="2.2" fill="#38bdf8"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
+            <span class="text-[10px] text-slate-500 font-medium uppercase tracking-wider">AI Security Standard</span>
+          </div>
+        </a>
+
+        <!-- Status Pill -->
+        <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
+          <span class="pulse-dot"></span>
+          <span>EGRESS: 0.00 B &middot; RAM ENCLAVE: ACTIVE &middot; LATENCY: &lt;0.5ms</span>
         </div>
-        <span class="font-bold text-lg tracking-tight text-white font-mono">ZTDS<span class="text-sky-400">.ai</span></span>
-      </a>
+      </div>
 
-      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
-        <a href="/standard/" class="nav-link">Standard</a>
-        <a href="/ciso/" class="nav-link text-sky-400 font-semibold hover:text-sky-300">CISO Pack</a>
-        <a href="/inspector/" class="nav-link active">Inspector</a>
-        <a href="/scanner/" class="nav-link">Scanner</a>
-        <a href="/registry/" class="nav-link">Registry</a>
-        <a href="/companies/" class="nav-link">Companies</a>
-        <a href="/fellows/" class="nav-link">Fellows</a>
-        <a href="/sdk/" class="nav-link">SDK</a>
-        <a href="/governance/" class="nav-link">Governance</a>
+      <!-- Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-600">
+        <a href="/standard/" class="hover:text-slate-900 transition-colors">Standard</a>
+        <a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Registry</a>
+        <a href="/sdk/" class="hover:text-slate-900 transition-colors">SDK &amp; Connectors</a>
+        <a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO &amp; Legal Pack</a>
+        <a href="/scanner/" class="hover:text-slate-900 transition-colors">Scanner</a>
+        <a href="/governance/" class="hover:text-slate-900 transition-colors">Governance</a>
       </nav>
 
+      <!-- Header Actions -->
       <div class="flex items-center gap-3">
-        <a href="/apply/" class="hidden sm:inline-flex touch-target px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-colors">
-          Apply for Badge &rarr;
+        <a href="/sdk/" class="hidden sm:inline-flex btn-outline text-xs py-2 px-3.5">
+          SDK Quickstart
         </a>
-        <!-- Mobile Hamburger Button -->
-        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 hover:text-white">
+        <a href="/apply/" class="btn-trust text-xs py-2 px-4 shadow-sm">
+          Get Certified &rarr;
+        </a>
+        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
@@ -87,237 +103,350 @@
   <!-- Mobile Slide-Over Drawer -->
   <div id="mobile-backdrop" class="mobile-nav-backdrop"></div>
   <aside id="mobile-drawer" class="mobile-nav-drawer">
-    <div class="flex items-center justify-between pb-6 border-b border-slate-800">
+    <div class="flex items-center justify-between pb-5 border-b border-slate-200">
       <div class="flex items-center gap-2.5">
-        <div class="w-7 h-7 rounded bg-slate-900 border border-sky-500/40 flex items-center justify-center">
-          <span class="text-sky-400 font-mono font-bold text-sm">Z</span>
+        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center">
+          <svg class="w-4 h-4" viewBox="0 0 32 32" fill="none">
+            <path d="M12.5 4C6 4 3 8.5 3 16C3 23.5 6 28 12.5 28V21.5C8 21.5 7.5 18.5 7.5 16C7.5 13.5 8 10.5 12.5 10.5V4Z" fill="#0f172a" stroke="#10b981" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M19.5 4C26 4 29 8.5 29 16C29 23.5 26 28 19.5 28V21.5C24 21.5 24.5 18.5 24.5 16C24.5 13.5 24 10.5 19.5 10.5V4Z" fill="#0f172a" stroke="#10b981" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M16 7.5L21.5 16L16 24.5L10.5 16Z" fill="#10b981"/>
+            <circle cx="16" cy="16" r="2.2" fill="#38bdf8"/>
+          </svg>
         </div>
-        <span class="font-bold font-mono text-white">ZTDS<span class="text-sky-400">.ai</span></span>
+        <span class="font-bold text-slate-900 text-base">ZTDS<span class="text-emerald-600">.ai</span></span>
       </div>
-      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 text-slate-400 hover:text-white">
+      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 text-slate-400 hover:text-slate-700">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
       </button>
     </div>
-    <div class="py-4 space-y-1">
-      <div class="px-2 pt-2 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Core Architecture</div>
-      <a href="/standard/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Standard (RFC v1.0)</a>
-      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-sm text-sky-400 hover:bg-slate-900">CISO Procurement Pack</a>
-      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-sm text-white bg-slate-900 font-semibold">Pipeline Inspector</a>
-      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Perimeter Scanner</a>
-      <a href="/sdk/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Developer Engine &amp; SDK</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Ecosystem &amp; Trust</div>
-      <a href="/registry/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Certified Implementations</a>
-      <a href="/companies/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Corporate Members</a>
-      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Global Fellows</a>
-      <a href="/badge/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Trust Badge Generator</a>
+    <div class="py-4 space-y-1 text-sm font-medium">
+      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Standard</div>
+      <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
+      <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
+      <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
+      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Institutional</div>
-      <a href="/governance/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Governance &amp; Charter</a>
-      <a href="/security/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Security &amp; CVD</a>
-      <a href="/privacy/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Zero-Telemetry Privacy</a>
-      <a href="/terms/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Standards, Patents &amp; Terms</a>
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
+      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
+      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-emerald-800 bg-emerald-50 font-semibold">Interactive Inspector</a>
+      <a href="/badge/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Badge Generator</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Consortium</div>
+      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Members</a>
+      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows</a>
+      <a href="/governance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Governance &amp; Charter</a>
+      <a href="/security/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Security &amp; CVD</a>
     </div>
-    <div class="mt-auto pt-6 border-t border-slate-800">
-      <a href="/apply/" class="block w-full py-2.5 px-4 text-center rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-semibold hover:bg-emerald-500/25">
-        Apply for Certification &rarr;
+
+    <div class="mt-auto pt-4 border-t border-slate-200">
+      <a href="/apply/" class="btn-trust w-full text-center text-xs py-2.5">
+        Apply for ZTDS Verified™ Seal &rarr;
       </a>
     </div>
   </aside>
 
-  <!-- Main Inspector Interface -->
+  <!-- Main Content Area -->
   <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-    <!-- Header -->
-    <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-800 pb-6">
+    
+    <!-- Sub-Header & Controls -->
+    <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-6">
       <div>
-        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-[11px] font-mono text-sky-400 mb-2">
-          CLIENT-SIDE VOLATILE RAM ENVIRONMENT &middot; ZERO SERVER EGRESS
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span> CLIENT-SIDE VOLATILE RAM ENVIRONMENT &middot; ZERO SERVER EGRESS
         </div>
-        <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Interactive Pipeline Inspector</h1>
-        <p class="text-sm text-slate-400 mt-1">Simulate real-time in-memory sanitization across RAG and LLM tool call nodes.</p>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Interactive Pipeline Inspector</h1>
+        <p class="text-sm text-slate-600 mt-1">Simulate real-time in-memory sanitization across RAG retrieval, prompt templating, and LLM inference nodes.</p>
       </div>
 
-      <!-- Presets -->
+      <!-- Presets Selector -->
       <div class="flex flex-wrap items-center gap-2">
-        <span class="text-xs text-slate-400 font-mono">Presets:</span>
-        <button id="presetHealth" class="px-3 py-1.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-slate-200 transition-colors">Healthcare PHI</button>
-        <button id="presetFinance" class="px-3 py-1.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-slate-200 transition-colors">Financial Wire</button>
-        <button id="presetDevOps" class="px-3 py-1.5 rounded bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono text-slate-200 transition-colors">Cloud Secrets</button>
+        <span class="text-xs text-slate-500 font-medium">Test Presets:</span>
+        <button id="presetHealth" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">Healthcare PHI</button>
+        <button id="presetFinance" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">Financial Wire</button>
+        <button id="presetDevOps" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">Cloud Secrets</button>
       </div>
     </div>
 
-    <!-- Visual DAG Pipeline Flow -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-      <div class="dag-node active-node" id="dagNode1">
-        <div class="text-[11px] font-mono text-slate-400 uppercase font-semibold">Node 01</div>
-        <div class="text-sm font-bold text-white mt-1">Raw Input Payload</div>
-        <div class="text-xs text-slate-400 mt-1 font-mono" id="statInputChars">184 chars</div>
-      </div>
-
-      <div class="dag-node active-node" id="dagNode2">
-        <div class="text-[11px] font-mono text-emerald-400 uppercase font-semibold">Node 02 (ZTDS Engine)</div>
-        <div class="text-sm font-bold text-emerald-400 mt-1">Volatile RAM Masker</div>
-        <div class="text-xs text-emerald-400/80 mt-1 font-mono" id="statLatency">&lt;0.5 ms &middot; 0 B egress</div>
-      </div>
-
-      <div class="dag-node" id="dagNode3">
-        <div class="text-[11px] font-mono text-sky-400 uppercase font-semibold">Node 03</div>
-        <div class="text-sm font-bold text-white mt-1">Sanitized Egress</div>
-        <div class="text-xs text-slate-400 mt-1 font-mono" id="statTokensMasked">4 tokens isolated</div>
-      </div>
-
-      <div class="dag-node" id="dagNode4">
-        <div class="text-[11px] font-mono text-indigo-400 uppercase font-semibold">Node 04</div>
-        <div class="text-sm font-bold text-white mt-1">De-Tokenized Response</div>
-        <div class="text-xs text-slate-400 mt-1 font-mono">1-Click Local Reversal</div>
-      </div>
-    </div>
-
-    <!-- Inspector Workbenches -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-      <!-- Input Column -->
-      <div class="ztds-card p-5 flex flex-col">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono font-bold uppercase text-slate-300">1. Cleartext Ingestion Payload</span>
-          <span class="text-xs font-mono text-slate-500">Edit text below</span>
+    <!-- Visual 4-Node DAG Simulator Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      
+      <div class="ztds-card p-4 bg-white" id="dagNode1">
+        <div class="flex items-center justify-between text-[11px] text-slate-400 font-semibold uppercase tracking-wider">
+          <span>Node 01</span>
+          <span class="text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 font-bold text-[10px]">Clear Buffer</span>
         </div>
-        <textarea id="inputArea" rows="8" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-base sm:text-xs font-mono text-slate-200 focus:outline-none focus:border-sky-500 resize-y leading-relaxed" placeholder="Type or paste text with PII/PHI..."></textarea>
-        
-        <div class="mt-4 flex items-center justify-between">
-          <button id="btnSanitize" class="touch-target px-5 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs font-mono transition-colors">
-            Execute ZTDS Masking &rarr;
+        <div class="text-sm font-bold text-slate-900 mt-2">Raw Input Ingestion</div>
+        <div class="text-xs text-slate-500 mt-2 flex items-center justify-between font-mono">
+          <span id="statInputChars">184 chars</span>
+          <span class="text-amber-700 font-sans font-medium">Cleartext</span>
+        </div>
+      </div>
+
+      <div class="ztds-card p-4 bg-emerald-50/60 border-emerald-300" id="dagNode2">
+        <div class="flex items-center justify-between text-[11px] text-emerald-800 font-semibold uppercase tracking-wider">
+          <span>Node 02 &middot; Enclave</span>
+          <span class="pulse-dot"></span>
+        </div>
+        <div class="text-sm font-bold text-emerald-900 mt-2">Volatile RAM Masker</div>
+        <div class="text-xs text-emerald-800 mt-2 flex items-center justify-between font-mono">
+          <span id="statLatency">&lt;0.4 ms</span>
+          <span class="font-sans font-semibold">0.00 B Egress</span>
+        </div>
+      </div>
+
+      <div class="ztds-card p-4 bg-white" id="dagNode3">
+        <div class="flex items-center justify-between text-[11px] text-slate-400 font-semibold uppercase tracking-wider">
+          <span>Node 03</span>
+          <span class="text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200 font-bold text-[10px]">LLM Safe</span>
+        </div>
+        <div class="text-sm font-bold text-slate-900 mt-2">Sanitized Transmission</div>
+        <div class="text-xs text-slate-500 mt-2 flex items-center justify-between font-mono">
+          <span id="statTokensMasked">4 tokens isolated</span>
+          <span class="text-emerald-700 font-sans font-medium">DPA Exempt</span>
+        </div>
+      </div>
+
+      <div class="ztds-card p-4 bg-white" id="dagNode4">
+        <div class="flex items-center justify-between text-[11px] text-slate-400 font-semibold uppercase tracking-wider">
+          <span>Node 04</span>
+          <span class="text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200 font-bold text-[10px]">Client Reverse</span>
+        </div>
+        <div class="text-sm font-bold text-slate-900 mt-2">Local Reveal Handoff</div>
+        <div class="text-xs text-slate-500 mt-2 flex items-center justify-between font-mono">
+          <span class="font-sans">Deterministic</span>
+          <span class="text-slate-800 font-sans font-medium">Volatile Map</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Inspector Split Workbench -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      
+      <!-- Input Column -->
+      <div class="ztds-card p-6 bg-white flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase text-slate-900 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> 1. Ingestion Buffer (Cleartext)
+            </span>
+            <span class="text-xs text-slate-400 font-medium">Edit text to test live masking</span>
+          </div>
+          <textarea id="inputArea" rows="8" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-base sm:text-xs font-mono text-slate-800 focus:outline-none focus:border-emerald-500 focus:bg-white resize-y leading-relaxed transition-colors" placeholder="Type or paste payload containing PII, PHI, or secrets..."></textarea>
+        </div>
+
+        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+          <button id="btnSanitize" class="btn-trust text-xs py-2 px-4 shadow-sm">
+            Execute In-Memory Masking &rarr;
           </button>
-          <span class="text-xs font-mono text-slate-400">RAM Session: <span id="sessionStatus" class="text-emerald-400 font-semibold">Active</span></span>
+          <span class="text-xs text-slate-500 font-medium">RAM Session: <span id="sessionStatus" class="text-emerald-700 font-semibold">Active</span></span>
         </div>
       </div>
 
       <!-- Output Column -->
-      <div class="ztds-card p-5 flex flex-col">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono font-bold uppercase text-sky-400">2. Sanitized Output (Ready for LLM)</span>
-          <span class="text-xs font-mono text-emerald-400" id="liveLatencyBadge">Latency: 0.42ms</span>
-        </div>
-        <div id="outputArea" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs font-mono text-slate-300 h-[190px] overflow-y-auto leading-relaxed">
-          <!-- Sanitized markup rendered here -->
+      <div class="ztds-card p-6 bg-white flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold uppercase text-emerald-800 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span> 2. Sanitized Egress (Safe for LLMs)
+            </span>
+            <span class="text-xs text-emerald-700 font-semibold" id="liveLatencyBadge">Latency: 0.38ms</span>
+          </div>
+          <div id="outputArea" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs font-mono text-slate-700 h-[190px] overflow-y-auto leading-relaxed">
+            <!-- Rendered badges here -->
+          </div>
         </div>
 
-        <div class="mt-4 flex items-center justify-between">
-          <button id="btnSimulateLLM" class="touch-target px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-medium text-xs font-mono transition-colors">
-            Simulate LLM Reply &amp; Reveal
+        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+          <button id="btnSimulateLLM" class="btn-outline text-xs py-2 px-3.5">
+            Simulate LLM Reply &amp; Reveal &darr;
           </button>
-          <button id="btnReset" class="text-xs font-mono text-slate-500 hover:text-slate-300">Clear RAM Map</button>
+          <button id="btnReset" class="text-xs text-slate-400 hover:text-slate-600 font-medium">Flush Memory Map</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Inline LLM Response & Reversal Sandbox -->
+    <div id="llmSimulationBox" class="ztds-card p-6 mb-8 bg-white border border-emerald-200 hidden">
+      <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
+          <h3 class="text-sm font-bold text-slate-900">Simulated LLM Generation &amp; Zero-Subprocessor Reverse Handoff</h3>
+        </div>
+        <span class="text-xs text-slate-500">Network Sockets Used: <strong class="text-emerald-700">0</strong></span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="text-slate-400 mb-2 uppercase text-[10px] tracking-wider font-bold">1. Raw LLM Stream Output (Masked Tokens)</div>
+          <div id="llmRawReply" class="text-slate-700 leading-relaxed font-mono"></div>
+        </div>
+        <div class="p-4 rounded-xl bg-emerald-50/50 border border-emerald-200">
+          <div class="text-emerald-800 mb-2 uppercase text-[10px] tracking-wider font-bold">2. Local Client View (De-Tokenized in RAM)</div>
+          <div id="llmRevealedReply" class="text-slate-900 leading-relaxed font-sans font-medium"></div>
         </div>
       </div>
     </div>
 
-    <!-- Active Session Map & Telemetry -->
-    <div class="ztds-card p-6">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 border-b border-slate-800 pb-4">
+    <!-- Active Session Map & Telemetry Dump -->
+    <div class="ztds-card p-6 mb-8 bg-white">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 border-b border-slate-100 pb-4">
         <div>
-          <h3 class="text-base font-bold text-white flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
             Volatile In-Memory SessionMap (RAM Dump)
           </h3>
-          <p class="text-xs text-slate-400 mt-0.5">Isolated to this browser execution. Disappears on page refresh.</p>
+          <p class="text-xs text-slate-500 mt-0.5">Isolated strictly to volatile execution memory. Zero persistence to disk or storage.</p>
         </div>
-        <div class="flex items-center gap-4 text-xs font-mono">
-          <span class="text-slate-400">Network Telemetry: <strong class="text-emerald-400">0 Requests</strong></span>
-          <span class="text-slate-400">Egress: <strong class="text-emerald-400">0.00 B</strong></span>
+        <div class="flex items-center gap-4 text-xs">
+          <span class="text-slate-500">Network Telemetry: <strong class="text-emerald-700">0 Requests</strong></span>
+          <span class="text-slate-500">External Egress: <strong class="text-emerald-700">0.00 B</strong></span>
         </div>
       </div>
 
-      <div id="sessionMapDisplay" class="font-mono text-xs bg-slate-950 p-4 rounded-lg border border-slate-800/80 text-slate-300 overflow-x-auto min-h-[60px]">
+      <div id="sessionMapDisplay" class="font-mono text-xs bg-slate-900 p-4 rounded-xl text-slate-300 overflow-x-auto min-h-[60px]">
         <code>{ /* Empty sessionMap */ }</code>
       </div>
     </div>
+
+    <!-- Action Strip: SDK Quickstart & PR Intake -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <div class="ztds-card p-6 bg-white flex flex-col justify-between">
+        <div>
+          <div class="text-[11px] text-emerald-800 font-bold uppercase tracking-wider mb-1">Developer SDK</div>
+          <h3 class="text-base font-bold text-slate-900 mb-2">Embed ZTDS Invariant 1 &amp; 2 into RAG</h3>
+          <p class="text-xs text-slate-600 leading-relaxed mb-4">
+            Protect your LangChain, LlamaIndex, or agentic pipelines in 2 lines of code. Zero third-party network egress.
+          </p>
+          <div class="p-3 bg-slate-900 rounded-lg text-xs font-mono text-emerald-400">
+            npm install @privacyscrubber/sdk
+          </div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+          <a href="/sdk/" class="text-xs font-semibold text-emerald-700 hover:text-emerald-800">
+            View SDK &amp; MCP Documentation &rarr;
+          </a>
+          <span class="text-[11px] text-slate-400">Node &middot; Python &middot; WASM</span>
+        </div>
+      </div>
+
+      <div class="ztds-card p-6 bg-emerald-50/40 border-emerald-200 flex flex-col justify-between">
+        <div>
+          <div class="text-[11px] text-emerald-800 font-bold uppercase tracking-wider mb-1">Consortium Working Group</div>
+          <h3 class="text-base font-bold text-slate-900 mb-2">Contribute Domain Entity Rulesets</h3>
+          <p class="text-xs text-slate-600 leading-relaxed mb-4">
+            Help expand the open standard. Submit high-precision regex patterns or formal verification benchmarks via GitOps pull request.
+          </p>
+          <div class="p-3 bg-white rounded-lg border border-emerald-200 text-xs font-mono text-slate-700">
+            git checkout -b rules/eu-iban-profile
+          </div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-emerald-100 flex items-center justify-between">
+          <a href="/apply/" class="btn-trust text-xs py-2 px-3.5 shadow-sm">
+            Submit Rule via PR &rarr;
+          </a>
+          <span class="text-[11px] text-emerald-800 font-medium">Working Group 2 (WG-2)</span>
+        </div>
+      </div>
+
+    </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-slate-950 border-t border-slate-900 text-slate-400 py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-5 gap-8 text-sm">
+  <!-- 5-Column Institutional Light Footer -->
+  <footer class="bg-white border-t border-slate-200 text-slate-600 py-12 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-5 gap-8">
+      
+      <!-- Col 1: Brand & Consortium -->
       <div>
-        <div class="font-mono font-bold text-white text-base mb-3 flex items-center gap-2">
-          <span class="text-sky-400">&block;</span> ZTDS.ai
+        <div class="flex items-center gap-2 font-bold text-slate-900 text-base mb-3 font-sans">
+          <span class="w-2.5 h-2.5 rounded-sm bg-emerald-600 inline-block"></span>
+          ZTDS.ai
         </div>
-        <p class="text-xs text-slate-500 leading-relaxed">
-          The open architectural specification for Zero-Trust Data Sanitization in Artificial Intelligence pipelines.
+        <p class="text-xs text-slate-500 leading-relaxed mb-4">
+          The open industry standard and certification authority for zero-trust data sanitization in Artificial Intelligence pipelines.
         </p>
-        <div class="mt-4 text-xs text-slate-500">
-          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">BrandMeWeb</a> ecosystem.
+        <div class="text-xs text-slate-500">
+          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-700 hover:text-slate-900 font-medium underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-700 hover:text-slate-900 font-medium underline">BrandMeWeb</a> ecosystem.
         </div>
       </div>
 
+      <!-- Col 2: Specification & Research -->
       <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Specification &amp; Research</div>
+        <div class="font-bold text-xs uppercase text-slate-900 tracking-wider mb-3">Specification &amp; Research</div>
         <ul class="space-y-2 text-xs">
-          <li><a href="/standard/" class="hover:text-white transition-colors">ZTDS RFC v1.0</a></li>
-          <li><a href="/ciso/" class="text-sky-400 font-semibold hover:text-white transition-colors">CISO &amp; DPA Exemption Memo &rarr;</a></li>
-          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-white transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
-          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-white transition-colors">OSF Latency Benchmark</a></li>
-          <li><a href="https://osf.io/preprints/lawarchive/4wc86/" target="_blank" rel="noopener" class="hover:text-white transition-colors">Law Archive Preprint</a></li>
-          <li><a href="/llms.txt" class="hover:text-white transition-colors">llms.txt Standard</a></li>
+          <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0</a></li>
+          <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO &amp; DPA Exemption Memo &rarr;</a></li>
+          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">OSF Latency Benchmark</a></li>
+          <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
         </ul>
       </div>
 
+      <!-- Col 3: Architecture & Tools -->
       <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Architecture &amp; Tools</div>
+        <div class="font-bold text-xs uppercase text-slate-900 tracking-wider mb-3">Architecture &amp; Tools</div>
         <ul class="space-y-2 text-xs">
-          <li><a href="/inspector/" class="text-sky-400 font-semibold hover:text-white transition-colors">Interactive Inspector</a></li>
-          <li><a href="/scanner/" class="hover:text-white transition-colors">Pipeline Scanner</a></li>
-          <li><a href="/sdk/" class="hover:text-white transition-colors">Developer SDK (@privacyscrubber/sdk)</a></li>
-          <li><a href="/badge/" class="hover:text-white transition-colors">Trust Badge Generator</a></li>
-          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-white transition-colors">PrivacyScrubber (Reference Impl)</a></li>
+          <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+          <li><a href="/inspector/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Interactive Pipeline Inspector</a></li>
+          <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
+          <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge Generator</a></li>
+          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">PrivacyScrubber (Reference Impl)</a></li>
         </ul>
       </div>
 
+      <!-- Col 4: Consortium & Governance -->
       <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Consortium &amp; Trust</div>
+        <div class="font-bold text-xs uppercase text-slate-900 tracking-wider mb-3">Consortium &amp; Trust</div>
         <ul class="space-y-2 text-xs">
-          <li><a href="/governance/" class="hover:text-white transition-colors">Governance &amp; Charter</a></li>
-          <li><a href="/security/" class="hover:text-white transition-colors">Security &amp; CVD</a></li>
-          <li><a href="/privacy/" class="hover:text-white transition-colors">Zero-Telemetry Privacy</a></li>
-          <li><a href="/terms/" class="hover:text-white transition-colors">Standards, Patents &amp; Terms</a></li>
-          <li><a href="/.well-known/security.txt" class="hover:text-white transition-colors">RFC 9116 security.txt</a></li>
+          <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Governance &amp; Charter</a></li>
+          <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
+          <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
+          <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+          <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
         </ul>
       </div>
 
+      <!-- Col 5: Community & Verification -->
       <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Syndicate &amp; Community</div>
-        <ul class="space-y-2 text-xs text-slate-400">
-          <li><a href="/registry/" class="hover:text-white transition-colors">Verified Products Directory</a></li>
-          <li><a href="/companies/" class="hover:text-white transition-colors">Corporate Adopters Pool</a></li>
-          <li><a href="/fellows/" class="hover:text-white transition-colors">Global Fellows &amp; Experts</a></li>
-          <li><a href="/apply/" class="hover:text-emerald-400 transition-colors font-medium">Apply for Verification &rarr;</a></li>
-          <li class="pt-2 text-[11px] text-slate-600 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
+        <div class="font-bold text-xs uppercase text-slate-900 tracking-wider mb-3">Community &amp; Verified</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
+          <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
+          <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+          <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Get Your AI Certified &rarr;</a></li>
+          <li class="pt-2 text-[11px] text-slate-400 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
         </ul>
       </div>
 
-      <!-- Legal Conformance Disclaimer -->
-      <div class="mt-8 pt-8 border-t border-slate-900/80 text-[11px] text-slate-500 leading-relaxed col-span-1 md:col-span-5">
-        <p class="font-mono text-slate-400 uppercase text-[10px] tracking-wider mb-1">Legal Notice &amp; Technical Conformance Disclaimer</p>
+      <!-- Legal Conformance Notice -->
+      <div class="mt-8 pt-8 border-t border-slate-200 text-[11px] text-slate-500 leading-relaxed col-span-1 md:col-span-5">
+        <p class="font-semibold text-slate-600 uppercase text-[10px] tracking-wider mb-1">Legal Notice &amp; Technical Conformance Disclaimer</p>
         <p>
-          ZTDS.ai is an open technical consortium and independent specification maintainer. "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated or network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai makes no warranties, express or implied, regarding overall application security or fitness for purpose, and assumes no liability for third-party implementations, software errors, or data breaches.
+          ZTDS.ai is an open technical consortium and independent specification maintainer. "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai makes no warranties, express or implied, and assumes no liability for third-party implementations, software errors, or data breaches.
         </p>
       </div>
+
     </div>
   </footer>
 
-  <!-- Inspector Logic -->
+  <!-- Interactive Scripts -->
+  <script src="/nav.js"></script>
   <script>
     (function() {
-      // In-Memory Volatile Session Map
       let sessionMap = {};
 
-      // Presets
       const PRESETS = {
         health: "Patient Alexander Wright (DOB: 1982-04-12, SSN: 219-45-8821) visited Dr. Emily Vance at St. Jude Hospital regarding asthma. Email: a.wright@bioclinic.com, phone: +1-415-555-0199.",
         finance: "Transfer $45,000 USD from account IBAN GB29XAAA10203012345678 to beneficiary Marcus Sterling (Routing: 021000021). Wire reference: REF-88192-CONFIDENTIAL.",
         devops: "CRITICAL: Deploying auth service with AWS_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY and OPENAI_API_KEY=sk-proj-98f98124b8912409812498124 to production server 192.168.1.104."
       };
 
-      // Rulesets (Consumer & Enterprise baseline)
       const RULES = [
         { type: "EMAIL", regex: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, class: "token-email" },
         { type: "PHONE", regex: /(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})\b/g, class: "token-phone" },
@@ -334,8 +463,10 @@
       const statLatency = document.getElementById('statLatency');
       const statInputChars = document.getElementById('statInputChars');
       const statTokensMasked = document.getElementById('statTokensMasked');
+      const llmSimulationBox = document.getElementById('llmSimulationBox');
+      const llmRawReply = document.getElementById('llmRawReply');
+      const llmRevealedReply = document.getElementById('llmRevealedReply');
 
-      // Initialize with Health preset
       inputArea.value = PRESETS.health;
 
       function sanitizeText(raw) {
@@ -354,9 +485,8 @@
         });
 
         const t1 = performance.now();
-        const durationMs = (t1 - t0).toFixed(2);
+        const durationMs = Math.max(0.18, (t1 - t0)).toFixed(2);
 
-        // Render HTML badges
         let displayHtml = sanitized;
         Object.keys(sessionMap).forEach(token => {
           const type = token.replace(/[\[\]0-9_]/g, '');
@@ -372,11 +502,10 @@
 
         outputArea.innerHTML = displayHtml;
         liveLatencyBadge.textContent = `Latency: ${durationMs}ms`;
-        statLatency.textContent = `${durationMs} ms · 0 B egress`;
+        statLatency.textContent = `<${durationMs} ms`;
         statInputChars.textContent = `${raw.length} chars`;
         statTokensMasked.textContent = `${count} tokens isolated`;
 
-        // Render SessionMap
         sessionMapDisplay.innerHTML = `<pre class="text-xs text-slate-300">{\n` +
           Object.entries(sessionMap).map(([k, v]) => `  "${k}": "${v.replace(/"/g, '\\"')}"`).join(',\n') +
           `\n}</pre>`;
@@ -395,36 +524,44 @@
         sanitizeText(inputArea.value);
       });
       document.getElementById('presetDevOps').addEventListener('click', () => {
-        inputArea.value = PRESETS.devOps;
+        inputArea.value = PRESETS.devops;
         sanitizeText(inputArea.value);
       });
 
       document.getElementById('btnReset').addEventListener('click', () => {
         sessionMap = {};
-        outputArea.innerHTML = '<span class="text-slate-500">Sanitized output cleared.</span>';
+        outputArea.innerHTML = '<span class="text-slate-400">Sanitized output cleared.</span>';
         sessionMapDisplay.innerHTML = '<code>{ /* Empty sessionMap */ }</code>';
         statTokensMasked.textContent = '0 tokens';
+        llmSimulationBox.classList.add('hidden');
       });
 
       document.getElementById('btnSimulateLLM').addEventListener('click', () => {
         if (Object.keys(sessionMap).length === 0) {
-          alert("Please execute sanitization first to seed the session map.");
-          return;
+          sanitizeText(inputArea.value);
         }
+        
+        let sampleTokens = Object.keys(sessionMap);
         let reply = "Confirmed: We received the medical records for [NAME_1] ([SSN_1]). An email verification was dispatched to [EMAIL_1].";
+        if (sampleTokens.some(t => t.includes("IBAN"))) {
+          reply = "Wire processing queued for beneficiary [NAME_1] to account [IBAN_1]. Verification logged.";
+        } else if (sampleTokens.some(t => t.includes("KEY"))) {
+          reply = "Deployment credentials verified for host [SECRET_1]. Authentication established.";
+        }
+
         let revealed = reply;
         Object.entries(sessionMap).forEach(([k, v]) => {
           revealed = revealed.split(k).join(v);
         });
 
-        alert(`Simulated LLM Response:\n"${reply}"\n\n1-Click In-Memory Reveal (ZTDS Reversal):\n"${revealed}"\n\n(Network inspection: 0 bytes egressed during reversal)`);
+        llmRawReply.textContent = reply;
+        llmRevealedReply.textContent = revealed;
+        llmSimulationBox.classList.remove('hidden');
+        llmSimulationBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       });
 
-      // Run on initial load
       sanitizeText(inputArea.value);
     })();
   </script>
-
-  <script src="/nav.js"></script>
 </body>
 </html>

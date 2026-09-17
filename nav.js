@@ -42,9 +42,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
   backdrop.addEventListener('click', closeMenu);
 
+  drawer.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && drawer.classList.contains('active')) {
       closeMenu();
     }
   });
 });
+
+/**
+ * Universal Zero-Failure Clipboard Copier
+ * Seamlessly handles HTTPS navigator.clipboard and fallback document.execCommand
+ */
+window.ztdsCopy = function(text, onSuccess, onError) {
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text)
+      .then(() => { if (onSuccess) onSuccess(); })
+      .catch(() => fallbackCopy(text, onSuccess, onError));
+  } else {
+    fallbackCopy(text, onSuccess, onError);
+  }
+};
+
+function fallbackCopy(text, onSuccess, onError) {
+  try {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    textArea.style.top = "-999999px";
+    textArea.setAttribute('readonly', '');
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    const successful = document.execCommand('copy');
+    document.body.removeChild(textArea);
+    if (successful) {
+      if (onSuccess) onSuccess();
+    } else if (onError) {
+      onError();
+    }
+  } catch (err) {
+    if (onError) onError(err);
+  }
+}
