@@ -53,6 +53,34 @@ document.addEventListener('DOMContentLoaded', () => {
       closeMenu();
     }
   });
+
+  // Automatically detect and highlight active desktop & drawer navigation link
+  try {
+    const rawPath = window.location.pathname.replace(/\/$/, '') || '/';
+    const desktopLinks = document.querySelectorAll('#desktop-nav a');
+    desktopLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('http') || href.startsWith('#')) return;
+      const cleanHref = href.replace(/\/$/, '') || '/';
+      if (cleanHref === rawPath || (cleanHref !== '/' && rawPath.startsWith(cleanHref))) {
+        link.classList.add('text-emerald-700', 'font-bold', 'active');
+        link.classList.remove('text-slate-600');
+      }
+    });
+
+    const drawerLinks = document.querySelectorAll('#mobile-drawer a');
+    drawerLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('http') || href.startsWith('#')) return;
+      const cleanHref = href.replace(/\/$/, '') || '/';
+      if (cleanHref === rawPath || (cleanHref !== '/' && rawPath.startsWith(cleanHref))) {
+        link.classList.add('text-emerald-800', 'bg-emerald-50', 'font-semibold');
+        link.classList.remove('text-slate-700', 'hover:bg-slate-100');
+      }
+    });
+  } catch (err) {
+    // Graceful fallback
+  }
 });
 
 /**

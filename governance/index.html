@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,18 +11,18 @@
   <!-- Open Graph & Social Cards -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ztds.ai/governance/">
-  <meta property="og:title" content="Consortium Governance & Charter — ZTDS.ai">
+  <meta property="og:title" content="Consortium Governance &amp; Charter — ZTDS.ai">
   <meta property="og:description" content="Multi-stakeholder technical governance, Working Groups, 2/3 supermajority voting rules, RAND-Z patent policy, and GitOps RFC process.">
   <meta property="og:image" content="https://ztds.ai/badge/privacyscrubber-web.svg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Consortium Governance & Charter — ZTDS.ai">
+  <meta name="twitter:title" content="Consortium Governance &amp; Charter — ZTDS.ai">
   <meta name="twitter:description" content="Multi-stakeholder technical governance, Working Groups, 2/3 supermajority voting rules, RAND-Z patent policy, and GitOps RFC process.">
   <meta name="twitter:image" content="https://ztds.ai/badge/privacyscrubber-web.svg">
 
-
+  <!-- Fonts & Styles -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/styles.css">
 
@@ -50,40 +50,55 @@
   }
   </script>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">
 
-  <!-- Shared Header Navigation -->
-  <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3 touch-target">
-        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-sky-500/40 flex items-center justify-center shadow-lg shadow-sky-500/10">
-          <svg class="w-5 h-5 text-sky-400" viewBox="0 0 32 32" fill="none">
-            <path d="M16 3L6 7V15C6 21.6 10.3 27.7 16 29C21.7 27.7 26 21.6 26 15V7L16 3Z" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
-            <path d="M11 12H21L12 21H21" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+  <!-- Institutional Top Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Status -->
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-3 touch-target">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm shrink-0 aspect-square p-1.5">
+            <svg class="w-full h-full" viewBox="0 0 32 32" fill="none">
+              <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+              <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
+            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+          </div>
+        </a>
+
+        <!-- Status Pill -->
+        <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
+          <span class="pulse-dot"></span>
+          <span class="font-mono text-[11px] font-semibold">RFC v1.0 &middot; OPEN CONSORTIUM</span>
         </div>
-        <span class="font-bold text-lg tracking-tight text-white font-mono">ZTDS<span class="text-sky-400">.ai</span></span>
-      </a>
+      </div>
 
-      <!-- Desktop Nav -->
-      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
-        <a href="/standard/" class="nav-link">Standard</a>
-        <a href="/ciso/" class="nav-link text-sky-400 font-semibold hover:text-sky-300">CISO Pack</a>
-        <a href="/inspector/" class="nav-link">Inspector</a>
-        <a href="/scanner/" class="nav-link">Scanner</a>
-        <a href="/registry/" class="nav-link">Registry</a>
-        <a href="/companies/" class="nav-link">Companies</a>
-        <a href="/fellows/" class="nav-link">Fellows</a>
-        <a href="/sdk/" class="nav-link">SDK</a>
-        <a href="/governance/" class="nav-link active">Governance</a>
+      <!-- Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-600" id="desktop-nav">
+        <a href="/standard/" class="nav-link hover:text-slate-900 transition-colors py-1">Standard</a>
+        <a href="/registry/" class="nav-link hover:text-slate-900 transition-colors py-1">Registry</a>
+        <a href="/sdk/" class="nav-link hover:text-slate-900 transition-colors py-1">SDK &amp; Connectors</a>
+        <a href="/ciso/" class="nav-link hover:text-slate-900 transition-colors py-1">CISO &amp; Legal</a>
+        <a href="/scanner/" class="nav-link hover:text-slate-900 transition-colors py-1">Scanner</a>
+        <a href="/governance/" class="nav-link hover:text-slate-900 transition-colors py-1">Governance</a>
       </nav>
 
+      <!-- Dual Actions -->
       <div class="flex items-center gap-3">
-        <a href="/apply/" class="hidden sm:inline-flex touch-target px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-colors">
-          Apply for Badge &rarr;
+        <a href="/sdk/" class="hidden sm:inline-flex btn-outline text-xs py-2 px-3.5">
+          SDK Quickstart
         </a>
-        <!-- Mobile Hamburger Button -->
-        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-900 border border-slate-700/60 text-slate-300 hover:text-white">
+        <a href="/apply/" class="btn-trust text-xs py-2 px-4 shadow-sm">
+          Get Certified &rarr;
+        </a>
+        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
@@ -95,123 +110,131 @@
   <!-- Mobile Slide-Over Drawer -->
   <div id="mobile-backdrop" class="mobile-nav-backdrop"></div>
   <aside id="mobile-drawer" class="mobile-nav-drawer">
-    <div class="flex items-center justify-between pb-6 border-b border-slate-800">
+    <div class="flex items-center justify-between pb-5 border-b border-slate-200">
       <div class="flex items-center gap-2.5">
-        <div class="w-7 h-7 rounded bg-slate-900 border border-sky-500/40 flex items-center justify-center">
-          <span class="text-sky-400 font-mono font-bold text-sm">Z</span>
+        <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 aspect-square p-1">
+          <svg class="w-full h-full" viewBox="0 0 32 32" fill="none">
+            <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+            <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+          </svg>
         </div>
-        <span class="font-bold font-mono text-white">ZTDS<span class="text-sky-400">.ai</span></span>
+        <span class="font-bold text-slate-900 text-base">ZTDS<span class="text-emerald-600">.ai</span></span>
       </div>
-      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 text-slate-400 hover:text-white">
+      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 text-slate-400 hover:text-slate-700">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
       </button>
     </div>
-    <div class="py-4 space-y-1">
-      <div class="px-2 pt-2 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Core Architecture</div>
-      <a href="/standard/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Standard (RFC v1.0)</a>
-      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-sm text-sky-400 hover:bg-slate-900">CISO Procurement Pack</a>
-      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Pipeline Inspector</a>
-      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Perimeter Scanner</a>
-      <a href="/sdk/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Developer Engine &amp; SDK</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Ecosystem &amp; Trust</div>
-      <a href="/registry/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Certified Implementations</a>
-      <a href="/companies/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Corporate Members</a>
-      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Global Fellows</a>
-      <a href="/badge/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Trust Badge Generator</a>
+    <div class="py-4 space-y-1 text-sm font-medium">
+      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Standard</div>
+      <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
+      <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
+      <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
+      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-mono uppercase tracking-wider text-slate-500">Institutional</div>
-      <a href="/governance/" class="block px-3 py-2 rounded-lg text-sm text-white bg-slate-900 font-semibold">Governance &amp; Charter</a>
-      <a href="/security/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Security &amp; CVD</a>
-      <a href="/privacy/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Zero-Telemetry Privacy</a>
-      <a href="/terms/" class="block px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-900 hover:text-white">Standards, Patents &amp; Terms</a>
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
+      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
+      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive Inspector</a>
+      <a href="/badge/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Badge Generator</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Consortium</div>
+      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Members</a>
+      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows</a>
+      <a href="/governance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Governance &amp; Charter</a>
+      <a href="/security/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Security &amp; CVD</a>
     </div>
-    <div class="mt-auto pt-6 border-t border-slate-800">
-      <a href="/apply/" class="block w-full py-2.5 px-4 text-center rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-semibold hover:bg-emerald-500/25">
-        Apply for Certification &rarr;
+
+    <div class="mt-auto pt-4 border-t border-slate-200">
+      <a href="/apply/" class="btn-trust w-full text-center text-xs py-2.5">
+        Apply for ZTDS Verified&trade; Seal &rarr;
       </a>
     </div>
   </aside>
 
-  <!-- Main Content -->
+  <!-- Main Content Area -->
   <main class="flex-grow">
+    
     <!-- Hero Header -->
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-14 border-b border-slate-800/80">
-      <div class="flex items-center gap-2 text-xs font-mono text-slate-400 mb-4">
-        <a href="/" class="hover:text-white">Home</a>
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-14 border-b border-slate-200">
+      <div class="flex items-center gap-2 text-xs font-medium text-slate-400 mb-4">
+        <a href="/" class="hover:text-slate-900">Home</a>
         <span>/</span>
-        <span class="text-slate-500">Consortium</span>
+        <span class="text-slate-400">Consortium</span>
         <span>/</span>
-        <span class="text-sky-400">Governance &amp; Charter</span>
+        <span class="text-emerald-700 font-semibold">Governance &amp; Charter</span>
       </div>
 
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/60 text-xs font-mono text-sky-300 mb-6">
-        <span class="w-2 h-2 rounded-full bg-sky-400"></span>
-        RFC-8821 GOVERNANCE &middot; RAND-Z PATENT COVENANT &middot; OPEN CONSORTIUM
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-6">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> RFC-8821 GOVERNANCE &middot; RAND-Z PATENT COVENANT &middot; GITOPS CONSENSUS
       </div>
 
-      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
         Consortium Governance &amp; Charter
       </h1>
-      <p class="mt-4 text-base sm:text-lg text-slate-400 max-w-3xl leading-relaxed">
-        The ZTDS AI Consortium is an independent, vendor-neutral standard-setting organization dedicated to zero-trust data sanitization in generative AI and automated systems. Governed under open consensus, academic peer review, and irrevocable zero-royalty patent covenants.
+      <p class="mt-4 text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed">
+        The ZTDS AI Consortium is an independent, vendor-neutral standard-setting body dedicated to zero-trust data sanitization in generative AI and automated agent systems. Governed under open consensus, academic peer review, and irrevocable royalty-free patent covenants.
       </p>
 
-      <!-- Telemetry Strip -->
+      <!-- Institutional Metrics Strip -->
       <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="ztds-card p-4">
-          <div class="font-mono text-xs text-slate-400">Governance Model</div>
-          <div class="mt-1 text-sm sm:text-base font-semibold text-white">Multi-Stakeholder</div>
-          <div class="text-[11px] text-slate-500">2/3 Supermajority Voting</div>
+        <div class="ztds-card p-5 bg-white">
+          <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wider">Governance Model</div>
+          <div class="mt-1.5 text-base font-bold text-slate-900">Multi-Stakeholder</div>
+          <div class="text-xs text-slate-500 mt-0.5">2/3 Supermajority Voting</div>
         </div>
-        <div class="ztds-card p-4">
-          <div class="font-mono text-xs text-slate-400">Patent Covenant</div>
-          <div class="mt-1 text-sm sm:text-base font-semibold text-sky-400">RAND-Z License</div>
-          <div class="text-[11px] text-slate-500">Irrevocable Worldwide</div>
+        <div class="ztds-card p-5 bg-white">
+          <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wider">Patent Covenant</div>
+          <div class="mt-1.5 text-base font-bold text-emerald-700">RAND-Z License</div>
+          <div class="text-xs text-slate-500 mt-0.5">Irrevocable Worldwide</div>
         </div>
-        <div class="ztds-card p-4">
-          <div class="font-mono text-xs text-slate-400">Active Working Groups</div>
-          <div class="mt-1 text-sm sm:text-base font-semibold text-emerald-400">3 Domain WGs</div>
-          <div class="text-[11px] text-slate-500">Crypto, GRC, Tooling</div>
+        <div class="ztds-card p-5 bg-white">
+          <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wider">Active Working Groups</div>
+          <div class="mt-1.5 text-base font-bold text-slate-900">3 Domain WGs</div>
+          <div class="text-xs text-slate-500 mt-0.5">Crypto, GRC, Tooling</div>
         </div>
-        <div class="ztds-card p-4">
-          <div class="font-mono text-xs text-slate-400">Contribution Model</div>
-          <div class="mt-1 text-sm sm:text-base font-semibold text-purple-400">GitOps RFC</div>
-          <div class="text-[11px] text-slate-500">Open GitHub Pull Requests</div>
+        <div class="ztds-card p-5 bg-white">
+          <div class="text-[11px] text-slate-400 uppercase font-bold tracking-wider">Contribution Model</div>
+          <div class="mt-1.5 text-base font-bold text-emerald-700">GitOps RFC</div>
+          <div class="text-xs text-slate-500 mt-0.5">Open Pull Requests</div>
         </div>
       </div>
     </section>
 
-    <!-- Section 1: Executive Charter & Institutional Mission -->
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-800/80">
+    <!-- Section 1: Executive Charter -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-200">
       <div class="max-w-3xl">
-        <h2 class="text-2xl font-bold text-white tracking-tight">1. Executive Charter &amp; Architectural Mission</h2>
-        <p class="mt-3 text-slate-300 leading-relaxed text-sm sm:text-base">
-          The primary purpose of the ZTDS AI Consortium is to establish, maintain, and verify provable industry standards that guarantee unmasked personally identifiable information (PII), protected health information (PHI), and intellectual secrets are mathematically incapable of crossing runtime execution perimeters.
+        <h2 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-emerald-600">01.</span> Executive Charter &amp; Architectural Mission
+        </h2>
+        <p class="mt-3 text-slate-600 leading-relaxed text-sm sm:text-base">
+          The primary purpose of the ZTDS AI Consortium is to establish, maintain, and verify provable industry standards that guarantee unmasked personally identifiable information (PII), protected health information (PHI), and confidential secrets are mathematically incapable of crossing runtime execution perimeters.
         </p>
       </div>
 
       <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="ztds-card p-6">
-          <div class="font-mono text-xs text-sky-400 font-semibold mb-2">PRINCIPLE 01</div>
-          <h3 class="text-lg font-bold text-white mb-2">Architectural Neutrality</h3>
-          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+        <div class="ztds-card p-6 bg-white">
+          <div class="text-xs text-emerald-800 font-bold uppercase tracking-wider mb-2">Principle 01</div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Architectural Neutrality</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
             The ZTDS standard operates independent of specific cloud providers, AI model vendors, or SaaS intermediaries. Specifications are formal mathematical contracts, not proprietary product lock-ins.
           </p>
         </div>
-        <div class="ztds-card p-6">
-          <div class="font-mono text-xs text-emerald-400 font-semibold mb-2">PRINCIPLE 02</div>
-          <h3 class="text-lg font-bold text-white mb-2">Empirical Reproducibility</h3>
-          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+        <div class="ztds-card p-6 bg-white">
+          <div class="text-xs text-emerald-800 font-bold uppercase tracking-wider mb-2">Principle 02</div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Empirical Reproducibility</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
             Every specification requirement MUST be auditable via verifiable network telemetry interception, cryptographic checksum validation, or reproducible unit benchmarks.
           </p>
         </div>
-        <div class="ztds-card p-6">
-          <div class="font-mono text-xs text-purple-400 font-semibold mb-2">PRINCIPLE 03</div>
-          <h3 class="text-lg font-bold text-white mb-2">Public Domain Integrity</h3>
-          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+        <div class="ztds-card p-6 bg-white">
+          <div class="text-xs text-emerald-800 font-bold uppercase tracking-wider mb-2">Principle 03</div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Public Domain Integrity</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
             All normative specification documents are published under Creative Commons Attribution 4.0 (CC-BY-4.0) with immutable DOI anchors registered via Zenodo, OSF, and CERN registries.
           </p>
         </div>
@@ -219,245 +242,226 @@
     </section>
 
     <!-- Section 2: The Three Working Groups -->
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-800/80">
-      <div class="max-w-3xl">
-        <h2 class="text-2xl font-bold text-white tracking-tight">2. Active Working Groups (WGs)</h2>
-        <p class="mt-3 text-slate-300 leading-relaxed text-sm sm:text-base">
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-200">
+      <div class="max-w-3xl mb-8">
+        <h2 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-emerald-600">02.</span> Active Working Groups (WGs)
+        </h2>
+        <p class="mt-3 text-slate-600 leading-relaxed text-sm sm:text-base">
           Consortium activities are partitioned into three specialized working groups. Each working group is co-chaired by an accredited ZTDS Fellow and an industry member representative.
         </p>
       </div>
 
-      <div class="mt-8 space-y-6">
+      <div class="space-y-4">
         <!-- WG 1 -->
-        <div class="ztds-card p-6 border-l-4 border-l-sky-500">
+        <div class="ztds-card p-6 bg-white">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
             <div class="flex items-center gap-3">
-              <span class="px-2.5 py-1 rounded bg-sky-500/10 border border-sky-500/30 text-sky-400 font-mono text-xs font-bold">WG-1</span>
-              <h3 class="text-lg font-bold text-white">Architecture &amp; Cryptography</h3>
+              <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold font-mono">WG-1</span>
+              <h3 class="text-lg font-bold text-slate-900">Architecture &amp; Cryptography</h3>
             </div>
-            <span class="text-xs font-mono text-slate-400">Scope: Invariants 1 &amp; 3 &middot; RFC Core</span>
+            <span class="text-xs text-slate-500 font-medium">Scope: Invariants 1 &amp; 3 &middot; RFC Core</span>
           </div>
-          <p class="text-sm text-slate-300 leading-relaxed">
+          <p class="text-xs text-slate-600 leading-relaxed">
             Responsible for the mathematical proof definitions of Invariant 1 (Zero External Egress) and Invariant 3 (Hardware Enclave &amp; WASM Isolation). Maintains formal schemas for deterministic tokenization matrices, cryptographic attestation manifests, and AES-256-GCM / Ed25519 audit receipts.
           </p>
-          <div class="mt-4 flex flex-wrap gap-2 text-[11px] font-mono text-slate-400">
-            <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Nitro Enclaves Attestation</span>
-            <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">WASM Sandbox Limits</span>
-            <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">RFC Proof Validation</span>
-          </div>
         </div>
 
         <!-- WG 2 -->
-        <div class="ztds-card p-6 border-l-4 border-l-emerald-500">
+        <div class="ztds-card p-6 bg-white">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
             <div class="flex items-center gap-3">
-              <span class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold">WG-2</span>
-              <h3 class="text-lg font-bold text-white">GRC &amp; Regulatory Compliance</h3>
+              <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold font-mono">WG-2</span>
+              <h3 class="text-lg font-bold text-slate-900">GRC &amp; Regulatory Compliance</h3>
             </div>
-            <span class="text-xs font-mono text-slate-400">Scope: Invariant 4 &middot; Legal Defense</span>
+            <span class="text-xs text-slate-500 font-medium">Scope: Invariant 4 &middot; Legal Defense</span>
           </div>
-          <p class="text-sm text-slate-300 leading-relaxed">
-            Maintains cross-jurisdictional compliance mappings between ZTDS invariants and global privacy statutes: GDPR Recital 26 (anonymous data exemption from DPA obligations), EU AI Act Article 10 (data governance without PII ingestion), HIPAA Safe Harbor 45 CFR &sect;164.514, and US Federal Rule of Evidence 502(b).
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Maintains cross-jurisdictional compliance mappings between ZTDS invariants and global privacy statutes: GDPR Recital 26 (anonymous data exemption from DPA obligations), EU AI Act Article 10 (data governance without PII ingestion), HIPAA Safe Harbor 45 CFR §164.514, and US Federal Rule of Evidence 502(b).
           </p>
-          <div class="mt-4 flex flex-wrap gap-2 text-[11px] font-mono text-slate-400">
-            <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Zero-DPA Guidance</span>
-            <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">EU AI Act Harmonization</span>
-            <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">CISO SIG Lite &amp; CAIQ Mappings</span>
-          </div>
         </div>
 
         <!-- WG 3 -->
-        <div class="ztds-card p-6 border-l-4 border-l-purple-500">
+        <div class="ztds-card p-6 bg-white">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
             <div class="flex items-center gap-3">
-              <span class="px-2.5 py-1 rounded bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono text-xs font-bold">WG-3</span>
-              <h3 class="text-lg font-bold text-white">Developer Ecosystem &amp; Tooling</h3>
+              <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold font-mono">WG-3</span>
+              <h3 class="text-lg font-bold text-slate-900">Developer Ecosystem &amp; Tooling</h3>
             </div>
-            <span class="text-xs font-mono text-slate-400">Scope: Invariant 2 &middot; Reference Implementations</span>
+            <span class="text-xs text-slate-500 font-medium">Scope: Invariant 2 &middot; Reference Implementations</span>
           </div>
-          <p class="text-sm text-slate-300 leading-relaxed">
-            Standardizes polyglot client-side engines and Model Context Protocol (MCP) stdio interfaces. Manages the official verification test harnesses (`npx ztds-audit`), benchmark runner suites, and GitOps CI certification pipelines.
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Standardizes polyglot client-side engines and Model Context Protocol (MCP) stdio interfaces. Manages the official verification test harnesses (<code class="px-1.5 py-0.5 bg-slate-100 rounded text-slate-800 font-mono text-[11px]">npx ztds-audit</code>), benchmark runner suites, and GitOps CI certification pipelines.
           </p>
-          <div class="mt-4 flex flex-wrap gap-2 text-[11px] font-mono text-slate-400">
-            <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">@privacyscrubber/sdk Integration</span>
-            <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">Cursor &amp; Claude MCP stdio</span>
-            <span class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800">CLI Network Inspector</span>
-          </div>
         </div>
       </div>
     </section>
 
     <!-- Section 3: RFC Specification Lifecycle -->
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-800/80">
-      <div class="max-w-3xl">
-        <h2 class="text-2xl font-bold text-white tracking-tight">3. RFC Specification Lifecycle</h2>
-        <p class="mt-3 text-slate-300 leading-relaxed text-sm sm:text-base">
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-200">
+      <div class="max-w-3xl mb-8">
+        <h2 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+          <span class="text-emerald-600">03.</span> RFC Specification Lifecycle
+        </h2>
+        <p class="mt-3 text-slate-600 leading-relaxed text-sm sm:text-base">
           All changes to the ZTDS technical specification progress through five formal lifecycle states modeled after IETF RFC procedures, requiring peer consensus and empirical proof.
         </p>
       </div>
 
-      <div class="mt-10 grid grid-cols-1 md:grid-cols-5 gap-4">
-        <div class="ztds-card p-4 relative">
-          <div class="font-mono text-xs text-sky-400 font-bold mb-1">STAGE 01</div>
-          <div class="text-sm font-bold text-white">Working Draft</div>
-          <div class="text-[11px] font-mono text-slate-500 mb-2">RFC-WD</div>
-          <p class="text-xs text-slate-400 leading-normal">
-            Initial document drafted by an accredited Fellow or Working Group member. Open for community comment.
-          </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
+        <div class="ztds-card p-5 bg-white">
+          <span class="text-[10px] uppercase text-slate-400 font-bold tracking-wider">Stage 01</span>
+          <div class="text-sm font-bold text-slate-900 mt-1">Draft Proposal</div>
+          <p class="text-xs text-slate-500 mt-2">Initial GitOps RFC opened by any fellow or contributor.</p>
         </div>
-
-        <div class="ztds-card p-4 relative">
-          <div class="font-mono text-xs text-teal-400 font-bold mb-1">STAGE 02</div>
-          <div class="text-sm font-bold text-white">Proposed Standard</div>
-          <div class="text-[11px] font-mono text-slate-500 mb-2">RFC-PS</div>
-          <p class="text-xs text-slate-400 leading-normal">
-            Formal review period (min. 60 days). Requires mathematical proof or formal verification model.
-          </p>
+        <div class="ztds-card p-5 bg-white">
+          <span class="text-[10px] uppercase text-amber-700 font-bold tracking-wider">Stage 02</span>
+          <div class="text-sm font-bold text-slate-900 mt-1">Working Draft</div>
+          <p class="text-xs text-slate-500 mt-2">Active revision under relevant Working Group oversight.</p>
         </div>
-
-        <div class="ztds-card p-4 relative">
-          <div class="font-mono text-xs text-emerald-400 font-bold mb-1">STAGE 03</div>
-          <div class="text-sm font-bold text-white">Candidate Standard</div>
-          <div class="text-[11px] font-mono text-slate-500 mb-2">RFC-CS</div>
-          <p class="text-xs text-slate-400 leading-normal">
-            Requires at least two independent, interoperable implementations demonstrating compliance in production.
-          </p>
+        <div class="ztds-card p-5 bg-white">
+          <span class="text-[10px] uppercase text-blue-700 font-bold tracking-wider">Stage 03</span>
+          <div class="text-sm font-bold text-slate-900 mt-1">Candidate</div>
+          <p class="text-xs text-slate-500 mt-2">Requires 2+ independent interoperable implementations.</p>
         </div>
-
-        <div class="ztds-card p-4 relative border-emerald-500/50">
-          <div class="font-mono text-xs text-emerald-300 font-bold mb-1">STAGE 04</div>
-          <div class="text-sm font-bold text-white">Ratified Standard</div>
-          <div class="text-[11px] font-mono text-slate-500 mb-2">RFC-RS (Active)</div>
-          <p class="text-xs text-slate-400 leading-normal">
-            Approved by 2/3 supermajority of the Steering Committee. Assigned immutable DOI and published in registry.
-          </p>
+        <div class="ztds-card p-5 bg-emerald-50/60 border-emerald-300">
+          <span class="text-[10px] uppercase text-emerald-800 font-bold tracking-wider">Stage 04</span>
+          <div class="text-sm font-bold text-emerald-900 mt-1">Ratified Standard</div>
+          <p class="text-xs text-emerald-800 mt-2">Consortium 2/3 supermajority consensus vote.</p>
         </div>
-
-        <div class="ztds-card p-4 relative">
-          <div class="font-mono text-xs text-slate-500 font-bold mb-1">STAGE 05</div>
-          <div class="text-sm font-bold text-slate-400">Deprecated</div>
-          <div class="text-[11px] font-mono text-slate-500 mb-2">RFC-HIST</div>
-          <p class="text-xs text-slate-400 leading-normal">
-            Superseded by newer specifications or retired due to cryptographic consensus changes.
-          </p>
+        <div class="ztds-card p-5 bg-white">
+          <span class="text-[10px] uppercase text-slate-400 font-bold tracking-wider">Stage 05</span>
+          <div class="text-sm font-bold text-slate-500 mt-1">Historic / Depr.</div>
+          <p class="text-xs text-slate-400 mt-2">Superseded specifications archived for historical audit.</p>
         </div>
       </div>
     </section>
 
-    <!-- Section 4: RAND-Z Patent Covenant & Intellectual Property -->
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-slate-800/80">
-      <div class="max-w-3xl">
-        <h2 class="text-2xl font-bold text-white tracking-tight">4. RAND-Z Patent Covenant &amp; IP Policy</h2>
-        <p class="mt-3 text-slate-300 leading-relaxed text-sm sm:text-base">
-          To protect enterprise adopters and developers from predatory patent assertion, all contributors to the ZTDS standard operate under an irrevocable worldwide zero-royalty patent covenant.
-        </p>
-      </div>
-
-      <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="ztds-callout">
-          <h3 class="text-base font-bold text-white mb-2">Royalty-Free Perpetual Grant (RAND-Z)</h3>
-          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
-            Every participating member, corporate sponsor, and fellow irrevocably grants to any implementer of a ratified ZTDS standard a non-exclusive, worldwide, royalty-free, perpetual patent license covering any essential patent claims required to practice the standard.
-          </p>
-        </div>
-
-        <div class="ztds-callout callout-amber">
-          <h3 class="text-base font-bold text-white mb-2">Defensive Patent Retaliation Clause</h3>
-          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
-            If any party initiates patent infringement litigation against a certified ZTDS implementer claiming that standard-compliant software infringes their patents, all patent licenses granted to that party under this charter terminate automatically with retroactive effect.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 5: GitOps Participation -->
+    <!-- Section 4: Patent Covenant (RAND-Z) & Join -->
     <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div class="ztds-card p-8 bg-gradient-to-b from-slate-900/90 to-slate-950 text-center max-w-4xl mx-auto">
-        <h2 class="text-2xl font-bold text-white">Join the Standards Process</h2>
-        <p class="mt-3 text-slate-400 text-sm max-w-2xl mx-auto leading-relaxed">
-          Consortium membership, Working Group participation, and RFC drafting are managed completely through open GitHub Pull Requests and peer review.
-        </p>
-        <div class="mt-6 flex flex-wrap items-center justify-center gap-4">
-          <a href="/apply/" class="touch-target px-6 py-3 rounded-lg bg-sky-500 text-slate-950 font-semibold text-sm hover:bg-sky-400 transition-colors">
-            Apply for Certification &rarr;
-          </a>
-          <a href="https://github.com/moxno/PrivacyScrubber" target="_blank" rel="noopener" class="touch-target px-6 py-3 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 font-semibold text-sm hover:text-white hover:border-slate-600 transition-colors">
-            Contribute on GitHub
-          </a>
-          <a href="/terms/" class="touch-target px-6 py-3 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 text-sm hover:text-white transition-colors">
-            Read Terms &amp; Patent Policy
+      <div class="ztds-card p-8 sm:p-12 bg-white border border-emerald-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-8">
+        <div class="max-w-2xl">
+          <div class="text-xs font-bold text-emerald-800 uppercase tracking-wider mb-2">RAND-Z Irrevocable Patent Covenant</div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Royalty-Free Open Industry Standard</h2>
+          <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+            All contributors grant an irrevocable, worldwide, perpetual, royalty-free, non-exclusive patent license to any entity implementing compliant ZTDS software. The standard belongs to the public domain and can be implemented freely without intellectual property encumbrances.
+          </p>
+        </div>
+
+        <div class="flex-shrink-0">
+          <a href="/apply/?track=fellow" class="btn-trust text-xs py-2.5 px-5 shadow-sm">
+            Join Working Group via GitOps PR &rarr;
           </a>
         </div>
       </div>
     </section>
+
   </main>
 
-  <!-- Shared Footer -->
-  <footer class="mt-auto border-t border-slate-800/80 bg-slate-950/90 py-12 text-slate-400">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-5 gap-8">
-      <div class="md:col-span-1">
-        <div class="flex items-center gap-2 font-mono font-bold text-white text-base">
-          <span class="text-sky-400">&bull;</span> ZTDS.ai
+  <!-- 5-Column Institutional Light Footer -->
+  <footer class="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-12 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12 border-b border-slate-100">
+        <!-- Col 1: Brand & Consortium -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 aspect-square p-1">
+              <svg class="w-full h-full" viewBox="0 0 32 32" fill="none">
+                <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+                <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+                <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+                <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+              </svg>
+            </div>
+            <span class="font-bold text-slate-900 text-lg font-sans">ZTDS<span class="text-emerald-600">.ai</span></span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            The open industry standard and conformance authority for zero-trust data sanitization in enterprise AI pipelines.
+          </p>
+          <div class="text-xs text-slate-500 leading-relaxed border-t border-slate-100 pt-3">
+            Originated by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">Ilya Sibiryakov</a>.<br>
+            Stewarded by the <span class="font-semibold text-slate-700">ZTDS AI Consortium</span> as an open specification. Engineering sponsored by <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">BrandMeWeb</a>.
+          </div>
         </div>
-        <p class="mt-2 text-xs text-slate-400 leading-relaxed">
-          The open architectural specification for Zero-Trust Data Sanitization in Artificial Intelligence pipelines.
-        </p>
-        <div class="mt-4 text-xs text-slate-500">
-          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">BrandMeWeb</a> ecosystem.
+
+        <!-- Col 2: Specification & RFC -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
+            <li><a href="/ciso/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">CISO &amp; DPA Exemption Memo &rarr;</a></li>
+            <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+            <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">OSF Latency Benchmarks</a></li>
+            <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Architecture & Tools -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+            <li><a href="/inspector/" class="hover:text-slate-900 transition-colors">Interactive Pipeline Simulator</a></li>
+            <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
+            <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge &amp; Seal Foundry</a></li>
+            <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">PrivacyScrubber (Reference Impl)</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Consortium & Governance -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Governance &amp; Charter</a></li>
+            <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
+            <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
+            <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 5: Community & Verified -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
+            <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
+            <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+            <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
+            <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
+          </ul>
         </div>
       </div>
 
-      <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Specification</div>
-        <ul class="space-y-2 text-xs">
-          <li><a href="/standard/" class="hover:text-white transition-colors">ZTDS RFC v1.0</a></li>
-          <li><a href="/ciso/" class="text-sky-400 font-semibold hover:text-white transition-colors">CISO &amp; DPA Memo &rarr;</a></li>
-          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-white transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
-          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-white transition-colors">OSF Benchmark</a></li>
-          <li><a href="/llms.txt" class="hover:text-white transition-colors">llms.txt Standard</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Architecture &amp; Tools</div>
-        <ul class="space-y-2 text-xs">
-          <li><a href="/inspector/" class="hover:text-white transition-colors">Interactive Inspector</a></li>
-          <li><a href="/scanner/" class="hover:text-white transition-colors">Perimeter Scanner</a></li>
-          <li><a href="/sdk/" class="hover:text-white transition-colors">Developer SDK</a></li>
-          <li><a href="/badge/" class="hover:text-white transition-colors">Trust Badge Generator</a></li>
-          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-white transition-colors">PrivacyScrubber (Reference)</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Consortium &amp; Trust</div>
-        <ul class="space-y-2 text-xs">
-          <li><a href="/governance/" class="text-sky-400 font-semibold hover:text-white transition-colors">Governance &amp; Charter</a></li>
-          <li><a href="/security/" class="hover:text-white transition-colors">Security &amp; CVD</a></li>
-          <li><a href="/privacy/" class="hover:text-white transition-colors">Zero-Telemetry Privacy</a></li>
-          <li><a href="/terms/" class="hover:text-white transition-colors">Standards, Patents &amp; Terms</a></li>
-          <li><a href="/.well-known/security.txt" class="hover:text-white transition-colors">RFC 9116 security.txt</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Community</div>
-        <ul class="space-y-2 text-xs text-slate-400">
-          <li><a href="/registry/" class="hover:text-white transition-colors">Verified Registry</a></li>
-          <li><a href="/companies/" class="hover:text-white transition-colors">Corporate Members</a></li>
-          <li><a href="/fellows/" class="hover:text-white transition-colors">Global Fellows</a></li>
-          <li><a href="/apply/" class="hover:text-emerald-400 transition-colors font-medium">Apply for Badge &rarr;</a></li>
-          <li class="pt-2 text-[11px] text-slate-600 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
-        </ul>
-      </div>
-
-      <!-- Legal Conformance Disclaimer -->
-      <div class="mt-8 pt-8 border-t border-slate-900/80 text-[11px] text-slate-500 leading-relaxed col-span-1 md:col-span-5">
-        <p class="font-mono text-slate-400 uppercase text-[10px] tracking-wider mb-1">Legal Notice &amp; Technical Conformance Disclaimer</p>
+      <!-- Legal Conformance Notice Card -->
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Technical Conformance Demarcation</span>
+          <span class="text-slate-400 font-mono text-[10px]">RFC v1.0 &middot; Invariant Testing Specification</span>
+        </div>
         <p>
-          ZTDS.ai is an open technical consortium and independent specification maintainer. "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated or network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai makes no warranties, express or implied, regarding overall application security or fitness for purpose, and assumes no liability for third-party implementations, software errors, or data breaches.
+          ZTDS.ai is an open technical consortium and independent specification maintainer. The "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai and its maintainers make no warranties, express or implied, and expressly disclaim all liability for third-party implementations, software errors, or downstream data breaches.
         </p>
       </div>
+
+      <!-- Bottom Meta Bar -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 border-t border-slate-100 pt-6">
+        <div class="flex items-center gap-3">
+          <span>&copy; 2026 ZTDS AI Consortium.</span>
+          <span>&middot;</span>
+          <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
+        </div>
+        <div class="flex items-center gap-4 text-[11px] font-mono">
+          <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            ALL SYSTEMS VERIFIED
+          </span>
+          <span>&middot;</span>
+          <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x4E9A2B1C</a>
+        </div>
+      </div>
+
     </div>
   </footer>
 

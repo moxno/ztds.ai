@@ -208,14 +208,14 @@ console.log(`Audit Hash:    \x1b[33m${auditHash}\x1b[0m`);
 console.log('\x1b[90m----------------------------------------------------------------------\x1b[0m\n');
 
 if (findings.length === 0) {
-  console.log('\x1b[1m\x1b[32m✔ CONFORMANCE CONFIRMED: 0 INVARIANT VIOLATIONS DETECTED\x1b[0m');
+  console.log('\x1b[1m\x1b[32m[PASS] CONFORMANCE CONFIRMED: 0 INVARIANT VIOLATIONS DETECTED\x1b[0m');
   console.log('\x1b[90mAll scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RAM isolation).\x1b[0m\n');
   console.log('\x1b[1mNext Steps:\x1b[0m');
   console.log(`1. Include this audit hash in your pull request: \x1b[36mhttps://ztds.ai/apply/\x1b[0m`);
   console.log(`2. Embed your Verified Trust Badge: \x1b[33m[![ZTDS Verified](https://ztds.ai/badge/your-app.svg)](https://ztds.ai/registry/)\x1b[0m\n`);
   process.exit(0);
 } else {
-  console.log(`\x1b[1m${passed ? '\x1b[33m⚠ AUDIT PASSED WITH WARNINGS' : '\x1b[31m✖ AUDIT FAILED: INVARIANT VIOLATIONS FOUND'}\x1b[0m (${findings.length} findings)\n`);
+  console.log(`\x1b[1m${passed ? '\x1b[33m[WARN] AUDIT PASSED WITH WARNINGS' : '\x1b[31m[FAIL] AUDIT FAILED: INVARIANT VIOLATIONS FOUND'}\x1b[0m (${findings.length} findings)\n`);
   
   for (const f of findings) {
     const color = f.severity === 'CRITICAL' ? '\x1b[31m' : (f.severity === 'HIGH' ? '\x1b[33m' : '\x1b[36m');
