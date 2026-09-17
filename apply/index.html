@@ -267,20 +267,16 @@
           <div class="flex items-center gap-2 text-emerald-900 font-bold text-sm">
             <span class="w-2 h-2 rounded-full bg-emerald-600 inline-block"></span>
             Application Prepared &amp; Formatted
-          </div>
           <p class="text-xs text-slate-600 leading-relaxed">
-            Your GitOps accreditation payload has been compiled. If the GitHub window did not open automatically (blocked popups), use the direct link below:
+            Your accreditation payload has been formatted. Click below to send directly via email or copy the Markdown submission:
           </p>
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-1">
-            <a id="directIssueLink" href="#" target="_blank" rel="noopener" class="btn-trust text-xs py-2 px-3 text-center">
-              Open Issue on GitHub &rarr;
+            <a id="mailtoLink" href="#" class="btn-trust text-xs py-2 px-3 text-center">
+              Send Email to Consortium &rarr;
             </a>
             <button id="copyPayloadBtn" type="button" class="btn-outline text-xs py-2 px-3 bg-white text-center">
               Copy Application Markdown
             </button>
-            <a id="mailtoLink" href="#" class="btn-outline text-xs py-2 px-3 bg-white text-center">
-              Email to Consortium
-            </a>
           </div>
         </div>
       </div>
@@ -308,14 +304,14 @@
           </a>
         </div>
 
-        <!-- GitOps Alternative Box -->
+        <!-- Direct Consortium Submission Box -->
         <div class="ztds-card p-6 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600 space-y-2">
-          <div class="font-bold text-slate-900 text-sm">GitOps PR Alternative</div>
+          <div class="font-bold text-slate-900 text-sm">Direct Consortium Review</div>
           <p class="leading-relaxed">
-            Prefer open source contribution? Add your entry directly to <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200">data/registry.json</code> via a GitHub Pull Request.
+            Submissions are audited against RFC v1.0 automated test suites. Entries meeting the 4 Invariants are listed in <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200">data/registry.json</code> within 2 business days.
           </p>
-          <a href="https://github.com/moxno/PrivacyScrubber" target="_blank" rel="noopener" class="text-blue-700 font-semibold hover:underline block pt-1">
-            Open GitHub Repository &rarr;
+          <a href="mailto:accreditation@ztds.ai?subject=ZTDS%20Registry%20Intake" class="text-blue-700 font-semibold hover:underline block pt-1">
+            Email Consortium Team &rarr;
           </a>
         </div>
       </div>
@@ -545,21 +541,15 @@
       compiledPayload = rawMarkdown;
 
       const body = encodeURIComponent(rawMarkdown);
-      const targetIssueUrl = `https://github.com/moxno/PrivacyScrubber/issues/new?title=${title}&body=${body}`;
       const targetMailto = `mailto:accreditation@ztds.ai?subject=${title}&body=${body}`;
 
       // Update UI feedback card
       const successBox = document.getElementById('submissionSuccess');
-      const directIssueLink = document.getElementById('directIssueLink');
       const mailtoLink = document.getElementById('mailtoLink');
 
-      directIssueLink.href = targetIssueUrl;
       mailtoLink.href = targetMailto;
       successBox.classList.remove('hidden');
       successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-      // Attempt popup
-      window.open(targetIssueUrl, '_blank');
     });
 
     document.getElementById('copyPayloadBtn').addEventListener('click', function() {
