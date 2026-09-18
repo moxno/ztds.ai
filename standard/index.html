@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ZTDS Specification v1.0 — Zero-Trust Data Sanitization RFC</title>
-  <meta name="description" content="The formal open specification, mathematical proofs, and compliance invariants for Zero-Trust Data Sanitization in AI workflows.">
+  <meta name="description" content="Formal open specification, mathematical proofs, and compliance invariants for Zero-Trust Data Sanitization (RFC v1.0) in enterprise and AI architectures.">
   <link rel="canonical" href="https://ztds.ai/standard/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
@@ -30,7 +30,7 @@
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "Zero-Trust Data Sanitization (ZTDS) Specification v1.0",
+    "headline": "Zero-Trust Data Sanitization (ZTDS) Specification (RFC v1.0)",
     "url": "https://ztds.ai/standard/",
     "author": {
       "@type": "Person",
@@ -165,39 +165,49 @@
       <div class="lg:sticky lg:top-24 space-y-6">
         
         <!-- Table of Contents -->
-        <div class="ztds-card p-5 bg-white">
-          <div class="text-[11px] uppercase text-slate-400 font-bold tracking-wider mb-3">RFC Contents</div>
-          <ul class="space-y-2.5 text-xs">
+        <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm rounded-xl">
+          <div class="text-[11px] uppercase text-slate-400 font-bold tracking-wider mb-3 font-mono">RFC Contents</div>
+          <ul class="space-y-2 text-xs">
             <li><a href="#metadata" class="text-slate-600 hover:text-slate-900 transition-colors block">00. Document Metadata</a></li>
-            <li><a href="#scope" class="text-slate-600 hover:text-slate-900 transition-colors block">01. Scope &amp; Problem</a></li>
-            <li><a href="#invariants" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors block flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> 02. The 4 Invariants</a></li>
-            <li><a href="#taxonomy" class="text-slate-600 hover:text-slate-900 transition-colors block">03. Token Taxonomy</a></li>
-            <li><a href="#grc" class="text-slate-600 hover:text-slate-900 transition-colors block">04. Regulatory Mapping</a></li>
-            <li><a href="#proofs" class="text-slate-600 hover:text-slate-900 transition-colors block">05. Mathematical Proofs</a></li>
-            <li><a href="#governance" class="text-slate-600 hover:text-slate-900 transition-colors block">06. GitOps Governance</a></li>
+            <li><a href="#scope" class="text-slate-600 hover:text-slate-900 transition-colors block">01. Scope &amp; Threat Model</a></li>
+            <li><a href="#math" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors block flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> 02. Mathematical Foundation</a></li>
+            <li><a href="#invariants" class="text-slate-600 hover:text-slate-900 transition-colors block">03. The 4 Non-Negotiable Invariants</a></li>
+            <li><a href="#taxonomy" class="text-slate-600 hover:text-slate-900 transition-colors block">04. Surrogate Token Taxonomy</a></li>
+            <li><a href="#context" class="text-slate-600 hover:text-slate-900 transition-colors block">05. Context Preservation &amp; Recovery</a></li>
+            <li><a href="#schemas" class="text-slate-600 hover:text-slate-900 transition-colors block">06. Verification Schemas</a></li>
+            <li><a href="#grc" class="text-slate-600 hover:text-slate-900 transition-colors block">07. Statutory Safe Harbors (GDPR &middot; HIPAA)</a></li>
+            <li><a href="#transport" class="text-slate-600 hover:text-slate-900 transition-colors block">08. Cryptographic Transport Handoff</a></li>
+            <li><a href="#benchmarks" class="text-slate-600 hover:text-slate-900 transition-colors block">09. Benchmarks &amp; Airplane Audit</a></li>
+            <li><a href="#governance" class="text-slate-600 hover:text-slate-900 transition-colors block">10. GitOps Consortium Governance</a></li>
           </ul>
         </div>
 
         <!-- Citation & BibTeX Box -->
-        <div class="ztds-card p-5 bg-white space-y-3">
-          <div class="text-[11px] uppercase text-emerald-800 font-bold tracking-wider">Citation &amp; DOI</div>
-          <p class="text-xs text-slate-500 leading-relaxed">Official academic citation for literature, enterprise compliance filings, and RFPs.</p>
-          <button id="btnCopyBibtex" class="w-full py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-slate-700 font-medium text-left transition-colors flex items-center justify-between">
-            <span>Copy BibTeX</span>
-            <span class="text-[10px] text-slate-400">&darr;</span>
+        <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm rounded-xl space-y-3">
+          <div class="text-[11px] uppercase text-emerald-800 font-bold tracking-wider font-mono">Academic Citation &amp; DOI</div>
+          <p class="text-xs text-slate-500 leading-relaxed">Canonical academic citation for research papers, enterprise compliance filings, and CISO RFPs.</p>
+          <button id="btnCopyBibtex" type="button" class="w-full py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-slate-700 font-medium text-left transition-colors flex items-center justify-between">
+            <span>Copy BibTeX Entry</span>
+            <span class="text-[10px] text-slate-400 font-mono">&darr;</span>
           </button>
           <a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="w-full py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-slate-700 font-medium text-left transition-colors flex items-center justify-between block">
-            <span>Zenodo DOI Record</span>
-            <span class="text-[10px] text-slate-400">&rarr;</span>
+            <span>Zenodo DOI (10.5281)</span>
+            <span class="text-[10px] text-slate-400 font-mono">&rarr;</span>
+          </a>
+          <a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="w-full py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-slate-700 font-medium text-left transition-colors flex items-center justify-between block">
+            <span>OSF Latency Benchmark</span>
+            <span class="text-[10px] text-slate-400 font-mono">&rarr;</span>
           </a>
         </div>
 
-        <!-- Submit Amendment Box -->
-        <div class="ztds-card p-5 bg-emerald-50/50 border border-emerald-200/80">
-          <div class="text-[11px] uppercase text-emerald-800 font-bold tracking-wider mb-1">Working Group 1</div>
-          <p class="text-xs text-slate-600 leading-relaxed mb-3">Submit RFC errata, entity profile expansions, or technical amendments via GitHub PR.</p>
-          <a href="/apply/?track=fellow" class="btn-trust block w-full text-center text-xs py-2">
-            Submit Amendment &rarr;
+        <!-- Working Group Errata Box -->
+        <div class="ztds-card p-5 bg-emerald-50/60 border border-emerald-200 rounded-xl space-y-2">
+          <div class="text-[11px] uppercase text-emerald-900 font-bold tracking-wider font-mono">Working Group 1 (WG-1)</div>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Submit RFC errata, mathematical bounds, or vertical entity profile expansions via GitOps PR.
+          </p>
+          <a href="/apply/?track=fellow" class="btn-trust block w-full text-center text-xs py-2 shadow-sm">
+            Propose Amendment &rarr;
           </a>
         </div>
 
@@ -206,12 +216,13 @@
 
     <!-- Main RFC Document Surface -->
     <main class="flex-grow max-w-3xl">
-      <div class="ztds-card p-6 sm:p-10 bg-white border border-slate-200 shadow-sm">
+      <div class="ztds-card p-6 sm:p-10 bg-white border border-slate-200 shadow-sm rounded-xl">
         
         <!-- Document Header & Metadata -->
         <div id="metadata" class="border-b border-slate-200 pb-8 mb-8">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-4">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> RFC DOCUMENT ID: ZTDS-SPEC-2026-V1 &middot; STATUS: STANDARD
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-4 shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span class="font-mono text-[11px]">RFC DOCUMENT ID: ZTDS-SPEC-2026-V1 &middot; STATUS: STANDARD / ACTIVE</span>
           </div>
           <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Zero-Trust Data Sanitization Specification (RFC v1.0)
@@ -223,19 +234,19 @@
           <!-- Sovereign Metadata Grid -->
           <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs font-sans">
             <div>
-              <span class="text-slate-400 block text-[11px] font-medium uppercase">Author</span>
+              <span class="text-slate-400 block text-[11px] font-medium uppercase font-mono">Lead Author</span>
               <span class="text-slate-900 font-semibold">Ilya Sibiryakov</span>
             </div>
             <div>
-              <span class="text-slate-400 block text-[11px] font-medium uppercase">Published</span>
+              <span class="text-slate-400 block text-[11px] font-medium uppercase font-mono">Published</span>
               <span class="text-slate-700 font-medium">2026-09-15</span>
             </div>
             <div>
-              <span class="text-slate-400 block text-[11px] font-medium uppercase">Zenodo DOI</span>
+              <span class="text-slate-400 block text-[11px] font-medium uppercase font-mono">Zenodo DOI</span>
               <a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="text-emerald-700 font-medium hover:underline">10.5281/zenodo</a>
             </div>
             <div>
-              <span class="text-slate-400 block text-[11px] font-medium uppercase">ORCID</span>
+              <span class="text-slate-400 block text-[11px] font-medium uppercase font-mono">ORCID iD</span>
               <a href="https://orcid.org/0009-0002-0642-5985" target="_blank" rel="noopener" class="text-emerald-700 font-medium hover:underline">0009-0002-0642</a>
             </div>
           </div>
@@ -244,86 +255,133 @@
         <!-- Specification Body -->
         <div class="space-y-12 text-sm leading-relaxed text-slate-700">
           
-          <!-- Section 1 -->
+          <!-- Section 01: Scope & Threat Model -->
           <section id="scope">
             <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
-              <span class="text-emerald-600">01.</span> Scope &amp; Problem Statement
+              <span class="text-emerald-600 font-mono">01.</span> Scope &amp; Threat Model
             </h2>
             <p class="mb-4">
-              Legacy Data Loss Prevention (DLP) solutions rely on centralized cloud proxies that intercept traffic between enterprise clients and Large Language Model (LLM) APIs. Under European Union GDPR Article 28, this intermediary processing designates the DLP vendor as a formal Data Processor, requiring extensive Data Processing Agreements (DPA), vendor risk audits, and recurring egress latency penalties of 150ms to 300ms.
+              Legacy Data Loss Prevention (DLP) and enterprise AI proxy architectures rely on centralized intermediary cloud proxies that intercept traffic between client endpoints and Large Language Model (LLM) providers. Under European Union GDPR Article 28, this intermediary processing classifies the cloud DLP proxy as a formal Data Processor, requiring complex Data Processing Agreements (DPAs), third-party risk management (TPRM) assessments, and introducing WAN latency penalties of 150ms to 350ms.
             </p>
-            <p>
-              Furthermore, sensitive data ingested into Retrieval-Augmented Generation (RAG) vector embeddings violates GDPR Article 17 (Right to Erasure), as high-dimensional vector representations cannot be excised without full database re-indexing. ZTDS solves this by enforcing in-memory client-side data de-identification prior to network transmission.
+            <p class="mb-4">
+              Furthermore, cleartext data ingested into Retrieval-Augmented Generation (RAG) vector embeddings creates irremediable liability under GDPR Article 17 (Right to Erasure), as mathematical vector spaces cannot excise individual entity records without full database deletion and re-indexing.
+            </p>
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-2 text-slate-600">
+              <div class="font-bold text-slate-900 text-xs font-mono uppercase">Threat Vectors Eliminated by RFC v1.0:</div>
+              <ul class="list-disc list-inside space-y-1">
+                <li><strong>Model Training Memorization:</strong> Foundation model providers training on user prompts or fine-tuning weights cannot memorize PII that was never transmitted.</li>
+                <li><strong>Vendor Log &amp; Cache Exposure:</strong> Cloud LLM providers log only synthetic tokens (<code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">[PATIENT_1]</code>, <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">[IBAN_2]</code>), neutralizing API provider data breaches.</li>
+                <li><strong>Centralized Proxy Honeypots:</strong> Zero-Trust architecture eliminates the proxy server entirely; no central database of enterprise prompts exists to breach.</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Section 02: Formal Mathematical Foundation -->
+          <section id="math">
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
+              <span class="text-emerald-600 font-mono">02.</span> Formal Mathematical Foundation
+            </h2>
+            <p class="mb-4">
+              Let an input payload or prompt <span class="font-mono font-semibold">P</span> represent a sequence of tokens composed of non-sensitive tokens <span class="font-mono font-semibold">U</span> and sensitive entities <span class="font-mono font-semibold">S</span>:
+            </p>
+            
+            <div class="p-5 rounded-xl bg-slate-900 text-emerald-400 font-mono text-xs space-y-3 leading-relaxed border border-slate-800">
+              <div>P = U &cup; S, &nbsp;where U &cap; S = &empty;</div>
+              <div class="text-slate-400 text-[11px]">// S is the set of discrete entity instances: S = {s_1, s_2, ..., s_k}</div>
+              <div class="pt-2 border-t border-slate-800">
+                1. Local In-Memory Transformation T: S &rarr; M<br>
+                &nbsp;&nbsp;&nbsp;M = {m_1, m_2, ..., m_k}, &nbsp;where each m_i = "[TYPE_N]"
+              </div>
+              <div>
+                2. Physical WAN Socket Transmission:<br>
+                &nbsp;&nbsp;&nbsp;Payload_wan = U &cup; M<br>
+                &nbsp;&nbsp;&nbsp;&Delta;Egress(S) &equiv; 0.00 bytes &forall; t &isin; [0, &infin;)
+              </div>
+              <div>
+                3. Mapping Dictionary R = {(m_i, s_i)} Scoped Strictly in Volatile RAM:<br>
+                &nbsp;&nbsp;&nbsp;R &sube; M_volatile, &nbsp;DiskWrite(R) &equiv; 0
+              </div>
+              <div>
+                4. Deterministic Bijective Inversion on Local Client Layer:<br>
+                &nbsp;&nbsp;&nbsp;P_final = T^(-1)(P_out, R)
+              </div>
+              <div class="text-slate-400 text-[11px] pt-1 border-t border-slate-800">
+                5. Memory Lifecycle Elimination: lim_{t &rarr; session_end} R = &empty;
+              </div>
+            </div>
+
+            <p class="mt-4 text-xs text-slate-600 leading-relaxed">
+              Because mapping dictionary <span class="font-mono font-semibold">R</span> exists solely within volatile memory <span class="font-mono font-semibold">M_volatile</span> of the client node and is never transmitted over external sockets, no third-party infrastructure ever achieves custody of cleartext entities. Subprocessor liability is mathematically nullified.
             </p>
           </section>
 
-          <!-- Section 2: The 4 Non-Negotiable Invariants -->
+          <!-- Section 03: The 4 Non-Negotiable Invariants -->
           <section id="invariants">
             <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
-              <span class="text-emerald-600">02.</span> The 4 Non-Negotiable Invariants
+              <span class="text-emerald-600 font-mono">03.</span> The 4 Non-Negotiable Invariants
             </h2>
             <p class="text-slate-600 mb-6">
-              Any software implementation or commercial agent claiming "ZTDS Verified" status MUST demonstrably adhere to all four foundational invariants:
+              Any software implementation, browser extension, SDK, or agent connector claiming <strong>ZTDS Verified™</strong> status MUST demonstrably enforce all four non-negotiable invariants:
             </p>
 
             <div class="space-y-4">
               <!-- Invariant 1 -->
               <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
                 <div class="flex items-center justify-between text-xs mb-2">
-                  <span class="text-emerald-800 font-bold uppercase tracking-wide">Invariant 1 &middot; Volatile Memory Scoping</span>
-                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">MANDATORY</span>
+                  <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono">Invariant 1 &middot; Zero External Egress Prior to Sanitization</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">MANDATORY</span>
                 </div>
-                <h3 class="text-base font-bold text-slate-900 mb-2">RAM-Only Ephemeral Lifecycle</h3>
+                <h3 class="text-base font-bold text-slate-900 mb-2">Mathematical Socket Egress Elimination</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                  All mapping pairs between sensitive entities and non-informative tokens (e.g. <code class="px-1.5 py-0.5 bg-white border border-slate-200 rounded text-slate-800 font-mono">{"[NAME_1]": "John Doe"}</code>) MUST be held strictly in volatile RAM. Persisting session maps to cookies, localStorage, IndexedDB, or swap space constitutes an immediate compliance violation. In web browsers, maps must be isolated per tab execution context.
+                  Raw PII, PHI, financial accounts, or credentials must NEVER traverse an external network socket unmasked. Sanitization occurs strictly prior to socket write. Evaluated via raw TCP/TLS packet inspection: <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">Egress(S) == 0.00 bytes</code>.
                 </p>
               </div>
 
               <!-- Invariant 2 -->
               <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
                 <div class="flex items-center justify-between text-xs mb-2">
-                  <span class="text-emerald-800 font-bold uppercase tracking-wide">Invariant 2 &middot; Latency Budget</span>
-                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">MANDATORY</span>
+                  <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono">Invariant 2 &middot; Deterministic Reversible Tokenization</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">MANDATORY</span>
                 </div>
-                <h3 class="text-base font-bold text-slate-900 mb-2">Sub-2ms Deterministic Execution</h3>
+                <h3 class="text-base font-bold text-slate-900 mb-2">Bijective Semantic Preservation &amp; Sub-2ms Latency</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                  Deterministic parsing, regex heuristic matching, and token replacement MUST execute within a maximum budget of 2 milliseconds per 15,000-character payload on standard consumer hardware. The core engine must introduce zero perceptible cognitive drag on human-in-the-loop workflows.
+                  Surrogate tokens (<code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">[PATIENT_1]</code>, <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">[EMAIL_1]</code>) preserve semantic context and grammatical category for LLM synthesis. Inversion <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">T^(-1)</code> must be bijective and execute with deterministic speed under 2.0ms per 15,000 characters.
                 </p>
               </div>
 
               <!-- Invariant 3 -->
               <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
                 <div class="flex items-center justify-between text-xs mb-2">
-                  <span class="text-emerald-800 font-bold uppercase tracking-wide">Invariant 3 &middot; Egress Elimination</span>
-                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">MANDATORY</span>
+                  <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono">Invariant 3 &middot; Verifiable Cryptographic Isolation</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">MANDATORY</span>
                 </div>
-                <h3 class="text-base font-bold text-slate-900 mb-2">The Airplane Mode Proving Test</h3>
+                <h3 class="text-base font-bold text-slate-900 mb-2">Volatile Memory Boundary &amp; Zero Secondary Storage</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                  The sanitization engine MUST be capable of complete autonomous operation with all physical and wireless network adapters severed. Network packet inspection during sanitization must record exactly 0 bytes transmitted. Any external telemetry beacon invalidates certification.
+                  Cleartext entity mappings <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">R</code> MUST exist exclusively in volatile RAM. Writing session state to localStorage, cookies, IndexedDB, unencrypted swap, or analytics disk logs is strictly prohibited. Multi-user session sharing mandates Argon2id and XChaCha20-Poly1305 encryption.
                 </p>
               </div>
 
               <!-- Invariant 4 -->
               <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
                 <div class="flex items-center justify-between text-xs mb-2">
-                  <span class="text-emerald-800 font-bold uppercase tracking-wide">Invariant 4 &middot; Session Security</span>
-                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">MANDATORY</span>
+                  <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono">Invariant 4 &middot; Continuous Compliance &amp; Zero Subprocessor Chain</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">MANDATORY</span>
                 </div>
-                <h3 class="text-base font-bold text-slate-900 mb-2">Cryptographic Transport Handoff</h3>
+                <h3 class="text-base font-bold text-slate-900 mb-2">Complete DPA Exemption under GDPR Article 28</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                  Multi-user collaborative handoff of token maps must enforce client-side authenticated encryption using <strong>Argon2id</strong> (memory: 19 MiB, iterations: 2) for key derivation and <strong>XChaCha20-Poly1305</strong> (256-bit key, 192-bit random nonce). Cleartext keys must never touch central relays.
+                  Because only de-identified non-personal data traverses the execution perimeter, downstream foundation model providers (OpenAI, Anthropic, Google Vertex) never become data processors under GDPR Article 28 or HIPAA BAA rules. Zero vendor DPA chain is created or maintained.
                 </p>
               </div>
             </div>
           </section>
 
-          <!-- Section 3: Tokenization Taxonomy -->
+          <!-- Section 04: Tokenization Taxonomy -->
           <section id="taxonomy">
             <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
-              <span class="text-emerald-600">03.</span> Tokenization Taxonomy &amp; Syntax
+              <span class="text-emerald-600 font-mono">04.</span> Bijective Surrogate Token Taxonomy
             </h2>
             <p class="mb-4">
-              ZTDS standardizes structured bracketed tokens that preserve grammatical context while completely removing informational entropy:
+              ZTDS standardizes structured bracketed tokens that preserve grammatical syntactic structure while removing 100% of informational entropy:
             </p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
               <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
@@ -333,103 +391,207 @@
                 <code class="text-emerald-700 font-mono font-semibold">[EMAIL_N]</code> &mdash; Corporate and personal email addresses
               </div>
               <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <code class="text-emerald-700 font-mono font-semibold">[PHONE_N]</code> &mdash; Universal international and domestic telephone numbers
+                <code class="text-emerald-700 font-mono font-semibold">[PHONE_N]</code> &mdash; Universal international and domestic phone numbers
               </div>
               <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <code class="text-emerald-700 font-mono font-semibold">[ID_N]</code> &mdash; National IDs, SSN, Tax numbers, passport numbers
+                <code class="text-emerald-700 font-mono font-semibold">[ID_N] / [SSN_N]</code> &mdash; National IDs, SSN, Tax numbers, passports
               </div>
               <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
                 <code class="text-emerald-700 font-mono font-semibold">[SECRET_N]</code> &mdash; API keys, AWS credentials, JWT tokens, private certificates
               </div>
               <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <code class="text-emerald-700 font-mono font-semibold">[FINANCIAL_N]</code> &mdash; Credit card PANs, IBANs, bank routing numbers
+                <code class="text-emerald-700 font-mono font-semibold">[FINANCIAL_N] / [IBAN_N]</code> &mdash; Credit card PANs, IBANs, routing numbers
+              </div>
+              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <code class="text-emerald-700 font-mono font-semibold">[PATIENT_N] / [MRN_N]</code> &mdash; Clinical medical record numbers, patient IDs
+              </div>
+              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <code class="text-emerald-700 font-mono font-semibold">[IP_ADDR_N]</code> &mdash; Private and public IPv4/IPv6 addresses, internal hostnames
               </div>
             </div>
-            <p class="text-xs text-slate-500">
-              To prevent LLM tokenization mutations (e.g. <code class="px-1 bg-slate-100 rounded text-slate-700 font-mono">[NAME_1]</code> translated or split across byte-pair boundaries), de-tokenizers must implement fuzzy token recovery regexes: <code class="px-1 bg-slate-100 rounded text-slate-700 font-mono">/[\[\(\{&lt;]NAME[ _-]?(\d+)[\]\}\)&gt;]/gi</code>.
-            </p>
           </section>
 
-          <!-- Section 4: Regulatory Mapping -->
+          <!-- Section 05: Context Preservation & Anti-Mutation Rules -->
+          <section id="context">
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
+              <span class="text-emerald-600 font-mono">05.</span> Context Preservation &amp; Anti-Mutation Rules
+            </h2>
+            <p class="mb-4">
+              To guarantee that LLMs execute valid clinical, financial, or legal reasoning, surrogate tokens retain grammatical part-of-speech context. For example:
+            </p>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 font-mono text-xs text-slate-800 space-y-2 mb-4">
+              <div class="text-slate-500 font-bold uppercase text-[10px]">Cleartext Input:</div>
+              <div class="text-rose-700">"Patient Alice Smith was prescribed Metformin by Dr. David Miller on 2026-09-15."</div>
+              <div class="text-slate-500 font-bold uppercase text-[10px] pt-2 border-t border-slate-200">Sanitized WAN Egress (Invariant 1 &amp; 2):</div>
+              <div class="text-emerald-700">"Patient [NAME_1] was prescribed Metformin by Dr. [NAME_2] on [DATE_1]."</div>
+            </div>
+            <p class="mb-3 text-xs text-slate-600">
+              <strong>Anti-Mutation Fuzzy Token Recovery:</strong> Foundation models occasionally mutate token brackets (e.g. translating <code class="font-mono">[NAME_1]</code> to <code class="font-mono">(NAME_1)</code> or splitting across sub-word BPE boundaries). Compliant de-tokenizers must implement fuzzy regex recovery:
+            </p>
+            <pre class="p-3 rounded-lg bg-slate-900 text-emerald-300 font-mono text-xs overflow-x-auto"><code>const FUZZY_RECOVERY_REGEX = /[\[\(\{<]([A-Z_]+)[ _-]?(\d+)[\]\}\)>]/gi;</code></pre>
+          </section>
+
+          <!-- Section 06: Verification Schemas -->
+          <section id="schemas">
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
+              <span class="text-emerald-600 font-mono">06.</span> Standard Verification Schemas
+            </h2>
+            <p class="mb-4">
+              All entries submitted via the GitOps gateway (<a href="/apply/" class="text-emerald-700 font-semibold hover:underline">/apply/</a>) are validated against versioned JSON schemas:
+            </p>
+
+            <div class="space-y-4">
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+                <div class="flex items-center justify-between font-mono font-bold text-slate-900 mb-2">
+                  <span>Track A: data/registry.json</span>
+                  <span class="text-emerald-700 text-[11px]">RFC v1.0 Product Schema</span>
+                </div>
+                <pre class="p-3 rounded-lg bg-slate-900 text-emerald-300 font-mono text-[11px] overflow-x-auto leading-relaxed"><code>{
+  "id": "privacyscrubber-web",
+  "name": "PrivacyScrubber Web",
+  "slug": "privacyscrubber-web",
+  "url": "https://privacyscrubber.com",
+  "category": "Client-Side Data Sanitization App",
+  "tier": "Reference Implementation",
+  "license": "Commercial / Proprietary",
+  "architecture": "RAM-Only V8 Engine / In-Memory Regex",
+  "verified_date": "2026-09-15",
+  "verified_hash": "sha256:7f83b1659a72...",
+  "badge_url": "https://ztds.ai/badge/privacyscrubber-web.svg",
+  "frameworks": ["GDPR", "HIPAA Safe Harbor", "SOC 2 Type II", "EU AI Act Art. 50"]
+}</code></pre>
+              </div>
+
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+                <div class="flex items-center justify-between font-mono font-bold text-slate-900 mb-2">
+                  <span>Track B: data/companies.json</span>
+                  <span class="text-blue-700 text-[11px]">Corporate Adopter Schema</span>
+                </div>
+                <pre class="p-3 rounded-lg bg-slate-900 text-sky-300 font-mono text-[11px] overflow-x-auto leading-relaxed"><code>{
+  "id": "brandmeweb",
+  "slug": "brandmeweb",
+  "name": "BrandMeWeb",
+  "tier": "Founding Corporate Member",
+  "industry": "Technical SEO & GEO",
+  "url": "https://brandmeweb.com",
+  "headquarters": "International",
+  "verified_date": "2026-09-15",
+  "compliance_scope": "Full ZTDS client-side policy enforced across internal LLM workflows."
+}</code></pre>
+              </div>
+            </div>
+          </section>
+
+          <!-- Section 07: Statutory Safe Harbors -->
           <section id="grc">
             <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
-              <span class="text-emerald-600">04.</span> Regulatory &amp; GRC Cross-Mapping
+              <span class="text-emerald-600 font-mono">07.</span> Statutory Safe Harbors &amp; GRC Cross-Mapping
             </h2>
             <div class="overflow-x-auto">
               <table class="w-full text-left border-collapse text-xs">
                 <thead>
                   <tr class="border-b border-slate-200 text-slate-500 bg-slate-50">
-                    <th class="py-3 px-3 font-semibold">Framework</th>
-                    <th class="py-3 px-3 font-semibold">Article / Section</th>
-                    <th class="py-3 px-3 font-semibold">ZTDS Conformance Mechanism</th>
-                    <th class="py-3 px-3 text-right font-semibold">Liability State</th>
+                    <th class="py-3 px-3 font-semibold font-mono">Framework</th>
+                    <th class="py-3 px-3 font-semibold font-mono">Statutory Section</th>
+                    <th class="py-3 px-3 font-semibold font-mono">ZTDS Conformance Invariant</th>
+                    <th class="py-3 px-3 text-right font-semibold font-mono">Compliance Impact</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-200 font-sans">
                   <tr class="hover:bg-slate-50">
                     <td class="py-3 px-3 text-slate-900 font-bold">EU GDPR</td>
-                    <td class="py-3 px-3 text-slate-500">Article 28 (DPA)</td>
-                    <td class="py-3 px-3 text-slate-700">0 server data processing; client execution perimeter</td>
-                    <td class="py-3 px-3 text-right text-emerald-700 font-bold">Exempt</td>
+                    <td class="py-3 px-3 text-slate-600 font-mono">Recital 26 &middot; Art. 28</td>
+                    <td class="py-3 px-3 text-slate-700">Invariant 1 &amp; 4: Anonymous data excluded; zero processor DPA required</td>
+                    <td class="py-3 px-3 text-right text-emerald-700 font-bold font-mono">DPA Exempt</td>
                   </tr>
                   <tr class="hover:bg-slate-50">
                     <td class="py-3 px-3 text-slate-900 font-bold">EU GDPR</td>
-                    <td class="py-3 px-3 text-slate-500">Article 17 (Right to Erasure)</td>
-                    <td class="py-3 px-3 text-slate-700">RAG vectors store 0 cleartext PII; zero re-indexing required</td>
-                    <td class="py-3 px-3 text-right text-emerald-700 font-bold">Compliant</td>
+                    <td class="py-3 px-3 text-slate-600 font-mono">Article 17</td>
+                    <td class="py-3 px-3 text-slate-700">Invariant 1: RAG vector databases store zero cleartext PII; zero re-indexing</td>
+                    <td class="py-3 px-3 text-right text-emerald-700 font-bold font-mono">Right to Erasure</td>
                   </tr>
                   <tr class="hover:bg-slate-50">
-                    <td class="py-3 px-3 text-slate-900 font-bold">HIPAA</td>
-                    <td class="py-3 px-3 text-slate-500">45 CFR § 164.514(b)</td>
-                    <td class="py-3 px-3 text-slate-700">Safe Harbor 18 PHI identifier exclusion</td>
-                    <td class="py-3 px-3 text-right text-emerald-700 font-bold">Compliant</td>
-                  </tr>
-                  <tr class="hover:bg-slate-50">
-                    <td class="py-3 px-3 text-slate-900 font-bold">SOC 2 Type II</td>
-                    <td class="py-3 px-3 text-slate-500">Trust Services Criteria CC6.7</td>
-                    <td class="py-3 px-3 text-slate-700">Eliminates unencrypted PII egress over public networks</td>
-                    <td class="py-3 px-3 text-right text-emerald-700 font-bold">Compliant</td>
+                    <td class="py-3 px-3 text-slate-900 font-bold">US HIPAA</td>
+                    <td class="py-3 px-3 text-slate-600 font-mono">45 CFR § 164.514(b)</td>
+                    <td class="py-3 px-3 text-slate-700">Invariant 1 &amp; 2: Removal of all 18 PHI identifiers prior to socket egress</td>
+                    <td class="py-3 px-3 text-right text-emerald-700 font-bold font-mono">Safe Harbor</td>
                   </tr>
                   <tr class="hover:bg-slate-50">
                     <td class="py-3 px-3 text-slate-900 font-bold">EU AI Act</td>
-                    <td class="py-3 px-3 text-slate-500">Article 50 (Transparency)</td>
-                    <td class="py-3 px-3 text-slate-700">Reproducible SHA-256 audit receipts generated per session</td>
-                    <td class="py-3 px-3 text-right text-emerald-700 font-bold">Compliant</td>
+                    <td class="py-3 px-3 text-slate-600 font-mono">Article 50 &middot; Art. 99</td>
+                    <td class="py-3 px-3 text-slate-700">Invariant 2 &amp; 3: SHA-256 audit digests confirm zero prohibited model manipulation</td>
+                    <td class="py-3 px-3 text-right text-emerald-700 font-bold font-mono">Transparent</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50">
+                    <td class="py-3 px-3 text-slate-900 font-bold">US Federal Law</td>
+                    <td class="py-3 px-3 text-slate-600 font-mono">FRE 502(b)</td>
+                    <td class="py-3 px-3 text-slate-700">Invariant 3: Reasonable precautions preventing attorney-client privilege waiver</td>
+                    <td class="py-3 px-3 text-right text-emerald-700 font-bold font-mono">Non-Waiver Shield</td>
+                  </tr>
+                  <tr class="hover:bg-slate-50">
+                    <td class="py-3 px-3 text-slate-900 font-bold">SOC 2 Type II</td>
+                    <td class="py-3 px-3 text-slate-600 font-mono">TSC CC6.7 &middot; CC6.8</td>
+                    <td class="py-3 px-3 text-slate-700">Invariant 1: Eliminates unencrypted sensitive data transmission over public WAN</td>
+                    <td class="py-3 px-3 text-right text-emerald-700 font-bold font-mono">Verified Boundary</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </section>
 
-          <!-- Section 5: Mathematical Proofs -->
-          <section id="proofs">
+          <!-- Section 08: Cryptographic Transport Handoff -->
+          <section id="transport">
             <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
-              <span class="text-emerald-600">05.</span> Mathematical Egress Proofs
+              <span class="text-emerald-600 font-mono">08.</span> Cryptographic Transport Handoff Protocol
             </h2>
             <p class="mb-4">
-              Let payload <span class="font-mono font-semibold">P</span> represent cleartext input and <span class="font-mono font-semibold">S</span> represent the set of confidential entities <span class="font-mono">e_i &isin; P</span>. Under the ZTDS Transformation Mapping:
+              When multi-user teams or distributed agent swarms require collaborative re-identification, the mapping dictionary <span class="font-mono">R</span> is encrypted prior to transport using:
             </p>
-            <div class="p-4 bg-slate-900 text-emerald-400 rounded-xl font-mono text-xs mb-4">
-              T(P) = P \ S &cup; { [TYPE_i] }<br>
-              Egress_external(S) = 0 &forall; t &isin; [0, &infin;)
+            <ul class="list-disc list-inside space-y-2 text-xs text-slate-600 mb-4">
+              <li><strong>Key Derivation:</strong> Argon2id (RFC 9106) configured with memory cost 19 MiB, time cost 2 iterations, parallelism 1.</li>
+              <li><strong>Authenticated Symmetric Cipher:</strong> XChaCha20-Poly1305 with 256-bit key and 192-bit random nonce generated via CSPRNG.</li>
+              <li><strong>Central Relay Demarcation:</strong> The coordination relay acts solely as a blind ciphertext pipe with zero mathematical capability to derive keys or decrypt tokens.</li>
+            </ul>
+          </section>
+
+          <!-- Section 09: Benchmarks & Airplane Audit -->
+          <section id="benchmarks">
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
+              <span class="text-emerald-600 font-mono">09.</span> Empirical Benchmarks &amp; Airplane Audit
+            </h2>
+            <p class="mb-4">
+              Every certified implementation must pass the 5-step <strong>Airplane Mode Audit Protocol</strong>:
+            </p>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-2 text-slate-700 mb-4">
+              <div><strong>1. Payload Ingestion:</strong> Ingest unredacted medical record or financial prompt into the tool.</div>
+              <div><strong>2. Physical Network Severance:</strong> Disconnect all network interfaces (Wi-Fi, Ethernet, Cellular).</div>
+              <div><strong>3. In-RAM Execution:</strong> Trigger de-identification. Confirm local execution completes in &lt;2.0ms.</div>
+              <div><strong>4. Reversible Restoration:</strong> Trigger de-tokenization. Confirm 100% bijective restoration.</div>
+              <div><strong>5. Network Inspection:</strong> Packet analysis confirms exactly 0.00 bytes transmitted across all sockets.</div>
             </div>
-            <p class="text-xs text-slate-500 leading-relaxed">
-              Because mapping pairs <span class="font-mono">{ [TYPE_i] &rarr; e_i }</span> reside entirely in client volatile memory <span class="font-mono">M_v</span>, no third-party infrastructure ever gains physical possession of cleartext keys or values. Subprocessor liability is mathematically nullified.
+            <p class="text-xs text-slate-500">
+              Audited in Open Science Framework benchmark DOI: <a href="https://doi.org/10.17605/OSF.IO/5BYJF" target="_blank" rel="noopener" class="text-emerald-700 font-mono underline">10.17605/OSF.IO/5BYJF</a>.
             </p>
           </section>
 
-          <!-- Section 6: GitOps Governance -->
+          <!-- Section 10: GitOps Governance -->
           <section id="governance">
             <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
-              <span class="text-emerald-600">06.</span> Specification Governance &amp; Working Groups
+              <span class="text-emerald-600 font-mono">10.</span> GitOps Consortium Governance
             </h2>
             <p class="mb-4">
-              ZTDS is maintained by the ZTDS AI Consortium under the 3-Working-Group GitOps structure:
+              The ZTDS standard is maintained as an open public specification under the Apache 2.0 and CC BY 4.0 licenses by the <strong>ZTDS AI Consortium</strong>:
             </p>
             <ul class="space-y-2.5 text-xs text-slate-700">
-              <li class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong class="text-slate-900">WG-1: Core Specification &amp; RFC Standards</strong> &mdash; Invariant definitions, mathematical proofs, RFC errata.</li>
-              <li class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong class="text-slate-900">WG-2: Registry &amp; Certification Authority</strong> &mdash; Accreditation audits, verified product certificates, SVG trust badge issuance.</li>
-              <li class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong class="text-slate-900">WG-3: Developer Engine &amp; Reference Implementations</strong> &mdash; WASM engines, MCP protocol adapters, SDK tooling.</li>
+              <li class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <strong class="text-slate-900">WG-1: Core Architecture &amp; Cryptography</strong> &mdash; Invariant definitions, entropy leak bounds, formal mathematical proofs.
+              </li>
+              <li class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <strong class="text-slate-900">WG-2: Registry &amp; Certification Authority</strong> &mdash; Verification audits, GitOps PR merges to <code class="font-mono text-slate-800">data/registry.json</code>, SVG trust badge issuance.
+              </li>
+              <li class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <strong class="text-slate-900">WG-3: Systems, WASM &amp; Reference SDK</strong> &mdash; Headless engine development, MCP stdio gateways, LangChain and LlamaIndex blueprints.
+              </li>
             </ul>
           </section>
 
@@ -564,7 +726,7 @@
         const btn = document.getElementById('btnCopyBibtex');
         btn.innerHTML = '<span>Copied BibTeX!</span><span class="text-emerald-600 font-bold">&check;</span>';
         setTimeout(() => {
-          btn.innerHTML = '<span>Copy BibTeX</span><span class="text-[10px] text-slate-400">&darr;</span>';
+          btn.innerHTML = '<span>Copy BibTeX Entry</span><span class="text-[10px] text-slate-400 font-mono">&darr;</span>';
         }, 2000);
       });
     });
