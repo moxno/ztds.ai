@@ -72,11 +72,13 @@
       </div>
 
       <!-- Navigation Links -->
-      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-600" id="desktop-nav">
+      <nav class="hidden lg:flex items-center gap-5 text-sm font-medium text-slate-600" id="desktop-nav">
         <a href="/standard/" class="nav-link hover:text-slate-900 transition-colors py-1">Standard</a>
         <a href="/registry/" class="nav-link hover:text-slate-900 transition-colors py-1">Registry</a>
         <a href="/sdk/" class="nav-link hover:text-slate-900 transition-colors py-1">SDK &amp; Connectors</a>
         <a href="/ciso/" class="nav-link hover:text-slate-900 transition-colors py-1">CISO &amp; Legal</a>
+        <a href="/soc2/" class="nav-link hover:text-slate-900 transition-colors py-1">SOC 2 &amp; Trust</a>
+        <a href="/inspector/" class="nav-link hover:text-slate-900 transition-colors py-1">Inspector</a>
         <a href="/scanner/" class="nav-link hover:text-slate-900 transition-colors py-1">Scanner</a>
         <a href="/governance/" class="nav-link hover:text-slate-900 transition-colors py-1">Governance</a>
       </nav>
@@ -128,6 +130,7 @@
       <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper</a>
       <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
       <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
+      <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 Trust Center</a>
 
       <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
       <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
@@ -169,17 +172,23 @@
     <div class="ztds-card p-6 sm:p-10 bg-white border border-slate-200 shadow-sm mb-10">
       <div class="space-y-6">
         
-        <!-- Slug Input -->
+        <!-- Slug Input & Dynamic Status -->
         <div>
-          <label for="slugInput" class="block text-xs font-bold text-slate-900 mb-2 uppercase tracking-wider">
-            Your Product / Implementation Slug
-          </label>
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <label for="slugInput" class="block text-xs font-bold text-slate-900 uppercase tracking-wider">
+              Your Product / Implementation Slug
+            </label>
+            <div id="registryStatusPill" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> VERIFIED REGISTRY ENTITY
+            </div>
+          </div>
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
             <span class="text-xs sm:text-sm text-slate-400 font-mono py-2 hidden sm:inline">https://ztds.ai/badge/</span>
             <input 
               type="text" 
               id="slugInput" 
               value="privacyscrubber-web" 
+              aria-label="Your Product or Implementation Slug"
               placeholder="your-product-slug" 
               class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2.5 text-base sm:text-sm font-mono text-slate-900 focus:outline-none focus:border-emerald-500 focus:bg-white transition-colors"
             >
@@ -190,27 +199,77 @@
           </p>
         </div>
 
-        <!-- Live Vector Preview -->
+        <!-- Conformance Tier Selector -->
+        <div>
+          <label class="block text-xs font-bold text-slate-900 mb-2 uppercase tracking-wider">
+            Conformance Tier &amp; Invariant Profile
+          </label>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono" id="tierSelector">
+            <button type="button" class="tier-btn active px-3 py-2.5 rounded-lg border text-center font-bold transition-all bg-emerald-50 border-emerald-500 text-emerald-800 shadow-sm" data-tier="VERIFIED">
+              VERIFIED
+              <span class="block text-[10px] font-sans font-normal text-slate-500 mt-0.5">RFC Invariant 1</span>
+            </button>
+            <button type="button" class="tier-btn px-3 py-2.5 rounded-lg border text-center font-bold transition-all bg-white border-slate-200 text-slate-700 hover:border-slate-300" data-tier="SOVEREIGN">
+              SOVEREIGN
+              <span class="block text-[10px] font-sans font-normal text-slate-500 mt-0.5">RFC Invariant 3</span>
+            </button>
+            <button type="button" class="tier-btn px-3 py-2.5 rounded-lg border text-center font-bold transition-all bg-white border-slate-200 text-slate-700 hover:border-slate-300" data-tier="DPA EXEMPT">
+              DPA EXEMPT
+              <span class="block text-[10px] font-sans font-normal text-slate-500 mt-0.5">RFC Invariant 4</span>
+            </button>
+            <button type="button" class="tier-btn px-3 py-2.5 rounded-lg border text-center font-bold transition-all bg-white border-slate-200 text-slate-700 hover:border-slate-300" data-tier="SELF-ATTESTED">
+              SELF-ATTESTED
+              <span class="block text-[10px] font-sans font-normal text-slate-500 mt-0.5">Pre-Attested</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Custom Label Override -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="customLabelInput" class="block text-xs font-bold text-slate-900 uppercase tracking-wider">
+              Custom Right-Wing Text <span class="text-slate-400 font-normal normal-case">(Optional Override)</span>
+            </label>
+            <button type="button" id="clearCustomLabelBtn" class="text-[11px] text-slate-400 hover:text-slate-600 hidden font-mono">Reset to default</button>
+          </div>
+          <input 
+            type="text" 
+            id="customLabelInput" 
+            aria-label="Custom Right-Wing Text"
+            placeholder="e.g. WASM-ONLY, AIR-GAPPED, GDPR-SAFE, PCI-DSS" 
+            maxlength="24"
+            class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3.5 py-2.5 text-base sm:text-sm font-mono uppercase text-slate-900 focus:outline-none focus:border-emerald-500 focus:bg-white transition-colors"
+          >
+          <p class="text-xs text-slate-500 mt-1.5">
+            Leave blank to use the active Conformance Tier default. Letters, digits, hyphens, and spaces only.
+          </p>
+        </div>
+
+        <!-- Live Vector Preview & Action Buttons -->
         <div class="pt-6 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div class="text-xs text-slate-500 font-medium uppercase mb-2">Live README Badge Vector Preview (22px):</div>
-            <div class="inline-block p-4 rounded-xl bg-slate-50 border border-slate-200">
-              <img id="badgeImg" src="/badge/privacyscrubber-web.svg" alt="ZTDS Verified Badge" class="h-6">
+            <div class="inline-flex items-center p-4 rounded-xl bg-slate-50 border border-slate-200 min-h-[54px] shadow-inner" id="badgeSvgPreviewContainer">
+              <div id="badgeSvgMount"></div>
             </div>
           </div>
-          <div>
-            <a href="/apply/?track=product" class="btn-trust text-xs py-2.5 px-4 shadow-sm">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <button id="btnDownloadBadgeSvg" class="btn-outline text-xs py-2.5 px-4 shadow-sm flex items-center gap-1.5 touch-target">
+              <svg class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              Download Badge (.svg)
+            </button>
+            <a href="/apply/?track=product" class="btn-trust text-xs py-2.5 px-4 shadow-sm touch-target">
               Submit Slug for Accreditation &rarr;
             </a>
           </div>
         </div>
 
-        <!-- Copy Snippets -->
+        <!-- Copy Snippets (Markdown, HTML, Raw SVG) -->
         <div class="pt-6 border-t border-slate-100 space-y-4 min-w-0 max-w-full overflow-hidden">
           <div class="min-w-0 max-w-full">
             <div class="flex items-center justify-between mb-1.5">
               <span class="text-xs text-slate-500 uppercase font-semibold">GitHub Markdown (README.md)</span>
-              <button id="copyMdBtn" class="text-xs text-emerald-700 hover:text-emerald-800 font-bold">Copy Markdown</button>
+              <button id="copyMdBtn" class="text-xs text-emerald-700 hover:text-emerald-800 font-bold touch-target">Copy Markdown</button>
             </div>
             <pre class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-xs font-mono text-emerald-400 select-all overflow-x-auto max-w-full break-all whitespace-pre-wrap"><code id="codeMd">[![ZTDS Verified](https://ztds.ai/badge/privacyscrubber-web.svg)](https://ztds.ai/registry/)</code></pre>
           </div>
@@ -218,9 +277,17 @@
           <div class="min-w-0 max-w-full">
             <div class="flex items-center justify-between mb-1.5">
               <span class="text-xs text-slate-500 uppercase font-semibold">HTML Embed</span>
-              <button id="copyHtmlBtn" class="text-xs text-emerald-700 hover:text-emerald-800 font-bold">Copy HTML</button>
+              <button id="copyHtmlBtn" class="text-xs text-emerald-700 hover:text-emerald-800 font-bold touch-target">Copy HTML</button>
             </div>
             <pre class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-xs font-mono text-slate-300 select-all overflow-x-auto max-w-full break-all whitespace-pre-wrap"><code id="codeHtml">&lt;a href="https://ztds.ai/registry/"&gt;&lt;img src="https://ztds.ai/badge/privacyscrubber-web.svg" alt="ZTDS Verified"&gt;&lt;/a&gt;</code></pre>
+          </div>
+
+          <div class="min-w-0 max-w-full">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-xs text-slate-500 uppercase font-semibold">Raw SVG XML (Direct Embedding)</span>
+              <button id="copySvgBtn" class="text-xs text-emerald-700 hover:text-emerald-800 font-bold touch-target">Copy SVG</button>
+            </div>
+            <pre class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-xs font-mono text-sky-400 select-all overflow-x-auto max-w-full break-all whitespace-pre-wrap"><code id="codeSvg"></code></pre>
           </div>
         </div>
 
@@ -231,19 +298,19 @@
     <div class="mb-4">
       <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-2">Pioneer Reference Implementations</div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-sans">
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300" data-slug="privacyscrubber-web">
+        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-web">
           <div class="text-slate-900 font-bold mb-1">Web Platform</div>
           <div class="text-slate-400 font-mono text-[11px]">privacyscrubber-web</div>
         </button>
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300" data-slug="privacyscrubber-extension">
+        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-extension">
           <div class="text-slate-900 font-bold mb-1">Chrome Extension</div>
           <div class="text-slate-400 font-mono text-[11px]">privacyscrubber-extension</div>
         </button>
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300" data-slug="privacyscrubber-mcp">
+        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-mcp">
           <div class="text-slate-900 font-bold mb-1">MCP Gateway</div>
           <div class="text-slate-400 font-mono text-[11px]">privacyscrubber-mcp</div>
         </button>
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300" data-slug="privacyscrubber-sdk">
+        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-sdk">
           <div class="text-slate-900 font-bold mb-1">Developer SDK</div>
           <div class="text-slate-400 font-mono text-[11px]">privacyscrubber-sdk</div>
         </button>
@@ -253,19 +320,19 @@
     <div class="mb-12">
       <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-2">Canonical Connectors &amp; Gateways</div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-sans">
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300" data-slug="langchain-ztds">
+        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="langchain-ztds">
           <div class="text-slate-900 font-bold mb-1">LangChain Callback</div>
           <div class="text-slate-400 font-mono text-[11px]">langchain-ztds</div>
         </button>
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300" data-slug="llamaindex-ztds">
+        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="llamaindex-ztds">
           <div class="text-slate-900 font-bold mb-1">LlamaIndex Node</div>
           <div class="text-slate-400 font-mono text-[11px]">llamaindex-ztds</div>
         </button>
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300" data-slug="ollama-ztds-filter">
+        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="ollama-ztds-filter">
           <div class="text-slate-900 font-bold mb-1">Ollama Filter</div>
           <div class="text-slate-400 font-mono text-[11px]">ollama-ztds-filter</div>
         </button>
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300" data-slug="envoy-ztds-wasm">
+        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="envoy-ztds-wasm">
           <div class="text-slate-900 font-bold mb-1">Envoy WASM Filter</div>
           <div class="text-slate-400 font-mono text-[11px]">envoy-ztds-wasm</div>
         </button>
@@ -286,31 +353,81 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Verified Implementation Seal -->
-        <div class="p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-4">
-          <div class="text-xs font-bold uppercase text-slate-700">Verified Implementation Seal</div>
+        <div class="p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">RFC v1.0 &middot; Invariant 1</span>
+              <span class="text-[10px] font-mono text-slate-400">280 &times; 56px</span>
+            </div>
+            <div class="text-sm font-bold text-slate-900">Verified Implementation Seal</div>
+            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+              Proves zero external egress prior to sanitization. Validated against perimeter HTTP, WebSocket, and DNS traffic sniffers.
+            </p>
+          </div>
           <div class="flex items-center justify-center p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
             <img src="/badge/seal-verified.svg" alt="ZTDS Verified Implementation Seal" class="h-14">
           </div>
-          <div class="text-xs text-slate-500 font-mono">Size: 280 &times; 56px &middot; Format: SVG Vector</div>
-          <div class="space-y-2">
-            <button class="copy-seal-btn w-full btn-outline text-xs py-2" data-url="https://ztds.ai/badge/seal-verified.svg">
+          <div class="space-y-2 pt-2 border-t border-slate-200/60">
+            <button class="copy-seal-btn w-full btn-outline text-xs py-2 touch-target" data-url="https://ztds.ai/badge/seal-verified.svg">
               Copy Seal HTML Embed
+            </button>
+            <button class="download-seal-btn w-full btn-ghost text-xs py-1.5 text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1 touch-target" data-file="seal-verified.svg">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              Download Vector (.svg)
             </button>
           </div>
         </div>
 
         <!-- Sovereign Enclave Seal -->
-        <div class="p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-4">
-          <div class="text-xs font-bold uppercase text-slate-700">Air-Gapped Sovereign Seal</div>
+        <div class="p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded">RFC v1.0 &middot; Invariant 3</span>
+              <span class="text-[10px] font-mono text-slate-400">280 &times; 56px</span>
+            </div>
+            <div class="text-sm font-bold text-slate-900">Air-Gapped Sovereign Seal</div>
+            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+              Attests to Nitro Enclave, sandboxed WebAssembly, or air-gapped local compute execution without vendor telemetry.
+            </p>
+          </div>
           <div class="flex items-center justify-center p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
             <img src="/badge/seal-sovereign.svg" alt="ZTDS Air-Gapped Sovereign Seal" class="h-14">
           </div>
-          <div class="text-xs text-slate-500 font-mono">Size: 280 &times; 56px &middot; Format: SVG Vector</div>
-          <div class="space-y-2">
-            <button class="copy-seal-btn w-full btn-outline text-xs py-2" data-url="https://ztds.ai/badge/seal-sovereign.svg">
+          <div class="space-y-2 pt-2 border-t border-slate-200/60">
+            <button class="copy-seal-btn w-full btn-outline text-xs py-2 touch-target" data-url="https://ztds.ai/badge/seal-sovereign.svg">
               Copy Seal HTML Embed
+            </button>
+            <button class="download-seal-btn w-full btn-ghost text-xs py-1.5 text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1 touch-target" data-file="seal-sovereign.svg">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              Download Vector (.svg)
+            </button>
+          </div>
+        </div>
+
+        <!-- Zero-Subprocessor Utility Seal (DPA Exempt) -->
+        <div class="p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-purple-700 bg-purple-50 border border-purple-200 px-2 py-0.5 rounded">RFC v1.0 &middot; Invariant 4</span>
+              <span class="text-[10px] font-mono text-slate-400">280 &times; 56px</span>
+            </div>
+            <div class="text-sm font-bold text-slate-900">DPA-Exempt Conformance Seal</div>
+            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+              Confirms zero-subprocessor architecture. Raw PII is eliminated before cloud ingestion, eliminating GDPR Art. 28 DPA requirements.
+            </p>
+          </div>
+          <div class="flex items-center justify-center p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
+            <img src="/badge/seal-dpa.svg" alt="ZTDS Zero-Subprocessor DPA-Exempt Conformance Seal" class="h-14">
+          </div>
+          <div class="space-y-2 pt-2 border-t border-slate-200/60">
+            <button class="copy-seal-btn w-full btn-outline text-xs py-2 touch-target" data-url="https://ztds.ai/badge/seal-dpa.svg">
+              Copy Seal HTML Embed
+            </button>
+            <button class="download-seal-btn w-full btn-ghost text-xs py-1.5 text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1 touch-target" data-file="seal-dpa.svg">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              Download Vector (.svg)
             </button>
           </div>
         </div>
@@ -431,56 +548,263 @@
 
   <script src="/nav.js"></script>
   <script>
-    const slugInput = document.getElementById('slugInput');
-    const badgeImg = document.getElementById('badgeImg');
-    const codeMd = document.getElementById('codeMd');
-    const codeHtml = document.getElementById('codeHtml');
+    (function() {
+      const KNOWN_VERIFIED_SLUGS = [
+        'privacyscrubber-web',
+        'privacyscrubber-extension',
+        'privacyscrubber-mcp',
+        'privacyscrubber-sdk',
+        'langchain-ztds',
+        'llamaindex-ztds',
+        'ollama-ztds-filter',
+        'envoy-ztds-wasm'
+      ];
 
-    function updateBadge(slug) {
-      const activeSlug = (slug || slugInput.value).trim().toLowerCase() || 'privacyscrubber-web';
-      slugInput.value = activeSlug;
-      const url = `https://ztds.ai/badge/${activeSlug}.svg`;
-      badgeImg.src = `/badge/${activeSlug}.svg`;
-      codeMd.innerText = `[![ZTDS Verified](${url})](https://ztds.ai/registry/)`;
-      codeHtml.innerText = `<a href="https://ztds.ai/registry/"><img src="${url}" alt="ZTDS Verified"></a>`;
-    }
+      const registeredSlugs = new Set(KNOWN_VERIFIED_SLUGS);
 
-    slugInput.addEventListener('input', () => updateBadge());
+      // Attempt to load dynamic registry
+      fetch('/data/registry.json')
+        .then(r => r.json())
+        .then(data => {
+          if (data && Array.isArray(data.entities)) {
+            data.entities.forEach(e => {
+              if (e.slug) registeredSlugs.add(e.slug.toLowerCase());
+              if (e.id) registeredSlugs.add(e.id.toLowerCase());
+            });
+            updateBadge();
+          }
+        })
+        .catch(() => {});
 
-    document.querySelectorAll('.preset-slug').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const slug = btn.getAttribute('data-slug');
-        updateBadge(slug);
-      });
-    });
+      const slugInput = document.getElementById('slugInput');
+      const customLabelInput = document.getElementById('customLabelInput');
+      const clearCustomLabelBtn = document.getElementById('clearCustomLabelBtn');
+      const registryStatusPill = document.getElementById('registryStatusPill');
+      const badgeSvgMount = document.getElementById('badgeSvgMount');
+      const codeMd = document.getElementById('codeMd');
+      const codeHtml = document.getElementById('codeHtml');
+      const codeSvg = document.getElementById('codeSvg');
+      const btnDownloadBadgeSvg = document.getElementById('btnDownloadBadgeSvg');
+      const tierBtns = document.querySelectorAll('.tier-btn');
 
-    document.getElementById('copyMdBtn').addEventListener('click', () => {
-      window.ztdsCopy(codeMd.innerText, () => {
-        const btn = document.getElementById('copyMdBtn');
-        btn.innerText = 'Copied!';
-        setTimeout(() => btn.innerText = 'Copy Markdown', 2000);
-      });
-    });
+      let currentTier = 'VERIFIED';
+      let currentSvgXml = '';
 
-    document.getElementById('copyHtmlBtn').addEventListener('click', () => {
-      window.ztdsCopy(codeHtml.innerText, () => {
-        const btn = document.getElementById('copyHtmlBtn');
-        btn.innerText = 'Copied!';
-        setTimeout(() => btn.innerText = 'Copy HTML', 2000);
-      });
-    });
+      function isSlugVerified(slug) {
+        if (!slug) return false;
+        const s = slug.trim().toLowerCase();
+        return registeredSlugs.has(s) || s.includes('privacyscrubber') || s === 'reference';
+      }
 
-    document.querySelectorAll('.copy-seal-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const url = btn.getAttribute('data-url');
-        const snippet = `<a href="https://ztds.ai/registry/" target="_blank" rel="noopener"><img src="${url}" alt="ZTDS Conformance Seal" width="280" height="56"></a>`;
-        window.ztdsCopy(snippet, () => {
-          const original = btn.innerText;
-          btn.innerText = 'Copied Snippet!';
-          setTimeout(() => btn.innerText = original, 2000);
+      function generateBadgeSvg(label, tier) {
+        let colorRight = '#059669'; // Emerald for VERIFIED
+        let textColorRight = '#ffffff';
+
+        if (tier === 'SOVEREIGN') {
+          colorRight = '#2563eb'; // Blue
+          textColorRight = '#ffffff';
+        } else if (tier === 'DPA EXEMPT') {
+          colorRight = '#0f172a'; // Slate-900
+          textColorRight = '#10b981'; // Emerald
+        } else if (tier === 'SELF-ATTESTED') {
+          colorRight = '#d97706'; // Amber
+          textColorRight = '#ffffff';
+        }
+
+        const cleanLabel = String(label || 'VERIFIED').trim().toUpperCase();
+        const wLeft = 58;
+        const charWidth = 6.8;
+        const wRight = Math.max(64, Math.round(cleanLabel.length * charWidth + 16));
+        const totalWidth = wLeft + wRight;
+        const textXRight = wLeft + Math.round(wRight / 2);
+
+        return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${totalWidth}" height="22" viewBox="0 0 ${totalWidth} 22" fill="none">
+  <defs>
+    <clipPath id="badgeClip">
+      <rect width="${totalWidth}" height="22" rx="4"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#badgeClip)">
+    <rect width="${wLeft}" height="22" fill="#0f172a"/>
+    <rect x="${wLeft}" width="${wRight}" height="22" fill="${colorRight}"/>
+    <rect width="${totalWidth}" height="22" stroke="#0f172a" stroke-width="1" fill="none"/>
+    <!-- Official ZTDS Air-Gap Monolith Vector Mark -->
+    <g transform="translate(6, 4)">
+      <path d="M5.5 1.5C2.5 1.5 1 3.5 1 7C1 10.5 2.5 12.5 5.5 12.5V9.5C3.5 9.5 3.2 8 3.2 7C3.2 6 3.5 4.5 5.5 4.5V1.5Z" fill="#020617" stroke="#10b981" stroke-width="0.8"/>
+      <path d="M8.5 1.5C11.5 1.5 13 3.5 13 7C13 10.5 11.5 12.5 8.5 12.5V9.5C10.5 9.5 10.8 8 10.8 7C10.8 6 10.5 4.5 8.5 4.5V1.5Z" fill="#020617" stroke="#10b981" stroke-width="0.8"/>
+      <path d="M7 3L9.5 7L7 11L4.5 7Z" fill="#10b981"/>
+      <circle cx="7" cy="7" r="1" fill="#38bdf8"/>
+    </g>
+    <text x="24" y="15" font-family="-apple-system, BlinkMacSystemFont, 'Inter', Roboto, sans-serif" font-size="10" font-weight="700" fill="#f8fafc" letter-spacing="0.5">ZTDS</text>
+    <text x="${textXRight}" y="15" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Inter', Roboto, sans-serif" font-size="9" font-weight="700" fill="${textColorRight}" letter-spacing="0.6">${cleanLabel}</text>
+  </g>
+</svg>`.trim();
+      }
+
+      function updateBadge(explicitSlug) {
+        let activeSlug = (explicitSlug !== undefined ? explicitSlug : slugInput.value).trim().toLowerCase();
+        if (!activeSlug) activeSlug = 'privacyscrubber-web';
+        slugInput.value = activeSlug;
+
+        const verified = isSlugVerified(activeSlug);
+        
+        // Update Registry Status Pill
+        if (verified) {
+          registryStatusPill.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200';
+          registryStatusPill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> VERIFIED REGISTRY ENTITY';
+        } else {
+          registryStatusPill.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200';
+          registryStatusPill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> UNREGISTERED / SELF-ATTESTED';
+        }
+
+        const customLabel = customLabelInput.value.trim().toUpperCase();
+        if (customLabel) {
+          clearCustomLabelBtn.classList.remove('hidden');
+        } else {
+          clearCustomLabelBtn.classList.add('hidden');
+        }
+
+        const effectiveLabel = customLabel || currentTier;
+
+        // Generate SVG vector markup in-memory
+        currentSvgXml = generateBadgeSvg(effectiveLabel, currentTier);
+
+        // Mount SVG into DOM preview
+        badgeSvgMount.innerHTML = currentSvgXml;
+
+        // Calculate remote URL query parameters if non-default
+        let remoteUrl = `https://ztds.ai/badge/${activeSlug}.svg`;
+        const queryParams = [];
+        if (currentTier === 'SOVEREIGN') queryParams.push('status=sovereign');
+        else if (currentTier === 'DPA EXEMPT') queryParams.push('status=dpa');
+        else if (currentTier === 'SELF-ATTESTED' && !customLabel) queryParams.push('label=SELF-ATTESTED');
+
+        if (customLabel) {
+          queryParams.push(`label=${encodeURIComponent(customLabel)}`);
+        }
+
+        if (queryParams.length > 0) {
+          remoteUrl += `?${queryParams.join('&')}`;
+        }
+
+        codeMd.textContent = `[![ZTDS ${effectiveLabel}](${remoteUrl})](https://ztds.ai/registry/)`;
+        codeHtml.textContent = `<a href="https://ztds.ai/registry/"><img src="${remoteUrl}" alt="ZTDS ${effectiveLabel}"></a>`;
+        codeSvg.textContent = currentSvgXml;
+      }
+
+      // Tier Selector handlers
+      tierBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tierBtns.forEach(b => {
+            b.classList.remove('active', 'bg-emerald-50', 'border-emerald-500', 'text-emerald-800', 'shadow-sm');
+            b.classList.add('bg-white', 'border-slate-200', 'text-slate-700');
+          });
+          btn.classList.add('active', 'bg-emerald-50', 'border-emerald-500', 'text-emerald-800', 'shadow-sm');
+          btn.classList.remove('bg-white', 'border-slate-200', 'text-slate-700');
+          currentTier = btn.getAttribute('data-tier');
+          updateBadge();
         });
       });
-    });
+
+      slugInput.addEventListener('input', () => updateBadge());
+      customLabelInput.addEventListener('input', () => {
+        customLabelInput.value = customLabelInput.value.toUpperCase();
+        updateBadge();
+      });
+
+      clearCustomLabelBtn.addEventListener('click', () => {
+        customLabelInput.value = '';
+        updateBadge();
+      });
+
+      // Quick preset slugs
+      document.querySelectorAll('.preset-slug').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const slug = btn.getAttribute('data-slug');
+          updateBadge(slug);
+        });
+      });
+
+      // Download SVG handler
+      btnDownloadBadgeSvg.addEventListener('click', () => {
+        const slug = slugInput.value.trim().toLowerCase() || 'ztds-badge';
+        const blob = new Blob([currentSvgXml], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${slug}-ztds.svg`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+
+      // Copy Markdown
+      document.getElementById('copyMdBtn').addEventListener('click', () => {
+        window.ztdsCopy(codeMd.textContent, () => {
+          const btn = document.getElementById('copyMdBtn');
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = 'Copy Markdown', 2000);
+        });
+      });
+
+      // Copy HTML
+      document.getElementById('copyHtmlBtn').addEventListener('click', () => {
+        window.ztdsCopy(codeHtml.textContent, () => {
+          const btn = document.getElementById('copyHtmlBtn');
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = 'Copy HTML', 2000);
+        });
+      });
+
+      // Copy Raw SVG
+      document.getElementById('copySvgBtn').addEventListener('click', () => {
+        window.ztdsCopy(codeSvg.textContent, () => {
+          const btn = document.getElementById('copySvgBtn');
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = 'Copy SVG', 2000);
+        });
+      });
+
+      // Copy Seal HTML Embed
+      document.querySelectorAll('.copy-seal-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const url = btn.getAttribute('data-url');
+          const snippet = `<a href="https://ztds.ai/registry/" target="_blank" rel="noopener"><img src="${url}" alt="ZTDS Conformance Seal" width="280" height="56"></a>`;
+          window.ztdsCopy(snippet, () => {
+            const original = btn.textContent;
+            btn.textContent = 'Copied Snippet!';
+            setTimeout(() => btn.textContent = original, 2000);
+          });
+        });
+      });
+
+      // Download Seal Vector
+      document.querySelectorAll('.download-seal-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const file = btn.getAttribute('data-file');
+          fetch(`/badge/${file}`)
+            .then(res => res.blob())
+            .then(blob => {
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = file;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              URL.revokeObjectURL(url);
+            })
+            .catch(() => {
+              window.open(`/badge/${file}`, '_blank');
+            });
+        });
+      });
+
+      // Initial render
+      updateBadge();
+    })();
   </script>
 </body>
 </html>

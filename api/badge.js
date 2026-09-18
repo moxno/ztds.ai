@@ -12,7 +12,7 @@ module.exports = (req, res) => {
   let textColorRight = '#ffffff';
 
   // Handle high-prestige enterprise seals directly
-  if (slug === 'seal-verified' || slug === 'seal-sovereign') {
+  if (slug === 'seal-verified' || slug === 'seal-sovereign' || slug === 'seal-dpa') {
     const sealPath = path.join(__dirname, `../public/badge/${slug}.svg`);
     if (fs.existsSync(sealPath)) {
       const sealSvg = fs.readFileSync(sealPath, 'utf8');
