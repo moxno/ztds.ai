@@ -268,21 +268,28 @@
       </div>
     </div>
 
-    <!-- Code Integration Recipes Showcase with Framework Tabs -->
+    <!-- Code Integration Recipes Showcase with 10 Canonical Blueprints -->
     <div class="ztds-card bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden" id="connectors">
       <div class="p-6 border-b border-slate-200 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
         <div>
-          <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Turnkey Middleware</div>
-          <h2 class="text-xl font-bold text-slate-900">5-Minute Integration Recipes</h2>
-          <p class="text-xs text-slate-500 mt-1">Select your stack to view production-ready, copy-pasteable connector code.</p>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-mono font-semibold text-emerald-800 mb-2">
+            <span>RFC v1.0 CANONICAL BLUEPRINTS</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">10 Canonical Architectural Integration Blueprints</h2>
+          <p class="text-xs text-slate-500 mt-1">Production-ready, copy-pasteable zero-trust connectors executing in &lt;1ms in local memory.</p>
         </div>
         
         <div class="flex flex-wrap items-center gap-1.5 p-1 bg-slate-100 rounded-xl text-xs font-semibold" id="recipe-tabs">
-          <button class="recipe-tab-btn px-3 py-1.5 rounded-lg bg-white text-slate-900 shadow-xs font-bold" data-recipe="langchain">LangChain</button>
-          <button class="recipe-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="llamaindex">LlamaIndex (RAG)</button>
-          <button class="recipe-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="mcp">MCP (Cursor / Claude)</button>
-          <button class="recipe-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="ts">TypeScript / Node</button>
-          <button class="recipe-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="python">Python Bridge</button>
+          <button class="recipe-tab-btn px-2.5 py-1.5 rounded-lg bg-white text-slate-900 shadow-xs font-bold" data-recipe="langchain">LangChain</button>
+          <button class="recipe-tab-btn px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="llamaindex">LlamaIndex (RAG)</button>
+          <button class="recipe-tab-btn px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="crewai">CrewAI</button>
+          <button class="recipe-tab-btn px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="ollama">Ollama Stream</button>
+          <button class="recipe-tab-btn px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="mcp">MCP Stdio</button>
+          <button class="recipe-tab-btn px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="pinecone">Pinecone Vector</button>
+          <button class="recipe-tab-btn px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="nextjs">Next.js Edge</button>
+          <button class="recipe-tab-btn px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="envoy">Envoy Sidecar</button>
+          <button class="recipe-tab-btn px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="kafka">Kafka Stream</button>
+          <button class="recipe-tab-btn px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" data-recipe="chromemv3">Chrome MV3</button>
         </div>
       </div>
 
@@ -295,7 +302,7 @@
           <span class="ml-2 text-slate-400 font-bold" id="activeFileName">ztds-langchain-callback.ts</span>
         </div>
         <button id="btnCopyActiveCode" class="text-emerald-400 hover:text-emerald-300 font-sans text-xs font-semibold px-2.5 py-1 rounded bg-slate-700 hover:bg-slate-600 transition-colors">
-          Copy Snippet
+          Copy Blueprint
         </button>
       </div>
 
@@ -305,8 +312,8 @@
         <!-- PANE 1: LangChain -->
         <div id="recipeLangchain" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4">
           <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 text-slate-300 text-[11px] leading-relaxed mb-4">
-            <strong class="text-emerald-400 font-sans block mb-0.5">LangChain BaseCallbackHandler Middleware</strong>
-            Intercepts prompts and completions transparently across any LCEL chain, ChatOpenAI, ChatAnthropic, or LangGraph agent without modifying existing pipeline logic.
+            <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 01 &middot; LangChain BaseCallbackHandler Middleware</strong>
+            Transparently intercepts prompts and completions across any LCEL chain, ChatOpenAI, ChatAnthropic, or LangGraph agent with zero cleartext network egress.
           </div>
           <pre class="text-slate-100"><code><span class="text-slate-500">// ztds-langchain-callback.ts</span>
 <span class="text-blue-400">import</span> { BaseCallbackHandler } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@langchain/core/callbacks/base"</span>;
@@ -324,7 +331,7 @@
     <span class="text-blue-400">this</span>.engine = <span class="text-blue-400">new</span> <span class="text-yellow-300">ZTDSEngine</span>({ profile });
   }
 
-  <span class="text-slate-500">// 1. Intercept and sanitize prompts before network dispatch</span>
+  <span class="text-slate-500">// 1. Intercept and sanitize prompts in volatile RAM before socket creation</span>
   <span class="text-blue-400">async</span> <span class="text-yellow-300">handleLLMStart</span>(llm: { name: <span class="text-blue-400">string</span> }, prompts: <span class="text-blue-400">string</span>[], runId: <span class="text-blue-400">string</span>) {
     <span class="text-blue-400">for</span> (<span class="text-blue-400">let</span> i = <span class="text-purple-400">0</span>; i &lt; prompts.length; i++) {
       <span class="text-blue-400">const</span> { sanitizedPrompt, sessionMap } = <span class="text-blue-400">this</span>.engine.<span class="text-yellow-300">sanitize</span>(prompts[i]);
@@ -333,7 +340,7 @@
     }
   }
 
-  <span class="text-slate-500">// 2. Losslessly restore cleartext strictly inside local volatile RAM</span>
+  <span class="text-slate-500">// 2. Losslessly restore cleartext strictly inside local client RAM</span>
   <span class="text-blue-400">async</span> <span class="text-yellow-300">handleLLMEnd</span>(output: LLMResult, runId: <span class="text-blue-400">string</span>) {
     <span class="text-blue-400">const</span> sessionMap = <span class="text-blue-400">this</span>.sessionMaps.<span class="text-yellow-300">get</span>(runId);
     <span class="text-blue-400">if</span> (!sessionMap) <span class="text-blue-400">return</span>;
@@ -343,7 +350,7 @@
         gen.text = <span class="text-blue-400">this</span>.engine.<span class="text-yellow-300">reveal</span>(gen.text, sessionMap);
       }
     }
-    <span class="text-blue-400">this</span>.sessionMaps.<span class="text-yellow-300">delete</span>(runId); <span class="text-slate-500">// Wipe sessionMap from RAM immediately</span>
+    <span class="text-blue-400">this</span>.sessionMaps.<span class="text-yellow-300">delete</span>(runId); <span class="text-slate-500">// Wipe volatile RAM sessionMap immediately</span>
   }
 }
 
@@ -357,8 +364,8 @@
         <!-- PANE 2: LlamaIndex -->
         <div id="recipeLlamaindex" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4 hidden">
           <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 text-slate-300 text-[11px] leading-relaxed mb-4">
-            <strong class="text-emerald-400 font-sans block mb-0.5">LlamaIndex IngestionPipeline TransformComponent</strong>
-            Immunizes vector stores (Pinecone, Qdrant, Chroma, Milvus) against permanent GDPR Article 17 vector poisoning by sanitizing documents before embedding creation.
+            <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 02 &middot; LlamaIndex IngestionPipeline TransformComponent</strong>
+            Immunizes vector stores (Pinecone, Qdrant, Chroma, Milvus) against permanent GDPR Article 17 vector poisoning by sanitizing documents before embedding generation.
           </div>
           <pre class="text-slate-100"><code><span class="text-slate-500"># ztds_llamaindex_transform.py</span>
 <span class="text-blue-400">from</span> typing <span class="text-blue-400">import</span> List, Optional
@@ -397,11 +404,78 @@ pipeline = IngestionPipeline(
 nodes = pipeline.run(documents=documents)</code></pre>
         </div>
 
-        <!-- PANE 3: MCP (Cursor / Claude) -->
+        <!-- PANE 3: CrewAI -->
+        <div id="recipeCrewai" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4 hidden">
+          <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 text-slate-300 text-[11px] leading-relaxed mb-4">
+            <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 03 &middot; CrewAI Multi-Agent Role Sanitizer</strong>
+            Sanitizes prompts before task delegation between autonomous agents and restores context before final user delivery in volatile host memory.
+          </div>
+          <pre class="text-slate-100"><code><span class="text-slate-500"># ztds_crewai_role_filter.py</span>
+<span class="text-blue-400">from</span> crewai <span class="text-blue-400">import</span> Agent, Task, Crew, Process
+<span class="text-blue-400">from</span> privacyscrubber <span class="text-blue-400">import</span> ZTDSEngine
+
+<span class="text-blue-400">class</span> <span class="text-yellow-300">ZTDSCrewMiddleware</span>:
+    <span class="text-blue-400">def</span> <span class="text-yellow-300">__init__</span>(self, profile: str = <span class="text-emerald-300">"bizops"</span>):
+        self.engine = ZTDSEngine()
+        self.profile = profile
+        self.session_maps = {}
+
+    <span class="text-blue-400">def</span> <span class="text-yellow-300">before_agent_execution</span>(self, task_description: str, task_id: str) -&gt; str:
+        <span class="text-slate-500"># Sanitize task input before LLM agent sees it</span>
+        sanitized, token_map = self.engine.sanitize(task_description, profile=self.profile)
+        self.session_maps[task_id] = token_map
+        return sanitized
+
+    <span class="text-blue-400">def</span> <span class="text-yellow-300">after_agent_execution</span>(self, task_output: str, task_id: str) -&gt; str:
+        <span class="text-slate-500"># Restore surrogate tokens in RAM before returning to caller</span>
+        token_map = self.session_maps.get(task_id, {})
+        revealed = self.engine.reveal(task_output, token_map)
+        self.session_maps.pop(task_id, None) <span class="text-slate-500"># Auto-purge RAM mapping</span>
+        return revealed</code></pre>
+        </div>
+
+        <!-- PANE 4: Ollama Stream -->
+        <div id="recipeOllama" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4 hidden">
+          <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 text-slate-300 text-[11px] leading-relaxed mb-4">
+            <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 04 &middot; Ollama &amp; Local vLLM Streaming Pipeline</strong>
+            High-throughput streaming pipe intercepting incoming chunks, buffering token boundaries, and streaming clean tokens without network leakage.
+          </div>
+          <pre class="text-slate-100"><code><span class="text-slate-500">// ztds-ollama-stream.js</span>
+<span class="text-blue-400">const</span> { PrivacyScrubberEngine } = <span class="text-blue-400">require</span>(<span class="text-emerald-300">"@privacyscrubber/sdk"</span>);
+
+<span class="text-blue-400">const</span> engine = <span class="text-blue-400">new</span> <span class="text-yellow-300">PrivacyScrubberEngine</span>();
+
+<span class="text-blue-400">async function</span> <span class="text-yellow-300">proxyOllamaPrompt</span>(prompt, profile = <span class="text-emerald-300">"dev"</span>) {
+  <span class="text-slate-500">// 1. Sanitize prompt before local or remote Ollama call</span>
+  <span class="text-blue-400">const</span> { sanitizedText, tokenMap } = engine.<span class="text-yellow-300">sanitize</span>(prompt, { profile });
+
+  <span class="text-blue-400">const</span> response = <span class="text-blue-400">await</span> <span class="text-yellow-300">fetch</span>(<span class="text-emerald-300">"http://localhost:11434/api/generate"</span>, {
+    method: <span class="text-emerald-300">"POST"</span>,
+    headers: { <span class="text-emerald-300">"Content-Type"</span>: <span class="text-emerald-300">"application/json"</span> },
+    body: JSON.<span class="text-yellow-300">stringify</span>({ model: <span class="text-emerald-300">"llama3:8b"</span>, prompt: sanitizedText, stream: <span class="text-purple-400">true</span> })
+  });
+
+  <span class="text-blue-400">const</span> reader = response.body.<span class="text-yellow-300">getReader</span>();
+  <span class="text-blue-400">const</span> decoder = <span class="text-blue-400">new</span> <span class="text-yellow-300">TextDecoder</span>();
+  <span class="text-blue-400">let</span> fullOutput = <span class="text-emerald-300">""</span>;
+
+  <span class="text-blue-400">while</span> (<span class="text-purple-400">true</span>) {
+    <span class="text-blue-400">const</span> { done, value } = <span class="text-blue-400">await</span> reader.<span class="text-yellow-300">read</span>();
+    <span class="text-blue-400">if</span> (done) <span class="text-blue-400">break</span>;
+    <span class="text-blue-400">const</span> chunk = JSON.<span class="text-yellow-300">parse</span>(decoder.<span class="text-yellow-300">decode</span>(value));
+    fullOutput += chunk.response;
+  }
+
+  <span class="text-slate-500">// 2. Instant RAM reverse scrub</span>
+  <span class="text-blue-400">return</span> engine.<span class="text-yellow-300">reveal</span>(fullOutput, tokenMap);
+}</code></pre>
+        </div>
+
+        <!-- PANE 5: MCP Stdio -->
         <div id="recipeMcp" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4 hidden">
           <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 text-slate-300 text-[11px] leading-relaxed mb-4">
-            <strong class="text-emerald-400 font-sans block mb-0.5">Model Context Protocol (MCP) Stdio Gateway</strong>
-            Standard JSON-RPC 2.0 interface for Cursor IDE, Claude Desktop, Claude Code CLI, and Windsurf running locally with zero external network connectivity.
+            <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 05 &middot; Model Context Protocol (MCP) Stdio Gateway</strong>
+            Standard JSON-RPC 2.0 interface for Cursor IDE, Claude Desktop, and Claude Code CLI running locally with zero external network connectivity.
           </div>
           <pre class="text-slate-100"><code><span class="text-slate-500">// ~/.cursor/mcp.json or claude_desktop_config.json</span>
 {
@@ -418,77 +492,272 @@ nodes = pipeline.run(documents=documents)</code></pre>
 }
 
 <span class="text-slate-500"># Claude Code CLI Registration:</span>
-<span class="text-slate-300">claude mcp add privacyscrubber npx -y @privacyscrubber/mcp-server@latest</span>
-
-<span class="text-slate-500">/*
-Available MCP Tools exposed to your agent:
-  - ztds_sanitize_prompt: Strips secrets, env tokens, and PII from prompts.
-  - ztds_restore_response: Restores surrogate tokens in agent outputs.
-  - ztds_verify_payload: Pre-flight audit asserting 0.00 bytes sensitive egress.
-*/</span></code></pre>
+<span class="text-slate-300">claude mcp add privacyscrubber npx -y @privacyscrubber/mcp-server@latest</span></code></pre>
         </div>
 
-        <!-- PANE 4: TypeScript Direct -->
-        <div id="recipeTs" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4 hidden">
+        <!-- PANE 6: Pinecone Vector -->
+        <div id="recipePinecone" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4 hidden">
           <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 text-slate-300 text-[11px] leading-relaxed mb-4">
-            <strong class="text-emerald-400 font-sans block mb-0.5">Headless In-Memory TypeScript Engine</strong>
-            Ultra-low-latency runtime for Next.js API routes, Express microservices, and Node.js backend processes with latency budget guarantees.
+            <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 06 &middot; Supabase &amp; Pinecone RAG Vector Embeddings Pipeline</strong>
+            Guarantees vector stores (Pinecone, Qdrant, Weaviate, pgvector) never index raw PII, preventing vector inversion attacks and enabling GDPR Art. 17 erasure.
           </div>
-          <pre class="text-slate-100"><code><span class="text-blue-400">import</span> { ZTDSEngine } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@privacyscrubber/sdk"</span>;
-<span class="text-blue-400">import</span> OpenAI <span class="text-blue-400">from</span> <span class="text-emerald-300">"openai"</span>;
+          <pre class="text-slate-100"><code><span class="text-slate-500">// ztds-pinecone-rag.ts</span>
+<span class="text-blue-400">import</span> { Pinecone } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@pinecone-database/pinecone"</span>;
+<span class="text-blue-400">import</span> { OpenAIEmbeddings } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@langchain/openai"</span>;
+<span class="text-blue-400">import</span> { PrivacyScrubberEngine } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@privacyscrubber/sdk"</span>;
 
-<span class="text-blue-400">const</span> openai = <span class="text-blue-400">new</span> <span class="text-yellow-300">OpenAI</span>();
-<span class="text-blue-400">const</span> ztds = <span class="text-blue-400">new</span> <span class="text-yellow-300">ZTDSEngine</span>({
-  profile: <span class="text-emerald-300">"healthcare"</span>, <span class="text-slate-500">// "general" | "healthcare" | "fintech" | "legal" | "devops"</span>
-  maxLatencyMs: <span class="text-purple-400">2.0</span>      <span class="text-slate-500">// Invariant 3: Hard abort if tokenization takes &gt;2ms</span>
-});
+<span class="text-blue-400">const</span> engine = <span class="text-blue-400">new</span> <span class="text-yellow-300">PrivacyScrubberEngine</span>();
+<span class="text-blue-400">const</span> pinecone = <span class="text-blue-400">new</span> <span class="text-yellow-300">Pinecone</span>();
+<span class="text-blue-400">const</span> embeddings = <span class="text-blue-400">new</span> <span class="text-yellow-300">OpenAIEmbeddings</span>();
 
-<span class="text-blue-400">async function</span> <span class="text-yellow-300">callSecureAI</span>(userPrompt: <span class="text-blue-400">string</span>): Promise&lt;<span class="text-blue-400">string</span>&gt; {
-  <span class="text-slate-500">// 1. Strip sensitive entities in local volatile RAM (&lt;0.8ms, 0.00 bytes egress)</span>
-  <span class="text-blue-400">const</span> { sanitizedPrompt, sessionMap, latencyMs } = ztds.<span class="text-yellow-300">sanitize</span>(userPrompt);
+<span class="text-blue-400">export async function</span> <span class="text-yellow-300">indexDocumentSecurely</span>(docId: <span class="text-blue-400">string</span>, rawText: <span class="text-blue-400">string</span>, profile = <span class="text-emerald-300">"medical"</span>) {
+  <span class="text-slate-500">// 1. Sanitize document client-side before embedding calculation</span>
+  <span class="text-blue-400">const</span> { sanitizedText, tokenMap } = engine.<span class="text-yellow-300">sanitize</span>(rawText, { profile });
 
-  <span class="text-slate-500">// 2. Transmit sanitized prompt to external LLM provider</span>
-  <span class="text-blue-400">const</span> completion = <span class="text-blue-400">await</span> openai.chat.completions.<span class="text-yellow-300">create</span>({
-    model: <span class="text-emerald-300">"gpt-4o"</span>,
-    messages: [{ role: <span class="text-emerald-300">"user"</span>, content: sanitizedPrompt }]
-  });
+  <span class="text-slate-500">// 2. Generate vector embedding from sanitized text ONLY</span>
+  <span class="text-blue-400">const</span> vector = <span class="text-blue-400">await</span> embeddings.<span class="text-yellow-300">embedQuery</span>(sanitizedText);
 
-  <span class="text-slate-500">// 3. Losslessly restore cleartext strictly inside local memory</span>
-  <span class="text-blue-400">const</span> rawResponse = completion.choices[<span class="text-purple-400">0</span>].message.content || <span class="text-emerald-300">""</span>;
-  <span class="text-blue-400">return</span> ztds.<span class="text-yellow-300">reveal</span>(rawResponse, sessionMap);
+  <span class="text-slate-500">// 3. Upsert to Pinecone - zero PII in vector coordinates or metadata</span>
+  <span class="text-blue-400">const</span> index = pinecone.<span class="text-yellow-300">Index</span>(<span class="text-emerald-300">"enterprise-knowledge"</span>);
+  <span class="text-blue-400">await</span> index.<span class="text-yellow-300">upsert</span>([{
+    id: docId,
+    values: vector,
+    metadata: {
+      textSnippet: sanitizedText.slice(<span class="text-purple-400">0</span>, <span class="text-purple-400">500</span>),
+      ztdsVerified: <span class="text-purple-400">true</span>,
+      entityCount: Object.keys(tokenMap).length
+    }
+  }]);
+  <span class="text-slate-500">// tokenMap is NOT stored in Pinecone. Volatile local RAM or tenant-isolated KMS only.</span>
 }</code></pre>
         </div>
 
-        <!-- PANE 5: Python Bridge -->
-        <div id="recipePython" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4 hidden">
+        <!-- PANE 7: Next.js Edge -->
+        <div id="recipeNextjs" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4 hidden">
           <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 text-slate-300 text-[11px] leading-relaxed mb-4">
-            <strong class="text-emerald-400 font-sans block mb-0.5">Python 3.9+ Local Synchronous Bridge</strong>
-            High-throughput binding utilizing WebAssembly / C-FFI linear memory. Guarantees 0.00 bytes socket transmission prior to prompt sanitization.
+            <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 07 &middot; Next.js App Router (Edge Runtime Sanitizer)</strong>
+            Ultra-fast (&lt;1ms) serverless middleware sanitizing incoming chat API payloads in Edge volatile memory before dispatching to upstream LLMs.
           </div>
-          <pre class="text-slate-100"><code><span class="text-blue-400">from</span> ztds <span class="text-blue-400">import</span> ZTDSEngine
-<span class="text-blue-400">from</span> openai <span class="text-blue-400">import</span> OpenAI
+          <pre class="text-slate-100"><code><span class="text-slate-500">// app/api/chat/route.ts</span>
+<span class="text-blue-400">import</span> { NextRequest, NextResponse } <span class="text-blue-400">from</span> <span class="text-emerald-300">"next/server"</span>;
+<span class="text-blue-400">import</span> { PrivacyScrubberEngine } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@privacyscrubber/sdk"</span>;
 
-client = OpenAI()
-engine = ZTDSEngine(profile=<span class="text-emerald-300">"legal"</span>)
+<span class="text-blue-400">export const</span> runtime = <span class="text-emerald-300">"edge"</span>;
 
-<span class="text-blue-400">def</span> <span class="text-yellow-300">safe_ai_inference</span>(raw_prompt: str) -&gt; str:
-    <span class="text-slate-500"># 1. In-memory deterministic sanitization</span>
-    res = engine.sanitize(raw_prompt)
-    print(f<span class="text-emerald-300">"Sanitized payload: {res.sanitized_prompt} in {res.latency_ms}ms"</span>)
+<span class="text-blue-400">const</span> engine = <span class="text-blue-400">new</span> <span class="text-yellow-300">PrivacyScrubberEngine</span>();
 
-    <span class="text-slate-500"># 2. Call external model (0 bytes cleartext attorney-client privileged data)</span>
-    response = client.chat.completions.create(
-        model=<span class="text-emerald-300">"gpt-4o"</span>,
-        messages=[{<span class="text-emerald-300">"role"</span>: <span class="text-emerald-300">"user"</span>, <span class="text-emerald-300">"content"</span>: res.sanitized_prompt}]
-    )
+<span class="text-blue-400">export async function</span> <span class="text-yellow-300">POST</span>(req: NextRequest) {
+  <span class="text-blue-400">const</span> { messages, profile } = <span class="text-blue-400">await</span> req.<span class="text-yellow-300">json</span>();
+  <span class="text-blue-400">const</span> lastMessage = messages[messages.length - <span class="text-purple-400">1</span>];
 
-    <span class="text-slate-500"># 3. Local in-memory restoration</span>
-    <span class="text-blue-400">return</span> engine.reveal(response.choices[<span class="text-purple-400">0</span>].message.content, res.session_map)</code></pre>
+  <span class="text-slate-500">// In-memory Edge sanitization (&lt;0.8ms)</span>
+  <span class="text-blue-400">const</span> { sanitizedText, tokenMap } = engine.<span class="text-yellow-300">sanitize</span>(lastMessage.content, {
+    profile: profile || <span class="text-emerald-300">"general"</span>
+  });
+  messages[messages.length - <span class="text-purple-400">1</span>].content = sanitizedText;
+
+  <span class="text-slate-500">// Forward to upstream model</span>
+  <span class="text-blue-400">const</span> upstreamRes = <span class="text-blue-400">await</span> <span class="text-yellow-300">fetch</span>(<span class="text-emerald-300">"https://api.openai.com/v1/chat/completions"</span>, {
+    method: <span class="text-emerald-300">"POST"</span>,
+    headers: {
+      Authorization: <span class="text-emerald-300">`Bearer ${process.env.OPENAI_API_KEY}`</span>,
+      <span class="text-emerald-300">"Content-Type"</span>: <span class="text-emerald-300">"application/json"</span>
+    },
+    body: JSON.<span class="text-yellow-300">stringify</span>({ model: <span class="text-emerald-300">"gpt-4o"</span>, messages })
+  });
+
+  <span class="text-blue-400">const</span> completion = <span class="text-blue-400">await</span> upstreamRes.<span class="text-yellow-300">json</span>();
+  <span class="text-blue-400">const</span> rawReply = completion.choices[<span class="text-purple-400">0</span>].message.content;
+
+  <span class="text-slate-500">// Reverse reveal before returning to client</span>
+  <span class="text-blue-400">const</span> revealedReply = engine.<span class="text-yellow-300">reveal</span>(rawReply, tokenMap);
+  <span class="text-blue-400">return</span> NextResponse.<span class="text-yellow-300">json</span>({ reply: revealedReply });
+}</code></pre>
+        </div>
+
+        <!-- PANE 8: Envoy Sidecar -->
+        <div id="recipeEnvoy" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4 hidden">
+          <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 text-slate-300 text-[11px] leading-relaxed mb-4">
+            <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 08 &middot; API Gateway / Envoy Sidecar Local Proxy</strong>
+            Local loopback reverse proxy intercepting outbound LLM traffic, inspecting JSON payload bodies, sanitizing PII in &lt;2ms, and stripping auth headers if unmasked leaks occur.
+          </div>
+          <pre class="text-slate-100"><code><span class="text-slate-500"># envoy-ztds-filter.yaml</span>
+static_resources:
+  listeners:
+  - name: llm_proxy_listener
+    address:
+      socket_address: { address: 127.0.0.1, port_value: 8080 }
+    filter_chains:
+    - filters:
+      - name: envoy.filters.network.http_connection_manager
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+          stat_prefix: egress_llm
+          route_config:
+            name: local_route
+            virtual_hosts:
+            - name: openai_upstream
+              domains: ["*"]
+              routes:
+              - match: { prefix: "/v1/chat/completions" }
+                route: { cluster: ztds_local_sidecar }
+  clusters:
+  - name: ztds_local_sidecar
+    connect_timeout: 0.25s
+    type: STATIC
+    lb_policy: ROUND_ROBIN
+    load_assignment:
+      cluster_name: ztds_local_sidecar
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address: { socket_address: { address: 127.0.0.1, port_value: 9090 } } <span class="text-slate-500"># Local @privacyscrubber/sdk daemon</span></code></pre>
+        </div>
+
+        <!-- PANE 9: Kafka Stream -->
+        <div id="recipeKafka" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4 hidden">
+          <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 text-slate-300 text-[11px] leading-relaxed mb-4">
+            <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 09 &middot; Microservices Kafka / Event Bus Stream Transformer</strong>
+            Kafka streaming consumer executing stateless in-RAM transformation on streaming topics before downstream LLM fine-tuning or vector indexing.
+          </div>
+          <pre class="text-slate-100"><code><span class="text-slate-500">// ztds-kafka-stream.js</span>
+<span class="text-blue-400">const</span> { Kafka } = <span class="text-blue-400">require</span>(<span class="text-emerald-300">"kafkajs"</span>);
+<span class="text-blue-400">const</span> { PrivacyScrubberEngine } = <span class="text-blue-400">require</span>(<span class="text-emerald-300">"@privacyscrubber/sdk"</span>);
+
+<span class="text-blue-400">const</span> kafka = <span class="text-blue-400">new</span> <span class="text-yellow-300">Kafka</span>({ clientId: <span class="text-emerald-300">"ztds-filter"</span>, brokers: [<span class="text-emerald-300">"localhost:9092"</span>] });
+<span class="text-blue-400">const</span> consumer = kafka.<span class="text-yellow-300">consumer</span>({ groupId: <span class="text-emerald-300">"sanitizer-group"</span> });
+<span class="text-blue-400">const</span> producer = kafka.<span class="text-yellow-300">producer</span>();
+<span class="text-blue-400">const</span> engine = <span class="text-blue-400">new</span> <span class="text-yellow-300">PrivacyScrubberEngine</span>();
+
+<span class="text-blue-400">async function</span> <span class="text-yellow-300">run</span>() {
+  <span class="text-blue-400">await</span> consumer.<span class="text-yellow-300">connect</span>();
+  <span class="text-blue-400">await</span> producer.<span class="text-yellow-300">connect</span>();
+  <span class="text-blue-400">await</span> consumer.<span class="text-yellow-300">subscribe</span>({ topic: <span class="text-emerald-300">"raw-customer-transcripts"</span>, fromBeginning: <span class="text-purple-400">true</span> });
+
+  <span class="text-blue-400">await</span> consumer.<span class="text-yellow-300">run</span>({
+    eachMessage: <span class="text-blue-400">async</span> ({ topic, partition, message }) =&gt; {
+      <span class="text-blue-400">const</span> rawText = message.value.<span class="text-yellow-300">toString</span>();
+      <span class="text-slate-500">// In-memory sanitization</span>
+      <span class="text-blue-400">const</span> { sanitizedText } = engine.<span class="text-yellow-300">sanitize</span>(rawText, { profile: <span class="text-emerald-300">"support"</span> });
+
+      <span class="text-slate-500">// Publish clean data to downstream topic</span>
+      <span class="text-blue-400">await</span> producer.<span class="text-yellow-300">send</span>({
+        topic: <span class="text-emerald-300">"clean-transcripts-ztds"</span>,
+        messages: [{ key: message.key, value: sanitizedText }]
+      });
+    }
+  });
+}
+<span class="text-yellow-300">run</span>();</code></pre>
+        </div>
+
+        <!-- PANE 10: Chrome MV3 -->
+        <div id="recipeChromemv3" class="recipe-pane p-6 font-mono text-xs overflow-x-auto leading-relaxed space-y-4 hidden">
+          <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 text-slate-300 text-[11px] leading-relaxed mb-4">
+            <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 10 &middot; Chrome MV3 Content Script / DOM Textarea Interceptor</strong>
+            Seamlessly integrates into any web-based LLM UI (ChatGPT, Claude, Perplexity), replacing sensitive text before DOM form dispatch.
+          </div>
+          <pre class="text-slate-100"><code><span class="text-slate-500">// content-script-ztds.js</span>
+(<span class="text-blue-400">function</span>() {
+  <span class="text-blue-400">const</span> engine = window.PrivacyScrubberEngine;
+  <span class="text-blue-400">let</span> activeSessionMap = {};
+
+  document.<span class="text-yellow-300">addEventListener</span>(<span class="text-emerald-300">"keydown"</span>, (e) =&gt; {
+    <span class="text-blue-400">if</span> (e.key === <span class="text-emerald-300">"Enter"</span> && !e.shiftKey) {
+      <span class="text-blue-400">const</span> target = e.target;
+      <span class="text-blue-400">if</span> (target && (target.tagName === <span class="text-emerald-300">"TEXTAREA"</span> || target.isContentEditable)) {
+        <span class="text-blue-400">const</span> rawText = target.value || target.innerText;
+        <span class="text-blue-400">const</span> { sanitizedText, tokenMap } = engine.<span class="text-yellow-300">sanitize</span>(rawText);
+        activeSessionMap = tokenMap;
+        <span class="text-blue-400">if</span> (target.value) target.value = sanitizedText;
+        <span class="text-blue-400">else</span> target.innerText = sanitizedText;
+      }
+    }
+  }, <span class="text-purple-400">true</span>);
+})();</code></pre>
         </div>
 
       </div>
     </div>
 
+    <!-- DEDICATED SECTION: MODEL CONTEXT PROTOCOL (MCP) STDIO ARCHITECTURE -->
+    <section class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6" id="mcp-gateway">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-semibold text-blue-800 mb-2">
+            <span>JSON-RPC 2.0 &middot; STDIO TRANSPORT</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Model Context Protocol (MCP) Stdio Gateway</h2>
+          <p class="text-xs text-slate-500 mt-1">Air-gapped integration for Cursor IDE, Claude Desktop, and Claude Code CLI with 0.00 bytes external telemetry.</p>
+        </div>
+        <span class="text-xs font-mono px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold w-fit">
+          RFC v1.0 Compliant
+        </span>
+      </div>
+
+      <!-- MCP Architecture Flow -->
+      <div class="p-4 bg-slate-900 text-white rounded-xl font-mono text-xs space-y-3">
+        <div class="text-slate-400 text-[11px] uppercase tracking-wider">MCP Stdio Communication Protocol</div>
+        <div class="flex flex-col md:flex-row items-center justify-between gap-3 p-3 bg-slate-950 rounded-lg border border-slate-800 text-center">
+          <div class="p-3 bg-slate-800 rounded-lg w-full md:w-auto">
+            <strong class="text-white block">Claude Desktop / Cursor IDE</strong>
+            <span class="text-[10px] text-slate-400">Prompt &amp; Code Buffers</span>
+          </div>
+          <div class="text-emerald-400 text-xs flex flex-col items-center">
+            <span>&larr; JSON-RPC 2.0 via stdio &rarr;</span>
+            <span class="text-[10px] text-slate-500">Zero Socket Telemetry</span>
+          </div>
+          <div class="p-3 bg-slate-800 rounded-lg w-full md:w-auto border border-emerald-500/40">
+            <strong class="text-emerald-300 block">@privacyscrubber/mcp-server</strong>
+            <span class="text-[10px] text-slate-400">Volatile RAM Sanitization Engine</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 MCP Tools Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="font-mono font-bold text-slate-900 flex items-center gap-1.5">
+            <span class="text-emerald-600">&bull;</span> ztds_sanitize_prompt
+          </div>
+          <p class="text-slate-600 leading-relaxed text-[11px]">
+            Intercepts developer prompt buffers, git diffs, and terminal logs, replacing cleartext secrets and PII with context-preserving surrogate tokens before LLM dispatch.
+          </p>
+          <div class="text-[10px] font-mono text-slate-400">Returns: sanitizedPrompt, sessionKey</div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="font-mono font-bold text-slate-900 flex items-center gap-1.5">
+            <span class="text-emerald-600">&bull;</span> ztds_restore_response
+          </div>
+          <p class="text-slate-600 leading-relaxed text-[11px]">
+            Restores surrogate tokens back to original values within the IDE interface strictly in volatile RAM, immediately purging private mapping keys.
+          </p>
+          <div class="text-[10px] font-mono text-slate-400">Returns: restoredPrompt</div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="font-mono font-bold text-slate-900 flex items-center gap-1.5">
+            <span class="text-emerald-600">&bull;</span> ztds_verify_compliance
+          </div>
+          <p class="text-slate-600 leading-relaxed text-[11px]">
+            Performs real-time AST linting on active editor files to detect un-sanitized LLM calls, hardcoded secrets, or storage persistence violations.
+          </p>
+          <div class="text-[10px] font-mono text-slate-400">Returns: compliant, score, auditHash</div>
+        </div>
+      </div>
+
+      <!-- Quick Install Box -->
+      <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
+        <div>
+          <strong class="text-slate-900 block font-sans">Install MCP Server in Claude Code CLI:</strong>
+          <span class="text-slate-500 font-mono text-[11px]">claude mcp add privacyscrubber npx -y @privacyscrubber/mcp-server@latest</span>
+        </div>
+        <a href="/apply/" class="btn-trust text-xs py-2 px-3.5 shrink-0">
+          Get MCP License &rarr;
+        </a>
+      </div>
+    </section>
     <!-- AI Framework Compatibility Matrix Table -->
     <div class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6" id="compatibility">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
@@ -914,9 +1183,14 @@ const sanitized = await engine.sanitize(patientPrompt);</code></pre>
       const fileNames = {
         langchain: 'ztds-langchain-callback.ts',
         llamaindex: 'ztds_llamaindex_transform.py',
+        crewai: 'ztds_crewai_role_filter.py',
+        ollama: 'ztds-ollama-stream.js',
         mcp: 'mcp-config.json',
-        ts: 'secure-ai-client.ts',
-        python: 'ztds_python_bridge.py'
+        pinecone: 'ztds-pinecone-rag.ts',
+        nextjs: 'app/api/chat/route.ts',
+        envoy: 'envoy-ztds-filter.yaml',
+        kafka: 'ztds-kafka-stream.js',
+        chromemv3: 'content-script-ztds.js'
       };
 
       let currentRecipe = 'langchain';
