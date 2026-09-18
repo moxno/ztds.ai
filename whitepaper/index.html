@@ -232,13 +232,21 @@
         <!-- Academic DOIs & Verification Meta -->
         <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm rounded-xl space-y-3">
           <div class="text-[11px] uppercase text-slate-400 font-bold tracking-wider font-mono">Academic DOI &amp; Citations</div>
-          <div class="space-y-2 text-xs font-mono">
+          <div class="space-y-1.5 text-xs font-mono">
             <a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors">
-              <span>Zenodo DOI Record</span>
+              <span>Zenodo: 10.5281</span>
               <span class="text-emerald-700 font-bold">&rarr;</span>
             </a>
             <a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors">
-              <span>OSF Repository</span>
+              <span>OSF: 10.17605/OSF.IO</span>
+              <span class="text-emerald-700 font-bold">&rarr;</span>
+            </a>
+            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7335581" target="_blank" rel="noopener" class="flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors">
+              <span>SSRN: 7335581</span>
+              <span class="text-emerald-700 font-bold">&rarr;</span>
+            </a>
+            <a href="https://osf.io/preprints/lawarchive/4wc86/" target="_blank" rel="noopener" class="flex items-center justify-between p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors">
+              <span>Law Archive: 4wc86</span>
               <span class="text-emerald-700 font-bold">&rarr;</span>
             </a>
           </div>
@@ -292,20 +300,23 @@
             <div>
               <span class="text-slate-400 uppercase font-mono font-semibold block text-[10px]">Lead Author</span>
               <strong class="text-slate-900 font-semibold text-sm">Ilya Sibiryakov</strong>
-              <div class="text-slate-500 mt-0.5">Chief Architect &amp; Founder, BrandMeWeb</div>
-              <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-emerald-700 hover:underline">LinkedIn Profile &rarr;</a>
+              <div class="text-slate-500 mt-0.5">Chief Architect, <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-700 hover:text-slate-900 underline font-medium">BrandMeWeb</a></div>
+              <div class="text-slate-500 font-mono text-[11px] mt-0.5">ORCID: <a href="https://orcid.org/0009-0002-0642-5985" target="_blank" rel="noopener" class="text-emerald-700 hover:underline">0009-0002-0642-5985</a></div>
+              <div class="text-[11px] text-slate-400 mt-0.5">Member: Internet Society #2377647 &middot; GEC</div>
             </div>
             <div>
               <span class="text-slate-400 uppercase font-mono font-semibold block text-[10px]">Consortium Working Group</span>
               <strong class="text-slate-900 font-semibold text-sm">ZTDS AI Systems WG</strong>
               <div class="text-slate-500 mt-0.5">Cryptographic &amp; Systems Research Council</div>
-              <span class="text-slate-500">Autonomous Open Governance</span>
+              <div class="text-slate-500 text-[11px] mt-0.5">Open Governance &middot; RFC-8821 Consensus</div>
+              <a href="/governance/" class="text-emerald-700 hover:underline text-[11px]">Consortium Charter &rarr;</a>
             </div>
             <div>
-              <span class="text-slate-400 uppercase font-mono font-semibold block text-[10px]">Document &amp; Publication</span>
+              <span class="text-slate-400 uppercase font-mono font-semibold block text-[10px]">Document &amp; Registries</span>
               <strong class="text-slate-900 font-semibold text-sm">Ratified September 2026</strong>
               <div class="text-slate-500 font-mono mt-0.5">DOI: 10.5281/zenodo.22058770</div>
-              <div class="text-slate-500 font-mono">License: CC BY 4.0 &amp; Apache 2.0</div>
+              <div class="text-slate-500 font-mono text-[11px]">OSF: 10.17605/OSF.IO/5BYJF &middot; SSRN: 7335581</div>
+              <div class="text-slate-500 font-mono text-[11px]">License: CC BY 4.0 &amp; Apache 2.0</div>
             </div>
           </div>
         </header>
@@ -532,42 +543,49 @@
           <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Formal Security Model &amp; Mathematical Proofs</h2>
           
           <p class="text-slate-700 text-sm leading-relaxed">
-            To provide the mathematical foundation required for formal CISO certification, we model the sanitization function $f: \mathcal{X} 	o \mathcal{T}$ under information-theoretic security principles.
+            To provide the rigorous mathematical foundation required for enterprise CISO verification, we formalize the sanitization transformation <span class="font-mono font-semibold">f: X &rarr; T</span> under Shannon information-theoretic security bounds and topological memory constraints.
           </p>
 
-          <h3 class="text-base font-bold text-slate-900 pt-2">Theorem 1: Zero Mutual Information of Token Payloads</h3>
+          <h3 class="text-base font-bold text-slate-900 pt-2">Theorem 1: Zero Mutual Information of Emitted Token Payloads</h3>
           <p class="text-slate-700 text-sm leading-relaxed">
-            Let $X$ denote a discrete random variable representing the cleartext entity space (e.g., telephone numbers, patient medical identifiers, credit card PANs). Let $T$ denote the synthetic token generated by the ZTDS deterministic tokenization function. We require that the mutual information $I(X; T)$ between the sensitive entity and the emitted token equals zero:
+            Let <span class="font-mono font-semibold">X</span> denote a discrete random variable over the sensitive entity domain (e.g. government IDs, clinical MRNs, banking IBANs, API secret keys). Let <span class="font-mono font-semibold">T</span> denote the surrogate token generated by the ZTDS deterministic tokenization function. The mutual information <span class="font-mono font-semibold">I(X; T)</span> between sensitive source entities and emitted payload tokens must be strictly identical to zero:
           </p>
 
-          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl font-mono text-xs text-slate-800 space-y-1">
-            <div>I(X; T) = H(X) - H(X | T) = 0</div>
-            <div>\iff H(X | T) = H(X)</div>
+          <div class="p-4 rounded-xl bg-slate-900 text-emerald-400 font-mono text-xs space-y-2 border border-slate-800 leading-relaxed">
+            <div class="text-slate-400 text-[11px]">// Shannon Information Entropy Bound</div>
+            <div>I(X; T) = H(X) - H(X | T) = 0.00 bits</div>
+            <div>&hArr; H(X | T) = H(X)</div>
           </div>
 
           <p class="text-slate-700 text-sm leading-relaxed">
-            <strong>Proof</strong>: In ZTDS RFC v1.0, tokens are selected from an invariant dictionary of synthetic entity markers indexed by monotonic sequence numbers per session ($T \in \{[TOKEN\_1], [TOKEN\_2], \dots\}$). The assignment function $f$ draws index $k$ strictly from the local session counter without dependency on the entropy or bit representation of $X$. Given $T = [TOKEN\_k]$, an adversary possessor of the downstream LLM transmission observes only the sequence identifier $k$. Because $k$ is statistically independent of $X$, the conditional probability distribution satisfies:
+            <strong>Formal Proof</strong>: Under ZTDS RFC v1.0, tokens are selected from an invariant dictionary of synthetic surrogate descriptors indexed by monotonic sequence counters per session (<span class="font-mono font-semibold">T &isin; {[TOKEN_1], [TOKEN_2], ...}</span>). The bijective assignment function draws index <span class="font-mono font-semibold">k</span> strictly from the local session counter without dependency on the bit representation, entropy, or lexicographical properties of entity <span class="font-mono font-semibold">X</span>.
           </p>
 
-          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl font-mono text-xs text-slate-800 space-y-1">
-            <div>P(X = x | T = [TOKEN_k]) = P(X = x) \quad orall x \in \mathcal{X}</div>
+          <div class="p-4 rounded-xl bg-slate-900 text-emerald-400 font-mono text-xs space-y-2 border border-slate-800 leading-relaxed">
+            <div class="text-slate-400 text-[11px]">// Statistical Independence of Conditional Distribution</div>
+            <div>P(X = x | T = [TOKEN_k]) = P(X = x) &nbsp;&forall; x &isin; X</div>
+            <div class="text-slate-300 text-[11px] pt-1 border-t border-slate-800">
+              &rArr; Marginal distribution is unchanged. Egressing payload contains exactly 0.00 bits of confidential information. &#9632;
+            </div>
           </div>
 
           <p class="text-slate-700 text-sm leading-relaxed">
-            Therefore, knowledge of $T$ yields zero reduction in uncertainty regarding $X$. The downstream model recipient receives zero bits of personal data under Shannon entropy bounds. $lacksquare$
+            Therefore, observing the masked prompt provides an adversary or downstream LLM provider with zero reduction in uncertainty regarding <span class="font-mono font-semibold">X</span>. Under Shannon entropy bounds, no confidential personal data crosses the local execution boundary.
           </p>
 
           <h3 class="text-base font-bold text-slate-900 pt-2">Theorem 2: Ephemeral Memory Destruction Invariant</h3>
           <p class="text-slate-700 text-sm leading-relaxed">
-            Let $\mathcal{M}$ represent the in-memory bidirectional mapping dictionary $\mathcal{M} = \{(T_i, X_i)\}$. Let $t_{	ext{session}}$ denote the active conversation lifecycle. We define the security lifecycle constraint:
+            Let <span class="font-mono font-semibold">M_map = {(T_i, X_i)}</span> represent the in-memory bidirectional substitution mapping dictionary. Let <span class="font-mono font-semibold">t_session</span> denote the active client conversation lifecycle. Conformance mandates the topological memory isolation and auto-zeroization invariant:
           </p>
 
-          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl font-mono text-xs text-slate-800 space-y-1">
-            <div>\lim_{t 	o t_{	ext{destroy}}} \mathcal{M} = \emptyset, \quad 	ext{where } \mathcal{M} \cap 	ext{NonVolatileStorage} = \emptyset</div>
+          <div class="p-4 rounded-xl bg-slate-900 text-emerald-400 font-mono text-xs space-y-2 border border-slate-800 leading-relaxed">
+            <div class="text-slate-400 text-[11px]">// In-Memory Volatile Scope &amp; Zeroization Limit</div>
+            <div>M_map &sube; VolatileRAM, &nbsp;where M_map &cap; NonVolatileStorage = &empty;</div>
+            <div class="pt-1 border-t border-slate-800">lim_{t &rarr; t_terminate} M_map = &empty;</div>
           </div>
 
           <p class="text-slate-700 text-sm leading-relaxed">
-            Any conforming implementation zeroes all allocated memory buffers upon session garbage collection or explicit client discard, guaranteeing zero residual forensic artifact recovery.
+            Conforming implementations zero all allocated buffer memory upon thread termination or garbage collection, guaranteeing zero residual forensic artifact recovery from swap, cache, or persistent disk partitions.
           </p>
         </section>
 
@@ -818,16 +836,21 @@
   month     = {September},
   doi       = {10.5281/zenodo.22058770},
   url       = {https://ztds.ai/whitepaper/},
-  note      = {Ratified Specification RFC v1.0, OSF: 10.17605/OSF.IO/5BYJF}
+  note      = {Ratified Specification RFC v1.0, OSF: 10.17605/OSF.IO/5BYJF, SSRN: 7335581}
 }</pre>
           </div>
 
-          <div class="space-y-2 text-xs text-slate-600 leading-relaxed pt-2">
+          <div class="space-y-2.5 text-xs text-slate-600 leading-relaxed pt-2">
             <div>[1] European Parliament and Council. (2016). <em>Regulation (EU) 2016/679 (General Data Protection Regulation)</em>, Recital 26 and Article 28. Official Journal of the European Union.</div>
             <div>[2] National Institute of Standards and Technology. (2023). <em>Artificial Intelligence Risk Management Framework (AI RMF 1.0)</em>. NIST Special Publication 1270.</div>
             <div>[3] Morris, J. X., et al. (2023). <em>Text Embeddings Reveal (Almost) As Much As Text</em>. Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP).</div>
             <div>[4] IBM Security &amp; Ponemon Institute. (2025). <em>Cost of a Data Breach Report 2025</em>. IBM Corporation.</div>
-            <div>[5] Sibiryakov, I. (2026). <em>Zero-Trust Data Sanitization Specification RFC v1.0</em>. Zenodo. DOI: 10.5281/zenodo.22058770.</div>
+            <div>[5] Sibiryakov, I. (2026). <em>Zero-Trust Data Sanitization (ZTDS): Mathematical Proof and Operational Framework for Client-Side AI Prompt Privacy</em>. CERN / Zenodo. DOI: <a href="https://doi.org/10.5281/zenodo.22058770" target="_blank" rel="noopener" class="text-emerald-700 underline">10.5281/zenodo.22058770</a>.</div>
+            <div>[6] Sibiryakov, I. (2026). <em>Empirical Latency Benchmark: In-Memory Client RAM Masking vs. Cloud DLP Proxies</em>. Center for Open Science / OSF. DOI: <a href="https://doi.org/10.17605/OSF.IO/5BYJF" target="_blank" rel="noopener" class="text-emerald-700 underline">10.17605/OSF.IO/5BYJF</a>.</div>
+            <div>[7] Sibiryakov, I. (2026). <em>Enterprise Compliance Under the EU AI Act and UK GDPR via Ephemeral Client-Side Sanitization</em>. SSRN / Elsevier. SSRN Abstract ID: <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7335581" target="_blank" rel="noopener" class="text-emerald-700 underline">7335581</a>.</div>
+            <div>[8] Sibiryakov, I. (2026). <em>Preserving Attorney-Client Privilege in Generative AI Workflows via Client-Side ZTDS</em>. Law Archive / OSF. Identifier: <a href="https://osf.io/preprints/lawarchive/4wc86/" target="_blank" rel="noopener" class="text-emerald-700 underline">4wc86</a>.</div>
+            <div>[9] Shannon, C. E. (1948). <em>A Mathematical Theory of Communication</em>. Bell System Technical Journal, 27(3), 379–423.</div>
+            <div>[10] Carlini, N., et al. (2021). <em>Extracting Training Data from Large Language Models</em>. 30th USENIX Security Symposium.</div>
           </div>
         </section>
 
@@ -948,7 +971,7 @@
   <!-- Nav Scripts & Whitepaper Controls -->
   <script src="/nav.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    (function initWhitepaper() {
       const bibtexText = `@article{sibiryakov2026ztds,
   title     = {ZTDS: A Data-Plane Primitive for the AI Era -- Formal Specification, Cryptographic Isolation, and Subprocessor Elimination in Enterprise Generative Workloads},
   author    = {Sibiryakov, Ilya and {ZTDS AI Consortium Working Group}},
@@ -957,22 +980,26 @@
   month     = {September},
   doi       = {10.5281/zenodo.22058770},
   url       = {https://ztds.ai/whitepaper/},
-  note      = {Ratified Specification RFC v1.0, OSF: 10.17605/OSF.IO/5BYJF}
+  note      = {Ratified Specification RFC v1.0, OSF: 10.17605/OSF.IO/5BYJF, SSRN: 7335581}
 }`;
 
-      function copyCitation() {
+      function handleCopy(btn) {
         if (window.ztdsCopy) {
           window.ztdsCopy(bibtexText, () => {
-            alert('BibTeX citation copied to clipboard.');
+            if (btn) {
+              const originalText = btn.innerText;
+              btn.innerText = 'Citation Copied!';
+              setTimeout(() => { btn.innerText = originalText; }, 2500);
+            }
           });
         }
       }
 
       const btn1 = document.getElementById('btnCopyBibtex');
-      if (btn1) btn1.addEventListener('click', copyCitation);
+      if (btn1) btn1.addEventListener('click', () => handleCopy(btn1));
 
       const btn2 = document.getElementById('btnCopyBibtexBlock');
-      if (btn2) btn2.addEventListener('click', copyCitation);
+      if (btn2) btn2.addEventListener('click', () => handleCopy(btn2));
 
       const btnPrint = document.getElementById('btnPrintWhitepaper');
       if (btnPrint) {
@@ -980,7 +1007,7 @@
           window.print();
         });
       }
-    });
+    })();
   </script>
 </body>
 </html>
