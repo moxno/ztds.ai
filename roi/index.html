@@ -56,7 +56,7 @@
   </script>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col antialiased">
-<!-- Institutional Top Header -->
+  <!-- Institutional Top Header -->
   <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
       
@@ -161,17 +161,18 @@
       </a>
     </div>
   </aside>
+
   <!-- Print-Only Memorandum Header -->
   <div class="hidden print-only p-8 mb-6 border-b-2 border-slate-900">
     <div class="flex justify-between items-start">
       <div>
         <div class="text-xl font-bold tracking-tight text-slate-900">ZTDS.ai &middot; Zero-Trust Data Sanitization Consortium</div>
-        <div class="text-xs text-slate-500 font-mono mt-1">EXECUTIVE BOARD MEMORANDUM &middot; CONFIDENTIAL</div>
-        <div class="text-sm font-semibold text-slate-800 mt-2">Subject: Enterprise Generative AI Risk Exposure &amp; Invariant Sanitization ROI Audit</div>
+        <div class="text-xs text-slate-500 font-mono mt-1">EXECUTIVE CISO AUDIT MEMORANDUM &middot; PRIVILEGED WORK PRODUCT</div>
+        <div class="text-sm font-semibold text-slate-800 mt-2">Subject: Enterprise Generative AI Actuarial Risk, Statutory Regulatory Caps &amp; Invariant Sanitization ROI</div>
       </div>
       <div class="text-right text-xs font-mono text-slate-500">
         <div>Date: <span id="printDate">September 2026</span></div>
-        <div>Standard: RFC v1.0 &middot; ISO/IEC 27001 / GDPR Art. 28</div>
+        <div>Statutes: GDPR Art. 83 &middot; EU AI Act Art. 99 &middot; HIPAA 45 CFR &middot; FRE 502</div>
       </div>
     </div>
   </div>
@@ -183,32 +184,35 @@
     <div class="mb-8 border-b border-slate-200 pb-8">
       <div class="flex flex-wrap items-center gap-2 mb-3">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 font-mono uppercase tracking-wider">
-          <span class="pulse-dot"></span> Actuarial Risk Engine v1.0
+          <span class="pulse-dot"></span> Actuarial Risk Engine v1.2 &middot; Multi-Regime
         </span>
-        <span class="text-xs text-slate-500 font-medium">Benchmark: IBM Cost of a Data Breach 2025 &middot; Ponemon GenAI Model</span>
+        <span class="text-xs text-slate-500 font-medium">Benchmarks: IBM Cost of a Data Breach 2025 &middot; GDPR Art. 83 &middot; EU AI Act Art. 99 &middot; HIPAA Safe Harbor</span>
       </div>
       
       <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
         CISO Risk &amp; ROI Calculator
       </h1>
       <p class="text-base text-slate-600 mt-2 max-w-3xl leading-relaxed">
-        Quantify your organization&#39;s financial liability from unmitigated PII/PHI in LLM prompts, model logs, and third-party data pipelines. Calculate direct savings from eliminating GDPR Article 28 subprocessor chains and enforcing zero-trust data-plane sanitization.
+        Quantify your organization&#39;s financial liability from unmitigated PII/PHI in LLM prompts, model logs, and third-party data pipelines. Calculate direct savings from eliminating GDPR Article 28 subprocessor chains, avoiding statutory penalties (GDPR up to 4%, EU AI Act up to 7%), and enforcing in-memory Zero-Trust Data Sanitization.
       </p>
 
       <!-- One-Click Industry Presets -->
       <div class="mt-6 flex flex-wrap items-center gap-2 no-print">
         <span class="text-xs text-slate-500 font-medium mr-1">Industry Presets:</span>
         <button type="button" id="presetSaas" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">
-          Enterprise SaaS (GDPR)
+          EU Enterprise SaaS (GDPR 4%)
         </button>
         <button type="button" id="presetFintech" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">
-          Regulated FinTech (PCI-DSS)
+          Regulated FinTech (PCI-DSS &middot; GLBA)
         </button>
         <button type="button" id="presetHealth" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">
-          Healthcare System (HIPAA)
+          Healthcare EHR (HIPAA Safe Harbor)
+        </button>
+        <button type="button" id="presetLegal" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">
+          Corporate Legal &amp; M&amp;A (FRE 502)
         </button>
         <button type="button" id="presetEnterprise" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">
-          Global Enterprise Scale
+          Global Multi-Cloud Enterprise (EU + US)
         </button>
       </div>
     </div>
@@ -275,20 +279,35 @@
             </div>
             <input type="range" id="inputVendors" min="1" max="8" step="1" value="3" class="ztds-slider">
             <p class="text-[11px] text-slate-400 mt-1 leading-tight">
-              OpenAI, Anthropic, Google Vertex, Pinecone, Cohere (each adds subprocessor review &amp; DPA burden).
+              OpenAI, Anthropic, Google Vertex, Pinecone, Mistral (each adds ~$25,000/yr in legal DPA, TPRM audit, and SOC 2 subprocessor chain maintenance).
             </p>
           </div>
         </div>
 
         <div class="ztds-card p-6 bg-white space-y-5 shadow-sm border border-slate-200">
           <div class="border-b border-slate-100 pb-3">
-            <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider font-mono">2. Risk Profile &amp; Cost Basis</h2>
-            <p class="text-xs text-slate-500 mt-0.5">Actuarial cost metrics from industry breach databases.</p>
+            <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider font-mono">2. Governance &amp; Regulatory Regime</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Actuarial enforcement metrics under European and American privacy statutes.</p>
+          </div>
+
+          <!-- Regulatory Jurisdiction Selector -->
+          <div>
+            <label for="selectRegime" class="block text-xs font-semibold text-slate-700 mb-1.5">Primary Enforcement Jurisdiction &amp; Statutes</label>
+            <select id="selectRegime" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="global" selected>Global Multi-Regime (GDPR Art. 83 4% &middot; EU AI Act &middot; US State Laws)</option>
+              <option value="eu">European Union (GDPR Art. 83 &middot; EU AI Act Art. 99 Transparency/Data)</option>
+              <option value="us_hipaa">United States Healthcare (HIPAA 45 CFR &middot; HITECH Tier 4 $2.06M Cap)</option>
+              <option value="us_fintech">United States Financial (GLBA 15 U.S.C. &middot; SEC Item 106 &middot; CCPA/CPRA)</option>
+              <option value="us_legal">United States Corporate Legal (FRE 502 Privilege Defense &middot; Non-Waiver)</option>
+            </select>
+            <p class="text-[11px] text-slate-400 mt-1 leading-tight" id="regimeDescription">
+              Evaluates combined GDPR Recital 26 de-identification and statutory fine caps across international jurisdictions.
+            </p>
           </div>
 
           <!-- Industry Risk Matrix -->
           <div>
-            <label for="selectIndustry" class="block text-xs font-semibold text-slate-700 mb-1.5">Industry Risk &amp; Compliance Sector</label>
+            <label for="selectIndustry" class="block text-xs font-semibold text-slate-700 mb-1.5">Industry Risk &amp; Sector Benchmark</label>
             <select id="selectIndustry" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
               <option value="saas" data-cost="165" data-name="Enterprise SaaS / Tech (GDPR &middot; CCPA)">Enterprise SaaS / Tech ($165 / record &middot; GDPR &middot; CCPA)</option>
               <option value="fintech" data-cost="188" data-name="Banking &amp; FinTech (PCI-DSS &middot; GLBA &middot; SOX)">Banking &amp; FinTech ($188 / record &middot; PCI-DSS &middot; GLBA)</option>
@@ -299,7 +318,7 @@
 
           <!-- Corporate Revenue -->
           <div>
-            <label for="selectRevenue" class="block text-xs font-semibold text-slate-700 mb-1.5">Annual Corporate Revenue Band</label>
+            <label for="selectRevenue" class="block text-xs font-semibold text-slate-700 mb-1.5">Annual Corporate Worldwide Turnover</label>
             <select id="selectRevenue" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
               <option value="10000000">$10,000,000 (Growth Stage)</option>
               <option value="50000000" selected>$50,000,000 (Mid-Market Enterprise)</option>
@@ -307,7 +326,7 @@
               <option value="1000000000">$1,000,000,000+ (Fortune 500 / Global Tier)</option>
             </select>
             <p class="text-[11px] text-slate-400 mt-1 leading-tight">
-              Used to calculate statutory GDPR (up to 4%) and EU AI Act (up to 7%) fine exposure.
+              Used to calculate statutory GDPR (up to 4%) and EU AI Act (up to 7%) worldwide turnover penalties.
             </p>
           </div>
 
@@ -331,14 +350,14 @@
         <div class="ztds-card p-6 sm:p-8 bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl border border-slate-700 shadow-lg">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-700/60 pb-6">
             <div>
-              <div class="text-[11px] font-mono uppercase tracking-widest text-emerald-400 font-bold">Net Enterprise Impact</div>
-              <div class="text-3xl sm:text-4xl font-extrabold text-white mt-1 tracking-tight" id="dispNetSavings">,250 / yr</div>
-              <div class="text-xs text-slate-400 mt-1">Direct liability reduction and procurement compliance savings</div>
+              <div class="text-[11px] font-mono uppercase tracking-widest text-emerald-400 font-bold">Net Enterprise Financial Impact</div>
+              <div class="text-3xl sm:text-4xl font-extrabold text-white mt-1 tracking-tight" id="dispNetSavings">$548,250 / yr</div>
+              <div class="text-xs text-slate-400 mt-1">Direct liability elimination, subprocessor DPA savings &amp; regulatory fine risk mitigation</div>
             </div>
             
-            <div class="sm:text-right bg-slate-800/80 px-4 py-3 rounded-xl border border-slate-700">
+            <div class="sm:text-right bg-slate-800/80 px-4 py-3 rounded-xl border border-slate-700 shrink-0">
               <div class="text-[10px] font-mono uppercase text-slate-400 font-semibold">Calculated ROI</div>
-              <div class="text-3xl font-extrabold text-emerald-400 font-mono mt-0.5" id="dispRoiMultiple">45.7x</div>
+              <div class="text-3xl font-extrabold text-emerald-400 font-mono mt-0.5" id="dispRoiMultiple">46.7x</div>
               <div class="text-[10px] text-slate-400 mt-0.5">Return on investment multiple</div>
             </div>
           </div>
@@ -346,19 +365,19 @@
           <!-- Micro Breakdown Grid -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 text-xs">
             <div>
-              <div class="text-slate-400 font-medium">Unmitigated Exposure</div>
+              <div class="text-slate-400 font-medium">Unmitigated Risk Exposure</div>
               <div class="text-base font-bold text-rose-400 font-mono mt-1" id="dispTotalExposure">$560,250</div>
               <div class="text-[10px] text-slate-400 mt-0.5">Breach + DPA + Fine Risk</div>
             </div>
             <div>
-              <div class="text-slate-400 font-medium">Subprocessor Savings</div>
+              <div class="text-slate-400 font-medium">Subprocessor Chain Savings</div>
               <div class="text-base font-bold text-emerald-400 font-mono mt-1" id="dispDpaSavings">$75,000</div>
-              <div class="text-[10px] text-slate-400 mt-0.5">Vendor DPA reviews eliminated</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">3 LLM provider DPAs eliminated</div>
             </div>
             <div>
-              <div class="text-slate-400 font-medium">ZTDS Protection Cost</div>
+              <div class="text-slate-400 font-medium">ZTDS Invariant Cost</div>
               <div class="text-base font-bold text-slate-200 font-mono mt-1" id="dispTco">$12,000</div>
-              <div class="text-[10px] text-slate-400 mt-0.5">Predictable flat licensing</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">Flat predictable annual licensing</div>
             </div>
           </div>
         </div>
@@ -373,7 +392,7 @@
             </div>
             <div class="text-2xl font-bold text-slate-900 font-mono mt-2" id="dispAnnualRecords">4,500,000</div>
             <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-              PII/PHI records exposed to third-party model providers prior to ZTDS Invariant 1 enforcement.
+              Sensitive PII/PHI entities traversing local pipeline before ZTDS Invariant 1 in-RAM de-identification.
             </p>
           </div>
 
@@ -384,32 +403,99 @@
             </div>
             <div class="text-2xl font-bold text-slate-900 font-mono mt-2" id="dispBreachCost">$435,250</div>
             <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-              Statistical breach probability (7.8%) multiplied by per-record mitigation and notification cost.
+              Statistical incidence (~7.8%) across LLM model caches &amp; logs multiplied by per-record notification and remediation cost.
             </p>
           </div>
 
           <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm">
             <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
-              <span>Vendor DPA Overhead</span>
+              <span>Subprocessor Chain Overhead</span>
               <span class="font-mono text-blue-700 font-bold text-[11px]">GDPR ART. 28</span>
             </div>
             <div class="text-2xl font-bold text-slate-900 font-mono mt-2" id="dispVendorOverhead">$75,000</div>
             <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-              Annual legal, TPRM, and SOC 2 subprocessor chain audit costs eliminated via Zero-DPA status.
+              Annual legal counsel, TPRM SIG Lite reviews, and SOC 2 subprocessor audits eliminated via Zero-DPA status.
             </p>
           </div>
 
           <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm">
             <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
               <span>Statutory Fine Exposure</span>
-              <span class="font-mono text-amber-700 font-bold text-[11px]">REGULATORY CAP</span>
+              <span class="font-mono text-amber-700 font-bold text-[11px]" id="statutoryLabelBadge">REGULATORY CAP</span>
             </div>
             <div class="text-2xl font-bold text-slate-900 font-mono mt-2" id="dispRegulatoryFine">$50,000</div>
-            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-              Actuarial weighted exposure against statutory ceilings under GDPR Art. 83 and EU AI Act.
+            <p class="text-xs text-slate-500 mt-1 leading-relaxed" id="dispRegulatoryFineSub">
+              Actuarial risk-weighted liability calculated against statutory caps under GDPR Art. 83 and EU AI Act Art. 99.
             </p>
           </div>
 
+        </div>
+
+        <!-- Statutory Regulatory Fine Decomposition Panel -->
+        <div class="ztds-card p-6 bg-white border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
+              <span class="font-bold text-xs text-slate-900 uppercase font-mono tracking-wider">Statutory Regulatory Fine Decomposition</span>
+            </div>
+            <span class="text-[11px] font-mono text-slate-500 font-semibold" id="dispActiveRegimeCode">GDPR 4% &middot; EU AI ACT</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-3.5 bg-slate-50 rounded-lg border border-slate-200 text-xs">
+              <div class="text-slate-500 font-medium">Maximum Statutory Legal Ceiling:</div>
+              <div class="text-lg font-bold text-slate-900 font-mono mt-0.5" id="dispStatutoryCeiling">$3,500,000</div>
+              <div class="text-[11px] text-slate-500 mt-1" id="dispStatutoryCeilingNote">Max fine under GDPR Art. 83(5) (4% of $50M) + EU AI Act Art. 99 (3%)</div>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 rounded-lg border border-slate-200 text-xs">
+              <div class="text-slate-500 font-medium">Actuarial Risk-Weighted Exposure:</div>
+              <div class="text-lg font-bold text-amber-700 font-mono mt-0.5" id="dispActuarialFine">$50,000 / yr</div>
+              <div class="text-[11px] text-slate-500 mt-1">Expected annual loss given 2.5% enforcement audit incidence probability</div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-lg bg-emerald-50/70 border border-emerald-200 text-xs space-y-1.5">
+            <div class="font-bold text-emerald-900 flex items-center gap-1.5">
+              <span>ZTDS Invariant Statutory Defense Basis:</span>
+            </div>
+            <p class="text-slate-700 leading-relaxed" id="dispStatutoryDefense">
+              <strong>GDPR Recital 26 &amp; Article 28 Exemption:</strong> Principles of data protection do not apply to anonymous information. By enforcing Invariant 1 (Zero-Egress) and executing irreversible de-identification inside client-side volatile memory prior to network serialization, external LLM APIs never receive personal data. They are lawfully excluded from the Article 28 subprocessor chain, shielding the enterprise from statutory 4% fines.
+            </p>
+          </div>
+        </div>
+
+        <!-- Subprocessor Chain Decomposition Panel -->
+        <div class="ztds-card p-6 bg-white border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-600 inline-block"></span>
+              <span class="font-bold text-xs text-slate-900 uppercase font-mono tracking-wider">Subprocessor Chain Elimination Breakdown</span>
+            </div>
+            <span class="text-[11px] font-mono text-slate-500 font-semibold" id="dispVendorsCountBadge">3 Connected LLM Providers</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+              <div class="text-slate-500 font-medium">Legal DPA Contract Review</div>
+              <div class="text-sm font-bold text-slate-900 font-mono mt-1" id="dispSubLegal">$24,000 / yr</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">$8,000 / vendor annually</div>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+              <div class="text-slate-500 font-medium">TPRM &amp; SIG Lite Audits</div>
+              <div class="text-sm font-bold text-slate-900 font-mono mt-1" id="dispSubTprm">$27,000 / yr</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">$9,000 / vendor annually</div>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+              <div class="text-slate-500 font-medium">SOC 2 Continuous Monitoring</div>
+              <div class="text-sm font-bold text-slate-900 font-mono mt-1" id="dispSubSoc2">$24,000 / yr</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">$8,000 / vendor annually</div>
+            </div>
+          </div>
+
+          <p class="text-[11px] text-slate-500 leading-relaxed">
+            Eliminated via <strong>ZTDS Invariant 4</strong>. Because foundation models receive strictly de-identified tokens, no Data Processing Addendum (DPA) or Business Associate Agreement (BAA) is required with OpenAI, Anthropic, or cloud providers.
+          </p>
         </div>
 
         <!-- Visual Risk Comparison Bar -->
@@ -452,16 +538,16 @@
             <div class="flex items-start gap-2.5">
               <span class="w-2 h-2 rounded-full bg-emerald-600 mt-1.5 shrink-0"></span>
               <div>
-                <strong class="text-slate-900 font-semibold">GDPR Recital 26 Compliance:</strong>
-                Data is rendered anonymous prior to traversing the execution boundary. Downstream LLM APIs never receive personal data, lawfully removing them from the subprocessor chain under Article 28.
+                <strong class="text-slate-900 font-semibold">GDPR Recital 26 &amp; EU AI Act Alignment:</strong>
+                Data is rendered anonymous prior to traversing the execution boundary. Downstream LLM APIs never receive personal data, lawfully removing them from the subprocessor chain under Article 28 and satisfying EU AI Act Article 50 transparency mandates.
               </div>
             </div>
 
             <div class="flex items-start gap-2.5">
               <span class="w-2 h-2 rounded-full bg-emerald-600 mt-1.5 shrink-0"></span>
               <div>
-                <strong class="text-slate-900 font-semibold">Deterministic Zero-Latency Egress:</strong>
-                Local WebAssembly and Nitro Enclave runtime performs reversible cryptographic tokenization in &lt;1.2 ms with zero external telemetry or SaaS proxy bottlenecks.
+                <strong class="text-slate-900 font-semibold">Sub-Millisecond In-Memory Execution:</strong>
+                Local WebAssembly and Nitro Enclave runtime performs reversible cryptographic tokenization in &lt;0.8 ms with zero external telemetry or SaaS proxy latency bottlenecks.
               </div>
             </div>
 
@@ -478,7 +564,7 @@
         <!-- Action Controls Suite -->
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 no-print pt-2">
           <button type="button" id="btnPrintMemo" class="btn-outline flex-1 py-3 px-4 text-xs font-semibold text-center justify-center">
-            Print Board Memo (PDF)
+            Print Executive Board Memo (PDF)
           </button>
           
           <a href="/sdk/" class="btn-trust flex-1 py-3 px-4 text-xs font-semibold text-center justify-center shadow-sm">
@@ -495,7 +581,8 @@
     </div>
 
   </main>
-<!-- 5-Column Institutional Light Footer -->
+
+  <!-- 5-Column Institutional Light Footer -->
   <footer class="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-12 text-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
@@ -604,6 +691,7 @@
 
     </div>
   </footer>
+
   <!-- Nav Scripts & Calculator Logic -->
   <script src="/nav.js"></script>
   <script>
@@ -617,9 +705,11 @@
       const labelRecords = document.getElementById('labelRecords');
       const inputVendors = document.getElementById('inputVendors');
       const labelVendors = document.getElementById('labelVendors');
+      const selectRegime = document.getElementById('selectRegime');
       const selectIndustry = document.getElementById('selectIndustry');
       const selectRevenue = document.getElementById('selectRevenue');
       const selectTier = document.getElementById('selectTier');
+      const regimeDescription = document.getElementById('regimeDescription');
 
       // Display outputs
       const dispNetSavings = document.getElementById('dispNetSavings');
@@ -631,6 +721,22 @@
       const dispBreachCost = document.getElementById('dispBreachCost');
       const dispVendorOverhead = document.getElementById('dispVendorOverhead');
       const dispRegulatoryFine = document.getElementById('dispRegulatoryFine');
+      const dispRegulatoryFineSub = document.getElementById('dispRegulatoryFineSub');
+      const statutoryLabelBadge = document.getElementById('statutoryLabelBadge');
+      
+      // Statutory Decomposition Elements
+      const dispActiveRegimeCode = document.getElementById('dispActiveRegimeCode');
+      const dispStatutoryCeiling = document.getElementById('dispStatutoryCeiling');
+      const dispStatutoryCeilingNote = document.getElementById('dispStatutoryCeilingNote');
+      const dispActuarialFine = document.getElementById('dispActuarialFine');
+      const dispStatutoryDefense = document.getElementById('dispStatutoryDefense');
+
+      // Subprocessor Decomposition Elements
+      const dispVendorsCountBadge = document.getElementById('dispVendorsCountBadge');
+      const dispSubLegal = document.getElementById('dispSubLegal');
+      const dispSubTprm = document.getElementById('dispSubTprm');
+      const dispSubSoc2 = document.getElementById('dispSubSoc2');
+
       const barLabelUnmitigated = document.getElementById('barLabelUnmitigated');
       const barLabelZtds = document.getElementById('barLabelZtds');
       const barZtds = document.getElementById('barZtds');
@@ -645,6 +751,7 @@
         const ratio = (parseFloat(inputRatio.value) || 0) / 100;
         const recordsPerPrompt = parseFloat(inputRecords.value) || 1;
         const vendors = parseFloat(inputVendors.value) || 1;
+        const regime = selectRegime.value;
         
         const selectedOpt = selectIndustry.options[selectIndustry.selectedIndex];
         const costPerRecord = parseFloat(selectedOpt.getAttribute('data-cost')) || 165;
@@ -661,15 +768,67 @@
         const normalizedBreachCost = Math.max(expectedBreachCost, 45000);
 
         // 3. Subprocessor DPA & TPRM Overhead Elimination
-        // Legal + compliance cost per vendor subprocessor review: ,000 / year
+        // Legal ($8k) + TPRM ($9k) + SOC 2 subprocessor chain audit ($8k) = $25,000 / vendor / year
+        const subLegal = vendors * 8000;
+        const subTprm = vendors * 9000;
+        const subSoc2 = vendors * 8000;
         const dpaSavings = vendors * 25000;
 
-        // 4. Regulatory Fine Actuarial Exposure
-        // Statutory GDPR cap 4% turnover; actuarial probability weighting ~0.001
-        const regulatoryExposure = revenue * 0.04 * 0.025;
+        // 4. Regulatory Fine Statutory Ceilings & Actuarial Weighted Risk
+        let statutoryCeiling = 0;
+        let statutoryCeilingNote = '';
+        let actuarialFine = 0;
+        let statutoryDefense = '';
+        let regimeCode = 'GDPR 4% · EU AI ACT';
+        let badgeLabel = 'GDPR & EU AI ACT';
+
+        if (regime === 'global') {
+          regimeCode = 'GLOBAL MULTI-REGIME';
+          badgeLabel = 'GLOBAL STATUTORY';
+          // GDPR Art. 83(5) 4% ($2M for $50M) + EU AI Act Art. 99(4) 3% ($1.5M for $50M) + US State Laws
+          statutoryCeiling = (revenue * 0.07) + 2067813;
+          statutoryCeilingNote = `GDPR Art. 83(5) 4% (${fmtCur.format(revenue * 0.04)}) + EU AI Act Art. 99 3% (${fmtCur.format(revenue * 0.03)}) + US HITECH/State Cap`;
+          actuarialFine = (revenue * 0.04 * 0.02) + 35000;
+          statutoryDefense = '<strong>GDPR Recital 26, EU AI Act Art. 50 &amp; US State Shield:</strong> Principles of data protection do not apply to anonymous information. By enforcing Invariant 1 (Zero-Egress) client-side in RAM prior to network serialization, external LLM APIs receive only syntactic surrogate tokens. Downstream model vendors are excluded from GDPR Article 28 subprocessor chains and US statutory discovery scope.';
+          regimeDescription.textContent = 'Evaluates combined GDPR Recital 26 de-identification and statutory fine caps across international jurisdictions.';
+        } else if (regime === 'eu') {
+          regimeCode = 'EU GDPR & AI ACT';
+          badgeLabel = 'GDPR ART. 83';
+          statutoryCeiling = revenue * 0.07;
+          statutoryCeilingNote = `Maximum statutory ceiling under GDPR Art. 83(5) (4% of turnover) and EU AI Act Art. 99(4) (3% transparency/data governance)`;
+          actuarialFine = revenue * 0.04 * 0.025;
+          statutoryDefense = '<strong>GDPR Recital 26 &amp; EU AI Act Art. 50 Compliance:</strong> Personal data is rendered anonymous prior to traversing the client execution boundary. Downstream foundation models never receive personal data, lawfully removing them from the Article 28 subprocessor chain and eliminating exposure to statutory 4% turnover fines.';
+          regimeDescription.textContent = 'Enforces GDPR Article 83(5) (up to 4% worldwide turnover or €20M) and EU AI Act Article 99 penalties.';
+        } else if (regime === 'us_hipaa') {
+          regimeCode = 'US HIPAA SAFE HARBOR';
+          badgeLabel = 'HITECH TIER 4';
+          statutoryCeiling = 2067813;
+          statutoryCeilingNote = 'HITECH Tier 4 statutory annual penalty cap ($2,067,813 per calendar year for uncorrected willful neglect)';
+          actuarialFine = Math.min(2067813, (annualRecords * 0.012) + 48000);
+          statutoryDefense = '<strong>HIPAA Safe Harbor 45 CFR § 164.514(b):</strong> All 18 statutory PHI identifiers are purged locally in workstation volatile RAM before API transmission. Zero Protected Health Information crosses external sockets, eliminating the requirement for third-party Business Associate Agreements (BAAs) with LLM vendors.';
+          regimeDescription.textContent = 'Enforces HIPAA Safe Harbor de-identification and HITECH statutory penalty ceilings for clinical healthcare.';
+        } else if (regime === 'us_fintech') {
+          regimeCode = 'US GLBA & SEC 106';
+          badgeLabel = 'FINANCIAL RISK';
+          statutoryCeiling = Math.min(revenue * 0.02, 25000000);
+          statutoryCeilingNote = 'GLBA 15 U.S.C. § 6801 safeguard penalties and SEC Item 106 material cybersecurity disclosure exposure';
+          actuarialFine = (revenue * 0.02 * 0.02) + 32000;
+          statutoryDefense = '<strong>GLBA Safeguards Rule &amp; PCI-DSS 4.0:</strong> Primary Account Numbers (PAN), CVVs, and wire routing identifiers are masked in-RAM with bijective tokens. Third-party LLM providers never touch non-public personal information (NPI), preserving SOC 2 Type II boundary controls.';
+          regimeDescription.textContent = 'Evaluates Gramm-Leach-Bliley Act (GLBA) and SEC cybersecurity disclosure compliance for banking & fintech.';
+        } else if (regime === 'us_legal') {
+          regimeCode = 'US FRE 502 PRIVILEGE';
+          badgeLabel = 'FRE 502 NON-WAIVER';
+          statutoryCeiling = Math.min(revenue * 0.015, 10000000);
+          statutoryCeilingNote = 'Subject-matter privilege waiver liability across commercial discovery and civil litigation under Federal Rule of Evidence 502';
+          actuarialFine = (revenue * 0.015 * 0.02) + 40000;
+          statutoryDefense = '<strong>Federal Rule of Evidence 502(b) Statutory Privilege Defense:</strong> Client-side deterministic surrogate tokenization establishes proactive reasonable precautions against inadvertent disclosure. Prevents subject-matter privilege waiver during AI-assisted discovery, litigation review, and M&amp;A due diligence.';
+          regimeDescription.textContent = 'Calculates statutory attorney-client privilege protection and work-product doctrine defense under FRE 502.';
+        }
+
+        const regulatoryExposure = Math.round(actuarialFine);
 
         // 5. Total Exposure & Net Savings
-        const totalExposure = normalizedBreachCost + dpaSavings + regulatoryExposure;
+        const totalExposure = Math.round(normalizedBreachCost + dpaSavings + regulatoryExposure);
         const netSavings = Math.max(0, totalExposure - tco);
         const roiMultiple = tco > 0 ? (totalExposure / tco) : 0;
 
@@ -687,9 +846,24 @@
         dispTco.textContent = fmtCur.format(tco);
 
         dispAnnualRecords.textContent = fmtNum.format(Math.round(annualRecords));
-        dispBreachCost.textContent = fmtCur.format(normalizedBreachCost);
+        dispBreachCost.textContent = fmtCur.format(Math.round(normalizedBreachCost));
         dispVendorOverhead.textContent = fmtCur.format(dpaSavings);
         dispRegulatoryFine.textContent = fmtCur.format(regulatoryExposure);
+        statutoryLabelBadge.textContent = badgeLabel;
+        dispRegulatoryFineSub.textContent = `Actuarial annual liability under ${regimeCode} given probabilistic enforcement audits.`;
+
+        // Update Statutory Decomposition Box
+        dispActiveRegimeCode.textContent = regimeCode;
+        dispStatutoryCeiling.textContent = fmtCur.format(Math.round(statutoryCeiling));
+        dispStatutoryCeilingNote.textContent = statutoryCeilingNote;
+        dispActuarialFine.textContent = fmtCur.format(regulatoryExposure) + ' / yr';
+        dispStatutoryDefense.innerHTML = statutoryDefense;
+
+        // Update Subprocessor Decomposition Box
+        dispVendorsCountBadge.textContent = `${vendors} Connected LLM Provider${vendors > 1 ? 's' : ''}`;
+        dispSubLegal.textContent = fmtCur.format(subLegal) + ' / yr';
+        dispSubTprm.textContent = fmtCur.format(subTprm) + ' / yr';
+        dispSubSoc2.textContent = fmtCur.format(subSoc2) + ' / yr';
 
         barLabelUnmitigated.textContent = fmtCur.format(totalExposure);
         const pctZtds = Math.min(100, Math.max(1, (tco / totalExposure) * 100));
@@ -698,7 +872,7 @@
       }
 
       // Event listeners
-      [inputCalls, inputRatio, inputRecords, inputVendors, selectIndustry, selectRevenue, selectTier].forEach(el => {
+      [inputCalls, inputRatio, inputRecords, inputVendors, selectRegime, selectIndustry, selectRevenue, selectTier].forEach(el => {
         el.addEventListener('input', calculate);
         el.addEventListener('change', calculate);
       });
@@ -709,6 +883,7 @@
         inputRatio.value = 20;
         inputRecords.value = 3;
         inputVendors.value = 3;
+        selectRegime.value = 'eu';
         selectIndustry.value = 'saas';
         selectRevenue.value = '50000000';
         selectTier.value = '12000';
@@ -720,6 +895,7 @@
         inputRatio.value = 40;
         inputRecords.value = 5;
         inputVendors.value = 4;
+        selectRegime.value = 'us_fintech';
         selectIndustry.value = 'fintech';
         selectRevenue.value = '250000000';
         selectTier.value = '12000';
@@ -731,8 +907,21 @@
         inputRatio.value = 65;
         inputRecords.value = 6;
         inputVendors.value = 2;
+        selectRegime.value = 'us_hipaa';
         selectIndustry.value = 'healthcare';
         selectRevenue.value = '100000000';
+        selectTier.value = '12000';
+        calculate();
+      });
+
+      document.getElementById('presetLegal').addEventListener('click', () => {
+        inputCalls.value = 200000;
+        inputRatio.value = 50;
+        inputRecords.value = 4;
+        inputVendors.value = 2;
+        selectRegime.value = 'us_legal';
+        selectIndustry.value = 'legal';
+        selectRevenue.value = '50000000';
         selectTier.value = '12000';
         calculate();
       });
@@ -742,6 +931,7 @@
         inputRatio.value = 35;
         inputRecords.value = 8;
         inputVendors.value = 6;
+        selectRegime.value = 'global';
         selectIndustry.value = 'saas';
         selectRevenue.value = '1000000000';
         selectTier.value = '35000';
