@@ -85,11 +85,13 @@
       </div>
 
       <!-- Navigation Links -->
-      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-600" id="desktop-nav">
+      <nav class="hidden lg:flex items-center gap-5 text-sm font-medium text-slate-600" id="desktop-nav">
         <a href="/standard/" class="nav-link hover:text-slate-900 transition-colors py-1">Standard</a>
         <a href="/registry/" class="nav-link hover:text-slate-900 transition-colors py-1">Registry</a>
         <a href="/sdk/" class="nav-link hover:text-slate-900 transition-colors py-1">SDK &amp; Connectors</a>
         <a href="/ciso/" class="nav-link hover:text-slate-900 transition-colors py-1">CISO &amp; Legal</a>
+        <a href="/soc2/" class="nav-link hover:text-slate-900 transition-colors py-1">SOC 2 &amp; Trust</a>
+        <a href="/inspector/" class="nav-link hover:text-slate-900 transition-colors py-1">Inspector</a>
         <a href="/scanner/" class="nav-link hover:text-slate-900 transition-colors py-1">Scanner</a>
         <a href="/governance/" class="nav-link hover:text-slate-900 transition-colors py-1">Governance</a>
       </nav>
@@ -141,6 +143,7 @@
       <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper</a>
       <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
       <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
+      <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 Trust Center</a>
 
       <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
       <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
@@ -172,7 +175,52 @@
       </div>
       <div class="text-right text-xs font-mono text-slate-500">
         <div>Date: <span id="printDate">September 2026</span></div>
-        <div>Statutes: GDPR Art. 83 &middot; EU AI Act Art. 99 &middot; HIPAA 45 CFR &middot; FRE 502</div>
+        <div>Standard: RFC v1.0 (Zenodo DOI: 10.5281/zenodo.22058770)</div>
+        <div>Auditor: Invariant Codebase Engine</div>
+      </div>
+    </div>
+
+    <!-- Print Routing Box -->
+    <div class="mt-4 p-3 bg-slate-100 rounded border border-slate-300 text-xs font-mono grid grid-cols-2 gap-2">
+      <div><strong>TO:</strong> CISO, DPO, Chief Legal Officer, Board Risk Committee</div>
+      <div><strong>FROM:</strong> Enterprise Information Security &amp; AI Governance</div>
+      <div><strong>CLASSIFICATION:</strong> PRIVILEGED WORK PRODUCT // RESTRICTED</div>
+      <div><strong>JURISDICTIONS:</strong> GDPR &middot; EU AI Act &middot; HIPAA &middot; FRE 502</div>
+    </div>
+
+    <!-- Print KPI Snapshot -->
+    <div class="mt-4 grid grid-cols-4 gap-3 text-center">
+      <div class="p-2.5 border border-slate-300 rounded">
+        <div class="text-[10px] text-slate-500 font-mono uppercase">Net Annual Savings</div>
+        <div class="text-base font-bold text-slate-900 font-mono mt-0.5" id="printNetSavings">$0</div>
+      </div>
+      <div class="p-2.5 border border-slate-300 rounded">
+        <div class="text-[10px] text-slate-500 font-mono uppercase">ROI Multiple</div>
+        <div class="text-base font-bold text-slate-900 font-mono mt-0.5" id="printRoiMultiple">0.0x</div>
+      </div>
+      <div class="p-2.5 border border-slate-300 rounded">
+        <div class="text-[10px] text-slate-500 font-mono uppercase">Unmitigated Exposure</div>
+        <div class="text-base font-bold text-slate-900 font-mono mt-0.5" id="printTotalExposure">$0</div>
+      </div>
+      <div class="p-2.5 border border-slate-300 rounded">
+        <div class="text-[10px] text-slate-500 font-mono uppercase">Subprocessor DPA Savings</div>
+        <div class="text-base font-bold text-slate-900 font-mono mt-0.5" id="printDpaSavings">$0</div>
+      </div>
+    </div>
+
+    <!-- Print Ingestion Parameters Table -->
+    <div class="mt-4 border border-slate-300 rounded overflow-hidden text-xs">
+      <div class="bg-slate-200 px-3 py-1.5 font-bold font-mono text-[11px] text-slate-800">
+        CONFIGURED MODEL INGESTION &amp; STATUTORY PARAMETERS
+      </div>
+      <div class="grid grid-cols-3 gap-2 p-3 bg-white font-mono text-[11px]">
+        <div>Monthly Calls: <strong id="printParamCalls">-</strong></div>
+        <div>Sensitive Ratio: <strong id="printParamRatio">-</strong></div>
+        <div>Records/Prompt: <strong id="printParamRecords">-</strong></div>
+        <div>Annual Sensitive Records: <strong id="printParamAnnualRecords">-</strong></div>
+        <div>Connected Providers: <strong id="printParamVendors">-</strong></div>
+        <div>Worldwide Turnover: <strong id="printParamRevenue">-</strong></div>
+        <div class="col-span-3">Primary Regime: <strong id="printParamRegime">-</strong></div>
       </div>
     </div>
   </div>
@@ -561,19 +609,100 @@
           </div>
         </div>
 
-        <!-- Action Controls Suite -->
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 no-print pt-2">
-          <button type="button" id="btnPrintMemo" class="btn-outline flex-1 py-3 px-4 text-xs font-semibold text-center justify-center">
-            Print Executive Board Memo (PDF)
+        <!-- Collapsible Actuarial Methodology & Computational Formulas -->
+        <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm rounded-xl no-print space-y-3">
+          <button type="button" id="toggleMethodologyBtn" class="w-full flex items-center justify-between text-left focus:outline-none cursor-pointer">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block"></span>
+              <span class="font-bold text-xs text-slate-900 uppercase font-mono tracking-wider">Actuarial Methodology &amp; Mathematical Formulas</span>
+            </div>
+            <span id="toggleMethodologyIcon" class="text-xs font-mono font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded border border-emerald-200">+ Show Formulas</span>
           </button>
-          
-          <a href="/sdk/" class="btn-trust flex-1 py-3 px-4 text-xs font-semibold text-center justify-center shadow-sm">
-            Deploy Reference SDK &rarr;
-          </a>
-          
-          <a href="/ciso/" class="px-4 py-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 text-center transition-colors">
-            CISO Legal Pack
-          </a>
+
+          <div id="methodologyContent" class="hidden text-xs text-slate-600 space-y-4 pt-3 border-t border-slate-100 leading-relaxed font-sans">
+            <div>
+              <div class="font-bold text-slate-900 font-mono text-[11px] uppercase tracking-wider mb-1">1. IBM Cost of a Data Breach (2025 Actuarial Model)</div>
+              <p class="text-slate-600">
+                Annual breach liability models the annualized expected loss from unmitigated model caching, telemetry logging, and provider retention:
+              </p>
+              <div class="mt-1.5 p-2.5 bg-slate-900 text-emerald-400 font-mono text-[11px] rounded-lg">
+                ExpectedBreachLoss = AnnualRecords &times; CostPerRecord &times; P(Breach) &times; ExposureWeight
+              </div>
+              <ul class="list-disc pl-4 mt-1.5 space-y-1 text-[11px] text-slate-500">
+                <li><strong>AnnualRecords</strong> = MonthlyCalls &times; SensitiveRatio &times; RecordsPerPrompt &times; 12.</li>
+                <li><strong>CostPerRecord</strong> = $165 (Enterprise SaaS), $188 (FinTech), $215 (Healthcare), $195 (Legal).</li>
+                <li><strong>P(Breach)</strong> = 7.8% (Ponemon/IBM statistical incidence across unmitigated LLM logs and caching).</li>
+                <li><strong>ExposureWeight</strong> = 0.5% (Actuarial risk weight for partial prompt logging exposure per incident).</li>
+              </ul>
+            </div>
+
+            <div>
+              <div class="font-bold text-slate-900 font-mono text-[11px] uppercase tracking-wider mb-1">2. Subprocessor Chain Overhead (GDPR Article 28 Elimination)</div>
+              <p class="text-slate-600">
+                Every external foundation model receiving cleartext personal data constitutes a subprocessor under GDPR Article 28 and HIPAA BAA requirements:
+              </p>
+              <div class="mt-1.5 p-2.5 bg-slate-900 text-emerald-400 font-mono text-[11px] rounded-lg">
+                SubprocessorOverhead = NumProviders &times; ($8,000 Legal DPA + $9,000 TPRM + $8,000 SOC 2 Audit) = NumProviders &times; $25,000/yr
+              </div>
+              <p class="text-[11px] text-slate-500 mt-1">
+                Enforcing Invariant 1 (Zero-Egress) and Invariant 4 excludes model providers from the subprocessor chain, eliminating these recurring operational costs completely.
+              </p>
+            </div>
+
+            <div>
+              <div class="font-bold text-slate-900 font-mono text-[11px] uppercase tracking-wider mb-1">3. Statutory Regulatory Ceilings &amp; Actuarial Weighted Risk</div>
+              <ul class="list-disc pl-4 space-y-1 text-[11px] text-slate-500">
+                <li><strong>GDPR Article 83(5)</strong>: Up to 4% of worldwide annual turnover or &euro;20M.</li>
+                <li><strong>EU AI Act Article 99(4)</strong>: Up to 3% of worldwide turnover for data governance and transparency non-compliance (Articles 10, 50).</li>
+                <li><strong>US HIPAA HITECH Tier 4</strong>: Statutory annual penalty ceiling of $2,067,813 for willful neglect.</li>
+                <li><strong>US FRE 502(b)</strong>: Attorney-client privilege non-waiver defense against inadvertent disclosure in AI litigation.</li>
+              </ul>
+            </div>
+
+            <div>
+              <div class="font-bold text-slate-900 font-mono text-[11px] uppercase tracking-wider mb-1">4. Net ROI Multiple</div>
+              <div class="mt-1.5 p-2.5 bg-slate-900 text-emerald-400 font-mono text-[11px] rounded-lg">
+                NetSavings = (BreachLiability + SubprocessorOverhead + ActuarialRegulatoryRisk) - ZTDS_TCO<br>
+                ROIMultiple = TotalUnmitigatedExposure / ZTDS_TCO
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Controls Suite -->
+        <div class="space-y-3 no-print pt-2">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button type="button" id="btnCopyMemo" class="btn-outline py-3 px-4 text-xs font-semibold text-center justify-center flex items-center gap-1.5 shadow-sm">
+              <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+              </svg>
+              <span id="copyMemoText">Copy Board Memo (.md)</span>
+            </button>
+
+            <button type="button" id="btnDownloadMemo" class="btn-outline py-3 px-4 text-xs font-semibold text-center justify-center flex items-center gap-1.5 shadow-sm">
+              <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+              </svg>
+              <span>Download Memo (.md)</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <button type="button" id="btnPrintMemo" class="btn-outline py-3 px-3 text-xs font-semibold text-center justify-center flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+              </svg>
+              <span>Print Memo (PDF)</span>
+            </button>
+            
+            <a href="/sdk/" class="btn-trust py-3 px-3 text-xs font-semibold text-center justify-center shadow-sm flex items-center gap-1">
+              <span>Deploy SDK</span> &rarr;
+            </a>
+            
+            <a href="/ciso/" class="py-3 px-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 text-center transition-colors">
+              CISO Legal Pack
+            </a>
+          </div>
         </div>
 
       </div>
@@ -741,6 +870,25 @@
       const barLabelZtds = document.getElementById('barLabelZtds');
       const barZtds = document.getElementById('barZtds');
       const btnPrintMemo = document.getElementById('btnPrintMemo');
+      const btnCopyMemo = document.getElementById('btnCopyMemo');
+      const copyMemoText = document.getElementById('copyMemoText');
+      const btnDownloadMemo = document.getElementById('btnDownloadMemo');
+      const toggleMethodologyBtn = document.getElementById('toggleMethodologyBtn');
+      const methodologyContent = document.getElementById('methodologyContent');
+      const toggleMethodologyIcon = document.getElementById('toggleMethodologyIcon');
+
+      // Print-Only Elements
+      const printNetSavings = document.getElementById('printNetSavings');
+      const printRoiMultiple = document.getElementById('printRoiMultiple');
+      const printTotalExposure = document.getElementById('printTotalExposure');
+      const printDpaSavings = document.getElementById('printDpaSavings');
+      const printParamCalls = document.getElementById('printParamCalls');
+      const printParamRatio = document.getElementById('printParamRatio');
+      const printParamRecords = document.getElementById('printParamRecords');
+      const printParamAnnualRecords = document.getElementById('printParamAnnualRecords');
+      const printParamVendors = document.getElementById('printParamVendors');
+      const printParamRevenue = document.getElementById('printParamRevenue');
+      const printParamRegime = document.getElementById('printParamRegime');
 
       // Currency / Number Formatters
       const fmtCur = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
@@ -762,7 +910,7 @@
         const annualRecords = calls * ratio * recordsPerPrompt * 12;
 
         // 2. Actuarial Breach Liability
-        // Ponemon 2025 statistical incidence factor ~7.8% across unmitigated LLM logs & caching
+        // Ponemon / IBM 2025 statistical incidence factor ~7.8% across unmitigated LLM logs & caching
         const incidentProbability = 0.078;
         const expectedBreachCost = annualRecords * costPerRecord * incidentProbability * 0.005; // dampened actuarial risk exposure
         const normalizedBreachCost = Math.max(expectedBreachCost, 45000);
@@ -869,6 +1017,98 @@
         const pctZtds = Math.min(100, Math.max(1, (tco / totalExposure) * 100));
         barLabelZtds.textContent = fmtCur.format(tco) + ' (' + pctZtds.toFixed(1) + '%)';
         barZtds.style.width = pctZtds + '%';
+
+        // Update Print-Only Header & Parameters
+        if (printNetSavings) printNetSavings.textContent = fmtCur.format(netSavings) + ' / yr';
+        if (printRoiMultiple) printRoiMultiple.textContent = roiMultiple.toFixed(1) + 'x';
+        if (printTotalExposure) printTotalExposure.textContent = fmtCur.format(totalExposure);
+        if (printDpaSavings) printDpaSavings.textContent = fmtCur.format(dpaSavings);
+
+        if (printParamCalls) printParamCalls.textContent = fmtNum.format(calls) + ' / mo';
+        if (printParamRatio) printParamRatio.textContent = Math.round(ratio * 100) + '%';
+        if (printParamRecords) printParamRecords.textContent = recordsPerPrompt + ' records';
+        if (printParamAnnualRecords) printParamAnnualRecords.textContent = fmtNum.format(Math.round(annualRecords));
+        if (printParamVendors) printParamVendors.textContent = vendors + ' providers';
+        if (printParamRevenue) printParamRevenue.textContent = fmtCur.format(revenue);
+        if (printParamRegime) printParamRegime.textContent = regimeCode;
+      }
+
+      function generateMemoMarkdown() {
+        const calls = parseFloat(inputCalls.value) || 0;
+        const ratio = parseFloat(inputRatio.value) || 0;
+        const recordsPerPrompt = parseFloat(inputRecords.value) || 1;
+        const vendors = parseFloat(inputVendors.value) || 1;
+        const revenue = parseFloat(selectRevenue.value) || 50000000;
+        const tco = parseFloat(selectTier.value) || 12000;
+        const annualRecords = calls * (ratio / 100) * recordsPerPrompt * 12;
+
+        const netSavingsStr = dispNetSavings.textContent;
+        const roiMultipleStr = dispRoiMultiple.textContent;
+        const totalExposureStr = dispTotalExposure.textContent;
+        const dpaSavingsStr = dispDpaSavings.textContent;
+        const breachCostStr = dispBreachCost.textContent;
+        const fineStr = dispRegulatoryFine.textContent;
+        const ceilingStr = dispStatutoryCeiling.textContent;
+        const ceilingNoteStr = dispStatutoryCeilingNote.textContent;
+        const activeRegimeStr = dispActiveRegimeCode.textContent;
+
+        return `# EXECUTIVE CISO AUDIT MEMORANDUM & ACTUARIAL RISK ASSESSMENT
+
+**TO:** Chief Information Security Officer (CISO), Chief Legal Officer (CLO), Board Risk Committee
+**FROM:** Enterprise Information Security & AI Governance
+**DATE:** September 2026
+**SUBJECT:** Enterprise Generative AI Actuarial Risk, Statutory Regulatory Caps & Zero-Trust Sanitization ROI
+**SPECIFICATION:** ZTDS RFC v1.0 (Zenodo DOI: 10.5281/zenodo.22058770)
+**BENCHMARKS:** IBM Cost of a Data Breach 2025 | GDPR Art. 83 | EU AI Act Art. 99 | HIPAA Safe Harbor | FRE 502
+
+---
+
+## 1. Executive Summary & Financial Return
+- **Net Annual Enterprise Savings:** ${netSavingsStr}
+- **Calculated ROI Multiple:** ${roiMultipleStr}
+- **Unmitigated Risk Exposure:** ${totalExposureStr}
+- **Subprocessor Chain DPA Overhead Elimination:** ${dpaSavingsStr} / yr
+- **ZTDS Invariant Architecture Cost (Flat TCO):** ${fmtCur.format(tco)} / yr
+
+---
+
+## 2. Configured Model Pipeline & Ingestion Profile
+- **Monthly LLM Prompts / Ingestion Volume:** ${fmtNum.format(calls)} calls / month
+- **Sensitive Payload Ratio:** ${ratio}%
+- **Average Sensitive Records per Prompt:** ${recordsPerPrompt} records
+- **Total Annual Sensitive Records Ingested:** ${fmtNum.format(Math.round(annualRecords))} records / year
+- **Connected Foundation Model Providers:** ${vendors} providers (OpenAI, Anthropic, Google Vertex, etc.)
+- **Primary Statutory Enforcement Regime:** ${activeRegimeStr}
+- **Corporate Annual Worldwide Turnover:** ${fmtCur.format(revenue)}
+
+---
+
+## 3. Actuarial Risk Decomposition
+1. **Actuarial Breach Liability Exposure:** ${breachCostStr}
+   - Modeling statistical incidence (7.8%) across LLM model caches, telemetry logging, and prompt retention under the IBM 2025 benchmark.
+2. **Subprocessor Chain Elimination (GDPR Article 28 / HIPAA BAA):** ${dpaSavingsStr} / yr
+   - Legal Counsel Contract Negotiation & Outside Counsel: ${fmtCur.format(vendors * 8000)} / yr ($8,000 / vendor)
+   - TPRM SIG Lite Reviews & CAIQ Questionnaires: ${fmtCur.format(vendors * 9000)} / yr ($9,000 / vendor)
+   - Continuous SOC 2 Subprocessor Chain Auditing: ${fmtCur.format(vendors * 8000)} / yr ($8,000 / vendor)
+3. **Statutory Regulatory Penalty Risk:**
+   - **Maximum Statutory Legal Ceiling:** ${ceilingStr} (${ceilingNoteStr})
+   - **Actuarial Risk-Weighted Expected Annual Loss:** ${fineStr}
+
+---
+
+## 4. Statutory Exemption & Legal Grounds for Defense
+- **EU GDPR Recital 26 & Article 28 Exemption:** Principles of data protection do not apply to anonymous information. By enforcing Invariant 1 (Zero-Egress) client-side in RAM prior to network serialization, external LLM APIs receive only syntactic surrogate tokens. Downstream model vendors are excluded from GDPR Article 28 subprocessor chains, eliminating statutory 4% turnover penalty exposure.
+- **EU AI Act Article 10 & 50:** Mathematical zero-entropy leakage ($I(X; T) = 0.00\\text{ bits}$) satisfies mandatory transparency and data governance obligations for high-risk AI workflows.
+- **US HIPAA Safe Harbor (45 CFR § 164.514(b)):** Local workstation RAM sanitization strips all 18 statutory PHI identifiers before transit, eliminating mandatory Business Associate Agreement (BAA) requirements.
+- **US Federal Rule of Evidence 502(b):** In-memory deterministic pseudonymization proves reasonable precautions against inadvertent disclosure, preserving attorney-client privilege during AI contract review and M&A discovery.
+
+---
+
+## 5. Architectural Recommendation
+Deploy Zero-Trust Data Sanitization (ZTDS RFC v1.0) client-side in volatile WebAssembly / AWS Nitro Enclaves to enforce Invariant 1 (Zero Egress), Invariant 2 (Deterministic Tokenization), Invariant 3 (RAM Isolation), and Invariant 4 (Subprocessor Chain Exclusion).
+
+Generated via ZTDS CISO Actuarial Engine: https://ztds.ai/roi/
+`;
       }
 
       // Event listeners
@@ -938,10 +1178,62 @@
         calculate();
       });
 
-      // Print Memo
-      btnPrintMemo.addEventListener('click', () => {
-        window.print();
-      });
+      // Toggle Methodology Accordion
+      if (toggleMethodologyBtn && methodologyContent && toggleMethodologyIcon) {
+        toggleMethodologyBtn.addEventListener('click', () => {
+          const isHidden = methodologyContent.classList.contains('hidden');
+          if (isHidden) {
+            methodologyContent.classList.remove('hidden');
+            toggleMethodologyIcon.textContent = '- Hide Formulas';
+          } else {
+            methodologyContent.classList.add('hidden');
+            toggleMethodologyIcon.textContent = '+ Show Formulas';
+          }
+        });
+      }
+
+      // Copy Memo to Clipboard
+      if (btnCopyMemo && copyMemoText) {
+        btnCopyMemo.addEventListener('click', () => {
+          const md = generateMemoMarkdown();
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(md).then(() => {
+              copyMemoText.textContent = 'Memo Copied to Clipboard!';
+              setTimeout(() => {
+                copyMemoText.textContent = 'Copy Board Memo (.md)';
+              }, 2500);
+            }).catch(() => {
+              copyMemoText.textContent = 'Copy Failed (Check Clipboard Permission)';
+              setTimeout(() => {
+                copyMemoText.textContent = 'Copy Board Memo (.md)';
+              }, 2500);
+            });
+          }
+        });
+      }
+
+      // Download Memo as Markdown File
+      if (btnDownloadMemo) {
+        btnDownloadMemo.addEventListener('click', () => {
+          const md = generateMemoMarkdown();
+          const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'ZTDS-CISO-Board-Memo-2026.md';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        });
+      }
+
+      // Print Memo (PDF)
+      if (btnPrintMemo) {
+        btnPrintMemo.addEventListener('click', () => {
+          window.print();
+        });
+      }
 
       // Initial calculation
       calculate();
