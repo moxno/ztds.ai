@@ -1,11 +1,11 @@
-# ZTDS Entity Taxonomy and 25 Specialized Industry Profiles (SSOT)
+# ZTDS Entity Taxonomy and 30 Specialized Industry Profiles (SSOT)
 
 ## 1. Executive Summary & Architectural Separation
 
 The Zero-Trust Data Sanitization (ZTDS) standard establishes a strict, mathematically verifiable entity classification hierarchy. To prevent data leakage while preserving AI model cognitive context and reasoning capability, entity detection is decoupled into two distinct operational layers:
 
 1. **Universal Consumer PII (`REGEX_RULES`)**: The foundational baseline covering ubiquitous human identifiers (names, emails, phone numbers, standard national IDs, IPv4/IPv6, file paths, physical addresses). This engine runs with a 15,000-character single-scrub quota on the Free Tier across all client platforms.
-2. **25 Specialized Industry Profiles (`PROFILE_RULES`)**: Highly specialized vertical vocabularies, regulatory codes, enterprise credentials, and domain-specific schemas covering 25 business sectors. These profiles run in a 5,000-character trial quota on the Free Tier and require a commercial tier (PRO at $15/mo, TEAMS at $99/mo flat, or DEVELOPER SDK at $199/mo) for unlimited throughput.
+2. **30 Specialized Industry Profiles (`PROFILE_RULES`)**: Highly specialized vertical vocabularies, regulatory codes, enterprise credentials, and domain-specific schemas covering 30 business sectors. These profiles run in a 5,000-character trial quota on the Free Tier and require a commercial tier (PRO at $15/mo, TEAMS at $99/mo flat, or DEVELOPER SDK at $199/mo) for unlimited throughput.
 
 ---
 
@@ -21,7 +21,7 @@ The separation between `REGEX_RULES` and `PROFILE_RULES` is an immutable economi
 
 ## 3. Universal Consumer PII Taxonomy (`REGEX_RULES`)
 
-`REGEX_RULES` is active across all 25 profiles as the baseline filter. It extracts:
+`REGEX_RULES` is active across all 30 profiles as the baseline filter. It extracts:
 
 | Entity Type | Scope & Patterns | Token Format | Edge Handling |
 | :--- | :--- | :--- | :--- |
@@ -37,7 +37,7 @@ The separation between `REGEX_RULES` and `PROFILE_RULES` is an immutable economi
 
 ---
 
-## 4. The 25 Specialized Industry Profiles (`PROFILE_RULES`)
+## 4. The 30 Specialized Industry Profiles (`PROFILE_RULES`)
 
 ### 4.1. Legal (`legal`)
 * **Target Personas**: Law firm partners, general counsel, litigation support, paralegals.
@@ -237,7 +237,43 @@ The separation between `REGEX_RULES` and `PROFILE_RULES` is an immutable economi
   * Loan Files: Loan application numbers, Underwriting file numbers, Fannie Mae / Freddie Mac reference IDs.
   * Banking Verification: Direct deposit account verification codes, Paystub check advice numbers, Pay group codes.
 
-### 4.25. General / Universal Baseline (`general`)
+### 4.25. Automotive & Telematics (`automotive`)
+* **Target Personas**: Fleet Managers, Connected Vehicle Engineers, Telematics Analysts, EV Infrastructure Operators.
+* **Target Entities**:
+  * Vehicle Identifiers: 17-character VIN (ISO 3779), License Plate numbers, Vehicle Registration Numbers.
+  * In-Vehicle Systems: Electronic Control Unit IDs (`ECU-*`), CAN bus message IDs, OBD-II Diagnostic Trouble Codes (`DTC P0300`, etc.).
+  * Telematics & Charging: EV Charging Station IDs, EVSE IDs, GPS telematics device serials, In-cabin safety driver logs.
+
+### 4.26. Energy & Utilities (`energy`)
+* **Target Personas**: SCADA Operators, Substation Engineers, Grid Dispatchers, NERC CIP Compliance Leads.
+* **Target Entities**:
+  * Grid Infrastructure: Smart Meter IDs, RTU (Remote Terminal Unit) IDs, Substation codes, Feeder line identifiers.
+  * Supervisory Control: SCADA tag names, PLC serial numbers, DNP3/Modbus addressing, EMS point IDs.
+  * Compliance & Safety: NERC CIP facility identifiers, Power Plant Outage notice IDs, High-voltage switching order numbers.
+
+### 4.27. Hospitality & Travel (`hospitality`)
+* **Target Personas**: Hotel Revenue Managers, Front Desk Leads, Passenger Services, Travel Counselors.
+* **Target Entities**:
+  * Passenger Records: Passenger Name Records (6-char alphanumeric PNR / Record Locators), E-Ticket numbers.
+  * Reservations & Folios: Guest Folio numbers, Hotel confirmation codes, Room/Cabin electronic keycards.
+  * Loyalty Programs: Airline frequent flyer numbers, Hotel rewards member IDs, Travel agency booking vouchers.
+
+### 4.28. Biotechnology & Genomics (`biotech`)
+* **Target Personas**: Bioinformaticians, Molecular Biologists, Genomic Research PIs, Biobank Curators.
+* **Target Entities**:
+  * Genomic Databases: OMIM disease codes, Orphanet IDs (`ORPHA*`), Human Phenotype Ontology (`HP:0000000`), Cytogenetic karyotypes.
+  * Specimens & Samples: Biobank sample IDs, Cryotube barcodes, Aliquot tracking IDs, FFPE tissue block codes.
+  * Sequencing Platforms: Next-Gen Sequencing run IDs (Illumina NovaSeq, NextSeq, MiSeq, Oxford Nanopore MinION, PacBio), FACS sorting identifiers.
+
+### 4.29. Telecommunications & Contact Centers (`telecom`)
+* **Target Personas**: Telecom Network Engineers, Contact Center Directors, VoIP Architects, CDR Analysts.
+* **Target Entities**:
+  * Mobile Hardware & SIM: IMSI (14-15 digit), IMEI/IMEISV (15-16 digit), ICCID SIM card numbers (89-prefix), MSISDN.
+  * Cellular Infrastructure: Cell Global Identity (`CGI`), eNodeB/gNodeB IDs, Physical Cell IDs (`PCI`), Tracking Area Codes (`TAC`).
+  * Telephony & VoIP: Session Initiation Protocol URIs (`sip:user@host`), SIP Call-IDs, CTI interaction sessions, IVR payment tokens.
+  * Call Detail Records: CDR record UUIDs, Trunk Group IDs, Point of Interconnect (`POI`) codes, RADIUS/Diameter shared session IDs.
+
+### 4.30. General / Universal Baseline (`general`)
 * **Target Personas**: Consumer users, generic AI prompt sanitization.
 * **Target Entities**: Relies purely on the zero-trust universal `REGEX_RULES` baseline (15,000 character allowance).
 
@@ -285,3 +321,19 @@ $$\text{Leakage}(T_{\text{sanitized}}) = 0 \quad \land \quad \text{Distortion}(T
 2. **Context & Semantic Integrity (Side B)**:
    * Jargon, clinical diagnoses, statutory legal citations, and role frameworks must NOT be redacted.
    * On reverse reveal ($T_{\text{revealed}}$), replacing `[TYPE_N]` tokens with values from the volatile RAM `sessionMap` must yield the exact original text with zero whitespace or grammatical drift.
+
+---
+
+## 7. Commercial Packaging & Intellectual Property Protection
+
+To protect the 25 High-ACV Industry Profiles from unauthorized extraction or competitive reverse engineering:
+
+1. **Layer 1: Open Core (`REGEX_RULES`)**:
+   - Universal consumer PII (email, phone, standard national IDs, credit cards, IP addresses) is distributed openly under the MIT License in `@privacyscrubber/sdk` on npm.
+   - Designed for zero-barrier developer adoption, public GitHub auditing, and indexing by autonomous LLM crawlers.
+
+2. **Layer 2: Commercial Vertical Engine (`PROFILE_RULES`)**:
+   - The 25 Industry Profiles are packaged as a compiled WebAssembly binary (`ps-engine-core.wasm`) compiled from Rust state machines (Aho-Corasick & deterministic finite automata).
+   - Plain-text regular expressions are NOT exposed in client-side JavaScript bundles.
+   - Commercial activation is authenticated via asymmetric Ed25519 cryptographic license tokens (`ZTDS-LIC-v1`).
+   - The engine validates licenses 100% offline in client volatile RAM without network callbacks, preserving the 0.00 B Egress Invariant.

@@ -301,15 +301,20 @@
                 &nbsp;&nbsp;&nbsp;&Delta;Egress(S) &equiv; 0.00 bytes &forall; t &isin; [0, &infin;)
               </div>
               <div>
-                3. Mapping Dictionary R = {(m_i, s_i)} Scoped Strictly in Volatile RAM:<br>
-                &nbsp;&nbsp;&nbsp;R &sube; M_volatile, &nbsp;DiskWrite(R) &equiv; 0
+                3. Information-Theoretic Entropy Bound (Shannon):<br>
+                &nbsp;&nbsp;&nbsp;I(S; Payload_wan) &equiv; 0 bits &nbsp;&rArr;&nbsp; H(S | M) = H(S)<br>
+                &nbsp;&nbsp;&nbsp;Zero mutual information leakage across network perimeter.
               </div>
               <div>
-                4. Deterministic Bijective Inversion on Local Client Layer:<br>
+                4. Mapping Dictionary R = {(m_i, s_i)} Scoped Strictly in Volatile RAM:<br>
+                &nbsp;&nbsp;&nbsp;R &sube; M_volatile, &nbsp;DiskWrite(R) &equiv; 0, &nbsp;H(S | M, R) = 0
+              </div>
+              <div>
+                5. Deterministic Bijective Inversion on Local Client Layer:<br>
                 &nbsp;&nbsp;&nbsp;P_final = T^(-1)(P_out, R)
               </div>
               <div class="text-slate-400 text-[11px] pt-1 border-t border-slate-800">
-                5. Memory Lifecycle Elimination: lim_{t &rarr; session_end} R = &empty;
+                6. Memory Lifecycle Elimination: lim_{t &rarr; session_end} R = &empty;
               </div>
             </div>
 
@@ -372,44 +377,188 @@
                 </div>
                 <h3 class="text-base font-bold text-slate-900 mb-2">Complete DPA Exemption under GDPR Article 28</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                  Because only de-identified non-personal data traverses the execution perimeter, downstream foundation model providers (OpenAI, Anthropic, Google Vertex) never become data processors under GDPR Article 28 or HIPAA BAA rules. Zero vendor DPA chain is created or maintained.
+                  The software provider acts strictly as a localized computational utility executing inside the customer's hardware perimeter. Because exactly 0.00 bytes of data are transmitted to the vendor, the vendor is legally excluded from GDPR Article 28 Data Processor status (under CJEU Case C-582/14 <em>Breyer</em> and EDPB Guidelines 07/2020). Conforming deployments require zero third-party vendor DPAs or BAA chains.
                 </p>
               </div>
             </div>
           </section>
 
-          <!-- Section 04: Tokenization Taxonomy -->
+          <!-- Section 04: Tokenization Taxonomy & 30 Industry Profiles -->
           <section id="taxonomy">
             <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
-              <span class="text-emerald-600 font-mono">04.</span> Bijective Surrogate Token Taxonomy
+              <span class="text-emerald-600 font-mono">04.</span> Bijective Surrogate Token Taxonomy &amp; 30 Specialized Profiles
             </h2>
             <p class="mb-4">
-              ZTDS standardizes structured bracketed tokens that preserve grammatical syntactic structure while removing 100% of informational entropy:
+              ZTDS RFC v1.0 establishes a strict two-layer classification hierarchy. Universal personal identifiers are sanitized via a high-performance open baseline (<code class="font-mono text-emerald-800">REGEX_RULES</code>), while specialized regulatory, clinical, and infrastructure patterns are enforced across <strong class="text-slate-900">30 discrete industry profiles</strong> (<code class="font-mono text-emerald-800">PROFILE_RULES</code>):
             </p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
-              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <code class="text-emerald-700 font-mono font-semibold">[NAME_N]</code> &mdash; Personal names, physician identifiers, executive titles
+
+            <!-- Layer 1: Universal Baseline -->
+            <div class="mb-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="px-2 py-0.5 rounded bg-slate-900 text-white font-mono text-[10px] font-bold uppercase">Layer 1: Universal Consumer Baseline</span>
+                <span class="text-xs text-slate-500 font-mono">Open Core (MIT) &middot; Sub-1ms Latency</span>
               </div>
-              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <code class="text-emerald-700 font-mono font-semibold">[EMAIL_N]</code> &mdash; Corporate and personal email addresses
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                  <code class="text-emerald-700 font-mono font-semibold">[NAME_N]</code> &mdash; First/Last names, honorifics, corporate and legal entities
+                </div>
+                <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                  <code class="text-emerald-700 font-mono font-semibold">[EMAIL_N]</code> &mdash; RFC 5322 compliant personal and corporate email addresses
+                </div>
+                <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                  <code class="text-emerald-700 font-mono font-semibold">[PHONE_N]</code> &mdash; International E.164, national formatted phone and fax numbers
+                </div>
+                <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                  <code class="text-emerald-700 font-mono font-semibold">[ID_N] / [SSN_N]</code> &mdash; SSN, EIN, Passport, Driver License, national resident IDs
+                </div>
+                <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                  <code class="text-emerald-700 font-mono font-semibold">[ADDRESS_N]</code> &mdash; Physical street addresses, P.O. Boxes, postal codes, unit numbers
+                </div>
+                <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                  <code class="text-emerald-700 font-mono font-semibold">[IP_ADDR_N]</code> &mdash; IPv4, IPv6 addresses, localhost socket bindings, internal hostnames
+                </div>
+                <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                  <code class="text-emerald-700 font-mono font-semibold">[LOCATION_N]</code> &mdash; Decimal and DMS coordinates, precise GPS waypoints, city/region pairs
+                </div>
+                <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                  <code class="text-emerald-700 font-mono font-semibold">[DATE_N]</code> &mdash; Dates of birth (DOB), person-associated dates
+                </div>
+                <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 sm:col-span-2">
+                  <code class="text-emerald-700 font-mono font-semibold">[FINANCIAL_N]</code> &mdash; Luhn-validated credit/debit PANs, crypto addresses, routing numbers
+                </div>
               </div>
-              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <code class="text-emerald-700 font-mono font-semibold">[PHONE_N]</code> &mdash; Universal international and domestic phone numbers
+            </div>
+
+            <!-- Layer 2: 30 Specialized Vertical Profiles -->
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded bg-emerald-700 text-white font-mono text-[10px] font-bold uppercase">Layer 2: 30 Specialized Industry Profiles</span>
+                  <span class="text-xs text-slate-500 font-mono">Enterprise Engine &middot; Cryptographic Validation</span>
+                </div>
+                <a href="/docs/ZTDS_Entity_Taxonomy_and_25_Profiles_SSOT.md" class="text-emerald-700 hover:underline font-mono text-xs hidden sm:inline">SSOT Taxonomy Specification &rarr;</a>
               </div>
-              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <code class="text-emerald-700 font-mono font-semibold">[ID_N] / [SSN_N]</code> &mdash; National IDs, SSN, Tax numbers, passports
-              </div>
-              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <code class="text-emerald-700 font-mono font-semibold">[SECRET_N]</code> &mdash; API keys, AWS credentials, JWT tokens, private certificates
-              </div>
-              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <code class="text-emerald-700 font-mono font-semibold">[FINANCIAL_N] / [IBAN_N]</code> &mdash; Credit card PANs, IBANs, routing numbers
-              </div>
-              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <code class="text-emerald-700 font-mono font-semibold">[PATIENT_N] / [MRN_N]</code> &mdash; Clinical medical record numbers, patient IDs
-              </div>
-              <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <code class="text-emerald-700 font-mono font-semibold">[IP_ADDR_N]</code> &mdash; Private and public IPv4/IPv6 addresses, internal hostnames
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs">
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">01. legal</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">Bates stamps, docket IDs, ECLI, attorney-client work product markers.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">02. hr</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">Workday CAND IDs, employee EEIDs, compensation, Works Council references.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">03. finance</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">SWIFT/BIC, IBAN, CUSIP, ISIN, LEI, SEC CIK, portfolio account hashes.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">04. medical</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">18 HIPAA PHI identifiers, HL7 v2 pipes, NPI, DEA, MRN, FHIR paths.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">05. security</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">Cloud API keys, JWT, SSH/PGP keys, CVEs, MITRE techniques, SIEM rules.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">06. dev</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">Database credentials, webhook secrets, localhost ports, env tokens.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">07. marketing</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">GCLID, FBCLID, GA4 client cookies, HubSpot/Marketo lead records.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">08. bizops</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">VDR room codes, cap table equity grants, Safe notes, M&amp;A term sheets.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">09. sales</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">Salesforce 18-char IDs, DocuSign envelope UUIDs, Gong conversation IDs.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">10. support</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">ServiceNow INC/RITM, Jira tickets, Zendesk hashes, RMA warranty codes.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">11. realestate</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">MLS numbers, APN parcel tax IDs, escrow closing files, lease agreements.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">12. compliance</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">SAR filing numbers, CTR, OFAC SDN list tags, ISO 27001 audit findings.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">13. logistics</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">Bill of Lading, Container BIC codes, FedEx/UPS/DHL tracking barcodes.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">14. education</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">FERPA student records, transcript IDs, FAFSA case files, GPA scores.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">15. government</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">ITAR control tags, CUI markers, clearance badges, CAGE/DUNS vendor codes.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">16. crypto</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">Solana/BTC/ETH addresses, seed phrases, ENS domains, smart contract hashes.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">17. gaming</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">Steam IDs, Discord user snowflaking, in-game item wallet identifiers.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">18. insurance</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">Policy declarations, FNOL claim numbers, VIN numbers, adjuster reports.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">19. hospitality</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">Amadeus/Sabre PNR locator codes, loyalty club numbers, room keys.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">20. energy</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">NERC-CIP asset IDs, SCADA telemetry tags, smart meter POD/MPAN IDs.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">21. automotive</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">WMI/VIN 17-char serials, CAN-bus arbitration IDs, connected car telemetry.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">22. biotech</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">Genomic FASTA tags, CRISPR guide targets, patent formulation codes.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">23. telecom</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">IMEI (15-digit), IMSI, ICCID SIM card numbers, cell tower CGI tuples.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">24. media</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">ISAN audiovisual IDs, ISRC music codes, talent contract deal points.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">25. retail</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">Shopify order UUIDs, Amazon order IDs, POS terminal serials, loyalty cards.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">26. manufacturing</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">ERP Part numbers, Bill of Materials (BOM) revisions, CNC job IDs.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">27. accounting</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">General Ledger account codes, tax return E-File IDs, depreciation books.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">28. nonprofit</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">Donor ledger IDs, endowment account codes, grant solicitation numbers.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">29. aerospace</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">FAA tail numbers, tail serial codes, flight manifest PNR records.</div>
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">30. agriculture</div>
+                  <div class="text-[11px] text-slate-600 mt-0.5">Livestock RFID tags, agricultural parcel boundary coordinates, yield logs.</div>
+                </div>
               </div>
             </div>
           </section>
@@ -503,8 +652,8 @@
                 <tbody class="divide-y divide-slate-200 font-sans">
                   <tr class="hover:bg-slate-50">
                     <td class="py-3 px-3 text-slate-900 font-bold">EU GDPR</td>
-                    <td class="py-3 px-3 text-slate-600 font-mono">Recital 26 &middot; Art. 28</td>
-                    <td class="py-3 px-3 text-slate-700">Invariant 1 &amp; 4: Anonymous data excluded; zero processor DPA required</td>
+                    <td class="py-3 px-3 text-slate-600 font-mono">Art. 28 (CJEU C-582/14 &amp; EDPB 07/2020)</td>
+                    <td class="py-3 px-3 text-slate-700">Invariant 1 &amp; 4: Software vendor is excluded from Data Processor status; local computational utility transmits 0.00 bytes to vendor</td>
                     <td class="py-3 px-3 text-right text-emerald-700 font-bold font-mono">DPA Exempt</td>
                   </tr>
                   <tr class="hover:bg-slate-50">

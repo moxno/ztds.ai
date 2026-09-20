@@ -64,11 +64,11 @@ To guarantee deterministic hashing across diverse JSON parsers:
 
 ## 3. Tier Hierarchy & Feature Enforcement Matrix
 
-| Tier ID | Annual Fee | Max Nodes | Universal PII | 25 Industry Profiles | Evidence Binder |
+| Tier ID | Annual Fee | Max Nodes | Universal PII | 30 Industry Profiles | Evidence Binder |
 | :--- | :---: | :---: | :---: | :---: | :---: |
 | **`community_free`** | $0 | 1 | Yes (15k chars) | Trial (5k chars) | No |
 | **`developer_pro`** | $1,990/yr | 5 | Unlimited | No (Baseline only) | Basic |
-| **`enterprise_airgapped`** | $12,000/yr | 5 | Unlimited | Yes (Full 25 Profiles) | Full (Drata/Vanta) |
+| **`enterprise_airgapped`** | $12,000/yr | 5 | Unlimited | Yes (Full 30 Profiles) | Full (Drata/Vanta) |
 | **`global_site`** | $50,000/yr | Unlimited | Unlimited | Yes (Custom Profiles) | Full + Dedicated |
 
 ### 3.1. Profile Access Check (`assertProfileAllowed`)

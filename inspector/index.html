@@ -167,7 +167,7 @@
         <p class="text-sm text-slate-600 mt-1">Simulate real-time in-memory sanitization across all 4 RFC v1.0 pipeline stages: Egress Interception, Tokenization, Enclave Isolation, and Loopback De-tokenization.</p>
       </div>
 
-      <!-- Presets Selector (5 High-ACV Profiles) -->
+      <!-- Presets Selector (7 High-ACV Profiles) -->
       <div class="flex flex-wrap items-center gap-2">
         <span class="text-xs text-slate-500 font-medium">Industry Profiles:</span>
         <button id="presetHealth" class="preset-btn px-2.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-300 text-xs font-semibold shadow-sm transition-all">Healthcare PHI</button>
@@ -175,6 +175,8 @@
         <button id="presetDevOps" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all">Cloud Secrets</button>
         <button id="presetLegal" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all">M&amp;A Legal</button>
         <button id="presetHR" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all">HR Payroll</button>
+        <button id="presetCrypto" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all">Crypto Web3</button>
+        <button id="presetInsurance" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all">Insurance Policy</button>
       </div>
     </div>
 
@@ -596,7 +598,9 @@
         finance: "Instruction: Transfer $450,000 USD from account IBAN DE89370400440532013000, SWIFT: DEUTDEDBFXX to beneficiary Sarah Jenkins (Routing: 021000021). Wire reference: REF-88192-CONFIDENTIAL.",
         devops: "CRITICAL: Deploying auth service with AWS_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY and OPENAI_API_KEY=sk-proj-98f98124b8912409812498124 to production host 192.168.1.104.",
         legal: "STRICTLY CONFIDENTIAL: Memorandum regarding Project Titan acquisition of Apex BioSciences for $1.4B. Advised by senior counsel Evelyn Reed under attorney-client privilege. Primary escrow contact: evelyn.reed@globalpartnerslaw.com.",
-        hr: "CONFIDENTIAL PAYROLL: Executive compensation record for Director Marcus Vance. National Insurance: QQ123456C, base salary $185,000 USD, bank sort code 20-04-15, personal email: marcus.vance@internalhr.org."
+        hr: "CONFIDENTIAL PAYROLL: Executive compensation record for Director Marcus Vance. National Insurance: QQ123456C, base salary $185,000 USD, bank sort code 20-04-15, personal email: marcus.vance@internalhr.org.",
+        crypto: "URGENT RECOVERY: Multi-sig vault authorization for wallet 0x71C7656EC7ab88b098defB751B7401B5f6d8976F. Signer: Dmitry Orlov. Custody key backup index: [SLOT_84]. Direct authorization contact: dmitry@web3defense.io.",
+        insurance: "CLAIM FILE: Policy POL-99281-US underwritten by Sovereign Assurance. Insured: Rebecca Stone, Claim: $78,500 USD for collision. Adjuster: Mark Sterling (ID: ADJ-4401), email: r.stone@horizonmail.com."
       };
 
       const inputArea = document.getElementById('inputArea');
@@ -685,8 +689,16 @@
         replacePattern(/\$\d+(?:,\d{3})*(?:\.\d+)?(?:\s*(?:Billion|Million|USD|[BM]))\b/gi, "DEAL_VALUE");
 
         // 8. Named Entities
-        replacePattern(/\b(?:Dr\.|Mr\.|Mrs\.|Patient|counsel|Director|beneficiary)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\b/g, "PERSON");
-        replacePattern(/\b(?:Alexander Wright|Emily Vance|Marcus Sterling|Sarah Jenkins|Evelyn Reed|Marcus Vance)\b/g, "PERSON");
+        replacePattern(/\b(?:Dr\.|Mr\.|Mrs\.|Patient|counsel|Director|beneficiary|Signer|Adjuster)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\b/g, "PERSON");
+        replacePattern(/\b(?:Alexander Wright|Emily Vance|Marcus Sterling|Sarah Jenkins|Evelyn Reed|Marcus Vance|Dmitry Orlov|Rebecca Stone|Mark Sterling)\b/g, "PERSON");
+
+        // 9. Crypto & Web3
+        replacePattern(/\b0x[a-fA-F0-9]{40}\b/g, "ETH_ADDR");
+        replacePattern(/\[MNEMONIC_[A-Z0-9_]+\]|\[SLOT_\d+\]/g, "KEY_SLOT");
+
+        // 10. Insurance Policy
+        replacePattern(/\bPOL-\d{5}-[A-Z]{2}\b/g, "POLICY_NUM");
+        replacePattern(/\bADJ-\d{4}\b/g, "ADJUSTER_ID");
 
         return { sanitized, localMap, count: Object.keys(localMap).length };
       }
@@ -699,12 +711,14 @@
 
         return escaped.replace(/\[([A-Z_]+)_\d+\]/g, (token, type) => {
           let badgeColor = "bg-emerald-950 text-emerald-300 border-emerald-500/40";
-          if (type.includes("SECRET")) badgeColor = "bg-rose-950 text-rose-300 border-rose-500/40";
+          if (type.includes("SECRET") || type.includes("KEY_SLOT")) badgeColor = "bg-rose-950 text-rose-300 border-rose-500/40";
           else if (type.includes("SSN") || type.includes("GOV_ID") || type.includes("IBAN")) badgeColor = "bg-purple-950 text-purple-300 border-purple-500/40";
           else if (type.includes("PHONE")) badgeColor = "bg-sky-950 text-sky-300 border-sky-500/40";
           else if (type.includes("PERSON")) badgeColor = "bg-amber-950 text-amber-300 border-amber-500/40";
           else if (type.includes("DEAL")) badgeColor = "bg-indigo-950 text-indigo-300 border-indigo-500/40";
           else if (type.includes("IP")) badgeColor = "bg-slate-800 text-slate-300 border-slate-600/40";
+          else if (type.includes("ETH")) badgeColor = "bg-amber-950 text-amber-300 border-amber-500/40";
+          else if (type.includes("POLICY") || type.includes("ADJUSTER")) badgeColor = "bg-teal-950 text-teal-300 border-teal-500/40";
 
           return `<span class="inline-block px-1.5 py-0.5 rounded border text-[11px] font-mono font-bold shadow-sm ${badgeColor}">${token}</span>`;
         });
@@ -864,6 +878,8 @@
       document.getElementById('presetDevOps').addEventListener('click', function() { setPreset('devops', this); });
       document.getElementById('presetLegal').addEventListener('click', function() { setPreset('legal', this); });
       document.getElementById('presetHR').addEventListener('click', function() { setPreset('hr', this); });
+      document.getElementById('presetCrypto').addEventListener('click', function() { setPreset('crypto', this); });
+      document.getElementById('presetInsurance').addEventListener('click', function() { setPreset('insurance', this); });
 
       // Live Input Monitoring
       inputArea.addEventListener('input', () => {

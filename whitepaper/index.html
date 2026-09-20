@@ -604,16 +604,9 @@
           <div class="space-y-4 pt-2 text-sm text-slate-700">
             
             <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
-              <div class="font-bold text-slate-900 text-sm font-mono">EU GDPR Recital 26 (Anonymous Information)</div>
+              <div class="font-bold text-slate-900 text-sm font-mono">EU GDPR Article 28 &amp; Recital 26 (Subprocessor Elimination Doctrine)</div>
               <p class="text-xs text-slate-600 leading-relaxed">
-                Recital 26 explicitly states: <em>"The principles of data protection should therefore not apply to anonymous information, namely information which does not relate to an identified or identifiable natural person..."</em> Because ZTDS strips all direct and indirect identifiers prior to external network egress, the payload received by the LLM provider constitutes anonymous information under EU law.
-              </p>
-            </div>
-
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
-              <div class="font-bold text-slate-900 text-sm font-mono">EU GDPR Article 28 (Subprocessor Chain Elimination)</div>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                Article 28 mandates that controllers execute formal Data Processing Agreements (DPAs) with any entity processing personal data on their behalf. Because downstream model providers receive zero personal data, they are not data processors within the statutory meaning of Article 4(8). Consequently, the enterprise is legally exempt from DPA requirements for that transmission.
+                Article 28 mandates that controllers execute formal Data Processing Agreements (DPAs) with any entity processing personal data on their behalf. Under the doctrine established by the Court of Justice of the European Union in Case C-582/14 (<em>Breyer</em>) and ratified in EDPB Guidelines 07/2020, information constitutes personal data for a third-party recipient only if that party possesses reasonable means likely to be used to identify the data subject. Because ZTDS-conforming software operates strictly as an in-memory client utility (with private token maps remaining in local volatile RAM), external AI model providers receive zero direct or indirect identifiers and possess no legal or technical means to de-anonymize the synthetic tokens. Downstream model vendors therefore fall outside statutory Data Processor classification under GDPR Article 4(8), exempting enterprise deployments from Article 28 DPA overhead and cross-border data transfer liabilities (Chapter V).
               </p>
             </div>
 
@@ -854,6 +847,8 @@
             <div>[8] Sibiryakov, I. (2026). <em>Preserving Attorney-Client Privilege in Generative AI Workflows via Client-Side ZTDS</em>. Law Archive / OSF. Identifier: <a href="https://osf.io/preprints/lawarchive/4wc86/" target="_blank" rel="noopener" class="text-emerald-700 underline">4wc86</a>.</div>
             <div>[9] Shannon, C. E. (1948). <em>A Mathematical Theory of Communication</em>. Bell System Technical Journal, 27(3), 379–423.</div>
             <div>[10] Carlini, N., et al. (2021). <em>Extracting Training Data from Large Language Models</em>. 30th USENIX Security Symposium.</div>
+            <div>[11] Court of Justice of the European Union (CJEU). (2016). <em>Case C-582/14, Patrick Breyer v Bundesrepublik Deutschland</em>. ECLI:EU:C:2016:779.</div>
+            <div>[12] European Data Protection Board (EDPB). (2020). <em>Guidelines 07/2020 on the concepts of controller and processor in the GDPR</em>. Version 2.0.</div>
           </div>
         </section>
 

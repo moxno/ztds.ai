@@ -132,7 +132,7 @@ Multiplication      Irreversible Latent Space         Mandatory Audit      Attor
 |   v                                                                                |
 | +-----------------------------------+                                              |
 | | ZTDS Headless Engine (WASM/Node)  |  Latency: < 1.8 ms                           |
-| | In-RAM Regex & 25 Profiles        |  Memory: Scoped to Thread                    |
+| | In-RAM Regex & 30 Profiles        |  Memory: Scoped to Thread                    |
 | +-----------------------------------+                                              |
 |   |                     |                                                          |
 |   | (Token Map in RAM)  | (Sanitized Prompt: "[PATIENT_1] has [DIAGNOSIS_4]")      |
@@ -264,12 +264,12 @@ Multiplication      Irreversible Latent Space         Mandatory Audit      Attor
 | Licensing Tier | Annual Commitment | Target Environment | Scope & SLA Included |
 | :--- | :---: | :--- | :--- |
 | **Option A: Developer Pro** | **$1,990 / Year** | AI Engineering Teams | 5 Dev Seats / Microservice Nodes &middot; LangChain/MCP &middot; 48h SLA |
-| **Option B: Enterprise Air-Gapped** | **$12,000 / Year** | Core Production Clusters | **5 Air-Gapped / Nitro Enclave Nodes &middot; 25 Profiles &middot; SOC 2 Binder &middot; 4h SLA** |
+| **Option B: Enterprise Air-Gapped** | **$12,000 / Year** | Core Production Clusters | **5 Air-Gapped / Nitro Enclave Nodes &middot; 30 Profiles &middot; SOC 2 Binder &middot; 4h SLA** |
 | **Option C: Global Enterprise Site** | **$50,000 / Year** | Global Enterprise-Wide | Unlimited Nodes &middot; Custom Profiles &middot; Escrow Audit Rights &middot; 24/7 SLA |
 
 ### Total Cost of Ownership (TCO) vs Alternatives
 * **Alternative 1: Cloud DLP Proxy (SaaS):** $120,000 to $250,000/yr + 400ms latency penalty + 6 months security review.
-* **Alternative 2: In-House Custom Build:** 9 months dev time ($350,000+ engineering salaries) + ongoing maintenance of 25 regulatory regex profiles + audit liability.
+* **Alternative 2: In-House Custom Build:** 9 months dev time ($350,000+ engineering salaries) + ongoing maintenance of 30 regulatory regex profiles + audit liability.
 * **ZTDS Enterprise Air-Gapped:** **$12,000/yr turnkey** &middot; 1-day deployment &middot; Zero compliance overhead &middot; Mathematically provable security.
 
 ### Verbatim Speaker Notes

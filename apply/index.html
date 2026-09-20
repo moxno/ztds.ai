@@ -285,16 +285,50 @@
                 </select>
               </div>
               <div>
-                <label for="appProfile" class="block text-xs font-semibold text-slate-700 mb-1">Industry Profile &amp; Rule Matrix</label>
-                <select id="appProfile" name="appProfile" aria-label="Industry Profile & Rule Matrix" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                  <option value="healthcare" selected>Healthcare &amp; Clinical EHR (18 PHI Identifiers)</option>
-                  <option value="fintech">Commercial Banking &amp; FinTech (PCI-DSS / IBAN)</option>
-                  <option value="legal">Corporate Law &amp; LegalTech (FRE 502 Privilege)</option>
-                  <option value="saas">B2B Enterprise SaaS (SOC 2 CC6.7 Isolation)</option>
-                  <option value="hr">Human Resources &amp; PeopleOps (SSN &amp; PII)</option>
-                  <option value="cyber">Cybersecurity &amp; SIEM (API Keys / Private IPs)</option>
-                  <option value="agency">Digital Agency &amp; GEO (Zero-DPA Chain)</option>
-                  <option value="defense">Sovereign Enclave &amp; Defense (ITAR / CMMC)</option>
+                <label for="appProfile" class="block text-xs font-semibold text-slate-700 mb-1">Industry Profile &amp; Rule Matrix (30 Profiles)</label>
+                <select id="appProfile" name="appProfile" aria-label="Industry Profile &amp; Rule Matrix" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                  <optgroup label="Clinical &amp; Healthcare">
+                    <option value="medical" selected>04. Medical &amp; Clinical EHR (18 PHI Identifiers, HL7, NPI)</option>
+                    <option value="biotech">22. Biotech &amp; Genomics (FASTA, CRISPR Targets, Formulations)</option>
+                    <option value="insurance">18. Insurance &amp; Actuarial (Claims, Policies, VIN Numbers)</option>
+                  </optgroup>
+                  <optgroup label="Banking, Finance &amp; Web3">
+                    <option value="finance">03. Banking &amp; Financial Markets (SWIFT/BIC, IBAN, CUSIP, ISIN)</option>
+                    <option value="crypto">16. Crypto &amp; Web3 (Wallets, Seed Phrases, Smart Contracts)</option>
+                    <option value="accounting">27. Accounting &amp; Audit (GL Accounts, E-File IDs, Depreciation)</option>
+                    <option value="bizops">08. Business Ops &amp; M&amp;A (VDR Codes, Cap Tables, Safe Notes)</option>
+                    <option value="sales">09. Sales &amp; RevOps (Salesforce IDs, DocuSign Envelopes, Gong)</option>
+                  </optgroup>
+                  <optgroup label="Legal, GRC &amp; HR">
+                    <option value="legal">01. Corporate Law &amp; LegalTech (Bates Stamps, Dockets, FRE 502)</option>
+                    <option value="compliance">12. GRC &amp; AML/Sanctions (SAR Filings, OFAC SDN, ISO 27001)</option>
+                    <option value="hr">02. Human Resources &amp; PeopleOps (Workday CAND, EEID, Works Council)</option>
+                  </optgroup>
+                  <optgroup label="Dev, Cloud &amp; Infrastructure">
+                    <option value="security">05. DevSecOps &amp; Incident Response (API Secrets, SSH, CVEs, SIEM)</option>
+                    <option value="dev">06. Software Development (Database URIs, Webhook Secrets, Localhost)</option>
+                    <option value="telecom">23. Telecom &amp; ISP (IMEI, IMSI, SIM ICCID, Cell CGI Tuples)</option>
+                    <option value="energy">20. Energy &amp; Utilities (NERC-CIP, SCADA Telemetry, Smart Meters)</option>
+                  </optgroup>
+                  <optgroup label="Enterprise Operations">
+                    <option value="support">10. Customer Support &amp; IT (ServiceNow INC/RITM, Jira, CSAT)</option>
+                    <option value="marketing">07. Marketing &amp; AdTech (GCLID, FBCLID, GA4 Cookies, Lead IDs)</option>
+                    <option value="realestate">11. Real Estate &amp; Title (MLS, Parcel APN, Escrow Closing Files)</option>
+                    <option value="logistics">13. Supply Chain &amp; Logistics (Bill of Lading, BIC Containers)</option>
+                    <option value="retail">25. Retail &amp; E-Commerce (Shopify UUIDs, Amazon Orders, POS)</option>
+                    <option value="manufacturing">26. Manufacturing (ERP Parts, BOM Revisions, CNC Job IDs)</option>
+                  </optgroup>
+                  <optgroup label="Sovereign, Public Sector &amp; Industry">
+                    <option value="government">15. Government &amp; Defense (ITAR Controls, CUI Markers, CAGE)</option>
+                    <option value="aerospace">29. Aerospace &amp; Aviation (FAA Tail Serials, Flight Manifests)</option>
+                    <option value="automotive">21. Connected Automotive (VIN 17-char, CAN-bus Telemetry)</option>
+                    <option value="education">14. Education &amp; EdTech (FERPA Records, FAFSA, GPA Scores)</option>
+                    <option value="nonprofit">28. Non-Profit &amp; Philanthropy (Donor Ledgers, Endowments, Grants)</option>
+                    <option value="gaming">17. Gaming &amp; Virtual Worlds (Steam IDs, In-Game Wallets, Discord)</option>
+                    <option value="hospitality">19. Hospitality &amp; Travel (Amadeus/Sabre PNR, Loyalty Clubs)</option>
+                    <option value="media">24. Media &amp; Entertainment (ISAN Audiovisual, ISRC Music Codes)</option>
+                    <option value="agriculture">30. Agriculture &amp; AgriTech (Livestock RFID, Parcel GPS Bounds)</option>
+                  </optgroup>
                 </select>
               </div>
             </div>
@@ -978,7 +1012,7 @@
           const auditHash = (auditHashInput ? auditHashInput.value.trim() : '') || 'sha256:7f83b1659a72d3e1104e6c70b8a245d8b76c94fa10b981e7d23f46a81e9d0c24';
 
           const fwList = [];
-          if (document.getElementById('fwGdpr') && document.getElementById('fwGdpr').checked) fwList.push('GDPR Recital 26');
+          if (document.getElementById('fwGdpr') && document.getElementById('fwGdpr').checked) fwList.push('GDPR Art. 28 Vendor Exemption');
           if (document.getElementById('fwHipaa') && document.getElementById('fwHipaa').checked) fwList.push('HIPAA Safe Harbor');
           if (document.getElementById('fwAiAct') && document.getElementById('fwAiAct').checked) fwList.push('EU AI Act Art. 50');
           if (document.getElementById('fwSoc2') && document.getElementById('fwSoc2').checked) fwList.push('SOC 2 Type II');
@@ -991,6 +1025,7 @@
             slug: slug,
             url: appUrl,
             category: appCategory,
+            profile: profile,
             tier: "Community Verified",
             license: "Commercial / Proprietary",
             description: `${appName} client-side zero-trust de-identification implementation.`,
