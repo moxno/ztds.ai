@@ -37,17 +37,18 @@ ZTDS (Zero-Trust Data Sanitization) guarantees that sensitive corporate entities
 - [GitHub Actions Workflow](https://ztds.ai/scanner/): Turnkey CI/CD pipeline (`.github/workflows/ztds-audit.yml`) for automated invariant enforcement.
 - [Interactive Pipeline Inspector](https://ztds.ai/inspector/): Real-time in-memory DAG playground simulating 4 RFC v1.0 pipeline stages, breach traps, 5 industry presets, and Theorem 2 RAM zeroization.
 - [Accreditation Gateway](https://ztds.ai/apply/): Self-serve GitOps verification application portal for developers and software vendors.
-- [Verified Implementation Directory](https://ztds.ai/registry/): Public directory of 8 verified conforming AI tools and blueprints:
+- [Verified Implementation Directory](https://ztds.ai/registry/): Public directory of verified conforming AI tools, open engines, and blueprints:
+  - ZTDS Core Reference Engine (`@ztds/core`): Official open-source baseline reference engine and TypeScript interface under Apache-2.0.
   - PrivacyScrubber Web (`privacyscrubber-web`): 100% client-side zero-server PII/PHI de-identification web utility.
   - PrivacyScrubber Chrome Extension (`privacyscrubber-extension`): Manifest V3 DOM interceptor for ChatGPT, Claude, Gemini.
   - PrivacyScrubber MCP Server (`privacyscrubber-mcp`): Stdio JSON-RPC 2.0 gateway for Cursor and Claude Desktop.
-  - @privacyscrubber/sdk (`privacyscrubber-sdk`): Sub-millisecond headless in-memory engine.
+  - @privacyscrubber/sdk (`privacyscrubber-sdk`): Enterprise-hardened in-memory engine with 30 high-ACV industry profiles.
   - LangChain ZTDS Privacy Callback (`langchain-ztds`): Client-side callback hook for LangChain and LangGraph workflows.
   - LlamaIndex Air-Gap Sanitizer (`llamaindex-ztds`): Pre-indexing ingestion node preventing RAG vector database poisoning.
   - Ollama Local Privacy Filter (`ollama-ztds-filter`): Localhost reverse proxy for air-gapped local model inference.
   - Envoy Proxy ZTDS WASM Filter (`envoy-ztds-wasm`): Proxy-WASM HTTP filter for enterprise service mesh egress control.
 - [Trust Badge Generator](https://ztds.ai/badge/): Dynamic SVG trust badge generator (`https://ztds.ai/badge/:slug.svg`).
-- [Developer SDK & Pre-Built Connectors](https://ztds.ai/sdk/): Headless Node.js / TypeScript / Python engine (`@privacyscrubber/sdk`), LangChain BaseCallbackHandler (`ZTDSCallbackHandler`), LlamaIndex Ingestion Transform (`ZTDSTransformation`), and Model Context Protocol stdio server for Cursor and Claude Code.
+- [Developer SDK & Open Reference Engine](https://ztds.ai/sdk/): Open-source TypeScript / Node.js baseline engine (`@ztds/core` · Apache-2.0) alongside enterprise production engine (`@privacyscrubber/sdk`), LangChain BaseCallbackHandler (`ZTDSCallbackHandler`), LlamaIndex Ingestion Transform (`ZTDSTransformation`), and Model Context Protocol stdio server for Cursor and Claude Code.
 - [Consortium Governance & Charter](https://ztds.ai/governance/): Multi-stakeholder charter, working groups, and RFC lifecycle bylaws.
 - [Corporate Directory](https://ztds.ai/companies/): Organizations enforcing client-side ZTDS invariant policies.
 - [Global Fellows Roster](https://ztds.ai/fellows/): Accredited researchers, legal counsel, and systems architects.
@@ -74,9 +75,10 @@ ZTDS (Zero-Trust Data Sanitization) guarantees that sensitive corporate entities
   - WG-1: Cryptography & Entropy Modeling (Track A Lead Council · Open Academic Call via GitOps PR)
   - WG-2: GRC, Regulatory & Legal Defense (Track B Lead Council · DPA Exemption & FRE 502 Privilege Defense)
   - WG-3: Systems, WASM & Enclaves (Track C Lead Council · Sub-millisecond WebAssembly & MCP Gateways)
+  - WG-4: Industry Profiles & Entity Taxonomy (Track D Lead Council · 30 vertical-specific detection rule sets: Healthcare/HIPAA, FinTech/PCI-DSS, Legal/FRE-502, HR/PIPEDA, DevSecOps, Maritime, Aviation, Energy · Anti-cannibalization architecture)
 
 ## Institutional Governance & Security Policies
-- [Consortium Governance & Charter](https://ztds.ai/governance/): Multi-stakeholder charter, Working Groups (WG-1 Architecture/Crypto, WG-2 GRC, WG-3 Tooling), 2/3 supermajority rule, RAND-Z patent covenant, and RFC lifecycle.
+- [Consortium Governance & Charter](https://ztds.ai/governance/): Multi-stakeholder charter, Working Groups (WG-1 Architecture/Crypto, WG-2 GRC, WG-3 Tooling, WG-4 Industry Profiles), 2/3 supermajority rule, RAND-Z patent covenant, and RFC lifecycle.
 - [Security & Coordinated Vulnerability Disclosure](https://ztds.ai/security/): Armored PGP key, RFC 9116 security.txt, 4-stage CVD SLA timeline, and $150,000 bug bounty matrix.
 - [Zero-Telemetry Privacy Declaration](https://ztds.ai/privacy/): Zero-telemetry guarantees (0 cookies, 0 external trackers, ephemeral RAM processing, GDPR Article 28 zero-DPA safe harbor).
 - [Standards, Patent Policy & Terms](https://ztds.ai/terms/): Tri-partite legal licensing (CC-BY-4.0, Apache 2.0, ZTDS Verified™ trust mark), RAND-Z patent non-assertion covenant, and statutory disclaimers.

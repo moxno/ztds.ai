@@ -25,6 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/styles.css">
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 
   <script type="application/ld+json">
   {
@@ -166,7 +167,7 @@
         Developer SDK &amp; Pre-Built Connectors
       </h1>
       <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
-        Drop-in, client-side zero-trust data sanitization for modern AI pipelines. The canonical reference implementation <code class="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-mono font-bold">@privacyscrubber/sdk</code> executes in &lt; 0.8ms in local host process memory with 0.00 bytes socket egress.
+        Drop-in, client-side zero-trust data sanitization for modern AI pipelines. Choose between the open reference engine <code class="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-mono font-bold">@ztds/core</code> (Apache 2.0) and the enterprise production engine <code class="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-mono font-bold">@privacyscrubber/sdk</code>. Both execute in &lt; 0.8ms in local host process memory with 0.00 bytes socket egress.
       </p>
 
       <!-- Quick Install Bar with Multi-Manager Switcher -->
@@ -186,6 +187,35 @@
           <button id="copyInstallBtn" class="shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 font-semibold transition-colors flex items-center gap-1">
             <span id="copyInstallText">Copy</span>
           </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Implementation Tier Demarcation (Vendor-Neutral Standard vs. Production Engine) -->
+    <div class="p-6 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 text-white border border-slate-800 shadow-lg">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-2 max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-[11px] font-mono text-emerald-300 uppercase tracking-wider">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Dual-Tier Implementation Architecture
+          </div>
+          <h2 class="text-xl font-bold text-white tracking-tight">Open Reference Engine &amp; Enterprise Hardened Runtime</h2>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            The ZTDS standard operates on a strictly demarcated two-tier model: choose between the community-governed open-source baseline engine (<code class="text-emerald-300 font-mono">@ztds/core</code> &middot; Apache-2.0) and the enterprise-grade production runtime (<code class="text-emerald-300 font-mono">@privacyscrubber/sdk</code> &middot; 30 Commercial Profiles).
+          </p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 shrink-0">
+          <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500/40 transition-colors">
+            <div class="text-[11px] font-mono text-emerald-400 font-bold uppercase">Open Source (Apache-2.0)</div>
+            <div class="text-sm font-bold text-white mt-0.5">@ztds/core</div>
+            <div class="text-[11px] text-slate-400 mt-1">Free community baseline. 4 Invariants, universal regex rules.</div>
+            <code class="block text-[10px] text-slate-300 font-mono mt-2 bg-black/30 p-1.5 rounded">npm i @ztds/core</code>
+          </div>
+          <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/40 transition-colors">
+            <div class="text-[11px] font-mono text-blue-400 font-bold uppercase">Enterprise Engine</div>
+            <div class="text-sm font-bold text-white mt-0.5">@privacyscrubber/sdk</div>
+            <div class="text-[11px] text-slate-400 mt-1">SIMD WebAssembly, 30 sector profiles, offline air-gap node licensing.</div>
+            <code class="block text-[10px] text-slate-300 font-mono mt-2 bg-black/30 p-1.5 rounded">npm i @privacyscrubber/sdk</code>
+          </div>
         </div>
       </div>
     </div>
@@ -922,9 +952,9 @@ static_resources:
               <li class="flex items-center gap-2">&check; Unlimited backend microservice nodes</li>
             </ul>
           </div>
-          <a href="/apply/" class="btn-trust w-full text-center text-xs py-2">
-            Get Developer License &rarr;
-          </a>
+          <button type="button" id="btnOpenCheckoutModal" class="btn-trust w-full text-center text-xs py-2.5 font-bold shadow-sm flex items-center justify-center gap-1.5 cursor-pointer">
+            <span>Get Developer License &rarr;</span>
+          </button>
         </div>
 
         <!-- Tier 3: Enterprise Air-Gapped -->
@@ -1575,7 +1605,408 @@ jobs:
       if (btnDecodeLicense) {
         btnDecodeLicense.addEventListener('click', executeLicenseCheck);
       }
+
+      // ==========================================
+      // 8. PADDLE CHECKOUT & MINTING CONTROLLER
+      // ==========================================
+      const modal = document.getElementById('checkoutModal');
+      const btnOpenModal = document.getElementById('btnOpenCheckoutModal');
+      const btnCloseModal = document.getElementById('btnCloseCheckoutModal');
+
+      const tabBuy = document.getElementById('tabCheckoutBuy');
+      const tabTrial = document.getElementById('tabCheckoutTrial');
+      const tabInvoice = document.getElementById('tabCheckoutInvoice');
+
+      const paneBuy = document.getElementById('paneCheckoutBuy');
+      const paneTrial = document.getElementById('paneCheckoutTrial');
+      const paneInvoice = document.getElementById('paneCheckoutInvoice');
+
+      const btnIntervalAnnual = document.getElementById('btnIntervalAnnual');
+      const btnIntervalMonthly = document.getElementById('btnIntervalMonthly');
+      const btnLaunchPaddle = document.getElementById('btnLaunchPaddleCheckout');
+      const btnLaunchPaddleText = document.getElementById('btnLaunchPaddleText');
+
+      let currentInterval = 'annual'; // 'annual' | 'monthly'
+
+      // Initialize Paddle Billing v2 if available
+      if (window.Paddle) {
+        try {
+          const paddleEnv = window.ZTDS_PADDLE_ENV || 'sandbox';
+          const paddleToken = window.ZTDS_PADDLE_TOKEN || 'test_token_ztds_demo';
+          Paddle.Initialize({
+            token: paddleToken,
+            environment: paddleEnv
+          });
+        } catch (e) {
+          console.warn('[Paddle SDK notice]:', e.message);
+        }
+      }
+
+      function openModal() {
+        if (modal) {
+          modal.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+          switchTab('buy');
+        }
+      }
+
+      function closeModal() {
+        if (modal) {
+          modal.classList.add('hidden');
+          document.body.style.overflow = '';
+        }
+      }
+
+      if (btnOpenModal) btnOpenModal.addEventListener('click', openModal);
+      if (btnCloseModal) btnCloseModal.addEventListener('click', closeModal);
+
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal();
+        });
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+          closeModal();
+        }
+      });
+
+      function switchTab(tabKey) {
+        const tabs = [tabBuy, tabTrial, tabInvoice];
+        const panes = [paneBuy, paneTrial, paneInvoice];
+
+        tabs.forEach(t => {
+          if (t) {
+            t.classList.remove('border-emerald-600', 'text-emerald-700', 'font-bold');
+            t.classList.add('border-transparent', 'text-slate-500', 'font-semibold');
+          }
+        });
+        panes.forEach(p => {
+          if (p) p.classList.add('hidden');
+        });
+
+        if (tabKey === 'buy') {
+          if (tabBuy) {
+            tabBuy.classList.add('border-emerald-600', 'text-emerald-700', 'font-bold');
+            tabBuy.classList.remove('border-transparent', 'text-slate-500', 'font-semibold');
+          }
+          if (paneBuy) paneBuy.classList.remove('hidden');
+        } else if (tabKey === 'trial') {
+          if (tabTrial) {
+            tabTrial.classList.add('border-emerald-600', 'text-emerald-700', 'font-bold');
+            tabTrial.classList.remove('border-transparent', 'text-slate-500', 'font-semibold');
+          }
+          if (paneTrial) paneTrial.classList.remove('hidden');
+        } else if (tabKey === 'invoice') {
+          if (tabInvoice) {
+            tabInvoice.classList.add('border-emerald-600', 'text-emerald-700', 'font-bold');
+            tabInvoice.classList.remove('border-transparent', 'text-slate-500', 'font-semibold');
+          }
+          if (paneInvoice) paneInvoice.classList.remove('hidden');
+        }
+      }
+
+      if (tabBuy) tabBuy.addEventListener('click', () => switchTab('buy'));
+      if (tabTrial) tabTrial.addEventListener('click', () => switchTab('trial'));
+      if (tabInvoice) tabInvoice.addEventListener('click', () => switchTab('invoice'));
+
+      // Interval Toggle
+      if (btnIntervalAnnual && btnIntervalMonthly) {
+        btnIntervalAnnual.addEventListener('click', () => {
+          currentInterval = 'annual';
+          btnIntervalAnnual.className = 'flex-1 py-2 rounded-lg bg-white text-slate-900 font-bold shadow-xs transition-all flex items-center justify-center gap-1.5';
+          btnIntervalMonthly.className = 'flex-1 py-2 rounded-lg text-slate-600 hover:text-slate-900 font-medium transition-all';
+          if (btnLaunchPaddleText) {
+            btnLaunchPaddleText.textContent = 'Proceed to Secure Checkout ($1,990 / year) →';
+          }
+        });
+
+        btnIntervalMonthly.addEventListener('click', () => {
+          currentInterval = 'monthly';
+          btnIntervalMonthly.className = 'flex-1 py-2 rounded-lg bg-white text-slate-900 font-bold shadow-xs transition-all flex items-center justify-center gap-1.5';
+          btnIntervalAnnual.className = 'flex-1 py-2 rounded-lg text-slate-600 hover:text-slate-900 font-medium transition-all flex items-center justify-center gap-1.5';
+          if (btnLaunchPaddleText) {
+            btnLaunchPaddleText.textContent = 'Proceed to Secure Checkout ($199 / month) →';
+          }
+        });
+      }
+
+      // Launch Paddle Checkout
+      if (btnLaunchPaddle) {
+        btnLaunchPaddle.addEventListener('click', () => {
+          const company = (document.getElementById('checkoutCompany')?.value || '').trim();
+          const email = (document.getElementById('checkoutEmail')?.value || '').trim();
+          const domain = (document.getElementById('checkoutDomain')?.value || '').trim();
+
+          if (!company || company.length < 2) {
+            alert('Please enter your company or organization name.');
+            document.getElementById('checkoutCompany')?.focus();
+            return;
+          }
+          if (!email || !email.includes('@')) {
+            alert('Please enter a valid developer or billing email address.');
+            document.getElementById('checkoutEmail')?.focus();
+            return;
+          }
+
+          const priceId = currentInterval === 'annual'
+            ? (window.ZTDS_PADDLE_PRICE_ANNUAL || 'pri_01hrztds_dev_annual_1990')
+            : (window.ZTDS_PADDLE_PRICE_MONTHLY || 'pri_01hrztds_dev_monthly_199');
+
+          if (window.Paddle && window.Paddle.Checkout && typeof Paddle.Checkout.open === 'function' && window.ZTDS_PADDLE_TOKEN) {
+            Paddle.Checkout.open({
+              items: [{ priceId, quantity: 1 }],
+              customer: { email },
+              customData: {
+                company_name: company,
+                domain: domain,
+                tier: 'developer_pro',
+                interval: currentInterval
+              }
+            });
+          } else {
+            // Self-serve preview: prefill trial tab with their company and email
+            const trialComp = document.getElementById('trialCompany');
+            const trialEm = document.getElementById('trialEmail');
+            if (trialComp) trialComp.value = company;
+            if (trialEm) trialEm.value = email;
+
+            alert(`Paddle MoR Gateway: Direct payment is ready. In this environment, your instant 14-day Developer Pro evaluation token has been pre-configured.`);
+            switchTab('trial');
+            const btnMint = document.getElementById('btnMintTrialLicense');
+            if (btnMint) btnMint.click();
+          }
+        });
+      }
+
+      // Mint 14-Day Evaluation Key via Serverless API
+      const btnMintTrial = document.getElementById('btnMintTrialLicense');
+      if (btnMintTrial) {
+        btnMintTrial.addEventListener('click', async () => {
+          const company = (document.getElementById('trialCompany')?.value || '').trim();
+          const email = (document.getElementById('trialEmail')?.value || '').trim();
+
+          if (!company || company.length < 2) {
+            alert('Please provide a company or developer name.');
+            document.getElementById('trialCompany')?.focus();
+            return;
+          }
+
+          const originalText = btnMintTrial.innerHTML;
+          btnMintTrial.disabled = true;
+          btnMintTrial.innerHTML = '<span class="pulse-dot mr-1"></span> Minting Ed25519 Token in Local RAM...';
+
+          try {
+            const res = await fetch('/api/mint-license', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                customerName: company,
+                email: email,
+                tier: 'developer_pro',
+                days: 14
+              })
+            });
+
+            const data = await res.json();
+            if (res.ok && data.token) {
+              const resultBox = document.getElementById('trialResultBox');
+              const licenseIdEl = document.getElementById('trialLicenseId');
+              const expiryEl = document.getElementById('trialExpiryDate');
+              const tokenDisplay = document.getElementById('trialTokenDisplay');
+              const quickstartCmd = document.getElementById('trialQuickstartCmd');
+
+              if (resultBox) resultBox.classList.remove('hidden');
+              if (licenseIdEl) licenseIdEl.textContent = data.licenseId;
+              if (expiryEl) expiryEl.textContent = `Valid through ${data.expiresAt.split('T')[0]}`;
+              if (tokenDisplay) tokenDisplay.textContent = data.token;
+              if (quickstartCmd) quickstartCmd.textContent = `export ZTDS_LICENSE="${data.token}"`;
+
+              const copyBtn = document.getElementById('btnCopyTrialToken');
+              if (copyBtn) {
+                copyBtn.onclick = () => {
+                  if (typeof window.ztdsCopy === 'function') {
+                    window.ztdsCopy(data.token, copyBtn, 'Token Copied!');
+                  } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(data.token).then(() => {
+                      copyBtn.textContent = 'Token Copied!';
+                      setTimeout(() => { copyBtn.textContent = 'Copy Token'; }, 2000);
+                    });
+                  }
+                };
+              }
+            } else {
+              alert(`Error minting token: ${data.details || data.error || 'Server error'}`);
+            }
+          } catch (err) {
+            alert(`Network error during license minting: ${err.message}`);
+          } finally {
+            btnMintTrial.disabled = false;
+            btnMintTrial.innerHTML = originalText;
+          }
+        });
+      }
     });
   </script>
+
+  <!-- PADDLE CHECKOUT & INSTANT LICENSE MODAL -->
+  <div id="checkoutModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/70 backdrop-blur-sm hidden" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle">
+    <div class="relative w-full max-w-2xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      
+      <!-- Modal Header -->
+      <div class="p-5 sm:p-6 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-[11px] font-mono font-bold text-emerald-800 uppercase tracking-wider mb-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Developer Pro Licensing
+          </div>
+          <h2 id="checkoutModalTitle" class="text-xl font-bold text-slate-900">Developer Pro SDK &amp; Offline Node License</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Merchant of Record via Paddle &middot; Automatic B2B VAT / Sales Tax Compliance</p>
+        </div>
+        <button type="button" id="btnCloseCheckoutModal" class="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-200/60 transition-colors" aria-label="Close modal">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Mode Switcher Tabs -->
+      <div class="flex border-b border-slate-200 bg-white px-5 sm:px-6 gap-2 pt-3" role="tablist">
+        <button type="button" id="tabCheckoutBuy" class="checkout-tab-btn active pb-3 px-3 text-xs font-bold border-b-2 border-emerald-600 text-emerald-700 transition-colors">
+          Commercial License (Paddle)
+        </button>
+        <button type="button" id="tabCheckoutTrial" class="checkout-tab-btn pb-3 px-3 text-xs font-semibold text-slate-500 border-b-2 border-transparent hover:text-slate-800 transition-colors">
+          Instant 14-Day Evaluation Key
+        </button>
+        <button type="button" id="tabCheckoutInvoice" class="checkout-tab-btn pb-3 px-3 text-xs font-semibold text-slate-500 border-b-2 border-transparent hover:text-slate-800 transition-colors">
+          Enterprise Wire / PO ($12k/yr)
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-5 sm:p-6 overflow-y-auto space-y-5">
+        
+        <!-- PANE 1: Paddle Commercial Checkout -->
+        <div id="paneCheckoutBuy" class="space-y-4">
+          <!-- Interval Toggle -->
+          <div class="p-1.5 bg-slate-100 rounded-xl flex items-center gap-1 text-xs">
+            <button type="button" id="btnIntervalAnnual" class="flex-1 py-2 rounded-lg bg-white text-slate-900 font-bold shadow-xs transition-all flex items-center justify-center gap-1.5">
+              <span>Annual: $1,990 / year</span>
+              <span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-mono">Save 17%</span>
+            </button>
+            <button type="button" id="btnIntervalMonthly" class="flex-1 py-2 rounded-lg text-slate-600 hover:text-slate-900 font-medium transition-all">
+              Monthly: $199 / month
+            </button>
+          </div>
+
+          <!-- Form Fields -->
+          <div class="space-y-3">
+            <div>
+              <label for="checkoutCompany" class="block text-xs font-semibold text-slate-700 mb-1">Company / Organization Legal Name *</label>
+              <input type="text" id="checkoutCompany" placeholder="e.g. Acme Health Technologies Ltd." class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+            </div>
+            <div>
+              <label for="checkoutEmail" class="block text-xs font-semibold text-slate-700 mb-1">Developer / Billing Contact Email *</label>
+              <input type="email" id="checkoutEmail" placeholder="cto@example.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+            </div>
+            <div>
+              <label for="checkoutDomain" class="block text-xs font-semibold text-slate-700 mb-1">Primary Application Domain (Optional)</label>
+              <input type="text" id="checkoutDomain" placeholder="app.example.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+            </div>
+          </div>
+
+          <!-- Feature Recap Pill -->
+          <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1">
+            <div class="font-bold text-slate-800 flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Instant Delivery via Paddle Webhook</span>
+            </div>
+            <p class="text-[11px] leading-relaxed">Cryptographic Ed25519 offline token issued immediately. B2B compliant invoice with reverse-charge VAT issued by Paddle.com Market Ltd.</p>
+          </div>
+
+          <!-- Submit CTA -->
+          <button type="button" id="btnLaunchPaddleCheckout" class="btn-trust w-full py-3 text-sm font-bold shadow-md flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            <span id="btnLaunchPaddleText">Proceed to Secure Checkout ($1,990 / year) &rarr;</span>
+          </button>
+        </div>
+
+        <!-- PANE 2: Instant 14-Day Evaluation Key -->
+        <div id="paneCheckoutTrial" class="space-y-4 hidden">
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Generate an authentic, cryptographically signed 14-day evaluation license token (<code class="font-mono text-emerald-700 bg-emerald-50 px-1 py-0.5 rounded">ZTDS-LIC-v1...</code>) immediately in local RAM. Zero credit card required.
+          </p>
+
+          <div class="space-y-3">
+            <div>
+              <label for="trialCompany" class="block text-xs font-semibold text-slate-700 mb-1">Company / Developer Name *</label>
+              <input type="text" id="trialCompany" placeholder="e.g. Acme Dev Team" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+            </div>
+            <div>
+              <label for="trialEmail" class="block text-xs font-semibold text-slate-700 mb-1">Work Email (Optional for Token Delivery)</label>
+              <input type="email" id="trialEmail" placeholder="developer@example.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+            </div>
+          </div>
+
+          <button type="button" id="btnMintTrialLicense" class="btn-navy w-full py-2.5 text-xs font-bold shadow-sm flex items-center justify-center gap-2 cursor-pointer">
+            <span>Mint 14-Day Evaluation Token &rarr;</span>
+          </button>
+
+          <!-- Generated Token Container -->
+          <div id="trialResultBox" class="hidden space-y-3 pt-2">
+            <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs flex items-center justify-between">
+              <span class="font-bold flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span id="trialLicenseId">ZTDS-2026-EVAL-XXXX</span>
+              </span>
+              <span class="text-[11px] font-mono text-emerald-700" id="trialExpiryDate">Valid for 14 days</span>
+            </div>
+
+            <div class="p-3 bg-slate-900 rounded-xl text-slate-200 font-mono text-[11px] space-y-2">
+              <div class="flex items-center justify-between text-slate-400 text-[10px] pb-1 border-b border-slate-800">
+                <span>Ed25519 Signed Token</span>
+                <button type="button" id="btnCopyTrialToken" class="text-emerald-400 hover:text-emerald-300 font-bold transition-colors cursor-pointer">Copy Token</button>
+              </div>
+              <div id="trialTokenDisplay" class="break-all select-all max-h-24 overflow-y-auto text-slate-300"></div>
+            </div>
+
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs font-mono space-y-1">
+              <div class="text-[10px] font-bold uppercase text-slate-400">Terminal Quickstart</div>
+              <div class="text-slate-800 select-all" id="trialQuickstartCmd">export ZTDS_LICENSE="..."</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANE 3: Enterprise Wire / PO -->
+        <div id="paneCheckoutInvoice" class="space-y-4 hidden">
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <h3 class="text-sm font-bold text-slate-900">Enterprise Air-Gapped License ($12,000 / year)</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Designed for regulated enterprises requiring multi-node deployment, 30 certified sector profiles, custom MSA terms, and payment via ACH, SEPA, or Wire transfer.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <a href="/public/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" target="_blank" class="btn-outline text-xs p-3 text-center rounded-xl flex items-center justify-center gap-1.5">
+              <span>CISO DPA Memo (PDF) &rarr;</span>
+            </a>
+            <a href="/public/docs/ZTDS_Enterprise_Security_Pack.zip" target="_blank" class="btn-outline text-xs p-3 text-center rounded-xl flex items-center justify-center gap-1.5">
+              <span>Security Pack (ZIP) &rarr;</span>
+            </a>
+          </div>
+
+          <div class="p-3 rounded-lg bg-emerald-50/70 border border-emerald-200 text-xs text-emerald-950 flex items-center justify-between gap-3">
+            <div>
+              <strong class="block text-emerald-900 font-bold">Direct Corporate Procurement:</strong>
+              <span>Contact Chief Architect Ilya Sibiryakov for turn-key custom order processing.</span>
+            </div>
+            <a href="mailto:licensing@ztds.ai?subject=Enterprise%20Order%20Inquiry%20($12,000/yr)" class="btn-trust text-xs py-2 px-3 shrink-0">
+              Email Procurement &rarr;
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
 </body>
 </html>

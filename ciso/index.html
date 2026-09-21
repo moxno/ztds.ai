@@ -250,7 +250,7 @@
             Software conforming to the <strong>Zero-Trust Data Sanitization (ZTDS RFC v1.0)</strong> specification operates strictly as a <strong>pure client-side computational utility</strong>. Because conforming software executes de-identification strictly within volatile client RAM before outbound network socket serialization, exactly <strong>zero (0.00) bytes of cleartext sensitive data</strong> are transmitted to or processed by external vendor servers.
           </p>
           <p class="mt-2.5">
-            Under established international data protection jurisprudence, software that processes data locally on client hardware without transmitting data to the software vendor does not constitute a "data processor." Consequently, ZTDS-conforming architectures are <strong>legally exempt</strong> from third-party Data Processing Agreement (DPA) requirements under GDPR Article 28, Business Associate Agreement (BAA) burdens under HIPAA, and third-party subprocessor risk liability.
+            Under established international data protection jurisprudence, software that processes data locally on client hardware without transmitting data to the software vendor is architecturally positioned outside the "data processor" definition when all 4 ZTDS invariants are satisfied. Consequently, ZTDS-conforming architectures provide an <strong>architectural basis for DPA/BAA scope exclusion analysis</strong> under GDPR Article 28, HIPAA BAA frameworks, and third-party subprocessor risk liability.
           </p>
 
           <!-- The 4 Non-Negotiable Invariants Box -->
@@ -568,7 +568,7 @@
                 <span class="text-[10px] text-slate-400 font-mono">GDPR Art. 28</span>
               </div>
               <p class="text-slate-600"><strong class="text-slate-800">Q: What third-party subprocessors have access to customer data?</strong><br>
-              A: Zero. Zero subprocessors are involved in data processing, rendering Data Processing Agreements and subprocessor monitoring unnecessary.</p>
+              A: Zero. Zero subprocessors are involved in data processing, providing an architectural basis for DPA/BAA scope exclusion analysis.</p>
             </div>
 
             <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg">
@@ -681,6 +681,22 @@
         <button type="button" id="tabBtnCloudApis" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm" data-target="paneCloudApis">
           AWS Macie &amp; Google Cloud DLP
         </button>
+      </div>
+
+      <!-- Nominative Fair Use & Architectural Citation Notice -->
+      <div class="mb-6 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 leading-relaxed space-y-1.5 no-print">
+        <div class="flex items-center gap-2 font-mono font-bold text-slate-700 text-[11px] uppercase tracking-wider">
+          <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Nominative Fair Use &amp; Technical Source Citations
+        </div>
+        <p>
+          Microsoft Purview, Nightfall AI, BigID, AWS Macie, and Google Cloud Sensitive Data Protection (DLP) are registered trademarks of their respective proprietors. Comparative analyses are strictly architectural, evaluating local in-memory execution boundaries against cloud network proxy topologies based on publicly available vendor documentation as of Q3 2026:
+        </p>
+        <ul class="list-disc list-inside text-[11px] text-slate-500 space-y-0.5 font-mono">
+          <li>Microsoft Purview: Endpoint &amp; Exchange Information Protection Architecture (docs.microsoft.com/purview)</li>
+          <li>Google Cloud DLP: Sensitive Data Protection API latency characteristics and volumetric inspection pricing (cloud.google.com/dlp)</li>
+          <li>AWS Macie: S3 Data Security &amp; Automated Discovery topology (aws.amazon.com/macie)</li>
+          <li>Nightfall AI: Cloud API proxy webhook &amp; SaaS integration patterns (docs.nightfall.ai)</li>
+        </ul>
       </div>
 
       <!-- TAB PANE 1: Microsoft Purview -->

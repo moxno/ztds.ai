@@ -13,7 +13,7 @@
   <meta property="og:url" content="https://ztds.ai/">
   <meta property="og:title" content="ZTDS (Zero Trust Data Sanitization) — In-RAM Method &amp; Open AI Security Standard">
   <meta property="og:description" content="ZTDS (Zero Trust Data Sanitization): Eliminate data processor liability and protect sensitive customer records in volatile client RAM before socket serialization. 0.00 bytes cloud egress, sub-millisecond execution.">
-  <meta property="og:image" content="https://ztds.ai/badge/privacyscrubber-web.svg">
+  <meta property="og:image" content="https://ztds.ai/badge/seal-verified.svg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ZTDS (Zero Trust Data Sanitization) — In-RAM Method &amp; Open AI Security Standard">
   <meta name="twitter:description" content="ZTDS (Zero Trust Data Sanitization): Eliminate data processor liability and protect sensitive customer records in volatile client RAM before socket serialization. 0.00 bytes cloud egress, sub-millisecond execution.">
@@ -39,8 +39,7 @@
         "logo": "https://ztds.ai/favicon.svg",
         "sameAs": [
           "https://zenodo.org/records/22058770",
-          "https://osf.io/5byjf/",
-          "https://www.linkedin.com/in/ilya-sibiryakov/"
+          "https://osf.io/5byjf/"
         ]
       },
       {
@@ -48,16 +47,25 @@
         "@id": "https://ztds.ai/#website",
         "url": "https://ztds.ai",
         "name": "ZTDS.ai",
-        "publisher": { "@id": "https://ztds.ai/#organization" }
+        "publisher": { "@id": "https://ztds.ai/#organization" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://ztds.ai/scanner/?domain={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
       },
       {
         "@type": "TechArticle",
+        "@id": "https://ztds.ai/standard/#tech-article",
         "headline": "Zero-Trust Data Sanitization (ZTDS) Specification v1.0",
         "description": "The open industry standard for in-memory client-side data de-identification in Generative AI pipelines.",
+        "datePublished": "2026-09-15",
+        "dateModified": "2026-09-21",
         "author": {
           "@type": "Person",
           "name": "Ilya Sibiryakov",
-          "url": "https://orcid.org/0009-0002-0642-5985"
+          "url": "https://orcid.org/0009-0002-0642-5985",
+          "sameAs": "https://www.linkedin.com/in/ilya-sibiryakov/"
         },
         "publisher": { "@id": "https://ztds.ai/#organization" }
       }
@@ -198,28 +206,76 @@
 
         <!-- Plain-Language Subtitle -->
         <p class="mt-5 text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-          <strong>ZTDS (Zero Trust Data Sanitization)</strong> eliminates data processor liability and protects sensitive customer records inside volatile client RAM before socket serialization. 0.00 bytes cloud egress, sub-millisecond execution, and an open certification ecosystem.
+          <strong>Airplane-Mode Privacy for AI.</strong> Your customer records, financial figures, and confidential prompts never leave the host device. ZTDS physically stops sensitive data from ever reaching external clouds: masked in volatile memory, verified by cryptographic proof, with 0.00 bytes data leakage and zero GDPR Article 28 subprocessor liability.
         </p>
 
-        <!-- DUAL PRIMARY CTAs -->
+        <!-- INTERACTIVE DOMAIN PERIMETER SCANNER BAR -->
+        <div class="mt-8 max-w-2xl mx-auto">
+          <form id="heroScanForm" class="scanner-hero-bar p-1.5 flex flex-col sm:flex-row items-center gap-2">
+            <div class="flex items-center gap-2.5 px-3 py-2 w-full">
+              <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+              </svg>
+              <input id="heroDomainInput" type="text" placeholder="Enter domain to scan (e.g. app.mycompany.com)..." class="w-full text-sm font-medium text-slate-900 placeholder:text-slate-400 bg-transparent focus:outline-none font-sans" required autocomplete="off" spellcheck="false" />
+            </div>
+            <button id="heroScanSubmitBtn" type="submit" class="btn-trust w-full sm:w-auto text-xs py-3 px-5 whitespace-nowrap shadow-sm flex items-center justify-center gap-2 shrink-0">
+              <span id="heroScanBtnText">Audit Perimeter &rarr;</span>
+              <span id="heroScanSpinner" class="hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+            </button>
+          </form>
+
+          <!-- Quick Test Presets -->
+          <div class="mt-2.5 flex flex-wrap items-center justify-center sm:justify-start gap-2 text-xs text-slate-500">
+            <span class="font-mono text-[11px] text-slate-400">Quick test:</span>
+            <button type="button" class="hero-preset-btn px-2.5 py-1 rounded-md bg-white border border-slate-200 hover:border-emerald-500 text-[11px] font-mono text-slate-600 transition-colors" data-domain="demo-saas.io">demo-saas.io</button>
+            <button type="button" class="hero-preset-btn px-2.5 py-1 rounded-md bg-white border border-slate-200 hover:border-emerald-500 text-[11px] font-mono text-slate-600 transition-colors" data-domain="ai-startup.dev">ai-startup.dev</button>
+            <button type="button" class="hero-preset-btn px-2.5 py-1 rounded-md bg-white border border-slate-200 hover:border-emerald-500 text-[11px] font-mono text-slate-600 transition-colors" data-domain="clinic-portal.health">clinic-portal.health</button>
+          </div>
+
+          <!-- Loading Progress State -->
+          <div id="heroScanProgress" class="mt-4 p-4 rounded-xl bg-white border border-slate-200 shadow-sm hidden text-left font-mono text-xs">
+            <div class="flex items-center justify-between mb-3 text-slate-500">
+              <span class="flex items-center gap-2 text-emerald-700 font-bold">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>AUDITING PERIMETER IN VOLATILE RAM</span>
+              </span>
+              <span id="heroScanTickerTimer" class="text-slate-400 font-mono">0.0s</span>
+            </div>
+            <div class="space-y-1.5 text-slate-600 text-[11px]" id="heroScanStepList">
+              <div id="heroStepDns" class="flex items-center gap-2"><span class="text-slate-400">&bull;</span> Resolving DNS &amp; verifying anti-SSRF perimeter...</div>
+              <div id="heroStepHeaders" class="flex items-center gap-2 text-slate-400"><span class="text-slate-300">&bull;</span> Inspecting HTTP headers, Cloud Edge, and CSP...</div>
+              <div id="heroStepSinks" class="flex items-center gap-2 text-slate-400"><span class="text-slate-300">&bull;</span> Auditing sensory inputs and third-party tracker sinkholes...</div>
+              <div id="heroStepSynthesize" class="flex items-center gap-2 text-slate-400"><span class="text-slate-300">&bull;</span> Synthesizing ZTDS RFC v1.0 In-RAM architecture blueprint...</div>
+            </div>
+          </div>
+
+          <!-- Dynamic Result Card -->
+          <div id="heroScanResult" class="mt-4 p-5 sm:p-6 rounded-2xl bg-white border border-slate-200 shadow-md hidden text-left">
+            <!-- Dynamic findings injected here via JS -->
+          </div>
+        </div>
+
+        <!-- TARGETED ACTION PATHS (Outcome First) -->
         <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/apply/" class="btn-trust w-full sm:w-auto text-base py-3.5 px-7 shadow-md">
-            Get Certified &rarr;
+          <a href="#heroScanForm" onclick="const inp = document.getElementById('heroDomainInput'); if(inp){ inp.focus(); inp.scrollIntoView({behavior: 'smooth', block: 'center'}); }" class="btn-trust w-full sm:w-auto text-base py-3 px-6 shadow-md">
+            Audit Your Domain Free &rarr;
           </a>
-          <a href="#method" class="btn-outline w-full sm:w-auto text-base py-3.5 px-7 shadow-sm">
-            Understand the Method &darr;
+          <a href="/sdk/" class="btn-navy w-full sm:w-auto text-base py-3 px-6 shadow-md">
+            Developer SDK &middot; Free Test Key &rarr;
           </a>
-          <a href="/sdk/" class="btn-navy w-full sm:w-auto text-base py-3.5 px-7 shadow-md">
-            Developer SDK &rarr;
+          <a href="/ciso/" class="btn-outline w-full sm:w-auto text-base py-3 px-6 shadow-sm">
+            CISO Zero-DPA Pack (PDF) &rarr;
           </a>
         </div>
 
-        <div class="mt-5 text-xs text-slate-500 flex flex-wrap items-center justify-center gap-4">
+        <div class="mt-5 text-xs text-slate-500 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <span>&check; 100% Free Open Specification (Apache 2.0 / CC BY 4.0)</span>
           <span>&middot;</span>
           <span>&check; Invariant-Based Cryptographic Proof</span>
           <span>&middot;</span>
           <span>&check; GDPR Article 28 DPA-Exempt</span>
+          <span>&middot;</span>
+          <a href="#method" class="text-emerald-700 font-semibold hover:underline">How the Method Works &darr;</a>
           <span>&middot;</span>
           <a href="/roi/" class="text-emerald-700 font-semibold hover:underline">Calculate CISO ROI &rarr;</a>
         </div>
@@ -236,14 +292,15 @@
           <div class="text-xs text-slate-500 mt-0.5">Volatile RAM Latency</div>
         </div>
         <div class="p-2 border-l border-slate-200">
-          <div class="text-2xl font-bold text-slate-900 font-mono">DPA Free</div>
-          <div class="text-xs text-slate-500 mt-0.5">GDPR Recital 26 Exempt</div>
+          <div class="text-2xl font-bold text-slate-900 font-mono">DPA-Free*</div>
+          <div class="text-xs text-slate-500 mt-0.5">Recital 26 Eligible*</div>
         </div>
         <div class="p-2 border-l border-slate-200">
           <div class="text-2xl font-bold text-slate-900 font-mono">100% Client</div>
           <div class="text-xs text-slate-500 mt-0.5">Volatile Memory Boundary</div>
         </div>
       </div>
+      <p class="text-[10px] text-slate-400 text-center mt-2 max-w-3xl mx-auto leading-relaxed">* Conformance claims apply when implementations satisfy all 4 ZTDS RFC v1.0 invariants as verified by the <a href="/scanner/" class="underline hover:text-slate-600">Perimeter Scanner</a>. This does not constitute legal counsel. Consult qualified privacy counsel for jurisdiction-specific compliance.</p>
     </section>
 
     <!-- SECTION 1: THE ZTDS METHOD IN 30 SECONDS (Interactive Showcase) -->
@@ -253,7 +310,12 @@
         <div class="text-center max-w-3xl mx-auto mb-14">
           <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 font-mono">Architectural Paradigm Shift</span>
           <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2 tracking-tight">The ZTDS Method vs. Legacy Cloud DLP</h2>
-          <p class="text-slate-600 mt-3 text-base leading-relaxed">
+          <div class="mt-4 inline-flex flex-wrap items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs sm:text-sm font-semibold text-emerald-900 shadow-xs">
+            <span>Legacy Cloud DLP = You hand keys to a third party.</span>
+            <span class="text-emerald-400 hidden sm:inline">&bull;</span>
+            <span class="text-emerald-700 font-bold">ZTDS = You never let raw data leave the room.</span>
+          </div>
+          <p class="text-slate-600 mt-4 text-base leading-relaxed">
             Traditional enterprise security relies on intermediate cloud proxies that intercept cleartext traffic, introducing latency and adding third-party subprocessor liability under GDPR Article 28. The ZTDS Method moves the security boundary into volatile process memory: raw PII never crosses the network socket.
           </p>
         </div>
@@ -566,7 +628,7 @@
             </div>
             <h3 class="text-base font-bold text-slate-900 mb-2">Complete Subprocessor Exclusion</h3>
             <div class="font-mono text-xs text-amber-700 bg-amber-50 px-2 py-1 rounded mb-3">
-              GDPR Art. 28 = Disapplied
+              GDPR Art. 28 &mdash; Subprocessor Exclusion Path
             </div>
             <p class="text-xs text-slate-600 leading-relaxed">
               Software functions purely as a local computing utility. Under GDPR Recital 26 and EDPB doctrine, zero vendor processing of PII means no subprocessor chain and no DPA required.
@@ -613,7 +675,7 @@
               </div>
               <h3 class="text-xl font-bold text-slate-900 mb-2">Verified AI Applications</h3>
               <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                For developers of AI agents, RAG systems, and SaaS tools who want to prove zero cloud data leakage to enterprise buyers.
+                Sell to enterprise buyers without 90-day legal reviews. Prove 0.00 bytes cloud leakage with automated CLI verification, an official verified trust badge, and canonical registry inclusion.
               </p>
               
               <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 space-y-2 mb-4">
@@ -655,7 +717,7 @@
               </div>
               <h3 class="text-xl font-bold text-slate-900 mb-2">Corporate Adopters</h3>
               <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                For CISOs, enterprise security teams, and compliance officers looking to deploy AI tools without creating subprocessor risks.
+                Deploy internal LLMs and AI agents across your organization without signing new data processor agreements (DPAs) or expanding vendor attack surfaces.
               </p>
               
               <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 space-y-2 mb-4">
@@ -697,7 +759,7 @@
               </div>
               <h3 class="text-xl font-bold text-slate-900 mb-2">Fellows Council</h3>
               <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                For academic researchers, cryptographers, and privacy engineers shaping future iterations of the open RFC standard.
+                Advance the mathematical and legal foundations of client-side privacy. Author peer-reviewed DOIs across Zenodo, OSF, SSRN, and IEEE-indexed publications.
               </p>
               
               <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 space-y-2 mb-4">
@@ -745,10 +807,10 @@
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24" id="quickstart">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div>
-          <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 font-mono">Reference Implementation</span>
+          <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 font-mono">Reference Implementations</span>
           <h2 class="text-3xl font-bold text-slate-900 mt-2">Deploy the Method in 4 Lines of Code</h2>
           <p class="text-slate-600 mt-3 text-base leading-relaxed">
-            Use the official reference SDK sponsored by the consortium: <strong class="text-slate-900 font-mono">@privacyscrubber/sdk</strong>. It executes 100% locally in WebAssembly or Node.js without any API keys, telemetry, or network calls.
+            Deploy using the vendor-neutral open reference package <strong class="text-slate-900 font-mono">@ztds/core</strong> (Apache 2.0) or the enterprise production engine <strong class="text-slate-900 font-mono">@privacyscrubber/sdk</strong>. Both execute 100% locally in WebAssembly or host RAM without external API keys, telemetry, or network calls.
           </p>
 
           <div class="mt-6 space-y-3 text-sm text-slate-700">
@@ -785,12 +847,12 @@
               <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
               <span class="ml-2 font-mono text-xs text-slate-300">pipeline.ts &mdash; ZTDS In-RAM Enclave</span>
             </div>
-            <span class="text-[11px] text-emerald-400 font-mono">Reference Engine: @privacyscrubber/sdk</span>
+            <span class="text-[11px] text-emerald-400 font-mono">@ztds/core &middot; Apache-2.0</span>
           </div>
           
           <pre class="p-5 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code>
-<span class="text-slate-500">// 1. Install reference package: npm i @privacyscrubber/sdk</span>
-<span class="text-blue-400">import</span> { ZTDSClient } <span class="text-blue-400">from</span> <span class="text-emerald-300">'@privacyscrubber/sdk'</span>;
+<span class="text-slate-500">// 1. Install open engine: npm i @ztds/core (or @privacyscrubber/sdk for enterprise profiles)</span>
+<span class="text-blue-400">import</span> { ZTDSClient } <span class="text-blue-400">from</span> <span class="text-emerald-300">'@ztds/core'</span>;
 
 <span class="text-slate-500">// 2. Initialize in-memory zero-trust enclave</span>
 <span class="text-blue-400">const</span> ztds = <span class="text-blue-400">new</span> <span class="text-yellow-300">ZTDSClient</span>();
@@ -995,7 +1057,7 @@
       let homeSessionMap = {};
 
       const PRESETS = {
-        health: 'Patient Alexander Wright (DOB: 1982-04-12, SSN: 219-45-8821) visited Dr. Emily Vance at St. Jude Hospital regarding asthma. Email: a.wright@bioclinic.com, phone: +1-415-555-0199.',
+        health: 'Patient Alexander Wright (DOB: 1982-04-12, SSN: 219-45-8821) visited Dr. Emily Vance at Meridian General Hospital regarding asthma. Email: a.wright@bioclinic.com, phone: +1-415-555-0199.',
         finance: 'Transfer ,000 USD from account IBAN GB29XAAA10203012345678 to beneficiary Marcus Sterling (Routing: 021000021). Wire reference: REF-88192-CONFIDENTIAL.',
         devops: 'CRITICAL: Deploying auth service with AWS_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY and OPENAI_API_KEY=sk-proj-98f98124b8912409812498124 to production server 192.168.1.104.'
       };
@@ -1117,5 +1179,636 @@
       sanitizeText(inputArea.value);
     })();
   </script>
+
+  <!-- Domain Perimeter Scanner Controller (Sprint 2) -->
+  <script>
+    (function() {
+      const form = document.getElementById('heroScanForm');
+      const domainInput = document.getElementById('heroDomainInput');
+      const submitBtn = document.getElementById('heroScanSubmitBtn');
+      const btnText = document.getElementById('heroScanBtnText');
+      const spinner = document.getElementById('heroScanSpinner');
+      const progressBox = document.getElementById('heroScanProgress');
+      const resultBox = document.getElementById('heroScanResult');
+      const timerEl = document.getElementById('heroScanTickerTimer');
+
+      if (!form || !domainInput) return;
+
+      // Preset handlers
+      document.querySelectorAll('.hero-preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const dom = btn.getAttribute('data-domain');
+          if (dom) {
+            domainInput.value = dom;
+            runDomainScan(dom);
+          }
+        });
+      });
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const dom = domainInput.value.trim();
+        if (dom) runDomainScan(dom);
+      });
+
+      let timerInterval = null;
+
+      function updateProgressStep(stepId, isComplete, isActive) {
+        const el = document.getElementById(stepId);
+        if (!el) return;
+        if (isComplete) {
+          el.className = 'flex items-center gap-2 text-emerald-700 font-semibold';
+          el.innerHTML = '<span class="text-emerald-600 font-bold">&check;</span> ' + el.textContent.replace(/^[•\s\u2713]+/, '');
+        } else if (isActive) {
+          el.className = 'flex items-center gap-2 text-slate-800 font-semibold';
+          el.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> ' + el.textContent.replace(/^[•\s\u2713]+/, '');
+        } else {
+          el.className = 'flex items-center gap-2 text-slate-400';
+          el.innerHTML = '<span class="text-slate-300">&bull;</span> ' + el.textContent.replace(/^[•\s\u2713]+/, '');
+        }
+      }
+
+      async function runDomainScan(domain) {
+        // UI Reset
+        submitBtn.disabled = true;
+        btnText.textContent = 'Auditing...';
+        spinner.classList.remove('hidden');
+        resultBox.classList.add('hidden');
+        progressBox.classList.remove('hidden');
+
+        // Reset progress steps
+        const startTime = Date.now();
+        if (timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+          const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+          if (timerEl) timerEl.textContent = elapsed + 's';
+        }, 100);
+
+        updateProgressStep('heroStepDns', false, true);
+        updateProgressStep('heroStepHeaders', false, false);
+        updateProgressStep('heroStepSinks', false, false);
+        updateProgressStep('heroStepSynthesize', false, false);
+
+        // Step ticker animations
+        const t1 = setTimeout(() => {
+          updateProgressStep('heroStepDns', true);
+          updateProgressStep('heroStepHeaders', false, true);
+        }, 400);
+
+        const t2 = setTimeout(() => {
+          updateProgressStep('heroStepHeaders', true);
+          updateProgressStep('heroStepSinks', false, true);
+        }, 800);
+
+        const t3 = setTimeout(() => {
+          updateProgressStep('heroStepSinks', true);
+          updateProgressStep('heroStepSynthesize', false, true);
+        }, 1200);
+
+        try {
+          const response = await fetch('/api/scan-domain', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ domain })
+          });
+
+          clearTimeout(t1);
+          clearTimeout(t2);
+          clearTimeout(t3);
+          clearInterval(timerInterval);
+
+          updateProgressStep('heroStepDns', true);
+          updateProgressStep('heroStepHeaders', true);
+          updateProgressStep('heroStepSinks', true);
+          updateProgressStep('heroStepSynthesize', true);
+
+          const data = await response.json();
+          renderScanResult(data, domain);
+        } catch (err) {
+          clearInterval(timerInterval);
+          renderFallbackSelector(domain, err.message);
+        } finally {
+          submitBtn.disabled = false;
+          btnText.innerHTML = 'Audit Perimeter &rarr;';
+          spinner.classList.add('hidden');
+          setTimeout(() => progressBox.classList.add('hidden'), 400);
+        }
+      }
+
+      function renderScanResult(data, domain) {
+        if (!data || data.error) {
+          renderFallbackSelector(domain, data ? data.details || data.error : 'Network Error');
+          return;
+        }
+
+        const ev = data.evaluation || {};
+        const fn = data.findings || {};
+        const rating = ev.conformanceRating || 'MODERATE_RISK';
+        
+        let badgeClass = 'score-badge-moderate';
+        let badgeLabel = 'MODERATE EXPOSURE';
+        if (rating === 'OPTIMAL') {
+          badgeClass = 'score-badge-optimal';
+          badgeLabel = 'ZTDS OPTIMAL';
+        } else if (rating === 'HIGH_EXPOSURE') {
+          badgeClass = 'score-badge-exposure';
+          badgeLabel = 'HIGH RISK EGRESS';
+        }
+
+        const frameworks = (fn.frameworks || []).map(f => f.name).join(', ') || 'Modern Web App';
+        const sinksCount = (fn.thirdPartySinks || []).length;
+        const sensoryCount = (fn.sensorySurfaces || []).length;
+        const bp = ev.recommendedBlueprint || {};
+        const ind = ev.industry || {};
+        const activeProfileKey = ind.activeProfile || 'general';
+        const currentDomain = data.domain || domain;
+
+        resultBox.innerHTML = `
+          <!-- LEVEL 1: VERDICT & PERIMETER SCOPE -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono font-bold text-slate-900">${escapeHtml(currentDomain)}</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold ${badgeClass}">${badgeLabel}</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-0.5">Scanned in ${data.scanDurationMs || 340}ms &middot; <strong>0.00 B</strong> WAN Egress &middot; Volatile RAM Boundary</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="/scanner/?domain=${encodeURIComponent(currentDomain)}" class="btn-trust text-xs py-1.5 px-3">
+                Full Perimeter Dossier &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- Score & Regulatory Metrics Grid (Level 1) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 my-4">
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="text-[10px] font-mono text-slate-500 uppercase font-bold">Perimeter Safety Score</div>
+              <div class="text-2xl font-black font-mono mt-0.5 ${ev.riskScore >= 80 ? 'text-emerald-600' : ev.riskScore >= 50 ? 'text-amber-600' : 'text-rose-600'}">
+                ${ev.riskScore || 70}%
+              </div>
+              <div class="text-[10px] text-slate-400 font-mono">RFC v1.0 Conformance</div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="text-[10px] font-mono text-slate-500 uppercase font-bold">DPA Liability Relief</div>
+              <div class="text-2xl font-black font-mono mt-0.5 text-emerald-600">
+                -${sinksCount}
+              </div>
+              <div class="text-[10px] text-slate-400 font-mono">Subprocessors Disapplied (Art. 28)</div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="text-[10px] font-mono text-slate-500 uppercase font-bold">Detected Stack &amp; Surface</div>
+              <div class="text-sm font-bold text-slate-800 truncate mt-1">
+                ${escapeHtml(frameworks)}
+              </div>
+              <div class="text-[10px] text-slate-400 font-mono">${sensoryCount} Sensory Surface(s) &middot; ${escapeHtml((fn.cloudEdge || []).map(c => c.name).join(', ') || 'Edge Host')}</div>
+            </div>
+          </div>
+
+          <!-- Compact Industry Profile Selector (Level 1) -->
+          <div class="p-3 rounded-xl bg-slate-900 text-white border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <div class="flex items-center gap-2 flex-wrap">
+              <label for="heroIndustrySelect" class="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold">Target Industry:</label>
+              <select id="heroIndustrySelect" class="bg-slate-950 text-white border border-slate-700 text-xs font-mono rounded-lg px-2.5 py-1 focus:border-emerald-500 focus:outline-none">
+                <option value="medical" ${activeProfileKey === 'medical' ? 'selected' : ''}>Healthcare &amp; HIPAA (Safe Harbor § 164.514)</option>
+                <option value="finance" ${activeProfileKey === 'finance' ? 'selected' : ''}>FinTech &amp; Banking (PCI-DSS &amp; GLBA)</option>
+                <option value="legal" ${activeProfileKey === 'legal' ? 'selected' : ''}>Legal &amp; Privilege (FRE 502 &amp; Model Rule 1.6)</option>
+                <option value="hr" ${activeProfileKey === 'hr' ? 'selected' : ''}>HR &amp; People Operations (GDPR Art. 9 &amp; EEOC)</option>
+                <option value="security" ${activeProfileKey === 'security' ? 'selected' : ''}>DevSecOps &amp; SaaS (SOC 2 Type II)</option>
+                <option value="general" ${activeProfileKey === 'general' ? 'selected' : ''}>General Enterprise (GDPR Recital 26)</option>
+              </select>
+              <span id="heroProfileConfidence" class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">${escapeHtml(ind.confidence || 'AUTO')} DETECTED</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-mono">
+              <span id="heroProfileStatute" class="text-emerald-400 font-semibold">${escapeHtml(ind.statute || 'GDPR Recital 26')}</span>
+              <span id="heroDpaPill" class="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-300 text-[10px] font-bold">${escapeHtml(ind.dpaStatus || 'DPA-EXEMPT')}</span>
+            </div>
+          </div>
+
+          <!-- LEVEL 2: ROLE SWITCHER -->
+          <div class="flex items-center justify-between border-b border-slate-200 mt-5 pb-3">
+            <div class="inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200 font-mono text-xs" role="tablist">
+              <button type="button" id="btnRoleCiso" class="px-3.5 py-1.5 rounded-lg font-bold transition-all bg-white text-slate-900 shadow-xs" role="tab" aria-selected="true">
+                Executive &amp; CISO Brief
+              </button>
+              <button type="button" id="btnRoleDev" class="px-3.5 py-1.5 rounded-lg font-medium transition-all text-slate-600 hover:text-slate-900" role="tab" aria-selected="false">
+                Developer &amp; Engineering Code
+              </button>
+            </div>
+            <span class="text-[11px] font-mono text-slate-400 hidden sm:inline" id="roleSummaryHint">Regulatory Shield &amp; Exemption</span>
+          </div>
+
+          <!-- View A: Executive & CISO View (Active by default) -->
+          <div id="viewRoleCiso" class="p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 text-white border border-emerald-900/40 shadow-sm mt-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b border-slate-800">
+              <div>
+                <span class="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">Institutional Exemption Pack</span>
+                <h3 class="text-sm sm:text-base font-bold text-white mt-1">Statutory Liability Shield &amp; DPA Elimination</h3>
+                <p class="text-xs text-slate-400 mt-0.5" id="heroCisoCitation">${escapeHtml(ind.cisoCitation || 'Eliminates data processor liabilities under GDPR Article 28.')}</p>
+                <div class="text-xs text-emerald-200/90 mt-2.5 p-2.5 rounded-lg bg-emerald-950/50 border border-emerald-800/60 leading-relaxed font-sans" id="heroCisoExecutiveSummary">
+                  ${escapeHtml(ev.cisoExecutiveSummary || 'Architectural audit confirms zero-trust In-RAM sanitization removes data processor obligations and guarantees 0.00 B cleartext WAN egress.')}
+                </div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button id="btnDownloadHeroCiso" type="button" class="btn-trust text-xs py-2 px-3.5 font-bold">
+                  Download CISO Memo (.md)
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-3.5 text-xs font-mono">
+              <div class="p-3 rounded-lg bg-slate-900/90 border border-slate-800">
+                <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">Protected Sector Entities</span>
+                <span id="heroTargetEntities" class="text-emerald-300 font-medium">${escapeHtml((ind.targetEntities || []).slice(0, 3).join(', '))}...</span>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-900/90 border border-slate-800">
+                <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">Regulatory Defense Basis</span>
+                <span id="heroRegulatoryFocus" class="text-slate-200">${escapeHtml(ind.regulatoryFocus || 'De-identification eliminates statutory obligations.')}</span>
+              </div>
+            </div>
+
+            <div class="mt-3.5 pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between text-xs font-mono gap-2">
+              <span class="text-slate-400">Next Step: Conformance Attestation</span>
+              <a id="heroApplyLinkCiso" href="/apply/?domain=${encodeURIComponent(currentDomain)}&profile=${encodeURIComponent(activeProfileKey)}" class="text-emerald-400 hover:underline font-semibold">
+                Attest &amp; Apply for Conformance Seal &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- View B: Developer & Engineering View (Hidden by default) -->
+          <div id="viewRoleDev" class="hidden p-4 sm:p-5 rounded-2xl bg-slate-950 text-white border border-slate-800 shadow-sm mt-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono font-bold text-emerald-400">In-RAM Enclave Code</span>
+                <span class="text-[10px] font-mono text-slate-400">&lt; 0.8ms Volatile Execution</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-1 text-[11px] font-mono" id="heroFrameworkTabs">
+                <button type="button" class="hero-tab-btn px-2.5 py-1 rounded transition-colors ${ev.recommendedVector === 'nextjs' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="nextjs">Next.js</button>
+                <button type="button" class="hero-tab-btn px-2.5 py-1 rounded transition-colors ${ev.recommendedVector === 'cloudflare' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="cloudflare">Cloudflare</button>
+                <button type="button" class="hero-tab-btn px-2.5 py-1 rounded transition-colors ${ev.recommendedVector === 'python' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="python">Python</button>
+                <button type="button" class="hero-tab-btn px-2.5 py-1 rounded transition-colors ${ev.recommendedVector === 'client' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="client">Client JS</button>
+              </div>
+            </div>
+
+            <!-- Install Line -->
+            <div class="flex items-center justify-between text-xs font-mono text-slate-300 p-2.5 bg-slate-900 rounded-lg border border-slate-800 my-2.5">
+              <span id="heroInstallCmd">$ ${(ev.blueprints && ev.blueprints[ev.recommendedVector]?.installCommand) || 'npm i @privacyscrubber/sdk'}</span>
+              <button id="btnCopyHeroInstall" type="button" class="text-emerald-400 hover:text-emerald-300 underline shrink-0 text-[11px]">Copy Install</button>
+            </div>
+
+            <!-- Code Block -->
+            <pre class="p-3 rounded-lg bg-slate-900 text-slate-200 font-mono text-xs overflow-x-auto leading-relaxed border border-slate-800 max-h-[170px]"><code id="heroCodeSnippet">${escapeHtml((ev.blueprints && ev.blueprints[ev.recommendedVector]?.codeSnippet) || bp.codeSnippet || '// ZTDS Code')}</code></pre>
+
+            <div class="mt-3 pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+              <button id="btnCopyHeroSnippet" type="button" class="btn-trust text-xs py-1.5 px-3.5 font-semibold">
+                Copy Enclave Code
+              </button>
+              <a id="heroApplyLinkDev" href="/apply/?domain=${encodeURIComponent(currentDomain)}&profile=${encodeURIComponent(activeProfileKey)}" class="text-emerald-400 hover:underline">
+                Register Conformance &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- LEVEL 3: DEEP DIVE ACCORDION (Before vs After DAG & CI/CD) -->
+          <details class="group mt-4 rounded-xl border border-slate-200 bg-slate-50 overflow-hidden transition-colors">
+            <summary class="flex items-center justify-between p-3.5 cursor-pointer text-xs font-mono font-bold text-slate-700 hover:text-slate-900 select-none">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span>Deep Dive: Architectural Flow Comparison &amp; CI/CD Audit Gate</span>
+              </div>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform duration-200 font-bold">&darr;</span>
+            </summary>
+            <div class="p-4 pt-2 border-t border-slate-200 space-y-4 text-xs font-mono">
+              <!-- Visual Flow Comparison Strip (Before vs After) -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                <div class="p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-950">
+                  <div class="font-bold text-[11px] mb-1 flex items-center justify-between">
+                    <span>Vulnerable: Cloud DLP Proxy</span>
+                    <span class="text-[10px] text-rose-700 font-bold">+450ms WAN Latency</span>
+                  </div>
+                  <div class="text-[10px] text-rose-700 mb-1">Raw PII leaves client &rarr; Decrypted in SaaS Proxy &rarr; DPA Required under GDPR Art. 28</div>
+                  <p class="text-[11px] text-slate-600 font-sans leading-relaxed">Honeypot risk: unmasked customer tokens reside in third-party cloud RAM and remote log stores.</p>
+                </div>
+                <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-300 text-emerald-950">
+                  <div class="font-bold text-[11px] mb-1 flex items-center justify-between">
+                    <span>Verified: ZTDS In-RAM Enclave</span>
+                    <span class="text-[10px] text-emerald-700 font-bold">&lt; 0.8ms In-RAM</span>
+                  </div>
+                  <div class="text-[10px] text-emerald-700 mb-1">0.00 B Egress &rarr; Bijective Tokens &rarr; DPA-Exempt under GDPR Recital 26</div>
+                  <p class="text-[11px] text-slate-600 font-sans leading-relaxed">Lossless attention: bijective cryptographic tokens preserve full LLM reasoning without sending plaintext off-device.</p>
+                </div>
+              </div>
+
+              <!-- CI/CD Terminal Line -->
+              <div class="p-3 rounded-lg bg-slate-950 text-white border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <span class="text-[10px] text-slate-400 uppercase font-bold block">CI/CD Terminal Gate:</span>
+                  <code class="text-xs text-emerald-300" id="heroCliCmd">npx ztds-audit https://${escapeHtml(currentDomain)}</code>
+                </div>
+                <button id="btnCopyHeroCli" type="button" class="text-emerald-400 hover:text-emerald-300 underline shrink-0 text-xs">Copy CI/CD</button>
+              </div>
+            </div>
+          </details>
+        `;
+
+        // Role Switcher handlers
+        const btnRoleCiso = document.getElementById('btnRoleCiso');
+        const btnRoleDev = document.getElementById('btnRoleDev');
+        const viewRoleCiso = document.getElementById('viewRoleCiso');
+        const viewRoleDev = document.getElementById('viewRoleDev');
+        const roleSummaryHint = document.getElementById('roleSummaryHint');
+
+        if (btnRoleCiso && btnRoleDev) {
+          btnRoleCiso.addEventListener('click', () => {
+            btnRoleCiso.className = 'px-3.5 py-1.5 rounded-lg font-bold transition-all bg-white text-slate-900 shadow-xs';
+            btnRoleCiso.setAttribute('aria-selected', 'true');
+            btnRoleDev.className = 'px-3.5 py-1.5 rounded-lg font-medium transition-all text-slate-600 hover:text-slate-900';
+            btnRoleDev.setAttribute('aria-selected', 'false');
+            viewRoleCiso.classList.remove('hidden');
+            viewRoleDev.classList.add('hidden');
+            if (roleSummaryHint) roleSummaryHint.textContent = 'Regulatory Shield & Exemption';
+          });
+
+          btnRoleDev.addEventListener('click', () => {
+            btnRoleDev.className = 'px-3.5 py-1.5 rounded-lg font-bold transition-all bg-white text-slate-900 shadow-xs';
+            btnRoleDev.setAttribute('aria-selected', 'true');
+            btnRoleCiso.className = 'px-3.5 py-1.5 rounded-lg font-medium transition-all text-slate-600 hover:text-slate-900';
+            btnRoleCiso.setAttribute('aria-selected', 'false');
+            viewRoleDev.classList.remove('hidden');
+            viewRoleCiso.classList.add('hidden');
+            if (roleSummaryHint) roleSummaryHint.textContent = 'Sub-Millisecond In-RAM SDK';
+          });
+        }
+
+        // Industry Profile select handler
+        const allProfilesMap = ind.allProfiles || {};
+        const heroSelect = document.getElementById('heroIndustrySelect');
+        if (heroSelect) {
+          heroSelect.addEventListener('change', () => {
+            const profKey = heroSelect.value;
+            const targetProf = allProfilesMap[profKey];
+            if (!targetProf) return;
+
+            const confEl = document.getElementById('heroProfileConfidence');
+            if (confEl) confEl.textContent = 'MANUAL SELECT';
+            const statEl = document.getElementById('heroProfileStatute');
+            if (statEl) statEl.textContent = targetProf.statute;
+            const dpaEl = document.getElementById('heroDpaPill');
+            if (dpaEl) dpaEl.textContent = targetProf.dpaStatus;
+            const citEl = document.getElementById('heroCisoCitation');
+            if (citEl) citEl.textContent = targetProf.cisoCitation;
+            const entEl = document.getElementById('heroTargetEntities');
+            if (entEl) entEl.textContent = (targetProf.targetEntities || []).slice(0, 3).join(', ') + '...';
+            const regEl = document.getElementById('heroRegulatoryFocus');
+            if (regEl) regEl.textContent = targetProf.regulatoryFocus;
+
+            const linkCiso = document.getElementById('heroApplyLinkCiso');
+            if (linkCiso) linkCiso.href = `/apply/?domain=${encodeURIComponent(currentDomain)}&profile=${encodeURIComponent(profKey)}`;
+            const linkDev = document.getElementById('heroApplyLinkDev');
+            if (linkDev) linkDev.href = `/apply/?domain=${encodeURIComponent(currentDomain)}&profile=${encodeURIComponent(profKey)}`;
+
+            // Mutate active profile in local data structure
+            ev.industry.activeProfile = profKey;
+            ev.industry.name = targetProf.name;
+            ev.industry.statute = targetProf.statute;
+            ev.industry.regulatoryFocus = targetProf.regulatoryFocus;
+            ev.industry.cisoCitation = targetProf.cisoCitation;
+            ev.industry.dpaStatus = targetProf.dpaStatus;
+            ev.industry.targetEntities = targetProf.targetEntities;
+
+            const profArrayLiteral = (targetProf.sdkProfiles || [profKey]).map(p => `'${p}'`).join(', ');
+            if (ev.blueprints?.nextjs) {
+              ev.blueprints.nextjs.codeSnippet = `// middleware.ts — ZTDS Zero-Trust Enclave for ${currentDomain}\n// Profile: ${targetProf.name} (${targetProf.statute})\nimport { NextResponse } from 'next/server';\nimport type { NextRequest } from 'next/server';\nimport { ZTDSClient } from '@privacyscrubber/sdk';\n\nconst ztds = new ZTDSClient({\n  profiles: [${profArrayLiteral}],\n  zeroEgress: true\n});\n\nexport async function middleware(req: NextRequest) {\n  if (req.nextUrl.pathname.startsWith('/api/chat') && req.method === 'POST') {\n    const rawBody = await req.json();\n    const { safePrompt, tokenMap } = ztds.sanitize(rawBody.prompt);\n    return NextResponse.next({\n      request: new Request(req.url, { method: req.method, headers: req.headers, body: JSON.stringify({ ...rawBody, prompt: safePrompt }) })\n    });\n  }\n}`;
+            }
+            if (ev.blueprints?.cloudflare) {
+              ev.blueprints.cloudflare.codeSnippet = `// worker.js — Cloudflare Zero-Trust Reverse Proxy for ${currentDomain}\n// Profile: ${targetProf.name} (${targetProf.statute})\nimport { ZTDSClient } from '@privacyscrubber/sdk';\n\nconst ztds = new ZTDSClient({\n  profiles: [${profArrayLiteral}],\n  zeroEgress: true\n});\n\nexport default {\n  async fetch(request, env) {\n    // In-RAM de-identification of ${targetProf.targetEntities[0]}\n    return fetch(request);\n  }\n};`;
+            }
+            if (ev.blueprints?.python) {
+              ev.blueprints.python.codeSnippet = `# main.py — FastAPI In-Memory Zero-Trust Enclave for ${currentDomain}\n# Profile: ${targetProf.name} (${targetProf.statute})\nfrom fastapi import FastAPI\nfrom privacyscrubber import ZTDSClient\n\nztds = ZTDSClient(profiles=[${profArrayLiteral}], zero_egress=True)\n\n@app.post("/api/ai")\nasync def secure_chat(req: ChatRequest):\n    safe, token_map = ztds.sanitize(req.prompt)\n    return {"reply": ztds.restore(await call_llm(safe), token_map)}`;
+            }
+            if (ev.blueprints?.client) {
+              ev.blueprints.client.codeSnippet = `<!-- In-RAM Client Enclave for ${currentDomain} (${targetProf.name}) -->\n<script type="module">\nimport { ZTDSClient } from 'https://cdn.jsdelivr.net/npm/@privacyscrubber/sdk/dist/ztds.esm.js';\n\nconst ztds = new ZTDSClient({ profiles: [${profArrayLiteral}] });\n// In-RAM local sanitization of ${targetProf.targetEntities[0]}\n<\/script>`;
+            }
+
+            const activeTab = document.querySelector('.hero-tab-btn.bg-emerald-600')?.getAttribute('data-vector') || ev.recommendedVector;
+            if (ev.blueprints && ev.blueprints[activeTab]) {
+              document.getElementById('heroCodeSnippet').textContent = ev.blueprints[activeTab].codeSnippet;
+            }
+          });
+        }
+
+        // Tab click handlers in hero developer view
+        const allBlueprints = ev.blueprints || {};
+        document.querySelectorAll('.hero-tab-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const vec = btn.getAttribute('data-vector');
+            const targetBp = allBlueprints[vec];
+            if (!targetBp) return;
+
+            document.querySelectorAll('.hero-tab-btn').forEach(b => {
+              b.className = b.getAttribute('data-vector') === vec
+                ? 'hero-tab-btn px-2.5 py-1 rounded bg-emerald-600 text-white font-bold transition-colors'
+                : 'hero-tab-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors';
+            });
+
+            document.getElementById('heroInstallCmd').textContent = '$ ' + targetBp.installCommand;
+            document.getElementById('heroCodeSnippet').textContent = targetBp.codeSnippet;
+          });
+        });
+
+        const copyBtn = document.getElementById('btnCopyHeroSnippet');
+        if (copyBtn) {
+          copyBtn.addEventListener('click', () => {
+            const code = document.getElementById('heroCodeSnippet')?.textContent || '';
+            navigator.clipboard.writeText(code);
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => { copyBtn.textContent = 'Copy Enclave Code'; }, 2000);
+          });
+        }
+
+        const copyInstallBtn = document.getElementById('btnCopyHeroInstall');
+        if (copyInstallBtn) {
+          copyInstallBtn.addEventListener('click', () => {
+            const cmd = document.getElementById('heroInstallCmd')?.textContent.replace(/^\$\s*/, '') || '';
+            navigator.clipboard.writeText(cmd);
+            copyInstallBtn.textContent = 'Copied!';
+            setTimeout(() => { copyInstallBtn.textContent = 'Copy Install'; }, 2000);
+          });
+        }
+
+        const copyCliBtn = document.getElementById('btnCopyHeroCli');
+        if (copyCliBtn) {
+          copyCliBtn.addEventListener('click', () => {
+            const cmd = document.getElementById('heroCliCmd')?.textContent || '';
+            navigator.clipboard.writeText(cmd);
+            copyCliBtn.textContent = 'Copied!';
+            setTimeout(() => { copyCliBtn.textContent = 'Copy CI/CD'; }, 2000);
+          });
+        }
+
+        const downloadCisoBtn = document.getElementById('btnDownloadHeroCiso');
+        if (downloadCisoBtn) {
+          downloadCisoBtn.addEventListener('click', () => {
+            const memoContent = generateHeroCisoMemo(data, domain, ev, fn, bp);
+            const blob = new Blob([memoContent], { type: 'text/markdown;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${currentDomain}-ztds-ciso-memo.md`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          });
+        }
+
+        resultBox.classList.remove('hidden');
+        resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      function generateHeroCisoMemo(data, domain, ev, fn, bp) {
+        const dateStr = new Date().toISOString().split('T')[0];
+        const dom = data.domain || domain;
+        const score = ev.riskScore || 70;
+        const rating = ev.conformanceRating || 'MODERATE_RISK';
+        const sinksCount = (fn.thirdPartySinks || []).length;
+        const sensoryCount = (fn.sensorySurfaces || []).length;
+        const ind = ev.industry || {};
+        const profileName = ind.name || 'Enterprise General';
+        const statute = ind.statute || 'GDPR Recital 26';
+        const citation = ind.cisoCitation || 'Eliminates data processor liabilities under GDPR Article 28.';
+        const entitiesList = (ind.targetEntities || []).map(e => `  * ${e}`).join('\n');
+
+        return `# Institutional ZTDS Compliance & Regulatory Exemption Memorandum
+**Date:** ${dateStr}
+**Target Perimeter:** https://${dom}
+**Target Industry:** ${profileName}
+**Statutory Basis:** ${statute}
+**Evaluator:** ZTDS AI Consortium (RFC v1.0 Automated Inspector)
+**Perimeter Conformance Score:** ${score}% (${rating})
+**Reference Engine:** @privacyscrubber/sdk (Zero-Network In-RAM Enclave)
+
+> **INFORMATIONAL ONLY — NOT LEGAL COUNSEL.** Generated by ztds.ai automated tooling. Must be reviewed by qualified privacy counsel before organizational reliance.
+
+---
+
+## 1. Executive Summary
+An automated zero-trust perimeter audit was performed on **${dom}** in the **${profileName}** sector against the 4 Foundational Invariants of **ZTDS RFC v1.0**.
+The audit identified **${sensoryCount} sensory input surfaces** and **${sinksCount} external third-party processors**.
+
+Deploying the **ZTDS In-RAM Enclave** at the **${bp.framework || 'Edge'}** boundary satisfies **${statute}**, architecturally positioning the vendor outside the "data processor" definition under GDPR Article 28 when all 4 invariants are satisfied, providing an architectural basis for DPA/BAA scope exclusion analysis while ensuring zero unmasked cloud data leakage.
+
+---
+
+## 2. Statutory Legal Grounds (${ind.dpaStatus || 'DPA-Exemption Doctrine'})
+1. **${statute}:**
+   ${citation}
+
+2. **GDPR Recital 26 (Anonymous Data Threshold):**
+   When client data is deterministically de-identified inside volatile process RAM prior to socket transmission, recipient cloud services receive purely surrogate context-preserving tokens. Because the reverse mapping table auto-destructs and never leaves local memory, the data is non-attributable and legally outside the material scope of GDPR.
+
+3. **GDPR Article 28 Subprocessor Exclusion Path:**
+   Because zero cleartext personal data crosses the client network perimeter to the software vendor, the vendor is architecturally positioned outside the "data processor" definition when all 4 ZTDS invariants are satisfied. This provides an architectural basis for DPA and BAA scope exclusion analysis.
+
+---
+
+## 3. Protected Industry Entities & Schemas
+The enclave actively isolates and tokenizes:
+${entitiesList}
+
+---
+
+## 4. ZTDS RFC v1.0 Invariant Audit Findings
+- **Invariant 1 (Zero External Egress):** ${ev.invariantStatus?.invariant1?.status || 'VERIFIED'}
+- **Invariant 2 (Bijective Tokenization):** ${ev.invariantStatus?.invariant2?.status || 'REQUIRED'}
+- **Invariant 3 (In-RAM Isolation):** ${ev.invariantStatus?.invariant3?.status || 'COMPLIANT_TARGET'}
+- **Invariant 4 (Complete Subprocessor Exclusion):** ${ev.invariantStatus?.invariant4?.status || 'DPA-EXEMPT'}
+
+---
+
+## 5. Recommended Enclave Implementation
+**Deployment Vector:** ${bp.framework || 'Edge Enclave'} (${bp.filename || 'middleware.ts'})
+**Installation Command:** \`${bp.installCommand || 'npm i @privacyscrubber/sdk'}\`
+
+\`\`\`typescript
+${bp.codeSnippet || '// ZTDS Enclave snippet'}
+\`\`\`
+
+---
+
+## 6. Next Steps & Governance
+1. Deploy \`@privacyscrubber/sdk\` in-RAM enclave for **${dom}**.
+2. Add CI/CD verification: \`npx ztds-audit https://${dom}\`.
+3. Apply for Verified Seal at https://ztds.ai/apply/?domain=${encodeURIComponent(dom)}&profile=${encodeURIComponent(ind.activeProfile || 'general')}.
+
+*Signed,*
+**ZTDS AI Consortium & Standards Governance Council**
+https://ztds.ai &middot; Apache 2.0 &middot; CC BY 4.0`;
+      }
+
+      function renderFallbackSelector(domain, reason) {
+        resultBox.innerHTML = `
+          <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 mb-4">
+            <div class="flex items-center gap-2 text-amber-800 font-bold text-xs font-mono">
+              <span>&bull;</span> DOMAIN INSPECTION RESTRICTED OR OFFLINE
+            </div>
+            <p class="text-xs text-amber-700 mt-1">
+              Could not complete automated socket scan for <strong>${domain}</strong> (${reason}). Use the 2-Click Architecture Builder below to generate your custom ZTDS blueprint.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-mono font-bold text-slate-700 mb-1.5">1. SELECT YOUR TARGET FRAMEWORK:</label>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <button type="button" class="fallback-stack-btn px-3 py-2 rounded-lg border border-slate-300 text-xs font-medium hover:border-emerald-600 focus:bg-emerald-50 focus:border-emerald-600 text-slate-800 active" data-stack="nextjs">Next.js / Vercel</button>
+                <button type="button" class="fallback-stack-btn px-3 py-2 rounded-lg border border-slate-300 text-xs font-medium hover:border-emerald-600 focus:bg-emerald-50 focus:border-emerald-600 text-slate-800" data-stack="cloudflare">Cloudflare Worker</button>
+                <button type="button" class="fallback-stack-btn px-3 py-2 rounded-lg border border-slate-300 text-xs font-medium hover:border-emerald-600 focus:bg-emerald-50 focus:border-emerald-600 text-slate-800" data-stack="python">Python FastAPI</button>
+                <button type="button" class="fallback-stack-btn px-3 py-2 rounded-lg border border-slate-300 text-xs font-medium hover:border-emerald-600 focus:bg-emerald-50 focus:border-emerald-600 text-slate-800" data-stack="client">Client Browser SPA</button>
+              </div>
+            </div>
+
+            <div id="fallbackCodeContainer">
+              <div class="flex items-center justify-between mb-1.5 text-xs font-mono">
+                <span class="text-slate-600 font-semibold">Generated ZTDS Enclave Snippet:</span>
+                <a href="/sdk/" class="text-[11px] text-emerald-700 font-semibold hover:underline">View Full SDK Docs &rarr;</a>
+              </div>
+              <pre class="p-3 rounded-lg bg-slate-950 text-slate-200 font-mono text-[11px] overflow-x-auto leading-relaxed border border-slate-800 max-h-[140px]"><code id="fallbackCodeBlock">// Run: npm i @privacyscrubber/sdk\nimport { ZTDSClient } from '@privacyscrubber/sdk';\nconst ztds = new ZTDSClient();\nconst { safePrompt, tokenMap } = ztds.sanitize(prompt);</code></pre>
+            </div>
+          </div>
+        `;
+
+        document.querySelectorAll('.fallback-stack-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const stack = btn.getAttribute('data-stack');
+            const codeBlock = document.getElementById('fallbackCodeBlock');
+            if (stack === 'nextjs') {
+              codeBlock.textContent = `// middleware.ts — Next.js Edge ZTDS Enclave\nimport { ZTDSClient } from '@privacyscrubber/sdk';\nconst ztds = new ZTDSClient();\nexport async function middleware(req) {\n  const { safePrompt, tokenMap } = ztds.sanitize(req.body.prompt);\n  // 0.00 B raw PII egress\n}`;
+            } else if (stack === 'cloudflare') {
+              codeBlock.textContent = `// worker.js — Cloudflare Zero-Trust Reverse Proxy\nimport { ZTDSClient } from '@privacyscrubber/sdk';\nconst ztds = new ZTDSClient();\nexport default { async fetch(req) { /* in-RAM sanitize before LLM egress */ } };`;
+            } else if (stack === 'python') {
+              codeBlock.textContent = `# main.py — FastAPI In-Memory Zero-Trust Decorator\nfrom privacyscrubber import ZTDS\nztds = ZTDS()\n@app.post("/chat")\ndef chat(prompt: str):\n    safe, token_map = ztds.sanitize(prompt)\n    return ztds.restore(call_llm(safe), token_map)`;
+            } else {
+              codeBlock.textContent = `<!-- Browser Client WASM Enclave -->\n<script type="module">\nimport { ZTDSClient } from '@privacyscrubber/sdk';\nconst ztds = new ZTDSClient();\n// Sanitize prompt in browser volatile memory before socket send\n<\/script>`;
+            }
+          });
+        });
+
+        resultBox.classList.remove('hidden');
+        resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+    })();
+  </script>
+  <!-- Vercel Web Analytics (Zero-Cookie, First-Party, GDPR Compliant) -->
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

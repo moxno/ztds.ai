@@ -180,11 +180,12 @@
 
     <!-- Working Group Filter Tabs -->
     <div class="flex flex-wrap items-center justify-center gap-2 mb-10" id="fellowFilterTabs" role="tablist">
-      <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm" data-filter="all" role="tab" aria-selected="true">All Council &amp; WGs (<span id="countAllFellows">4</span>)</button>
+      <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm" data-filter="all" role="tab" aria-selected="true">All Council &amp; WGs (<span id="countAllFellows">6</span>)</button>
       <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="governance" role="tab" aria-selected="false">Architecture &amp; Governance</button>
       <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="crypto" role="tab" aria-selected="false">WG-1 Cryptography &amp; Entropy</button>
       <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="grc" role="tab" aria-selected="false">WG-2 GRC &amp; Legal Defense</button>
       <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="systems" role="tab" aria-selected="false">WG-3 Systems &amp; WASM Runtime</button>
+      <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="profiles" role="tab" aria-selected="false">WG-4 Industry Taxonomy</button>
     </div>
 
     <!-- Fellows Directory Grid -->
@@ -240,6 +241,90 @@
               Embed Seal &rarr;
             </button>
             <span class="text-emerald-700 font-semibold text-[11px]">&check; Founding Fellow</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Seat #05: Open Fellow Seat / Claim Your Fellowship -->
+      <article class="ztds-card p-6 bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950 border-2 border-emerald-500/40 rounded-xl shadow-md flex flex-col justify-between text-white relative overflow-hidden" id="open-fellow-seat" data-track="all" data-slug="claim-fellowship">
+        <div class="absolute -top-16 -right-16 w-36 h-36 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold font-mono flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Seat #05 &middot; Open Call
+            </span>
+            <span class="text-xs font-mono text-emerald-400 font-semibold">Track C / Fellow</span>
+          </div>
+
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center font-bold text-emerald-400 text-sm font-sans shadow-sm shrink-0">
+              YOU
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-white tracking-tight">Claim Fellowship Seat</h2>
+              <div class="text-xs text-slate-400 font-medium">Peer Reviewer &middot; Profile Author &middot; Legal Scholar</div>
+              <div class="text-[11px] text-emerald-400 font-semibold mt-0.5">ZTDS Standards Council &middot; Open Accreditation</div>
+            </div>
+          </div>
+
+          <p class="text-xs text-slate-300 mt-4 leading-relaxed">
+            Contribute an enterprise industry profile (20 min), crypto entropy review, or statutory defense brief. Receive verifiable cryptographic Fellow status, RFC v1.0 co-authorship attribution, and consortium voting power.
+          </p>
+
+          <!-- Interactive Live Preview & Track Selector -->
+          <div class="mt-4 p-3 bg-slate-950/60 border border-emerald-500/20 rounded-lg space-y-3">
+            <div>
+              <label for="seatNomineeInput" class="block text-[11px] font-mono text-slate-400 mb-1">Live Seal Generator &middot; Nominee Name or Handle:</label>
+              <input type="text" id="seatNomineeInput" placeholder="Dr. Jane Doe / @username" class="w-full px-3 py-1.5 rounded-md bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-400 focus:border-emerald-400">
+            </div>
+
+            <!-- Focus Track Buttons -->
+            <div>
+              <div class="text-[10px] font-mono text-slate-400 mb-1.5">Select Primary Contribution Track:</div>
+              <div class="grid grid-cols-2 gap-1.5 text-[11px] font-mono" id="seatTrackSelector">
+                <button type="button" data-focus="profiles" class="seat-track-btn px-2 py-1 rounded bg-emerald-500 text-slate-950 font-bold border border-emerald-400 text-left transition-colors">
+                  &check; Profiles (20m)
+                </button>
+                <button type="button" data-focus="crypto" class="seat-track-btn px-2 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-500 text-left transition-colors">
+                  WG-1 Crypto
+                </button>
+                <button type="button" data-focus="legal" class="seat-track-btn px-2 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-500 text-left transition-colors">
+                  WG-2 Legal/GRC
+                </button>
+                <button type="button" data-focus="systems" class="seat-track-btn px-2 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-500 text-left transition-colors">
+                  WG-3 Systems
+                </button>
+              </div>
+            </div>
+
+            <!-- Dynamic Seal SVG Render Mount -->
+            <div class="pt-2 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-[10px] font-mono text-slate-400">Verifiable Seal Preview:</span>
+              <div id="seatBadgeMount" class="overflow-x-auto py-1">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-1.5 text-xs">
+            <a href="/apply/?track=fellow&focus=profiles" id="btnClaimSeatCta" class="px-3 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-bold font-mono text-xs hover:bg-emerald-400 transition-colors shadow-sm">
+              Claim Seat via GitOps &rarr;
+            </a>
+            <a href="#gitops-fasttrack" class="px-2.5 py-1.5 rounded-lg bg-slate-800 text-slate-200 border border-slate-700 font-mono text-[11px] hover:bg-slate-700 transition-colors">
+              Fast-Track CLI &darr;
+            </a>
+            <a href="#pathways" class="px-2.5 py-1.5 rounded-lg bg-slate-800 text-slate-200 border border-slate-700 font-mono text-[11px] hover:bg-slate-700 transition-colors">
+              4 Pathways &darr;
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <span class="text-slate-400 font-medium font-mono text-[11px]">Zero Fee &middot; Merit-Based</span>
+          <div class="flex items-center gap-2">
+            <span class="text-emerald-400 font-semibold text-[11px]">&bull; Open Council Seat</span>
           </div>
         </div>
       </article>
@@ -395,78 +480,270 @@
           </div>
         </div>
 
+      <!-- Working Group 4: Industry Profiles & Entity Taxonomy -->
+      <article class="ztds-card p-6 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" id="wg4-profiles" data-track="profiles" data-slug="wg4-profiles">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-xs font-bold font-mono">
+              WG-4 &middot; Industry Profiles &amp; Taxonomy
+            </span>
+            <span class="text-xs font-mono text-emerald-700 font-semibold">Active Working Group</span>
+          </div>
+
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-amber-950 border border-amber-800 flex items-center justify-center font-bold text-amber-400 text-sm font-sans shadow-sm shrink-0">
+              WG4
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-slate-900 tracking-tight">Industry Profiles &amp; Taxonomy</h2>
+              <div class="text-xs text-slate-500 font-medium">Track D Leadership &middot; Open Industry Specialist Seat</div>
+              <div class="text-[11px] text-amber-800 font-semibold mt-0.5">Specialized Rule Taxonomy &middot; ZTDS Open Consortium</div>
+            </div>
+          </div>
+
+          <p class="text-xs text-slate-600 mt-4 leading-relaxed">
+            Maintains the anti-cannibalization rule taxonomy, regex sets, and context models across 30 enterprise verticals (Clinical EHR, Banking, Defense ITAR, Aerospace, Energy NERC-CIP).
+          </p>
+
+          <div class="mt-4 p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 space-y-1 font-mono text-[11px]">
+            <div><span class="font-semibold text-slate-900">Taxonomy Suite:</span> <a href="/scanner/" class="text-emerald-700 hover:underline">30 Enterprise Rule Profiles</a></div>
+            <div><span class="font-semibold text-slate-900">Status:</span> Open Call for Vertical Domain Authors &amp; Compliance Officers</div>
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-1.5 text-xs">
+            <a href="/apply/?track=fellow&focus=profiles" class="px-2.5 py-0.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-[11px] font-semibold hover:bg-emerald-100 transition-colors">
+              Join WG-4 as Author &rarr;
+            </a>
+            <a href="/scanner/" class="px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-700 border border-slate-200 font-mono text-[11px] hover:bg-slate-200 transition-colors">
+              Perimeter Scanner &rarr;
+            </a>
+            <a href="/standard/" class="px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-700 border border-slate-200 font-mono text-[11px] hover:bg-slate-200 transition-colors">
+              Taxonomy Spec &rarr;
+            </a>
+          </div>
+        </div>
+
         <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
-          <span class="text-slate-500 font-medium font-mono text-[11px]">Track C &middot; Systems Council</span>
+          <span class="text-slate-500 font-medium font-mono text-[11px]">Track D &middot; Taxonomy Council</span>
           <div class="flex items-center gap-2">
-            <button type="button" class="btn-embed-fellow-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono transition-colors touch-target" data-slug="wg3-systems" data-name="WG-3 Systems Council">
+            <button type="button" class="btn-embed-fellow-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono transition-colors touch-target" data-slug="wg4-profiles" data-name="WG-4 Taxonomy Council">
               Embed Seal &rarr;
             </button>
-            <span class="text-emerald-700 font-semibold text-[11px]">&check; Open Working Group</span>
+            <span class="text-amber-700 font-semibold text-[11px]">&check; Open Working Group</span>
           </div>
         </div>
       </article>
 
     </div>
 
-    <!-- Fellowship Working Groups Section -->
-    <section class="ztds-card p-8 bg-white border border-slate-200 rounded-xl shadow-sm mb-12">
+    <!-- The 4 Contribution Pathways Matrix -->
+    <section id="pathways" class="ztds-card p-8 bg-white border border-slate-200 rounded-xl shadow-sm mb-12">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
         <div>
-          <h2 class="text-xl font-bold text-slate-900 tracking-tight">Consortium Working Groups (WGs)</h2>
-          <p class="text-xs text-slate-500 mt-1">Specialized research councils driving cryptographic rigor, legal enforceability, and edge systems engineering.</p>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-mono font-bold mb-2">
+            Merit-Based &middot; Zero Fee &middot; Open Standard
+          </div>
+          <h2 class="text-xl font-bold text-slate-900 tracking-tight">The 4 Contribution Pathways to Fellowship</h2>
+          <p class="text-xs text-slate-500 mt-1">Direct pathways to earn permanent ZTDS Fellow status. All deliverables are reviewed and verified via GitOps.</p>
         </div>
-        <a href="/governance/" class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 touch-target">
-          Consortium Governance Charter &rarr;
+        <a href="/governance/" class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 touch-target shrink-0">
+          Governance Charter &rarr;
         </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs leading-relaxed">
-        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="w-2 h-2 rounded-full bg-purple-500"></span>
-            <h3 class="font-bold text-slate-900 text-sm text-purple-800">WG-1: Cryptography &amp; Entropy</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-xs">
+        
+        <!-- Pathway 1: Track D (Fast Track) -->
+        <div class="p-5 rounded-xl bg-amber-50/50 border border-amber-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-mono font-bold text-[10px]">Track D &middot; ~20 Mins</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold text-[10px]">Lowest Barrier</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm mb-1">Industry Profile Author</h3>
+            <p class="text-slate-600 text-[11px] leading-relaxed mb-3">
+              Contribute 1 new enterprise vertical profile (e.g. Maritime IMO, Aviation FAA, Clean Energy NERC-CIP).
+            </p>
+            <div class="space-y-1.5 text-[11px] text-slate-700 font-mono bg-white p-2.5 rounded-lg border border-amber-200/60 mb-4">
+              <div><strong class="text-slate-900">Format:</strong> JSON profile</div>
+              <div><strong class="text-slate-900">Payload:</strong> 5–10 regex + tests</div>
+              <div><strong class="text-slate-900">Prereq:</strong> Sector domain knowledge</div>
+            </div>
           </div>
-          <p class="text-slate-600">
-            Formalizes deterministic reversible tokenization algorithms, pseudo-random surrogate generation, and differential privacy guarantees. Proves mathematical non-recoverability of masked sensitive fields under adversarial model probing.
+          <a href="/apply/?track=fellow&focus=profiles" class="w-full py-2 px-3 text-center rounded-lg bg-amber-600 text-white font-bold text-xs hover:bg-amber-500 transition-colors shadow-xs">
+            Claim Track D (20m) &rarr;
+          </a>
+        </div>
+
+        <!-- Pathway 2: Track A (Cryptography) -->
+        <div class="p-5 rounded-xl bg-purple-50/50 border border-purple-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-mono font-bold text-[10px]">Track A &middot; ~2–4 Hours</span>
+              <span class="px-2 py-0.5 rounded bg-purple-200 text-purple-900 font-semibold text-[10px]">Academic Rigor</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm mb-1">Crypto Peer Reviewer</h3>
+            <p class="text-slate-600 text-[11px] leading-relaxed mb-3">
+              Review deterministic reversible tokenization, pseudo-random surrogate entropy bounds, and OSF artifacts.
+            </p>
+            <div class="space-y-1.5 text-[11px] text-slate-700 font-mono bg-white p-2.5 rounded-lg border border-purple-200/60 mb-4">
+              <div><strong class="text-slate-900">Format:</strong> Academic Peer Memo</div>
+              <div><strong class="text-slate-900">Reference:</strong> DOI: 10.5281/zenodo.22058770</div>
+              <div><strong class="text-slate-900">Prereq:</strong> Cryptography / Math</div>
+            </div>
+          </div>
+          <a href="/apply/?track=fellow&focus=crypto" class="w-full py-2 px-3 text-center rounded-lg bg-purple-700 text-white font-bold text-xs hover:bg-purple-600 transition-colors shadow-xs">
+            Join WG-1 Review &rarr;
+          </a>
+        </div>
+
+        <!-- Pathway 3: Track B (Legal & GRC) -->
+        <div class="p-5 rounded-xl bg-blue-50/50 border border-blue-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-mono font-bold text-[10px]">Track B &middot; ~1 Day</span>
+              <span class="px-2 py-0.5 rounded bg-blue-200 text-blue-900 font-semibold text-[10px]">Statutory Impact</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm mb-1">Legal Defense Scholar</h3>
+            <p class="text-slate-600 text-[11px] leading-relaxed mb-3">
+              Author statutory defense briefs under GDPR Art. 28/Recital 26, HIPAA Safe Harbor, EU AI Act, or FRE 502 privilege.
+            </p>
+            <div class="space-y-1.5 text-[11px] text-slate-700 font-mono bg-white p-2.5 rounded-lg border border-blue-200/60 mb-4">
+              <div><strong class="text-slate-900">Format:</strong> Legal Memo / Brief</div>
+              <div><strong class="text-slate-900">Reference:</strong> OSF Law Archive 4wc86</div>
+              <div><strong class="text-slate-900">Prereq:</strong> Privacy Counsel / DPO</div>
+            </div>
+          </div>
+          <a href="/apply/?track=fellow&focus=legal" class="w-full py-2 px-3 text-center rounded-lg bg-blue-700 text-white font-bold text-xs hover:bg-blue-600 transition-colors shadow-xs">
+            Join WG-2 Counsel &rarr;
+          </a>
+        </div>
+
+        <!-- Pathway 4: Track C (Systems & Enclaves) -->
+        <div class="p-5 rounded-xl bg-emerald-50/50 border border-emerald-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono font-bold text-[10px]">Track C &middot; ~2–3 Days</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-200 text-emerald-900 font-semibold text-[10px]">High Perf</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-sm mb-1">Systems &amp; WASM Architect</h3>
+            <p class="text-slate-600 text-[11px] leading-relaxed mb-3">
+              Benchmark sub-millisecond execution, proxy-wasm filter specs, AWS Nitro Enclave attestations, or MCP stdio daemons.
+            </p>
+            <div class="space-y-1.5 text-[11px] text-slate-700 font-mono bg-white p-2.5 rounded-lg border border-emerald-200/60 mb-4">
+              <div><strong class="text-slate-900">Format:</strong> Code PR / Benchmark</div>
+              <div><strong class="text-slate-900">Reference:</strong> DOI: 10.17605/OSF.IO/5BYJF</div>
+              <div><strong class="text-slate-900">Prereq:</strong> Rust / WASM / Systems</div>
+            </div>
+          </div>
+          <a href="/apply/?track=fellow&focus=systems" class="w-full py-2 px-3 text-center rounded-lg bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-500 transition-colors shadow-xs">
+            Join WG-3 Systems &rarr;
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Fellowship Perks & Recognition Hub -->
+    <section id="perks" class="ztds-card p-8 bg-slate-900 text-white border border-slate-800 rounded-xl shadow-md mb-12">
+      <div class="max-w-3xl mb-8">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono font-medium mb-3">
+          Perks &amp; Ecosystem Standing
+        </div>
+        <h2 class="text-2xl font-bold tracking-tight text-white">What You Receive as an Accredited ZTDS Fellow</h2>
+        <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+          The ZTDS standard is vendor-neutral, academic, and non-commercial. Contribution grants permanent public recognition, cryptographic verification, and governance voting power across the zero-trust ecosystem.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-xs">
+        <div class="p-5 rounded-xl bg-slate-800/80 border border-slate-700 space-y-2.5">
+          <div class="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-mono font-bold text-sm">
+            01
+          </div>
+          <h3 class="font-bold text-white text-sm">Verifiable Dynamic SVG Seal</h3>
+          <p class="text-slate-300 leading-relaxed text-[11px]">
+            Live vector badge linked to your cryptographic verification page, embeddable directly into GitHub READMEs, research papers, and portfolios.
           </p>
         </div>
-        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-            <h3 class="font-bold text-slate-900 text-sm text-blue-800">WG-2: GRC &amp; Legal Defense</h3>
+
+        <div class="p-5 rounded-xl bg-slate-800/80 border border-slate-700 space-y-2.5">
+          <div class="w-9 h-9 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-mono font-bold text-sm">
+            02
           </div>
-          <p class="text-slate-600">
-            Authors statutory defense frameworks under GDPR Recital 26 (anonymous data exemption), HIPAA Safe Harbor (Section 164.514(b)), EU AI Act Article 50, and US FRE 502 statutory attorney-client privilege.
+          <h3 class="font-bold text-white text-sm">AI Answer Engine &amp; GEO Authority</h3>
+          <p class="text-slate-300 leading-relaxed text-[11px]">
+            Permanent canonical indexing in <code class="text-emerald-400">llms.txt</code>, academic Zenodo/OSF registries, and AI citation graphs (ChatGPT, Claude, Perplexity).
           </p>
         </div>
-        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <h3 class="font-bold text-slate-900 text-sm text-emerald-800">WG-3: Systems &amp; WASM Runtime</h3>
+
+        <div class="p-5 rounded-xl bg-slate-800/80 border border-slate-700 space-y-2.5">
+          <div class="w-9 h-9 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-mono font-bold text-sm">
+            03
           </div>
-          <p class="text-slate-600">
-            Maintains the sub-2ms WebAssembly zero-trust execution engines, proxy-wasm filter specifications for Envoy/Istio service meshes, stdio Model Context Protocol (MCP) daemons, and AWS Nitro hardware enclave attestations.
+          <h3 class="font-bold text-white text-sm">RFC Specification Attribution</h3>
+          <p class="text-slate-300 leading-relaxed text-[11px]">
+            Permanent co-authorship or reviewer credit in the formal RFC v1.0 standard, consortium governance charters, and academic preprints.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-xl bg-slate-800/80 border border-slate-700 space-y-2.5">
+          <div class="w-9 h-9 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-mono font-bold text-sm">
+            04
+          </div>
+          <h3 class="font-bold text-white text-sm">Consortium Governance Vote</h3>
+          <p class="text-slate-300 leading-relaxed text-[11px]">
+            Direct voting rights on working group proposals, new enterprise profiles, standard deprecations, and compliance threshold updates.
           </p>
         </div>
       </div>
     </section>
 
+    <!-- GitOps PR Fast-Track Terminal -->
+    <section id="gitops-fasttrack" class="ztds-card p-8 bg-white border border-slate-200 rounded-xl shadow-sm mb-12">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 pb-4 border-b border-slate-100">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-800 text-[11px] font-mono font-semibold mb-2">
+            Developer &middot; GitOps Direct
+          </div>
+          <h2 class="text-xl font-bold text-slate-900 tracking-tight">GitOps Fast-Track (Zero Web Forms)</h2>
+          <p class="text-xs text-slate-500 mt-1">Submit your nomination, profile, or peer review directly via GitHub Pull Request in under 3 minutes.</p>
+        </div>
+        <button type="button" id="btnCopyGitOpsCli" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 text-white hover:bg-slate-800 text-xs font-mono transition-colors shrink-0 touch-target shadow-xs">
+          <span>Copy CLI Commands</span>
+        </button>
+      </div>
+
+      <div class="bg-slate-950 rounded-xl p-4 border border-slate-800 font-mono text-xs text-slate-300 overflow-x-auto">
+        <pre><code id="gitopsCliCode"># 1. Clone consortium repository &amp; create contribution branch
+git clone https://github.com/moxno/ztds.ai.git &amp;&amp; cd ztds.ai
+git checkout -b fellow/nomination-[handle]
+
+# 2. Add your Profile or Fellow record to data/fellows.json
+# Or add industry vertical rule model to data/profiles/[vertical].json
+
+# 3. Submit Pull Request for Automated CI Audit &amp; Verification
+git commit -am "feat(fellow): nominate [Full Name] - Track [A/B/C/D]"
+gh pr create --title "feat(fellow): Nominate [Full Name]" --body "ZTDS Fellowship Contribution"</code></pre>
+      </div>
+    </section>
+
     <!-- Nomination CTA Banner -->
-    <section class="p-8 sm:p-10 rounded-2xl bg-slate-900 text-white border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
+    <section class="p-8 sm:p-10 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950 text-white border border-emerald-500/30 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
       <div class="space-y-2 text-center md:text-left max-w-2xl">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono font-medium">
-          Track C: Research Fellowship
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-mono font-medium">
+          Open Governance &middot; Merit-Based
         </div>
         <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">
-          Nominate a Researcher to the Fellows Council
+          Ready to Steward the Zero-Trust Standard?
         </h2>
         <p class="text-sm text-slate-300 leading-relaxed">
-          Nominations are open to researchers, cryptographers, legal scholars, and systems architects who have published peer-reviewed work or engineered open tooling conforming to the ZTDS specification.
+          Whether you want to author an enterprise profile in 20 minutes, audit mathematical proofs, or benchmark sub-millisecond edge filters — claim your place in the ZTDS consortium.
         </p>
       </div>
       <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0">
         <a href="/apply/?track=fellow" class="btn-trust text-xs py-3 px-5 text-center justify-center font-bold touch-target">
-          Nominate Fellow (Track C) &rarr;
+          Apply for Fellowship &rarr;
         </a>
         <a href="/standard/" class="btn-outline text-xs py-3 px-5 text-center justify-center font-semibold bg-slate-800 border-slate-700 text-white hover:bg-slate-700 touch-target">
           View RFC v1.0 Spec
@@ -680,54 +957,6 @@
         countAll.textContent = cards.length;
       }
 
-      function filterFellows() {
-        const query = (searchInput.value || '').trim().toLowerCase();
-        const activeBtn = document.querySelector('#fellowFilterTabs .filter-btn.bg-slate-900');
-        const activeFilter = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
-
-        cards.forEach(card => {
-          const track = card.getAttribute('data-track') || '';
-          const text = (card.innerText || '').toLowerCase();
-          const matchesFilter = activeFilter === 'all' || track === activeFilter;
-          const matchesQuery = !query || text.includes(query);
-
-          if (matchesFilter && matchesQuery) {
-            card.style.display = 'flex';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      }
-
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          filterBtns.forEach(b => {
-            b.className = 'filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50';
-            b.setAttribute('aria-selected', 'false');
-          });
-          btn.className = 'filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm';
-          btn.setAttribute('aria-selected', 'true');
-          filterFellows();
-        });
-      });
-
-      if (searchInput) {
-        searchInput.addEventListener('input', filterFellows);
-      }
-
-      // Dynamic Modal Controller
-      const fellowBadgeModal = document.getElementById('fellowBadgeModal');
-      const fellowModalCloseBtn = document.getElementById('fellowModalCloseBtn');
-      const fellowModalTitle = document.getElementById('fellowModalTitle');
-      const fellowModalSubtitle = document.getElementById('fellowModalSubtitle');
-      const fellowModalBadgeMount = document.getElementById('fellowModalBadgeMount');
-      const fellowModalMdSnippet = document.getElementById('fellowModalMdSnippet');
-      const fellowModalHtmlSnippet = document.getElementById('fellowModalHtmlSnippet');
-      const copyFellowModalMdBtn = document.getElementById('copyFellowModalMdBtn');
-      const copyFellowModalHtmlBtn = document.getElementById('copyFellowModalHtmlBtn');
-      const fellowModalBadgeUrlText = document.getElementById('fellowModalBadgeUrlText');
-      const fellowModalDirectSvgLink = document.getElementById('fellowModalDirectSvgLink');
-
       function generateBadgeSvg(label) {
         const cleanLabel = String(label || 'FELLOW').trim().toUpperCase();
         const wLeft = 58;
@@ -758,6 +987,113 @@
   </g>
 </svg>`.trim();
       }
+
+      function filterFellows() {
+        const query = (searchInput.value || '').trim().toLowerCase();
+        const activeBtn = document.querySelector('#fellowFilterTabs .filter-btn.bg-slate-900');
+        const activeFilter = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+
+        cards.forEach(card => {
+          const track = card.getAttribute('data-track') || '';
+          const text = (card.innerText || '').toLowerCase();
+          const isSeat = card.id === 'open-fellow-seat';
+          const matchesFilter = activeFilter === 'all' || track === activeFilter || isSeat;
+          const matchesQuery = !query || text.includes(query);
+
+          if (matchesFilter && matchesQuery) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => {
+            b.className = 'filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50';
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.className = 'filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm';
+          btn.setAttribute('aria-selected', 'true');
+          filterFellows();
+        });
+      });
+
+      if (searchInput) {
+        searchInput.addEventListener('input', filterFellows);
+      }
+
+      // Seat #05 Interactive Live Seal & Track Controller
+      const seatNomineeInput = document.getElementById('seatNomineeInput');
+      const seatBadgeMount = document.getElementById('seatBadgeMount');
+      const btnClaimSeatCta = document.getElementById('btnClaimSeatCta');
+      const seatTrackBtns = document.querySelectorAll('#seatTrackSelector .seat-track-btn');
+      let currentSeatFocus = 'profiles';
+
+      function updateSeatCtaAndBadge() {
+        const rawName = seatNomineeInput ? (seatNomineeInput.value || '').trim() : '';
+        const badgeLabel = rawName ? (rawName.toUpperCase() + ' · FELLOW') : 'YOU · FELLOW';
+        if (seatBadgeMount) {
+          seatBadgeMount.innerHTML = generateBadgeSvg(badgeLabel);
+        }
+        if (btnClaimSeatCta) {
+          let ctaHref = `/apply/?track=fellow&focus=${encodeURIComponent(currentSeatFocus)}`;
+          if (rawName) {
+            ctaHref += `&name=${encodeURIComponent(rawName)}`;
+          }
+          btnClaimSeatCta.href = ctaHref;
+        }
+      }
+
+      if (seatBadgeMount) {
+        updateSeatCtaAndBadge();
+      }
+
+      if (seatNomineeInput) {
+        seatNomineeInput.addEventListener('input', updateSeatCtaAndBadge);
+      }
+
+      seatTrackBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          seatTrackBtns.forEach(b => {
+            b.className = 'seat-track-btn px-2 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-500 text-left transition-colors';
+            b.textContent = b.textContent.replace(/^✓\s*/, '');
+          });
+          btn.className = 'seat-track-btn px-2 py-1 rounded bg-emerald-500 text-slate-950 font-bold border border-emerald-400 text-left transition-colors';
+          if (!btn.textContent.startsWith('✓')) {
+            btn.textContent = '✓ ' + btn.textContent.trim();
+          }
+          currentSeatFocus = btn.getAttribute('data-focus') || 'profiles';
+          updateSeatCtaAndBadge();
+        });
+      });
+
+      // GitOps Fast-Track CLI Copy Handler
+      const btnCopyGitOpsCli = document.getElementById('btnCopyGitOpsCli');
+      const gitopsCliCode = document.getElementById('gitopsCliCode');
+      if (btnCopyGitOpsCli && gitopsCliCode) {
+        btnCopyGitOpsCli.addEventListener('click', () => {
+          window.ztdsCopy(gitopsCliCode.textContent, () => {
+            const originalHtml = btnCopyGitOpsCli.innerHTML;
+            btnCopyGitOpsCli.innerHTML = '<span>Copied CLI!</span>';
+            setTimeout(() => { btnCopyGitOpsCli.innerHTML = originalHtml; }, 2000);
+          });
+        });
+      }
+
+      // Dynamic Modal Controller
+      const fellowBadgeModal = document.getElementById('fellowBadgeModal');
+      const fellowModalCloseBtn = document.getElementById('fellowModalCloseBtn');
+      const fellowModalTitle = document.getElementById('fellowModalTitle');
+      const fellowModalSubtitle = document.getElementById('fellowModalSubtitle');
+      const fellowModalBadgeMount = document.getElementById('fellowModalBadgeMount');
+      const fellowModalMdSnippet = document.getElementById('fellowModalMdSnippet');
+      const fellowModalHtmlSnippet = document.getElementById('fellowModalHtmlSnippet');
+      const copyFellowModalMdBtn = document.getElementById('copyFellowModalMdBtn');
+      const copyFellowModalHtmlBtn = document.getElementById('copyFellowModalHtmlBtn');
+      const fellowModalBadgeUrlText = document.getElementById('fellowModalBadgeUrlText');
+      const fellowModalDirectSvgLink = document.getElementById('fellowModalDirectSvgLink');
 
       function openFellowBadgeModal(slug, name) {
         if (!fellowBadgeModal) return;

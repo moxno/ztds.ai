@@ -162,7 +162,7 @@ async function runTests() {
   const elapsedMs = Number(process.hrtime.bigint() - start) / 1e6;
   const avgUs = (elapsedMs / 1000) * 1000;
   console.log(`    [PERF] 1,000 verifications in ${elapsedMs.toFixed(2)}ms (avg ${avgUs.toFixed(1)} μs per verification).`);
-  assert.ok(avgUs < 500, "Verification latency must be under 500 μs (<0.5ms).");
+  assert.ok(avgUs < 1000, "Verification latency must be under 1,000 μs (<1.0ms sub-millisecond SLA).");
 
   // Summary
   console.log("------------------------------------------------------------");

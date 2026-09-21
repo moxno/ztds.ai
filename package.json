@@ -8,8 +8,10 @@
   },
   "scripts": {
     "audit": "node bin/ztds-audit.js",
-    "test": "node bin/ztds-audit.js --dir ./data && node test/license.test.js",
-    "test:license": "node test/license.test.js"
+    "test": "node bin/ztds-audit.js --dir ./data && node test/license.test.js && node test/scan-domain.test.js && node test/paddle-webhook.test.js",
+    "test:license": "node test/license.test.js",
+    "test:scan": "node test/scan-domain.test.js",
+    "test:paddle": "node test/paddle-webhook.test.js"
   },
   "keywords": [
     "ztds",
@@ -23,7 +25,7 @@
     "security"
   ],
   "author": "Ilya Sibiryakov (ZTDS AI Consortium / BrandMeWeb)",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "homepage": "https://ztds.ai",
   "private": true
 }

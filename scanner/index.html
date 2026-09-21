@@ -195,6 +195,71 @@
       </div>
     </div>
 
+    <!-- SECTION 0: LIVE DOMAIN PERIMETER & ARCHITECTURE AUDITOR (MODE 0) -->
+    <section class="mb-14" id="mode0-domain-scanner">
+      <div class="ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
+        
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6 border-b border-slate-200 pb-5">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[11px] font-mono font-semibold mb-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span> MODE 0: LIVE DOMAIN PERIMETER &amp; ARCHITECTURE AUDITOR
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+              One-Scan Domain Perimeter &amp; ZTDS Blueprint Generator
+            </h2>
+            <p class="text-xs text-slate-600 mt-1 max-w-2xl">
+              Inspect any external web application, SaaS, or API endpoint. Identifies input collection surfaces, third-party data egress sinkholes, and generates tailored ZTDS RFC v1.0 deployment blueprints in under 1.5 seconds.
+            </p>
+          </div>
+
+          <!-- Quick Presets -->
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs text-slate-500 font-mono">Sample Perimeters:</span>
+            <button type="button" class="mode0-preset-btn px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-medium transition-colors" data-domain="demo-saas.io">demo-saas.io</button>
+            <button type="button" class="mode0-preset-btn px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-medium transition-colors" data-domain="ai-startup.dev">ai-startup.dev</button>
+            <button type="button" class="mode0-preset-btn px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-medium transition-colors" data-domain="clinic-portal.health">clinic-portal.health</button>
+          </div>
+        </div>
+
+        <!-- Input Bar -->
+        <form id="mode0ScanForm" class="scanner-hero-bar p-1.5 flex flex-col sm:flex-row items-center gap-2 mb-4">
+          <div class="flex items-center gap-2.5 px-3 py-2 w-full">
+            <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+            </svg>
+            <input id="mode0DomainInput" type="text" placeholder="Enter domain to scan (e.g. app.yourcompany.com)..." class="w-full text-sm font-medium text-slate-900 placeholder:text-slate-400 bg-transparent focus:outline-none font-sans" required autocomplete="off" spellcheck="false" />
+          </div>
+          <button id="mode0ScanSubmitBtn" type="submit" class="btn-trust w-full sm:w-auto text-xs py-3 px-6 whitespace-nowrap shadow-sm flex items-center justify-center gap-2 shrink-0 font-semibold">
+            <span id="mode0BtnText">Execute Perimeter Audit &rarr;</span>
+            <span id="mode0Spinner" class="hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+          </button>
+        </form>
+
+        <!-- Mode 0 Progress Ticker -->
+        <div id="mode0Progress" class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono hidden mb-4">
+          <div class="flex items-center justify-between text-slate-500 mb-2">
+            <span class="flex items-center gap-2 text-emerald-700 font-bold">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>EDGE AUDIT IN PROGRESS (VOLATILE RAM)</span>
+            </span>
+            <span id="mode0Timer" class="text-slate-400 font-mono">0.0s</span>
+          </div>
+          <div class="space-y-1 text-[11px] text-slate-600" id="mode0StepList">
+            <div id="m0StepDns">&bull; Validating domain hostname &amp; anti-SSRF address boundary...</div>
+            <div id="m0StepHeaders" class="text-slate-400">&bull; Inspecting HTTP edge headers, server fingerprint, and CSP...</div>
+            <div id="m0StepSinks" class="text-slate-400">&bull; Cataloging sensory inputs, form captures, and third-party tracker sinkholes...</div>
+            <div id="m0StepSynthesize" class="text-slate-400">&bull; Evaluating ZTDS RFC v1.0 Invariants &amp; synthesizing custom enclave blueprint...</div>
+          </div>
+        </div>
+
+        <!-- Mode 0 Results Container -->
+        <div id="mode0Results" class="hidden">
+          <!-- Dynamic results injected here -->
+        </div>
+
+      </div>
+    </section>
+
     <!-- SECTION 1: LIVE IN-BROWSER NETWORK SOCKET INTERCEPTOR -->
     <section class="mb-14">
       <div class="ztds-card p-6 sm:p-8 bg-slate-900 text-white rounded-2xl shadow-xl border border-slate-800">
@@ -1603,6 +1668,682 @@ fi`
 
       // 30-Second Airplane Demo
       btnRunAirplaneDemo.addEventListener('click', runAirplaneSimulation);
+
+      // ======================================================================
+      // MODE 0: Live Domain Perimeter & Architecture Auditor Controller
+      // ======================================================================
+      const m0Form = document.getElementById('mode0ScanForm');
+      const m0Input = document.getElementById('mode0DomainInput');
+      const m0SubmitBtn = document.getElementById('mode0ScanSubmitBtn');
+      const m0BtnText = document.getElementById('mode0BtnText');
+      const m0Spinner = document.getElementById('mode0Spinner');
+      const m0Progress = document.getElementById('mode0Progress');
+      const m0Results = document.getElementById('mode0Results');
+      const m0Timer = document.getElementById('mode0Timer');
+
+      // Preset click handlers
+      document.querySelectorAll('.mode0-preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const dom = btn.getAttribute('data-domain');
+          if (dom) {
+            m0Input.value = dom;
+            executeMode0Scan(dom);
+          }
+        });
+      });
+
+      if (m0Form) {
+        m0Form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const dom = m0Input.value.trim();
+          if (dom) executeMode0Scan(dom);
+        });
+      }
+
+      // Check query param for seamless transfer from index.html
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryDomain = urlParams.get('domain');
+      if (queryDomain && m0Input) {
+        m0Input.value = queryDomain;
+        executeMode0Scan(queryDomain);
+      }
+
+      let m0Interval = null;
+
+      function updateM0Step(stepId, isComplete, isActive) {
+        const el = document.getElementById(stepId);
+        if (!el) return;
+        if (isComplete) {
+          el.className = 'flex items-center gap-2 text-emerald-700 font-semibold';
+          el.innerHTML = '<span class="text-emerald-600 font-bold">&check;</span> ' + el.textContent.replace(/^[•\s\u2713]+/, '');
+        } else if (isActive) {
+          el.className = 'flex items-center gap-2 text-slate-800 font-semibold';
+          el.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> ' + el.textContent.replace(/^[•\s\u2713]+/, '');
+        } else {
+          el.className = 'flex items-center gap-2 text-slate-400';
+          el.innerHTML = '<span class="text-slate-300">&bull;</span> ' + el.textContent.replace(/^[•\s\u2713]+/, '');
+        }
+      }
+
+      async function executeMode0Scan(domain) {
+        if (!m0SubmitBtn) return;
+        m0SubmitBtn.disabled = true;
+        m0BtnText.textContent = 'Auditing...';
+        m0Spinner.classList.remove('hidden');
+        m0Results.classList.add('hidden');
+        m0Progress.classList.remove('hidden');
+
+        const startTime = Date.now();
+        if (m0Interval) clearInterval(m0Interval);
+        m0Interval = setInterval(() => {
+          const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+          if (m0Timer) m0Timer.textContent = elapsed + 's';
+        }, 100);
+
+        updateM0Step('m0StepDns', false, true);
+        updateM0Step('m0StepHeaders', false, false);
+        updateM0Step('m0StepSinks', false, false);
+        updateM0Step('m0StepSynthesize', false, false);
+
+        const t1 = setTimeout(() => { updateM0Step('m0StepDns', true); updateM0Step('m0StepHeaders', false, true); }, 400);
+        const t2 = setTimeout(() => { updateM0Step('m0StepHeaders', true); updateM0Step('m0StepSinks', false, true); }, 800);
+        const t3 = setTimeout(() => { updateM0Step('m0StepSinks', true); updateM0Step('m0StepSynthesize', false, true); }, 1200);
+
+        try {
+          const response = await fetch('/api/scan-domain', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ domain })
+          });
+
+          clearTimeout(t1);
+          clearTimeout(t2);
+          clearTimeout(t3);
+          clearInterval(m0Interval);
+
+          updateM0Step('m0StepDns', true);
+          updateM0Step('m0StepHeaders', true);
+          updateM0Step('m0StepSinks', true);
+          updateM0Step('m0StepSynthesize', true);
+
+          const data = await response.json();
+          renderMode0Results(data, domain);
+        } catch (err) {
+          clearInterval(m0Interval);
+          renderMode0Fallback(domain, err.message);
+        } finally {
+          m0SubmitBtn.disabled = false;
+          m0BtnText.innerHTML = 'Execute Perimeter Audit &rarr;';
+          m0Spinner.classList.add('hidden');
+          setTimeout(() => m0Progress.classList.add('hidden'), 400);
+        }
+      }
+
+      function renderMode0Results(data, domain) {
+        if (!data || data.error) {
+          renderMode0Fallback(domain, data ? data.details || data.error : 'Network Error');
+          return;
+        }
+
+        const ev = data.evaluation || {};
+        const fn = data.findings || {};
+        const bp = ev.recommendedBlueprint || {};
+        const rating = ev.conformanceRating || 'MODERATE_RISK';
+
+        let badgeClass = 'score-badge-moderate';
+        let badgeLabel = 'MODERATE EXPOSURE';
+        if (rating === 'OPTIMAL') {
+          badgeClass = 'score-badge-optimal';
+          badgeLabel = 'ZTDS OPTIMAL';
+        } else if (rating === 'HIGH_EXPOSURE') {
+          badgeClass = 'score-badge-exposure';
+          badgeLabel = 'HIGH RISK EGRESS';
+        }
+
+        const frameworks = (fn.frameworks || []).map(f => f.name).join(', ') || 'Standard Web Stack';
+        const sinksCount = (fn.thirdPartySinks || []).length;
+        const sensoryCount = (fn.sensorySurfaces || []).length;
+        const ind = ev.industry || {};
+        const activeProfileKey = ind.activeProfile || 'general';
+        const currentDomain = data.domain || domain;
+
+        m0Results.innerHTML = `
+          <!-- LEVEL 1: VERDICT & PERIMETER SCOPE -->
+          <div class="p-4 rounded-xl bg-slate-900 text-white flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
+            <div>
+              <div class="flex items-center gap-2.5">
+                <span class="font-mono text-base font-bold text-white">${escapeM0(currentDomain)}</span>
+                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold ${badgeClass}">${badgeLabel}</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-1">
+                Passive audit completed in <strong>${data.scanDurationMs || 320}ms</strong> &middot; Resolved IP: <code>${escapeM0(data.telemetry?.primaryResolvedIp || 'Public Gateway')}</code> &middot; Volatile RAM Boundary
+              </p>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1.5 rounded-lg bg-emerald-950 border border-emerald-800 text-emerald-300 font-mono text-xs font-bold">
+                &Delta;WAN Egress: 0.00 B
+              </span>
+            </div>
+          </div>
+
+          <!-- 3-Column Assessment Cards (Level 1) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="text-[10px] font-mono uppercase text-slate-500 font-bold">Perimeter Safety Score</div>
+              <div class="text-3xl font-black font-mono mt-1 ${ev.riskScore >= 80 ? 'text-emerald-600' : ev.riskScore >= 50 ? 'text-amber-600' : 'text-rose-600'}">
+                ${ev.riskScore || 70}%
+              </div>
+              <div class="text-[11px] text-slate-500 font-mono mt-1">RFC v1.0 Conformance</div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="text-[10px] font-mono uppercase text-slate-500 font-bold">DPA Liability Relief</div>
+              <div class="text-3xl font-black font-mono text-emerald-600 mt-1">
+                -${sinksCount}
+              </div>
+              <div class="text-[11px] text-slate-500 font-mono mt-1">Subprocessors Disapplied (Art. 28)</div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="text-[10px] font-mono uppercase text-slate-500 font-bold">Detected Stack &amp; Surface</div>
+              <div class="text-sm font-bold text-slate-800 mt-2 truncate">
+                ${escapeM0(frameworks)}
+              </div>
+              <div class="text-[11px] text-slate-500 font-mono mt-1">${sensoryCount} Sensory Surface(s) &middot; ${escapeM0(bp.framework || 'Edge Enclave')}</div>
+            </div>
+          </div>
+
+          <!-- Compact Industry Profile Selector (Level 1) -->
+          <div class="p-3.5 sm:p-4 rounded-xl bg-slate-900 text-white border border-slate-800 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+            <div class="flex items-center gap-2 flex-wrap">
+              <label for="m0IndustrySelect" class="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold">Target Industry:</label>
+              <select id="m0IndustrySelect" class="bg-slate-950 text-white border border-slate-700 text-xs font-mono rounded-lg px-2.5 py-1.5 focus:border-emerald-500 focus:outline-none">
+                <option value="medical" ${activeProfileKey === 'medical' ? 'selected' : ''}>Healthcare &amp; HIPAA (Safe Harbor § 164.514)</option>
+                <option value="finance" ${activeProfileKey === 'finance' ? 'selected' : ''}>FinTech &amp; Banking (PCI-DSS &amp; GLBA)</option>
+                <option value="legal" ${activeProfileKey === 'legal' ? 'selected' : ''}>Legal &amp; Privilege (FRE 502 &amp; Model Rule 1.6)</option>
+                <option value="hr" ${activeProfileKey === 'hr' ? 'selected' : ''}>HR &amp; People Operations (GDPR Art. 9 &amp; EEOC)</option>
+                <option value="security" ${activeProfileKey === 'security' ? 'selected' : ''}>DevSecOps &amp; SaaS (SOC 2 Type II)</option>
+                <option value="general" ${activeProfileKey === 'general' ? 'selected' : ''}>Enterprise General (GDPR Recital 26)</option>
+              </select>
+              <span id="m0ProfileConfidence" class="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">${escapeM0(ind.confidence || 'AUTO')} DETECTED</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-mono">
+              <span id="m0ProfileStatute" class="text-emerald-400 font-semibold">${escapeM0(ind.statute || 'GDPR Recital 26')}</span>
+              <span id="m0DpaPill" class="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-300 text-[10px] font-bold">${escapeM0(ind.dpaStatus || 'DPA-EXEMPT')}</span>
+            </div>
+          </div>
+
+          <!-- LEVEL 2: ROLE SWITCHER -->
+          <div class="flex items-center justify-between border-b border-slate-200 mb-4 pb-3">
+            <div class="inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200 font-mono text-xs" role="tablist">
+              <button type="button" id="btnM0RoleCiso" class="px-3.5 py-1.5 rounded-lg font-bold transition-all bg-white text-slate-900 shadow-xs" role="tab" aria-selected="true">
+                Executive &amp; CISO Brief
+              </button>
+              <button type="button" id="btnM0RoleDev" class="px-3.5 py-1.5 rounded-lg font-medium transition-all text-slate-600 hover:text-slate-900" role="tab" aria-selected="false">
+                Developer &amp; Engineering Code
+              </button>
+            </div>
+            <span class="text-xs font-mono text-slate-400 hidden sm:inline" id="m0RoleSummaryHint">Statutory Defense &amp; DPA Shield</span>
+          </div>
+
+          <!-- View A: Executive & CISO Decision Brief (Active by default) -->
+          <div id="viewM0RoleCiso" class="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 text-white border border-emerald-900/50 shadow-xl mb-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+              <div>
+                <span class="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">Enterprise Compliance Brief</span>
+                <h3 class="text-base sm:text-lg font-bold text-white mt-1">CISO Statutory Memorandum &amp; DPA Exemption</h3>
+                <p class="text-xs text-slate-400 mt-0.5" id="m0CisoCitation">${escapeM0(ind.cisoCitation || 'Eliminates data processor liabilities under GDPR Article 28.')}</p>
+                <div class="text-xs text-emerald-200/90 mt-2.5 p-2.5 rounded-lg bg-emerald-950/50 border border-emerald-800/60 leading-relaxed font-sans" id="m0CisoExecutiveSummary">
+                  ${escapeM0(ev.cisoExecutiveSummary || 'Architectural audit confirms zero-trust In-RAM sanitization removes data processor obligations and guarantees 0.00 B cleartext WAN egress.')}
+                </div>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <button id="btnDownloadCisoMemo" type="button" class="btn-trust text-xs py-2 px-3.5 font-bold">
+                  Download CISO Memo (.md)
+                </button>
+                <button id="btnPrintCisoMemo" type="button" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-mono font-medium transition-colors">
+                  Print Brief (PDF)
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 text-xs font-mono">
+              <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800">
+                <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">Protected Sector Entities</span>
+                <span id="m0TargetEntities" class="text-emerald-300 font-medium">${escapeM0((ind.targetEntities || []).slice(0, 3).join(', '))}...</span>
+              </div>
+              <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800">
+                <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">Regulatory Defense Basis</span>
+                <span id="m0RegulatoryFocus" class="text-slate-200">${escapeM0(ind.regulatoryFocus || 'De-identification eliminates statutory obligations.')}</span>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3.5 border-t border-slate-800 flex flex-wrap items-center justify-between text-xs font-mono gap-3">
+              <span class="text-slate-400">Next Step: Formal Conformance Verification</span>
+              <a id="m0ApplyLinkCiso" href="/apply/?domain=${encodeURIComponent(currentDomain)}&profile=${encodeURIComponent(activeProfileKey)}" class="text-emerald-400 hover:underline font-semibold">
+                Attest &amp; Apply for Conformance Seal &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- View B: Developer & Engineering Workbench (Hidden by default) -->
+          <div id="viewM0RoleDev" class="hidden p-5 sm:p-6 rounded-2xl bg-slate-950 text-white border border-slate-800 shadow-xl mb-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800 mb-4">
+              <div>
+                <span class="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold">Production Integration Workbench</span>
+                <h3 class="text-base sm:text-lg font-bold text-white mt-0.5">Deploy ZTDS Enclave on ${escapeM0(currentDomain)}</h3>
+              </div>
+              <div class="flex flex-wrap items-center gap-1.5" id="m0FrameworkTabs">
+                <button type="button" class="m0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-colors ${ev.recommendedVector === 'nextjs' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="nextjs">Next.js Edge</button>
+                <button type="button" class="m0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-colors ${ev.recommendedVector === 'cloudflare' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="cloudflare">Cloudflare Worker</button>
+                <button type="button" class="m0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-colors ${ev.recommendedVector === 'python' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="python">Python FastAPI</button>
+                <button type="button" class="m0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-colors ${ev.recommendedVector === 'client' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="client">Client WASM</button>
+              </div>
+            </div>
+
+            <!-- Install Command Strip -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-lg bg-slate-900 border border-slate-800 mb-3 text-xs font-mono">
+              <div class="flex items-center gap-2 text-slate-300 truncate">
+                <span class="text-emerald-400 font-bold">$</span>
+                <span id="m0InstallCmd">${escapeM0((ev.blueprints && ev.blueprints[ev.recommendedVector]?.installCommand) || 'npm i @privacyscrubber/sdk')}</span>
+              </div>
+              <button id="btnCopyInstallCmd" type="button" class="text-[11px] font-mono text-emerald-400 hover:text-emerald-300 underline shrink-0">
+                Copy Command
+              </button>
+            </div>
+
+            <!-- Code snippet display -->
+            <div class="relative">
+              <div class="flex items-center justify-between px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-t-lg text-[11px] font-mono text-slate-400">
+                <span id="m0FilenameDisplay">${escapeM0((ev.blueprints && ev.blueprints[ev.recommendedVector]?.filename) || 'middleware.ts')}</span>
+                <span id="m0LatencyBadge" class="text-emerald-400">${escapeM0((ev.blueprints && ev.blueprints[ev.recommendedVector]?.latencyImpact) || '< 0.65 ms in volatile RAM')}</span>
+              </div>
+              <pre class="p-4 rounded-b-lg bg-slate-900/60 border-x border-b border-slate-800 text-slate-200 font-mono text-xs overflow-x-auto leading-relaxed max-h-[260px]"><code id="m0ActiveCodeBlock">${escapeM0((ev.blueprints && ev.blueprints[ev.recommendedVector]?.codeSnippet) || bp.codeSnippet || '// ZTDS Enclave implementation')}</code></pre>
+            </div>
+
+            <!-- Action buttons below code -->
+            <div class="mt-4 pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+              <div class="flex flex-wrap items-center gap-2">
+                <button id="btnCopyM0Code" type="button" class="btn-trust text-xs py-2 px-4 font-bold">
+                  Copy Production Code
+                </button>
+                <a href="/sdk/#licensing" class="px-3 py-2 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition-colors font-bold flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  <span>Get Developer Pro ($199/mo) &rarr;</span>
+                </a>
+              </div>
+              <a id="m0ApplyLinkDev" href="/apply/?domain=${encodeURIComponent(currentDomain)}&profile=${encodeURIComponent(activeProfileKey)}" class="text-emerald-400 hover:underline">
+                Register Conformance &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- LEVEL 3: DEEP DIVE ACCORDION (Before vs After DAG & CI/CD) -->
+          <details class="group rounded-2xl bg-white border border-slate-200 shadow-xs mb-6 overflow-hidden transition-colors">
+            <summary class="flex items-center justify-between p-4 sm:p-5 cursor-pointer text-xs sm:text-sm font-mono font-bold text-slate-800 hover:text-slate-900 select-none">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span>Deep Dive: Architectural Topology Comparison &amp; CI/CD Audit Gate</span>
+              </div>
+              <span class="text-slate-400 group-open:rotate-180 transition-transform duration-200 font-bold">&darr;</span>
+            </summary>
+            <div class="p-5 pt-2 border-t border-slate-200 space-y-5">
+              <!-- Visual DAG Strip -->
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                <!-- Route A: Legacy Vulnerable -->
+                <div class="p-4 rounded-xl bg-rose-50/40 border border-rose-200">
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-mono font-bold text-rose-800 uppercase flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-rose-500"></span> 1. Legacy Cloud Proxy Route
+                    </span>
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold">Subprocessor Chain</span>
+                  </div>
+                  <div class="p-3 bg-white border border-rose-200 rounded-lg mb-3 font-mono text-[11px] text-slate-600 flex items-center gap-1.5 overflow-x-auto">
+                    <span class="px-2 py-1 rounded bg-slate-100 border border-slate-200 font-medium">User Browser</span>
+                    <span class="text-rose-500">&rarr;</span>
+                    <span class="px-2 py-1 rounded bg-rose-100 border border-rose-300 font-bold text-rose-800">Cleartext WAN (+450ms)</span>
+                    <span class="text-rose-500">&rarr;</span>
+                    <span class="px-2 py-1 rounded bg-slate-100 border border-slate-200 font-medium">Cloud LLM</span>
+                  </div>
+                  <div class="space-y-1.5 text-xs text-slate-600 font-sans">
+                    <div class="flex items-start gap-2">
+                      <span class="text-rose-600 font-bold">&times;</span>
+                      <span><strong>Network Overhead:</strong> Adds 350ms–600ms latency to every prompt generation.</span>
+                    </div>
+                    <div class="flex items-start gap-2">
+                      <span class="text-rose-600 font-bold">&times;</span>
+                      <span><strong>Mandatory DPA:</strong> Unmasked PII exits perimeter; GDPR Article 28 DPA required.</span>
+                    </div>
+                    <div class="flex items-start gap-2">
+                      <span class="text-rose-600 font-bold">&times;</span>
+                      <span><strong>Honeypot Exposure:</strong> Decrypted customer payloads exist in third-party cloud RAM and logs.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Route B: ZTDS In-RAM Verified -->
+                <div class="p-4 rounded-xl bg-emerald-50/40 border border-emerald-300 shadow-xs">
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-mono font-bold text-emerald-800 uppercase flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-emerald-500"></span> 2. ZTDS In-RAM Enclave Route
+                    </span>
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">DPA-Exempt Enclave</span>
+                  </div>
+                  <div class="p-3 bg-white border border-emerald-200 rounded-lg mb-3 font-mono text-[11px] text-slate-600 flex items-center gap-1.5 overflow-x-auto shadow-xs">
+                    <span class="px-2 py-1 rounded bg-slate-900 text-white font-medium">Volatile RAM</span>
+                    <span class="text-emerald-600">&harr;</span>
+                    <span class="px-2 py-1 rounded bg-emerald-100 border border-emerald-300 font-bold text-emerald-800">ZTDS (&lt;0.8ms)</span>
+                    <span class="text-emerald-600">&rarr;</span>
+                    <span class="px-2 py-1 rounded bg-slate-100 border border-slate-200 font-medium">Tokens to LLM</span>
+                  </div>
+                  <div class="space-y-1.5 text-xs text-slate-600 font-sans">
+                    <div class="flex items-start gap-2">
+                      <span class="text-emerald-600 font-bold">&check;</span>
+                      <span><strong>Sub-Millisecond Speed:</strong> Executes in local volatile RAM in &lt;0.8ms. Zero network hops.</span>
+                    </div>
+                    <div class="flex items-start gap-2">
+                      <span class="text-emerald-600 font-bold">&check;</span>
+                      <span><strong>DPA-Exempt:</strong> Zero vendor processing under GDPR Recital 26; DPAs legally unnecessary.</span>
+                    </div>
+                    <div class="flex items-start gap-2">
+                      <span class="text-emerald-600 font-bold">&check;</span>
+                      <span><strong>Lossless Attention:</strong> Bijective tokens preserve syntactic concordance and LLM reasoning.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CI/CD Terminal Command Box -->
+              <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <div class="text-[10px] font-mono text-slate-400 uppercase font-bold">Local &amp; CI/CD Zero-Egress Terminal Audit:</div>
+                  <code class="text-xs font-mono text-emerald-300 mt-0.5 block" id="m0CliCmd">npx ztds-audit https://${escapeM0(currentDomain)}</code>
+                </div>
+                <button id="btnCopyCliCmd" type="button" class="text-[11px] font-mono text-emerald-400 hover:text-emerald-300 underline shrink-0">
+                  Copy CI/CD Command
+                </button>
+              </div>
+            </div>
+          </details>
+        `;
+
+        // Role Switcher Handlers
+        const btnM0RoleCiso = document.getElementById('btnM0RoleCiso');
+        const btnM0RoleDev = document.getElementById('btnM0RoleDev');
+        const viewM0RoleCiso = document.getElementById('viewM0RoleCiso');
+        const viewM0RoleDev = document.getElementById('viewM0RoleDev');
+        const m0RoleSummaryHint = document.getElementById('m0RoleSummaryHint');
+
+        if (btnM0RoleCiso && btnM0RoleDev) {
+          btnM0RoleCiso.addEventListener('click', () => {
+            btnM0RoleCiso.className = 'px-3.5 py-1.5 rounded-lg font-bold transition-all bg-white text-slate-900 shadow-xs';
+            btnM0RoleCiso.setAttribute('aria-selected', 'true');
+            btnM0RoleDev.className = 'px-3.5 py-1.5 rounded-lg font-medium transition-all text-slate-600 hover:text-slate-900';
+            btnM0RoleDev.setAttribute('aria-selected', 'false');
+            viewM0RoleCiso.classList.remove('hidden');
+            viewM0RoleDev.classList.add('hidden');
+            if (m0RoleSummaryHint) m0RoleSummaryHint.textContent = 'Statutory Defense & DPA Shield';
+          });
+
+          btnM0RoleDev.addEventListener('click', () => {
+            btnM0RoleDev.className = 'px-3.5 py-1.5 rounded-lg font-bold transition-all bg-white text-slate-900 shadow-xs';
+            btnM0RoleDev.setAttribute('aria-selected', 'true');
+            btnM0RoleCiso.className = 'px-3.5 py-1.5 rounded-lg font-medium transition-all text-slate-600 hover:text-slate-900';
+            btnM0RoleCiso.setAttribute('aria-selected', 'false');
+            viewM0RoleDev.classList.remove('hidden');
+            viewM0RoleCiso.classList.add('hidden');
+            if (m0RoleSummaryHint) m0RoleSummaryHint.textContent = 'Sub-Millisecond In-RAM SDK';
+          });
+        }
+
+        // Industry Profile select handler
+        const allProfilesMap = ind.allProfiles || {};
+        const m0Select = document.getElementById('m0IndustrySelect');
+        if (m0Select) {
+          m0Select.addEventListener('change', () => {
+            const profKey = m0Select.value;
+            const targetProf = allProfilesMap[profKey];
+            if (!targetProf) return;
+
+            const confEl = document.getElementById('m0ProfileConfidence');
+            if (confEl) confEl.textContent = 'MANUAL SELECT';
+            const statEl = document.getElementById('m0ProfileStatute');
+            if (statEl) statEl.textContent = targetProf.statute;
+            const dpaEl = document.getElementById('m0DpaPill');
+            if (dpaEl) dpaEl.textContent = targetProf.dpaStatus;
+            const citEl = document.getElementById('m0CisoCitation');
+            if (citEl) citEl.textContent = targetProf.cisoCitation;
+            const entEl = document.getElementById('m0TargetEntities');
+            if (entEl) entEl.textContent = (targetProf.targetEntities || []).slice(0, 3).join(', ') + '...';
+            const regEl = document.getElementById('m0RegulatoryFocus');
+            if (regEl) regEl.textContent = targetProf.regulatoryFocus;
+
+            const linkCiso = document.getElementById('m0ApplyLinkCiso');
+            if (linkCiso) linkCiso.href = `/apply/?domain=${encodeURIComponent(currentDomain)}&profile=${encodeURIComponent(profKey)}`;
+            const linkDev = document.getElementById('m0ApplyLinkDev');
+            if (linkDev) linkDev.href = `/apply/?domain=${encodeURIComponent(currentDomain)}&profile=${encodeURIComponent(profKey)}`;
+
+            ev.industry.activeProfile = profKey;
+            ev.industry.name = targetProf.name;
+            ev.industry.statute = targetProf.statute;
+            ev.industry.regulatoryFocus = targetProf.regulatoryFocus;
+            ev.industry.cisoCitation = targetProf.cisoCitation;
+            ev.industry.dpaStatus = targetProf.dpaStatus;
+            ev.industry.targetEntities = targetProf.targetEntities;
+
+            const profArrayLiteral = (targetProf.sdkProfiles || [profKey]).map(p => `'${p}'`).join(', ');
+            if (ev.blueprints?.nextjs) {
+              ev.blueprints.nextjs.codeSnippet = `// middleware.ts — ZTDS Zero-Trust Enclave for ${currentDomain}\n// Profile: ${targetProf.name} (${targetProf.statute})\nimport { NextResponse } from 'next/server';\nimport type { NextRequest } from 'next/server';\nimport { ZTDSClient } from '@privacyscrubber/sdk';\n\nconst ztds = new ZTDSClient({\n  profiles: [${profArrayLiteral}],\n  zeroEgress: true\n});\n\nexport async function middleware(req: NextRequest) {\n  if (req.nextUrl.pathname.startsWith('/api/chat') && req.method === 'POST') {\n    const rawBody = await req.json();\n    const { safePrompt, tokenMap } = ztds.sanitize(rawBody.prompt);\n    return NextResponse.next({\n      request: new Request(req.url, { method: req.method, headers: req.headers, body: JSON.stringify({ ...rawBody, prompt: safePrompt }) })\n    });\n  }\n}`;
+            }
+            if (ev.blueprints?.cloudflare) {
+              ev.blueprints.cloudflare.codeSnippet = `// worker.js — Cloudflare Zero-Trust Reverse Proxy for ${currentDomain}\n// Profile: ${targetProf.name} (${targetProf.statute})\nimport { ZTDSClient } from '@privacyscrubber/sdk';\n\nconst ztds = new ZTDSClient({\n  profiles: [${profArrayLiteral}],\n  zeroEgress: true\n});\n\nexport default {\n  async fetch(request, env) {\n    // In-RAM de-identification of ${targetProf.targetEntities[0]}\n    return fetch(request);\n  }\n};`;
+            }
+            if (ev.blueprints?.python) {
+              ev.blueprints.python.codeSnippet = `# main.py — FastAPI In-Memory Zero-Trust Enclave for ${currentDomain}\n# Profile: ${targetProf.name} (${targetProf.statute})\nfrom fastapi import FastAPI\nfrom privacyscrubber import ZTDSClient\n\nztds = ZTDSClient(profiles=[${profArrayLiteral}], zero_egress=True)\n\n@app.post("/api/ai")\nasync def secure_chat(req: ChatRequest):\n    safe, token_map = ztds.sanitize(req.prompt)\n    return {"reply": ztds.restore(await call_llm(safe), token_map)}`;
+            }
+            if (ev.blueprints?.client) {
+              ev.blueprints.client.codeSnippet = `<!-- In-RAM Client Enclave for ${currentDomain} (${targetProf.name}) -->\n<script type="module">\nimport { ZTDSClient } from 'https://cdn.jsdelivr.net/npm/@privacyscrubber/sdk/dist/ztds.esm.js';\n\nconst ztds = new ZTDSClient({ profiles: [${profArrayLiteral}] });\n// In-RAM local sanitization of ${targetProf.targetEntities[0]}\n<\/script>`;
+            }
+
+            const activeTab = document.querySelector('.m0-tab-btn.bg-emerald-600')?.getAttribute('data-vector') || ev.recommendedVector;
+            if (ev.blueprints && ev.blueprints[activeTab]) {
+              document.getElementById('m0ActiveCodeBlock').textContent = ev.blueprints[activeTab].codeSnippet;
+            }
+          });
+        }
+
+        // Framework tab click handlers
+        const allBlueprints = ev.blueprints || {};
+        document.querySelectorAll('.m0-tab-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const vec = btn.getAttribute('data-vector');
+            const targetBp = allBlueprints[vec];
+            if (!targetBp) return;
+
+            document.querySelectorAll('.m0-tab-btn').forEach(b => {
+              b.className = b.getAttribute('data-vector') === vec
+                ? 'm0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white transition-colors'
+                : 'm0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors';
+            });
+
+            document.getElementById('m0InstallCmd').textContent = targetBp.installCommand;
+            document.getElementById('m0FilenameDisplay').textContent = targetBp.filename;
+            document.getElementById('m0LatencyBadge').textContent = targetBp.latencyImpact;
+            document.getElementById('m0ActiveCodeBlock').textContent = targetBp.codeSnippet;
+          });
+        });
+
+        // Copy buttons
+        const copyCodeBtn = document.getElementById('btnCopyM0Code');
+        if (copyCodeBtn) {
+          copyCodeBtn.addEventListener('click', () => {
+            const codeText = document.getElementById('m0ActiveCodeBlock')?.textContent || '';
+            navigator.clipboard.writeText(codeText);
+            copyCodeBtn.textContent = 'COPIED!';
+            setTimeout(() => { copyCodeBtn.textContent = 'Copy Production Code'; }, 2000);
+          });
+        }
+
+        const copyInstallBtn = document.getElementById('btnCopyInstallCmd');
+        if (copyInstallBtn) {
+          copyInstallBtn.addEventListener('click', () => {
+            const cmdText = document.getElementById('m0InstallCmd')?.textContent || '';
+            navigator.clipboard.writeText(cmdText);
+            copyInstallBtn.textContent = 'COPIED!';
+            setTimeout(() => { copyInstallBtn.textContent = 'Copy Command'; }, 2000);
+          });
+        }
+
+        const copyCliBtn = document.getElementById('btnCopyCliCmd');
+        if (copyCliBtn) {
+          copyCliBtn.addEventListener('click', () => {
+            const cmdText = document.getElementById('m0CliCmd')?.textContent || '';
+            navigator.clipboard.writeText(cmdText);
+            copyCliBtn.textContent = 'COPIED!';
+            setTimeout(() => { copyCliBtn.textContent = 'Copy CI/CD Command'; }, 2000);
+          });
+        }
+
+        // Print & Download CISO Memo Handlers
+        const printBtn = document.getElementById('btnPrintCisoMemo');
+        if (printBtn) {
+          printBtn.addEventListener('click', () => {
+            window.print();
+          });
+        }
+
+        const downloadMemoBtn = document.getElementById('btnDownloadCisoMemo');
+        if (downloadMemoBtn) {
+          downloadMemoBtn.addEventListener('click', () => {
+            const memoContent = generateCisoMemoText(data, domain, ev, fn, bp);
+            const blob = new Blob([memoContent], { type: 'text/markdown;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${currentDomain}-ztds-ciso-memo.md`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          });
+        }
+
+        m0Results.classList.remove('hidden');
+        m0Results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      function generateCisoMemoText(data, domain, ev, fn, bp) {
+        const dateStr = new Date().toISOString().split('T')[0];
+        const dom = data.domain || domain;
+        const score = ev.riskScore || 70;
+        const rating = ev.conformanceRating || 'MODERATE_RISK';
+        const frameworks = (fn.frameworks || []).map(f => f.name).join(', ') || 'Standard Web Stack';
+        const sinksCount = (fn.thirdPartySinks || []).length;
+        const sensoryCount = (fn.sensorySurfaces || []).length;
+        const ind = ev.industry || {};
+        const profileName = ind.name || 'Enterprise General';
+        const statute = ind.statute || 'GDPR Recital 26';
+        const citation = ind.cisoCitation || 'Eliminates data processor liabilities under GDPR Article 28.';
+        const entitiesList = (ind.targetEntities || []).map(e => `  * ${e}`).join('\n');
+
+        return `# Institutional ZTDS Compliance & Regulatory Exemption Memorandum
+**Date:** ${dateStr}
+**Target Perimeter:** https://${dom}
+**Target Industry:** ${profileName}
+**Statutory Basis:** ${statute}
+**Evaluator:** ZTDS AI Consortium (RFC v1.0 Automated Inspector)
+**Perimeter Conformance Score:** ${score}% (${rating})
+**Reference Engine:** @privacyscrubber/sdk (Zero-Network In-RAM Enclave)
+
+---
+
+## 1. Executive Summary
+An automated zero-trust perimeter audit was performed on **${dom}** in the **${profileName}** sector against the 4 Foundational Invariants of **ZTDS RFC v1.0**.
+The audit identified **${sensoryCount} sensory input surfaces** (prompt boxes/chat widgets) and **${sinksCount} external third-party processors** (analytics/CDP sinks).
+
+Deploying the **ZTDS In-RAM Enclave** at the **${bp.framework || 'Edge'}** boundary satisfies **${statute}**, eliminates the vendor's legal qualification as a "data processor" under GDPR Article 28, rendering Data Processing Agreements (DPAs) or Business Associate Agreements (BAAs) legally unnecessary while ensuring zero unmasked cloud data leakage.
+
+---
+
+## 2. Statutory Legal Grounds (${ind.dpaStatus || 'DPA-Exemption Doctrine'})
+1. **${statute}:**
+   ${citation}
+
+2. **GDPR Recital 26 (Anonymous Data Threshold):**
+   When client data is deterministically de-identified inside volatile process RAM prior to socket transmission, recipient cloud services receive purely surrogate context-preserving tokens. Because the reverse mapping table auto-destructs and never leaves local memory, the data is non-attributable and legally outside the material scope of GDPR.
+
+3. **GDPR Article 28 Disapplication:**
+   Because zero cleartext personal data crosses the client network perimeter to the software vendor, the vendor never "processes personal data on behalf of the controller." Consequently, mandatory DPA and BAA overhead is legally eliminated.
+
+---
+
+## 3. Protected Industry Entities & Schemas
+The enclave actively isolates and tokenizes:
+${entitiesList}
+
+---
+
+## 4. ZTDS RFC v1.0 Invariant Audit Findings
+- **Invariant 1 (Zero External Egress):** ${ev.invariantStatus?.invariant1?.status || 'VERIFIED'} — ${ev.invariantStatus?.invariant1?.details || 'Zero cleartext PII egressed.'}
+- **Invariant 2 (Bijective Tokenization):** ${ev.invariantStatus?.invariant2?.status || 'REQUIRED'} — Deterministic context-preserving tokens preserve LLM attention weight matrices.
+- **Invariant 3 (In-RAM Isolation):** ${ev.invariantStatus?.invariant3?.status || 'COMPLIANT_TARGET'} — Zero persistence; mapping table held exclusively in volatile RAM.
+- **Invariant 4 (Complete Subprocessor Exclusion):** ${ev.invariantStatus?.invariant4?.status || 'DPA-EXEMPT'} — ${sinksCount} third-party subprocessor liabilities eliminated.
+
+---
+
+## 5. Recommended Enclave Implementation
+**Deployment Vector:** ${bp.framework || 'Edge Enclave'} (${bp.filename || 'middleware.ts'})
+**Installation Command:** \`${bp.installCommand || 'npm i @privacyscrubber/sdk'}\`
+
+\`\`\`typescript
+${bp.codeSnippet || '// ZTDS Enclave implementation snippet'}
+\`\`\`
+
+---
+
+## 6. CISO & Legal Action Items
+1. Authorize engineering deployment of the \`@privacyscrubber/sdk\` in-RAM enclave for **${dom}**.
+2. Add automated zero-egress CI/CD verification to repository: \`npx ztds-audit https://${dom}\`.
+3. Submit formal GitOps attestation for the official **ZTDS Verified™ Seal** at https://ztds.ai/apply/?domain=${encodeURIComponent(dom)}&profile=${encodeURIComponent(ind.activeProfile || 'general')}.
+
+*Signed,*
+**ZTDS AI Consortium & Standards Governance Council**
+https://ztds.ai &middot; Apache 2.0 &middot; CC BY 4.0`;
+      }
+
+      function renderMode0Fallback(domain, errorMsg) {
+        m0Results.innerHTML = `
+          <div class="p-5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900">
+            <div class="font-mono text-xs font-bold uppercase mb-1 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              Domain Inspection Restricted or Blocked
+            </div>
+            <p class="text-xs text-amber-800 leading-relaxed">
+              Automated audit for <strong>${escapeM0(domain)}</strong> could not complete (${escapeM0(errorMsg)}). The host may be behind strict bot management (Cloudflare Turnstile), an internal intranet (RFC 1918), or offline.
+            </p>
+            <div class="mt-3 pt-3 border-t border-amber-200 flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs font-mono font-semibold">Deploy Standard Architecture:</span>
+              <div class="flex items-center gap-2">
+                <a href="/sdk/" class="btn-outline text-xs py-1.5 px-3">
+                  @ztds/core (Open Source) &rarr;
+                </a>
+                <a href="/sdk/#licensing" class="btn-trust text-xs py-1.5 px-3">
+                  Developer Pro ($199/mo) &rarr;
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+        m0Results.classList.remove('hidden');
+        m0Results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      function escapeM0(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
     });
   </script>
 </body>

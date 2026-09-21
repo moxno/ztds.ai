@@ -138,8 +138,8 @@ for (const filePath of files) {
 
     const relPath = path.relative(TARGET_DIR, filePath);
 
-    // Skip auditor itself to prevent self-triggering
-    if (relPath.includes('ztds-audit.js')) continue;
+    // Skip auditor itself and test fixtures to prevent self-triggering on mock data
+    if (relPath.includes('ztds-audit.js') || relPath.includes('.test.') || relPath.endsWith('test.js') || relPath.split(path.sep).includes('test') || relPath.split(path.sep).includes('tests')) continue;
 
     const lines = content.split('\n');
     for (let i = 0; i < lines.length; i++) {
