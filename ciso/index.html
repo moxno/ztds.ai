@@ -25,21 +25,93 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "CISO Procurement & DPA Exemption Pack — ZTDS.ai",
-    "description": "1-Page CISO Data Protection Memorandum, GDPR Article 28 DPA Exemption Doctrine, HIPAA Safe Harbor, and SIG Lite questionnaire responses for Zero-Trust Data Sanitization.",
-    "url": "https://ztds.ai/ciso/",
-    "author": {
-      "@type": "Person",
-      "name": "Ilya Sibiryakov",
-      "url": "https://orcid.org/0009-0002-0642-5985"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "ZTDS AI Consortium",
-      "url": "https://ztds.ai"
-    },
-    "about": ["GDPR Article 28", "HIPAA Safe Harbor", "ISO 27001 A.8.11", "Zero-Trust Architecture"]
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://ztds.ai/ciso/#article",
+        "headline": "CISO Procurement & DPA Exemption Pack — ZTDS.ai",
+        "description": "1-Page CISO Data Protection Memorandum, GDPR Article 28 DPA Exemption Doctrine, HIPAA Safe Harbor, and SIG Lite questionnaire responses for Zero-Trust Data Sanitization.",
+        "url": "https://ztds.ai/ciso/",
+        "author": {
+          "@type": "Person",
+          "name": "Ilya Sibiryakov",
+          "url": "https://orcid.org/0009-0002-0642-5985"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ZTDS AI Consortium",
+          "url": "https://ztds.ai"
+        },
+        "about": [
+          "GDPR Article 28",
+          "HIPAA Safe Harbor",
+          "ISO 27001 A.8.11",
+          "Zero-Trust Architecture"
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://ztds.ai/ciso/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Where is customer prompt data hosted or stored?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nowhere. Cleartext data and token maps reside strictly in volatile RAM. No data is ever written to disk, databases, cookies, or cloud storage."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What data egresses to vendor servers during sanitization?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Exactly 0.00 bytes. The sanitization engine is self-contained in WebAssembly/TypeScript. No telemetry, analytics, or socket communication exists."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does the vendor have custody or access to customer encryption keys?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Masking tables and session keys are derived strictly in client RAM. The vendor maintains zero key escrow and zero remote access."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does collaborative unmasking work across enterprise teams?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Token maps are encrypted client-side using Argon2id and XChaCha20-Poly1305. Central relays act as blind zero-knowledge conduits."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What third-party subprocessors have access to customer data?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Zero. Zero subprocessors are involved in data processing, providing an architectural basis for DPA/BAA scope exclusion analysis under GDPR Article 28."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How can our security team verify zero egress independently?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Run the 5-Step Airplane Mode protocol in DevTools or execute 'npx ztds-audit --dir ./src' to generate a verifiable cryptographic audit hash."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is a Data Processing Agreement (DPA) under GDPR Article 28 not required for ZTDS?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Under GDPR Article 28, a Data Processing Agreement is required when a third party processes personal data on behalf of a controller. Because ZTDS operates exclusively within client-side volatile memory without cleartext egress to vendor servers, the vendor never receives custody of personal data, excluding the workflow from subprocessor classification."
+            }
+          }
+        ]
+      }
+    ]
   }
   </script>
 
