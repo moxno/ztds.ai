@@ -41,17 +41,41 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "ZTDS CISO ROI & Risk Exposure Calculator",
-    "url": "https://ztds.ai/roi/",
-    "applicationCategory": "SecurityApplication",
-    "operatingSystem": "All",
-    "description": "Interactive risk and ROI calculator for enterprise CISOs to quantify data breach liability reduction and subprocessor elimination in AI workloads.",
-    "publisher": {
-      "@type": "Organization",
-      "name": "ZTDS AI Consortium",
-      "url": "https://ztds.ai"
-    }
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://ztds.ai/roi/#app",
+        "name": "ZTDS CISO ROI & Risk Exposure Calculator",
+        "url": "https://ztds.ai/roi/",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "All",
+        "description": "Interactive risk and ROI calculator for enterprise CISOs to quantify data breach liability reduction and subprocessor elimination in AI workloads.",
+        "isPartOf": { "@id": "https://ztds.ai/#website" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ZTDS AI Consortium",
+          "url": "https://ztds.ai"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ztds.ai/roi/#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ztds.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "CISO ROI Calculator",
+            "item": "https://ztds.ai/roi/"
+          }
+        ]
+      }
+    ]
   }
   </script>
 </head>

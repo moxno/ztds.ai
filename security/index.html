@@ -29,15 +29,39 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "ZTDS Security Policy & Vulnerability Disclosure",
-    "url": "https://ztds.ai/security/",
-    "description": "Coordinated vulnerability disclosure policy, PGP keys, and bug bounty framework.",
-    "publisher": {
-      "@type": "Organization",
-      "name": "ZTDS AI Consortium",
-      "url": "https://ztds.ai"
-    }
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://ztds.ai/security/#webpage",
+        "name": "ZTDS Security Policy & Vulnerability Disclosure",
+        "url": "https://ztds.ai/security/",
+        "description": "Coordinated vulnerability disclosure policy, PGP keys, and bug bounty framework.",
+        "isPartOf": { "@id": "https://ztds.ai/#website" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ZTDS AI Consortium",
+          "url": "https://ztds.ai"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ztds.ai/security/#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ztds.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Security Policy",
+            "item": "https://ztds.ai/security/"
+          }
+        ]
+      }
+    ]
   }
   </script>
 </head>

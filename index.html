@@ -36,21 +36,48 @@
         "@id": "https://ztds.ai/#organization",
         "name": "ZTDS AI Consortium",
         "url": "https://ztds.ai",
-        "logo": "https://ztds.ai/favicon.svg",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://ztds.ai/favicon.svg"
+        },
+        "founder": {
+          "@id": "https://ztds.ai/#founder"
+        },
         "sameAs": [
+          "https://github.com/moxno/ztds.ai",
           "https://zenodo.org/records/22058770",
           "https://osf.io/5byjf/"
         ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://ztds.ai/#founder",
+        "name": "Ilya Sibiryakov",
+        "jobTitle": "Specification Author & Chief Architect",
+        "url": "https://orcid.org/0009-0002-0642-5985",
+        "sameAs": [
+          "https://www.linkedin.com/in/ilya-sibiryakov/",
+          "https://orcid.org/0009-0002-0642-5985"
+        ],
+        "affiliation": {
+          "@type": "Organization",
+          "name": "BrandMeWeb",
+          "url": "https://brandmeweb.com"
+        }
       },
       {
         "@type": "WebSite",
         "@id": "https://ztds.ai/#website",
         "url": "https://ztds.ai",
         "name": "ZTDS.ai",
+        "description": "Zero-Trust Data Sanitization (ZTDS) — Open Industry Standard and Verification Authority for Enterprise AI",
         "publisher": { "@id": "https://ztds.ai/#organization" },
         "potentialAction": {
           "@type": "SearchAction",
-          "target": "https://ztds.ai/scanner/?domain={search_term_string}",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://ztds.ai/scanner/?domain={search_term_string}"
+          },
           "query-input": "required name=search_term_string"
         }
       },
@@ -61,12 +88,7 @@
         "description": "The open industry standard for in-memory client-side data de-identification in Generative AI pipelines.",
         "datePublished": "2026-09-15",
         "dateModified": "2026-09-21",
-        "author": {
-          "@type": "Person",
-          "name": "Ilya Sibiryakov",
-          "url": "https://orcid.org/0009-0002-0642-5985",
-          "sameAs": "https://www.linkedin.com/in/ilya-sibiryakov/"
-        },
+        "author": { "@id": "https://ztds.ai/#founder" },
         "publisher": { "@id": "https://ztds.ai/#organization" }
       }
     ]

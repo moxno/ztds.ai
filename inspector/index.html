@@ -29,17 +29,41 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "ZTDS Pipeline Inspector — Interactive Zero-Trust DAG Simulator",
-    "description": "Simulate in-memory Zero-Trust Data Sanitization in real-time. Measure sub-millisecond latency, test entity tokenization, and verify zero network egress.",
-    "url": "https://ztds.ai/inspector/",
-    "applicationCategory": "DeveloperApplication",
-    "operatingSystem": "All",
-    "publisher": {
-      "@type": "Organization",
-      "name": "ZTDS AI Consortium",
-      "url": "https://ztds.ai"
-    }
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://ztds.ai/inspector/#app",
+        "name": "ZTDS Pipeline Inspector — Interactive Zero-Trust DAG Simulator",
+        "description": "Simulate in-memory Zero-Trust Data Sanitization in real-time. Measure sub-millisecond latency, test entity tokenization, and verify zero network egress.",
+        "url": "https://ztds.ai/inspector/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "isPartOf": { "@id": "https://ztds.ai/#website" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ZTDS AI Consortium",
+          "url": "https://ztds.ai"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ztds.ai/inspector/#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ztds.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Pipeline Inspector",
+            "item": "https://ztds.ai/inspector/"
+          }
+        ]
+      }
+    ]
   }
   </script>
 </head>

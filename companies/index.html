@@ -29,15 +29,39 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "ZTDS Corporate Adopters & Partners",
-    "url": "https://ztds.ai/companies/",
-    "description": "Directory of enterprises and organizations adopting the ZTDS open security standard.",
-    "publisher": {
-      "@type": "Organization",
-      "name": "ZTDS AI Consortium",
-      "url": "https://ztds.ai"
-    }
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://ztds.ai/companies/#collection",
+        "name": "ZTDS Corporate Adopters & Partners",
+        "url": "https://ztds.ai/companies/",
+        "description": "Directory of enterprises, working group members, and organizations adopting the ZTDS open security standard.",
+        "isPartOf": { "@id": "https://ztds.ai/#website" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ZTDS AI Consortium",
+          "url": "https://ztds.ai"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ztds.ai/companies/#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ztds.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Corporate Adopters",
+            "item": "https://ztds.ai/companies/"
+          }
+        ]
+      }
+    ]
   }
   </script>
 </head>

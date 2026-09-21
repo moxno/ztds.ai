@@ -29,15 +29,39 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "ZTDS Verified™ Public Registry — Accredited AI Tools & Solutions",
-    "description": "Official public directory of AI tools, agents, and platforms verified compliant with the Zero-Trust Data Sanitization (ZTDS v1.0) specification.",
-    "url": "https://ztds.ai/registry/",
-    "publisher": {
-      "@type": "Organization",
-      "name": "ZTDS AI Consortium",
-      "url": "https://ztds.ai"
-    }
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://ztds.ai/registry/#collection",
+        "name": "ZTDS Verified™ Public Registry — Accredited AI Tools & Solutions",
+        "description": "Official public directory of AI tools, agents, and platforms verified compliant with the Zero-Trust Data Sanitization (ZTDS v1.0) specification.",
+        "url": "https://ztds.ai/registry/",
+        "isPartOf": { "@id": "https://ztds.ai/#website" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ZTDS AI Consortium",
+          "url": "https://ztds.ai"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ztds.ai/registry/#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ztds.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Verified Registry",
+            "item": "https://ztds.ai/registry/"
+          }
+        ]
+      }
+    ]
   }
   </script>
 </head>

@@ -29,15 +29,39 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "ContactPage",
-    "name": "ZTDS Accreditation Gateway & Verification Portal",
-    "description": "Apply for ZTDS Verified™ certification for your AI application, register as a corporate member, or nominate a contributor to the open specification.",
-    "url": "https://ztds.ai/apply/",
-    "publisher": {
-      "@type": "Organization",
-      "name": "ZTDS AI Consortium",
-      "url": "https://ztds.ai"
-    }
+    "@graph": [
+      {
+        "@type": "ContactPage",
+        "@id": "https://ztds.ai/apply/#contact",
+        "name": "ZTDS Accreditation Gateway & Verification Portal",
+        "description": "Apply for ZTDS Verified™ certification for your AI application, register as a corporate member, or nominate a contributor to the open specification.",
+        "url": "https://ztds.ai/apply/",
+        "isPartOf": { "@id": "https://ztds.ai/#website" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ZTDS AI Consortium",
+          "url": "https://ztds.ai"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ztds.ai/apply/#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ztds.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Accreditation Application",
+            "item": "https://ztds.ai/apply/"
+          }
+        ]
+      }
+    ]
   }
   </script>
 </head>

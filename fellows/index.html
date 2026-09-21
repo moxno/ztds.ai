@@ -29,15 +29,39 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "ZTDS Global Fellows & Research Council",
-    "url": "https://ztds.ai/fellows/",
-    "description": "Registry of accredited researchers, cryptographers, and architects contributing to the ZTDS standard.",
-    "publisher": {
-      "@type": "Organization",
-      "name": "ZTDS AI Consortium",
-      "url": "https://ztds.ai"
-    }
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://ztds.ai/fellows/#collection",
+        "name": "ZTDS Global Fellows & Research Council",
+        "url": "https://ztds.ai/fellows/",
+        "description": "Registry of accredited researchers, cryptographers, and architects contributing to the ZTDS standard.",
+        "isPartOf": { "@id": "https://ztds.ai/#website" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ZTDS AI Consortium",
+          "url": "https://ztds.ai"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ztds.ai/fellows/#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ztds.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Fellows & Research Council",
+            "item": "https://ztds.ai/fellows/"
+          }
+        ]
+      }
+    ]
   }
   </script>
 </head>
