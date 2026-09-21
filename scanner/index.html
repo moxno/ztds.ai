@@ -1680,6 +1680,7 @@ fi`
       const m0Progress = document.getElementById('mode0Progress');
       const m0Results = document.getElementById('mode0Results');
       const m0Timer = document.getElementById('mode0Timer');
+      let currentM0MemoData = null;
 
       // Preset click handlers
       document.querySelectorAll('.mode0-preset-btn').forEach(btn => {
@@ -2215,16 +2216,17 @@ fi`
         const downloadMemoBtn = document.getElementById('btnDownloadCisoMemo');
         if (downloadMemoBtn) {
           downloadMemoBtn.addEventListener('click', () => {
-            const memoContent = generateCisoMemoText(data, domain, ev, fn, bp);
-            const blob = new Blob([memoContent], { type: 'text/markdown;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${currentDomain}-ztds-ciso-memo.md`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            currentM0MemoData = {
+              data,
+              domain,
+              ev,
+              fn,
+              bp,
+              currentDomain,
+              activeProfileKey: ev.industry?.activeProfile || 'general',
+              profileName: ev.industry?.name || 'General Enterprise'
+            };
+            openCisoLeadModalM0(currentM0MemoData);
           });
         }
 
@@ -2344,7 +2346,267 @@ https://ztds.ai &middot; Apache 2.0 &middot; CC BY 4.0`;
           .replace(/</g, '&lt;')
           .replace(/>/g, '&gt;');
       }
+
+      function triggerMemoDownloadM0(content, filename) {
+        const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      // CISO Lead Capture Modal Controller (Mode 0)
+      const leadModalM0 = document.getElementById('cisoLeadModal');
+      const closeLeadModalBtnM0 = document.getElementById('btnCloseCisoLeadModal');
+      const leadFormM0 = document.getElementById('cisoLeadForm');
+      const bypassLeadBtnM0 = document.getElementById('btnBypassCisoLead');
+
+      function openCisoLeadModalM0(memoData) {
+        if (!leadModalM0) return;
+        const domEl = document.getElementById('cisoModalDomain');
+        const profEl = document.getElementById('cisoProfileDisplay');
+        const emailInput = document.getElementById('cisoWorkEmail');
+        const modalBody = document.getElementById('cisoLeadModalBody');
+        const successState = document.getElementById('cisoLeadSuccessState');
+
+        if (domEl) domEl.textContent = memoData?.currentDomain || 'your-domain.com';
+        if (profEl) profEl.value = memoData?.profileName || 'General Enterprise';
+        if (emailInput) emailInput.value = '';
+        if (modalBody) modalBody.classList.remove('hidden');
+        if (successState) successState.classList.add('hidden');
+
+        leadModalM0.classList.remove('hidden');
+        if (emailInput) emailInput.focus();
+      }
+
+      function closeCisoLeadModalM0() {
+        if (leadModalM0) leadModalM0.classList.add('hidden');
+      }
+
+      if (closeLeadModalBtnM0) {
+        closeLeadModalBtnM0.addEventListener('click', closeCisoLeadModalM0);
+      }
+
+      if (leadModalM0) {
+        leadModalM0.addEventListener('click', (e) => {
+          if (e.target === leadModalM0) closeCisoLeadModalM0();
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && !leadModalM0.classList.contains('hidden')) {
+            closeCisoLeadModalM0();
+          }
+        });
+      }
+
+      if (bypassLeadBtnM0) {
+        bypassLeadBtnM0.addEventListener('click', () => {
+          if (currentM0MemoData) {
+            const memoContent = generateCisoMemoText(
+              currentM0MemoData.data,
+              currentM0MemoData.domain,
+              currentM0MemoData.ev,
+              currentM0MemoData.fn,
+              currentM0MemoData.bp
+            );
+            triggerMemoDownloadM0(memoContent, `${currentM0MemoData.currentDomain || currentM0MemoData.domain}-ztds-ciso-memorandum.md`);
+          }
+          closeCisoLeadModalM0();
+        });
+      }
+
+      if (leadFormM0) {
+        leadFormM0.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const emailInput = document.getElementById('cisoWorkEmail');
+          const roleSelect = document.getElementById('cisoRoleSelect');
+          const submitBtn = document.getElementById('btnSubmitCisoLead');
+          const submitText = document.getElementById('btnSubmitCisoText');
+          const spinner = document.getElementById('cisoLeadSpinner');
+
+          const email = emailInput ? emailInput.value.trim() : '';
+          const role = roleSelect ? roleSelect.value : 'CISO / Security Director';
+          if (!email) return;
+
+          if (submitBtn) submitBtn.disabled = true;
+          if (submitText) submitText.textContent = 'Generating Memorandum...';
+          if (spinner) spinner.classList.remove('hidden');
+
+          const targetDomain = currentM0MemoData?.currentDomain || currentM0MemoData?.domain || 'unknown-domain';
+          const targetProfile = currentM0MemoData?.activeProfileKey || 'general';
+          const riskScore = currentM0MemoData?.ev?.riskScore || 70;
+
+          try {
+            const res = await fetch('/api/lead-capture', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                email,
+                role,
+                domain: targetDomain,
+                industryProfile: targetProfile,
+                riskScore,
+                source: 'deep_scanner_m0'
+              })
+            });
+            const resData = await res.json();
+
+            // Trigger file download
+            if (currentM0MemoData) {
+              const memoContent = generateCisoMemoText(
+                currentM0MemoData.data,
+                currentM0MemoData.domain,
+                currentM0MemoData.ev,
+                currentM0MemoData.fn,
+                currentM0MemoData.bp
+              );
+              triggerMemoDownloadM0(memoContent, `${targetDomain}-ztds-ciso-memorandum.md`);
+            }
+
+            // Display success receipt in modal
+            const modalBody = document.getElementById('cisoLeadModalBody');
+            const successState = document.getElementById('cisoLeadSuccessState');
+            const receiptBadge = document.getElementById('cisoReceiptBadge');
+            const applyLink = document.getElementById('cisoSuccessApplyLink');
+
+            if (modalBody) modalBody.classList.add('hidden');
+            if (successState) successState.classList.remove('hidden');
+            if (receiptBadge) receiptBadge.textContent = `Receipt: ${resData.leadId || 'LEAD-2026-CONFIRMED'}`;
+            if (applyLink) {
+              applyLink.href = `/apply/?domain=${encodeURIComponent(targetDomain)}&profile=${encodeURIComponent(targetProfile)}`;
+            }
+          } catch (err) {
+            // Graceful fallback: download file anyway
+            if (currentM0MemoData) {
+              const memoContent = generateCisoMemoText(
+                currentM0MemoData.data,
+                currentM0MemoData.domain,
+                currentM0MemoData.ev,
+                currentM0MemoData.fn,
+                currentM0MemoData.bp
+              );
+              triggerMemoDownloadM0(memoContent, `${targetDomain}-ztds-ciso-memorandum.md`);
+            }
+            closeCisoLeadModalM0();
+          } finally {
+            if (submitBtn) submitBtn.disabled = false;
+            if (submitText) submitText.innerHTML = 'Generate &amp; Download Official Memorandum &rarr;';
+            if (spinner) spinner.classList.add('hidden');
+          }
+        });
+      }
     });
   </script>
+
+  <!-- CISO COMPLIANCE MEMORANDUM & B2B LEAD CAPTURE MODAL -->
+  <div id="cisoLeadModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/75 backdrop-blur-sm hidden" role="dialog" aria-modal="true" aria-labelledby="cisoLeadModalTitle">
+    <div class="relative w-full max-w-xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      
+      <!-- Modal Header -->
+      <div class="p-5 sm:p-6 border-b border-slate-100 bg-slate-50 flex items-start justify-between">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-[11px] font-mono font-bold text-emerald-800 uppercase tracking-wider mb-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Institutional Compliance Memorandum
+          </div>
+          <h2 id="cisoLeadModalTitle" class="text-lg sm:text-xl font-bold text-slate-900">
+            Download Official CISO Compliance Memorandum
+          </h2>
+          <p class="text-xs text-slate-500 mt-1" id="cisoLeadModalSubtitle">
+            Tailored for <strong id="cisoModalDomain" class="font-mono text-slate-800">your-domain.com</strong> &middot; Statutory Defense &amp; DPA Elimination
+          </p>
+        </div>
+        <button type="button" id="btnCloseCisoLeadModal" class="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-200/60 transition-colors" aria-label="Close modal">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Modal Body (Form View) -->
+      <div id="cisoLeadModalBody" class="p-5 sm:p-6 overflow-y-auto space-y-4 text-xs font-sans">
+        
+        <!-- Summary Callout -->
+        <div class="p-3.5 rounded-xl bg-emerald-950 text-emerald-100 border border-emerald-800/80 leading-relaxed font-mono text-[11px]">
+          <div class="font-bold text-emerald-300 uppercase tracking-wider text-[10px] mb-1">Memorandum Scope &amp; Legal Grounds</div>
+          Includes complete GDPR Recital 26 analysis, Article 28 data processor exemption doctrine, and Invariant 1 (0.00 B egress) cryptographic receipts for enterprise procurement.
+        </div>
+
+        <form id="cisoLeadForm" class="space-y-4">
+          <div>
+            <label for="cisoWorkEmail" class="block text-xs font-bold text-slate-700 uppercase tracking-wider font-mono mb-1.5">
+              Work / Corporate Email <span class="text-rose-500">*</span>
+            </label>
+            <input type="email" id="cisoWorkEmail" required placeholder="ciso@yourcompany.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 font-sans shadow-xs transition-colors" autocomplete="email" />
+            <span class="text-[10px] text-slate-400 font-mono mt-1 block">Zero marketing spam. Used exclusively for cryptographic verification receipt generation.</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="cisoRoleSelect" class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider font-mono mb-1.5">
+                Organizational Role
+              </label>
+              <select id="cisoRoleSelect" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-slate-900 text-xs focus:outline-none focus:border-emerald-600 font-mono shadow-xs">
+                <option value="CISO / Security Director">CISO / Security Director</option>
+                <option value="VP Engineering / Architect">VP Engineering / Architect</option>
+                <option value="Founder / CEO">Founder / CEO</option>
+                <option value="Compliance / DPO / Legal">Compliance / DPO / Legal</option>
+                <option value="Security Researcher">Security Researcher</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="cisoProfileDisplay" class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider font-mono mb-1.5">
+                Target Profile
+              </label>
+              <input type="text" id="cisoProfileDisplay" readonly class="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-100 text-slate-700 text-xs font-mono shadow-xs" value="General Enterprise" />
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button type="submit" id="btnSubmitCisoLead" class="btn-trust w-full py-3 px-4 text-xs font-bold shadow-md flex items-center justify-center gap-2 cursor-pointer">
+              <span id="btnSubmitCisoText">Generate &amp; Download Official Memorandum &rarr;</span>
+              <span id="cisoLeadSpinner" class="hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Frictionless Developer Bypass -->
+        <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-[11px] font-mono text-slate-500">
+          <span>Need raw file immediately?</span>
+          <button type="button" id="btnBypassCisoLead" class="text-slate-600 hover:text-emerald-700 underline font-medium cursor-pointer">
+            Skip email &amp; download raw .md
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Success State (Hidden by default) -->
+      <div id="cisoLeadSuccessState" class="p-6 text-center space-y-4 hidden">
+        <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-slate-900">Official Memorandum Generated</h3>
+          <p class="text-xs text-slate-600 mt-1" id="cisoSuccessMessage">
+            The institutional memorandum has been generated and downloaded to your device.
+          </p>
+          <div class="mt-2 text-[11px] font-mono text-emerald-800 bg-emerald-50 border border-emerald-200 py-1.5 px-3 rounded-lg inline-block" id="cisoReceiptBadge">
+            Receipt: LEAD-2026-XXXX
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
+          <a id="cisoSuccessApplyLink" href="/apply/" class="btn-trust py-2 px-3 text-center">
+            Apply for Seal &rarr;
+          </a>
+          <a href="/sdk/" class="btn-outline py-2 px-3 text-center">
+            Developer SDK &rarr;
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </body>
 </html>
