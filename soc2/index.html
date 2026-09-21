@@ -293,9 +293,9 @@
       </div>
 
       <!-- Controls Table -->
-      <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+      <div class="bg-transparent md:bg-white md:border md:border-slate-200 md:rounded-xl md:shadow-sm overflow-hidden">
         <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs text-slate-700">
+          <table class="w-full text-left text-xs text-slate-700 table-responsive-cards">
             <thead class="bg-slate-50 border-b border-slate-200 text-[11px] font-mono uppercase text-slate-500">
               <tr>
                 <th class="px-5 py-3.5 font-bold">Control ID</th>
@@ -309,198 +309,198 @@
               
               <!-- CC6.1 -->
               <tr class="control-row hover:bg-slate-50/70 transition-colors" data-category="cc">
-                <td class="px-5 py-4 font-mono font-bold text-slate-900">CC6.1</td>
-                <td class="px-5 py-4">
+                <td class="px-5 py-4 font-mono font-bold text-slate-900" data-label="Control ID">CC6.1</td>
+                <td class="px-5 py-4" data-label="Standard / Domain">
                   <div class="font-semibold text-slate-900">Logical Access Security</div>
                   <div class="text-[11px] text-slate-500">Security / Boundary Defense</div>
                 </td>
-                <td class="px-5 py-4 leading-relaxed">
+                <td class="px-5 py-4 leading-relaxed" data-label="ZTDS Implementation">
                   Ephemeral volatile RAM execution boundary. Session mapping tables are created in localized user memory and destroyed on tab closure or process termination. Zero persistent credentials on external infrastructure. Offline Ed25519 cryptographic token (<code>ZTDS-LIC-v1</code>) validates authorized node boundaries strictly in memory without licensing phone-home beacons.
                 </td>
-                <td class="px-5 py-4 font-mono text-[11px] text-slate-600">
+                <td class="px-5 py-4 font-mono text-[11px] text-slate-600" data-label="Audit Evidence">
                   Volatile RAM boundary tests; 0 bytes localStorage persistence; Ed25519 cryptographic validation receipt.
                 </td>
-                <td class="px-5 py-4 text-center">
+                <td class="px-5 py-4 text-center" data-label="Status">
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">SATISFIED</span>
                 </td>
               </tr>
 
               <!-- CC6.6 -->
               <tr class="control-row hover:bg-slate-50/70 transition-colors" data-category="cc">
-                <td class="px-5 py-4 font-mono font-bold text-slate-900">CC6.6</td>
-                <td class="px-5 py-4">
+                <td class="px-5 py-4 font-mono font-bold text-slate-900" data-label="Control ID">CC6.6</td>
+                <td class="px-5 py-4" data-label="Standard / Domain">
                   <div class="font-semibold text-slate-900">Perimeter Egress Protection</div>
                   <div class="text-[11px] text-slate-500">Security / Network Boundary</div>
                 </td>
-                <td class="px-5 py-4 leading-relaxed">
+                <td class="px-5 py-4 leading-relaxed" data-label="ZTDS Implementation">
                   <strong>Invariant 1:</strong> Zero cleartext network egress prior to local sanitization. Client-side DOM/stream interceptor executes regex/WASM sanitization before socket frames are dispatched to third-party LLM endpoints.
                 </td>
-                <td class="px-5 py-4 font-mono text-[11px] text-slate-600">
+                <td class="px-5 py-4 font-mono text-[11px] text-slate-600" data-label="Audit Evidence">
                   DevTools 5-Step Airplane Mode Audit; Zero socket frames captured in tcpdump/mitmproxy.
                 </td>
-                <td class="px-5 py-4 text-center">
+                <td class="px-5 py-4 text-center" data-label="Status">
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">SATISFIED</span>
                 </td>
               </tr>
 
               <!-- CC6.7 -->
               <tr class="control-row hover:bg-slate-50/70 transition-colors" data-category="cc">
-                <td class="px-5 py-4 font-mono font-bold text-slate-900">CC6.7</td>
-                <td class="px-5 py-4">
+                <td class="px-5 py-4 font-mono font-bold text-slate-900" data-label="Control ID">CC6.7</td>
+                <td class="px-5 py-4" data-label="Standard / Domain">
                   <div class="font-semibold text-slate-900">Transmission Data Protection</div>
                   <div class="text-[11px] text-slate-500">Confidentiality / Encryption in Transit</div>
                 </td>
-                <td class="px-5 py-4 leading-relaxed">
+                <td class="px-5 py-4 leading-relaxed" data-label="ZTDS Implementation">
                   Deterministic token substitution ([EMAIL_TOKEN_1], [IBAN_TOKEN_2]) replaces high-risk cleartext data before transit over public networks. Upstream LLM providers process strictly de-identified syntactical placeholders.
                 </td>
-                <td class="px-5 py-4 font-mono text-[11px] text-slate-600">
+                <td class="px-5 py-4 font-mono text-[11px] text-slate-600" data-label="Audit Evidence">
                   Egress payload network inspection; OSF Latency Benchmark dataset (10.17605/OSF.IO/5BYJF).
                 </td>
-                <td class="px-5 py-4 text-center">
+                <td class="px-5 py-4 text-center" data-label="Status">
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">SATISFIED</span>
                 </td>
               </tr>
 
               <!-- CC6.8 -->
               <tr class="control-row hover:bg-slate-50/70 transition-colors" data-category="cc">
-                <td class="px-5 py-4 font-mono font-bold text-slate-900">CC6.8</td>
-                <td class="px-5 py-4">
+                <td class="px-5 py-4 font-mono font-bold text-slate-900" data-label="Control ID">CC6.8</td>
+                <td class="px-5 py-4" data-label="Standard / Domain">
                   <div class="font-semibold text-slate-900">Malicious Code &amp; Tamper Defense</div>
                   <div class="text-[11px] text-slate-500">Security / Threat Mitigation</div>
                 </td>
-                <td class="px-5 py-4 leading-relaxed">
+                <td class="px-5 py-4 leading-relaxed" data-label="ZTDS Implementation">
                   <strong>Invariant 3 (Cryptographic &amp; Memory Isolation):</strong> In-memory AST heuristic analyzer and sandboxed WebAssembly execution environment operate without dynamic <code>eval()</code> or untrusted remote code. Prevents prompt injection payloads from escaping into client contexts. Offline Ed25519 asymmetric signature validation ensures zero runtime tampering with core sanitization profiles.
                 </td>
-                <td class="px-5 py-4 font-mono text-[11px] text-slate-600">
+                <td class="px-5 py-4 font-mono text-[11px] text-slate-600" data-label="Audit Evidence">
                   AST static parser checks; license.test.js anti-tampering verification (Test 3); CSP <code>script-src 'self'</code> strict enforcement.
                 </td>
-                <td class="px-5 py-4 text-center">
+                <td class="px-5 py-4 text-center" data-label="Status">
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">SATISFIED</span>
                 </td>
               </tr>
 
               <!-- CC7.2 -->
               <tr class="control-row hover:bg-slate-50/70 transition-colors" data-category="cc">
-                <td class="px-5 py-4 font-mono font-bold text-slate-900">CC7.2</td>
-                <td class="px-5 py-4">
+                <td class="px-5 py-4 font-mono font-bold text-slate-900" data-label="Control ID">CC7.2</td>
+                <td class="px-5 py-4" data-label="Standard / Domain">
                   <div class="font-semibold text-slate-900">Vulnerability Monitoring &amp; Patching</div>
                   <div class="text-[11px] text-slate-500">Security / Vulnerability Management</div>
                 </td>
-                <td class="px-5 py-4 leading-relaxed">
+                <td class="px-5 py-4 leading-relaxed" data-label="ZTDS Implementation">
                   Continuous vulnerability tracking through automated CI test harnesses (<code>npx ztds-audit</code>) and Coordinated Vulnerability Disclosure (CVD). Machine-readable RFC 9116 declaration published at <code>/.well-known/security.txt</code> with 24-hour initial triage guarantee and encrypted disclosure via PGP key <code>0x4E9A2B1C</code>.
                 </td>
-                <td class="px-5 py-4 font-mono text-[11px] text-slate-600">
+                <td class="px-5 py-4 font-mono text-[11px] text-slate-600" data-label="Audit Evidence">
                   RFC 9116 <code>/.well-known/security.txt</code>; Automated CI/CD invariant build checks; CVD ledger.
                 </td>
-                <td class="px-5 py-4 text-center">
+                <td class="px-5 py-4 text-center" data-label="Status">
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">SATISFIED</span>
                 </td>
               </tr>
 
               <!-- CC7.3 -->
               <tr class="control-row hover:bg-slate-50/70 transition-colors" data-category="cc">
-                <td class="px-5 py-4 font-mono font-bold text-slate-900">CC7.3</td>
-                <td class="px-5 py-4">
+                <td class="px-5 py-4 font-mono font-bold text-slate-900" data-label="Control ID">CC7.3</td>
+                <td class="px-5 py-4" data-label="Standard / Domain">
                   <div class="font-semibold text-slate-900">Incident Detection &amp; Audit Logs</div>
                   <div class="text-[11px] text-slate-500">Security / Continuous Monitoring</div>
                 </td>
-                <td class="px-5 py-4 leading-relaxed">
+                <td class="px-5 py-4 leading-relaxed" data-label="ZTDS Implementation">
                   Automated CLI test suite (<code>npx ztds-audit</code>) performs static and dynamic perimeter analysis. Generates tamper-evident cryptographic SHA-256 receipts confirming zero egress and memory isolation.
                 </td>
-                <td class="px-5 py-4 font-mono text-[11px] text-slate-600">
+                <td class="px-5 py-4 font-mono text-[11px] text-slate-600" data-label="Audit Evidence">
                   Cryptographic receipt file: <code>ztds-audit-receipt.json</code>; CI/CD GitHub Action artifact.
                 </td>
-                <td class="px-5 py-4 text-center">
+                <td class="px-5 py-4 text-center" data-label="Status">
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">SATISFIED</span>
                 </td>
               </tr>
 
               <!-- C1.1 -->
               <tr class="control-row hover:bg-slate-50/70 transition-colors" data-category="privacy">
-                <td class="px-5 py-4 font-mono font-bold text-slate-900">C1.1 / C1.2</td>
-                <td class="px-5 py-4">
+                <td class="px-5 py-4 font-mono font-bold text-slate-900" data-label="Control ID">C1.1 / C1.2</td>
+                <td class="px-5 py-4" data-label="Standard / Domain">
                   <div class="font-semibold text-slate-900">Confidential Information Classification</div>
                   <div class="text-[11px] text-slate-500">Confidentiality / Data Governance</div>
                 </td>
-                <td class="px-5 py-4 leading-relaxed">
+                <td class="px-5 py-4 leading-relaxed" data-label="ZTDS Implementation">
                   Hierarchical entity taxonomy: baseline universal consumer PII plus 25 vertical profiles (HIPAA Clinical PHI, Financial PAN/IBAN, Legal Privilege, Cloud Secrets). Prevents cross-domain entity leakage.
                 </td>
-                <td class="px-5 py-4 font-mono text-[11px] text-slate-600">
+                <td class="px-5 py-4 font-mono text-[11px] text-slate-600" data-label="Audit Evidence">
                   ZTDS Entity Taxonomy SSOT; Automated 25-profile verification test suite.
                 </td>
-                <td class="px-5 py-4 text-center">
+                <td class="px-5 py-4 text-center" data-label="Status">
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">SATISFIED</span>
                 </td>
               </tr>
 
               <!-- P1.1 -->
               <tr class="control-row hover:bg-slate-50/70 transition-colors" data-category="privacy">
-                <td class="px-5 py-4 font-mono font-bold text-slate-900">P1.1</td>
-                <td class="px-5 py-4">
+                <td class="px-5 py-4 font-mono font-bold text-slate-900" data-label="Control ID">P1.1</td>
+                <td class="px-5 py-4" data-label="Standard / Domain">
                   <div class="font-semibold text-slate-900">Notice &amp; Communication of Objectives</div>
                   <div class="text-[11px] text-slate-500">Privacy / Transparency</div>
                 </td>
-                <td class="px-5 py-4 leading-relaxed">
+                <td class="px-5 py-4 leading-relaxed" data-label="ZTDS Implementation">
                   Client presentation layer visualizes exact surrogate token replacements in real time before submission, enabling user inspection and granular audit control over sanitized fields.
                 </td>
-                <td class="px-5 py-4 font-mono text-[11px] text-slate-600">
+                <td class="px-5 py-4 font-mono text-[11px] text-slate-600" data-label="Audit Evidence">
                   UI Prompt Preview Inspector; Interactive pipeline debugger.
                 </td>
-                <td class="px-5 py-4 text-center">
+                <td class="px-5 py-4 text-center" data-label="Status">
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">SATISFIED</span>
                 </td>
               </tr>
 
               <!-- P4.1 -->
               <tr class="control-row hover:bg-slate-50/70 transition-colors" data-category="privacy">
-                <td class="px-5 py-4 font-mono font-bold text-slate-900">P4.1</td>
-                <td class="px-5 py-4">
+                <td class="px-5 py-4 font-mono font-bold text-slate-900" data-label="Control ID">P4.1</td>
+                <td class="px-5 py-4" data-label="Standard / Domain">
                   <div class="font-semibold text-slate-900">Retention &amp; Storage Limitation</div>
                   <div class="text-[11px] text-slate-500">Privacy / Data Minimization</div>
                 </td>
-                <td class="px-5 py-4 leading-relaxed">
+                <td class="px-5 py-4 leading-relaxed" data-label="ZTDS Implementation">
                   Zero data retention. Raw PII and surrogate mapping tables are never written to non-volatile storage, disks, cloud databases, or log files. Complete memory reclamation upon session end.
                 </td>
-                <td class="px-5 py-4 font-mono text-[11px] text-slate-600">
+                <td class="px-5 py-4 font-mono text-[11px] text-slate-600" data-label="Audit Evidence">
                   Disk write audit logs; In-memory garbage collection verification.
                 </td>
-                <td class="px-5 py-4 text-center">
+                <td class="px-5 py-4 text-center" data-label="Status">
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">SATISFIED</span>
                 </td>
               </tr>
 
               <!-- ISO A.8.11 -->
               <tr class="control-row hover:bg-slate-50/70 transition-colors" data-category="iso">
-                <td class="px-5 py-4 font-mono font-bold text-slate-900">A.8.11</td>
-                <td class="px-5 py-4">
+                <td class="px-5 py-4 font-mono font-bold text-slate-900" data-label="Control ID">A.8.11</td>
+                <td class="px-5 py-4" data-label="Standard / Domain">
                   <div class="font-semibold text-slate-900">Data Masking</div>
                   <div class="text-[11px] text-slate-500">ISO/IEC 27001:2022 / Application Security</div>
                 </td>
-                <td class="px-5 py-4 leading-relaxed">
+                <td class="px-5 py-4 leading-relaxed" data-label="ZTDS Implementation">
                   Enforces deterministic, reversible tokenization in accordance with organizational access control policies. Protects sensitive data while preserving syntactic context necessary for LLM cognitive reasoning.
                 </td>
-                <td class="px-5 py-4 font-mono text-[11px] text-slate-600">
+                <td class="px-5 py-4 font-mono text-[11px] text-slate-600" data-label="Audit Evidence">
                   RFC v1.0 Invariant 2 mathematical specification; Reversibility proof.
                 </td>
-                <td class="px-5 py-4 text-center">
+                <td class="px-5 py-4 text-center" data-label="Status">
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">SATISFIED</span>
                 </td>
               </tr>
 
               <!-- ISO A.8.16 -->
               <tr class="control-row hover:bg-slate-50/70 transition-colors" data-category="iso">
-                <td class="px-5 py-4 font-mono font-bold text-slate-900">A.8.16</td>
-                <td class="px-5 py-4">
+                <td class="px-5 py-4 font-mono font-bold text-slate-900" data-label="Control ID">A.8.16</td>
+                <td class="px-5 py-4" data-label="Standard / Domain">
                   <div class="font-semibold text-slate-900">Monitoring Activities</div>
                   <div class="text-[11px] text-slate-500">ISO/IEC 27001:2022 / Security Operations</div>
                 </td>
-                <td class="px-5 py-4 leading-relaxed">
+                <td class="px-5 py-4 leading-relaxed" data-label="ZTDS Implementation">
                   Client execution runtime operates with strict zero-telemetry policy (Invariant 3). No analytical beacons, tracking scripts, or error telemetry transmit runtime metadata or prompt fragments.
                 </td>
-                <td class="px-5 py-4 font-mono text-[11px] text-slate-600">
+                <td class="px-5 py-4 font-mono text-[11px] text-slate-600" data-label="Audit Evidence">
                   Content Security Policy (connect-src 'self' strictly); Network egress audit.
                 </td>
-                <td class="px-5 py-4 text-center">
+                <td class="px-5 py-4 text-center" data-label="Status">
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">SATISFIED</span>
                 </td>
               </tr>

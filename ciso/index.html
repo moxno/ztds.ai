@@ -427,8 +427,8 @@
             <a href="/roi/" class="text-emerald-700 hover:text-emerald-800 text-xs font-semibold underline">Model Custom Exposure in CISO Calculator &rarr;</a>
           </div>
           
-          <div class="overflow-x-auto border border-slate-200 rounded-xl">
-            <table class="w-full text-left text-xs bg-white divide-y divide-slate-200">
+          <div class="overflow-x-auto md:border md:border-slate-200 md:rounded-xl">
+            <table class="w-full text-left text-xs bg-white divide-y divide-slate-200 table-responsive-cards">
               <thead class="bg-slate-50 text-slate-700 font-semibold uppercase font-mono text-[11px]">
                 <tr>
                   <th class="py-3 px-4">Jurisdiction &amp; Regulatory Statute</th>
@@ -438,62 +438,62 @@
               </thead>
               <tbody class="divide-y divide-slate-200 text-slate-600">
                 <tr>
-                  <td class="py-3 px-4 font-semibold text-slate-900">
+                  <td class="py-3 px-4 font-semibold text-slate-900" data-label="Jurisdiction &amp; Statute">
                     EU GDPR Article 83(5)<br>
                     <span class="text-[11px] font-normal text-slate-500">Cross-Border Data Transfer / Processor Breach</span>
                   </td>
-                  <td class="py-3 px-4 font-mono font-bold text-rose-700">
+                  <td class="py-3 px-4 font-mono font-bold text-rose-700" data-label="Max Penalty Ceiling">
                     Up to &euro;20,000,000 or 4% of Global Annual Turnover
                   </td>
-                  <td class="py-3 px-4 text-emerald-800 font-medium">
+                  <td class="py-3 px-4 text-emerald-800 font-medium" data-label="ZTDS Safe Harbor Defense">
                     Raw PII never traverses network boundary (&Delta;Egress = 0.00 B). No cross-border personal data transfer occurs under Chapter V.
                   </td>
                 </tr>
                 <tr>
-                  <td class="py-3 px-4 font-semibold text-slate-900">
+                  <td class="py-3 px-4 font-semibold text-slate-900" data-label="Jurisdiction &amp; Statute">
                     EU Artificial Intelligence Act (Article 99)<br>
                     <span class="text-[11px] font-normal text-slate-500">High-Risk AI Data Governance &amp; Transparency</span>
                   </td>
-                  <td class="py-3 px-4 font-mono font-bold text-rose-700">
+                  <td class="py-3 px-4 font-mono font-bold text-rose-700" data-label="Max Penalty Ceiling">
                     Up to &euro;15,000,000 or 3% of Global Annual Turnover
                   </td>
-                  <td class="py-3 px-4 text-emerald-800 font-medium">
+                  <td class="py-3 px-4 text-emerald-800 font-medium" data-label="ZTDS Safe Harbor Defense">
                     Surrogate tokens satisfy transparency and training data governance requirements without exposing proprietary records to LLM retainment.
                   </td>
                 </tr>
                 <tr>
-                  <td class="py-3 px-4 font-semibold text-slate-900">
+                  <td class="py-3 px-4 font-semibold text-slate-900" data-label="Jurisdiction &amp; Statute">
                     US HIPAA HITECH (45 CFR Part 160)<br>
                     <span class="text-[11px] font-normal text-slate-500">Tier 4 Uncorrected Willful Neglect</span>
                   </td>
-                  <td class="py-3 px-4 font-mono font-bold text-rose-700">
+                  <td class="py-3 px-4 font-mono font-bold text-rose-700" data-label="Max Penalty Ceiling">
                     $2,067,813 Statutory Annual Cap per Violation Category
                   </td>
-                  <td class="py-3 px-4 text-emerald-800 font-medium">
+                  <td class="py-3 px-4 text-emerald-800 font-medium" data-label="ZTDS Safe Harbor Defense">
                     Strict Safe Harbor 18-element de-identification executed before egress; outbound prompts contain zero PHI, nullifying breach notification triggers.
                   </td>
                 </tr>
                 <tr>
-                  <td class="py-3 px-4 font-semibold text-slate-900">
+                  <td class="py-3 px-4 font-semibold text-slate-900" data-label="Jurisdiction &amp; Statute">
                     US Federal Rule of Evidence 502(b)<br>
                     <span class="text-[11px] font-normal text-slate-500">Attorney-Client Privilege &amp; Work Product</span>
                   </td>
-                  <td class="py-3 px-4 font-mono font-bold text-amber-700">
+                  <td class="py-3 px-4 font-mono font-bold text-amber-700" data-label="Max Penalty Ceiling">
                     Subject-Matter Privilege Waiver in Commercial Litigation
                   </td>
-                  <td class="py-3 px-4 text-emerald-800 font-medium">
+                  <td class="py-3 px-4 text-emerald-800 font-medium" data-label="ZTDS Safe Harbor Defense">
                     Deterministic reversible masking ensures unprivileged third parties (LLM vendors) never receive unmasked work product, preventing inadvertent waiver.
                   </td>
                 </tr>
                 <tr>
-                  <td class="py-3 px-4 font-semibold text-slate-900">
+                  <td class="py-3 px-4 font-semibold text-slate-900" data-label="Jurisdiction &amp; Statute">
                     US GLBA &amp; SEC Item 106<br>
                     <span class="text-[11px] font-normal text-slate-500">Financial Customer NPI &amp; Cyber Disclosures</span>
                   </td>
-                  <td class="py-3 px-4 font-mono font-bold text-rose-700">
+                  <td class="py-3 px-4 font-mono font-bold text-rose-700" data-label="Max Penalty Ceiling">
                     Regulatory Enforcement &amp; $7,500/record Statutory Damages
                   </td>
-                  <td class="py-3 px-4 text-emerald-800 font-medium">
+                  <td class="py-3 px-4 text-emerald-800 font-medium" data-label="ZTDS Safe Harbor Defense">
                     Financial institution NPI and cardholder data isolated to volatile workstation RAM; zero egress to AI inference infrastructure.
                   </td>
                 </tr>
@@ -549,8 +549,8 @@
         <!-- Section 5: Risk Comparison Table -->
         <div>
           <h2 class="text-lg font-bold text-slate-900 mb-3">5. Architectural Liability Comparison</h2>
-          <div class="overflow-x-auto border border-slate-200 rounded-xl">
-            <table class="w-full text-left text-xs bg-white divide-y divide-slate-200">
+          <div class="overflow-x-auto md:border md:border-slate-200 md:rounded-xl">
+            <table class="w-full text-left text-xs bg-white divide-y divide-slate-200 table-responsive-cards">
               <thead class="bg-slate-50 text-slate-700 font-semibold uppercase font-mono text-[11px]">
                 <tr>
                   <th class="py-3 px-4">Evaluation Dimension</th>
@@ -560,34 +560,34 @@
               </thead>
               <tbody class="divide-y divide-slate-200 text-slate-600">
                 <tr>
-                  <td class="py-3 px-4 font-semibold text-slate-900">Execution Perimeter</td>
-                  <td class="py-3 px-4 text-red-600">Multi-tenant vendor cloud (AWS/GCP)</td>
-                  <td class="py-3 px-4 text-emerald-800 font-semibold">Local volatile workstation / VPC RAM</td>
+                  <td class="py-3 px-4 font-semibold text-slate-900" data-label="Dimension">Execution Perimeter</td>
+                  <td class="py-3 px-4 text-red-600" data-label="Legacy Cloud DLP">Multi-tenant vendor cloud (AWS/GCP)</td>
+                  <td class="py-3 px-4 text-emerald-800 font-semibold" data-label="ZTDS RFC v1.0">Local volatile workstation / VPC RAM</td>
                 </tr>
                 <tr>
-                  <td class="py-3 px-4 font-semibold text-slate-900">Cleartext Socket Egress</td>
-                  <td class="py-3 px-4 text-red-600">Mandatory (raw data travels over WAN)</td>
-                  <td class="py-3 px-4 text-emerald-800 font-semibold">&Delta;Egress = 0.00 bytes prior to masking</td>
+                  <td class="py-3 px-4 font-semibold text-slate-900" data-label="Dimension">Cleartext Socket Egress</td>
+                  <td class="py-3 px-4 text-red-600" data-label="Legacy Cloud DLP">Mandatory (raw data travels over WAN)</td>
+                  <td class="py-3 px-4 text-emerald-800 font-semibold" data-label="ZTDS RFC v1.0">&Delta;Egress = 0.00 bytes prior to masking</td>
                 </tr>
                 <tr>
-                  <td class="py-3 px-4 font-semibold text-slate-900">Subprocessor Liability Chain</td>
-                  <td class="py-3 px-4 text-red-600">Creates new subprocessor under GDPR Art. 28</td>
-                  <td class="py-3 px-4 text-emerald-800 font-semibold">Zero subprocessors added (utility exemption)</td>
+                  <td class="py-3 px-4 font-semibold text-slate-900" data-label="Dimension">Subprocessor Liability Chain</td>
+                  <td class="py-3 px-4 text-red-600" data-label="Legacy Cloud DLP">Creates new subprocessor under GDPR Art. 28</td>
+                  <td class="py-3 px-4 text-emerald-800 font-semibold" data-label="ZTDS RFC v1.0">Zero subprocessors added (utility exemption)</td>
                 </tr>
                 <tr>
-                  <td class="py-3 px-4 font-semibold text-slate-900">Added Network Latency</td>
-                  <td class="py-3 px-4 text-red-600">+350ms to +800ms per LLM prompt</td>
-                  <td class="py-3 px-4 text-emerald-800 font-semibold">&lt;0.8ms local synchronous execution</td>
+                  <td class="py-3 px-4 font-semibold text-slate-900" data-label="Dimension">Added Network Latency</td>
+                  <td class="py-3 px-4 text-red-600" data-label="Legacy Cloud DLP">+350ms to +800ms per LLM prompt</td>
+                  <td class="py-3 px-4 text-emerald-800 font-semibold" data-label="ZTDS RFC v1.0">&lt;0.8ms local synchronous execution</td>
                 </tr>
                 <tr>
-                  <td class="py-3 px-4 font-semibold text-slate-900">Token Masking Quality</td>
-                  <td class="py-3 px-4 text-red-600">Destructive static [REDACTED] strings</td>
-                  <td class="py-3 px-4 text-emerald-800 font-semibold">Bijective contextual surrogate tokens</td>
+                  <td class="py-3 px-4 font-semibold text-slate-900" data-label="Dimension">Token Masking Quality</td>
+                  <td class="py-3 px-4 text-red-600" data-label="Legacy Cloud DLP">Destructive static [REDACTED] strings</td>
+                  <td class="py-3 px-4 text-emerald-800 font-semibold" data-label="ZTDS RFC v1.0">Bijective contextual surrogate tokens</td>
                 </tr>
                 <tr>
-                  <td class="py-3 px-4 font-semibold text-slate-900">Offline Resilience</td>
-                  <td class="py-3 px-4 text-red-600">Fails completely if vendor cloud is down</td>
-                  <td class="py-3 px-4 text-emerald-800 font-semibold">100% operational in Airplane Mode / air-gapped</td>
+                  <td class="py-3 px-4 font-semibold text-slate-900" data-label="Dimension">Offline Resilience</td>
+                  <td class="py-3 px-4 text-red-600" data-label="Legacy Cloud DLP">Fails completely if vendor cloud is down</td>
+                  <td class="py-3 px-4 text-emerald-800 font-semibold" data-label="ZTDS RFC v1.0">100% operational in Airplane Mode / air-gapped</td>
                 </tr>
               </tbody>
             </table>

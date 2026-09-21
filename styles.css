@@ -569,3 +569,68 @@ body {
     print-color-adjust: exact !important;
   }
 }
+
+/* ==========================================================================
+   Responsive Table-to-Card Transformation (Mobile < 768px)
+   Converts multi-column compliance & legal matrices into vertical parameter cards
+   ========================================================================== */
+@media (max-width: 767px) {
+  .table-responsive-cards {
+    display: block !important;
+    width: 100% !important;
+    border: none !important;
+    background: transparent !important;
+  }
+  .table-responsive-cards thead {
+    display: none !important;
+  }
+  .table-responsive-cards tbody {
+    display: block !important;
+    width: 100% !important;
+    border: none !important;
+  }
+  .table-responsive-cards tbody.divide-y > * + * {
+    border-top-width: 0px !important;
+  }
+  .table-responsive-cards tbody > tr {
+    display: block !important;
+    width: 100% !important;
+    margin-bottom: 1rem !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 0.75rem !important;
+    padding: 1rem !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.02) !important;
+    box-sizing: border-box !important;
+  }
+  .table-responsive-cards tbody > tr:hover {
+    background: #ffffff !important;
+  }
+  .table-responsive-cards td {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    padding: 0.5rem 0 !important;
+    border: none !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    text-align: left !important;
+    box-sizing: border-box !important;
+  }
+  .table-responsive-cards td:last-child {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+  }
+  .table-responsive-cards td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    margin-bottom: 0.25rem;
+  }
+}
+
