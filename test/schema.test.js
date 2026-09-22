@@ -30,6 +30,7 @@ const prodPages = [
   'inspector/index.html',
   'soc2/index.html',
   'deck/index.html',
+  'agency/index.html',
   'docs/legal/order-form.html'
 ];
 

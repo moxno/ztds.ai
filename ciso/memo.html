@@ -175,7 +175,7 @@
       </div>
 
       <div class="text-right font-mono text-[10px] text-slate-600 space-y-0.5">
-        <div>DOC ID: <strong class="text-slate-900">ZTDS-CISO-2026-V1</strong></div>
+        <div>DOC ID: <strong class="text-slate-900" id="memoDocId">ZTDS-CISO-2026-V1</strong></div>
         <div>RATIFIED: <strong class="text-slate-900">September 2026</strong></div>
         <div>STATUS: <strong class="text-emerald-700 font-bold uppercase">Statutorily Exempt</strong></div>
       </div>
@@ -185,7 +185,7 @@
     <div class="bg-slate-50 border border-slate-200 rounded-lg p-3 mb-3 grid grid-cols-2 gap-2 text-xs">
       <div>
         <span class="text-[10px] font-mono uppercase text-slate-500 block font-semibold">To:</span>
-        <strong class="text-slate-900 text-[11px]">Chief Information Security Officer (CISO), Data Protection Officer (DPO), General Counsel</strong>
+        <strong class="text-slate-900 text-[11px]" id="memoToRecipient">Chief Information Security Officer (CISO), Data Protection Officer (DPO), General Counsel</strong>
       </div>
       <div>
         <span class="text-[10px] font-mono uppercase text-slate-500 block font-semibold">From:</span>
@@ -300,5 +300,24 @@
 
   </div>
 
+  <script>
+  (function() {
+    try {
+      const p = new URLSearchParams(window.location.search);
+      const org = (p.get('org') || p.get('company') || '').trim();
+      const domain = (p.get('domain') || '').trim();
+      if (org || domain) {
+        const toEl = document.getElementById('memoToRecipient');
+        if (toEl) {
+          toEl.innerHTML = `Chief Information Security Officer &middot; <span class="text-emerald-800 font-bold">${org || domain}</span>`;
+        }
+        const docIdEl = document.getElementById('memoDocId');
+        if (docIdEl && domain) {
+          docIdEl.textContent = `ZTDS-MEMO-${domain.toUpperCase().replace(/[^A-Z0-9]/g, '-')}`;
+        }
+      }
+    } catch(e) {}
+  })();
+  </script>
 </body>
 </html>
