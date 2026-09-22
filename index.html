@@ -1345,6 +1345,24 @@
         const ind = ev.industry || {};
         const activeProfileKey = ind.activeProfile || 'general';
         const currentDomain = data.domain || domain;
+        const dag = ev.dagComparison || {
+          legacy: {
+            title: 'Legacy Cloud Proxy Route (Vulnerable)',
+            flow: ['User Device', 'Unencrypted WAN Socket', 'Third-Party SaaS Proxy (+450ms)', 'Cloud LLM API'],
+            subprocessorsCount: sinksCount + 2,
+            dpaRequired: true,
+            latencyOverhead: '+450ms WAN Latency',
+            honeypotRisk: 'Unmasked customer tokens reside in third-party cloud RAM and remote log stores.'
+          },
+          ztds: {
+            title: 'ZTDS In-RAM Enclave Route (Verified)',
+            flow: ['User Device RAM', `<0.8ms In-Memory Enclave (${ind.statute || 'ZTDS'})`, 'Safe Surrogate Tokens Only', 'Cloud LLM API'],
+            subprocessorsCount: 0,
+            dpaRequired: false,
+            latencyOverhead: '< 0.8ms In-RAM',
+            honeypotRisk: 'Zero (0.00 B raw data ever leaves device)'
+          }
+        };
 
         resultBox.innerHTML = `
           <!-- LEVEL 1: VERDICT & PERIMETER SCOPE -->
@@ -1506,21 +1524,48 @@
             <div class="p-4 pt-2 border-t border-slate-200 space-y-4 text-xs font-mono">
               <!-- Visual Flow Comparison Strip (Before vs After) -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
-                <div class="p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-950">
-                  <div class="font-bold text-[11px] mb-1 flex items-center justify-between">
-                    <span>Vulnerable: Cloud DLP Proxy</span>
-                    <span class="text-[10px] text-rose-700 font-bold">+450ms WAN Latency</span>
+                <!-- Legacy Route -->
+                <div class="p-3.5 rounded-xl bg-rose-50/60 border border-rose-200 text-rose-950">
+                  <div class="font-bold text-[11px] mb-2 flex items-center justify-between">
+                    <span class="flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                      <span>${escapeHtml(dag.legacy.title || 'Legacy Cloud Proxy Route')}</span>
+                    </span>
+                    <span class="text-[10px] text-rose-700 font-bold px-1.5 py-0.5 rounded bg-rose-100 border border-rose-200">${escapeHtml(dag.legacy.latencyOverhead || '+450ms WAN')}</span>
                   </div>
-                  <div class="text-[10px] text-rose-700 mb-1">Raw PII leaves client &rarr; Decrypted in SaaS Proxy &rarr; DPA Required under GDPR Art. 28</div>
-                  <p class="text-[11px] text-slate-600 font-sans leading-relaxed">Honeypot risk: unmasked customer tokens reside in third-party cloud RAM and remote log stores.</p>
+                  <div class="p-2 bg-white border border-rose-200 rounded-lg mb-2.5 flex items-center gap-1 overflow-x-auto">
+                    ${(dag.legacy.flow || []).map((step, idx, arr) => `
+                      <span class="px-1.5 py-0.5 rounded text-[10px] font-mono shrink-0 ${idx === 2 ? 'bg-rose-100 text-rose-900 font-bold border border-rose-300' : 'bg-slate-100 text-slate-700 border border-slate-200'}">${escapeHtml(step)}</span>
+                      ${idx < arr.length - 1 ? '<span class="text-rose-400 font-bold text-xs shrink-0">&rarr;</span>' : ''}
+                    `).join('')}
+                  </div>
+                  <div class="flex items-center justify-between text-[10px] font-bold text-rose-800 mb-1">
+                    <span>Subprocessors: +${dag.legacy.subprocessorsCount || 3} Entities</span>
+                    <span>DPA: Mandatory (Art. 28)</span>
+                  </div>
+                  <p class="text-[11px] text-slate-600 font-sans leading-relaxed">Honeypot risk: ${escapeHtml(dag.legacy.honeypotRisk || 'Unmasked customer tokens reside in third-party cloud RAM and remote log stores.')}</p>
                 </div>
-                <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-300 text-emerald-950">
-                  <div class="font-bold text-[11px] mb-1 flex items-center justify-between">
-                    <span>Verified: ZTDS In-RAM Enclave</span>
-                    <span class="text-[10px] text-emerald-700 font-bold">&lt; 0.8ms In-RAM</span>
+
+                <!-- ZTDS Route -->
+                <div class="p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-300 text-emerald-950 shadow-xs">
+                  <div class="font-bold text-[11px] mb-2 flex items-center justify-between">
+                    <span class="flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                      <span>${escapeHtml(dag.ztds.title || 'ZTDS In-RAM Enclave Route')}</span>
+                    </span>
+                    <span class="text-[10px] text-emerald-700 font-bold px-1.5 py-0.5 rounded bg-emerald-100 border border-emerald-200">${escapeHtml(dag.ztds.latencyOverhead || '< 0.8ms In-RAM')}</span>
                   </div>
-                  <div class="text-[10px] text-emerald-700 mb-1">0.00 B Egress &rarr; Bijective Tokens &rarr; DPA-Exempt under GDPR Recital 26</div>
-                  <p class="text-[11px] text-slate-600 font-sans leading-relaxed">Lossless attention: bijective cryptographic tokens preserve full LLM reasoning without sending plaintext off-device.</p>
+                  <div class="p-2 bg-white border border-emerald-200 rounded-lg mb-2.5 flex items-center gap-1 overflow-x-auto shadow-xs">
+                    ${(dag.ztds.flow || []).map((step, idx, arr) => `
+                      <span class="px-1.5 py-0.5 rounded text-[10px] font-mono shrink-0 ${idx === 1 ? 'bg-emerald-100 text-emerald-900 font-bold border border-emerald-300' : idx === 0 ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 border border-slate-200'}">${escapeHtml(step)}</span>
+                      ${idx < arr.length - 1 ? '<span class="text-emerald-500 font-bold text-xs shrink-0">&rarr;</span>' : ''}
+                    `).join('')}
+                  </div>
+                  <div class="flex items-center justify-between text-[10px] font-bold text-emerald-800 mb-1">
+                    <span>Subprocessors: 0 (Disapplied)</span>
+                    <span>DPA: Exempt (Recital 26)</span>
+                  </div>
+                  <p class="text-[11px] text-slate-600 font-sans leading-relaxed">Lossless attention: Bijective cryptographic tokens preserve full LLM reasoning without sending cleartext data off-device.</p>
                 </div>
               </div>
 
@@ -1530,7 +1575,7 @@
                   <span class="text-[10px] text-slate-400 uppercase font-bold block">CI/CD Terminal Gate:</span>
                   <code class="text-xs text-emerald-300" id="heroCliCmd">npx ztds-audit https://${escapeHtml(currentDomain)}</code>
                 </div>
-                <button id="btnCopyHeroCli" type="button" class="text-emerald-400 hover:text-emerald-300 underline shrink-0 text-xs">Copy CI/CD</button>
+                <button id="btnCopyHeroCli" type="button" class="text-emerald-400 hover:text-emerald-300 underline shrink-0 text-xs font-mono">Copy CI/CD</button>
               </div>
             </div>
           </details>

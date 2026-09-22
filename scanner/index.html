@@ -223,6 +223,35 @@
       </div>
     </div>
 
+    <!-- AUDITOR MODE NAVIGATION TABS (PROGRESSIVE DISCLOSURE) -->
+    <div class="mb-10 max-w-4xl mx-auto sticky top-16 z-30 py-2 bg-slate-50/95 backdrop-blur-md" id="auditorModeTabsContainer">
+      <div class="bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap sm:flex-nowrap items-center justify-between gap-1">
+        <button type="button" class="auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-semibold transition-all text-center flex items-center justify-center gap-1.5 bg-slate-900 text-white shadow-xs border border-slate-900" data-mode="mode0-domain-scanner">
+          <span class="auditor-mode-dot w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>Domain Perimeter</span>
+        </button>
+        <button type="button" class="auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900" data-mode="mode1-socket-interceptor">
+          <span class="auditor-mode-dot w-2 h-2 rounded-full bg-slate-300"></span>
+          <span>Socket Interceptor</span>
+        </button>
+        <button type="button" class="auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900" data-mode="mode2-static-linter">
+          <span class="auditor-mode-dot w-2 h-2 rounded-full bg-slate-300"></span>
+          <span>AST Code Linter</span>
+        </button>
+        <button type="button" class="auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900" data-mode="mode3-airplane-protocol">
+          <span class="auditor-mode-dot w-2 h-2 rounded-full bg-slate-300"></span>
+          <span>Airplane Protocol</span>
+        </button>
+        <button type="button" class="auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900" data-mode="mode4-cicd-workbench">
+          <span class="auditor-mode-dot w-2 h-2 rounded-full bg-slate-300"></span>
+          <span>CLI &amp; CI/CD</span>
+        </button>
+        <button type="button" class="auditor-mode-tab py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-900 shrink-0" data-mode="all" title="View all scanner modes simultaneously">
+          <span>Unified View</span>
+        </button>
+      </div>
+    </div>
+
     <!-- SECTION 0: LIVE DOMAIN PERIMETER & ARCHITECTURE AUDITOR (MODE 0) -->
     <section class="mb-14" id="mode0-domain-scanner">
       <div class="ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
@@ -289,7 +318,7 @@
     </section>
 
     <!-- SECTION 1: LIVE IN-BROWSER NETWORK SOCKET INTERCEPTOR -->
-    <section class="mb-14">
+    <section class="mb-14" id="mode1-socket-interceptor">
       <div class="ztds-card p-6 sm:p-8 bg-slate-900 text-white rounded-2xl shadow-xl border border-slate-800">
         
         <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4 mb-6 border-b border-slate-800 pb-5">
@@ -519,7 +548,7 @@
     </section>
 
     <!-- SECTION 2: IN-BROWSER STATIC CODE LINTER (AST HEURISTICS) -->
-    <section class="mb-14">
+    <section class="mb-14" id="mode2-static-linter">
       <div class="ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
         
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-slate-200 pb-5">
@@ -614,7 +643,7 @@
     </section>
 
     <!-- SECTION 3: THE 5-STEP AIRPLANE MODE AUDIT PROTOCOL -->
-    <section class="mb-14">
+    <section class="mb-14" id="mode3-airplane-protocol">
       <div class="ztds-card p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div class="max-w-2xl">
@@ -681,7 +710,7 @@
     </section>
 
     <!-- SECTION 4: COMMAND-LINE CODEBASE AUDITOR & CI/CD WORKBENCH -->
-    <section class="mb-16">
+    <section class="mb-16" id="mode4-cicd-workbench">
       <div class="ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
         
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-slate-200 pb-5">
@@ -1430,8 +1459,101 @@ async function ingestDocument(patientDoc: string) {
             btnToggleAirplane.click();
           }
           executeVerification();
+          airplaneDemoStatus.classList.remove('hidden');
+          // Smoothly switch to Mode 1 Socket Interceptor to inspect live zero-egress packet receipts
+          setTimeout(() => {
+            if (typeof setAuditorMode === 'function') {
+              setAuditorMode('mode1-socket-interceptor', true);
+            }
+            const targetSection = document.getElementById('mode1-socket-interceptor');
+            if (targetSection) {
+              targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }, 850);
         }
       }, 350);
+    }
+
+    // ======================================================================
+    // Auditor Mode Controller (Progressive Disclosure)
+    // ======================================================================
+    const AUDITOR_SECTIONS = [
+      'mode0-domain-scanner',
+      'mode1-socket-interceptor',
+      'mode2-static-linter',
+      'mode3-airplane-protocol',
+      'mode4-cicd-workbench'
+    ];
+
+    const HASH_ALIAS_MAP = {
+      '#mode0': 'mode0-domain-scanner',
+      '#mode0-domain-scanner': 'mode0-domain-scanner',
+      '#domain': 'mode0-domain-scanner',
+      '#perimeter': 'mode0-domain-scanner',
+      '#mode1': 'mode1-socket-interceptor',
+      '#mode1-socket-interceptor': 'mode1-socket-interceptor',
+      '#socket': 'mode1-socket-interceptor',
+      '#interceptor': 'mode1-socket-interceptor',
+      '#mode2': 'mode2-static-linter',
+      '#mode2-static-linter': 'mode2-static-linter',
+      '#linter': 'mode2-static-linter',
+      '#ast': 'mode2-static-linter',
+      '#mode3': 'mode3-airplane-protocol',
+      '#mode3-airplane-protocol': 'mode3-airplane-protocol',
+      '#airplane': 'mode3-airplane-protocol',
+      '#airplane-protocol': 'mode3-airplane-protocol',
+      '#mode4': 'mode4-cicd-workbench',
+      '#mode4-cicd-workbench': 'mode4-cicd-workbench',
+      '#cli': 'mode4-cicd-workbench',
+      '#cicd': 'mode4-cicd-workbench',
+      '#all': 'all',
+      '#unified': 'all'
+    };
+
+    function setAuditorMode(targetMode, updateHash = true) {
+      if (targetMode === 'all') {
+        AUDITOR_SECTIONS.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.remove('hidden');
+        });
+      } else {
+        AUDITOR_SECTIONS.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            if (id === targetMode) {
+              el.classList.remove('hidden');
+            } else {
+              el.classList.add('hidden');
+            }
+          }
+        });
+      }
+
+      // Update tab active states
+      document.querySelectorAll('.auditor-mode-tab').forEach(tab => {
+        const mode = tab.getAttribute('data-mode');
+        const dot = tab.querySelector('.auditor-mode-dot');
+        const isUnified = mode === 'all';
+        if (mode === targetMode) {
+          tab.className = isUnified
+            ? "auditor-mode-tab py-2.5 px-3 rounded-xl text-xs font-mono font-semibold transition-all text-center flex items-center justify-center gap-1.5 bg-slate-900 text-white shadow-xs border border-slate-900 shrink-0"
+            : "auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-semibold transition-all text-center flex items-center justify-center gap-1.5 bg-slate-900 text-white shadow-xs border border-slate-900";
+          if (dot) dot.className = "auditor-mode-dot w-2 h-2 rounded-full bg-emerald-400";
+        } else {
+          tab.className = isUnified
+            ? "auditor-mode-tab py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-900 shrink-0"
+            : "auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900";
+          if (dot) dot.className = "auditor-mode-dot w-2 h-2 rounded-full bg-slate-300";
+        }
+      });
+
+      if (updateHash) {
+        if (targetMode === 'all') {
+          history.replaceState(null, '', '#all');
+        } else {
+          history.replaceState(null, '', '#' + targetMode);
+        }
+      }
     }
 
     // CLI Hub Content Map
@@ -1494,6 +1616,29 @@ fi`
 
     // Wire Event Listeners
     document.addEventListener('DOMContentLoaded', () => {
+      // Auditor Mode Tabs Event Listeners
+      document.querySelectorAll('.auditor-mode-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const mode = tab.getAttribute('data-mode');
+          if (mode) setAuditorMode(mode, true);
+        });
+      });
+
+      // Handle Direct Deep-Link Hash Navigation or Default to Mode 0
+      const initialHash = window.location.hash.toLowerCase();
+      if (initialHash && HASH_ALIAS_MAP[initialHash]) {
+        setAuditorMode(HASH_ALIAS_MAP[initialHash], false);
+      } else {
+        setAuditorMode('mode0-domain-scanner', false);
+      }
+
+      window.addEventListener('hashchange', () => {
+        const h = window.location.hash.toLowerCase();
+        if (h && HASH_ALIAS_MAP[h]) {
+          setAuditorMode(HASH_ALIAS_MAP[h], false);
+        }
+      });
+
       // Set initial input
       inputText.value = PRESETS.health;
       inputLength.innerText = `${inputText.value.length} chars`;
@@ -1835,6 +1980,24 @@ fi`
         const ind = ev.industry || {};
         const activeProfileKey = ind.activeProfile || 'general';
         const currentDomain = data.domain || domain;
+        const dag = ev.dagComparison || {
+          legacy: {
+            title: 'Legacy Cloud Proxy Route (Vulnerable)',
+            flow: ['User Browser', 'Unencrypted WAN Socket', 'Third-Party SaaS Proxy (+450ms)', 'Cloud LLM API'],
+            subprocessorsCount: sinksCount + 2,
+            dpaRequired: true,
+            latencyOverhead: '+450ms network hop',
+            honeypotRisk: 'Decrypted customer payloads exist in third-party cloud RAM and logs.'
+          },
+          ztds: {
+            title: 'ZTDS In-RAM Enclave Route (Verified)',
+            flow: ['User Device RAM', `<0.8ms In-Memory Enclave (${ind.statute || 'ZTDS'})`, 'Safe Surrogate Tokens Only', 'Cloud LLM API'],
+            subprocessorsCount: 0,
+            dpaRequired: false,
+            latencyOverhead: '<0.8ms local RAM execution',
+            honeypotRisk: 'Zero (0.00 B raw data ever leaves device)'
+          }
+        };
 
         m0Results.innerHTML = `
           <!-- LEVEL 1: VERDICT & PERIMETER SCOPE -->
@@ -2023,29 +2186,29 @@ fi`
                 <div class="p-4 rounded-xl bg-rose-50/40 border border-rose-200">
                   <div class="flex items-center justify-between mb-3">
                     <span class="text-xs font-mono font-bold text-rose-800 uppercase flex items-center gap-1.5">
-                      <span class="w-2 h-2 rounded-full bg-rose-500"></span> 1. Legacy Cloud Proxy Route
+                      <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                      <span>${escapeM0(dag.legacy.title || '1. Legacy Cloud Proxy Route')}</span>
                     </span>
-                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold">Subprocessor Chain</span>
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-100 border border-rose-300 text-rose-800 font-bold">${dag.legacy.dpaRequired ? 'Subprocessor Chain' : 'DPA Required'}</span>
                   </div>
                   <div class="p-3 bg-white border border-rose-200 rounded-lg mb-3 font-mono text-[11px] text-slate-600 flex items-center gap-1.5 overflow-x-auto">
-                    <span class="px-2 py-1 rounded bg-slate-100 border border-slate-200 font-medium">User Browser</span>
-                    <span class="text-rose-500">&rarr;</span>
-                    <span class="px-2 py-1 rounded bg-rose-100 border border-rose-300 font-bold text-rose-800">Cleartext WAN (+450ms)</span>
-                    <span class="text-rose-500">&rarr;</span>
-                    <span class="px-2 py-1 rounded bg-slate-100 border border-slate-200 font-medium">Cloud LLM</span>
+                    ${(dag.legacy.flow || []).map((step, idx, arr) => `
+                      <span class="px-2 py-1 rounded ${idx === 2 ? 'bg-rose-100 border border-rose-300 font-bold text-rose-800' : 'bg-slate-100 border border-slate-200 font-medium'} shrink-0">${escapeM0(step)}</span>
+                      ${idx < arr.length - 1 ? '<span class="text-rose-500 font-bold text-xs shrink-0">&rarr;</span>' : ''}
+                    `).join('')}
                   </div>
                   <div class="space-y-1.5 text-xs text-slate-600 font-sans">
                     <div class="flex items-start gap-2">
                       <span class="text-rose-600 font-bold">&times;</span>
-                      <span><strong>Network Overhead:</strong> Adds 350ms–600ms latency to every prompt generation.</span>
+                      <span><strong>Network Overhead:</strong> Adds ${escapeM0(dag.legacy.latencyOverhead || '350ms–600ms latency')} to every prompt generation.</span>
                     </div>
                     <div class="flex items-start gap-2">
                       <span class="text-rose-600 font-bold">&times;</span>
-                      <span><strong>Mandatory DPA:</strong> Unmasked PII exits perimeter; GDPR Article 28 DPA required.</span>
+                      <span><strong>Mandatory DPA:</strong> Unmasked PII exits perimeter; GDPR Article 28 DPA required for +${dag.legacy.subprocessorsCount || 3} external entities.</span>
                     </div>
                     <div class="flex items-start gap-2">
                       <span class="text-rose-600 font-bold">&times;</span>
-                      <span><strong>Honeypot Exposure:</strong> Decrypted customer payloads exist in third-party cloud RAM and logs.</span>
+                      <span><strong>Honeypot Exposure:</strong> ${escapeM0(dag.legacy.honeypotRisk || 'Decrypted customer payloads exist in third-party cloud RAM and logs.')}</span>
                     </div>
                   </div>
                 </div>
@@ -2054,21 +2217,21 @@ fi`
                 <div class="p-4 rounded-xl bg-emerald-50/40 border border-emerald-300 shadow-xs">
                   <div class="flex items-center justify-between mb-3">
                     <span class="text-xs font-mono font-bold text-emerald-800 uppercase flex items-center gap-1.5">
-                      <span class="w-2 h-2 rounded-full bg-emerald-500"></span> 2. ZTDS In-RAM Enclave Route
+                      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                      <span>${escapeM0(dag.ztds.title || '2. ZTDS In-RAM Enclave Route')}</span>
                     </span>
-                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">DPA-Exempt Enclave</span>
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 border border-emerald-300 text-emerald-800 font-bold">DPA-Exempt Enclave</span>
                   </div>
                   <div class="p-3 bg-white border border-emerald-200 rounded-lg mb-3 font-mono text-[11px] text-slate-600 flex items-center gap-1.5 overflow-x-auto shadow-xs">
-                    <span class="px-2 py-1 rounded bg-slate-900 text-white font-medium">Volatile RAM</span>
-                    <span class="text-emerald-600">&harr;</span>
-                    <span class="px-2 py-1 rounded bg-emerald-100 border border-emerald-300 font-bold text-emerald-800">ZTDS (&lt;0.8ms)</span>
-                    <span class="text-emerald-600">&rarr;</span>
-                    <span class="px-2 py-1 rounded bg-slate-100 border border-slate-200 font-medium">Tokens to LLM</span>
+                    ${(dag.ztds.flow || []).map((step, idx, arr) => `
+                      <span class="px-2 py-1 rounded ${idx === 1 ? 'bg-emerald-100 border border-emerald-300 font-bold text-emerald-800' : idx === 0 ? 'bg-slate-900 text-white font-medium' : 'bg-slate-100 border border-slate-200 font-medium'} shrink-0">${escapeM0(step)}</span>
+                      ${idx < arr.length - 1 ? '<span class="text-emerald-600 font-bold text-xs shrink-0">&rarr;</span>' : ''}
+                    `).join('')}
                   </div>
                   <div class="space-y-1.5 text-xs text-slate-600 font-sans">
                     <div class="flex items-start gap-2">
                       <span class="text-emerald-600 font-bold">&check;</span>
-                      <span><strong>Sub-Millisecond Speed:</strong> Executes in local volatile RAM in &lt;0.8ms. Zero network hops.</span>
+                      <span><strong>Sub-Millisecond Speed:</strong> Executes in local volatile RAM in ${escapeM0(dag.ztds.latencyOverhead || '<0.8ms')}. Zero network hops.</span>
                     </div>
                     <div class="flex items-start gap-2">
                       <span class="text-emerald-600 font-bold">&check;</span>
@@ -2083,7 +2246,7 @@ fi`
               </div>
 
               <!-- CI/CD Terminal Command Box -->
-              <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-white">
                 <div>
                   <div class="text-[10px] font-mono text-slate-400 uppercase font-bold">Local &amp; CI/CD Zero-Egress Terminal Audit:</div>
                   <code class="text-xs font-mono text-emerald-300 mt-0.5 block" id="m0CliCmd">npx ztds-audit https://${escapeM0(currentDomain)}</code>
