@@ -49,9 +49,27 @@ The Zero-Trust Data Sanitization (ZTDS) standard is not merely a commercial fram
   - Comprehensive regulatory mapping across EU AI Act Article 50 (Transparency) and Article 10 (Data Governance).
   - Demonstrates how client-side surrogate substitution satisfies the European Data Protection Board (EDPB) guidelines on AI training models.
 
+### Tier-1 European Open Archive: HAL Open Science (CNRS / Inria)
+- **Paper 1:** *Reconciling Enterprise Generative AI Workflows with the EU AI Act, GDPR, HIPAA, and Statutory Privacy Regimes via Ephemeral Client-Side Sanitization*
+  - **HAL Document ID:** [hal-05757820](https://hal.science/hal-05757820) (hal-05757820v1)
+  - **Status:** Submitted & In Moderation Queue (Deposited 2026-09-21)
+- **Paper 2:** *Reconciling Enterprise Generative AI Workflows with the EU AI Act, UK GDPR, and US State Privacy Statutes via Ephemeral Client-Side Sanitization*
+  - **HAL Document ID:** [hal-05730857](https://hal.science/hal-05730857) (hal-05730857v1)
+  - **Status:** Submitted & In Moderation Queue (Deposited 2026-08-28)
+
 ---
 
-## 3. Medical & Life Sciences Preprints
+## 3. Medical, Life Sciences & Clinical Preprints
+
+### Tier-1 Healthcare Paper 5: Research Square / Springer Nature
+- **Title:** *Client-Side Ephemeral De-Identification of Protected Health Information (PHI) in Multi-Center Clinical Trial Analysis and Large Language Model Workflows: Validating Zero-Trust Data Sanitization Under HIPAA Safe Harbor Section 164.514(b)*
+- **Permanent DOI:** [10.21203/rs.3.rs-11117457/v1](https://doi.org/10.21203/rs.3.rs-11117457/v1)
+- **Archive Record:** https://www.researchsquare.com/article/rs-11117457/v1
+- **Status:** Posted & Active (Live Public DOI)
+- **Key Contributions:**
+  - Clinical validation of the 18 HIPAA Safe Harbor identifiers (§ 164.514(b)).
+  - Mathematical demonstration that surrogate tokens preserve longitudinal diagnosis, pathology, and treatment logic in physician notes without patient identity leakage.
+  - Multi-center clinical trial workflow privacy guarantees eliminating HIPAA Business Associate Agreement (BAA) requirements for third-party LLM inference.
 
 ### medRxiv Clinical Research
 - **Title:** *De-Identification of Longitudinal Patient Records for Generative AI in Healthcare*
