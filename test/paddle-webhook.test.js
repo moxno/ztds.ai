@@ -64,6 +64,15 @@ async function runTests() {
   process.env.PADDLE_WEBHOOK_SECRET_KEY = secretKey;
   process.env.NODE_ENV = 'production'; // Enforce strict signature check during test
 
+  // Ensure offline signing key is available for test verification
+  const privKeyPath = path.join(__dirname, '../keys/ztds_license_private.pem');
+  const examplePrivPath = path.join(__dirname, '../keys/ztds_license_private.pem.example');
+  if (!process.env.ZTDS_LICENSE_PRIVATE_KEY && !fs.existsSync(privKeyPath) && fs.existsSync(examplePrivPath)) {
+    const fallbackPriv = fs.readFileSync(examplePrivPath, 'utf8');
+    process.env.ZTDS_LICENSE_PRIVATE_KEY = fallbackPriv;
+    process.env.ZTDS_LICENSE_PUBLIC_KEY = crypto.createPublicKey(fallbackPriv).export({ type: 'spki', format: 'pem' });
+  }
+
   // Test 1: Signature Verification Success
   console.log('--> Test 1: Valid HMAC-SHA256 Signature Verification');
   const sampleBody = JSON.stringify({ event_type: 'transaction.completed', data: { id: 'txn_123' } });
@@ -126,7 +135,7 @@ async function runTests() {
 
   // Test 5: Verify Minted Token via Offline License Validator
   console.log('--> Test 5: Verify Minted License via Offline Validator');
-  const publicKeyPem = fs.readFileSync(path.join(__dirname, '../keys/ztds_license_public.pem'), 'utf8');
+  const publicKeyPem = process.env.ZTDS_LICENSE_PUBLIC_KEY || fs.readFileSync(path.join(__dirname, '../keys/ztds_license_public.pem'), 'utf8');
   const verification = verifyLicense(res.data.token, { publicKeyPem });
 
   assert.strictEqual(verification.valid, true);

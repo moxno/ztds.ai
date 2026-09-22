@@ -41,6 +41,10 @@ function getPrivateKey() {
   if (fs.existsSync(defaultPath)) {
     return fs.readFileSync(defaultPath, 'utf8');
   }
+  const examplePath = path.join(__dirname, '../keys/ztds_license_private.pem.example');
+  if (process.env.NODE_ENV === 'test' && fs.existsSync(examplePath)) {
+    return fs.readFileSync(examplePath, 'utf8');
+  }
   return null;
 }
 

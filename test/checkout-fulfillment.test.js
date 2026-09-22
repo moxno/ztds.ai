@@ -8,9 +8,21 @@
 'use strict';
 
 const assert = require('assert');
+const path = require('path');
+const fs = require('fs');
+const crypto = require('crypto');
 const fulfillmentHandler = require('../api/checkout-fulfillment');
 const { verifyLicense } = require('../lib/license-validator');
 const { PADDLE_CONFIG, getPriceId } = require('../config/paddle');
+
+// Ensure offline signing key is available for test verification
+const privKeyPath = path.join(__dirname, '../keys/ztds_license_private.pem');
+const examplePrivPath = path.join(__dirname, '../keys/ztds_license_private.pem.example');
+if (!process.env.ZTDS_LICENSE_PRIVATE_KEY && !fs.existsSync(privKeyPath) && fs.existsSync(examplePrivPath)) {
+  const fallbackPriv = fs.readFileSync(examplePrivPath, 'utf8');
+  process.env.ZTDS_LICENSE_PRIVATE_KEY = fallbackPriv;
+  process.env.ZTDS_LICENSE_PUBLIC_KEY = crypto.createPublicKey(fallbackPriv).export({ type: 'spki', format: 'pem' });
+}
 
 console.log('[TEST] Starting Paddle Checkout Fulfillment Verification Suite...\n');
 

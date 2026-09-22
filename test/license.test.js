@@ -38,8 +38,29 @@ function mintTestToken(payload, privateKeyPem) {
 async function runTests() {
   console.log("[TEST] Starting ZTDS Offline Licensing Verification Suite...");
 
-  const privateKeyPem = fs.readFileSync(path.join(__dirname, "../keys/ztds_license_private.pem"), "utf8");
-  const publicKeyPem = fs.readFileSync(path.join(__dirname, "../keys/ztds_license_public.pem"), "utf8");
+  const privPath = path.join(__dirname, "../keys/ztds_license_private.pem");
+  const examplePrivPath = path.join(__dirname, "../keys/ztds_license_private.pem.example");
+  const pubPath = path.join(__dirname, "../keys/ztds_license_public.pem");
+
+  let privateKeyPem;
+  let publicKeyPem;
+
+  if (process.env.ZTDS_LICENSE_PRIVATE_KEY) {
+    privateKeyPem = process.env.ZTDS_LICENSE_PRIVATE_KEY;
+    publicKeyPem = process.env.ZTDS_LICENSE_PUBLIC_KEY || crypto.createPublicKey(privateKeyPem).export({ type: "spki", format: "pem" });
+  } else if (fs.existsSync(privPath)) {
+    privateKeyPem = fs.readFileSync(privPath, "utf8");
+    publicKeyPem = fs.existsSync(pubPath)
+      ? fs.readFileSync(pubPath, "utf8")
+      : crypto.createPublicKey(privateKeyPem).export({ type: "spki", format: "pem" });
+  } else if (fs.existsSync(examplePrivPath)) {
+    privateKeyPem = fs.readFileSync(examplePrivPath, "utf8");
+    publicKeyPem = crypto.createPublicKey(privateKeyPem).export({ type: "spki", format: "pem" });
+  } else {
+    const keypair = crypto.generateKeyPairSync("ed25519");
+    privateKeyPem = keypair.privateKey.export({ type: "pkcs8", format: "pem" });
+    publicKeyPem = keypair.publicKey.export({ type: "spki", format: "pem" });
+  }
 
   // Test 1: Valid Enterprise Air-Gapped License
   console.log("--> Test 1: Valid Enterprise Air-Gapped Token Verification");
