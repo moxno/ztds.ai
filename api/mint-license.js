@@ -52,7 +52,7 @@ function mintToken({ customerName, tier = 'developer_pro', days = 14, nodes = 3 
 
   const now = new Date();
   const expiresDate = new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
-  const tierPrefix = tier.includes('eval') ? 'EVAL' : 'DEV';
+  const tierPrefix = tier.includes('eval') ? 'EVAL' : (tier === 'teams' ? 'TEAMS' : 'DEV');
   const randomSuffix = Math.floor(1000 + Math.random() * 9000);
   const licenseId = `ZTDS-2026-${tierPrefix}-${randomSuffix}`;
 

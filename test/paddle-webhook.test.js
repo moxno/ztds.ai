@@ -150,7 +150,48 @@ async function runTests() {
   assert.strictEqual(badRes.statusCode, 401);
   console.log('    [PASS] 401 Unauthorized emitted for invalid signature.');
 
-  console.log('\n[SUMMARY] ALL 6 PADDLE WEBHOOK & MINTING TESTS PASSED.');
+  // Test 7: TEAMS Tier Webhook Transaction & License Minting (10 nodes)
+  console.log('--> Test 7: TEAMS Tier Webhook Transaction & License Minting');
+  const teamsPayload = JSON.stringify({
+    event_id: 'evt_test_teams_01',
+    event_type: 'transaction.completed',
+    data: {
+      id: 'txn_test_teams_99',
+      status: 'completed',
+      customer: {
+        email: 'ops@clinictrial.org',
+        name: 'Clinic Trial Systems'
+      },
+      custom_data: {
+        company_name: 'Clinic Trial Systems',
+        tier: 'teams'
+      },
+      billing_cycle: {
+        interval: 'month'
+      }
+    }
+  });
+
+  const teamsSig = generatePaddleSignature(teamsPayload, secretKey);
+  const { req: teamsReq, res: teamsRes } = createMockReqRes({
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      'paddle-signature': teamsSig
+    },
+    body: teamsPayload
+  });
+
+  await paddleWebhookHandler(teamsReq, teamsRes);
+  assert.strictEqual(teamsRes.statusCode, 200);
+  assert.ok(teamsRes.data.license_id.startsWith('ZTDS-2026-TEAMS-'));
+  const teamsVerification = verifyLicense(teamsRes.data.token, { publicKeyPem });
+  assert.strictEqual(teamsVerification.valid, true);
+  assert.strictEqual(teamsVerification.tier, 'teams');
+  assert.strictEqual(teamsVerification.maxNodes, 10);
+  console.log(`    [PASS] TEAMS license minted: ${teamsRes.data.license_id} (10 nodes).`);
+
+  console.log('\n[SUMMARY] ALL 7 PADDLE WEBHOOK & MINTING TESTS PASSED.');
 }
 
 runTests().catch(err => {

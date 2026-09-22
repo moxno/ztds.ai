@@ -1675,33 +1675,90 @@ jobs:
       const paneBuy = document.getElementById('paneCheckoutBuy');
       const paneTrial = document.getElementById('paneCheckoutTrial');
       const paneInvoice = document.getElementById('paneCheckoutInvoice');
+      const paneSuccess = document.getElementById('paneCheckoutSuccess');
 
       const btnIntervalAnnual = document.getElementById('btnIntervalAnnual');
       const btnIntervalMonthly = document.getElementById('btnIntervalMonthly');
       const btnLaunchPaddle = document.getElementById('btnLaunchPaddleCheckout');
       const btnLaunchPaddleText = document.getElementById('btnLaunchPaddleText');
 
-      let currentInterval = 'annual'; // 'annual' | 'monthly'
+      const btnTierDeveloper = document.getElementById('btnTierDeveloper');
+      const btnTierTeams = document.getElementById('btnTierTeams');
+      const dotTierDeveloper = document.getElementById('dotTierDeveloper');
+      const dotTierTeams = document.getElementById('dotTierTeams');
+      const badgeEnvIndicator = document.getElementById('badgePaddleEnvIndicator');
 
-      // Initialize Paddle Billing v2 if available
+      let currentInterval = 'annual'; // 'annual' | 'monthly'
+      let currentTier = 'developer_pro'; // 'developer_pro' | 'teams'
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const currentPaddleEnv = (urlParams.get('paddle_env') || window.ZTDS_PADDLE_ENV || 'sandbox').toLowerCase();
+
+      // Pricing & Price ID configuration
+      const PADDLE_PRICES = {
+        sandbox: {
+          token: window.ZTDS_PADDLE_TOKEN || 'test_c0384ff8a02a7ea414436eb81b5',
+          developer_pro: {
+            annual: window.ZTDS_PADDLE_PRICE_ANNUAL || 'pri_01hrztds_dev_annual_1990',
+            monthly: window.ZTDS_PADDLE_PRICE_MONTHLY || 'pri_01hrztds_dev_monthly_199',
+            amountAnnual: 1990,
+            amountMonthly: 199
+          },
+          teams: {
+            annual: window.ZTDS_PADDLE_PRICE_TEAMS_ANNUAL || 'pri_01hrztds_teams_annual_990',
+            monthly: window.ZTDS_PADDLE_PRICE_TEAMS_MONTHLY || 'pri_01hrztds_teams_monthly_99',
+            amountAnnual: 990,
+            amountMonthly: 99
+          }
+        },
+        production: {
+          token: window.ZTDS_PADDLE_TOKEN_PROD || 'live_7a94b8e391fbc238510842e4d91',
+          developer_pro: {
+            annual: window.ZTDS_PADDLE_PRICE_ANNUAL_PROD || 'pri_01j7ztds_dev_annual_1990',
+            monthly: window.ZTDS_PADDLE_PRICE_DEV_MONTHLY_PROD || 'pri_01j7ztds_dev_monthly_199',
+            amountAnnual: 1990,
+            amountMonthly: 199
+          },
+          teams: {
+            annual: window.ZTDS_PADDLE_PRICE_TEAMS_ANNUAL_PROD || 'pri_01j7ztds_teams_annual_990',
+            monthly: window.ZTDS_PADDLE_PRICE_TEAMS_MONTHLY_PROD || 'pri_01j7ztds_teams_monthly_99',
+            amountAnnual: 990,
+            amountMonthly: 99
+          }
+        }
+      };
+
+      const activeEnvConfig = PADDLE_PRICES[currentPaddleEnv] || PADDLE_PRICES.sandbox;
+      if (badgeEnvIndicator) {
+        badgeEnvIndicator.textContent = currentPaddleEnv === 'production' ? 'Live MoR Gateway' : 'Sandbox MoR';
+        badgeEnvIndicator.className = currentPaddleEnv === 'production'
+          ? 'text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold uppercase'
+          : 'text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200 text-slate-700 font-bold uppercase';
+      }
+
+      // Initialize Paddle Billing v2 with fulfillment callback
       if (window.Paddle) {
         try {
-          const paddleEnv = window.ZTDS_PADDLE_ENV || 'sandbox';
-          const paddleToken = window.ZTDS_PADDLE_TOKEN || 'test_token_ztds_demo';
           Paddle.Initialize({
-            token: paddleToken,
-            environment: paddleEnv
+            token: activeEnvConfig.token,
+            environment: currentPaddleEnv,
+            eventCallback: function(event) {
+              if (event && (event.name === 'checkout.completed' || event.name === 'transaction.completed')) {
+                handleCheckoutCompleted(event);
+              }
+            }
           });
         } catch (e) {
           console.warn('[Paddle SDK notice]:', e.message);
         }
       }
 
-      function openModal() {
+      function openModal(preselectedTier = null) {
         if (modal) {
           modal.classList.remove('hidden');
           document.body.style.overflow = 'hidden';
           switchTab('buy');
+          if (preselectedTier) selectTier(preselectedTier);
         }
       }
 
@@ -1712,7 +1769,7 @@ jobs:
         }
       }
 
-      if (btnOpenModal) btnOpenModal.addEventListener('click', openModal);
+      if (btnOpenModal) btnOpenModal.addEventListener('click', () => openModal('developer_pro'));
       if (btnCloseModal) btnCloseModal.addEventListener('click', closeModal);
 
       if (modal) {
@@ -1729,7 +1786,7 @@ jobs:
 
       function switchTab(tabKey) {
         const tabs = [tabBuy, tabTrial, tabInvoice];
-        const panes = [paneBuy, paneTrial, paneInvoice];
+        const panes = [paneBuy, paneTrial, paneInvoice, paneSuccess];
 
         tabs.forEach(t => {
           if (t) {
@@ -1766,25 +1823,187 @@ jobs:
       if (tabTrial) tabTrial.addEventListener('click', () => switchTab('trial'));
       if (tabInvoice) tabInvoice.addEventListener('click', () => switchTab('invoice'));
 
+      function updatePricingLabels() {
+        const isAnnual = currentInterval === 'annual';
+        const devPrice = isAnnual
+          ? `$${activeEnvConfig.developer_pro.amountAnnual} / year`
+          : `$${activeEnvConfig.developer_pro.amountMonthly} / month`;
+        const teamsPrice = isAnnual
+          ? `$${activeEnvConfig.teams.amountAnnual} / year`
+          : `$${activeEnvConfig.teams.amountMonthly} / month`;
+
+        const labelPriceDev = document.getElementById('labelPriceDeveloper');
+        const labelPriceTeams = document.getElementById('labelPriceTeams');
+        if (labelPriceDev) labelPriceDev.textContent = devPrice;
+        if (labelPriceTeams) labelPriceTeams.textContent = teamsPrice;
+
+        const labelIntervalAnn = document.getElementById('labelIntervalAnnual');
+        const labelIntervalMon = document.getElementById('labelIntervalMonthly');
+        if (currentTier === 'developer_pro') {
+          if (labelIntervalAnn) labelIntervalAnn.textContent = `Annual: $${activeEnvConfig.developer_pro.amountAnnual} / year`;
+          if (labelIntervalMon) labelIntervalMon.textContent = `Monthly: $${activeEnvConfig.developer_pro.amountMonthly} / month`;
+        } else {
+          if (labelIntervalAnn) labelIntervalAnn.textContent = `Annual: $${activeEnvConfig.teams.amountAnnual} / year`;
+          if (labelIntervalMon) labelIntervalMon.textContent = `Monthly: $${activeEnvConfig.teams.amountMonthly} / month`;
+        }
+
+        if (btnLaunchPaddleText) {
+          const selectedAmount = currentTier === 'developer_pro'
+            ? (isAnnual ? `$${activeEnvConfig.developer_pro.amountAnnual} / year` : `$${activeEnvConfig.developer_pro.amountMonthly} / month`)
+            : (isAnnual ? `$${activeEnvConfig.teams.amountAnnual} / year` : `$${activeEnvConfig.teams.amountMonthly} / month`);
+          btnLaunchPaddleText.textContent = `Proceed to Secure Checkout (${selectedAmount}) →`;
+        }
+      }
+
+      function selectTier(tier) {
+        currentTier = tier;
+        if (tier === 'developer_pro') {
+          if (btnTierDeveloper) btnTierDeveloper.className = 'p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/50 text-left transition-all cursor-pointer';
+          if (btnTierTeams) btnTierTeams.className = 'p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white text-left transition-all cursor-pointer';
+          if (dotTierDeveloper) dotTierDeveloper.className = 'w-2 h-2 rounded-full bg-emerald-500';
+          if (dotTierTeams) dotTierTeams.className = 'w-2 h-2 rounded-full bg-slate-300';
+        } else {
+          if (btnTierTeams) btnTierTeams.className = 'p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/50 text-left transition-all cursor-pointer';
+          if (btnTierDeveloper) btnTierDeveloper.className = 'p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white text-left transition-all cursor-pointer';
+          if (dotTierTeams) dotTierTeams.className = 'w-2 h-2 rounded-full bg-emerald-500';
+          if (dotTierDeveloper) dotTierDeveloper.className = 'w-2 h-2 rounded-full bg-slate-300';
+        }
+        updatePricingLabels();
+      }
+
+      if (btnTierDeveloper) btnTierDeveloper.addEventListener('click', () => selectTier('developer_pro'));
+      if (btnTierTeams) btnTierTeams.addEventListener('click', () => selectTier('teams'));
+
       // Interval Toggle
       if (btnIntervalAnnual && btnIntervalMonthly) {
         btnIntervalAnnual.addEventListener('click', () => {
           currentInterval = 'annual';
           btnIntervalAnnual.className = 'flex-1 py-2 rounded-lg bg-white text-slate-900 font-bold shadow-xs transition-all flex items-center justify-center gap-1.5';
           btnIntervalMonthly.className = 'flex-1 py-2 rounded-lg text-slate-600 hover:text-slate-900 font-medium transition-all';
-          if (btnLaunchPaddleText) {
-            btnLaunchPaddleText.textContent = 'Proceed to Secure Checkout ($1,990 / year) →';
-          }
+          updatePricingLabels();
         });
 
         btnIntervalMonthly.addEventListener('click', () => {
           currentInterval = 'monthly';
           btnIntervalMonthly.className = 'flex-1 py-2 rounded-lg bg-white text-slate-900 font-bold shadow-xs transition-all flex items-center justify-center gap-1.5';
           btnIntervalAnnual.className = 'flex-1 py-2 rounded-lg text-slate-600 hover:text-slate-900 font-medium transition-all flex items-center justify-center gap-1.5';
-          if (btnLaunchPaddleText) {
-            btnLaunchPaddleText.textContent = 'Proceed to Secure Checkout ($199 / month) →';
-          }
+          updatePricingLabels();
         });
+      }
+
+      // Real-Time Fulfillment Handler (invoked upon checkout.completed)
+      async function handleCheckoutCompleted(event) {
+        const company = (document.getElementById('checkoutCompany')?.value || '').trim() || 'Enterprise Licensee';
+        const email = (document.getElementById('checkoutEmail')?.value || '').trim() || 'billing@customer.com';
+        const domain = (document.getElementById('checkoutDomain')?.value || '').trim();
+        const transactionId = (event && event.data && (event.data.id || event.data.transaction_id)) || ('txn_' + Date.now());
+
+        if (btnLaunchPaddleText) {
+          btnLaunchPaddleText.textContent = 'Payment Confirmed · Minting Offline Ed25519 Token...';
+        }
+
+        try {
+          const res = await fetch('/api/checkout-fulfillment/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              transactionId,
+              customerEmail: email,
+              customerName: company,
+              tier: currentTier,
+              interval: currentInterval,
+              domain,
+              environment: currentPaddleEnv
+            })
+          });
+
+          const data = await res.json();
+          if (res.ok && data.status === 'success') {
+            displayFulfillmentSuccess(data);
+          } else {
+            alert('Payment completed, but token minting returned: ' + (data.details || data.error));
+          }
+        } catch (err) {
+          alert('Payment confirmed. Network error during fulfillment: ' + err.message);
+        } finally {
+          updatePricingLabels();
+        }
+      }
+
+      function displayFulfillmentSuccess(data) {
+        if (paneBuy) paneBuy.classList.add('hidden');
+        if (paneSuccess) paneSuccess.classList.remove('hidden');
+
+        const elLicenseId = document.getElementById('fulfillLicenseId');
+        const elTierBadge = document.getElementById('fulfillTierBadge');
+        const elCustomerName = document.getElementById('fulfillCustomerName');
+        const elCustomerEmail = document.getElementById('fulfillCustomerEmail');
+        const elExpiryDate = document.getElementById('fulfillExpiryDate');
+        const elTokenDisplay = document.getElementById('fulfillTokenDisplay');
+        const elQuickstartCmd = document.getElementById('fulfillQuickstartCmd');
+
+        if (elLicenseId) elLicenseId.textContent = data.licenseId;
+        if (elTierBadge) elTierBadge.textContent = `${data.tierTitle} · ${data.nodes} Nodes`;
+        if (elCustomerName) elCustomerName.textContent = data.customerName;
+        if (elCustomerEmail) elCustomerEmail.textContent = data.customerEmail;
+        if (elExpiryDate) elExpiryDate.textContent = `Valid through ${new Date(data.expiresAt).toLocaleDateString()}`;
+        if (elTokenDisplay) elTokenDisplay.textContent = data.token;
+        if (elQuickstartCmd) elQuickstartCmd.textContent = (data.quickstart && data.quickstart.envVar) || `export ZTDS_LICENSE="${data.token}"`;
+
+        const btnCopyToken = document.getElementById('btnCopyFulfillToken');
+        if (btnCopyToken) {
+          btnCopyToken.onclick = () => {
+            navigator.clipboard.writeText(data.token).then(() => {
+              btnCopyToken.textContent = 'COPIED!';
+              setTimeout(() => { btnCopyToken.textContent = 'Copy Token'; }, 2000);
+            });
+          };
+        }
+
+        const btnCopyCmd = document.getElementById('btnCopyFulfillQuickstart');
+        if (btnCopyCmd) {
+          btnCopyCmd.onclick = () => {
+            const cmd = (data.quickstart && data.quickstart.envVar) || `export ZTDS_LICENSE="${data.token}"`;
+            navigator.clipboard.writeText(cmd).then(() => {
+              btnCopyCmd.textContent = 'COPIED!';
+              setTimeout(() => { btnCopyCmd.textContent = 'Copy Command'; }, 2000);
+            });
+          };
+        }
+
+        const btnDownloadJson = document.getElementById('btnDownloadLicenseJson');
+        if (btnDownloadJson) {
+          btnDownloadJson.onclick = () => {
+            const licenseBlob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const blobUrl = URL.createObjectURL(licenseBlob);
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = `ztds-license-${data.licenseId}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(blobUrl);
+          };
+        }
+
+        const btnVerify = document.getElementById('btnVerifyInDecoder');
+        if (btnVerify) {
+          btnVerify.onclick = () => {
+            closeModal();
+            const inputDecoder = document.getElementById('inputLicenseToken');
+            const btnDecode = document.getElementById('btnDecodeLicense');
+            const decoderSection = document.getElementById('offlineLicenseTester');
+            if (inputDecoder && data.token) {
+              inputDecoder.value = data.token;
+            }
+            if (btnDecode) {
+              btnDecode.click();
+            }
+            if (decoderSection) {
+              decoderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          };
+        }
       }
 
       // Launch Paddle Checkout
@@ -1805,29 +2024,29 @@ jobs:
             return;
           }
 
-          const priceId = currentInterval === 'annual'
-            ? (window.ZTDS_PADDLE_PRICE_ANNUAL || 'pri_01hrztds_dev_annual_1990')
-            : (window.ZTDS_PADDLE_PRICE_MONTHLY || 'pri_01hrztds_dev_monthly_199');
+          const tierPrices = activeEnvConfig[currentTier] || activeEnvConfig.developer_pro;
+          const priceId = currentInterval === 'annual' ? tierPrices.annual : tierPrices.monthly;
 
-          if (window.Paddle && window.Paddle.Checkout && typeof Paddle.Checkout.open === 'function' && window.ZTDS_PADDLE_TOKEN) {
+          if (window.Paddle && window.Paddle.Checkout && typeof Paddle.Checkout.open === 'function' && activeEnvConfig.token) {
             Paddle.Checkout.open({
               items: [{ priceId, quantity: 1 }],
               customer: { email },
               customData: {
                 company_name: company,
                 domain: domain,
-                tier: 'developer_pro',
-                interval: currentInterval
+                tier: currentTier,
+                interval: currentInterval,
+                environment: currentPaddleEnv
               }
             });
           } else {
-            // Self-serve preview: prefill trial tab with their company and email
+            // Self-serve preview / adblocker fallback: prefill trial tab with company and email
             const trialComp = document.getElementById('trialCompany');
             const trialEm = document.getElementById('trialEmail');
             if (trialComp) trialComp.value = company;
             if (trialEm) trialEm.value = email;
 
-            alert(`Paddle MoR Gateway: Direct payment is ready. In this environment, your instant 14-day Developer Pro evaluation token has been pre-configured.`);
+            alert(`Paddle MoR Gateway: Direct payment is ready. In this environment, your instant 14-day evaluation token has been pre-configured.`);
             switchTab('trial');
             const btnMint = document.getElementById('btnMintTrialLicense');
             if (btnMint) btnMint.click();
@@ -1941,14 +2160,35 @@ jobs:
         
         <!-- PANE 1: Paddle Commercial Checkout -->
         <div id="paneCheckoutBuy" class="space-y-4">
+          <!-- Plan / Tier Selector -->
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <button type="button" id="btnTierDeveloper" class="p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/50 text-left transition-all cursor-pointer">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-slate-900 font-mono text-xs">Developer Pro SDK</span>
+                <span id="dotTierDeveloper" class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              </div>
+              <div class="text-[11px] text-slate-600">5 Nodes &middot; Headless &middot; MCP</div>
+              <div class="text-xs font-bold font-mono text-emerald-800 mt-1" id="labelPriceDeveloper">$1,990 / year</div>
+            </button>
+
+            <button type="button" id="btnTierTeams" class="p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white text-left transition-all cursor-pointer">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-slate-900 font-mono text-xs">ZTDS TEAMS</span>
+                <span id="dotTierTeams" class="w-2 h-2 rounded-full bg-slate-300"></span>
+              </div>
+              <div class="text-[11px] text-slate-600">10 Nodes &middot; 5 Seats &middot; Team Sync</div>
+              <div class="text-xs font-bold font-mono text-slate-700 mt-1" id="labelPriceTeams">$990 / year</div>
+            </button>
+          </div>
+
           <!-- Interval Toggle -->
           <div class="p-1.5 bg-slate-100 rounded-xl flex items-center gap-1 text-xs">
             <button type="button" id="btnIntervalAnnual" class="flex-1 py-2 rounded-lg bg-white text-slate-900 font-bold shadow-xs transition-all flex items-center justify-center gap-1.5">
-              <span>Annual: $1,990 / year</span>
-              <span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-mono">Save 17%</span>
+              <span id="labelIntervalAnnual">Annual: $1,990 / year</span>
+              <span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-mono font-bold">Save 17%</span>
             </button>
             <button type="button" id="btnIntervalMonthly" class="flex-1 py-2 rounded-lg text-slate-600 hover:text-slate-900 font-medium transition-all">
-              Monthly: $199 / month
+              <span id="labelIntervalMonthly">Monthly: $199 / month</span>
             </button>
           </div>
 
@@ -1970,11 +2210,14 @@ jobs:
 
           <!-- Feature Recap Pill -->
           <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1">
-            <div class="font-bold text-slate-800 flex items-center gap-1.5">
-              <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-              <span>Instant Delivery via Paddle Webhook</span>
+            <div class="font-bold text-slate-800 flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                <span>Instant MoR Fulfillment via Paddle.js Overlay</span>
+              </div>
+              <span id="badgePaddleEnvIndicator" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200 text-slate-700 font-bold uppercase">Sandbox MoR</span>
             </div>
-            <p class="text-[11px] leading-relaxed">Cryptographic Ed25519 offline token issued immediately. B2B compliant invoice with reverse-charge VAT issued by Paddle.com Market Ltd.</p>
+            <p class="text-[11px] leading-relaxed">Cryptographic Ed25519 offline token issued immediately upon payment completion. B2B compliant invoice with reverse-charge VAT issued by Paddle.com Market Ltd.</p>
           </div>
 
           <!-- Submit CTA -->
@@ -1982,6 +2225,49 @@ jobs:
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
             <span id="btnLaunchPaddleText">Proceed to Secure Checkout ($1,990 / year) &rarr;</span>
           </button>
+        </div>
+
+        <!-- PANE 4: Fulfillment Success View (Revealed after payment) -->
+        <div id="paneCheckoutSuccess" class="space-y-4 hidden">
+          <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-950 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-2 font-bold font-mono text-sm text-emerald-900">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span id="fulfillLicenseId">ZTDS-2026-DEV-XXXX</span>
+              </span>
+              <span class="px-2 py-0.5 rounded bg-emerald-100 border border-emerald-300 text-emerald-800 text-[10px] font-mono font-bold uppercase" id="fulfillTierBadge">Active &middot; 5 Nodes</span>
+            </div>
+            <div class="text-xs text-slate-600 space-y-0.5" id="fulfillCustomerInfo">
+              <div>Licensee: <strong class="text-slate-900" id="fulfillCustomerName">Acme Corp</strong> (<span id="fulfillCustomerEmail">cto@example.com</span>)</div>
+              <div>Validity: <span id="fulfillExpiryDate">Valid for 365 days</span> &middot; Merchant of Record: Paddle.com Market Ltd.</div>
+            </div>
+          </div>
+
+          <div class="p-3.5 bg-slate-900 rounded-xl text-slate-200 font-mono text-[11px] space-y-2">
+            <div class="flex items-center justify-between text-slate-400 text-[10px] pb-1.5 border-b border-slate-800">
+              <span class="font-bold text-emerald-400">Offline Asymmetric License Token (RFC 8032)</span>
+              <button type="button" id="btnCopyFulfillToken" class="text-emerald-400 hover:text-emerald-300 font-bold transition-colors cursor-pointer">Copy Token</button>
+            </div>
+            <div id="fulfillTokenDisplay" class="break-all select-all max-h-24 overflow-y-auto text-slate-300"></div>
+          </div>
+
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs font-mono space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase text-slate-500">Terminal Quickstart</span>
+              <button type="button" id="btnCopyFulfillQuickstart" class="text-[11px] text-emerald-700 hover:underline font-bold cursor-pointer">Copy Command</button>
+            </div>
+            <div class="text-slate-800 select-all font-mono text-[11px] bg-white p-2 rounded border border-slate-200" id="fulfillQuickstartCmd">export ZTDS_LICENSE="..."</div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+            <button type="button" id="btnDownloadLicenseJson" class="btn-outline text-xs py-2.5 px-3 flex items-center justify-center gap-1.5 font-bold cursor-pointer">
+              <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              <span>Download ztds-license.json</span>
+            </button>
+            <button type="button" id="btnVerifyInDecoder" class="btn-trust text-xs py-2.5 px-3 flex items-center justify-center gap-1.5 font-bold cursor-pointer">
+              <span>Verify in Local RAM Decoder &rarr;</span>
+            </button>
+          </div>
         </div>
 
         <!-- PANE 2: Instant 14-Day Evaluation Key -->
