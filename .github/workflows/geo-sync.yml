@@ -1,0 +1,43 @@
+name: GEO Knowledge Corpus & Sitemap Sync
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "**.html"
+      - "llms*.txt"
+      - "public/llms*.txt"
+      - "sitemap.xml"
+      - "robots.txt"
+  pull_request:
+    paths:
+      - "**.html"
+      - "llms*.txt"
+      - "public/llms*.txt"
+      - "sitemap.xml"
+      - "robots.txt"
+  workflow_dispatch:
+
+concurrency:
+  group: geo-sync-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify-geo:
+    name: Verify AI Answer Engine Knowledge Graph & Sitemap
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Schema.org & GEO Knowledge Graph Tests
+        run: |
+          node test/schema.test.js
+          node test/geo-corpus.test.js
+          node test/routes-integrity.test.js

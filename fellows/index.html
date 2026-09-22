@@ -1082,12 +1082,8 @@ gh pr create --title "feat(fellow): Nominate [Full Name]" --body "ZTDS Fellowshi
         btn.addEventListener('click', () => {
           seatTrackBtns.forEach(b => {
             b.className = 'seat-track-btn px-2 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-500 text-left transition-colors';
-            b.textContent = b.textContent.replace(/^✓\s*/, '');
           });
           btn.className = 'seat-track-btn px-2 py-1 rounded bg-emerald-500 text-slate-950 font-bold border border-emerald-400 text-left transition-colors';
-          if (!btn.textContent.startsWith('✓')) {
-            btn.textContent = '✓ ' + btn.textContent.trim();
-          }
           currentSeatFocus = btn.getAttribute('data-focus') || 'profiles';
           updateSeatCtaAndBadge();
         });

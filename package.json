@@ -8,7 +8,11 @@
   },
   "scripts": {
     "audit": "node bin/ztds-audit.js",
-    "test": "node bin/ztds-audit.js --dir ./data && node test/license.test.js && node test/scan-domain.test.js && node test/paddle-webhook.test.js && node test/lead-capture.test.js && node test/schema.test.js && node test/scanner-ui.test.js && node test/checkout-fulfillment.test.js && node test/agency.test.js",
+    "test": "node bin/ztds-audit.js --dir ./data && node test/license.test.js && node test/scan-domain.test.js && node test/paddle-webhook.test.js && node test/lead-capture.test.js && node test/schema.test.js && node test/scanner-ui.test.js && node test/checkout-fulfillment.test.js && node test/agency.test.js && node test/routes-integrity.test.js && node test/registries-schema.test.js && node test/geo-corpus.test.js",
+    "test:all": "npm test",
+    "test:routes": "node test/routes-integrity.test.js",
+    "test:registries": "node test/registries-schema.test.js",
+    "test:geo": "node test/geo-corpus.test.js",
     "test:license": "node test/license.test.js",
     "test:scan": "node test/scan-domain.test.js",
     "test:paddle": "node test/paddle-webhook.test.js",

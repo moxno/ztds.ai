@@ -1,0 +1,51 @@
+name: Continuous Integration & RFC Conformance
+
+on:
+  push:
+    branches: [ main, master, develop ]
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+  pull_request:
+    branches: [ main, master ]
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-suite:
+    name: Full Test Suite & RFC v1.0 Invariant Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Full Test Suite
+        run: |
+          npm test
+
+      - name: Run Dedicated Invariant Codebase Audit
+        run: |
+          node bin/ztds-audit.js --json > ztds-audit-receipt.json
+          cat ztds-audit-receipt.json
+
+      - name: Upload Audit Receipt Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ztds-audit-receipt
+          path: ztds-audit-receipt.json
+          retention-days: 30

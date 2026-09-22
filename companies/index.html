@@ -1478,10 +1478,8 @@
         btn.addEventListener('click', () => {
           sectorBtns.forEach(b => {
             b.className = 'corp-sector-btn px-2 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-500 text-left transition-colors';
-            b.textContent = b.textContent.replace('✓ ', '').trim();
           });
           btn.className = 'corp-sector-btn px-2 py-1 rounded bg-blue-600 text-white font-bold border border-blue-400 text-left transition-colors';
-          btn.textContent = '✓ ' + btn.textContent.trim();
           currentNomineeSector = btn.getAttribute('data-industry') || 'saas';
           updateNomineeSeat();
         });
