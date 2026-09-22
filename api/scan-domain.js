@@ -867,7 +867,7 @@ const RATE_LIMIT_MAX_REQUESTS = 25;
 const requestHistory = new Map();
 
 function checkRateLimit(ip) {
-  if (!ip || ip === 'test-runner' || process.env.NODE_ENV === 'test') {
+  if (!ip || ip === 'test-runner') {
     return { limited: false, remaining: RATE_LIMIT_MAX_REQUESTS };
   }
   const now = Date.now();
