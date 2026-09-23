@@ -350,6 +350,188 @@
       </div>
     </div>
 
+    <!-- 3 Physical Delivery Form Factors Matrix -->
+    <div id="form-factors" class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-5">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-semibold text-blue-800 mb-1.5">
+            <span>PHYSICAL DEPLOYMENT TOPOLOGIES</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">3 Physical Delivery Form Factors</h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">ZTDS does not mandate hosting models; it enforces an in-RAM execution perimeter across three physical runtime form factors.</p>
+        </div>
+        <span class="text-xs font-mono px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold w-fit shrink-0">
+          Zero Cloud Proxies
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Form Factor 1: Web & Browser Client -->
+        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">Form Factor 01</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-mono font-bold">&lt; 0.20 ms</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 mb-2">Web &amp; Browser Client Engine</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Executes in-memory directly on the end-user device before data leaves the browser window. Zero cleartext hits web servers, reverse proxies, or external clouds.
+            </p>
+            <div class="space-y-2 text-xs border-t border-slate-200 pt-3 text-slate-700">
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Target:</span>
+                <span class="font-semibold text-slate-900">SPAs, SaaS Portals, CRM UI</span>
+              </div>
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Distribution:</span>
+                <span class="font-semibold text-slate-900">WASM / WebWorker / MV3</span>
+              </div>
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Perimeter:</span>
+                <span class="font-semibold text-emerald-700">Client Device RAM</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-slate-200 font-mono text-[11px] text-slate-500">
+            <code>&lt;script src="@privacyscrubber/web"&gt;</code>
+          </div>
+        </div>
+
+        <!-- Form Factor 2: Native Desktop & Endpoint Binary -->
+        <div class="p-6 rounded-xl bg-emerald-50/40 border border-emerald-300 flex flex-col justify-between shadow-xs">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[11px] font-mono font-bold text-emerald-800 uppercase tracking-wider">Form Factor 02</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-200 text-emerald-900 text-[10px] font-mono font-bold">&lt; 0.05 ms</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 mb-2">Native Endpoint Binary</h3>
+            <p class="text-xs text-slate-700 leading-relaxed mb-4">
+              Pre-compiled native dynamic library with zero dependencies. Runs inside local host process memory with C-ABI bindings for maximum throughput.
+            </p>
+            <div class="space-y-2 text-xs border-t border-emerald-200 pt-3 text-slate-700">
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Target:</span>
+                <span class="font-semibold text-slate-900">Electron, C++, Rust, Go, Python</span>
+              </div>
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Distribution:</span>
+                <span class="font-semibold text-slate-900">.dylib / .so / .dll / Native WASM</span>
+              </div>
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Perimeter:</span>
+                <span class="font-semibold text-emerald-700">OS Process Address Space</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-emerald-200 font-mono text-[11px] text-emerald-800">
+            <code>dlopen("libztds_engine.so")</code>
+          </div>
+        </div>
+
+        <!-- Form Factor 3: Headless Runtime SDK & MCP Stdio -->
+        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">Form Factor 03</span>
+              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-[10px] font-mono font-bold">&lt; 0.80 ms</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 mb-2">Headless Runtime &amp; MCP Stdio</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Process-isolated middleware for modern AI pipelines. Sanitizes prompts and tool payloads over stdio pipes or direct function calls before model dispatch.
+            </p>
+            <div class="space-y-2 text-xs border-t border-slate-200 pt-3 text-slate-700">
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Target:</span>
+                <span class="font-semibold text-slate-900">Node.js, LangChain, MCP, Cursor</span>
+              </div>
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Distribution:</span>
+                <span class="font-semibold text-slate-900">npm / pip / MCP Stdio Server</span>
+              </div>
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Perimeter:</span>
+                <span class="font-semibold text-emerald-700">Volatile Runtime Sandbox</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-slate-200 font-mono text-[11px] text-slate-500">
+            <code>npm install @privacyscrubber/sdk</code>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Intellectual Property & Patent Protection Block -->
+    <div id="intellectual-property" class="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-850 to-slate-950 text-white border border-slate-800 shadow-xl space-y-6">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[11px] font-mono text-emerald-300 uppercase tracking-wider mb-2">
+            <span>PATENT PENDING &middot; WIPO PRIORITY LOCKED</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Intellectual Property Protection &amp; Commercial Licensing</h2>
+          <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-3xl leading-relaxed">
+            The ZTDS standard maintains absolute separation between public specification openness and proprietary implementation technology.
+          </p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 shrink-0">
+          <span class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 font-mono text-xs text-slate-200">
+            Patent: <strong class="text-emerald-400">IL 331905</strong>
+          </span>
+          <span class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 font-mono text-xs text-slate-200">
+            Trademark: <strong class="text-emerald-400">ZTDS&trade;</strong>
+          </span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-300">
+        
+        <!-- Column 1: Patent & Legal Monopoly -->
+        <div class="space-y-4 p-5 rounded-xl bg-black/40 border border-slate-800">
+          <div class="flex items-center gap-2 text-emerald-400 font-mono font-bold text-sm">
+            <span>01 &middot; Patent Monopoly &amp; International Priority</span>
+          </div>
+          <p class="leading-relaxed">
+            The deterministic, in-RAM zero-trust data sanitization mechanism, volatile session mapping, and cryptographic attestation topology are protected under Israel Patent Office Application <strong class="text-white">IL 331905</strong> (filed 14/09/2026, WIPO DAS Access Code: <strong class="text-emerald-400">B17B</strong>, Paris Convention international priority locked through 14/09/2027). The word mark <strong class="text-white">ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42).
+          </p>
+          <div class="p-3 bg-slate-900/90 rounded-lg border border-slate-800 font-mono text-[11px] text-slate-400 space-y-1">
+            <div><span class="text-slate-500">Open Specification:</span> Public domain &middot; Apache 2.0 / CC BY 4.0</div>
+            <div><span class="text-slate-500">Commercial Runtimes:</span> Proprietary licensed implementation</div>
+            <div><span class="text-slate-500">Canonical Pioneer:</span> PrivacyScrubber (Product #001)</div>
+          </div>
+        </div>
+
+        <!-- Column 2: Offline Zero-Telemetry Licensing & Continuous Rule Feeds -->
+        <div class="space-y-4 p-5 rounded-xl bg-black/40 border border-slate-800">
+          <div class="flex items-center gap-2 text-blue-400 font-mono font-bold text-sm">
+            <span>02 &middot; Air-Gapped Licensing &amp; Dynamic Rule Updates</span>
+          </div>
+          <p class="leading-relaxed">
+            Enterprise and TEAMS tiers operate on an entirely air-gapped cryptographic model: license validation utilizes local <strong class="text-white">Ed25519 digital signatures</strong> embedded directly into deployment tokens. Your instances never ping license activation servers, safeguarding air-gapped networks from phone-home telemetry.
+          </p>
+          <div class="p-3 bg-slate-900/90 rounded-lg border border-slate-800 font-mono text-[11px] text-slate-400 space-y-1">
+            <div><span class="text-slate-500">License Verification:</span> Offline Ed25519 &middot; Zero Network Calls</div>
+            <div><span class="text-slate-500">Compliance Feeds:</span> Continuous dynamic updates (30+ Industry Profiles)</div>
+            <div><span class="text-slate-500">Regulatory Coverage:</span> HIPAA Safe Harbor, PCI-DSS v4.0, GDPR Recital 26</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
+        <div class="text-slate-300">
+          <strong class="text-white">Need an Air-Gapped Enterprise Deployment License?</strong>
+          <span class="text-slate-400 block sm:inline sm:ml-1">Developer Pro ($1,990/yr) and TEAMS ($99/mo) licenses include offline Ed25519 tokens with instant fulfillment.</span>
+        </div>
+        <div class="flex items-center gap-3 shrink-0">
+          <a href="#commercial-checkout" onclick="const el=document.getElementById('commercial-checkout'); if(el) el.scrollIntoView({behavior:'smooth'});" class="btn-trust text-xs py-2 px-4 shadow-sm font-semibold">
+            View License Options &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+
     <!-- Code Integration Recipes Showcase with 10 Canonical Blueprints -->
     <div class="ztds-card bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden" id="connectors">
       <div class="p-6 border-b border-slate-200 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
@@ -1362,11 +1544,11 @@ jobs:
       <!-- Legal Conformance Notice Card -->
       <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
-          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Technical Conformance Demarcation</span>
-          <span class="text-slate-400 font-mono text-[10px]">RFC v1.0 &middot; Invariant Testing Specification</span>
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
+          <span class="text-slate-400 font-mono text-[10px]">Patent IL 331905 &middot; WIPO DAS: B17B &middot; Trademark #182655957</span>
         </div>
         <p>
-          ZTDS.ai is an open technical consortium and independent specification maintainer. The "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai and its maintainers make no warranties, express or implied, and expressly disclaim all liability for third-party implementations, software errors, or downstream data breaches.
+          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under Israel Patent Office Application <strong>IL 331905</strong> (filed 14/09/2026, WIPO DAS Access Code: <strong>B17B</strong>, Paris Convention international priority locked through 14/09/2027). The word mark <strong>ZTDS™</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
         </p>
       </div>
 

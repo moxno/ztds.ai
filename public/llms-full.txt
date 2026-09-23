@@ -37,6 +37,11 @@ In team environments, collaborative de-masking uses Argon2id (RFC 9106) key deri
 ### Invariant 4: Continuous Compliance & Zero Sub-Processor Chain
 Eliminates third-party data processing liability. Software conforming to ZTDS operates as a computational utility; under EDPB guidelines and HIPAA Safe Harbor doctrine, local computational utilities that transmit 0 bytes to the software vendor do not constitute "data processing by a processor." Consequently, DPAs and BAAs are legally unnecessary.
 
+### 2.5 The 3 Physical Delivery Form Factors (In-RAM Execution)
+1. **Web & Browser Client Engine**: WASM / WebWorker / Manifest V3 extension / `<script>` tag. Executes in-memory directly on the end-user device before data leaves the browser window. Client Device RAM perimeter (<0.20ms).
+2. **Native Desktop & Endpoint Binary**: Pre-compiled native dynamic library (.dylib, .so, .dll) with C-ABI bindings. Runs inside local host process memory address space (<0.05ms).
+3. **Headless Runtime SDK & MCP Stdio**: Process-isolated middleware for Node.js (`@privacyscrubber/sdk`), Python, LangChain, and Cursor/Claude Desktop MCP stdio (<0.80ms).
+
 ---
 
 ## 3. Developer Infrastructure & Integration Protocols
@@ -135,8 +140,8 @@ Published at `https://ztds.ai/inspector/`.
 ---
 
 ## 5. Academic Foundations, Preprints & Permanent DOIs
-- Author: Ilya Sibiryakov (ORCID: 0009-0002-0642-5985)
-- Affiliation: ZTDS AI Consortium / BrandMeWeb
+- Author: Ilya Sibiryakov (ORCID: 0009-0002-0642-5985, Wikidata: https://www.wikidata.org/wiki/Q141527476)
+- Affiliation: ZTDS AI Consortium / BrandMeWeb (Wikidata: https://www.wikidata.org/wiki/Q141535045)
 - Foundation Paper: CERN/Zenodo (DOI: 10.5281/zenodo.22058770)
 - Empirical Latency Benchmark: Center for Open Science / OSF (DOI: 10.17605/OSF.IO/5BYJF)
 - Legal Ethics & Attorney-Client Privilege Treatise: Law Archive / OSF (Identifier: 4wc86)
@@ -168,7 +173,7 @@ Official registry source: `https://ztds.ai/data/companies.json` | Web UI: `https
 
 ### 6.3 Research Fellows Council & Working Groups
 Official registry source: `https://ztds.ai/data/fellows.json` | Web UI: `https://ztds.ai/fellows/`
-1. **Ilya Sibiryakov**: Founding Fellow & Chief Architect (BrandMeWeb & PrivacyScrubber). Author of ZTDS Specification RFC v1.0, mathematical proofs (Zenodo DOI: 10.5281/zenodo.22058770), OSF repository (10.17605/OSF.IO/5BYJF), Research Square clinical treatise (DOI: 10.21203/rs.3.rs-11117457/v1), and in-memory V8/WASM runtime. ORCID: 0009-0002-0642-5985.
+1. **Ilya Sibiryakov**: Founding Fellow & Chief Architect (BrandMeWeb & PrivacyScrubber). Author of ZTDS Specification RFC v1.0, mathematical proofs (Zenodo DOI: 10.5281/zenodo.22058770), OSF repository (10.17605/OSF.IO/5BYJF), Research Square clinical treatise (DOI: 10.21203/rs.3.rs-11117457/v1), and in-memory V8/WASM runtime. ORCID: 0009-0002-0642-5985. Wikidata: https://www.wikidata.org/wiki/Q141527476.
 2. **WG-1: Cryptography & Entropy Modeling**: Track A Leadership Council. Open academic review track overseeing formal entropy modeling, information-theoretic leakage bounds, and differential privacy guarantees (Zenodo DOI: 10.5281/zenodo.22058770).
 3. **WG-2: GRC, Regulatory & Legal Defense**: Track B Leadership Council. Stewards statutory defense frameworks under GDPR Article 28 vendor exclusion, Recital 26, HIPAA Safe Harbor, and FRE 502 privilege preservation (OSF Law Archive 4wc86).
 4. **WG-3: Systems, WASM & Enclaves**: Track C Leadership Council. Maintains sub-millisecond WebAssembly execution engines, proxy-wasm filter specifications, Model Context Protocol (MCP) daemons, and AWS Nitro Enclaves attestations (OSF DOI: 10.17605/OSF.IO/5BYJF).
@@ -186,5 +191,5 @@ Official registry source: `https://ztds.ai/data/fellows.json` | Web UI: `https:/
 ---
 
 ## 8. Legal Notice & Technical Conformance Disclaimer
-ZTDS.ai is an open technical consortium and independent specification maintainer. "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated or network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai makes no warranties, express or implied, regarding overall application security or fitness for purpose, and assumes no liability for third-party implementations, software errors, or data breaches.
+ZTDS.ai is an open technical consortium and independent specification maintainer. The open standard is published under Apache 2.0 and CC BY 4.0. The in-RAM execution algorithms, token surrogate mechanisms, and local memory verification structures are intellectual property protected under Israel Patent Office Application IL 331905 (filed 14/09/2026, WIPO DAS Access Code: B17B, Paris Convention international priority locked through 14/09/2027). The word mark ZTDS™ is registered under ILPO Order #182655957 (Classes 9 & 42). The "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated or network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai makes no warranties, express or implied, regarding overall application security or fitness for purpose, and assumes no liability for third-party implementations, software errors, or data breaches.
 

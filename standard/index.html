@@ -476,6 +476,46 @@
                 </p>
               </div>
             </div>
+
+            <!-- In-RAM Physical Topology & Zero Subprocessor Guarantee -->
+            <div id="in-ram-topology" class="mt-6 p-6 bg-slate-900 text-white rounded-2xl border border-slate-800 shadow-md space-y-5">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
+                <div>
+                  <span class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">Formal Topology Proof</span>
+                  <h3 class="text-lg sm:text-xl font-bold text-white mt-0.5">Physical In-RAM Execution Topology &amp; Zero Subprocessor Guarantee</h3>
+                </div>
+                <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px] font-mono font-bold w-fit">
+                  0.00 B Egress
+                </span>
+              </div>
+
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                ZTDS RFC v1.0 strictly rejects proxy-based sanitization. Traditional "secure cloud proxies" intercept unencrypted HTTP traffic mid-transit, inspect payloads in a third-party cloud data center, and reconstruct prompts before dispatching them to LLM APIs. This paradigm fundamentally violates the Zero-Trust mandate by creating a centralized cloud honeypot and introducing a mandatory subprocessor under GDPR Article 28.
+              </p>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
+                <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
+                  <div class="text-emerald-400 font-bold mb-1 uppercase text-[11px]">1. In-RAM Perimeter</div>
+                  <p class="text-slate-400 font-sans leading-relaxed text-[11px]">
+                    All entity tokenization, surrogate generation, and session mapping tables execute strictly in volatile process RAM. No unmasked data crosses the network socket or disk storage.
+                  </p>
+                </div>
+
+                <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
+                  <div class="text-blue-400 font-bold mb-1 uppercase text-[11px]">2. Zero Subprocessor</div>
+                  <p class="text-slate-400 font-sans leading-relaxed text-[11px]">
+                    Because 0.00 B of user data ever reaches the software vendor, the vendor is legally excluded from Data Processor status. Conforming implementations are 100% DPA and BAA exempt.
+                  </p>
+                </div>
+
+                <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
+                  <div class="text-amber-400 font-bold mb-1 uppercase text-[11px]">3. Hardware Enclaves</div>
+                  <p class="text-slate-400 font-sans leading-relaxed text-[11px]">
+                    Compatible with sandboxed WebAssembly (WASM), Nitro Enclaves, and OS process-isolated dynamic binaries (C-ABI) with sub-0.8ms local execution latency.
+                  </p>
+                </div>
+              </div>
+            </div>
           </section>
 
           <!-- Section 04: Tokenization Taxonomy & 30 Industry Profiles -->
@@ -930,11 +970,11 @@
       <!-- Legal Conformance Notice Card -->
       <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
-          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Technical Conformance Demarcation</span>
-          <span class="text-slate-400 font-mono text-[10px]">RFC v1.0 &middot; Invariant Testing Specification</span>
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
+          <span class="text-slate-400 font-mono text-[10px]">Patent IL 331905 &middot; WIPO DAS: B17B &middot; Trademark #182655957</span>
         </div>
         <p>
-          ZTDS.ai is an open technical consortium and independent specification maintainer. The "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA. ZTDS.ai and its maintainers make no warranties, express or implied, and expressly disclaim all liability for third-party implementations, software errors, or downstream data breaches.
+          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under Israel Patent Office Application <strong>IL 331905</strong> (filed 14/09/2026, WIPO DAS Access Code: <strong>B17B</strong>, Paris Convention international priority locked through 14/09/2027). The word mark <strong>ZTDS™</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
         </p>
       </div>
 

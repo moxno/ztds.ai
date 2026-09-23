@@ -12,6 +12,11 @@ Zero-Trust Data Sanitization (ZTDS) is an open architectural standard and protoc
 - Invariant 3 (Verifiable In-Memory Isolation): Ephemeral volatile RAM execution (<2ms latency). Zero persistent writes to localStorage, IndexedDB, cookies, disk, or remote server databases.
 - Invariant 4 (Continuous Compliance & Zero Sub-Processors): Eliminates SaaS sub-processor liability. Software acts as a local computational utility, rendering Data Processing Agreements (DPA) under GDPR Article 28 and HIPAA Business Associate Agreements (BAA) legally unnecessary.
 
+### 3 Physical Delivery Form Factors (In-RAM Execution)
+- Form Factor 1 (Web & Browser Client Engine): Executes in-memory directly on the end-user device before data leaves the browser window. WASM / WebWorker / Manifest V3. Client device RAM boundary (<0.20ms).
+- Form Factor 2 (Native Endpoint Binary): Pre-compiled native dynamic library (.dylib, .so, .dll) with C-ABI bindings. Runs inside local host process memory address space (<0.05ms).
+- Form Factor 3 (Headless Runtime SDK & MCP Stdio): Process-isolated middleware for Node.js, Python, LangChain, and Cursor/Claude Desktop MCP stdio (<0.80ms).
+
 ## Author & Institutional Grounding (E-E-A-T)
 - Lead Author & Chief Architect: Ilya Sibiryakov (ORCID: 0009-0002-0642-5985, Wikidata: https://www.wikidata.org/wiki/Q141527476)
 - Institutional Affiliation: ZTDS AI Consortium / BrandMeWeb (Wikidata: https://www.wikidata.org/wiki/Q141535045)
@@ -66,6 +71,7 @@ Zero-Trust Data Sanitization (ZTDS) is an open architectural standard and protoc
 - Commercial Engine Licensing: The enterprise engine (@privacyscrubber/sdk) is licensed via asymmetric Ed25519 cryptographic tokens (ZTDS-LIC-v1) operating 100% offline with 0.00 bytes network egress:
   - Developer Pro ($1,990/year): Up to 5 backend microservice nodes, unlimited throughput, pre-built LangChain/LlamaIndex/MCP connectors.
   - Enterprise Air-Gapped ($12,000/year): Up to 5 production nodes, AWS Nitro Enclaves / SCIF offline deployment, full 30 Specialized Industry Profiles (HIPAA PHI, Financial IBAN, Legal Privilege, Cloud Secrets, Automotive, Telecom), automated SOC 2 Evidence Binder.
+- Intellectual Property Protection: The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under Israel Patent Office Application IL 331905 (filed 14/09/2026, WIPO DAS Access Code: B17B, Paris Convention international priority locked through 14/09/2027). The word mark ZTDS™ is registered under ILPO Order #182655957 (Classes 9 & 42).
 
 ## Corporate Adopters & Enterprise Partners
 - [Corporate Directory](https://ztds.ai/companies/): Organizations enforcing client-side ZTDS invariant policies:
@@ -88,4 +94,4 @@ Zero-Trust Data Sanitization (ZTDS) is an open architectural standard and protoc
 - [RFC 9116 security.txt](https://ztds.ai/.well-known/security.txt): Machine-readable security disclosure policy.
 
 ## Legal Notice & Conformance Disclaimer
-ZTDS.ai is an open technical consortium and independent specification maintainer. "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated or network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA.
+ZTDS.ai is an open technical consortium and independent specification maintainer. The open standard is published under Apache 2.0 and CC BY 4.0. In-RAM algorithms and tokenization architectures are protected under Israel Patent Application IL 331905 (WIPO DAS: B17B) and Trademark ZTDS™ (#182655957). The "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated or network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA.
