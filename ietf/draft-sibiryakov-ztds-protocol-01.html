@@ -1,0 +1,2068 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>The Zero-Trust Data Sanitization (ZTDS) Protocol for Frontier Artificial Intelligence Ingestion</title>
+<meta content="Ilya Sibiryakov" name="author">
+<meta content="
+       
+        This document specifies the Zero-Trust Data Sanitization (ZTDS) protocol, an architectural framework and execution standard designed to eliminate personally identifiable information (PII), protected health information (PHI), payment card data, and corporate credentials from unstructured text payloads prior to ingestion by remote Large Language Models (LLMs) and autonomous AI agents.
+       
+       
+        ZTDS enforces strict in-memory execution within volatile Random Access Memory (RAM), ephemeral surrogate tokenization, tab-isolated session mapping, and mathematically verifiable zero network egress of raw identifying data. Reversible mapping is executed strictly on the client or private host boundary, precluding intermediate cloud proxy interception, prompt injection exfiltration, and persistent vector database poisoning.
+       
+    " name="description">
+<meta content="xml2rfc 3.34.1" name="generator">
+<meta content="Zero-Trust" name="keyword">
+<meta content="Data Sanitization" name="keyword">
+<meta content="PII Redaction" name="keyword">
+<meta content="Large Language Models" name="keyword">
+<meta content="Generative AI" name="keyword">
+<meta content="In-Memory Computing" name="keyword">
+<meta content="Privacy-Preserving AI" name="keyword">
+<meta content="draft-sibiryakov-ztds-protocol-01" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.34.1
+    Python 3.12.3
+    ConfigArgParse 1.7.7
+    google-i18n-address 3.1.1
+    intervaltree 3.2.1
+    Jinja2 3.1.6
+    lxml 6.1.3
+    natsort 8.4.0
+    platformdirs 4.11.8
+    pycountry 26.2.16
+    PyYAML 6.0.3
+    requests 2.34.2
+    wcwidth 0.8.3
+    weasyprint 70.0
+-->
+<link href="draft-sibiryakov-ztds-protocol-01.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">/*
+
+  NOTE: Changes at the bottom of this file overrides some earlier settings.
+
+  Once the style has stabilized and has been adopted as an official RFC style,
+  this can be consolidated so that style settings occur only in one place, but
+  for now the contents of this file consists first of the initial CSS work as
+  provided to the RFC Formatter (xml2rfc) work, followed by itemized and
+  commented changes found necessary during the development of the v3
+  formatters.
+
+*/
+
+/* fonts */
+@import url('https://static.ietf.org/fonts/noto-sans/import.css'); /* Sans-serif */
+@import url('https://static.ietf.org/fonts/noto-serif/import.css'); /* Serif (print) */
+@import url('https://static.ietf.org/fonts/roboto-mono/import.css'); /* Monospace */
+
+:root {
+  --font-sans: 'Noto Sans', Arial, Helvetica, sans-serif;
+  --font-serif: 'Noto Serif', 'Times', 'Times New Roman', serif;
+  --font-mono: 'Roboto Mono', Courier, 'Courier New', monospace;
+}
+
+@viewport {
+  zoom: 1.0;
+}
+@-ms-viewport {
+  width: extend-to-zoom;
+  zoom: 1.0;
+}
+/* general and mobile first */
+html {
+}
+body {
+  max-width: 90%;
+  margin: 1.5em auto;
+  color: #222;
+  background-color: #fff;
+  font-size: 14px;
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  overflow-wrap: break-word;
+}
+.ears {
+  display: none;
+}
+
+/* headings */
+#title, h1, h2, h3, h4, h5, h6 {
+  margin: 1em 0 0.5em;
+  font-weight: bold;
+  line-height: 1.3;
+}
+#title {
+  clear: both;
+  border-bottom: 1px solid #ddd;
+  margin: 0 0 0.5em 0;
+  padding: 1em 0 0.5em;
+}
+.author {
+  padding-bottom: 4px;
+}
+h1 {
+  font-size: 26px;
+  margin: 1em 0;
+}
+h2 {
+  font-size: 22px;
+  margin-top: -20px;  /* provide offset for in-page anchors */
+  padding-top: 33px;
+}
+h3 {
+  font-size: 18px;
+  margin-top: -36px;  /* provide offset for in-page anchors */
+  padding-top: 42px;
+}
+h4 {
+  font-size: 16px;
+  margin-top: -36px;  /* provide offset for in-page anchors */
+  padding-top: 42px;
+}
+h5, h6 {
+  font-size: 14px;
+}
+#n-copyright-notice {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+}
+/* general structure */
+p {
+  padding: 0;
+  margin: 0 0 1em 0;
+  text-align: left;
+}
+div, span {
+  position: relative;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 1em 1em 0;
+  margin-bottom: 1.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+@media print {
+  svg {
+    max-height: 850px;
+    max-width: 660px;
+  }
+}
+svg[font-family~="serif" i], svg [font-family~="serif" i] {
+  font-family: var(--font-serif);
+}
+svg[font-family~="sans-serif" i], svg [font-family~="sans-serif" i] {
+  font-family: var(--font-sans);
+}
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 1em 1em 0;
+  margin-bottom: 1.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  display: table;
+  border: none;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 1em 2em;
+}
+ol ol, ul ul, ol ul, ul ol {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+ul.ulBare, li.ulBare {
+  margin-left: 0em !important;
+}
+ul.compact, .ulCompact,
+ol.compact, .olCompact {
+  line-height: 100%;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+/* 
+dl.nohang > dt {
+  float: none;
+}
+*/
+dl > dd {
+  margin-bottom: .8em;
+  min-height: 1.3em;
+}
+dl.compact > dd, .dlCompact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+
+/* links */
+a {
+  text-decoration: none;
+}
+a[href] {
+  color: #22e; /* Arlen: WCAG 2019 */
+}
+a[href]:hover {
+  background-color: #f2f2f2;
+}
+figcaption a[href],
+a[href].selfRef {
+  color: #222;
+}
+/* XXX probably not this:
+a.selfRef:hover {
+  background-color: transparent;
+  cursor: default;
+} */
+
+/* Figures */
+tt, code, pre {
+  background-color: #f9f9f9;
+  font-family: var(--font-mono);
+}
+pre {
+  border: 1px solid #eee;
+  margin: 0;
+  padding: 1em;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption {
+  font-style: italic;
+  margin: 0 0 1em 0;
+}
+@media screen {
+  pre {
+    overflow-x: auto;
+    max-width: 100%;
+    max-width: calc(100% - 22px);
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 1.2em 2em;
+}
+blockquote {
+  background-color: #f9f9f9;
+  color: #111; /* Arlen: WCAG 2019 */
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin: 1em 0;
+}
+blockquote > *:last-child {
+  margin-bottom: 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+.xref {
+  overflow-wrap: normal;
+}
+
+/* tables */
+table {
+  width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  border: 1px solid #eee;
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5em 0.75em;
+}
+th {
+  text-align: left;
+  background-color: #e9e9e9;
+}
+tr:nth-child(2n+1) > td {
+  background-color: #f5f5f5;
+}
+table caption {
+  font-style: italic;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+table p {
+  /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
+     be allowed within tables more generally, it would be far better to select on a class. */
+  margin: 0;
+}
+sub,
+sup {
+ white-space: nowrap;
+}
+
+/* pilcrow */
+a.pilcrow {
+  color: #666; /* Arlen: AHDJ 2019 */
+  text-decoration: none;
+  visibility: hidden;
+  user-select: none;
+  -ms-user-select: none;
+  -o-user-select:none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+@media screen {
+  aside:hover > a.pilcrow,
+  p:hover > a.pilcrow,
+  blockquote:hover > a.pilcrow,
+  div:hover > a.pilcrow,
+  li:hover > a.pilcrow,
+  pre:hover > a.pilcrow {
+    visibility: visible;
+  }
+  a.pilcrow:hover {
+    background-color: transparent;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+}
+.bcp14 {
+  font-variant: small-caps;
+}
+
+.role {
+  font-variant: all-small-caps;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: 0.9em;
+}
+#identifiers dt {
+  width: 3em;
+  clear: left;
+}
+#identifiers dd {
+  float: left;
+  margin-bottom: 0;
+}
+/* Fix PDF info block run off issue */
+@media print {
+  #identifiers dd {
+    max-width: 100%;
+  }
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #666; /* Arlen: WCAG 2019 */
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc  {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+nav.toc ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+nav.toc li {
+  line-height: 1.3em;
+  margin: 0.75em 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 7em;
+}
+.references dd {
+  margin-left: 8em;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.refSubseries {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+.index ul {
+  margin: 0 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+.index ul ul {
+  margin: 0;
+}
+.index li {
+  margin: 0;
+  text-indent: -2em;
+  padding-left: 2em;
+  padding-bottom: 5px;
+}
+.indexIndex {
+  margin: 0.5em 0 1em;
+}
+.index a {
+  font-weight: 700;
+}
+/* make the index two-column on all but the smallest screens */
+@media (min-width: 600px) {
+  .index ul {
+    -moz-column-count: 2;
+    -moz-column-gap: 20px;
+  }
+  .index ul ul {
+    -moz-column-count: 1;
+    -moz-column-gap: 0;
+  }
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  font-family: var(--font-sans);
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+
+/* temporary notes */
+.rfcEditorRemove::before {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  padding: 0.2em;
+  content: "The RFC Editor will remove this note";
+  color: #9e2a00; /* Arlen: WCAG 2019 */
+  background-color: #ffd; /* Arlen: WCAG 2019 */
+}
+.rfcEditorRemove {
+  position: relative;
+  padding-top: 1.8em;
+  background-color: #ffd; /* Arlen: WCAG 2019 */
+  border-radius: 3px;
+}
+.cref {
+  background-color: #ffd; /* Arlen: WCAG 2019 */
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 1023px) {
+  body {
+    padding-top: 2em;
+  }
+  #title {
+    padding: 1em 0;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    margin-top: -18px;  /* provide offset for in-page anchors */
+    padding-top: 38px;
+  }
+  #identifiers dd {
+    max-width: 60%;
+  }
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    background-color: inherit;
+    border-bottom: 1px solid #ccc;
+  }
+  #toc h2 {
+    margin: -1px 0 0 0;
+    padding: 4px 0 4px 6px;
+    padding-right: 1em;
+    min-width: 190px;
+    font-size: 1.1em;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 6px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 1024px) {
+  body {
+    max-width: 724px;
+    margin: 42px auto;
+    padding-left: 1.5em;
+    padding-right: 29em;
+  }
+  #toc {
+    position: fixed;
+    top: 42px;
+    right: 42px;
+    width: 25%;
+    margin: 0;
+    padding: 0 1em;
+    z-index: 1;
+  }
+  #toc h2 {
+    border-top: none;
+    border-bottom: 1px solid #ddd;
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 0;
+    overflow: auto;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre {
+    page-break-inside: avoid;
+  }
+  figure {
+    overflow: scroll;
+  }
+  .breakable pre {
+    break-inside: auto;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  h2+*, h3+*, h4+*, h5+*, h6+* {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+/* This is commented out here, as the string-set: doesn't
+   pass W3C validation currently */
+/*
+.ears thead .left {
+  string-set: ears-top-left content();
+}
+
+.ears thead .center {
+  string-set: ears-top-center content();
+}
+
+.ears thead .right {
+  string-set: ears-top-right content();
+}
+
+.ears tfoot .left {
+  string-set: ears-bottom-left content();
+}
+
+.ears tfoot .center {
+  string-set: ears-bottom-center content();
+}
+
+.ears tfoot .right {
+  string-set: ears-bottom-right content();
+}
+*/
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+  /* The following is commented out here, but set appropriately by in code, as
+     the content depends on the document */
+  /*
+  @top-left {
+    content: 'Internet-Draft';
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-left {
+    content: string(ears-top-left);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-center {
+    content: string(ears-top-center);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-right {
+    content: string(ears-top-right);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @bottom-left {
+    content: string(ears-bottom-left);
+    vertical-align: top;
+    border-top: solid 1px #ccc;
+  }
+  @bottom-center {
+    content: string(ears-bottom-center);
+    vertical-align: top;
+    border-top: solid 1px #ccc;
+  }
+  @bottom-right {
+      content: '[Page ' counter(page) ']';
+      vertical-align: top;
+      border-top: solid 1px #ccc;
+  }
+  */
+
+}
+
+/* Changes introduced to fix issues found during implementation */
+/* Make sure links are clickable even if overlapped by following H* */
+a {
+  z-index: 2;
+}
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Leave room in document info to show Internet-Draft on one line */
+#identifiers dt {
+  width: 8em;
+}
+
+/* Don't waste quite as much whitespace between label and value in doc info */
+#identifiers dd {
+  margin-left: 1em;
+}
+
+/* Give floating toc a background color (needed when it's a div inside section */
+#toc {
+  background-color: white;
+}
+
+/* Make the collapsed ToC header render white on gray also when it's a link */
+@media screen and (max-width: 1023px) {
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+}
+
+/* Give the bottom of the ToC some whitespace */
+@media screen and (min-width: 1024px) {
+  #toc {
+    padding: 0 0 1em 1em;
+  }
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* prevent monospace from becoming overly large */
+tt, code, pre {
+  font-size: 95%;
+}
+
+/* Fix the height/width aspect for ascii art*/
+.sourcecode pre,
+.art-text pre {
+  line-height: 1.12;
+}
+
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin-right: 0.5em;
+}
+
+/* Fix the dl styling to match the RFC 7992 attributes */
+dl > dt,
+dl.dlParallel > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+
+/* Provide styling for table cell text alignment */
+table td.text-left,
+table th.text-left {
+  text-align: left;
+}
+table td.text-center,
+table th.text-center {
+  text-align: center;
+}
+table td.text-right,
+table th.text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact information look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 30em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Provide table alignment support.  We can't use the alignX classes above
+   since they do unwanted things with caption and other styling. */
+table.right {
+ margin-left: auto;
+ margin-right: 0;
+}
+table.center {
+ margin-left: auto;
+ margin-right: auto;
+}
+table.left {
+ margin-left: 0;
+ margin-right: auto;
+}
+
+/* Give the table caption label the same styling as the figcaption */
+caption a[href] {
+  color: #222;
+}
+
+@media print {
+  .toplink {
+    display: none;
+  }
+
+  /* avoid overwriting the top border line with the ToC header */
+  #toc {
+    padding-top: 1px;
+  }
+
+  /* Avoid page breaks inside dl and author address entries */
+  .vcard {
+    page-break-inside: avoid;
+  }
+
+}
+/* Tweak the bcp14 keyword presentation */
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+/* Tweak the invisible space above H* in order not to overlay links in text above */
+ h2 {
+  margin-top: -18px;  /* provide offset for in-page anchors */
+  padding-top: 31px;
+ }
+ h3 {
+  margin-top: -18px;  /* provide offset for in-page anchors */
+  padding-top: 24px;
+ }
+ h4 {
+  margin-top: -18px;  /* provide offset for in-page anchors */
+  padding-top: 24px;
+ }
+/* Float artwork pilcrow to the right */
+@media screen {
+  .artwork a.pilcrow {
+    display: block;
+    line-height: 0.7;
+    margin-top: 0.15em;
+  }
+}
+/* Make pilcrows on dd visible */
+@media screen {
+  dd:hover > a.pilcrow {
+    visibility: visible;
+  }
+}
+/* Make the placement of figcaption match that of a table's caption
+   by removing the figure's added bottom margin */
+.alignLeft.art-text,
+.alignCenter.art-text,
+.alignRight.art-text {
+   margin-bottom: 0;
+}
+.alignLeft,
+.alignCenter,
+.alignRight {
+  margin: 1em 0 0 0;
+}
+/* In print, the pilcrow won't show on hover, so prevent it from taking up space,
+   possibly even requiring a new line */
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+/* Styling for the external metadata */
+div#external-metadata {
+  background-color: #eee;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+  display: none;
+}
+div#internal-metadata {
+  padding: 0.5em;                       /* to match the external-metadata padding */
+}
+/* Styling for title RFC Number */
+h1#rfcnum {
+  clear: both;
+  margin: 0 0 -1em;
+  padding: 1em 0 0 0;
+}
+/* Make .olPercent look the same as <ol><li> */
+dl.olPercent > dd {
+  margin-bottom: 0.25em;
+  min-height: initial;
+}
+/* Give aside some styling to set it apart */
+aside {
+  border-left: 1px solid #ddd;
+  margin: 1em 0 1em 2em;
+  padding: 0.2em 2em;
+}
+aside > dl,
+aside > ol,
+aside > ul,
+aside > table,
+aside > p {
+  margin-bottom: 0.5em;
+}
+/* Additional page break settings */
+@media print {
+  figcaption, table caption {
+    page-break-before: avoid;
+  }
+  table {
+    page-break-inside: avoid;
+  }
+}
+/* Font size adjustments for print */
+@media print {
+  body  { font-size: 10pt;      line-height: normal; max-width: 96%; }
+  h1    { font-size: 1.72em;    padding-top: 1.5em; } /* 1*1.2*1.2*1.2 */
+  h2    { font-size: 1.44em;    padding-top: 1.5em; } /* 1*1.2*1.2 */
+  h3    { font-size: 1.2em;     padding-top: 1.5em; } /* 1*1.2 */
+  h4    { font-size: 1em;       padding-top: 1.5em; }
+  h5, h6 { font-size: 1em;      margin: initial; padding: 0.5em 0 0.3em; }
+}
+/* Sourcecode margin in print, when there's no pilcrow */
+@media print {
+  .artwork,
+  .artwork > pre,
+  .sourcecode {
+    margin-bottom: 1em;
+  }
+}
+/* Avoid narrow tables forcing too narrow table captions, which may render badly */
+table {
+  min-width: 20em;
+}
+/* ol type a */
+ol.type-a { list-style-type: lower-alpha; }
+ol.type-A { list-style-type: upper-alpha; }
+ol.type-i { list-style-type: lower-roman; }
+ol.type-I { list-style-type: upper-roman; }
+/* Apply the print table and row borders in general, on request from the RPC,
+and increase the contrast between border and odd row background slightly */
+table {
+  border: 1px solid #ddd;
+}
+td {
+  border-top: 1px solid #ddd;
+}
+tr {
+  break-inside: avoid;
+}
+tr:nth-child(2n+1) > td {
+  background-color: #f8f8f8;
+}
+/* Use style rules to govern display of the TOC. */
+@media screen and (max-width: 1023px) {
+  #toc nav { display: none; }
+  #toc.active nav { display: block; }
+}
+/* Add support for keepWithNext */
+.keepWithNext {
+  break-after: avoid-page;
+  break-after: avoid-page;
+}
+/* Add support for keepWithPrevious */
+.keepWithPrevious {
+  break-before: avoid-page;
+}
+/* Change the approach to avoiding breaks inside artwork etc. */
+figure, pre, table, .artwork, .sourcecode  {
+  break-before: auto;
+  break-after: auto;
+}
+/* Avoid breaks between <dt> and <dd> */
+dl {
+  break-before: auto;
+  break-inside: auto;
+}
+dt {
+  break-before: auto;
+  break-after: avoid-page;
+}
+dd {
+  break-before: avoid-page;
+  break-after: auto;
+  orphans: 3;
+  widows: 3
+}
+span.break, dd.break {
+  margin-bottom: 0;
+  min-height: 0;
+  break-before: auto;
+  break-inside: auto;
+  break-after: auto;
+}
+/* Undo break-before ToC */
+@media print {
+  #toc {
+    break-before: auto;
+  }
+}
+/* Text in compact lists should not get extra bottom margin space,
+   since that would makes the list not compact */
+ul.compact p, .ulCompact p,
+ol.compact p, .olCompact p {
+ margin: 0;
+}
+/* But the list as a whole needs the extra space at the end */
+section ul.compact,
+section .ulCompact,
+section ol.compact,
+section .olCompact {
+  margin-bottom: 1em;                    /* same as p not within ul.compact etc. */
+}
+/* The tt and code background above interferes with for instance table cell
+   backgrounds.  Changed to something a bit more selective. */
+tt, code {
+  background-color: transparent;
+}
+p tt, p code, li tt, li code, dt tt, dt code {
+  background-color: #f8f8f8;
+}
+/* Tweak the pre margin -- 0px doesn't come out well */
+pre {
+   margin-top: 0.5px;
+}
+/* Tweak the compact list text */
+ul.compact, .ulCompact,
+ol.compact, .olCompact,
+dl.compact, .dlCompact {
+  line-height: normal;
+}
+/* Don't add top margin for nested lists */
+li > ul, li > ol, li > dl,
+dd > ul, dd > ol, dd > dl,
+dl > dd > dl {
+  margin-top: initial;
+}
+/* Elements that should not be rendered on the same line as a <dt> */
+/* This should match the element list in writer.text.TextWriter.render_dl() */
+dd > div.artwork:first-child,
+dd > aside:first-child,
+dd > blockquote:first-child,
+dd > figure:first-child,
+dd > ol:first-child,
+dd > div.sourcecode:first-child,
+dd > table:first-child,
+dd > ul:first-child {
+  clear: left;
+}
+/* fix for weird browser behaviour when <dd/> is empty */
+dt+dd:empty::before{
+  content: "\00a0";
+}
+/* Make paragraph spacing inside <li> smaller than in body text, to fit better within the list */
+li > p {
+  margin-bottom: 0.5em
+}
+/* Don't let p margin spill out from inside list items */
+li > p:last-of-type:only-child {
+  margin-bottom: 0;
+}
+</style>
+<link href="rfc-local.css" rel="stylesheet" type="text/css">
+<script type="application/javascript">async function addMetadata(){try{const e=document.styleSheets[0].cssRules;for(let t=0;t<e.length;t++)if(/#identifiers/.exec(e[t].selectorText)){const a=e[t].cssText.replace("#identifiers","#external-updates");document.styleSheets[0].insertRule(a,document.styleSheets[0].cssRules.length)}}catch(e){console.log(e)}const e=document.getElementById("external-metadata");if(e)try{var t,a="",o=function(e){const t=document.getElementsByTagName("meta");for(let a=0;a<t.length;a++)if(t[a].getAttribute("name")===e)return t[a].getAttribute("content");return""}("rfc.number");if(o){t="https://www.rfc-editor.org/rfc/rfc"+o+".json";try{const e=await fetch(t);a=await e.json()}catch(e){t=document.URL.indexOf("html")>=0?document.URL.replace(/html$/,"json"):document.URL+".json";const o=await fetch(t);a=await o.json()}}if(!a)return;e.style.display="block";const s="",d="https://datatracker.ietf.org/doc",n="https://datatracker.ietf.org/ipr/search",c="https://www.rfc-editor.org/info",l=a.doc_id.toLowerCase(),i=a.doc_id.slice(0,3).toLowerCase(),f=a.doc_id.slice(3).replace(/^0+/,""),u={status:"Status",obsoletes:"Obsoletes",obsoleted_by:"Obsoleted By",updates:"Updates",updated_by:"Updated By",see_also:"See Also",errata_url:"Errata"};let h="<dl style='overflow:hidden' id='external-updates'>";["status","obsoletes","obsoleted_by","updates","updated_by","see_also","errata_url"].forEach(e=>{if("status"==e){a[e]=a[e].toLowerCase();var t=a[e].split(" "),o=t.length,w="",p=1;for(let e=0;e<o;e++)p<o?w=w+r(t[e])+" ":w+=r(t[e]),p++;a[e]=w}else if("obsoletes"==e||"obsoleted_by"==e||"updates"==e||"updated_by"==e){var g,m="",b=1;g=a[e].length;for(let t=0;t<g;t++)a[e][t]&&(a[e][t]=String(a[e][t]).toLowerCase(),m=b<g?m+"<a href='"+s+"/rfc/".concat(a[e][t])+"'>"+a[e][t].slice(3)+"</a>, ":m+"<a href='"+s+"/rfc/".concat(a[e][t])+"'>"+a[e][t].slice(3)+"</a>",b++);a[e]=m}else if("see_also"==e){var y,L="",C=1;y=a[e].length;for(let t=0;t<y;t++)if(a[e][t]){a[e][t]=String(a[e][t]);var _=a[e][t].slice(0,3),v=a[e][t].slice(3).replace(/^0+/,"");L=C<y?"RFC"!=_?L+"<a href='"+s+"/info/"+_.toLowerCase().concat(v.toLowerCase())+"'>"+_+" "+v+"</a>, ":L+"<a href='"+s+"/info/"+_.toLowerCase().concat(v.toLowerCase())+"'>"+v+"</a>, ":"RFC"!=_?L+"<a href='"+s+"/info/"+_.toLowerCase().concat(v.toLowerCase())+"'>"+_+" "+v+"</a>":L+"<a href='"+s+"/info/"+_.toLowerCase().concat(v.toLowerCase())+"'>"+v+"</a>",C++}a[e]=L}else if("errata_url"==e){var R="";R=a[e]?R+"<a href='"+a[e]+"'>Errata exist</a> | <a href='"+d+"/"+l+"'>Datatracker</a>| <a href='"+n+"/?"+i+"="+f+"&submit="+i+"'>IPR</a> | <a href='"+c+"/"+l+"'>Info page</a>":"<a href='"+d+"/"+l+"'>Datatracker</a> | <a href='"+n+"/?"+i+"="+f+"&submit="+i+"'>IPR</a> | <a href='"+c+"/"+l+"'>Info page</a>",a[e]=R}""!=a[e]?"Errata"==u[e]?h+=`<dt>More info:</dt><dd>${a[e]}</dd>`:h+=`<dt>${u[e]}:</dt><dd>${a[e]}</dd>`:"Errata"==u[e]&&(h+=`<dt>More info:</dt><dd>${a[e]}</dd>`)}),h+="</dl>",e.innerHTML=h}catch(e){console.log(e)}else console.log("Could not locate metadata <div> element");function r(e){return e.charAt(0).toUpperCase()+e.slice(1)}}window.removeEventListener("load",addMetadata),window.addEventListener("load",addMetadata);</script>
+</head>
+<body class="xml2rfc">
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">ZTDS Protocol</td>
+<td class="right">September 2026</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Sibiryakov</td>
+<td class="center">Expires 27 March 2027</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Network Working Group</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-sibiryakov-ztds-protocol-01</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2026-09-23" class="published">23 September 2026</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2027-03-27">27 March 2027</time></dd>
+<dt class="label-authors">Author:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">I. Sibiryakov</div>
+<div class="org">ZTDS AI Consortium</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">The Zero-Trust Data Sanitization (ZTDS) Protocol for Frontier Artificial Intelligence Ingestion</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">
+        This document specifies the Zero-Trust Data Sanitization (ZTDS) protocol, an architectural framework and execution standard designed to eliminate personally identifiable information (PII), protected health information (PHI), payment card data, and corporate credentials from unstructured text payloads prior to ingestion by remote Large Language Models (LLMs) and autonomous AI agents.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">
+        ZTDS enforces strict in-memory execution within volatile Random Access Memory (RAM), ephemeral surrogate tokenization, tab-isolated session mapping, and mathematically verifiable zero network egress of raw identifying data. Reversible mapping is executed strictly on the client or private host boundary, precluding intermediate cloud proxy interception, prompt injection exfiltration, and persistent vector database poisoning.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 27 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2026 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-problem-statement-the-cloud" class="internal xref">Problem Statement: The Cloud DLP Paradox</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
+                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-architectural-paradigm-clou" class="internal xref">Architectural Paradigm: Cloud Proxy vs. Host-Native In-Memory Boundary</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3">
+                <p id="section-toc.1-1.1.2.3.1" class="keepWithNext"><a href="#section-1.3" class="auto internal xref">1.3</a>.  <a href="#name-requirements-language" class="internal xref">Requirements Language</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.4">
+                <p id="section-toc.1-1.1.2.4.1"><a href="#section-1.4" class="auto internal xref">1.4</a>.  <a href="#name-terminology" class="internal xref">Terminology</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-mathematical-model-and-core" class="internal xref">Mathematical Model and Core Invariants</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-formal-model-definition" class="internal xref">Formal Model Definition</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-the-four-fundamental-invari" class="internal xref">The Four Fundamental Invariants</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.1">
+                    <p id="section-toc.1-1.2.2.2.2.1.1"><a href="#section-2.2.1" class="auto internal xref">2.2.1</a>.  <a href="#name-invariant-1-volatile-memory" class="internal xref">Invariant 1: Volatile Memory Boundary (RAM-Only Isolation)</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.2">
+                    <p id="section-toc.1-1.2.2.2.2.2.1"><a href="#section-2.2.2" class="auto internal xref">2.2.2</a>.  <a href="#name-invariant-2-sub-2-milliseco" class="internal xref">Invariant 2: Sub-2-Millisecond Latency Ceiling</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.3">
+                    <p id="section-toc.1-1.2.2.2.2.3.1"><a href="#section-2.2.3" class="auto internal xref">2.2.3</a>.  <a href="#name-invariant-3-zero-outgoing-n" class="internal xref">Invariant 3: Zero Outgoing Network Transmission (Airplane Mode Standard)</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.4">
+                    <p id="section-toc.1-1.2.2.2.2.4.1"><a href="#section-2.2.4" class="auto internal xref">2.2.4</a>.  <a href="#name-invariant-4-cryptographic-t" class="internal xref">Invariant 4: Cryptographic Transport Handoff</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-protocol-lifecycle-and-oper" class="internal xref">Protocol Lifecycle and Operational Mechanics</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-phase-1-ingestion-and-lexic" class="internal xref">Phase 1: Ingestion and Lexical Boundary Parsing</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-phase-2-contextual-surrogat" class="internal xref">Phase 2: Contextual Surrogate Tokenization</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-phase-3-ephemeral-session-m" class="internal xref">Phase 3: Ephemeral Session Map Allocation</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-phase-4-upstream-transmissi" class="internal xref">Phase 4: Upstream Transmission and Inference</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5">
+                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-phase-5-local-de-tokenizati" class="internal xref">Phase 5: Local De-Tokenization (Re-identification)</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.6">
+                <p id="section-toc.1-1.3.2.6.1"><a href="#section-3.6" class="auto internal xref">3.6</a>.  <a href="#name-phase-6-deterministic-memor" class="internal xref">Phase 6: Deterministic Memory Erasure</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-surrogate-token-taxonomy" class="internal xref">Surrogate Token Taxonomy</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-cryptographic-transport-han" class="internal xref">Cryptographic Transport Handoff Protocol</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-cipher-and-key-derivation-p" class="internal xref">Cipher and Key Derivation Parameters</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-verification-and-conformanc" class="internal xref">Verification and Conformance Audit</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-the-5-step-airplane-mode-au" class="internal xref">The 5-Step Airplane Mode Audit Procedure</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-conformance-test-vectors" class="internal xref">Conformance Test Vectors</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-prompt-injection-and-traini" class="internal xref">Prompt Injection and Training Data Exfiltration</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
+                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-local-host-memory-inspectio" class="internal xref">Local Host Memory Inspection and Swap Analysis</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3">
+                <p id="section-toc.1-1.9.2.3.1"><a href="#section-9.3" class="auto internal xref">9.3</a>.  <a href="#name-surrogate-token-collision-a" class="internal xref">Surrogate Token Collision and Ambiguity</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
+                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
+                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">
+        The rapid deployment of frontier generative artificial intelligence (AI), Retrieval-Augmented Generation (RAG) architectures, and autonomous multi-agent systems has exposed a fundamental security paradigm failure. Millions of enterprise users, developers, and autonomous software agents continuously transmit unstructured natural language prompts, source code repositories, clinical summaries, and financial ledgers to remote foundation model inference endpoints.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<div id="problem-statement">
+<section id="section-1.1">
+        <h3 id="name-problem-statement-the-cloud">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-problem-statement-the-cloud" class="section-name selfRef">Problem Statement: The Cloud DLP Paradox</a>
+        </h3>
+<p id="section-1.1-1">
+          Legacy enterprise data loss prevention (DLP) systems rely on intermediary cloud proxies or central inspection gateways. When applied to modern generative AI workloads, this architecture introduces four critical vulnerabilities:<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-1.1-2">
+          <li id="section-1.1-2.1">
+            <strong>Network Latency and Perceptual Lag:</strong> Cloud-routed DLP inspection adds round-trip network delays ranging between 150 ms and 400 ms per inference invocation, degrading real-time conversational streaming and sub-agent coordination.<a href="#section-1.1-2.1" class="pilcrow">¶</a>
+</li>
+          <li id="section-1.1-2.2">
+            <strong>Single Point of Data Breach:</strong> Routing cleartext organizational payloads through intermediary proxy infrastructure creates a centralized target for state-sponsored adversaries and infrastructure compromises.<a href="#section-1.1-2.2" class="pilcrow">¶</a>
+</li>
+          <li id="section-1.1-2.3">
+            <strong>Regulatory Subprocessor Multiplication:</strong> Under European Union General Data Protection Regulation (GDPR) Article 28, introducing a cloud inspection proxy adds a new data processor into the statutory subprocessor chain, requiring bespoke Data Processing Agreements (DPAs) and cross-border transfer assessments.<a href="#section-1.1-2.3" class="pilcrow">¶</a>
+</li>
+          <li id="section-1.1-2.4">
+            <strong>Transport Layer Interception Failure:</strong> As client-to-inference transport increasingly adopts end-to-end authenticated encryption, traditional network-level middleboxes require intrusive TLS certificate termination, compromising cryptographic integrity.<a href="#section-1.1-2.4" class="pilcrow">¶</a>
+</li>
+        </ol>
+</section>
+</div>
+<div id="architectural-paradigm">
+<section id="section-1.2">
+        <h3 id="name-architectural-paradigm-clou">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-architectural-paradigm-clou" class="section-name selfRef">Architectural Paradigm: Cloud Proxy vs. Host-Native In-Memory Boundary</a>
+        </h3>
+<p id="section-1.2-1">
+          ZTDS replaces network-boundary inspection with a host-native, client-boundary sanitization topology <span>[<a href="#ZENODO-ZTDS" class="cite xref">ZENODO-ZTDS</a>]</span>. All entity detection, de-identification, and surrogate replacement occur within volatile memory on the originating client device before any TCP/IP socket serialization.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<span id="name-architectural-comparison-in"></span><div id="fig-architecture-comparison">
+<figure id="figure-1">
+          <div class="alignLeft art-ascii-art art-text artwork" id="section-1.2-2.1">
+<pre>
+Traditional Cloud DLP Architecture:
++--------+  WAN Cleartext  +-----------+  WAN Cleartext  +-------+
+| Client | --------------&gt; | Cloud DLP | --------------&gt; | Cloud |
+| Device | &lt;-------------- |   Proxy   | &lt;-------------- |  LLM  |
++--------+  (Risk/Latency) +-----------+ (Audit Friction)+-------+
+
+ZTDS Zero-Trust Endpoint Architecture:
++-----------------------------------+
+| Client Host Execution Perimeter   |
+| +-----------+     +-------------+ |  Sanitized WAN   +-------+
+| | Cleartext | --&gt; |  In-Memory  | | ---------------&gt; | Cloud |
+| | Payload S |     | Engine T(S) | | &lt;--------------- |  LLM  |
+| +-----------+     +-------------+ |  Surrogate WAN   +-------+
+|       ^                  |        |
+|       | Local Inverse v           |
+|   [Volatile Session Map R in RAM] |
++-----------------------------------+
+
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-architectural-comparison-in" class="selfRef">Architectural Comparison: Intermediary Cloud Proxy vs. ZTDS Host-Native Perimeter</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="requirements-language">
+<section id="section-1.3">
+        <h3 id="name-requirements-language">
+<a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-requirements-language" class="section-name selfRef">Requirements Language</a>
+        </h3>
+<p id="section-1.3-1">
+          The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they appear in all capitals, as shown here.<a href="#section-1.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="terminology">
+<section id="section-1.4">
+        <h3 id="name-terminology">
+<a href="#section-1.4" class="section-number selfRef">1.4. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
+        </h3>
+<span class="break"></span><dl class="dlParallel" id="section-1.4-1">
+          <dt id="section-1.4-1.1">Sanitization Engine:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.4-1.2">A deterministic computational module that identifies sensitive entities within unstructured text and substitutes them with synthetic surrogate tokens.<a href="#section-1.4-1.2" class="pilcrow">¶</a>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.4-1.3">Surrogate Token:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.4-1.4">A non-sensitive, type-preserving synthetic placeholder (e.g., "<code>[NAME_1]</code>", "[EMAIL_2]") that preserves grammatical structure and semantic roles for downstream language models.<a href="#section-1.4-1.4" class="pilcrow">¶</a>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.4-1.5">Session Mapping Dictionary (R):</dt>
+          <dd style="margin-left: 1.5em" id="section-1.4-1.6">A temporary bidirectional lookup table mapping surrogate tokens to original cleartext entities, maintained exclusively in volatile host memory.<a href="#section-1.4-1.6" class="pilcrow">¶</a>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.4-1.7">De-Tokenization (Re-identification):</dt>
+          <dd style="margin-left: 1.5em" id="section-1.4-1.8">The reverse mapping process executed locally on the client to restore original cleartext values into model completions before user display or local application consumption.<a href="#section-1.4-1.8" class="pilcrow">¶</a>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-1.4-1.9">Airplane Mode Audit:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.4-1.10">A formal compliance procedure verifying that 100% of data sanitization and de-tokenization operations execute successfully while all network interfaces are physically or logically disconnected.<a href="#section-1.4-1.10" class="pilcrow">¶</a>
+</dd>
+        <dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+</div>
+<div id="mathematical-foundation">
+<section id="section-2">
+      <h2 id="name-mathematical-model-and-core">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-mathematical-model-and-core" class="section-name selfRef">Mathematical Model and Core Invariants</a>
+      </h2>
+<div id="formal-definition">
+<section id="section-2.1">
+        <h3 id="name-formal-model-definition">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-formal-model-definition" class="section-name selfRef">Formal Model Definition</a>
+        </h3>
+<p id="section-2.1-1">
+          Let an input text prompt or agent payload P be a finite sequence of tokens partitioned into non-sensitive tokens U and sensitive tokens S:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">
+          P = U UNION S, where U INTERSECT S = EMPTYSET<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">
+          Where S = {s_1, s_2, ..., s_k} represents discrete identifying entity substrings matching statutory, medical, financial, or organizational classification taxonomy.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">
+          Under the ZTDS protocol:<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-2.1-5">
+          <li id="section-2.1-5.1">
+            An in-memory sanitization transformation T: S -&gt; M is executed locally:
+            M = {m_1, m_2, ..., m_k}
+            where each surrogate token m_i is an orthogonal synthetic label preserving entity syntax.<a href="#section-2.1-5.1" class="pilcrow">¶</a>
+</li>
+          <li id="section-2.1-5.2">
+            The sanitized payload transmitted across the external network perimeter contains strictly U UNION M:
+            Egress(S) = 0 bytes<a href="#section-2.1-5.2" class="pilcrow">¶</a>
+</li>
+          <li id="section-2.1-5.3">
+            The ephemeral session map R = {(m_i, s_i) : 1 &lt;= i &lt;= k} is retained strictly in volatile Random Access Memory (RAM), bound exclusively to the local execution thread or tab context.<a href="#section-2.1-5.3" class="pilcrow">¶</a>
+</li>
+          <li id="section-2.1-5.4">
+            Upon receipt of the model inference response P_out containing surrogate tokens M, an inverse transformation T^(-1) is evaluated locally:
+            P_final = T^(-1)(P_out, R)<a href="#section-2.1-5.4" class="pilcrow">¶</a>
+</li>
+          <li id="section-2.1-5.5">
+            Upon session completion, window close, or process termination, R is deterministically erased from RAM.<a href="#section-2.1-5.5" class="pilcrow">¶</a>
+</li>
+        </ol>
+</section>
+</div>
+<div id="core-invariants">
+<section id="section-2.2">
+        <h3 id="name-the-four-fundamental-invari">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-the-four-fundamental-invari" class="section-name selfRef">The Four Fundamental Invariants</a>
+        </h3>
+<p id="section-2.2-1">
+          Any implementation claiming conformance with the ZTDS standard MUST satisfy four non-negotiable invariants:<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<div id="invariant-1">
+<section id="section-2.2.1">
+          <h4 id="name-invariant-1-volatile-memory">
+<a href="#section-2.2.1" class="section-number selfRef">2.2.1. </a><a href="#name-invariant-1-volatile-memory" class="section-name selfRef">Invariant 1: Volatile Memory Boundary (RAM-Only Isolation)</a>
+          </h4>
+<p id="section-2.2.1-1">
+            Under no operational circumstances SHALL cleartext sensitive entities S or session mapping pairs R be committed to non-volatile secondary storage. This prohibition explicitly bans:<a href="#section-2.2.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.2.1-2.1">Web browser persistent stores: localStorage, sessionStorage, IndexedDB, Cache API, and HTTP cookies.<a href="#section-2.2.1-2.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-2.2.1-2.2">Operating system storage: unencrypted temporary files, persistent swap files, crash log dumps, or diagnostic event logs.<a href="#section-2.2.1-2.2" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-2.2.1-2.3">External server infrastructure: application logging endpoints, telemetry trackers, or cloud operational analytics.<a href="#section-2.2.1-2.3" class="pilcrow">¶</a>
+</li>
+          </ul>
+<p id="section-2.2.1-3">
+            In browser runtimes, session mapping state MUST be tab-isolated (scoped strictly to the execution context of the originating browsing context) to prevent cross-session or cross-tab side-channel memory leaks.<a href="#section-2.2.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="invariant-2">
+<section id="section-2.2.2">
+          <h4 id="name-invariant-2-sub-2-milliseco">
+<a href="#section-2.2.2" class="section-number selfRef">2.2.2. </a><a href="#name-invariant-2-sub-2-milliseco" class="section-name selfRef">Invariant 2: Sub-2-Millisecond Latency Ceiling</a>
+          </h4>
+<p id="section-2.2.2-1">
+            To prevent human perceptual latency and avoid pipeline stall conditions in real-time autonomous multi-agent loops, the sanitization transformation T MUST execute with deterministic bounded latency:<a href="#section-2.2.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.2.2-2.1">For interactive client prompts containing up to 15,000 characters, execution latency MUST NOT exceed 2.0 milliseconds on modern consumer client hardware.<a href="#section-2.2.2-2.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-2.2.2-2.2">For high-throughput enterprise batch pipelines, sanitization throughput MUST achieve a minimum sustained rate of 10,000 records per second per CPU core, as documented in empirical latency benchmarks <span>[<a href="#OSF-BENCH" class="cite xref">OSF-BENCH</a>]</span>.<a href="#section-2.2.2-2.2" class="pilcrow">¶</a>
+</li>
+          </ul>
+</section>
+</div>
+<div id="invariant-3">
+<section id="section-2.2.3">
+          <h4 id="name-invariant-3-zero-outgoing-n">
+<a href="#section-2.2.3" class="section-number selfRef">2.2.3. </a><a href="#name-invariant-3-zero-outgoing-n" class="section-name selfRef">Invariant 3: Zero Outgoing Network Transmission (Airplane Mode Standard)</a>
+          </h4>
+<p id="section-2.2.3-1">
+            The sanitization engine MUST be completely self-contained. All pattern compilation, regular expression matching, checksum verification (e.g., Luhn algorithm for payment cards), and surrogate substitution MUST operate with zero external network connectivity.<a href="#section-2.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.3-2">
+            Conformance is verified using the Airplane Mode Audit: the host device MUST successfully perform complete entity detection, substitution, and inverse reconstruction while all network interfaces (Ethernet, Wi-Fi, cellular, and loopback sockets to remote hosts) are disabled.<a href="#section-2.2.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="invariant-4">
+<section id="section-2.2.4">
+          <h4 id="name-invariant-4-cryptographic-t">
+<a href="#section-2.2.4" class="section-number selfRef">2.2.4. </a><a href="#name-invariant-4-cryptographic-t" class="section-name selfRef">Invariant 4: Cryptographic Transport Handoff</a>
+          </h4>
+<p id="section-2.2.4-1">
+            When distributed agent swarms or collaborative enterprise workflows require transferring session maps across host boundaries, the session map R MUST NOT be transmitted in cleartext. Serialization MUST enforce authenticated encryption with associated data (AEAD) using XChaCha20-Poly1305 with a 192-bit cryptographic nonce and key derivation via Argon2id <span>[<a href="#RFC9106" class="cite xref">RFC9106</a>]</span>. The intermediary relay server MUST act exclusively as an opaque blind store with zero computational ability to derive the key or decrypt cleartext entities.<a href="#section-2.2.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="protocol-lifecycle">
+<section id="section-3">
+      <h2 id="name-protocol-lifecycle-and-oper">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-protocol-lifecycle-and-oper" class="section-name selfRef">Protocol Lifecycle and Operational Mechanics</a>
+      </h2>
+<p id="section-3-1">
+        The ZTDS operational lifecycle progresses through six sequential phases executed within the local host boundary:<a href="#section-3-1" class="pilcrow">¶</a></p>
+<div id="phase-ingestion">
+<section id="section-3.1">
+        <h3 id="name-phase-1-ingestion-and-lexic">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-phase-1-ingestion-and-lexic" class="section-name selfRef">Phase 1: Ingestion and Lexical Boundary Parsing</a>
+        </h3>
+<p id="section-3.1-1">
+          The cleartext payload P is received by the local host interface. The engine performs lexical scanning across standardized entity taxonomy classes (Section 4). To prevent catastrophic regex backtracking (ReDoS), all evaluation expressions MUST conform to linear-time deterministic finite automaton (DFA) matching semantics.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="phase-tokenization">
+<section id="section-3.2">
+        <h3 id="name-phase-2-contextual-surrogat">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-phase-2-contextual-surrogat" class="section-name selfRef">Phase 2: Contextual Surrogate Tokenization</a>
+        </h3>
+<p id="section-3.2-1">
+          Each identified entity s_i is registered and assigned an indexed synthetic surrogate m_i. Surrogate formatting adheres strictly to bracketed syntactic labels (e.g., "<code>[NAME_1]</code>", "<code>[IBAN_1]</code>"). If the identical entity string s_i recurs multiple times within the same payload, the engine MUST map all occurrences to the identical surrogate token m_i to preserve coreference resolution for downstream language models.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="phase-session-mapping">
+<section id="section-3.3">
+        <h3 id="name-phase-3-ephemeral-session-m">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-phase-3-ephemeral-session-m" class="section-name selfRef">Phase 3: Ephemeral Session Map Allocation</a>
+        </h3>
+<p id="section-3.3-1">
+          The association pair (m_i, s_i) is committed to an in-memory hash map R. The map structure is tagged with a cryptographically secure random session identifier and marked for volatile lifecycle management.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="phase-transmission">
+<section id="section-3.4">
+        <h3 id="name-phase-4-upstream-transmissi">
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-phase-4-upstream-transmissi" class="section-name selfRef">Phase 4: Upstream Transmission and Inference</a>
+        </h3>
+<p id="section-3.4-1">
+          The sanitized payload P_sanitized = U UNION M is serialized and transmitted over TLS to the remote foundation model inference provider. Because raw identifying strings never leave the client boundary, the remote provider's logging infrastructure, fine-tuning pipelines, and prompt caching systems ingest strictly synthetic surrogate identifiers.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="phase-detokenization">
+<section id="section-3.5">
+        <h3 id="name-phase-5-local-de-tokenizati">
+<a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-phase-5-local-de-tokenizati" class="section-name selfRef">Phase 5: Local De-Tokenization (Re-identification)</a>
+        </h3>
+<p id="section-3.5-1">
+          Upon receipt of the inference response P_out from the foundation model, the client runtime parses the stream for surrogate token patterns. Each occurrence of m_i is matched against local session map R and replaced with corresponding original value s_i:<a href="#section-3.5-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-3.5-2">
+<pre>
+
+Input Text:    "Transfer $50k from Alice Smith acct 12345678"
+Sanitized:     "Transfer $50k from &lt;tt&gt;[NAME_1]&lt;/tt&gt; acct [IBAN_1]"
+Model Output:  "Confirmation: scheduled transfer for [NAME_1]."
+Reconstructed: "Confirmation: scheduled transfer for Alice Smith."
+
+</pre><a href="#section-3.5-2" class="pilcrow">¶</a>
+</div>
+<p id="section-3.5-3">
+          The end user or local consumer receives complete grammatical fidelity without any cleartext exposure to the cloud model provider.<a href="#section-3.5-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="phase-erasure">
+<section id="section-3.6">
+        <h3 id="name-phase-6-deterministic-memor">
+<a href="#section-3.6" class="section-number selfRef">3.6. </a><a href="#name-phase-6-deterministic-memor" class="section-name selfRef">Phase 6: Deterministic Memory Erasure</a>
+        </h3>
+<p id="section-3.6-1">
+          Upon user session termination, tab close, or explicit pipeline teardown, the host runtime MUST execute a zero-fill overwrite or release of the memory buffer hosting R. In runtimes lacking manual memory management (e.g., JavaScript engines), object references MUST be nullified immediately, and WeakMap structures SHOULD be utilized to allow instantaneous garbage collection.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="token-taxonomy">
+<section id="section-4">
+      <h2 id="name-surrogate-token-taxonomy">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-surrogate-token-taxonomy" class="section-name selfRef">Surrogate Token Taxonomy</a>
+      </h2>
+<p id="section-4-1">
+        To maintain natural language fluency and attention head alignment across diverse foundation model architectures (Transformer, SSM, MoE), surrogate tokens MUST conform to standard bracketed uppercase identifiers:<a href="#section-4-1" class="pilcrow">¶</a></p>
+<span id="name-standardized-ztds-surrogate"></span><table class="center" id="table-1">
+        <caption>
+<a href="#table-1" class="selfRef">Table 1</a>:
+<a href="#name-standardized-ztds-surrogate" class="selfRef">Standardized ZTDS Surrogate Token Taxonomy</a>
+        </caption>
+<thead>
+          <tr>
+            <th class="text-left" rowspan="1" colspan="1">Entity Classification</th>
+            <th class="text-left" rowspan="1" colspan="1">Canonical Token Format</th>
+            <th class="text-left" rowspan="1" colspan="1">Syntactic Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Personal Full Name</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <code>[NAME_N]</code>
+</td>
+            <td class="text-left" rowspan="1" colspan="1">"John Doe" -&gt; "<code>[NAME_1]</code>"</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Electronic Mail Address</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <code>[EMAIL_N]</code>
+</td>
+            <td class="text-left" rowspan="1" colspan="1">"user@enterprise.org" -&gt; "<code>[EMAIL_1]</code>"</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Telephone / Mobile Number</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <code>[PHONE_N]</code>
+</td>
+            <td class="text-left" rowspan="1" colspan="1">"+1-555-0199" -&gt; "<code>[PHONE_1]</code>"</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Government / National ID / SSN</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <code>[NAT_ID_N]</code> / <code>[SSN_N]</code>
+</td>
+            <td class="text-left" rowspan="1" colspan="1">"123-45-6789" -&gt; "<code>[SSN_1]</code>"</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Payment Card (Luhn Validated)</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <code>[CARD_N]</code>
+</td>
+            <td class="text-left" rowspan="1" colspan="1">"4532...8812" -&gt; "<code>[CARD_1]</code>"</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">International Bank Account (IBAN)</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <code>[IBAN_N]</code>
+</td>
+            <td class="text-left" rowspan="1" colspan="1">"GB29XAAA10203012345678" -&gt; "<code>[IBAN_1]</code>"</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Protected Health Identifier (PHI/MRN)</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <code>[MRN_N]</code> / <code>[PATIENT_N]</code>
+</td>
+            <td class="text-left" rowspan="1" colspan="1">"MRN-889104" -&gt; "<code>[MRN_1]</code>"</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">API Keys and Cryptographic Secrets</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <code>[SECRET_KEY_N]</code>
+</td>
+            <td class="text-left" rowspan="1" colspan="1">"sk-live-99f...8a" -&gt; "<code>[SECRET_KEY_1]</code>"</td>
+          </tr>
+          <tr>
+            <td class="text-left" rowspan="1" colspan="1">Network IPv4 / IPv6 / Hostname</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <code>[IP_ADDR_N]</code>
+</td>
+            <td class="text-left" rowspan="1" colspan="1">"192.168.1.104" -&gt; "<code>[IP_ADDR_1]</code>"</td>
+          </tr>
+        </tbody>
+      </table>
+</section>
+</div>
+<div id="cryptographic-handoff">
+<section id="section-5">
+      <h2 id="name-cryptographic-transport-han">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-cryptographic-transport-han" class="section-name selfRef">Cryptographic Transport Handoff Protocol</a>
+      </h2>
+<p id="section-5-1">
+        In enterprise agent architectures where an upstream agent creates a session map that must be de-tokenized by a downstream agent running on a distinct host node, the session map MUST be encrypted prior to transit across intermediate networks.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<div id="crypto-algorithms">
+<section id="section-5.1">
+        <h3 id="name-cipher-and-key-derivation-p">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-cipher-and-key-derivation-p" class="section-name selfRef">Cipher and Key Derivation Parameters</a>
+        </h3>
+<p id="section-5.1-1">
+          The cryptographic handoff protocol mandates the following primitives:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.1-2.1">
+            <strong>Key Derivation Function:</strong> Argon2id conforming to <span>[<a href="#RFC9106" class="cite xref">RFC9106</a>]</span>. Minimum operational parameters: Memory = 64 MiB (65536 KiB), Iterations = 3, Parallelism = 1.<a href="#section-5.1-2.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.1-2.2">
+            <strong>Authenticated Symmetric Encryption:</strong> XChaCha20-Poly1305 AEAD cipher conforming to <span>[<a href="#RFC8439" class="cite xref">RFC8439</a>]</span> with extended 192-bit (24-byte) nonces generated using a cryptographically secure pseudorandom number generator (CSPRNG).<a href="#section-5.1-2.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-5.1-2.3">
+            <strong>Associated Data:</strong> The AEAD associated data MUST bind the session UUID and expiration timestamp to prevent ciphertext replay and splicing attacks.<a href="#section-5.1-2.3" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="verification-audit">
+<section id="section-6">
+      <h2 id="name-verification-and-conformanc">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-verification-and-conformanc" class="section-name selfRef">Verification and Conformance Audit</a>
+      </h2>
+<p id="section-6-1">
+        Compliance with this specification requires verifiable testing under adversarial boundary conditions:<a href="#section-6-1" class="pilcrow">¶</a></p>
+<div id="airplane-audit-steps">
+<section id="section-6.1">
+        <h3 id="name-the-5-step-airplane-mode-au">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-the-5-step-airplane-mode-au" class="section-name selfRef">The 5-Step Airplane Mode Audit Procedure</a>
+        </h3>
+<ol start="1" type="1" class="normal type-1" id="section-6.1-1">
+          <li id="section-6.1-1.1">Initialize the host application or agent runtime with a test corpus containing statutory PII and secrets.<a href="#section-6.1-1.1" class="pilcrow">¶</a>
+</li>
+          <li id="section-6.1-1.2">Physically disconnect or logically disable all network adapters (Wi-Fi, Ethernet, LTE/5G).<a href="#section-6.1-1.2" class="pilcrow">¶</a>
+</li>
+          <li id="section-6.1-1.3">Execute complete document sanitization. Verify that output contains strictly surrogate tokens.<a href="#section-6.1-1.3" class="pilcrow">¶</a>
+</li>
+          <li id="section-6.1-1.4">Simulate a model response containing surrogate tokens and execute local de-tokenization. Confirm 100% string restoration.<a href="#section-6.1-1.4" class="pilcrow">¶</a>
+</li>
+          <li id="section-6.1-1.5">Inspect host operating system socket tables to confirm exactly zero packets were emitted during the entire test sequence.<a href="#section-6.1-1.5" class="pilcrow">¶</a>
+</li>
+        </ol>
+</section>
+</div>
+</section>
+</div>
+<div id="test-vectors">
+<section id="section-7">
+      <h2 id="name-conformance-test-vectors">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-conformance-test-vectors" class="section-name selfRef">Conformance Test Vectors</a>
+      </h2>
+<p id="section-7-1">
+        The following test vector illustrates a standardized ZTDS execution sequence:<a href="#section-7-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-ascii-art art-text artwork" id="section-7-2">
+<pre>
+
+Vector 1.0 (Clinical / Financial Hybrid):
+Input Payload:
+  "Patient Sarah Connor (MRN: 902-114-88, Phone: +1-555-0144) authorized
+   payment using Visa 4111111111111111 to Dr. Marcus Vance."
+
+Sanitized Payload Egress:
+  "Patient &lt;tt&gt;[NAME_1]&lt;/tt&gt; (MRN: [MRN_1], Phone: [PHONE_1]) authorized
+   payment using Visa &lt;tt&gt;[CARD_1]&lt;/tt&gt; to Dr. [NAME_2]."
+
+Volatile Session Map R:
+  {
+    "&lt;tt&gt;[NAME_1]&lt;/tt&gt;": "Sarah Connor",
+    "&lt;tt&gt;[MRN_1]&lt;/tt&gt;": "902-114-88",
+    "&lt;tt&gt;[PHONE_1]&lt;/tt&gt;": "+1-555-0144",
+    "&lt;tt&gt;[CARD_1]&lt;/tt&gt;": "4111111111111111",
+    "&lt;tt&gt;[NAME_2]&lt;/tt&gt;": "Marcus Vance"
+  }
+
+Inference Response Inbound:
+  "Billing confirmed for &lt;tt&gt;[NAME_1]&lt;/tt&gt; under clinical file [MRN_1]."
+
+Restored Client Display:
+  "Billing confirmed for Sarah Connor under clinical file 902-114-88."
+
+</pre><a href="#section-7-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="iana">
+<section id="section-8">
+      <h2 id="name-iana-considerations">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-8-1">
+        This document has no IANA actions.<a href="#section-8-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="security">
+<section id="section-9">
+      <h2 id="name-security-considerations">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-9-1">
+        This entire document specifies security and privacy architecture. In conformance with BCP 72 <span>[<a href="#RFC3552" class="cite xref">RFC3552</a>]</span>, the following threat scenarios are analyzed:<a href="#section-9-1" class="pilcrow">¶</a></p>
+<div id="threat-prompt-injection">
+<section id="section-9.1">
+        <h3 id="name-prompt-injection-and-traini">
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-prompt-injection-and-traini" class="section-name selfRef">Prompt Injection and Training Data Exfiltration</a>
+        </h3>
+<p id="section-9.1-1">
+          Adversaries executing indirect prompt injection attacks against LLMs attempt to manipulate model context into revealing private user records. Under ZTDS, because raw PII never enters the model context window, prompt injection attacks cannot exfiltrate original credentials; the attacker can at most observe synthetic surrogate labels.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="threat-memory-dumping">
+<section id="section-9.2">
+        <h3 id="name-local-host-memory-inspectio">
+<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-local-host-memory-inspectio" class="section-name selfRef">Local Host Memory Inspection and Swap Analysis</a>
+        </h3>
+<p id="section-9.2-1">
+          If an adversary achieves root-level compromise of the client operating system, they may inspect volatile memory buffers. To mitigate this, compliant implementations SHOULD use memory locking (e.g., mlock on POSIX systems) to prevent volatile memory from being paged to unencrypted swap disks, and explicitly zero memory buffers upon deallocation.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="threat-token-collision">
+<section id="section-9.3">
+        <h3 id="name-surrogate-token-collision-a">
+<a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-surrogate-token-collision-a" class="section-name selfRef">Surrogate Token Collision and Ambiguity</a>
+        </h3>
+<p id="section-9.3-1">
+          If an input prompt naturally contains text matching the surrogate regex syntax (e.g., a software tutorial discussing "<code>[NAME_1]</code>"), the engine MUST escape or disambiguate literal brackets using namespace prefixes to prevent accidental de-tokenization collision.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="privacy">
+<section id="section-10">
+      <h2 id="name-privacy-considerations">
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
+      </h2>
+<p id="section-10-1">
+        In accordance with <span>[<a href="#RFC6973" class="cite xref">RFC6973</a>]</span>, ZTDS provides deterministic technical and organizational measures (TOMs) satisfying global privacy statutes:<a href="#section-10-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-10-2.1">
+          <strong>GDPR Article 28 Exemption:</strong> By eliminating cleartext PII transmission across the WAN, downstream foundation model vendors never process personal data in cleartext, preventing SaaS vendor lock-in to burdensome subprocessor compliance chains.<a href="#section-10-2.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-10-2.2">
+          <strong>Right to be Forgotten (GDPR Article 17):</strong> When AI models or vector databases ingest strictly surrogate tokens, an individual exercising their deletion right requires only erasing the local ephemeral session key; all remote embeddings and logs remain permanently de-identified and mathematically un-linkable.<a href="#section-10-2.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-10-2.3">
+          <strong>HIPAA Safe Harbor De-Identification:</strong> Replacing all 18 statutory HIPAA identifiers with surrogate tokens fulfills 45 CFR Section 164.514(b) requirements prior to cloud ingestion.<a href="#section-10-2.3" class="pilcrow">¶</a>
+</li>
+      </ul>
+</section>
+</div>
+<section id="section-11">
+      <h2 id="name-references">
+<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<section id="section-11.1">
+        <h3 id="name-normative-references">
+<a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC2119">[RFC2119]</dt>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+        <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8439">[RFC8439]</dt>
+        <dd>
+<span class="refAuthor">Nir, Y.</span> and <span class="refAuthor">A. Langley</span>, <span class="refTitle">"ChaCha20 and Poly1305 for IETF Protocols"</span>, <span class="seriesInfo">RFC 8439</span>, <span class="seriesInfo">DOI 10.17487/RFC8439</span>, <time datetime="2018-06" class="refDate">June 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8439">https://www.rfc-editor.org/info/rfc8439</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9106">[RFC9106]</dt>
+      <dd>
+<span class="refAuthor">Biryukov, A.</span>, <span class="refAuthor">Dinu, D.</span>, <span class="refAuthor">Khovratovich, D.</span>, and <span class="refAuthor">S. Kiviharju</span>, <span class="refTitle">"Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications"</span>, <span class="seriesInfo">RFC 9106</span>, <span class="seriesInfo">DOI 10.17487/RFC9106</span>, <time datetime="2021-09" class="refDate">September 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc9106">https://www.rfc-editor.org/info/rfc9106</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+<section id="section-11.2">
+        <h3 id="name-informative-references">
+<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC3552">[RFC3552]</dt>
+        <dd>
+<span class="refAuthor">Rescorla, E.</span> and <span class="refAuthor">B. Korver</span>, <span class="refTitle">"Guidelines for Writing RFC Text on Security Considerations"</span>, <span class="seriesInfo">BCP 72</span>, <span class="seriesInfo">RFC 3552</span>, <span class="seriesInfo">DOI 10.17487/RFC3552</span>, <time datetime="2003-07" class="refDate">July 2003</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3552">https://www.rfc-editor.org/info/rfc3552</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6973">[RFC6973]</dt>
+        <dd>
+<span class="refAuthor">Cooper, A.</span>, <span class="refAuthor">Tschofenig, H.</span>, <span class="refAuthor">Aboba, B.</span>, <span class="refAuthor">Peterson, J.</span>, <span class="refAuthor">Morris, J.</span>, <span class="refAuthor">Hansen, M.</span>, and <span class="refAuthor">R. Smith</span>, <span class="refTitle">"Privacy Considerations for Internet Protocols"</span>, <span class="seriesInfo">RFC 6973</span>, <span class="seriesInfo">DOI 10.17487/RFC6973</span>, <time datetime="2013-07" class="refDate">July 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6973">https://www.rfc-editor.org/info/rfc6973</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="ZENODO-ZTDS">[ZENODO-ZTDS]</dt>
+        <dd>
+<span class="refAuthor">Sibiryakov, I.</span>, <span class="refTitle">"Zero-Trust Data Sanitization (ZTDS) Protocol Specification"</span>, <span class="seriesInfo">CERN Zenodo DOI 10.5281/zenodo.22058770</span>, <time datetime="2026-09" class="refDate">September 2026</time>, <span>&lt;<a href="https://doi.org/10.5281/zenodo.22058770">https://doi.org/10.5281/zenodo.22058770</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="OSF-BENCH">[OSF-BENCH]</dt>
+      <dd>
+<span class="refAuthor">Sibiryakov, I.</span>, <span class="refTitle">"Empirical Latency and Memory Profiling of Client-Side vs Cloud Proxy Data Sanitization"</span>, <span class="seriesInfo">Center for Open Science DOI 10.17605/OSF.IO/5BYJF</span>, <time datetime="2026-09" class="refDate">September 2026</time>, <span>&lt;<a href="https://doi.org/10.17605/OSF.IO/5BYJF">https://doi.org/10.17605/OSF.IO/5BYJF</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</section>
+<div id="authors-addresses">
+<section id="appendix-A">
+      <h2 id="name-authors-address">
+<a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Ilya Sibiryakov</span></div>
+<div dir="auto" class="left"><span class="org">ZTDS AI Consortium</span></div>
+<div dir="auto" class="left">
+<span class="locality">Tel Aviv</span> </div>
+<div dir="auto" class="left"><span class="country-name">Israel</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:support@privacyscrubber.com" class="email">support@privacyscrubber.com</a>
+</div>
+<div class="url">
+<span>URI:</span>
+<a href="https://ztds.ai/" class="url">https://ztds.ai/</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>

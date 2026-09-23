@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" version="3" category="info" docName="draft-sibiryakov-ztds-protocol-01" ipr="trust200902" submissionType="IETF" consensus="true" xml:lang="en">
+
+  <front>
+    <title abbrev="ZTDS Protocol">The Zero-Trust Data Sanitization (ZTDS) Protocol for Frontier Artificial Intelligence Ingestion</title>
+    <seriesInfo name="Internet-Draft" value="draft-sibiryakov-ztds-protocol-01"/>
+
+    <author fullname="Ilya Sibiryakov" initials="I." surname="Sibiryakov">
+      <organization>ZTDS AI Consortium</organization>
+      <address>
+        <postal>
+          <city>Tel Aviv</city>
+          <country>Israel</country>
+        </postal>
+        <email>support@privacyscrubber.com</email>
+        <uri>https://ztds.ai/</uri>
+      </address>
+    </author>
+
+    <date year="2026" month="September" day="23"/>
+
+    <area>Security</area>
+    <workgroup>Network Working Group</workgroup>
+
+    <keyword>Zero-Trust</keyword>
+    <keyword>Data Sanitization</keyword>
+    <keyword>PII Redaction</keyword>
+    <keyword>Large Language Models</keyword>
+    <keyword>Generative AI</keyword>
+    <keyword>In-Memory Computing</keyword>
+    <keyword>Privacy-Preserving AI</keyword>
+
+    <abstract>
+      <t>
+        This document specifies the Zero-Trust Data Sanitization (ZTDS) protocol, an architectural framework and execution standard designed to eliminate personally identifiable information (PII), protected health information (PHI), payment card data, and corporate credentials from unstructured text payloads prior to ingestion by remote Large Language Models (LLMs) and autonomous AI agents.
+      </t>
+      <t>
+        ZTDS enforces strict in-memory execution within volatile Random Access Memory (RAM), ephemeral surrogate tokenization, tab-isolated session mapping, and mathematically verifiable zero network egress of raw identifying data. Reversible mapping is executed strictly on the client or private host boundary, precluding intermediate cloud proxy interception, prompt injection exfiltration, and persistent vector database poisoning.
+      </t>
+    </abstract>
+  </front>
+
+  <middle>
+
+    <section anchor="introduction">
+      <name>Introduction</name>
+      <t>
+        The rapid deployment of frontier generative artificial intelligence (AI), Retrieval-Augmented Generation (RAG) architectures, and autonomous multi-agent systems has exposed a fundamental security paradigm failure. Millions of enterprise users, developers, and autonomous software agents continuously transmit unstructured natural language prompts, source code repositories, clinical summaries, and financial ledgers to remote foundation model inference endpoints.
+      </t>
+
+      <section anchor="problem-statement">
+        <name>Problem Statement: The Cloud DLP Paradox</name>
+        <t>
+          Legacy enterprise data loss prevention (DLP) systems rely on intermediary cloud proxies or central inspection gateways. When applied to modern generative AI workloads, this architecture introduces four critical vulnerabilities:
+        </t>
+        <ol>
+          <li>
+            <strong>Network Latency and Perceptual Lag:</strong> Cloud-routed DLP inspection adds round-trip network delays ranging between 150 ms and 400 ms per inference invocation, degrading real-time conversational streaming and sub-agent coordination.
+          </li>
+          <li>
+            <strong>Single Point of Data Breach:</strong> Routing cleartext organizational payloads through intermediary proxy infrastructure creates a centralized target for state-sponsored adversaries and infrastructure compromises.
+          </li>
+          <li>
+            <strong>Regulatory Subprocessor Multiplication:</strong> Under European Union General Data Protection Regulation (GDPR) Article 28, introducing a cloud inspection proxy adds a new data processor into the statutory subprocessor chain, requiring bespoke Data Processing Agreements (DPAs) and cross-border transfer assessments.
+          </li>
+          <li>
+            <strong>Transport Layer Interception Failure:</strong> As client-to-inference transport increasingly adopts end-to-end authenticated encryption, traditional network-level middleboxes require intrusive TLS certificate termination, compromising cryptographic integrity.
+          </li>
+        </ol>
+      </section>
+
+      <section anchor="architectural-paradigm">
+        <name>Architectural Paradigm: Cloud Proxy vs. Host-Native In-Memory Boundary</name>
+        <t>
+          ZTDS replaces network-boundary inspection with a host-native, client-boundary sanitization topology <xref target="ZENODO-ZTDS"/>. All entity detection, de-identification, and surrogate replacement occur within volatile memory on the originating client device before any TCP/IP socket serialization.
+        </t>
+        <figure anchor="fig-architecture-comparison">
+          <name>Architectural Comparison: Intermediary Cloud Proxy vs. ZTDS Host-Native Perimeter</name>
+          <artwork type="ascii-art"><![CDATA[
+Traditional Cloud DLP Architecture:
++--------+  WAN Cleartext  +-----------+  WAN Cleartext  +-------+
+| Client | --------------> | Cloud DLP | --------------> | Cloud |
+| Device | <-------------- |   Proxy   | <-------------- |  LLM  |
++--------+  (Risk/Latency) +-----------+ (Audit Friction)+-------+
+
+ZTDS Zero-Trust Endpoint Architecture:
++-----------------------------------+
+| Client Host Execution Perimeter   |
+| +-----------+     +-------------+ |  Sanitized WAN   +-------+
+| | Cleartext | --> |  In-Memory  | | ---------------> | Cloud |
+| | Payload S |     | Engine T(S) | | <--------------- |  LLM  |
+| +-----------+     +-------------+ |  Surrogate WAN   +-------+
+|       ^                  |        |
+|       | Local Inverse v           |
+|   [Volatile Session Map R in RAM] |
++-----------------------------------+
+]]>
+          </artwork>
+        </figure>
+      </section>
+
+      <section anchor="requirements-language">
+        <name>Requirements Language</name>
+        <t>
+          The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when, they appear in all capitals, as shown here.
+        </t>
+      </section>
+
+      <section anchor="terminology">
+        <name>Terminology</name>
+        <dl>
+          <dt>Sanitization Engine:</dt>
+          <dd>A deterministic computational module that identifies sensitive entities within unstructured text and substitutes them with synthetic surrogate tokens.</dd>
+          <dt>Surrogate Token:</dt>
+          <dd>A non-sensitive, type-preserving synthetic placeholder (e.g., "<tt>[NAME_1]</tt>", "[EMAIL_2]") that preserves grammatical structure and semantic roles for downstream language models.</dd>
+          <dt>Session Mapping Dictionary (R):</dt>
+          <dd>A temporary bidirectional lookup table mapping surrogate tokens to original cleartext entities, maintained exclusively in volatile host memory.</dd>
+          <dt>De-Tokenization (Re-identification):</dt>
+          <dd>The reverse mapping process executed locally on the client to restore original cleartext values into model completions before user display or local application consumption.</dd>
+          <dt>Airplane Mode Audit:</dt>
+          <dd>A formal compliance procedure verifying that 100% of data sanitization and de-tokenization operations execute successfully while all network interfaces are physically or logically disconnected.</dd>
+        </dl>
+      </section>
+
+    </section>
+
+    <section anchor="mathematical-foundation">
+      <name>Mathematical Model and Core Invariants</name>
+
+      <section anchor="formal-definition">
+        <name>Formal Model Definition</name>
+        <t>
+          Let an input text prompt or agent payload P be a finite sequence of tokens partitioned into non-sensitive tokens U and sensitive tokens S:
+        </t>
+        <t>
+          P = U UNION S, where U INTERSECT S = EMPTYSET
+        </t>
+        <t>
+          Where S = {s_1, s_2, ..., s_k} represents discrete identifying entity substrings matching statutory, medical, financial, or organizational classification taxonomy.
+        </t>
+        <t>
+          Under the ZTDS protocol:
+        </t>
+        <ol>
+          <li>
+            An in-memory sanitization transformation T: S -&gt; M is executed locally:
+            M = {m_1, m_2, ..., m_k}
+            where each surrogate token m_i is an orthogonal synthetic label preserving entity syntax.
+          </li>
+          <li>
+            The sanitized payload transmitted across the external network perimeter contains strictly U UNION M:
+            Egress(S) = 0 bytes
+          </li>
+          <li>
+            The ephemeral session map R = {(m_i, s_i) : 1 &lt;= i &lt;= k} is retained strictly in volatile Random Access Memory (RAM), bound exclusively to the local execution thread or tab context.
+          </li>
+          <li>
+            Upon receipt of the model inference response P_out containing surrogate tokens M, an inverse transformation T^(-1) is evaluated locally:
+            P_final = T^(-1)(P_out, R)
+          </li>
+          <li>
+            Upon session completion, window close, or process termination, R is deterministically erased from RAM.
+          </li>
+        </ol>
+      </section>
+
+      <section anchor="core-invariants">
+        <name>The Four Fundamental Invariants</name>
+        <t>
+          Any implementation claiming conformance with the ZTDS standard MUST satisfy four non-negotiable invariants:
+        </t>
+
+        <section anchor="invariant-1">
+          <name>Invariant 1: Volatile Memory Boundary (RAM-Only Isolation)</name>
+          <t>
+            Under no operational circumstances SHALL cleartext sensitive entities S or session mapping pairs R be committed to non-volatile secondary storage. This prohibition explicitly bans:
+          </t>
+          <ul>
+            <li>Web browser persistent stores: localStorage, sessionStorage, IndexedDB, Cache API, and HTTP cookies.</li>
+            <li>Operating system storage: unencrypted temporary files, persistent swap files, crash log dumps, or diagnostic event logs.</li>
+            <li>External server infrastructure: application logging endpoints, telemetry trackers, or cloud operational analytics.</li>
+          </ul>
+          <t>
+            In browser runtimes, session mapping state MUST be tab-isolated (scoped strictly to the execution context of the originating browsing context) to prevent cross-session or cross-tab side-channel memory leaks.
+          </t>
+        </section>
+
+        <section anchor="invariant-2">
+          <name>Invariant 2: Sub-2-Millisecond Latency Ceiling</name>
+          <t>
+            To prevent human perceptual latency and avoid pipeline stall conditions in real-time autonomous multi-agent loops, the sanitization transformation T MUST execute with deterministic bounded latency:
+          </t>
+          <ul>
+            <li>For interactive client prompts containing up to 15,000 characters, execution latency MUST NOT exceed 2.0 milliseconds on modern consumer client hardware.</li>
+            <li>For high-throughput enterprise batch pipelines, sanitization throughput MUST achieve a minimum sustained rate of 10,000 records per second per CPU core, as documented in empirical latency benchmarks <xref target="OSF-BENCH"/>.</li>
+          </ul>
+        </section>
+
+        <section anchor="invariant-3">
+          <name>Invariant 3: Zero Outgoing Network Transmission (Airplane Mode Standard)</name>
+          <t>
+            The sanitization engine MUST be completely self-contained. All pattern compilation, regular expression matching, checksum verification (e.g., Luhn algorithm for payment cards), and surrogate substitution MUST operate with zero external network connectivity.
+          </t>
+          <t>
+            Conformance is verified using the Airplane Mode Audit: the host device MUST successfully perform complete entity detection, substitution, and inverse reconstruction while all network interfaces (Ethernet, Wi-Fi, cellular, and loopback sockets to remote hosts) are disabled.
+          </t>
+        </section>
+
+        <section anchor="invariant-4">
+          <name>Invariant 4: Cryptographic Transport Handoff</name>
+          <t>
+            When distributed agent swarms or collaborative enterprise workflows require transferring session maps across host boundaries, the session map R MUST NOT be transmitted in cleartext. Serialization MUST enforce authenticated encryption with associated data (AEAD) using XChaCha20-Poly1305 with a 192-bit cryptographic nonce and key derivation via Argon2id <xref target="RFC9106"/>. The intermediary relay server MUST act exclusively as an opaque blind store with zero computational ability to derive the key or decrypt cleartext entities.
+          </t>
+        </section>
+
+      </section>
+
+    </section>
+
+    <section anchor="protocol-lifecycle">
+      <name>Protocol Lifecycle and Operational Mechanics</name>
+      <t>
+        The ZTDS operational lifecycle progresses through six sequential phases executed within the local host boundary:
+      </t>
+
+      <section anchor="phase-ingestion">
+        <name>Phase 1: Ingestion and Lexical Boundary Parsing</name>
+        <t>
+          The cleartext payload P is received by the local host interface. The engine performs lexical scanning across standardized entity taxonomy classes (Section 4). To prevent catastrophic regex backtracking (ReDoS), all evaluation expressions MUST conform to linear-time deterministic finite automaton (DFA) matching semantics.
+        </t>
+      </section>
+
+      <section anchor="phase-tokenization">
+        <name>Phase 2: Contextual Surrogate Tokenization</name>
+        <t>
+          Each identified entity s_i is registered and assigned an indexed synthetic surrogate m_i. Surrogate formatting adheres strictly to bracketed syntactic labels (e.g., "<tt>[NAME_1]</tt>", "<tt>[IBAN_1]</tt>"). If the identical entity string s_i recurs multiple times within the same payload, the engine MUST map all occurrences to the identical surrogate token m_i to preserve coreference resolution for downstream language models.
+        </t>
+      </section>
+
+      <section anchor="phase-session-mapping">
+        <name>Phase 3: Ephemeral Session Map Allocation</name>
+        <t>
+          The association pair (m_i, s_i) is committed to an in-memory hash map R. The map structure is tagged with a cryptographically secure random session identifier and marked for volatile lifecycle management.
+        </t>
+      </section>
+
+      <section anchor="phase-transmission">
+        <name>Phase 4: Upstream Transmission and Inference</name>
+        <t>
+          The sanitized payload P_sanitized = U UNION M is serialized and transmitted over TLS to the remote foundation model inference provider. Because raw identifying strings never leave the client boundary, the remote provider's logging infrastructure, fine-tuning pipelines, and prompt caching systems ingest strictly synthetic surrogate identifiers.
+        </t>
+      </section>
+
+      <section anchor="phase-detokenization">
+        <name>Phase 5: Local De-Tokenization (Re-identification)</name>
+        <t>
+          Upon receipt of the inference response P_out from the foundation model, the client runtime parses the stream for surrogate token patterns. Each occurrence of m_i is matched against local session map R and replaced with corresponding original value s_i:
+        </t>
+        <artwork type="ascii-art">
+<![CDATA[
+Input Text:    "Transfer $50k from Alice Smith acct 12345678"
+Sanitized:     "Transfer $50k from <tt>[NAME_1]</tt> acct [IBAN_1]"
+Model Output:  "Confirmation: scheduled transfer for [NAME_1]."
+Reconstructed: "Confirmation: scheduled transfer for Alice Smith."
+]]>
+        </artwork>
+        <t>
+          The end user or local consumer receives complete grammatical fidelity without any cleartext exposure to the cloud model provider.
+        </t>
+      </section>
+
+      <section anchor="phase-erasure">
+        <name>Phase 6: Deterministic Memory Erasure</name>
+        <t>
+          Upon user session termination, tab close, or explicit pipeline teardown, the host runtime MUST execute a zero-fill overwrite or release of the memory buffer hosting R. In runtimes lacking manual memory management (e.g., JavaScript engines), object references MUST be nullified immediately, and WeakMap structures SHOULD be utilized to allow instantaneous garbage collection.
+        </t>
+      </section>
+
+    </section>
+
+    <section anchor="token-taxonomy">
+      <name>Surrogate Token Taxonomy</name>
+      <t>
+        To maintain natural language fluency and attention head alignment across diverse foundation model architectures (Transformer, SSM, MoE), surrogate tokens MUST conform to standard bracketed uppercase identifiers:
+      </t>
+      <table>
+        <name>Standardized ZTDS Surrogate Token Taxonomy</name>
+        <thead>
+          <tr>
+            <th>Entity Classification</th>
+            <th>Canonical Token Format</th>
+            <th>Syntactic Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Personal Full Name</td>
+            <td><tt>[NAME_N]</tt></td>
+            <td>"John Doe" -&gt; "<tt>[NAME_1]</tt>"</td>
+          </tr>
+          <tr>
+            <td>Electronic Mail Address</td>
+            <td><tt>[EMAIL_N]</tt></td>
+            <td>"user@enterprise.org" -&gt; "<tt>[EMAIL_1]</tt>"</td>
+          </tr>
+          <tr>
+            <td>Telephone / Mobile Number</td>
+            <td><tt>[PHONE_N]</tt></td>
+            <td>"+1-555-0199" -&gt; "<tt>[PHONE_1]</tt>"</td>
+          </tr>
+          <tr>
+            <td>Government / National ID / SSN</td>
+            <td><tt>[NAT_ID_N]</tt> / <tt>[SSN_N]</tt></td>
+            <td>"123-45-6789" -&gt; "<tt>[SSN_1]</tt>"</td>
+          </tr>
+          <tr>
+            <td>Payment Card (Luhn Validated)</td>
+            <td><tt>[CARD_N]</tt></td>
+            <td>"4532...8812" -&gt; "<tt>[CARD_1]</tt>"</td>
+          </tr>
+          <tr>
+            <td>International Bank Account (IBAN)</td>
+            <td><tt>[IBAN_N]</tt></td>
+            <td>"GB29XAAA10203012345678" -&gt; "<tt>[IBAN_1]</tt>"</td>
+          </tr>
+          <tr>
+            <td>Protected Health Identifier (PHI/MRN)</td>
+            <td><tt>[MRN_N]</tt> / <tt>[PATIENT_N]</tt></td>
+            <td>"MRN-889104" -&gt; "<tt>[MRN_1]</tt>"</td>
+          </tr>
+          <tr>
+            <td>API Keys and Cryptographic Secrets</td>
+            <td><tt>[SECRET_KEY_N]</tt></td>
+            <td>"sk-live-99f...8a" -&gt; "<tt>[SECRET_KEY_1]</tt>"</td>
+          </tr>
+          <tr>
+            <td>Network IPv4 / IPv6 / Hostname</td>
+            <td><tt>[IP_ADDR_N]</tt></td>
+            <td>"192.168.1.104" -&gt; "<tt>[IP_ADDR_1]</tt>"</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section anchor="cryptographic-handoff">
+      <name>Cryptographic Transport Handoff Protocol</name>
+      <t>
+        In enterprise agent architectures where an upstream agent creates a session map that must be de-tokenized by a downstream agent running on a distinct host node, the session map MUST be encrypted prior to transit across intermediate networks.
+      </t>
+      <section anchor="crypto-algorithms">
+        <name>Cipher and Key Derivation Parameters</name>
+        <t>
+          The cryptographic handoff protocol mandates the following primitives:
+        </t>
+        <ul>
+          <li>
+            <strong>Key Derivation Function:</strong> Argon2id conforming to <xref target="RFC9106"/>. Minimum operational parameters: Memory = 64 MiB (65536 KiB), Iterations = 3, Parallelism = 1.
+          </li>
+          <li>
+            <strong>Authenticated Symmetric Encryption:</strong> XChaCha20-Poly1305 AEAD cipher conforming to <xref target="RFC8439"/> with extended 192-bit (24-byte) nonces generated using a cryptographically secure pseudorandom number generator (CSPRNG).
+          </li>
+          <li>
+            <strong>Associated Data:</strong> The AEAD associated data MUST bind the session UUID and expiration timestamp to prevent ciphertext replay and splicing attacks.
+          </li>
+        </ul>
+      </section>
+    </section>
+
+    <section anchor="verification-audit">
+      <name>Verification and Conformance Audit</name>
+      <t>
+        Compliance with this specification requires verifiable testing under adversarial boundary conditions:
+      </t>
+      <section anchor="airplane-audit-steps">
+        <name>The 5-Step Airplane Mode Audit Procedure</name>
+        <ol>
+          <li>Initialize the host application or agent runtime with a test corpus containing statutory PII and secrets.</li>
+          <li>Physically disconnect or logically disable all network adapters (Wi-Fi, Ethernet, LTE/5G).</li>
+          <li>Execute complete document sanitization. Verify that output contains strictly surrogate tokens.</li>
+          <li>Simulate a model response containing surrogate tokens and execute local de-tokenization. Confirm 100% string restoration.</li>
+          <li>Inspect host operating system socket tables to confirm exactly zero packets were emitted during the entire test sequence.</li>
+        </ol>
+      </section>
+    </section>
+
+    <section anchor="test-vectors">
+      <name>Conformance Test Vectors</name>
+      <t>
+        The following test vector illustrates a standardized ZTDS execution sequence:
+      </t>
+      <artwork type="ascii-art">
+<![CDATA[
+Vector 1.0 (Clinical / Financial Hybrid):
+Input Payload:
+  "Patient Sarah Connor (MRN: 902-114-88, Phone: +1-555-0144) authorized
+   payment using Visa 4111111111111111 to Dr. Marcus Vance."
+
+Sanitized Payload Egress:
+  "Patient <tt>[NAME_1]</tt> (MRN: [MRN_1], Phone: [PHONE_1]) authorized
+   payment using Visa <tt>[CARD_1]</tt> to Dr. [NAME_2]."
+
+Volatile Session Map R:
+  {
+    "<tt>[NAME_1]</tt>": "Sarah Connor",
+    "<tt>[MRN_1]</tt>": "902-114-88",
+    "<tt>[PHONE_1]</tt>": "+1-555-0144",
+    "<tt>[CARD_1]</tt>": "4111111111111111",
+    "<tt>[NAME_2]</tt>": "Marcus Vance"
+  }
+
+Inference Response Inbound:
+  "Billing confirmed for <tt>[NAME_1]</tt> under clinical file [MRN_1]."
+
+Restored Client Display:
+  "Billing confirmed for Sarah Connor under clinical file 902-114-88."
+]]>
+      </artwork>
+    </section>
+
+    <section anchor="iana">
+      <name>IANA Considerations</name>
+      <t>
+        This document has no IANA actions.
+      </t>
+    </section>
+
+    <section anchor="security">
+      <name>Security Considerations</name>
+      <t>
+        This entire document specifies security and privacy architecture. In conformance with BCP 72 <xref target="RFC3552"/>, the following threat scenarios are analyzed:
+      </t>
+      <section anchor="threat-prompt-injection">
+        <name>Prompt Injection and Training Data Exfiltration</name>
+        <t>
+          Adversaries executing indirect prompt injection attacks against LLMs attempt to manipulate model context into revealing private user records. Under ZTDS, because raw PII never enters the model context window, prompt injection attacks cannot exfiltrate original credentials; the attacker can at most observe synthetic surrogate labels.
+        </t>
+      </section>
+      <section anchor="threat-memory-dumping">
+        <name>Local Host Memory Inspection and Swap Analysis</name>
+        <t>
+          If an adversary achieves root-level compromise of the client operating system, they may inspect volatile memory buffers. To mitigate this, compliant implementations SHOULD use memory locking (e.g., mlock on POSIX systems) to prevent volatile memory from being paged to unencrypted swap disks, and explicitly zero memory buffers upon deallocation.
+        </t>
+      </section>
+      <section anchor="threat-token-collision">
+        <name>Surrogate Token Collision and Ambiguity</name>
+        <t>
+          If an input prompt naturally contains text matching the surrogate regex syntax (e.g., a software tutorial discussing "<tt>[NAME_1]</tt>"), the engine MUST escape or disambiguate literal brackets using namespace prefixes to prevent accidental de-tokenization collision.
+        </t>
+      </section>
+    </section>
+
+    <section anchor="privacy">
+      <name>Privacy Considerations</name>
+      <t>
+        In accordance with <xref target="RFC6973"/>, ZTDS provides deterministic technical and organizational measures (TOMs) satisfying global privacy statutes:
+      </t>
+      <ul>
+        <li>
+          <strong>GDPR Article 28 Exemption:</strong> By eliminating cleartext PII transmission across the WAN, downstream foundation model vendors never process personal data in cleartext, preventing SaaS vendor lock-in to burdensome subprocessor compliance chains.
+        </li>
+        <li>
+          <strong>Right to be Forgotten (GDPR Article 17):</strong> When AI models or vector databases ingest strictly surrogate tokens, an individual exercising their deletion right requires only erasing the local ephemeral session key; all remote embeddings and logs remain permanently de-identified and mathematically un-linkable.
+        </li>
+        <li>
+          <strong>HIPAA Safe Harbor De-Identification:</strong> Replacing all 18 statutory HIPAA identifiers with surrogate tokens fulfills 45 CFR Section 164.514(b) requirements prior to cloud ingestion.
+        </li>
+      </ul>
+    </section>
+
+  </middle>
+
+  <back>
+
+    <references>
+      <name>References</name>
+
+      <references>
+        <name>Normative References</name>
+
+        <reference anchor="RFC2119" target="https://www.rfc-editor.org/info/rfc2119">
+          <front>
+            <title>Key words for use in RFCs to Indicate Requirement Levels</title>
+            <author fullname="S. Bradner" initials="S." surname="Bradner"/>
+            <date month="March" year="1997"/>
+          </front>
+          <seriesInfo name="BCP" value="14"/>
+          <seriesInfo name="RFC" value="2119"/>
+          <seriesInfo name="DOI" value="10.17487/RFC2119"/>
+        </reference>
+
+        <reference anchor="RFC8174" target="https://www.rfc-editor.org/info/rfc8174">
+          <front>
+            <title>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</title>
+            <author fullname="B. Leiba" initials="B." surname="Leiba"/>
+            <date month="May" year="2017"/>
+          </front>
+          <seriesInfo name="BCP" value="14"/>
+          <seriesInfo name="RFC" value="8174"/>
+          <seriesInfo name="DOI" value="10.17487/RFC8174"/>
+        </reference>
+
+        <reference anchor="RFC8439" target="https://www.rfc-editor.org/info/rfc8439">
+          <front>
+            <title>ChaCha20 and Poly1305 for IETF Protocols</title>
+            <author fullname="Y. Nir" initials="Y." surname="Nir"/>
+            <author fullname="A. Langley" initials="A." surname="Langley"/>
+            <date month="June" year="2018"/>
+          </front>
+          <seriesInfo name="RFC" value="8439"/>
+          <seriesInfo name="DOI" value="10.17487/RFC8439"/>
+        </reference>
+
+        <reference anchor="RFC9106" target="https://www.rfc-editor.org/info/rfc9106">
+          <front>
+            <title>Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications</title>
+            <author fullname="A. Biryukov" initials="A." surname="Biryukov"/>
+            <author fullname="D. Dinu" initials="D." surname="Dinu"/>
+            <author fullname="D. Khovratovich" initials="D." surname="Khovratovich"/>
+            <author fullname="S. Kiviharju" initials="S." surname="Kiviharju"/>
+            <date month="September" year="2021"/>
+          </front>
+          <seriesInfo name="RFC" value="9106"/>
+          <seriesInfo name="DOI" value="10.17487/RFC9106"/>
+        </reference>
+
+      </references>
+
+      <references>
+        <name>Informative References</name>
+
+        <reference anchor="RFC3552" target="https://www.rfc-editor.org/info/rfc3552">
+          <front>
+            <title>Guidelines for Writing RFC Text on Security Considerations</title>
+            <author fullname="E. Rescorla" initials="E." surname="Rescorla"/>
+            <author fullname="B. Korver" initials="B." surname="Korver"/>
+            <date month="July" year="2003"/>
+          </front>
+          <seriesInfo name="BCP" value="72"/>
+          <seriesInfo name="RFC" value="3552"/>
+          <seriesInfo name="DOI" value="10.17487/RFC3552"/>
+        </reference>
+
+        <reference anchor="RFC6973" target="https://www.rfc-editor.org/info/rfc6973">
+          <front>
+            <title>Privacy Considerations for Internet Protocols</title>
+            <author fullname="A. Cooper" initials="A." surname="Cooper"/>
+            <author fullname="H. Tschofenig" initials="H." surname="Tschofenig"/>
+            <author fullname="B. Aboba" initials="B." surname="Aboba"/>
+            <author fullname="J. Peterson" initials="J." surname="Peterson"/>
+            <author fullname="J. Morris" initials="J." surname="Morris"/>
+            <author fullname="M. Hansen" initials="M." surname="Hansen"/>
+            <author fullname="R. Smith" initials="R." surname="Smith"/>
+            <date month="July" year="2013"/>
+          </front>
+          <seriesInfo name="RFC" value="6973"/>
+          <seriesInfo name="DOI" value="10.17487/RFC6973"/>
+        </reference>
+
+        <reference anchor="ZENODO-ZTDS" target="https://doi.org/10.5281/zenodo.22058770">
+          <front>
+            <title>Zero-Trust Data Sanitization (ZTDS) Protocol Specification</title>
+            <author fullname="Ilya Sibiryakov" initials="I." surname="Sibiryakov"/>
+            <date year="2026" month="September"/>
+          </front>
+          <seriesInfo name="CERN Zenodo" value="DOI 10.5281/zenodo.22058770"/>
+        </reference>
+
+        <reference anchor="OSF-BENCH" target="https://doi.org/10.17605/OSF.IO/5BYJF">
+          <front>
+            <title>Empirical Latency and Memory Profiling of Client-Side vs Cloud Proxy Data Sanitization</title>
+            <author fullname="Ilya Sibiryakov" initials="I." surname="Sibiryakov"/>
+            <date year="2026" month="September"/>
+          </front>
+          <seriesInfo name="Center for Open Science" value="DOI 10.17605/OSF.IO/5BYJF"/>
+        </reference>
+
+      </references>
+
+    </references>
+
+  </back>
+
+</rfc>
