@@ -1889,16 +1889,16 @@ jobs:
           }
         },
         production: {
-          token: window.ZTDS_PADDLE_TOKEN_PROD || 'live_7a94b8e391fbc238510842e4d91',
+          token: window.ZTDS_PADDLE_TOKEN_PROD || 'live_56f364b2871549a93d1a6d40504',
           developer_pro: {
-            annual: window.ZTDS_PADDLE_PRICE_ANNUAL_PROD || 'pri_01j7ztds_dev_annual_1990',
-            monthly: window.ZTDS_PADDLE_PRICE_DEV_MONTHLY_PROD || 'pri_01j7ztds_dev_monthly_199',
+            annual: window.ZTDS_PADDLE_PRICE_ANNUAL_PROD || 'pri_01m17c4006vvjjrnxsz3a81hy1',
+            monthly: window.ZTDS_PADDLE_PRICE_DEV_MONTHLY_PROD || 'pri_01m17c3ar9545er7twcx8fj5mr',
             amountAnnual: 1990,
             amountMonthly: 199
           },
           teams: {
-            annual: window.ZTDS_PADDLE_PRICE_TEAMS_ANNUAL_PROD || 'pri_01j7ztds_teams_annual_990',
-            monthly: window.ZTDS_PADDLE_PRICE_TEAMS_MONTHLY_PROD || 'pri_01j7ztds_teams_monthly_99',
+            annual: window.ZTDS_PADDLE_PRICE_TEAMS_ANNUAL_PROD || 'pri_01ks303fretapszffcaqn86xdt',
+            monthly: window.ZTDS_PADDLE_PRICE_TEAMS_MONTHLY_PROD || 'pri_01ks303fretapszffcaqn86xdt',
             amountAnnual: 990,
             amountMonthly: 99
           }
@@ -2218,8 +2218,9 @@ jobs:
           }
 
           // Canonical Commercial Flow: Unified billing via PrivacyScrubber (Implementation #001)
-          const targetUrl = new URL('https://privacyscrubber.com');
-          targetUrl.searchParams.set('plan', currentTier);
+          const targetUrl = new URL('https://privacyscrubber.com/pricing/');
+          const targetTier = currentTier === 'developer_pro' ? 'SDK' : 'TEAMS';
+          targetUrl.searchParams.set('tier', targetTier);
           targetUrl.searchParams.set('interval', currentInterval);
           if (company) targetUrl.searchParams.set('company', company);
           if (email) targetUrl.searchParams.set('email', email);

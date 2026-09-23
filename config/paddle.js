@@ -35,17 +35,17 @@ const PADDLE_CONFIG = {
       name: 'production',
       apiBaseUrl: 'https://api.paddle.com',
       checkoutBaseUrl: 'https://buy.paddle.com',
-      clientToken: process.env.PADDLE_CLIENT_TOKEN_PROD || process.env.PADDLE_CLIENT_TOKEN || 'live_7a94b8e391fbc238510842e4d91',
+      clientToken: process.env.PADDLE_CLIENT_TOKEN_PROD || process.env.PADDLE_CLIENT_TOKEN || 'live_56f364b2871549a93d1a6d40504',
       prices: {
         developer_pro: {
-          annual: process.env.PADDLE_PRICE_DEV_ANNUAL_PROD || 'pri_01j7ztds_dev_annual_1990',
-          monthly: process.env.PADDLE_PRICE_DEV_MONTHLY_PROD || 'pri_01j7ztds_dev_monthly_199',
+          annual: process.env.PADDLE_PRICE_DEV_ANNUAL_PROD || 'pri_01m17c4006vvjjrnxsz3a81hy1',
+          monthly: process.env.PADDLE_PRICE_DEV_MONTHLY_PROD || 'pri_01m17c3ar9545er7twcx8fj5mr',
           amountAnnualUsd: 1990,
           amountMonthlyUsd: 199
         },
         teams: {
-          annual: process.env.PADDLE_PRICE_TEAMS_ANNUAL_PROD || 'pri_01j7ztds_teams_annual_990',
-          monthly: process.env.PADDLE_PRICE_TEAMS_MONTHLY_PROD || 'pri_01j7ztds_teams_monthly_99',
+          annual: process.env.PADDLE_PRICE_TEAMS_ANNUAL_PROD || 'pri_01ks303fretapszffcaqn86xdt',
+          monthly: process.env.PADDLE_PRICE_TEAMS_MONTHLY_PROD || 'pri_01ks303fretapszffcaqn86xdt',
           amountAnnualUsd: 990,
           amountMonthlyUsd: 99
         }

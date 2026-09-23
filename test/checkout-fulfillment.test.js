@@ -71,6 +71,9 @@ async function runTests() {
   assert(PADDLE_CONFIG.environments.production, 'Production environment must exist');
   assert.strictEqual(typeof getPriceId('developer_pro', 'annual', 'sandbox'), 'string');
   assert.strictEqual(typeof getPriceId('teams', 'monthly', 'sandbox'), 'string');
+  assert.strictEqual(getPriceId('developer_pro', 'annual', 'production'), 'pri_01m17c4006vvjjrnxsz3a81hy1');
+  assert.strictEqual(getPriceId('developer_pro', 'monthly', 'production'), 'pri_01m17c3ar9545er7twcx8fj5mr');
+  assert.strictEqual(getPriceId('teams', 'monthly', 'production'), 'pri_01ks303fretapszffcaqn86xdt');
   console.log('    [PASS] Paddle configuration and pricing resolution validated.');
 
   // Test 1: Developer Pro Annual Fulfillment
