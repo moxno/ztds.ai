@@ -1725,10 +1725,8 @@ jobs:
 
       const activeEnvConfig = PADDLE_PRICES[currentPaddleEnv] || PADDLE_PRICES.sandbox;
       if (badgeEnvIndicator) {
-        badgeEnvIndicator.textContent = currentPaddleEnv === 'production' ? 'Live MoR Gateway' : 'Sandbox MoR';
-        badgeEnvIndicator.className = currentPaddleEnv === 'production'
-          ? 'text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold uppercase'
-          : 'text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200 text-slate-700 font-bold uppercase';
+        badgeEnvIndicator.textContent = currentPaddleEnv === 'production' ? 'Live MoR Gateway' : 'Commercial MoR';
+        badgeEnvIndicator.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold uppercase';
       }
 
       // Initialize Paddle Billing v2 with fulfillment callback
@@ -2001,28 +1999,28 @@ jobs:
         }
       }
 
-      // Launch Paddle Checkout
+      // Launch Paddle Checkout / PrivacyScrubber Commercial Gateway
       if (btnLaunchPaddle) {
         btnLaunchPaddle.addEventListener('click', () => {
           const company = (document.getElementById('checkoutCompany')?.value || '').trim();
           const email = (document.getElementById('checkoutEmail')?.value || '').trim();
           const domain = (document.getElementById('checkoutDomain')?.value || '').trim();
 
-          if (!company || company.length < 2) {
-            alert('Please enter your company or organization name.');
-            document.getElementById('checkoutCompany')?.focus();
-            return;
-          }
-          if (!email || !email.includes('@')) {
-            alert('Please enter a valid developer or billing email address.');
-            document.getElementById('checkoutEmail')?.focus();
-            return;
-          }
+          // If explicit direct Paddle parameter is provided (?paddle_direct=true), allow in-modal Paddle overlay
+          if (urlParams.get('paddle_direct') === 'true' && window.Paddle && window.Paddle.Checkout && typeof Paddle.Checkout.open === 'function') {
+            if (!company || company.length < 2) {
+              alert('Please enter your company or organization name.');
+              document.getElementById('checkoutCompany')?.focus();
+              return;
+            }
+            if (!email || !email.includes('@')) {
+              alert('Please enter a valid developer or billing email address.');
+              document.getElementById('checkoutEmail')?.focus();
+              return;
+            }
 
-          const tierPrices = activeEnvConfig[currentTier] || activeEnvConfig.developer_pro;
-          const priceId = currentInterval === 'annual' ? tierPrices.annual : tierPrices.monthly;
-
-          if (window.Paddle && window.Paddle.Checkout && typeof Paddle.Checkout.open === 'function' && activeEnvConfig.token) {
+            const tierPrices = activeEnvConfig[currentTier] || activeEnvConfig.developer_pro;
+            const priceId = currentInterval === 'annual' ? tierPrices.annual : tierPrices.monthly;
             Paddle.Checkout.open({
               items: [{ priceId, quantity: 1 }],
               customer: { email },
@@ -2034,18 +2032,21 @@ jobs:
                 environment: currentPaddleEnv
               }
             });
-          } else {
-            // Self-serve preview / adblocker fallback: prefill trial tab with company and email
-            const trialComp = document.getElementById('trialCompany');
-            const trialEm = document.getElementById('trialEmail');
-            if (trialComp) trialComp.value = company;
-            if (trialEm) trialEm.value = email;
-
-            alert(`Paddle MoR Gateway: Direct payment is ready. In this environment, your instant 14-day evaluation token has been pre-configured.`);
-            switchTab('trial');
-            const btnMint = document.getElementById('btnMintTrialLicense');
-            if (btnMint) btnMint.click();
+            return;
           }
+
+          // Canonical Commercial Flow: Unified billing via PrivacyScrubber (Implementation #001)
+          const targetUrl = new URL('https://privacyscrubber.com');
+          targetUrl.searchParams.set('plan', currentTier);
+          targetUrl.searchParams.set('interval', currentInterval);
+          if (company) targetUrl.searchParams.set('company', company);
+          if (email) targetUrl.searchParams.set('email', email);
+          if (domain) targetUrl.searchParams.set('domain', domain);
+          targetUrl.searchParams.set('utm_source', 'ztds.ai');
+          targetUrl.searchParams.set('utm_medium', 'consortium_ref');
+          targetUrl.searchParams.set('utm_campaign', 'sdk_pricing');
+
+          window.open(targetUrl.toString(), '_blank', 'noopener,noreferrer');
         });
       }
 
@@ -2130,7 +2131,7 @@ jobs:
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Developer Pro Licensing
           </div>
           <h2 id="checkoutModalTitle" class="text-xl font-bold text-slate-900">Developer Pro SDK &amp; Offline Node License</h2>
-          <p class="text-xs text-slate-500 mt-0.5">Merchant of Record via Paddle &middot; Automatic B2B VAT / Sales Tax Compliance</p>
+          <p class="text-xs text-slate-500 mt-0.5">Commercial Distribution &amp; Billing via PrivacyScrubber (Pioneer Implementation #001) &middot; Paddle MoR</p>
         </div>
         <button type="button" id="btnCloseCheckoutModal" class="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-200/60 transition-colors" aria-label="Close modal">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -2140,7 +2141,7 @@ jobs:
       <!-- Mode Switcher Tabs -->
       <div class="flex border-b border-slate-200 bg-white px-5 sm:px-6 gap-2 pt-3" role="tablist">
         <button type="button" id="tabCheckoutBuy" class="checkout-tab-btn active pb-3 px-3 text-xs font-bold border-b-2 border-emerald-600 text-emerald-700 transition-colors">
-          Commercial License (Paddle)
+          Commercial License (PrivacyScrubber)
         </button>
         <button type="button" id="tabCheckoutTrial" class="checkout-tab-btn pb-3 px-3 text-xs font-semibold text-slate-500 border-b-2 border-transparent hover:text-slate-800 transition-colors">
           Instant 14-Day Evaluation Key
@@ -2208,16 +2209,16 @@ jobs:
             <div class="font-bold text-slate-800 flex items-center justify-between">
               <div class="flex items-center gap-1.5">
                 <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                <span>Instant MoR Fulfillment via Paddle.js Overlay</span>
+                <span>Fulfillment via PrivacyScrubber.com</span>
               </div>
-              <span id="badgePaddleEnvIndicator" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200 text-slate-700 font-bold uppercase">Sandbox MoR</span>
+              <span id="badgePaddleEnvIndicator" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold uppercase">Commercial MoR</span>
             </div>
-            <p class="text-[11px] leading-relaxed">Cryptographic Ed25519 offline token issued immediately upon payment completion. B2B compliant invoice with reverse-charge VAT issued by Paddle.com Market Ltd.</p>
+            <p class="text-[11px] leading-relaxed">Commercial SDK distribution, multi-seat TEAMS licensing, and MoR invoicing are fulfilled via PrivacyScrubber (ZTDS Implementation #001). Direct checkout includes 100% offline Ed25519 token issuance, automatic reverse-charge VAT, and developer dashboard access.</p>
           </div>
 
           <!-- Submit CTA -->
           <button type="button" id="btnLaunchPaddleCheckout" class="btn-trust w-full py-3 text-sm font-bold shadow-md flex items-center justify-center gap-2 cursor-pointer">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
             <span id="btnLaunchPaddleText">Proceed to Secure Checkout ($1,990 / year) &rarr;</span>
           </button>
         </div>
