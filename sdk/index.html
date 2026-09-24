@@ -80,6 +80,82 @@
             "item": "https://ztds.ai/sdk/"
           }
         ]
+      },
+      {
+        "@type": "TechArticle",
+        "@id": "https://ztds.ai/sdk/#techarticle",
+        "headline": "ZTDS Developer SDK & Pre-Built Connectors — Zero-Trust AI Sanitization",
+        "description": "Technical documentation, API specifications, Model Context Protocol (MCP) stdio setup, and framework blueprints for in-memory zero-trust data sanitization.",
+        "url": "https://ztds.ai/sdk/",
+        "author": {
+          "@type": "Person",
+          "name": "Ilya Sibiryakov",
+          "sameAs": "https://www.linkedin.com/in/ilya-sibiryakov/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ZTDS AI Consortium",
+          "url": "https://ztds.ai"
+        },
+        "citation": [
+          "https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/",
+          "https://doi.org/10.5281/zenodo.22058770",
+          "https://doi.org/10.17605/OSF.IO/5BYJF"
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://ztds.ai/sdk/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the ZTDS Developer SDK and how does it prevent PII leakage to LLMs?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The ZTDS Developer SDK is an in-memory runtime engine and set of pre-built connectors that intercepts prompts and documents directly in host volatile RAM before external socket transmission. Sensitive PII, PHI, API keys, and corporate secrets are deterministically replaced with context-preserving surrogate tokens in under 0.8ms with 0.00 bytes socket egress. Model completions are losslessly restored locally in client memory."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I configure ZTDS with Model Context Protocol (MCP) in Cursor IDE or Claude Desktop?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Add @privacyscrubber/mcp-server to your .cursor/mcp.json or claude_desktop_config.json using the stdio transport with command 'npx' and args ['-y', '@privacyscrubber/mcp-server@latest']. It runs locally as a child process communicating over stdin/stdout with zero network telemetry."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does the ZTDS runtime send any telemetry or licensing phone-home beacons?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. All ZTDS runtime engines enforce Invariant 1 (Zero External Egress Prior to Sanitization). Commercial license validation uses local asymmetric Ed25519 digital signatures (RFC 8032) embedded directly into offline license tokens, executing verification in under 0.12ms in RAM with zero network calls."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is a Data Processing Agreement (DPA) unnecessary under GDPR Article 28?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Under GDPR Article 28, a DPA is only required when personal data is transmitted to an external third-party data processor. Because ZTDS operates as a computational utility strictly inside the customer's own execution perimeter, no personal data ever crosses the network boundary to ZTDS or PrivacyScrubber servers, eliminating third-party subprocessor legal liability."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do offline Ed25519 asymmetric cryptographic license tokens work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Commercial licenses (Developer Pro, TEAMS, Enterprise) provide an offline token (ZTDS-LIC-v1...). The engine verifies the Ed25519 signature against an embedded public key in local memory in under 120 microseconds. It operates 100% offline in air-gapped Docker containers, Kubernetes pods, and AWS Nitro Enclaves with an automated 60-day AP grace period."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between @ztds/core and @privacyscrubber/sdk?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "@ztds/core is the permissive Apache 2.0 open-source baseline reference implementation providing core invariant compliance and universal regex detectors. @privacyscrubber/sdk is the enterprise production engine featuring SIMD-accelerated WebAssembly, 30 certified industry profiles (HIPAA, PCI-DSS v4, Legal Privilege), offline multi-node licensing, and pre-built framework connectors."
+            }
+          }
+        ]
       }
     ]
   }
@@ -212,13 +288,21 @@
         Drop-in, client-side zero-trust data sanitization for modern AI pipelines. Choose between the open reference engine <code class="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-mono font-bold">@ztds/core</code> (Apache 2.0) and the enterprise production engine <code class="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-mono font-bold">@privacyscrubber/sdk</code>. Both execute in &lt; 0.8ms in local host process memory with 0.00 bytes socket egress.
       </p>
 
-      <!-- Quick Install Bar with Multi-Manager Switcher -->
-      <div class="pt-2 max-w-xl mx-auto">
-        <div class="p-1 bg-slate-100 rounded-xl flex items-center justify-center gap-1 text-xs font-mono mb-2" id="pkg-manager-tabs">
-          <button class="pkg-tab-btn px-3 py-1.5 rounded-lg bg-white text-slate-900 font-bold shadow-xs transition-all" data-mgr="npm">npm</button>
-          <button class="pkg-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 font-medium transition-all" data-mgr="pnpm">pnpm</button>
-          <button class="pkg-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 font-medium transition-all" data-mgr="yarn">yarn</button>
-          <button class="pkg-tab-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 font-medium transition-all" data-mgr="pip">pip</button>
+      <!-- Quick Install Bar with Multi-Manager & Engine Switcher -->
+      <div class="pt-2 max-w-2xl mx-auto space-y-2">
+        <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+          <!-- Engine Selector -->
+          <div class="inline-flex p-0.5 bg-slate-200/80 rounded-lg text-[11px] font-mono" id="pkg-engine-selector">
+            <button type="button" class="pkg-engine-btn px-2.5 py-1 rounded-md bg-white text-slate-900 font-bold shadow-xs transition-all" data-engine="enterprise">Enterprise Engine (@privacyscrubber/sdk)</button>
+            <button type="button" class="pkg-engine-btn px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-medium transition-all" data-engine="oss">OSS Baseline (@ztds/core)</button>
+          </div>
+          <!-- Manager Switcher -->
+          <div class="inline-flex p-0.5 bg-slate-100 rounded-lg text-xs font-mono" id="pkg-manager-tabs">
+            <button class="pkg-tab-btn px-2.5 py-1 rounded-md bg-white text-slate-900 font-bold shadow-xs transition-all" data-mgr="npm">npm</button>
+            <button class="pkg-tab-btn px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-medium transition-all" data-mgr="pnpm">pnpm</button>
+            <button class="pkg-tab-btn px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-medium transition-all" data-mgr="yarn">yarn</button>
+            <button class="pkg-tab-btn px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-medium transition-all" data-mgr="pip">pip</button>
+          </div>
         </div>
 
         <div class="flex items-center justify-between gap-3 p-3.5 bg-slate-900 text-white rounded-xl shadow-md font-mono text-xs">
@@ -229,6 +313,50 @@
           <button id="copyInstallBtn" class="shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 font-semibold transition-colors flex items-center gap-1">
             <span id="copyInstallText">Copy</span>
           </button>
+        </div>
+
+        <!-- 30-Second Minimal Quickstart (Immediate Developer Value) -->
+        <div class="rounded-xl border border-slate-800 bg-slate-950 text-left shadow-lg overflow-hidden font-mono text-xs mt-3">
+          <div class="flex items-center justify-between px-3.5 py-2 bg-slate-900 border-b border-slate-800 text-[11px]">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span class="text-slate-300 font-bold font-sans">30-Second Quickstart</span>
+              <span class="text-slate-500 font-normal hidden sm:inline">&middot; In-Memory Execution</span>
+            </div>
+            <div class="flex items-center gap-1.5" id="quickstart-lang-tabs">
+              <button type="button" class="quickstart-tab-btn px-2 py-0.5 rounded text-[11px] bg-slate-800 text-emerald-400 font-bold transition-colors" data-lang="ts">Node / TS</button>
+              <button type="button" class="quickstart-tab-btn px-2 py-0.5 rounded text-[11px] text-slate-400 hover:text-slate-200 transition-colors" data-lang="py">Python</button>
+              <button type="button" id="copyQuickstartBtn" class="ml-2 text-slate-400 hover:text-emerald-300 text-[11px] font-sans font-semibold transition-colors">Copy</button>
+            </div>
+          </div>
+          <div class="p-3.5 overflow-x-auto leading-relaxed text-slate-200">
+            <pre id="quickstartTsBlock"><code><span class="text-blue-400">import</span> { ZTDSEngine } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@privacyscrubber/sdk"</span>;
+
+<span class="text-blue-400">const</span> engine = <span class="text-blue-400">new</span> <span class="text-yellow-300">ZTDSEngine</span>({ profile: <span class="text-emerald-300">"dev"</span> });
+
+<span class="text-slate-500">// 1. In-RAM sanitization before socket dispatch (&lt;0.8ms, 0.00B egress)</span>
+<span class="text-blue-400">const</span> { sanitizedPrompt, sessionMap } = engine.<span class="text-yellow-300">sanitize</span>(<span class="text-emerald-300">"User ceo@acme.com budget $50,000"</span>);
+<span class="text-slate-500">// sanitizedPrompt =&gt; "User [EMAIL_TOKEN_1] budget [FIN_TOKEN_1]"</span>
+
+<span class="text-slate-500">// 2. Forward sanitizedPrompt safely to OpenAI, Claude, or local Ollama...</span>
+<span class="text-blue-400">const</span> llmResponse = <span class="text-blue-400">await</span> <span class="text-yellow-300">callLLM</span>(sanitizedPrompt);
+
+<span class="text-slate-500">// 3. Losslessly restore surrogate tokens strictly inside local client RAM</span>
+<span class="text-blue-400">const</span> clearOutput = engine.<span class="text-yellow-300">reveal</span>(llmResponse, sessionMap);</code></pre>
+            <pre id="quickstartPyBlock" class="hidden"><code><span class="text-blue-400">from</span> privacyscrubber <span class="text-blue-400">import</span> ZTDSEngine
+
+engine = <span class="text-yellow-300">ZTDSEngine</span>(profile=<span class="text-emerald-300">"dev"</span>)
+
+<span class="text-slate-500"># 1. In-RAM sanitization before network dispatch (&lt;0.8ms, 0.00B egress)</span>
+sanitized_prompt, token_map = engine.<span class="text-yellow-300">sanitize</span>(<span class="text-emerald-300">"User ceo@acme.com budget $50,000"</span>)
+<span class="text-slate-500"># sanitized_prompt =&gt; "User [EMAIL_TOKEN_1] budget [FIN_TOKEN_1]"</span>
+
+<span class="text-slate-500"># 2. Forward sanitized prompt to OpenAI, Claude, or LlamaIndex...</span>
+llm_response = <span class="text-yellow-300">call_llm</span>(sanitized_prompt)
+
+<span class="text-slate-500"># 3. Restore tokens locally in RAM; token_map wiped on exit</span>
+clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, token_map)</code></pre>
+          </div>
         </div>
       </div>
     </div>
@@ -353,6 +481,73 @@
           <div class="font-mono text-[10px] px-2 py-1 rounded bg-blue-200 text-blue-900 font-bold w-fit">Zero Disk Persistence</div>
         </div>
 
+      </div>
+
+      <!-- Deterministic Airplane Mode & Zero-Egress Terminal Audit -->
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300 space-y-2">
+        <div class="flex items-center justify-between text-[11px] pb-1 border-b border-slate-800">
+          <span class="text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            Independent Zero-Egress Audit Protocol (Airplane Mode Test)
+          </span>
+          <span class="text-slate-500 font-sans text-[10px]">RFC v1.0 Section 4</span>
+        </div>
+        <p class="text-slate-400 text-[11px] font-sans leading-relaxed">
+          To mathematically verify Invariant 1 (0.00 bytes socket egress), disconnect your host from Wi-Fi/Ethernet or run with kernel socket tracing. The ZTDS runtime executes completely with zero socket bind/connect syscalls:
+        </p>
+        <div class="bg-black/60 p-2.5 rounded-lg border border-slate-800 text-[11px] text-emerald-300 overflow-x-auto select-all">
+          AIRPLANE_MODE=1 strace -e trace=network node -e "const { ZTDSEngine } = require('@privacyscrubber/sdk'); const e = new ZTDSEngine(); console.log(e.sanitize('Patient John Doe SSN 000-12-3456'));"
+        </div>
+        <div class="flex flex-wrap items-center justify-between gap-2 text-[10px] text-slate-400 pt-1 font-sans">
+          <span>Syscall verification: <strong class="text-slate-200">0 network sockets opened</strong> &middot; Latency: <strong class="text-emerald-400">&lt; 0.8ms</strong></span>
+          <a href="/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" target="_blank" class="text-emerald-400 hover:underline font-semibold font-mono">Download CISO Verification Memo (PDF) &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Statutory Compliance & DPA Exemption Crosswalk -->
+      <div class="rounded-xl border border-slate-200 overflow-hidden">
+        <div class="bg-slate-100 px-4 py-2 border-b border-slate-200 flex items-center justify-between text-xs font-bold text-slate-800">
+          <span>Statutory Compliance &amp; Zero-DPA Exemption Crosswalk</span>
+          <span class="text-[11px] font-mono text-emerald-700 font-semibold">Zero-DPA Certified</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-xs text-left text-slate-600">
+            <thead class="bg-slate-50 text-[10px] font-mono uppercase text-slate-500 border-b border-slate-200">
+              <tr>
+                <th class="p-2.5">Regulation</th>
+                <th class="p-2.5">Statutory Provision</th>
+                <th class="p-2.5">ZTDS Invariant Mechanism</th>
+                <th class="p-2.5">Legal &amp; GRC Impact</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 font-sans text-[11px]">
+              <tr>
+                <td class="p-2.5 font-bold text-slate-900">GDPR (EU)</td>
+                <td class="p-2.5 font-mono text-slate-700">Recital 26 &amp; Art. 28</td>
+                <td class="p-2.5">In-RAM surrogate tokenization before network transmission</td>
+                <td class="p-2.5 text-emerald-700 font-semibold">No DPA required; 0 subprocessor liability</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-bold text-slate-900">HIPAA (US)</td>
+                <td class="p-2.5 font-mono text-slate-700">45 CFR &sect; 164.514(b)</td>
+                <td class="p-2.5">Deterministic masking of all 18 Safe Harbor PHI identifiers</td>
+                <td class="p-2.5 text-emerald-700 font-semibold">BAA with third-party LLMs excluded from PHI scope</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-bold text-slate-900">EU AI Act</td>
+                <td class="p-2.5 font-mono text-slate-700">Art. 50 &amp; Art. 10(5)</td>
+                <td class="p-2.5">Eliminates raw PII exposure to foundation model training feeds</td>
+                <td class="p-2.5 text-emerald-700 font-semibold">Zero training memorization risk</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-bold text-slate-900">PCI-DSS v4.0</td>
+                <td class="p-2.5 font-mono text-slate-700">Req. 3.4 &amp; 3.5</td>
+                <td class="p-2.5">Client-side PAN/CVV cryptographic substitution</td>
+                <td class="p-2.5 text-emerald-700 font-semibold">LLM APIs desensitized from PCI audit boundary</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -1159,67 +1354,87 @@ static_resources:
         <a href="/roi/" class="text-xs font-mono text-emerald-700 font-semibold hover:underline">Calculate Enterprise ROI &rarr;</a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         
         <!-- Tier 1: OSS Core -->
-        <div class="p-6 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-between space-y-4">
+        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-between space-y-4">
           <div>
             <div class="text-[11px] font-mono font-bold text-slate-500 uppercase">Open Specification</div>
-            <h3 class="text-lg font-bold text-slate-900 mt-1">Open Source Core</h3>
-            <div class="text-2xl font-bold text-slate-900 font-mono mt-2">$0 <span class="text-xs font-normal text-slate-500 font-sans">/ Free Forever</span></div>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">Permissive Apache 2.0 reference implementation, community regex detectors, and CLI audit tooling.</p>
-            <ul class="mt-4 space-y-2 text-xs text-slate-600">
-              <li class="flex items-center gap-2">&check; Full ZTDS RFC v1.0 Spec</li>
-              <li class="flex items-center gap-2">&check; CLI Scanner (npx ztds-audit)</li>
-              <li class="flex items-center gap-2">&check; Baseline General PII Rules</li>
-              <li class="flex items-center gap-2">&check; Community GitHub Support</li>
+            <h3 class="text-base font-bold text-slate-900 mt-1">Open Source Core</h3>
+            <div class="text-xl font-bold text-slate-900 font-mono mt-1">$0 <span class="text-xs font-normal text-slate-500 font-sans">/ Free Forever</span></div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">Permissive Apache 2.0 reference implementation, universal regex detectors, and CLI audit tooling.</p>
+            <ul class="mt-3.5 space-y-1.5 text-xs text-slate-600">
+              <li class="flex items-center gap-1.5">&check; Full ZTDS RFC v1.0 Spec</li>
+              <li class="flex items-center gap-1.5">&check; CLI Scanner (npx ztds-audit)</li>
+              <li class="flex items-center gap-1.5">&check; Universal PII Regex Rules</li>
+              <li class="flex items-center gap-1.5">&check; Community GitHub Support</li>
             </ul>
           </div>
-          <a href="/standard/" class="btn-outline w-full text-center text-xs py-2">
+          <a href="/standard/" class="btn-outline w-full text-center text-xs py-2 font-semibold">
             Read RFC v1.0 Spec &rarr;
           </a>
         </div>
 
-        <!-- Tier 2: Developer Annual -->
-        <div class="p-6 rounded-xl border-2 border-emerald-500 bg-emerald-50/30 flex flex-col justify-between space-y-4 shadow-sm relative">
-          <div class="absolute -top-3 right-4 px-2.5 py-0.5 rounded-full bg-emerald-600 text-white font-mono text-[10px] font-bold tracking-wider uppercase">
+        <!-- Tier 2: ZTDS TEAMS -->
+        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-between space-y-4 hover:border-slate-300 transition-colors">
+          <div>
+            <div class="text-[11px] font-mono font-bold text-sky-700 uppercase">Team Collaboration</div>
+            <h3 class="text-base font-bold text-slate-900 mt-1">ZTDS TEAMS</h3>
+            <div class="text-xl font-bold text-slate-900 font-mono mt-1">$99 <span class="text-xs font-normal text-slate-500 font-sans">/ month ($990/yr)</span></div>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">Shared team policies, synchronized rulesets, and multi-node microservice deployment for growing engineering teams.</p>
+            <ul class="mt-3.5 space-y-1.5 text-xs text-slate-700">
+              <li class="flex items-center gap-1.5">&check; 10 Microservice Nodes</li>
+              <li class="flex items-center gap-1.5">&check; 5 Developer Seats &amp; Team Sync</li>
+              <li class="flex items-center gap-1.5">&check; Headless @privacyscrubber/sdk</li>
+              <li class="flex items-center gap-1.5">&check; Offline Ed25519 Token Minting</li>
+              <li class="flex items-center gap-1.5">&check; Universal PII &amp; Secrets Rules</li>
+            </ul>
+          </div>
+          <button type="button" id="btnOpenCheckoutTeams" class="btn-outline w-full text-center text-xs py-2 font-bold hover:bg-slate-900 hover:text-white transition-colors cursor-pointer">
+            <span>Get TEAMS License &rarr;</span>
+          </button>
+        </div>
+
+        <!-- Tier 3: Developer Annual -->
+        <div class="p-5 rounded-xl border-2 border-emerald-500 bg-emerald-50/40 flex flex-col justify-between space-y-4 shadow-sm relative">
+          <div class="absolute -top-3 right-3 px-2 py-0.5 rounded-full bg-emerald-600 text-white font-mono text-[9.5px] font-bold tracking-wider uppercase">
             Most Popular
           </div>
           <div>
             <div class="text-[11px] font-mono font-bold text-emerald-800 uppercase">Developer Pro</div>
-            <h3 class="text-lg font-bold text-slate-900 mt-1">Developer Annual SDK</h3>
-            <div class="text-2xl font-bold text-slate-900 font-mono mt-2">$1,990 <span class="text-xs font-normal text-slate-500 font-sans">/ year ($199/mo)</span></div>
+            <h3 class="text-base font-bold text-slate-900 mt-1">Developer Annual SDK</h3>
+            <div class="text-xl font-bold text-slate-900 font-mono mt-1">$1,990 <span class="text-xs font-normal text-slate-500 font-sans">/ year ($199/mo)</span></div>
             <p class="text-xs text-slate-600 mt-2 leading-relaxed">Commercial license for production microservices, pre-built AI framework connectors, and verified registry listing.</p>
-            <ul class="mt-4 space-y-2 text-xs text-slate-700">
-              <li class="flex items-center gap-2">&check; Headless @privacyscrubber/sdk</li>
-              <li class="flex items-center gap-2">&check; LangChain &amp; LlamaIndex Connectors</li>
-              <li class="flex items-center gap-2">&check; Cursor &amp; Claude Code MCP Server</li>
-              <li class="flex items-center gap-2">&check; Verified Registry Badge &amp; Backlink</li>
-              <li class="flex items-center gap-2">&check; Unlimited backend microservice nodes</li>
+            <ul class="mt-3.5 space-y-1.5 text-xs text-slate-700">
+              <li class="flex items-center gap-1.5">&check; Unlimited microservice nodes</li>
+              <li class="flex items-center gap-1.5">&check; LangChain &amp; LlamaIndex Connectors</li>
+              <li class="flex items-center gap-1.5">&check; Cursor &amp; Claude Code MCP Server</li>
+              <li class="flex items-center gap-1.5">&check; Verified Registry Badge &amp; Seal</li>
+              <li class="flex items-center gap-1.5">&check; Priority Developer Email Support</li>
             </ul>
           </div>
-          <button type="button" id="btnOpenCheckoutModal" class="btn-trust w-full text-center text-xs py-2.5 font-bold shadow-sm flex items-center justify-center gap-1.5 cursor-pointer">
-            <span>Get Developer License &rarr;</span>
+          <button type="button" id="btnOpenCheckoutModal" class="btn-trust w-full text-center text-xs py-2 font-bold shadow-sm flex items-center justify-center gap-1 cursor-pointer">
+            <span>Get Developer Pro &rarr;</span>
           </button>
         </div>
 
-        <!-- Tier 3: Enterprise Air-Gapped -->
-        <div class="p-6 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-between space-y-4">
+        <!-- Tier 4: Enterprise Air-Gapped -->
+        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 flex flex-col justify-between space-y-4">
           <div>
             <div class="text-[11px] font-mono font-bold text-slate-500 uppercase">Enterprise GRC</div>
-            <h3 class="text-lg font-bold text-slate-900 mt-1">Air-Gapped &amp; Enclaves</h3>
-            <div class="text-2xl font-bold text-slate-900 font-mono mt-2">$12,000 <span class="text-xs font-normal text-slate-500 font-sans">/ year</span></div>
+            <h3 class="text-base font-bold text-slate-900 mt-1">Air-Gapped &amp; Enclaves</h3>
+            <div class="text-xl font-bold text-slate-900 font-mono mt-1">$12,000 <span class="text-xs font-normal text-slate-500 font-sans">/ year</span></div>
             <p class="text-xs text-slate-600 mt-2 leading-relaxed">Sovereign confidential computing deployment, custom NER entity profiles, and turnkey CISO DPA exemption documentation.</p>
-            <ul class="mt-4 space-y-2 text-xs text-slate-600">
-              <li class="flex items-center gap-2">&check; AWS Nitro Enclaves Attestation</li>
-              <li class="flex items-center gap-2">&check; 30 High-ACV Industry Profiles</li>
-              <li class="flex items-center gap-2">&check; Turnkey Zero-DPA Compliance Pack</li>
-              <li class="flex items-center gap-2">&check; SIG Lite / CAIQ / VSAQ Responses</li>
-              <li class="flex items-center gap-2">&check; Dedicated SLA &amp; Security Support</li>
+            <ul class="mt-3.5 space-y-1.5 text-xs text-slate-600">
+              <li class="flex items-center gap-1.5">&check; AWS Nitro Enclaves Attestation</li>
+              <li class="flex items-center gap-1.5">&check; 30 High-ACV Industry Profiles</li>
+              <li class="flex items-center gap-1.5">&check; Turnkey Zero-DPA Compliance Pack</li>
+              <li class="flex items-center gap-1.5">&check; SIG Lite / CAIQ / VSAQ Responses</li>
+              <li class="flex items-center gap-1.5">&check; Dedicated SLA &amp; Security Retainer</li>
             </ul>
           </div>
-          <a href="/ciso/" class="btn-outline w-full text-center text-xs py-2">
-            Enterprise Invariant Scope &rarr;
+          <a href="/ciso/" class="btn-outline w-full text-center text-xs py-2 font-semibold">
+            Enterprise Scope &rarr;
           </a>
         </div>
 
@@ -1472,6 +1687,89 @@ jobs:
       </div>
     </div>
 
+    <!-- Technical FAQ Section (High-Density GEO & AI Engine Ingestion) -->
+    <section class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24" id="faq">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-xs font-mono font-semibold mb-2">
+            <span>FREQUENTLY ASKED QUESTIONS</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Technical &amp; Architectural FAQ</h2>
+        </div>
+        <span class="text-xs font-mono text-slate-500">RFC v1.0 &middot; Model Context Protocol &middot; Compliance</span>
+      </div>
+
+      <div class="space-y-3 font-sans text-xs" id="faqAccordion">
+        
+        <!-- Q1 -->
+        <details class="group border border-slate-200 rounded-xl p-4 transition-colors hover:border-slate-300 open:bg-slate-50/60" open>
+          <summary class="font-bold text-slate-900 text-sm cursor-pointer list-none flex items-center justify-between gap-4">
+            <span>What is the ZTDS Developer SDK and how does it prevent PII leakage to LLMs?</span>
+            <span class="text-slate-400 group-open:rotate-180 transition-transform font-mono text-sm">&darr;</span>
+          </summary>
+          <p class="mt-3 text-slate-600 leading-relaxed text-xs">
+            The ZTDS Developer SDK is an in-memory runtime engine and set of pre-built connectors that intercepts prompts and documents directly in host volatile RAM before external socket transmission. Sensitive PII, PHI, API keys, and corporate secrets are deterministically replaced with context-preserving surrogate tokens (<code class="font-mono text-emerald-700 bg-emerald-50 px-1 py-0.5 rounded">[EMAIL_TOKEN_1]</code>, <code class="font-mono text-emerald-700 bg-emerald-50 px-1 py-0.5 rounded">[FIN_TOKEN_1]</code>) in under 0.8ms with 0.00 bytes socket egress. Model completions are losslessly restored locally in client memory, and the session mapping table is completely wiped on process exit.
+          </p>
+        </details>
+
+        <!-- Q2 -->
+        <details class="group border border-slate-200 rounded-xl p-4 transition-colors hover:border-slate-300 open:bg-slate-50/60">
+          <summary class="font-bold text-slate-900 text-sm cursor-pointer list-none flex items-center justify-between gap-4">
+            <span>How do I configure ZTDS with Model Context Protocol (MCP) in Cursor IDE or Claude Desktop?</span>
+            <span class="text-slate-400 group-open:rotate-180 transition-transform font-mono text-sm">&darr;</span>
+          </summary>
+          <p class="mt-3 text-slate-600 leading-relaxed text-xs">
+            Add <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">@privacyscrubber/mcp-server</code> to your <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">.cursor/mcp.json</code> or <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">claude_desktop_config.json</code> using the stdio transport with command <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">npx</code> and args <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">["-y", "@privacyscrubber/mcp-server@latest"]</code>. The MCP server executes as a process-isolated child process communicating strictly over local JSON-RPC 2.0 stdio pipes with 0.00 bytes network telemetry.
+          </p>
+        </details>
+
+        <!-- Q3 -->
+        <details class="group border border-slate-200 rounded-xl p-4 transition-colors hover:border-slate-300 open:bg-slate-50/60">
+          <summary class="font-bold text-slate-900 text-sm cursor-pointer list-none flex items-center justify-between gap-4">
+            <span>Does the ZTDS runtime send any telemetry, analytics, or licensing phone-home beacons?</span>
+            <span class="text-slate-400 group-open:rotate-180 transition-transform font-mono text-sm">&darr;</span>
+          </summary>
+          <p class="mt-3 text-slate-600 leading-relaxed text-xs">
+            No. All ZTDS runtime engines enforce Invariant 1 (Zero External Egress Prior to Sanitization). Commercial license validation uses local asymmetric Ed25519 digital signatures (RFC 8032) embedded directly into offline license tokens (<code class="font-mono text-emerald-700 bg-emerald-50 px-1 py-0.5 rounded">ZTDS-LIC-v1...</code>). Digital signatures are verified against an embedded public key in local RAM in under 120 microseconds with zero network calls, making it safe for fully air-gapped VPCs and SCIF environments.
+          </p>
+        </details>
+
+        <!-- Q4 -->
+        <details class="group border border-slate-200 rounded-xl p-4 transition-colors hover:border-slate-300 open:bg-slate-50/60">
+          <summary class="font-bold text-slate-900 text-sm cursor-pointer list-none flex items-center justify-between gap-4">
+            <span>Why is a Data Processing Agreement (DPA) legally unnecessary under GDPR Article 28?</span>
+            <span class="text-slate-400 group-open:rotate-180 transition-transform font-mono text-sm">&darr;</span>
+          </summary>
+          <p class="mt-3 text-slate-600 leading-relaxed text-xs">
+            Under GDPR Article 28, a DPA is only required when personal data is processed by an external third-party data processor. Because ZTDS operates as a local computational utility strictly inside the customer's own execution perimeter, no personal data ever crosses the network boundary to ZTDS or PrivacyScrubber servers. This legally excludes ZTDS from the SaaS subprocessor chain, eliminating DPA overhead and third-party vendor breach liability.
+          </p>
+        </details>
+
+        <!-- Q5 -->
+        <details class="group border border-slate-200 rounded-xl p-4 transition-colors hover:border-slate-300 open:bg-slate-50/60">
+          <summary class="font-bold text-slate-900 text-sm cursor-pointer list-none flex items-center justify-between gap-4">
+            <span>How does offline Ed25519 asymmetric licensing work in air-gapped environments?</span>
+            <span class="text-slate-400 group-open:rotate-180 transition-transform font-mono text-sm">&darr;</span>
+          </summary>
+          <p class="mt-3 text-slate-600 leading-relaxed text-xs">
+            Commercial licenses (Developer Pro, TEAMS, Enterprise) provide an offline token that contains signed claims (tier, max nodes, validity, allowed profiles). When the SDK initializes, it performs an in-memory Ed25519 cryptographic verification without opening any sockets. All annual licenses include an automated 60-day accounts payable grace period past expiration to prevent unexpected production outages during corporate renewal cycles.
+          </p>
+        </details>
+
+        <!-- Q6 -->
+        <details class="group border border-slate-200 rounded-xl p-4 transition-colors hover:border-slate-300 open:bg-slate-50/60">
+          <summary class="font-bold text-slate-900 text-sm cursor-pointer list-none flex items-center justify-between gap-4">
+            <span>What is the architectural difference between @ztds/core and @privacyscrubber/sdk?</span>
+            <span class="text-slate-400 group-open:rotate-180 transition-transform font-mono text-sm">&darr;</span>
+          </summary>
+          <p class="mt-3 text-slate-600 leading-relaxed text-xs">
+            <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">@ztds/core</code> is the community-governed open-source baseline reference implementation under Apache 2.0, providing universal regex detectors and four-invariant validation. <code class="font-mono text-emerald-800 bg-emerald-50 px-1 py-0.5 rounded">@privacyscrubber/sdk</code> is the enterprise production engine featuring SIMD-accelerated WebAssembly, 30 certified regulatory profiles (HIPAA, PCI-DSS v4, Legal Privilege), offline multi-node licensing, and pre-built framework connectors.
+          </p>
+        </details>
+
+      </div>
+    </section>
+
   </main>
 
 
@@ -1590,20 +1888,49 @@ jobs:
   <script src="/nav.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Package Manager Switcher
+      // 1. Package Manager & Engine Switcher
+      const pkgEngineBtns = document.querySelectorAll('.pkg-engine-btn');
       const pkgTabs = document.querySelectorAll('.pkg-tab-btn');
       const installDisplay = document.getElementById('installCmdDisplay');
       const copyInstallBtn = document.getElementById('copyInstallBtn');
       const copyInstallText = document.getElementById('copyInstallText');
 
+      let currentEngine = 'enterprise'; // 'enterprise' | 'oss'
+      let activePkg = 'npm';
+
       const pkgCommands = {
-        npm: 'npm install @privacyscrubber/sdk',
-        pnpm: 'pnpm add @privacyscrubber/sdk',
-        yarn: 'yarn add @privacyscrubber/sdk',
-        pip: 'pip install ztds-python'
+        enterprise: {
+          npm: 'npm install @privacyscrubber/sdk',
+          pnpm: 'pnpm add @privacyscrubber/sdk',
+          yarn: 'yarn add @privacyscrubber/sdk',
+          pip: 'pip install privacyscrubber'
+        },
+        oss: {
+          npm: 'npm install @ztds/core',
+          pnpm: 'pnpm add @ztds/core',
+          yarn: 'yarn add @ztds/core',
+          pip: 'pip install ztds-core'
+        }
       };
 
-      let activePkg = 'npm';
+      function updateInstallCmd() {
+        if (installDisplay) {
+          installDisplay.textContent = pkgCommands[currentEngine][activePkg] || pkgCommands.enterprise.npm;
+        }
+      }
+
+      pkgEngineBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          pkgEngineBtns.forEach(b => {
+            b.classList.remove('bg-white', 'text-slate-900', 'font-bold', 'shadow-xs');
+            b.classList.add('text-slate-600');
+          });
+          btn.classList.add('bg-white', 'text-slate-900', 'font-bold', 'shadow-xs');
+          btn.classList.remove('text-slate-600');
+          currentEngine = btn.getAttribute('data-engine') || 'enterprise';
+          updateInstallCmd();
+        });
+      });
 
       pkgTabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -1614,19 +1941,54 @@ jobs:
           tab.classList.add('bg-white', 'text-slate-900', 'font-bold', 'shadow-xs');
           tab.classList.remove('text-slate-600');
 
-          activePkg = tab.getAttribute('data-mgr');
-          if (installDisplay) {
-            installDisplay.textContent = pkgCommands[activePkg] || pkgCommands.npm;
-          }
+          activePkg = tab.getAttribute('data-mgr') || 'npm';
+          updateInstallCmd();
         });
       });
 
       if (copyInstallBtn && copyInstallText) {
         copyInstallBtn.addEventListener('click', () => {
-          const cmd = pkgCommands[activePkg] || pkgCommands.npm;
+          const cmd = pkgCommands[currentEngine][activePkg] || pkgCommands.enterprise.npm;
           window.ztdsCopy(cmd, () => {
             copyInstallText.textContent = 'Copied!';
             setTimeout(() => { copyInstallText.textContent = 'Copy'; }, 2000);
+          });
+        });
+      }
+
+      // 1.1 30-Second Quickstart Language Tab Switcher
+      const qsTabs = document.querySelectorAll('.quickstart-tab-btn');
+      const qsTsBlock = document.getElementById('quickstartTsBlock');
+      const qsPyBlock = document.getElementById('quickstartPyBlock');
+      const copyQsBtn = document.getElementById('copyQuickstartBtn');
+      let currentQsLang = 'ts';
+
+      qsTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          qsTabs.forEach(t => {
+            t.classList.remove('bg-slate-800', 'text-emerald-400', 'font-bold');
+            t.classList.add('text-slate-400');
+          });
+          tab.classList.add('bg-slate-800', 'text-emerald-400', 'font-bold');
+          tab.classList.remove('text-slate-400');
+          currentQsLang = tab.getAttribute('data-lang') || 'ts';
+          if (currentQsLang === 'ts') {
+            if (qsTsBlock) qsTsBlock.classList.remove('hidden');
+            if (qsPyBlock) qsPyBlock.classList.add('hidden');
+          } else {
+            if (qsPyBlock) qsPyBlock.classList.remove('hidden');
+            if (qsTsBlock) qsTsBlock.classList.add('hidden');
+          }
+        });
+      });
+
+      if (copyQsBtn) {
+        copyQsBtn.addEventListener('click', () => {
+          const activeBlock = currentQsLang === 'ts' ? qsTsBlock : qsPyBlock;
+          const code = activeBlock ? (activeBlock.querySelector('code')?.innerText || activeBlock.innerText) : '';
+          window.ztdsCopy(code, () => {
+            copyQsBtn.textContent = 'Copied!';
+            setTimeout(() => { copyQsBtn.textContent = 'Copy'; }, 2000);
           });
         });
       }
@@ -1959,7 +2321,9 @@ jobs:
         }
       }
 
+      const btnOpenTeams = document.getElementById('btnOpenCheckoutTeams');
       if (btnOpenModal) btnOpenModal.addEventListener('click', () => openModal('developer_pro'));
+      if (btnOpenTeams) btnOpenTeams.addEventListener('click', () => openModal('teams'));
       if (btnCloseModal) btnCloseModal.addEventListener('click', closeModal);
 
       if (modal) {
@@ -2275,6 +2639,13 @@ jobs:
         } else if (hash === '#middleware') {
           const el = document.getElementById('connectors');
           if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (hash === '#faq') {
+          const el = document.getElementById('faq');
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (hash === '#teams') {
+          const el = document.getElementById('licensing');
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          openModal('teams');
         }
       }
 
