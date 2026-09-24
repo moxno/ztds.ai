@@ -45,12 +45,12 @@ function getNavHtml(relPath) {
 
   const link = (href, label, isActive) => {
     const cls = isActive
-      ? 'nav-link text-emerald-700 font-bold py-1'
-      : 'nav-link hover:text-slate-900 transition-colors py-1';
+      ? 'nav-link text-emerald-700 font-bold py-1 whitespace-nowrap'
+      : 'nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap';
     return `<a href="${href}" class="${cls}">${label}</a>`;
   };
 
-  return `<nav class="hidden lg:flex items-center gap-5 text-sm font-medium text-slate-600" id="desktop-nav">
+  return `<nav class="hidden lg:flex items-center gap-3.5 xl:gap-5 text-sm font-medium text-slate-600" id="desktop-nav">
         ${link('/standard/', 'Standard', isStandard)}
         ${link('/registry/', 'Registry', isRegistry)}
         ${link('/fellows/', 'Fellows', isFellows)}
