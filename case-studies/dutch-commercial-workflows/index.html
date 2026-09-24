@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Study: Evaluating In-Browser ZTDS for Dutch Commercial Workflows — ZTDS.ai</title>
+  <meta name="description" content="Match2Market field report evaluating client-side Zero-Trust Data Sanitization across synthetic Dutch enterprise prompts and ChatGPT workflows.">
+  <link rel="canonical" href="https://ztds.ai/case-studies/dutch-commercial-workflows/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ztds.ai/case-studies/dutch-commercial-workflows/">
+  <meta property="og:title" content="Field Validation Report: Evaluating In-Browser ZTDS for Dutch Commercial Workflows">
+  <meta property="og:description" content="Independent empirical evaluation by Match2Market (Netherlands) assessing client-side zero-server AI prompt sanitization, BSN rules, and DOM inspection.">
+  <meta property="og:image" content="https://ztds.ai/badge/privacyscrubber-web.svg">
+
+  <!-- Fonts & CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://ztds.ai/case-studies/dutch-commercial-workflows/#article",
+        "headline": "Evaluating In-Browser Zero-Trust Data Sanitization for Dutch Commercial Workflows",
+        "description": "Empirical field validation report by Match2Market assessing client-side zero-server AI prompt sanitization, Dutch BSN rulesets, and DOM inspection.",
+        "url": "https://ztds.ai/case-studies/dutch-commercial-workflows/",
+        "author": {
+          "@type": "Person",
+          "name": "Peter van Gameren",
+          "jobTitle": "Founder & Managing Consultant",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Match2Market"
+          }
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ZTDS AI Consortium",
+          "url": "https://ztds.ai"
+        },
+        "datePublished": "2026-09-18",
+        "dateModified": "2026-09-18",
+        "about": [
+          "Zero-Trust Data Sanitization",
+          "GDPR Article 28 DPA Exemption",
+          "Dutch BSN De-Identification",
+          "Client-Side AI Data Privacy"
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "ZTDS.ai",
+            "item": "https://ztds.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Companies",
+            "item": "https://ztds.ai/companies/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Dutch Commercial Workflows",
+            "item": "https://ztds.ai/case-studies/dutch-commercial-workflows/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 touch-target">
+        <div class="w-8 h-8 rounded-lg bg-slate-900 border border-sky-500/40 flex items-center justify-center shadow-lg shadow-sky-500/10">
+          <svg class="w-5 h-5 text-sky-400" viewBox="0 0 32 32" fill="none">
+            <path d="M16 3L6 7V15C6 21.6 10.3 27.7 16 29C21.7 27.7 26 21.6 26 15V7L16 3Z" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+            <path d="M11 12H21L12 21H21" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="font-bold text-lg tracking-tight text-white font-mono">ZTDS<span class="text-sky-400">.ai</span></span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
+        <a href="/ztds-ai/standard/" class="nav-link">Standard</a>
+        <a href="/ztds-ai/inspector/" class="nav-link">Inspector</a>
+        <a href="/ztds-ai/scanner/" class="nav-link">Scanner</a>
+        <a href="/ztds-ai/registry/" class="nav-link">Registry</a>
+        <a href="/ztds-ai/companies/" class="nav-link active">Companies</a>
+        <a href="/ztds-ai/fellows/" class="nav-link">Fellows</a>
+        <a href="/ztds-ai/sdk/" class="nav-link">SDK</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="/ztds-ai/companies/" class="touch-target px-3.5 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 hover:text-white text-xs font-mono font-semibold transition-colors">
+          &larr; Corporate Pool
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Article Content -->
+  <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumb -->
+    <nav class="text-xs font-mono text-slate-500 mb-6 flex items-center gap-2">
+      <a href="/" class="hover:text-slate-300">ZTDS.ai</a>
+      <span>/</span>
+      <a href="/ztds-ai/companies/" class="hover:text-slate-300">Companies</a>
+      <span>/</span>
+      <span class="text-sky-400">Match2Market Case Study</span>
+    </nav>
+
+    <!-- Header Section -->
+    <div class="mb-10 border-b border-slate-800 pb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-xs font-mono text-emerald-400 mb-4">
+        FIELD VALIDATION REPORT &middot; INDEPENDENT EVALUATION
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+        Evaluating In-Browser Zero-Trust Data Sanitization for Dutch Commercial Workflows
+      </h1>
+      <p class="mt-4 text-base text-slate-400 leading-relaxed">
+        An empirical 90-minute evaluation assessing client-side zero-server AI prompt sanitization, Dutch Burgerservicenummer (BSN) de-identification, and in-browser DOM inspection.
+      </p>
+
+      <!-- Evaluator Attribution Box -->
+      <div class="mt-6 p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full overflow-hidden border border-sky-500/40 shrink-0">
+            <img src="/assets/img/peter-van-gameren.jpg" alt="Peter van Gameren" class="w-full h-full object-cover object-center" width="48" height="48" loading="lazy">
+          </div>
+          <div>
+            <div class="text-sm font-bold text-white"><a href="https://www.linkedin.com/in/petervangameren/" target="_blank" rel="noopener" class="hover:text-sky-400 transition-colors">Peter van Gameren</a></div>
+            <div class="text-xs text-slate-400 font-mono">Founder &amp; Managing Consultant, Match2Market (Netherlands)</div>
+            <div class="text-[11px] text-slate-400 font-medium mt-0.5">Author of <em class="text-slate-300 not-italic">Artificial Responsiveness</em></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-mono">
+          <span class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">90-min Hands-on Test</span>
+          <span class="px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Verified Evaluator</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Article Body -->
+    <article class="prose prose-invert prose-slate max-w-none space-y-8 text-slate-300 text-sm sm:text-base leading-relaxed">
+      
+      <!-- Section 1 -->
+      <div>
+        <h2 class="text-xl font-bold text-white tracking-tight font-mono mb-3">1. Executive Summary &amp; Scope</h2>
+        <p>
+          As commercial enterprises and consultancies increasingly adopt frontier AI endpoints (OpenAI ChatGPT, Anthropic Claude, Google Gemini), legal and compliance obligations under the European General Data Protection Regulation (GDPR) create acute operational friction. Transferring unmasked personal data, employee records, or citizen identifiers to commercial LLM APIs triggers strict Data Processing Agreement (DPA) sub-processor liabilities under GDPR Article 28 and severe re-identification penalties under GDPR Article 9.
+        </p>
+        <p class="mt-3">
+          To evaluate whether an on-device, in-browser tokenization engine can eliminate this liability without adding server infrastructure, <strong>Match2Market</strong> conducted an independent 90-minute hands-on evaluation of the <strong>Zero-Trust Data Sanitization (ZTDS)</strong> paradigm using the PrivacyScrubber reference implementation in an isolated Chrome browser profile with synthetic Dutch commercial datasets.
+        </p>
+      </div>
+
+      <!-- Section 2 -->
+      <div>
+        <h2 class="text-xl font-bold text-white tracking-tight font-mono mb-3">2. Evaluated Architecture &amp; Key Strengths</h2>
+        <p>
+          The evaluation tested both the standalone web application and the Manifest V3 browser extension across synthetic prompts containing customer names, order numbers, national citizen codes, and commercial narrative briefs. Several architectural capabilities demonstrated immediate utility:
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+          <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+            <div class="text-xs font-mono font-bold text-sky-400 mb-1">&bull; In-Chat Shield Inspection</div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              The Chrome extension directly intercepts the ChatGPT input DOM textarea, allowing users to visually inspect sanitized surrogate tokens (<code class="text-sky-300 font-mono">[NAME_1]</code>, <code class="text-sky-300 font-mono">[ID_1]</code>) before the prompt is transmitted over the network socket.
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+            <div class="text-xs font-mono font-bold text-emerald-400 mb-1">&bull; Multi-Turn Token Consistency</div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Repeated identifiers throughout the input prompt maintain consistent token assignments across multi-turn reasoning, allowing the LLM to process relationships between entities without accessing cleartext PII.
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+            <div class="text-xs font-mono font-bold text-indigo-400 mb-1">&bull; Volatile RAM Reveal</div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              When the AI returns a response containing surrogate tokens, the client-side session map rehydrates the original Dutch identifiers locally on screen without persisting tokens to cookies, localStorage, or remote servers.
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800">
+            <div class="text-xs font-mono font-bold text-amber-400 mb-1">&bull; False-Positive Reversal</div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Detected entities can be reviewed prior to submission, allowing users to immediately unmask non-sensitive false positives with a single click while leaving sensitive tokens protected.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3 -->
+      <div>
+        <h2 class="text-xl font-bold text-white tracking-tight font-mono mb-3">3. Field Findings &amp; Engineering Remediations</h2>
+        <p>
+          The value of hands-on validation lies in exposing boundary conditions that standard unit tests miss. During testing with synthetic Dutch prompts, Match2Market identified four specific areas of friction, which were subsequently analyzed and resolved by the ZTDS engineering team:
+        </p>
+
+        <div class="space-y-4 my-4">
+          <!-- Finding 1 -->
+          <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
+            <div class="flex items-center justify-between text-xs font-mono mb-2">
+              <span class="text-amber-400 font-bold">1. Dutch BSN (Burgerservicenummer) Recognition</span>
+              <span class="text-emerald-400">&check; Resolved in Core Rules</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              <em>Finding:</em> Labeled Dutch BSN test numbers remained visible under the General profile unless a custom user regex was added. While the custom regex worked seamlessly and persisted tokens correctly, universal protection required native detection.<br>
+              <em>Remediation:</em> Added native regex pattern <code class="text-sky-300 font-mono">\b(?:BSN(?:-nummer)?|Burgerservicenummer|SOFI)[^\S\r\n]*[:#=-]?[^\S\r\n]*(\d{8,9})\b</code> and KvK company registration detection to the baseline <code class="text-slate-400 font-mono">REGEX_RULES</code> across Web, Extension, MCP, and SDK planes.
+            </p>
+          </div>
+
+          <!-- Finding 2 -->
+          <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
+            <div class="flex items-center justify-between text-xs font-mono mb-2">
+              <span class="text-amber-400 font-bold">2. Initial-Prefixed Names &amp; Tussenvoegsels</span>
+              <span class="text-emerald-400">&check; Resolved in Core Rules</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              <em>Finding:</em> Standard European business nomenclature combining initials with noble particles (e.g., <code class="text-slate-300">J. de Ruiter</code>, <code class="text-slate-300">P. van Gameren</code>) failed to trigger name detection due to leading punctuation constraints.<br>
+              <em>Remediation:</em> Implemented initial-prefixed lookahead regex <code class="text-sky-300 font-mono">(?:\p{Lu}\.(?:[ \t\xA0]*\p{Lu}\.)*)[ \t\xA0]+(?:(?:van|von|de|te|ten|ter|in 't)[ \t\xA0]+){0,2}</code> and registered Dutch salutations (<code class="text-slate-400">beste</code>, <code class="text-slate-400">geachte</code>, <code class="text-slate-400">mevrouw</code>, <code class="text-slate-400">dhr</code>) in <code class="text-slate-400 font-mono">NOT_NAME_WORDS</code> to avoid swallowing greetings into names.
+            </p>
+          </div>
+
+          <!-- Finding 3 -->
+          <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
+            <div class="flex items-center justify-between text-xs font-mono mb-2">
+              <span class="text-amber-400 font-bold">3. Dynamic Privacy Note Synchronization</span>
+              <span class="text-emerald-400">&check; Resolved in Extension v2.2.2</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              <em>Finding:</em> When individual false positives were reverted and zero tokens remained in the prompt, the extension’s appended <code class="text-slate-400 font-mono">[Privacy Note: ...]</code> instruction block remained attached to the prompt textarea.<br>
+              <em>Remediation:</em> Updated <code class="text-sky-300 font-mono">base-injector.js</code> to scan <code class="text-slate-400 font-mono">restoredText</code> with token verification regex, automatically stripping the Privacy Note when the remaining token count reaches zero.
+            </p>
+          </div>
+
+          <!-- Finding 4 -->
+          <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
+            <div class="flex items-center justify-between text-xs font-mono mb-2">
+              <span class="text-amber-400 font-bold">4. Evidentiary Scope of Audit Receipts</span>
+              <span class="text-emerald-400">&check; Clarified in Technical Spec</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              <em>Finding:</em> The PDF audit receipt generated by the tool makes robust compliance claims. The documentation needed to precisely delineate what client-side SHA-256 hashing establishes.<br>
+              <em>Remediation:</em> Clarified in ZTDS RFC v1.0: the receipt mathematically proves local volatile RAM tokenization and session digest integrity; it verifies that the client performed zero-server de-identification prior to egress.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4 -->
+      <div>
+        <h2 class="text-xl font-bold text-white tracking-tight font-mono mb-3">4. Regulatory Implications for European Enterprises</h2>
+        <p>
+          Under traditional Cloud DLP or gateway proxy architectures, sensitive employee prompts must be routed through a third-party intermediary server for inspection. This creates a secondary data processor under GDPR Article 28, requiring Data Processing Agreements, security attestations, and risk assessments.
+        </p>
+        <p class="mt-3">
+          By contrast, <strong>Zero-Trust Data Sanitization (ZTDS)</strong> operates completely inside the local V8 JavaScript engine of the user's browser or device RAM:
+        </p>
+        <ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm mt-3 font-mono text-slate-300">
+          <li><strong>0 Outbound Bytes:</strong> No prompt data, tokens, or session maps are ever sent to PrivacyScrubber or ZTDS servers.</li>
+          <li><strong>DPA Exemption:</strong> Because no third-party server ever accesses the cleartext personal data, no sub-processor relationship is established.</li>
+          <li><strong>Airplane Mode Verified:</strong> The entire sanitization and reveal cycle functions seamlessly with the network interface disconnected.</li>
+        </ul>
+      </div>
+
+      <!-- Section 5 -->
+      <div>
+        <h2 class="text-xl font-bold text-white tracking-tight font-mono mb-3">5. Conclusion &amp; Evaluator Statement</h2>
+        <div class="p-6 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900/80 to-slate-900 border border-slate-800 shadow-xl">
+          <blockquote class="italic text-slate-200 text-sm sm:text-base leading-relaxed mb-4">
+            &ldquo;I tested PrivacyScrubber in Chrome with synthetic Dutch prompts. The in-chat shield let me inspect a protected prompt before sending it, and repeated identifiers kept consistent tokens through the ChatGPT response. I particularly liked being able to reveal the original values on screen and restore individual false positives. Adding a custom rule for Dutch BSNs also worked well in my test. A promising, practical workflow for taking more control over what you share in AI chats.&rdquo;
+          </blockquote>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs font-mono">
+            <div>
+              <span class="font-bold text-white"><a href="https://www.linkedin.com/in/petervangameren/" target="_blank" rel="noopener" class="hover:text-sky-400 transition-colors">Peter van Gameren</a></span>
+              <span class="text-slate-400">&mdash; Founder &amp; Managing Consultant, Match2Market &middot; Author of <em class="text-slate-300 not-italic">Artificial Responsiveness</em></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </article>
+
+    <!-- Back to Hub Navigation -->
+    <div class="mt-12 pt-8 border-t border-slate-800 flex items-center justify-between text-xs font-mono">
+      <a href="/ztds-ai/companies/" class="text-sky-400 hover:underline flex items-center gap-1.5">
+        &larr; View Corporate Adopters Directory
+      </a>
+      <a href="/ztds-ai/standard/" class="text-emerald-400 hover:underline flex items-center gap-1.5">
+        Read ZTDS Technical RFC v1.0 &rarr;
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-900 text-slate-400 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+      <div>
+        <div class="font-mono font-bold text-white text-base mb-3 flex items-center gap-2">
+          <span class="text-sky-400">&block;</span> ZTDS.ai
+        </div>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          The open architectural specification for Zero-Trust Data Sanitization in Artificial Intelligence pipelines.
+        </p>
+        <div class="mt-4 text-xs text-slate-500">
+          Founded by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">Ilya Sibiryakov</a>. Part of the <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-400 hover:text-white underline">BrandMeWeb</a> ecosystem.
+        </div>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Specification &amp; Research</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/ztds-ai/standard/" class="hover:text-white transition-colors">ZTDS RFC v1.0</a></li>
+          <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-white transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+          <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-white transition-colors">OSF Latency Benchmark</a></li>
+          <li><a href="https://osf.io/preprints/lawarchive/4wc86/" target="_blank" rel="noopener" class="hover:text-white transition-colors">Law Archive Preprint</a></li>
+          <li><a href="/llms.txt" class="hover:text-white transition-colors">llms.txt Standard</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Architecture &amp; Tools</div>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/ztds-ai/inspector/" class="hover:text-white transition-colors">Interactive Inspector</a></li>
+          <li><a href="/ztds-ai/scanner/" class="hover:text-white transition-colors">Pipeline Scanner</a></li>
+          <li><a href="/ztds-ai/sdk/" class="hover:text-white transition-colors">Developer SDK (@privacyscrubber/sdk)</a></li>
+          <li><a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="hover:text-white transition-colors">PrivacyScrubber (Reference Impl)</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="font-mono text-xs uppercase text-slate-300 font-bold mb-3">Syndicate &amp; Community</div>
+        <ul class="space-y-2 text-xs text-slate-400">
+          <li><a href="/ztds-ai/registry/" class="hover:text-white transition-colors">Verified Products Directory</a></li>
+          <li><a href="/ztds-ai/companies/" class="text-sky-400 font-semibold hover:text-white transition-colors">Corporate Adopters Pool</a></li>
+          <li><a href="/ztds-ai/fellows/" class="hover:text-white transition-colors">Global Fellows &amp; Experts</a></li>
+          <li><a href="/ztds-ai/apply/" class="hover:text-emerald-400 transition-colors font-medium">Apply for Certification &rarr;</a></li>
+          <li class="pt-2 text-[11px] text-slate-600 leading-tight">&copy; 2026 ZTDS AI Consortium. All rights reserved.</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
