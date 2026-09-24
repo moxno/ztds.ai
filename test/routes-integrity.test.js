@@ -147,4 +147,129 @@ for (const asset of criticalAssets) {
 }
 console.log(`    [PASS] All ${criticalAssets.length} critical assets verified and non-empty.`);
 
-console.log('\n[SUMMARY] ALL 4 ROUTES INTEGRITY & COMPLIANCE TESTS PASSED.');
+// Test 5: Desktop Navigation & Mobile Drawer Structural Invariant
+console.log('--> Test 5: Desktop Navigation & Mobile Drawer Structural Invariant');
+const canonicalNavLinks = [
+  '/standard/',
+  '/registry/',
+  '/fellows/',
+  '/companies/',
+  '/scanner/',
+  '/sdk/',
+  '/ciso/'
+];
+
+for (const relPath of prodPages) {
+  const fullPath = path.join(rootDir, relPath);
+  const html = fs.readFileSync(fullPath, 'utf8');
+
+  // Verify desktop navigation 7 canonical links in exact order with whitespace-nowrap
+  const desktopNavMatch = html.match(/<nav[^>]*id=["']desktop-nav["'][^>]*>([\s\S]*?)<\/nav>/i);
+  if (desktopNavMatch) {
+    const navContent = desktopNavMatch[1];
+    const linkMatches = [...navContent.matchAll(/<a\s+[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)];
+    const hrefs = linkMatches.map(m => m[1]);
+
+    canonicalNavLinks.forEach((expectedHref, idx) => {
+      assert(
+        hrefs[idx] === expectedHref,
+        `Desktop nav link #${idx + 1} in ${relPath} is "${hrefs[idx]}", expected "${expectedHref}"`
+      );
+    });
+
+    linkMatches.forEach((m, idx) => {
+      assert(
+        m[0].includes('whitespace-nowrap'),
+        `Desktop nav link "${hrefs[idx]}" in ${relPath} missing "whitespace-nowrap" class`
+      );
+    });
+  }
+
+  // Verify mobile drawer backdrop and drawer classes + canonical links
+  if (html.includes('id="mobile-drawer"')) {
+    assert(
+      html.includes('id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"'),
+      `Missing #mobile-backdrop classes in ${relPath}`
+    );
+    assert(
+      html.includes('id="mobile-drawer" class="mobile-nav-drawer drawer"'),
+      `Missing #mobile-drawer classes in ${relPath}`
+    );
+    const mobileDrawerMatch = html.match(/<aside[^>]*id=["']mobile-drawer["'][^>]*>([\s\S]*?)<\/aside>/i);
+    assert(mobileDrawerMatch, `Could not parse #mobile-drawer in ${relPath}`);
+    const drawerContent = mobileDrawerMatch[1];
+    canonicalNavLinks.forEach(expectedHref => {
+      assert(
+        drawerContent.includes(`href="${expectedHref}"`),
+        `Mobile drawer in ${relPath} missing canonical link "${expectedHref}"`
+      );
+    });
+  }
+}
+console.log(`    [PASS] Desktop navigation and mobile drawer structural invariant verified across all routes.`);
+
+// Test 6: Fellow Profiles Architecture & Layout Invariant
+console.log('--> Test 6: Fellow Profiles Architecture & Layout Invariant');
+const fellowPages = [
+  'fellows/ilya-sibiryakov/index.html',
+  'fellows/peter-van-gameren/index.html',
+  'fellows/cliford-fanyuy/index.html'
+];
+
+for (const relPath of fellowPages) {
+  const fullPath = path.join(rootDir, relPath);
+  assert(fs.existsSync(fullPath), `Fellow profile missing: ${relPath}`);
+  const html = fs.readFileSync(fullPath, 'utf8');
+
+  // Verify responsive 2-column layout grid: lg:grid-cols-3 and lg:col-span-2
+  assert(
+    html.includes('grid grid-cols-1 lg:grid-cols-3'),
+    `Missing 3-column responsive grid container in ${relPath}`
+  );
+  assert(
+    html.includes('lg:col-span-2'),
+    `Missing lg:col-span-2 main content column in ${relPath}`
+  );
+
+  // Verify Specs Grid exists
+  assert(
+    html.includes('Specs Grid') || html.includes('FELLOWSHIP TIER'),
+    `Missing Specs Grid in ${relPath}`
+  );
+
+  // Verify Badge section with interactive copy buttons (ztdsCopy)
+  assert(
+    html.includes('ztdsCopy'),
+    `Missing ztdsCopy button triggers in ${relPath}`
+  );
+  assert(
+    html.includes('Copy Markdown') && html.includes('Copy HTML'),
+    `Missing Copy Markdown or Copy HTML buttons in ${relPath}`
+  );
+
+  // Verify image loading: all avatars and peer review photos must use loading="eager" (no lazy-load glitch)
+  const imgMatches = [...html.matchAll(/<img\s+[^>]*src=["']([^"']+)["'][^>]*>/gi)];
+  imgMatches.forEach(img => {
+    const tag = img[0];
+    const src = img[1];
+    if (src.includes('/assets/img/')) {
+      assert(
+        tag.includes('loading="eager"'),
+        `Avatar/photo ${src} in ${relPath} must have loading="eager", got: ${tag}`
+      );
+    }
+  });
+
+  // Verify institutional roles and peer review cross-links
+  assert(
+    html.includes('Institutional Roles'),
+    `Missing Institutional Roles in ${relPath}`
+  );
+  assert(
+    html.includes('Consortium Architecture') || html.includes('Consortium'),
+    `Missing Consortium Architecture/peer section in ${relPath}`
+  );
+}
+console.log(`    [PASS] All ${fellowPages.length} fellow profiles conform 100% to the layout & interactive architecture invariant.`);
+
+console.log('\n[SUMMARY] ALL 6 ROUTES INTEGRITY & COMPLIANCE TESTS PASSED.');

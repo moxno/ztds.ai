@@ -1,38 +1,44 @@
 #!/usr/bin/env node
 
+/**
+ * ZTDS.ai Header Navigation & Mobile Drawer Synchronizer
+ * 
+ * Systemically enforces consistent header navigation and mobile drawer
+ * architecture across all HTML pages in the repository.
+ */
+
 const fs = require('fs');
 const path = require('path');
 
 const rootDir = path.join(__dirname, '..');
 
-const pages = [
-  'index.html',
-  'standard/index.html',
-  'ciso/index.html',
-  'sdk/index.html',
-  'whitepaper/index.html',
-  'scanner/index.html',
-  'registry/index.html',
-  'companies/index.html',
-  'fellows/index.html',
-  'governance/index.html',
-  'badge/index.html',
-  'apply/index.html',
-  'roi/index.html',
-  'security/index.html',
-  'privacy/index.html',
-  'terms/index.html',
-  'inspector/index.html',
-  'soc2/index.html',
-  'agency/index.html',
-  'fellows/peter-van-gameren/index.html',
-  'fellows/ilya-sibiryakov/index.html',
-  'companies/brandmeweb/index.html',
-  'companies/match2market/index.html',
-  'case-studies/index.html',
-  'case-studies/dutch-commercial-workflows/index.html',
-  '404.html'
-];
+const ignoredDirs = new Set([
+  'node_modules',
+  '.git',
+  '.agents',
+  'stitch_export',
+  'tmp',
+  '.gemini',
+  'dist',
+  'coverage'
+]);
+
+function findHtmlFiles(dir, fileList = []) {
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    if (entry.isDirectory()) {
+      if (!ignoredDirs.has(entry.name)) {
+        findHtmlFiles(path.join(dir, entry.name), fileList);
+      }
+    } else if (entry.isFile() && entry.name.endsWith('.html')) {
+      const relPath = path.relative(rootDir, path.join(dir, entry.name));
+      fileList.push(relPath);
+    }
+  }
+  return fileList;
+}
+
+const allPages = findHtmlFiles(rootDir).sort();
 
 function getNavHtml(relPath) {
   const isStandard = relPath.startsWith('standard/');
@@ -61,20 +67,60 @@ function getNavHtml(relPath) {
       </nav>`;
 }
 
-let updated = 0;
-for (const relPath of pages) {
+let navUpdated = 0;
+let drawerUpdated = 0;
+
+for (const relPath of allPages) {
   const fullPath = path.join(rootDir, relPath);
-  if (!fs.existsSync(fullPath)) continue;
-
   let content = fs.readFileSync(fullPath, 'utf8');
-  const navRegex = /<nav class="[^"]*" id="desktop-nav">[\s\S]*?<\/nav>/;
+  let changed = false;
 
+  // 1. Sync Desktop Navigation
+  const navRegex = /<nav class="[^"]*" id="desktop-nav">[\s\S]*?<\/nav>/;
   if (navRegex.test(content)) {
     const newNav = getNavHtml(relPath);
-    content = content.replace(navRegex, newNav);
+    const existingNav = content.match(navRegex)[0];
+    if (existingNav !== newNav) {
+      content = content.replace(navRegex, newNav);
+      changed = true;
+      navUpdated++;
+    }
+  }
+
+  // 2. Sync Mobile Backdrop and Drawer classes
+  const backdropRegex = /<div id="mobile-backdrop" class="([^"]*)"/i;
+  const backdropMatch = content.match(backdropRegex);
+  if (backdropMatch) {
+    const classList = backdropMatch[1].trim().split(/\s+/);
+    if (!classList.includes('mobile-nav-backdrop') || !classList.includes('drawer-backdrop')) {
+      content = content.replace(
+        backdropRegex,
+        '<div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"'
+      );
+      changed = true;
+      drawerUpdated++;
+    }
+  }
+
+  const drawerRegex = /<aside id="mobile-drawer" class="([^"]*)"/i;
+  const drawerMatch = content.match(drawerRegex);
+  if (drawerMatch) {
+    const classList = drawerMatch[1].trim().split(/\s+/);
+    if (!classList.includes('mobile-nav-drawer') || !classList.includes('drawer')) {
+      content = content.replace(
+        drawerRegex,
+        '<aside id="mobile-drawer" class="mobile-nav-drawer drawer"'
+      );
+      changed = true;
+      drawerUpdated++;
+    }
+  }
+
+  if (changed) {
     fs.writeFileSync(fullPath, content, 'utf8');
-    updated++;
   }
 }
 
-console.log(`Updated desktop navigation with Fellows & Adopters links in ${updated} pages.`);
+console.log(`Scan completed across ${allPages.length} HTML files.`);
+console.log(`Updated desktop navigation in ${navUpdated} pages.`);
+console.log(`Normalized mobile drawer classes in ${drawerUpdated} pages.`);
