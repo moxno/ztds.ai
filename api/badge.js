@@ -34,6 +34,28 @@ module.exports = (req, res) => {
         colorRight = '#059669'; // Emerald
       }
     }
+
+    const companiesPath = path.join(__dirname, '../data/companies.json');
+    if (!isVerified && fs.existsSync(companiesPath)) {
+      const companies = JSON.parse(fs.readFileSync(companiesPath, 'utf8'));
+      const comp = (companies.companies || []).find(c => c.slug === slug || c.id === slug);
+      if (comp) {
+        isVerified = true;
+        labelRight = 'VERIFIED';
+        colorRight = '#059669'; // Emerald
+      }
+    }
+
+    const fellowsPath = path.join(__dirname, '../data/fellows.json');
+    if (!isVerified && fs.existsSync(fellowsPath)) {
+      const fellows = JSON.parse(fs.readFileSync(fellowsPath, 'utf8'));
+      const fel = (fellows.fellows || []).find(f => f.slug === slug || f.id === slug);
+      if (fel) {
+        isVerified = true;
+        labelRight = 'FELLOW';
+        colorRight = '#0284c7'; // Sky blue / Blue
+      }
+    }
   } catch (err) {
     // Fallback gracefully
   }
