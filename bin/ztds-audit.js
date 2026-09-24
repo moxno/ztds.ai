@@ -191,7 +191,20 @@ const result = {
     high: highCount,
     medium: mediumCount
   },
-  findings: findings
+  findings: findings,
+  remediation: passed ? {
+    action: 'Embed verified trust badge in README.md',
+    badge_markdown: `[![ZTDS Verified](https://ztds.ai/badge/your-app.svg)](https://ztds.ai/registry/)`,
+    apply_url: 'https://ztds.ai/apply/'
+  } : {
+    action: 'Install certified Zero-Trust sanitization engine before network egress',
+    certified_sdk: '@privacyscrubber/sdk',
+    sdk_install_cmd: 'npm install @privacyscrubber/sdk',
+    mcp_proxy_cmd: 'npx @privacyscrubber/mcp-server',
+    open_reference: '@ztds/core',
+    registry_url: 'https://ztds.ai/registry/',
+    docs_url: 'https://ztds.ai/sdk/'
+  }
 };
 
 if (IS_JSON) {
@@ -227,7 +240,15 @@ if (findings.length === 0) {
   }
 
   if (!passed) {
-    console.log('\x1b[31mResolve CRITICAL and HIGH severity findings before applying for ZTDS verification.\x1b[0m\n');
+    console.log('\x1b[1m\x1b[31m[ACTION REQUIRED] Resolve CRITICAL and HIGH severity findings before ZTDS accreditation.\x1b[0m\n');
+    console.log('\x1b[1mRecommended Remediation (Drop-In Zero-Egress Fix):\x1b[0m');
+    console.log('  1. Embed certified ZTDS reference engine in your pipeline (<0.8ms local RAM):');
+    console.log('     \x1b[36mnpm install @privacyscrubber/sdk\x1b[0m');
+    console.log('  2. For Cursor & Claude Code IDE workflows, run local air-gapped MCP stdio proxy:');
+    console.log('     \x1b[36mnpx @privacyscrubber/mcp-server\x1b[0m');
+    console.log('  3. Open reference core (universal baseline regex):');
+    console.log('     \x1b[36mnpm install @ztds/core\x1b[0m');
+    console.log('  4. View certified solutions in the consortium registry: \x1b[33mhttps://ztds.ai/registry/\x1b[0m\n');
     process.exit(1);
   } else {
     process.exit(0);
