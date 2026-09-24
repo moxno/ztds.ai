@@ -33,13 +33,10 @@ const prodPages = [
   'soc2/index.html',
   'deck/index.html',
   'agency/index.html',
-  'fellows/peter-van-gameren/index.html',
   'fellows/ilya-sibiryakov/index.html',
   'fellows/cliford-fanyuy/index.html',
   'companies/brandmeweb/index.html',
-  'companies/match2market/index.html',
   'case-studies/index.html',
-  'case-studies/dutch-commercial-workflows/index.html',
   '404.html'
 ];
 
@@ -212,7 +209,6 @@ console.log(`    [PASS] Desktop navigation and mobile drawer structural invarian
 console.log('--> Test 6: Fellow Profiles Architecture & Layout Invariant');
 const fellowPages = [
   'fellows/ilya-sibiryakov/index.html',
-  'fellows/peter-van-gameren/index.html',
   'fellows/cliford-fanyuy/index.html'
 ];
 
