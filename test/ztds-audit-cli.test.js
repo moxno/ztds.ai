@@ -84,14 +84,25 @@ console.log('--> Test 3: Violation Detection & Invariant 1 Red Flag');
 // Test 4: Package Whitelist & Tarball Isolation
 console.log('--> Test 4: npm Tarball Contents Whitelist');
 {
-  const packOutput = execSync('npm pack --dry-run 2>&1', { encoding: 'utf8' });
-  assert(packOutput.includes('package: ztds-audit@1.0.0'), 'Package name must be ztds-audit@1.0.0');
-  assert(packOutput.includes('bin/ztds-audit.js'), 'Must include bin/ztds-audit.js');
-  assert(packOutput.includes('README.md'), 'Must include README.md');
-  assert(packOutput.includes('LICENSE'), 'Must include LICENSE');
-  assert(!packOutput.includes('bin/ztds-license-generator.js'), 'Must NOT include founder license generator');
-  assert(!packOutput.includes('index.html'), 'Must NOT include landing page HTML');
-  assert(!packOutput.includes('keys/ztds_license_private'), 'Must NEVER include private keys');
+  const packJsonRaw = execSync('npm pack --dry-run --json', { encoding: 'utf8' });
+  const jsonStart = packJsonRaw.indexOf('[');
+  const jsonEnd = packJsonRaw.lastIndexOf(']') + 1;
+  const jsonStr = (jsonStart !== -1 && jsonEnd > jsonStart)
+    ? packJsonRaw.slice(jsonStart, jsonEnd)
+    : packJsonRaw.trim();
+  const packData = JSON.parse(jsonStr);
+  const pkg = Array.isArray(packData) ? packData[0] : packData;
+
+  assert.strictEqual(pkg.name, 'ztds-audit', 'Package name must be ztds-audit');
+  assert.strictEqual(pkg.version, '1.0.0', 'Package version must be 1.0.0');
+
+  const filePaths = (pkg.files || []).map(f => f.path);
+  assert(filePaths.includes('bin/ztds-audit.js'), 'Must include bin/ztds-audit.js');
+  assert(filePaths.includes('README.md'), 'Must include README.md');
+  assert(filePaths.includes('LICENSE'), 'Must include LICENSE');
+  assert(!filePaths.includes('bin/ztds-license-generator.js'), 'Must NOT include founder license generator');
+  assert(!filePaths.includes('index.html'), 'Must NOT include landing page HTML');
+  assert(!filePaths.some(p => p.startsWith('keys/')), 'Must NEVER include private keys');
   console.log('    [PASS] Production tarball whitelist verified (< 15 KB, 0 private leakage).');
 }
 
