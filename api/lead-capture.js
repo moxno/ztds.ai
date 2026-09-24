@@ -82,6 +82,72 @@ function dispatchWebhook(webhookUrl, payload) {
   });
 }
 
+function dispatchResendEmail(apiKey, payload) {
+  return new Promise((resolve) => {
+    try {
+      const fromEmail = process.env.RESEND_FROM_EMAIL || 'security@ztds.ai';
+      const toEmail = process.env.LEAD_NOTIFY_EMAIL || 'info@brandmeweb.com';
+      const isAgency = payload.role === 'agency_client' || payload.source === 'agency_workbench';
+      const subject = isAgency
+        ? `[BrandMeWeb Audit $2,500] New Booking: ${payload.domain || payload.email} (${payload.leadId})`
+        : `[ZTDS Lead] New Compliance Lead: ${payload.role || 'CISO'} - ${payload.domain || payload.email} (${payload.leadId})`;
+
+      const html = `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
+          <h2 style="color: #0f172a; margin-top: 0;">${isAgency ? 'BrandMeWeb $2,500 Turn-Key Audit Booking' : 'New ZTDS CISO Compliance Lead'}</h2>
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <tr><td style="padding: 6px 0; color: #64748b;"><strong>Lead ID:</strong></td><td style="padding: 6px 0; color: #0f172a; font-family: monospace;">${payload.leadId}</td></tr>
+            <tr><td style="padding: 6px 0; color: #64748b;"><strong>Email:</strong></td><td style="padding: 6px 0; color: #0f172a;"><a href="mailto:${payload.email}">${payload.email}</a></td></tr>
+            <tr><td style="padding: 6px 0; color: #64748b;"><strong>Domain:</strong></td><td style="padding: 6px 0; color: #0f172a;">${payload.domain || 'N/A'}</td></tr>
+            <tr><td style="padding: 6px 0; color: #64748b;"><strong>Role:</strong></td><td style="padding: 6px 0; color: #0f172a;">${payload.role || 'N/A'}</td></tr>
+            <tr><td style="padding: 6px 0; color: #64748b;"><strong>Industry Profile:</strong></td><td style="padding: 6px 0; color: #0f172a;">${payload.industryProfile}</td></tr>
+            <tr><td style="padding: 6px 0; color: #64748b;"><strong>Risk Score:</strong></td><td style="padding: 6px 0; color: #0f172a;">${payload.riskScore}/100</td></tr>
+            <tr><td style="padding: 6px 0; color: #64748b;"><strong>Source:</strong></td><td style="padding: 6px 0; color: #0f172a;">${payload.source}</td></tr>
+            <tr><td style="padding: 6px 0; color: #64748b;"><strong>Timestamp:</strong></td><td style="padding: 6px 0; color: #0f172a;">${payload.timestamp}</td></tr>
+            ${payload.notes ? `<tr><td style="padding: 6px 0; color: #64748b;"><strong>Notes:</strong></td><td style="padding: 6px 0; color: #0f172a;">${payload.notes}</td></tr>` : ''}
+          </table>
+          <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0;">
+            <a href="mailto:${payload.email}?subject=BrandMeWeb%20Follow-up%20${encodeURIComponent(payload.leadId)}" style="background: #059669; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 13px; display: inline-block;">Reply to Client</a>
+          </div>
+        </div>
+      `;
+
+      const postData = JSON.stringify({
+        from: `ZTDS Sentinel <${fromEmail}>`,
+        to: [toEmail],
+        reply_to: payload.email,
+        subject,
+        html
+      });
+
+      const req = https.request('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(postData),
+          'User-Agent': 'ZTDS-LeadCapture/1.0'
+        },
+        timeout: 5000
+      }, (res) => {
+        res.resume();
+        resolve(res.statusCode >= 200 && res.statusCode < 300);
+      });
+
+      req.on('error', () => resolve(false));
+      req.on('timeout', () => {
+        req.destroy();
+        resolve(false);
+      });
+
+      req.write(postData);
+      req.end();
+    } catch (e) {
+      resolve(false);
+    }
+  });
+}
+
 module.exports = async (req, res) => {
   // Edge CORS & Cache control
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -154,8 +220,14 @@ module.exports = async (req, res) => {
     industryProfile,
     riskScore,
     source,
+    notes: sanitizeInput(body.notes || '', 500),
     clientIpPrefix: ip.includes('.') ? ip.split('.').slice(0, 3).join('.') + '.xxx' : 'masked'
   };
+
+  // Asynchronously dispatch via Resend transactional email if configured
+  if (process.env.RESEND_API_KEY) {
+    dispatchResendEmail(process.env.RESEND_API_KEY, leadPayload).catch(() => {});
+  }
 
   // Asynchronously dispatch webhook if configured (BrandMeWeb lead pipeline)
   if (process.env.LEAD_WEBHOOK_URL) {
@@ -179,3 +251,5 @@ module.exports = async (req, res) => {
 // Export helper functions for testing
 module.exports._checkRateLimit = checkRateLimit;
 module.exports._rateLimitHistory = rateLimitHistory;
+module.exports._dispatchWebhook = dispatchWebhook;
+module.exports._dispatchResendEmail = dispatchResendEmail;

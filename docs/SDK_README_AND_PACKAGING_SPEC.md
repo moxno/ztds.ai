@@ -122,7 +122,7 @@ console.log(sanitized.text);
 | **Developer Pro ($1,990/yr)** | `[ZTDS Node] Customer: Acme Labs | Tier: Developer Pro | Nodes: 1/5 | Status: ACTIVE` |
 | **Enterprise Air-Gapped ($12,000/yr)** | `[ZTDS Node] Customer: Acme Health | Tier: Enterprise Air-Gapped | Profiles: 25 Active | Status: ACTIVE` |
 | **Unauthorized Profile Access** | `[ZTDS Error] Profile healthcare is not authorized under tier developer_pro. Upgrade to Enterprise Air-Gapped at https://ztds.ai/sdk` |
-| **Active 60-Day Grace Period** | `[ZTDS Warning] License in 60-day renewal grace period (42 days remaining). Contact sales@ztds.ai to renew.` |
+| **Active 60-Day Grace Period** | `[ZTDS Warning] License in 60-day renewal grace period (42 days remaining). Contact security@ztds.ai to renew.` |
 
 ---
 

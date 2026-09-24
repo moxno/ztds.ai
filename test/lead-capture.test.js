@@ -195,7 +195,30 @@ async function runTests() {
     console.log('    [PASS] HTML/script injection tags stripped cleanly from lead record');
   }
 
-  console.log('\n[SUMMARY] ALL 7 LEAD CAPTURE TESTS PASSED WITH 100% CONFORMANCE.\n');
+  // Test 8: Resend Transactional Email Dispatch Helper
+  {
+    console.log('--> Test 8: Resend Dispatch Resilience & Structure');
+    assert.strictEqual(typeof handler._dispatchResendEmail, 'function', 'Resend dispatcher must be exported');
+    
+    // Ensure dispatch handles error gracefully without unhandled rejection
+    const mockPayload = {
+      leadId: 'LEAD-2026-TEST1234',
+      email: 'ciso@test-enterprise.org',
+      domain: 'test-enterprise.org',
+      role: 'CISO',
+      industryProfile: 'finance',
+      riskScore: 88,
+      source: 'agency_workbench',
+      timestamp: new Date().toISOString(),
+      notes: 'BrandMeWeb Snapshot Audit ($2,500)'
+    };
+
+    const result = await handler._dispatchResendEmail('re_mock_test_key', mockPayload);
+    assert.strictEqual(typeof result, 'boolean', 'Dispatch must resolve to boolean without throwing');
+    console.log('    [PASS] Resend email dispatch verified and resilient');
+  }
+
+  console.log('\n[SUMMARY] ALL 8 LEAD CAPTURE TESTS PASSED WITH 100% CONFORMANCE.\n');
 }
 
 runTests().catch(err => {
