@@ -31,6 +31,7 @@ const prodPages = [
   'soc2/index.html',
   'deck/index.html',
   'agency/index.html',
+  '404.html',
   'docs/legal/order-form.html'
 ];
 
