@@ -739,6 +739,11 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
     <!-- Code Integration Recipes Showcase with 10 Canonical Blueprints -->
     <div class="ztds-card bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden scroll-mt-24" id="connectors">
       <span id="middleware" class="scroll-mt-24 pointer-events-none -mt-24 block"></span>
+      <span id="blueprint-langchain" class="scroll-mt-24 pointer-events-none -mt-24 block"></span>
+      <span id="blueprint-llamaindex" class="scroll-mt-24 pointer-events-none -mt-24 block"></span>
+      <span id="blueprint-crewai" class="scroll-mt-24 pointer-events-none -mt-24 block"></span>
+      <span id="blueprint-ollama" class="scroll-mt-24 pointer-events-none -mt-24 block"></span>
+      <span id="blueprint-envoy" class="scroll-mt-24 pointer-events-none -mt-24 block"></span>
       <div class="p-6 border-b border-slate-200 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
         <div>
           <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-mono font-semibold text-emerald-800 mb-2">
@@ -2631,8 +2636,8 @@ jobs:
           if (mcpTab) mcpTab.click();
           const connectorsEl = document.getElementById('connectors');
           if (connectorsEl) connectorsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else if (hash.startsWith('#recipe-') || hash.startsWith('#recipe')) {
-          const recipeName = hash.replace(/^#recipe-?/, '');
+        } else if (hash.startsWith('#blueprint-') || hash.startsWith('#recipe-') || hash.startsWith('#recipe')) {
+          const recipeName = hash.replace(/^#(?:blueprint|recipe)-?/, '');
           const tab = document.querySelector('.recipe-tab-btn[data-recipe=\"' + recipeName + '\"]');
           if (tab) tab.click();
           const connectorsEl = document.getElementById('connectors');

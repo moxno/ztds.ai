@@ -97,7 +97,7 @@ const AUDIT_RULES = [
 ];
 
 const IGNORED_DIRS = new Set([
-  'node_modules', '.git', '.next', 'dist', 'build', '.vercel', 'coverage', '.cache', 'public/badge'
+  'node_modules', '.git', '.next', 'dist', 'build', '.vercel', 'coverage', '.cache', 'public/badge', 'vendor', 'fixtures'
 ]);
 
 const ALLOWED_EXTS = new Set([
@@ -114,6 +114,7 @@ function getFiles(dir, fileList = []) {
         getFiles(fullPath, fileList);
       } else if (entry.isFile()) {
         const ext = path.extname(entry.name).toLowerCase();
+        if (entry.name.endsWith('.min.js') || entry.name.includes('.min.')) continue;
         if (ALLOWED_EXTS.has(ext) || entry.name.startsWith('.env')) {
           fileList.push(fullPath);
         }
@@ -138,8 +139,8 @@ for (const filePath of files) {
 
     const relPath = path.relative(TARGET_DIR, filePath);
 
-    // Skip auditor itself and test fixtures to prevent self-triggering on mock data
-    if (relPath.includes('ztds-audit.js') || relPath.includes('.test.') || relPath.endsWith('test.js') || relPath.split(path.sep).includes('test') || relPath.split(path.sep).includes('tests')) continue;
+    // Skip auditor itself, test fixtures, and vendor bundles to prevent self-triggering on mock data
+    if (relPath.includes('ztds-audit.js') || relPath.includes('.test.') || relPath.endsWith('test.js') || relPath.split(path.sep).includes('test') || relPath.split(path.sep).includes('tests') || relPath.split(path.sep).includes('vendor') || relPath.split(path.sep).includes('fixtures')) continue;
 
     const lines = content.split('\n');
     for (let i = 0; i < lines.length; i++) {
