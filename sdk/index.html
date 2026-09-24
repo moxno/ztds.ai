@@ -2291,9 +2291,11 @@ jobs:
       // Initialize Paddle Billing v2 with fulfillment callback
       if (window.Paddle) {
         try {
+          if (currentPaddleEnv === 'sandbox' && Paddle.Environment && typeof Paddle.Environment.set === 'function') {
+            Paddle.Environment.set('sandbox');
+          }
           Paddle.Initialize({
             token: activeEnvConfig.token,
-            environment: currentPaddleEnv,
             eventCallback: function(event) {
               if (event && (event.name === 'checkout.completed' || event.name === 'transaction.completed')) {
                 handleCheckoutCompleted(event);
@@ -2810,7 +2812,7 @@ jobs:
           <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1">
             <div class="font-bold text-slate-800 flex items-center justify-between">
               <div class="flex items-center gap-1.5">
-                <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm3.707-9.293a1 1 0 0 0-1.414-1.414L9 10.586 7.707 9.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4z" clip-rule="evenodd"/></svg>
                 <span>Fulfillment via PrivacyScrubber.com</span>
               </div>
               <span id="badgePaddleEnvIndicator" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold uppercase">Commercial MoR</span>
