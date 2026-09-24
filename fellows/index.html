@@ -292,7 +292,7 @@
       </article>
 
       <!-- Fellow 2: Peter van Gameren -->
-      <article class="ztds-card p-6 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" id="peter-van-gameren" data-track="systems" data-slug="peter-van-gameren">
+      <article class="ztds-card p-6 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" id="peter-van-gameren" data-track="profiles systems" data-slug="peter-van-gameren">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold font-mono">
@@ -1098,7 +1098,7 @@ gh pr create --title "feat(fellow): Nominate [Full Name]" --body "ZTDS Fellowshi
           const track = card.getAttribute('data-track') || '';
           const text = (card.innerText || '').toLowerCase();
           const isSeat = card.id === 'open-fellow-seat';
-          const matchesFilter = activeFilter === 'all' || track === activeFilter || isSeat;
+          const matchesFilter = activeFilter === 'all' || track.split(' ').includes(activeFilter) || isSeat;
           const matchesQuery = !query || text.includes(query);
 
           if (matchesFilter && matchesQuery) {
