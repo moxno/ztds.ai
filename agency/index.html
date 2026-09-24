@@ -1155,7 +1155,7 @@ BrandMeWeb: Ilya Sibiryakov, Chief Architect (brandmeweb.com)`;
         });
 
         const data = await response.json();
-        if (response.ok && data.status === 'success') {
+        if (response.ok && (data.success || data.status === 'success' || data.status === 'memorandum_generated')) {
           feedbackBox.className = 'p-3 rounded-lg text-xs font-mono bg-emerald-100 text-emerald-900 border border-emerald-300 block';
           feedbackBox.innerHTML = `<strong>Booking Request Received (${data.leadId})</strong><br>BrandMeWeb Chief Architect Ilya Sibiryakov will contact you at <strong>${email}</strong> within 1 business hour to execute your 30-minute turn-key audit.`;
           btnSubmit.textContent = 'Booking Confirmed';

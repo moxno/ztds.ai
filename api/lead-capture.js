@@ -170,7 +170,8 @@ module.exports = async (req, res) => {
     role,
     industryProfile,
     timestamp,
-    status: 'memorandum_generated',
+    status: 'success',
+    memorandumStatus: 'memorandum_generated',
     message: 'Institutional CISO compliance memorandum generated and logged successfully.'
   });
 };
