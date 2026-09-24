@@ -142,8 +142,8 @@
   </header>
 
   <!-- Mobile Slide-Over Drawer -->
-  <div id="mobile-backdrop" class="drawer-backdrop" aria-hidden="true"></div>
-  <aside id="mobile-drawer" class="drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+  <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop" aria-hidden="true"></div>
+  <aside id="mobile-drawer" class="mobile-nav-drawer drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
     <div class="flex items-center justify-between pb-4 border-b border-slate-200">
       <div class="flex items-center gap-2.5">
         <div class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center p-0.5 overflow-hidden">
@@ -209,18 +209,21 @@
     <div class="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-8 sm:p-10 mb-8 relative overflow-hidden">
       <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-slate-100">
         <div class="flex items-center gap-5">
-          <div class="w-16 h-16 rounded-2xl overflow-hidden border border-slate-200 shadow-sm shrink-0">
-            <img src="/assets/img/peter-van-gameren.jpg" alt="Peter van Gameren" class="w-full h-full object-cover object-center" width="64" height="64">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-slate-200/90 shadow-sm shrink-0 bg-slate-100 flex items-center justify-center">
+            <img src="/assets/img/peter-van-gameren.jpg" alt="Peter van Gameren" class="w-full h-full object-cover object-top" width="96" height="96" loading="eager">
           </div>
           <div>
             <div class="flex items-center gap-3 flex-wrap">
               <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Peter van Gameren</h1>
               <span class="px-2.5 py-1 rounded bg-sky-50 text-sky-800 border border-sky-200 text-xs font-mono font-bold">
-                Industry Fellow &amp; Evaluator
+                Industry Fellow &middot; WG-4
+              </span>
+              <span class="px-2.5 py-1 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-mono font-bold">
+                Verified Evaluator
               </span>
             </div>
-            <p class="text-xs sm:text-sm text-slate-500 font-mono mt-1">
-              Founder &amp; Managing Consultant &middot; Match2Market (Netherlands)
+            <p class="text-xs sm:text-sm text-slate-600 font-mono mt-1.5">
+              Author of <em>Artificial Responsiveness</em> &middot; Founder &amp; Managing Consultant, <a href="/companies/match2market/" class="text-sky-700 font-semibold hover:underline">Match2Market (Netherlands)</a>
             </p>
           </div>
         </div>
@@ -236,11 +239,11 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-6 text-xs font-mono">
         <div>
           <div class="text-slate-400 mb-1">FELLOWSHIP TIER</div>
-          <div class="text-sky-800 font-bold">Industry Fellow</div>
+          <div class="text-sky-800 font-bold">Industry Fellow (WG-4)</div>
         </div>
         <div>
           <div class="text-slate-400 mb-1">AFFILIATION</div>
-          <div class="text-slate-800 font-semibold">Match2Market (NL)</div>
+          <a href="/companies/match2market/" class="text-sky-700 font-semibold hover:underline">Match2Market (NL) &rarr;</a>
         </div>
         <div>
           <div class="text-slate-400 mb-1">MAJOR WORK</div>
@@ -248,7 +251,7 @@
         </div>
         <div>
           <div class="text-slate-400 mb-1">EVALUATION FOCUS</div>
-          <div class="text-slate-800 font-semibold">Dutch BSN &amp; GDPR Art. 28</div>
+          <a href="/case-studies/dutch-commercial-workflows/" class="text-emerald-700 font-semibold hover:underline">Dutch BSN &amp; GDPR Art. 28 &rarr;</a>
         </div>
       </div>
     </div>
@@ -262,9 +265,32 @@
           <p class="text-sm text-slate-600 leading-relaxed mb-4">
             Peter van Gameren is the author of <em>Artificial Responsiveness: Clarity Before Scale in the Age of AI</em> and Managing Consultant at Match2Market, a commercial strategy practice in the Netherlands. He works with leadership teams to align commercial architecture, customer operations, and AI adoption.
           </p>
-          <p class="text-sm text-slate-600 leading-relaxed">
+          <p class="text-sm text-slate-600 leading-relaxed mb-6">
             As an Industry Fellow for the ZTDS AI Consortium, he conducted an independent 90-minute empirical validation of in-browser client-side sanitization. His testing calibrated Dutch Burgerservicenummer (BSN) recognition, European initial-prefixed surname patterns, and in-chat DOM prompt interception under GDPR Article 9 &amp; 28 standards.
           </p>
+
+          <!-- Key Verification Milestones -->
+          <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+            <h3 class="text-xs font-mono font-bold text-slate-900 uppercase tracking-wider mb-3">Key Validation Milestones &amp; Contributions</h3>
+            <ul class="text-xs space-y-2.5 text-slate-700 leading-relaxed">
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
+                <span><strong class="text-slate-900">Dutch BSN (Burgerservicenummer) Regex:</strong> Calibrated 9-digit Dutch citizen service number detection and Elfproef 11-proof checksum validation inside the core ZTDS engine.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
+                <span><strong class="text-slate-900">European Surname Particle Modeling:</strong> Solved Dutch name prefix fragmentation (<code class="text-[11px] font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">van</code>, <code class="text-[11px] font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">de</code>, <code class="text-[11px] font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">der</code>, <code class="text-[11px] font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">den</code>) to ensure complete entity de-identification.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
+                <span><strong class="text-slate-900">In-Browser DOM Token Interception:</strong> Verified zero WAN egress token isolation and in-memory persistence on ChatGPT web interfaces.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
+                <span><strong class="text-slate-900">Commercial Adoption Strategy:</strong> Applying the <em>Clarity Before Scale</em> framework to enterprise generative AI deployments without 90-day DPA legal friction.</span>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div class="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-6 sm:p-8">
@@ -285,15 +311,23 @@
       <!-- Right Column: Verification & Affiliations -->
       <div class="space-y-6">
         <div class="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-6">
-          <div class="text-xs font-mono text-slate-400 mb-2 font-bold">FELLOW BADGE</div>
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center mb-4">
-            <img src="/badge/peter-van-gameren.svg" alt="ZTDS Fellow — Peter van Gameren" class="h-6 w-auto" width="138" height="22">
+          <div class="text-xs font-mono text-slate-400 mb-2 font-bold uppercase tracking-wider">FELLOW BADGE</div>
+          <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center mb-4">
+            <img src="/badge/peter-van-gameren.svg" alt="ZTDS Fellow — Peter van Gameren" class="h-7 w-auto drop-shadow-xs" width="168" height="24">
           </div>
-          <p class="text-xs text-slate-500 leading-relaxed mb-3">
-            Official ZTDS Industry Fellow credential badge.
+          <p class="text-xs text-slate-500 leading-relaxed mb-4">
+            Official ZTDS Industry Fellow credential badge. Real-time SVG linked to verified consortium records.
           </p>
+          <div class="flex items-center gap-2 mb-3">
+            <button onclick="ztdsCopy('[![ZTDS Industry Fellow](https://ztds.ai/badge/peter-van-gameren.svg)](https://ztds.ai/fellows/peter-van-gameren/)', () => { this.innerText = 'Copied!'; setTimeout(() => this.innerText = 'Copy Markdown', 2000); })" class="w-1/2 py-2 px-2.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono font-semibold transition-colors text-center border border-slate-200">
+              Copy Markdown
+            </button>
+            <button onclick="ztdsCopy('&lt;a href=&quot;https://ztds.ai/fellows/peter-van-gameren/&quot;&gt;&lt;img src=&quot;https://ztds.ai/badge/peter-van-gameren.svg&quot; alt=&quot;ZTDS Industry Fellow — Peter van Gameren&quot;&gt;&lt;/a&gt;', () => { this.innerText = 'Copied!'; setTimeout(() => this.innerText = 'Copy HTML', 2000); })" class="w-1/2 py-2 px-2.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono font-semibold transition-colors text-center border border-slate-200">
+              Copy HTML
+            </button>
+          </div>
           <a href="/badge/peter-van-gameren.svg" target="_blank" class="text-xs font-mono text-emerald-700 font-semibold hover:underline flex items-center gap-1">
-            Open Raw SVG &rarr;
+            Open Raw SVG Asset &rarr;
           </a>
         </div>
 
@@ -303,6 +337,7 @@
             <li>&bull; <a href="/companies/match2market/" class="text-sky-700 font-semibold hover:underline">Match2Market (Founder)</a></li>
             <li>&bull; <a href="/case-studies/dutch-commercial-workflows/" class="text-emerald-700 font-semibold hover:underline">Dutch Commercial Case Study</a></li>
             <li>&bull; <a href="/standard/" class="text-slate-700 hover:underline">ZTDS RFC Spec Working Group</a></li>
+            <li>&bull; <a href="/governance/" class="text-slate-700 hover:underline">WG-4 Taxonomy Charter</a></li>
           </ul>
         </div>
       </div>
@@ -311,7 +346,7 @@
     <!-- Back Navigation -->
     <div class="border-t border-slate-200 pt-6 flex items-center justify-between text-xs font-mono">
       <a href="/fellows/" class="text-emerald-700 font-semibold hover:underline">&larr; Back to All Global Fellows</a>
-      <a href="/apply/?track=fellow" class="text-emerald-700 font-semibold hover:underline">Nominate a Fellow &rarr;</a>
+      <a href="/case-studies/dutch-commercial-workflows/" class="text-emerald-700 font-semibold hover:underline">View Dutch Commercial Case Study &rarr;</a>
     </div>
 
   </main>

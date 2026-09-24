@@ -401,7 +401,8 @@ body {
 /* ==========================================================================
    Mobile Slide-Over Navigation Drawer
    ========================================================================== */
-.mobile-nav-backdrop {
+.mobile-nav-backdrop,
+.drawer-backdrop {
   position: fixed;
   inset: 0;
   background-color: rgba(15, 23, 42, 0.5);
@@ -414,13 +415,15 @@ body {
   transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
-.mobile-nav-backdrop.active {
+.mobile-nav-backdrop.active,
+.drawer-backdrop.active {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
 
-.mobile-nav-drawer {
+.mobile-nav-drawer,
+.drawer {
   position: fixed;
   top: 0;
   right: 0;
@@ -443,7 +446,8 @@ body {
   padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
 }
 
-.mobile-nav-drawer.active {
+.mobile-nav-drawer.active,
+.drawer.active {
   transform: translateX(0);
   visibility: visible;
   pointer-events: auto;
