@@ -32,7 +32,8 @@ const prodPages = [
   'inspector/index.html',
   'soc2/index.html',
   'deck/index.html',
-  'agency/index.html'
+  'agency/index.html',
+  '404.html'
 ];
 
 // Test 1: HTML5 Document Structure & Essential Meta Tags
