@@ -195,9 +195,15 @@
     
     <!-- Hero Header & Package Manager Switcher -->
     <div class="text-center max-w-3xl mx-auto space-y-4">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-semibold text-blue-800 shadow-sm">
-        <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-        <span>Developer Engine &middot; Apache 2.0 Dual License</span>
+      <div class="inline-flex flex-wrap items-center justify-center gap-2">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-semibold text-blue-800 shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+          <span>Developer Engine &middot; Apache 2.0 Dual License</span>
+        </div>
+        <a href="https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 shadow-sm hover:bg-emerald-100 transition-colors">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span class="font-mono">IETF Internet-Draft: draft-01 &rarr;</span>
+        </a>
       </div>
       <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
         Developer SDK &amp; Pre-Built Connectors
@@ -455,8 +461,9 @@
               </div>
             </div>
           </div>
-          <div class="mt-5 pt-3 border-t border-slate-200 font-mono text-[11px] text-slate-500">
+          <div class="mt-5 pt-3 border-t border-slate-200 flex items-center justify-between font-mono text-[11px] text-slate-500">
             <code>npm install @privacyscrubber/sdk</code>
+            <a href="#mcp" class="text-blue-700 font-sans font-semibold hover:underline">MCP Stdio &rarr;</a>
           </div>
         </div>
 
@@ -525,7 +532,7 @@
           <span class="text-slate-400 block sm:inline sm:ml-1">Developer Pro ($1,990/yr) and TEAMS ($99/mo) licenses include offline Ed25519 tokens with instant fulfillment.</span>
         </div>
         <div class="flex items-center gap-3 shrink-0">
-          <a href="#commercial-checkout" onclick="const el=document.getElementById('commercial-checkout'); if(el) el.scrollIntoView({behavior:'smooth'});" class="btn-trust text-xs py-2 px-4 shadow-sm font-semibold">
+          <a href="#licensing" onclick="const el=document.getElementById('licensing'); if(el) el.scrollIntoView({behavior:'smooth'});" class="btn-trust text-xs py-2 px-4 shadow-sm font-semibold">
             View License Options &rarr;
           </a>
         </div>
@@ -533,7 +540,8 @@
     </div>
 
     <!-- Code Integration Recipes Showcase with 10 Canonical Blueprints -->
-    <div class="ztds-card bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden" id="connectors">
+    <div class="ztds-card bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden scroll-mt-24" id="connectors">
+      <span id="middleware" class="scroll-mt-24 pointer-events-none -mt-24 block"></span>
       <div class="p-6 border-b border-slate-200 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
         <div>
           <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-mono font-semibold text-emerald-800 mb-2">
@@ -945,7 +953,8 @@ static_resources:
     </div>
 
     <!-- DEDICATED SECTION: MODEL CONTEXT PROTOCOL (MCP) STDIO ARCHITECTURE -->
-    <section class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6" id="mcp-gateway">
+    <section class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24" id="mcp">
+      <span id="mcp-gateway" class="scroll-mt-24 pointer-events-none -mt-24 block"></span>
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
         <div>
           <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-semibold text-blue-800 mb-2">
@@ -954,9 +963,14 @@ static_resources:
           <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Model Context Protocol (MCP) Stdio Gateway</h2>
           <p class="text-xs text-slate-500 mt-1">Air-gapped integration for Cursor IDE, Claude Desktop, and Claude Code CLI with 0.00 bytes external telemetry.</p>
         </div>
-        <span class="text-xs font-mono px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold w-fit">
-          RFC v1.0 Compliant
-        </span>
+        <div class="flex flex-col sm:items-end gap-1.5">
+          <span class="text-xs font-mono px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold w-fit">
+            RFC v1.0 &middot; IETF draft-01 Compliant
+          </span>
+          <a href="#connectors" onclick="const t=document.querySelector('.recipe-tab-btn[data-recipe='mcp']'); if(t) t.click(); const c=document.getElementById('connectors'); if(c) c.scrollIntoView({behavior:'smooth'}); return false;" class="text-[11px] text-emerald-700 hover:text-emerald-800 font-medium inline-flex items-center gap-1 hover:underline">
+            <span>&uarr; View Blueprint 05 Code Recipe</span>
+          </a>
+        </div>
       </div>
 
       <!-- MCP Architecture Flow -->
@@ -1059,7 +1073,7 @@ static_resources:
       </div>
     </section>
     <!-- AI Framework Compatibility Matrix Table -->
-    <div class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6" id="compatibility">
+    <div class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24" id="compatibility">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
         <div>
           <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Ecosystem Coverage</div>
@@ -1135,7 +1149,8 @@ static_resources:
     </div>
 
     <!-- Commercial Licensing & Support Tiers -->
-    <div class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6" id="licensing">
+    <div class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24" id="licensing">
+      <span id="commercial-checkout" class="scroll-mt-24 pointer-events-none -mt-24 block"></span>
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
         <div>
           <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Predictable Pricing SSOT</div>
@@ -1269,7 +1284,7 @@ const sanitized = await engine.sanitize(patientPrompt);</code></pre>
         </div>
 
         <!-- Interactive License Token Decoder & Verifier Workbench -->
-        <div class="mt-8 p-5 rounded-xl bg-slate-950 text-white border border-slate-800 space-y-4 font-sans" id="offlineLicenseTester">
+        <div class="mt-8 p-5 rounded-xl bg-slate-950 text-white border border-slate-800 space-y-4 font-sans scroll-mt-24" id="offlineLicenseTester">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
@@ -1341,7 +1356,7 @@ const sanitized = await engine.sanitize(patientPrompt);</code></pre>
     </div>
 
     <!-- CI/CD GitHub Actions Invariant Pipeline Showcase -->
-    <div class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6" id="cicd">
+    <div class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24" id="cicd">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
         <div>
           <div class="text-[11px] font-mono font-bold text-emerald-700 uppercase tracking-wider">Automated Pre-Merge Assurance</div>
@@ -2165,7 +2180,7 @@ jobs:
         if (btnVerify) {
           btnVerify.onclick = () => {
             closeModal();
-            const inputDecoder = document.getElementById('inputLicenseToken');
+            const inputDecoder = document.getElementById('licenseTokenInput');
             const btnDecode = document.getElementById('btnDecodeLicense');
             const decoderSection = document.getElementById('offlineLicenseTester');
             if (inputDecoder && data.token) {
@@ -2232,6 +2247,39 @@ jobs:
           window.open(targetUrl.toString(), '_blank', 'noopener,noreferrer');
         });
       }
+
+      // 9. Initial Hash & Hashchange Navigation Controller
+      function handleUrlHash() {
+        const hash = window.location.hash.toLowerCase();
+        if (!hash) return;
+
+        if (hash === '#mcp' || hash === '#mcp-gateway') {
+          const el = document.getElementById('mcp') || document.getElementById('mcp-gateway');
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        } else if (hash === '#mcp-recipe' || hash === '#recipe-mcp') {
+          const mcpTab = document.querySelector('.recipe-tab-btn[data-recipe="mcp"]');
+          if (mcpTab) mcpTab.click();
+          const connectorsEl = document.getElementById('connectors');
+          if (connectorsEl) connectorsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (hash.startsWith('#recipe-') || hash.startsWith('#recipe')) {
+          const recipeName = hash.replace(/^#recipe-?/, '');
+          const tab = document.querySelector('.recipe-tab-btn[data-recipe=\"' + recipeName + '\"]');
+          if (tab) tab.click();
+          const connectorsEl = document.getElementById('connectors');
+          if (connectorsEl) connectorsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (hash === '#commercial-checkout' || hash === '#licensing' || hash === '#pricing') {
+          const el = document.getElementById('licensing') || document.getElementById('commercial-checkout');
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (hash === '#middleware') {
+          const el = document.getElementById('connectors');
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      setTimeout(handleUrlHash, 100);
+      window.addEventListener('hashchange', handleUrlHash);
 
       // Mint 14-Day Evaluation Key via Serverless API
       const btnMintTrial = document.getElementById('btnMintTrialLicense');
@@ -2505,10 +2553,10 @@ jobs:
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <a href="/public/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" target="_blank" class="btn-outline text-xs p-3 text-center rounded-xl flex items-center justify-center gap-1.5">
+            <a href="/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" target="_blank" class="btn-outline text-xs p-3 text-center rounded-xl flex items-center justify-center gap-1.5">
               <span>CISO DPA Memo (PDF) &rarr;</span>
             </a>
-            <a href="/public/docs/ZTDS_Enterprise_Security_Pack.zip" target="_blank" class="btn-outline text-xs p-3 text-center rounded-xl flex items-center justify-center gap-1.5">
+            <a href="/docs/ZTDS_Enterprise_Security_Pack.zip" target="_blank" class="btn-outline text-xs p-3 text-center rounded-xl flex items-center justify-center gap-1.5">
               <span>Security Pack (ZIP) &rarr;</span>
             </a>
           </div>
