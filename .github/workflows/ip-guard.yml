@@ -1,0 +1,110 @@
+name: IP Leak Prevention Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ip-guard:
+    name: Scan for IP & Secret Leakage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Block .agents/ directory
+        run: |
+          echo "Checking for .agents/ files in tree..."
+          if find . -path './.agents/*' -type f 2>/dev/null | grep -q .; then
+            echo "::error::BLOCKED: .agents/ directory found in repository tree. This directory contains operational strategy, license manager workflows, and must remain local-only."
+            find . -path './.agents/*' -type f
+            exit 1
+          fi
+          echo "OK: No .agents/ files found."
+
+      - name: Scan for private keys and secrets
+        run: |
+          echo "Scanning for private keys and API secrets..."
+          FOUND=0
+
+          # Private keys
+          if grep -rl "PRIVATE KEY" --include="*.pem" --include="*.key" --include="*.txt" --include="*.md" --include="*.js" --include="*.ts" . 2>/dev/null | grep -v node_modules | grep -v '.git/'; then
+            echo "::error::Private key material detected in repository."
+            FOUND=1
+          fi
+
+          # API keys in source (not .env.example)
+          PATTERNS=(
+            'sk-[a-zA-Z0-9]{20,}'
+            'sk_live_[a-zA-Z0-9]+'
+            'ghp_[a-zA-Z0-9]{36}'
+            'AIza[0-9A-Za-z_-]{35}'
+          )
+          for pattern in "${PATTERNS[@]}"; do
+            if grep -rlE "$pattern" --include="*.js" --include="*.ts" --include="*.json" --include="*.md" --include="*.txt" . 2>/dev/null | grep -v node_modules | grep -v '.git/' | grep -v '.env.example'; then
+              echo "::error::API secret pattern '$pattern' detected in source files."
+              FOUND=1
+            fi
+          done
+
+          if [ $FOUND -eq 1 ]; then
+            exit 1
+          fi
+          echo "OK: No secrets detected."
+
+      - name: Scan for commercial engine IP
+        run: |
+          echo "Scanning for PrivacyScrubber commercial engine leakage..."
+          FOUND=0
+
+          # Commercial engine identifiers that should never appear in ztds.ai
+          ENGINE_PATTERNS=(
+            'pii-engine-core'
+            'piiEngineCore'
+            'tree-scrubber\.js'
+            'treeScrubber'
+            'quota-engine\.js'
+            'worker-manager\.js'
+            'PROFILE_RULES\s*='
+            'industryProfiles\s*='
+            'HIPAA_PHI_PATTERNS'
+            'IBAN_PATTERNS'
+            'FRE_502_PATTERNS'
+            'CLOUD_SECRET_PATTERNS'
+          )
+
+          for pattern in "${ENGINE_PATTERNS[@]}"; do
+            MATCHES=$(grep -rlE "$pattern" --include="*.js" --include="*.ts" --include="*.json" . 2>/dev/null | grep -v node_modules | grep -v '.git/' || true)
+            if [ -n "$MATCHES" ]; then
+              echo "::error::Commercial engine pattern '$pattern' found in: $MATCHES"
+              FOUND=1
+            fi
+          done
+
+          if [ $FOUND -eq 1 ]; then
+            echo "::error::PrivacyScrubber commercial IP detected in public repository. This code belongs in the private PrivacyScrubber repo only."
+            exit 1
+          fi
+          echo "OK: No commercial engine IP detected."
+
+      - name: Verify .gitignore coverage
+        run: |
+          echo "Verifying .gitignore contains critical exclusions..."
+          MISSING=0
+          REQUIRED=(".agents/" ".agent/" "keys/ztds_license_private" "*.private.pem" "*.key.pem")
+          for entry in "${REQUIRED[@]}"; do
+            if ! grep -qF "$entry" .gitignore; then
+              echo "::error::.gitignore is missing required exclusion: $entry"
+              MISSING=1
+            fi
+          done
+          if [ $MISSING -eq 1 ]; then
+            exit 1
+          fi
+          echo "OK: .gitignore contains all required exclusions."
