@@ -38,7 +38,7 @@
         Zero-Trust Data Sanitization (ZTDS) defines a formal architectural standard and execution protocol for client-side, in-memory de-identification and re-identification across Generative Artificial Intelligence (GenAI), Retrieval-Augmented Generation (RAG), and autonomous agent workflows.
       </t>
       <t>
-        Under ZTDS, sensitive information—including Personally Identifiable Information (PII), Protected Health Information (PHI), financial account numbers, and developer secrets—is intercepted and transformed into synthetic surrogate tokens strictly within volatile memory (RAM) of the originating client or private host node before network serialization.
+        Under ZTDS, sensitive information (including Personally Identifiable Information (PII), Protected Health Information (PHI), financial account numbers, and developer secrets) is intercepted and transformed into synthetic surrogate tokens strictly within volatile memory (RAM) of the originating client or private host node before network serialization.
       </t>
       <t>
         This protocol specification formalizes the threat model, the four core invariants, surrogate token syntaxes, cryptographic transport handoffs, and verification procedures required for interoperable, zero-subprocessor implementations.
@@ -60,7 +60,7 @@
           <t><strong>Network Gateways and Total Blockades:</strong> Prohibiting corporate AI access entirely. This strategy induces widespread employee circumvention ("Shadow AI"), leading to uncontrolled cleartext data exposure.</t>
         </li>
         <li>
-          <t><strong>Cloud-Based Data Loss Prevention (Cloud DLP) Proxies:</strong> Intercepting and inspecting WAN traffic via intermediate multi-tenant cloud services. This introduces significant network round-trip latencies (typically 150ms to 350ms), establishes a single point of data compromise, and introduces an additional Data Processor under European Union General Data Protection Regulation (GDPR) Article 28, mandating cumbersome Data Processing Agreements (DPAs).</t>
+          <t><strong>Cloud-Based Data Loss Prevention (Cloud DLP) Proxies:</strong> Intercepting and inspecting WAN traffic via intermediate multi-tenant cloud services. This introduces significant network round-trip latencies (typically 150ms to 350ms, as empirically measured in <xref target="ZTDS-LATENCY"/>), establishes a single point of data compromise, and introduces an additional Data Processor under European Union General Data Protection Regulation (GDPR) Article 28, mandating cumbersome Data Processing Agreements (DPAs).</t>
         </li>
       </ol>
       <t>
@@ -153,7 +153,7 @@ P = U union S, where U intersect S = empty_set
     <section anchor="invariants">
       <name>The Four Protocol Invariants</name>
       <t>
-        Every compliant implementation of the ZTDS protocol MUST satisfy four normative invariants:
+        Every compliant implementation of the ZTDS protocol MUST satisfy four normative invariants, with formal mathematical proofs detailed in <xref target="ZTDS-PROOF"/>:
       </t>
 
       <section anchor="inv-1">
@@ -223,43 +223,43 @@ T^(-1)( T(S) ) == S
         <tbody>
           <tr>
             <td>Personal Name</td>
-            <td>[NAME_N]</td>
-            <td>John Doe -&gt; [NAME_1]</td>
+            <td><tt>[NAME_N]</tt></td>
+            <td>John Doe -&gt; <tt>[NAME_1]</tt></td>
           </tr>
           <tr>
             <td>Email Address</td>
-            <td>[EMAIL_N]</td>
-            <td>john@example.com -&gt; [EMAIL_1]</td>
+            <td><tt>[EMAIL_N]</tt></td>
+            <td>john@example.com -&gt; <tt>[EMAIL_1]</tt></td>
           </tr>
           <tr>
             <td>Phone Number</td>
-            <td>[PHONE_N]</td>
-            <td>+1-555-0199 -&gt; [PHONE_1]</td>
+            <td><tt>[PHONE_N]</tt></td>
+            <td>+1-555-0199 -&gt; <tt>[PHONE_1]</tt></td>
           </tr>
           <tr>
             <td>National ID / SSN</td>
-            <td>[ID_N] / [SSN_N]</td>
-            <td>123-45-6789 -&gt; [SSN_1]</td>
+            <td><tt>[ID_N]</tt> / <tt>[SSN_N]</tt></td>
+            <td>123-45-6789 -&gt; <tt>[SSN_1]</tt></td>
           </tr>
           <tr>
             <td>Financial / IBAN</td>
-            <td>[IBAN_N] / [CARD_N]</td>
-            <td>GB29XAAA... -&gt; [IBAN_1]</td>
+            <td><tt>[IBAN_N]</tt> / <tt>[CARD_N]</tt></td>
+            <td>GB29XAAA... -&gt; <tt>[IBAN_1]</tt></td>
           </tr>
           <tr>
             <td>Protected Health / PHI</td>
-            <td>[MRN_N] / [PATIENT_N]</td>
-            <td>MRN-90123 -&gt; [MRN_1]</td>
+            <td><tt>[MRN_N]</tt> / <tt>[PATIENT_N]</tt></td>
+            <td>MRN-90123 -&gt; <tt>[MRN_1]</tt></td>
           </tr>
           <tr>
             <td>Developer Secrets</td>
-            <td>[SECRET_KEY_N]</td>
-            <td>sk-ant-... -&gt; [SECRET_KEY_1]</td>
+            <td><tt>[SECRET_KEY_N]</tt></td>
+            <td>sk-ant-... -&gt; <tt>[SECRET_KEY_1]</tt></td>
           </tr>
           <tr>
             <td>IP / Host Address</td>
-            <td>[IP_ADDR_N]</td>
-            <td>192.168.1.100 -&gt; [IP_ADDR_1]</td>
+            <td><tt>[IP_ADDR_N]</tt></td>
+            <td>192.0.2.1 -&gt; <tt>[IP_ADDR_1]</tt></td>
           </tr>
         </tbody>
       </table>
@@ -330,7 +330,7 @@ ZTDS-CERT-v1.{payload_b64url}.{signature_b64url}
     <section anchor="privacy">
       <name>Privacy and Regulatory Considerations</name>
       <t>
-        By eliminating intermediate data processors, ZTDS satisfies European Union GDPR Article 28 exemption requirements, Article 17 Right to be Forgotten within vector databases (embeddings contain zero extractable cleartext PII), and HIPAA 45 CFR § 164.514(b) Safe Harbor de-identification rules.
+        By eliminating intermediate data processors, ZTDS satisfies European Union GDPR Article 28 exemption requirements, Article 17 Right to be Forgotten within vector databases (embeddings contain zero extractable cleartext PII), and HIPAA 45 CFR Section 164.514(b) Safe Harbor de-identification rules, as analyzed in <xref target="ZTDS-LEGAL"/>.
       </t>
     </section>
   </middle>

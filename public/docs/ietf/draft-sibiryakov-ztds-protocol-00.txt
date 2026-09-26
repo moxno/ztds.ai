@@ -1,11 +1,15 @@
-Security Area                                               I. Sibiryakov
-Internet-Draft                                ZTDS AI Consortium / BrandMeWeb
-Intended status: Informational                              26 September 2026
+
+
+
+
+Independent Submission                                     I. Sibiryakov
+Internet-Draft                           ZTDS AI Consortium / BrandMeWeb
+Intended status: Informational                         26 September 2026
 Expires: 30 March 2027
 
 
               Zero-Trust Data Sanitization (ZTDS) Protocol
-                    draft-sibiryakov-ztds-protocol-00
+                   draft-sibiryakov-ztds-protocol-00
 
 Abstract
 
@@ -15,12 +19,12 @@ Abstract
    Intelligence (GenAI), Retrieval-Augmented Generation (RAG), and
    autonomous agent workflows.
 
-   Under ZTDS, sensitive information—including Personally Identifiable
+   Under ZTDS, sensitive information (including Personally Identifiable
    Information (PII), Protected Health Information (PHI), financial
-   account numbers, and developer secrets—is intercepted and transformed
-   into synthetic surrogate tokens strictly within volatile memory (RAM)
-   of the originating client or private host node before network
-   serialization.
+   account numbers, and developer secrets) is intercepted and
+   transformed into synthetic surrogate tokens strictly within volatile
+   memory (RAM) of the originating client or private host node before
+   network serialization.
 
    This protocol specification formalizes the threat model, the four
    core invariants, surrogate token syntaxes, cryptographic transport
@@ -44,41 +48,53 @@ Status of This Memo
 
    This Internet-Draft will expire on 30 March 2027.
 
+
+
+
+
+
+Sibiryakov                Expires 30 March 2027                 [Page 1]
+
+Internet-Draft                ZTDS Protocol               September 2026
+
+
 Copyright Notice
 
    Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info)
-   in effect on the date of publication of this document.  Please review
-   these documents carefully, as they describe your rights and
-   restrictions with respect to this document.
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.
 
 Table of Contents
 
-   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Conventions and Terminology . . . . . . . . . . . . . . . . .   3
    3.  Threat Model and Assumptions  . . . . . . . . . . . . . . . .   4
    4.  Mathematical Specification of Protocol  . . . . . . . . . . .   4
    5.  The Four Protocol Invariants  . . . . . . . . . . . . . . . .   5
-       5.1.  Invariant 1: Volatile Memory Boundary (RAM Isolation) .   5
-       5.2.  Invariant 2: Deterministic Reversible Tokenization  . .   5
-       5.3.  Invariant 3: Zero Outgoing Network Transmission . . . .   6
-       5.4.  Invariant 4: Zero Sub-Processor Chain . . . . . . . . .   6
+     5.1.  Invariant 1: Volatile Memory Boundary (RAM-Only
+           Isolation)  . . . . . . . . . . . . . . . . . . . . . . .   5
+     5.2.  Invariant 2: Deterministic Reversible Tokenization  . . .   5
+     5.3.  Invariant 3: Zero Outgoing Network Transmission (Airplane
+           Mode Standard)  . . . . . . . . . . . . . . . . . . . . .   6
+     5.4.  Invariant 4: Zero Sub-Processor Chain . . . . . . . . . .   6
    6.  Surrogate Token Taxonomy  . . . . . . . . . . . . . . . . . .   6
    7.  Cryptographic Transport Handoff . . . . . . . . . . . . . . .   7
    8.  Conformance Attestation Architecture  . . . . . . . . . . . .   8
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
    10. Security Considerations . . . . . . . . . . . . . . . . . . .   8
-       10.1. Memory Dumps and Side-Channel Attacks . . . . . . . . .   8
-       10.2. Adversarial Prompt Injection  . . . . . . . . . . . . .   9
-       10.3. Surrogate Collision and Entropy . . . . . . . . . . . .   9
-   11. Privacy and Regulatory Considerations . . . . . . . . . . . .   9
+     10.1.  Memory Dumps and Side-Channel Attacks  . . . . . . . . .   8
+     10.2.  Adversarial Prompt Injection . . . . . . . . . . . . . .   8
+     10.3.  Surrogate Collision and Entropy  . . . . . . . . . . . .   8
+   11. Privacy and Regulatory Considerations . . . . . . . . . . . .   8
    12. References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
-       12.1. Normative References  . . . . . . . . . . . . . . . . .   9
-       12.2. Informative References  . . . . . . . . . . . . . . . .  10
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  10
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .   9
+     12.2.  Informative References . . . . . . . . . . . . . . . . .   9
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   9
 
 1.  Introduction
 
@@ -89,22 +105,31 @@ Table of Contents
    Public Internet risk compromising sensitive information during model
    training, telemetry harvesting, or third-party cloud breaches.
 
+
+
+
+
+Sibiryakov                Expires 30 March 2027                 [Page 2]
+
+Internet-Draft                ZTDS Protocol               September 2026
+
+
    Prior approaches have relied on two predominant architectures, each
    with critical shortcomings:
 
-   1.  Network Gateways and Total Blockades: Prohibiting corporate AI
+   1.  *Network Gateways and Total Blockades:* Prohibiting corporate AI
        access entirely.  This strategy induces widespread employee
        circumvention ("Shadow AI"), leading to uncontrolled cleartext
        data exposure.
 
-   2.  Cloud-Based Data Loss Prevention (Cloud DLP) Proxies: Intercepting
-       and inspecting WAN traffic via intermediate multi-tenant cloud
-       services.  This introduces significant network round-trip
-       latencies (typically 150ms to 350ms), establishes a single point
-       of data compromise, and introduces an additional Data Processor
-       under European Union General Data Protection Regulation (GDPR)
-       Article 28, mandating cumbersome Data Processing Agreements
-       (DPAs).
+   2.  *Cloud-Based Data Loss Prevention (Cloud DLP) Proxies:*
+       Intercepting and inspecting WAN traffic via intermediate multi-
+       tenant cloud services.  This introduces significant network
+       round-trip latencies (typically 150ms to 350ms, as empirically
+       measured in [ZTDS-LATENCY]), establishes a single point of data
+       compromise, and introduces an additional Data Processor under
+       European Union General Data Protection Regulation (GDPR) Article
+       28, mandating cumbersome Data Processing Agreements (DPAs).
 
    The Zero-Trust Data Sanitization (ZTDS) protocol shifts the security
    perimeter directly into volatile memory (RAM) of the local execution
@@ -116,43 +141,50 @@ Table of Contents
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in
-   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-   Cleartext Entity (S):
-      A sensitive substring matching regulatory or organizational
-      classification rules (e.g., patient name, credit card number, API
-      secret).
+   Cleartext Entity (S):  A sensitive substring matching regulatory or
+      organizational classification rules (e.g., patient name, credit
+      card number, API secret).
 
-   Surrogate Token (M):
-      A structured, synthetic replacement token preserving semantic and
-      syntactic properties without revealing cleartext.
+   Surrogate Token (M):  A structured, synthetic replacement token
+      preserving semantic and syntactic properties without revealing
+      cleartext.
 
-   Session Mapping Dictionary (R):
-      An ephemeral table linking surrogate tokens to cleartext entities,
-      held exclusively in volatile memory.
+   Session Mapping Dictionary (R):  An ephemeral table linking surrogate
+      tokens to cleartext entities, held exclusively in volatile memory.
 
-   Airplane Mode Standard:
-      An empirical test confirming that sanitization and inverse
-      restoration execute with zero network packets emitted across all
-      interfaces.
+   Airplane Mode Standard:  An empirical test confirming that
+      sanitization and inverse restoration execute with zero network
+      packets emitted across all interfaces.
+
+
+
+
+
+
+Sibiryakov                Expires 30 March 2027                 [Page 3]
+
+Internet-Draft                ZTDS Protocol               September 2026
+
 
 3.  Threat Model and Assumptions
 
    The ZTDS threat model operates under the following security
    assumptions:
 
-   *  Untrusted Transport: The Wide Area Network (WAN) and all
+   *  *Untrusted Transport:* The Wide Area Network (WAN) and all
       intermediary proxy servers are assumed to be monitored or subject
       to lawful/unlawful interception.
 
-   *  Untrusted Remote Model: The upstream AI model provider (e.g.,
+   *  *Untrusted Remote Model:* The upstream AI model provider (e.g.,
       public LLM API endpoint) is treated as an untrusted third party
       that MUST NOT receive cleartext sensitive data, preventing
       training set ingestion or prompt logging.
 
-   *  Semi-Trusted Host Application: The host execution environment
+   *  *Semi-Trusted Host Application:* The host execution environment
       (e.g., browser tab, container, or IDE process) is trusted for
       local volatile execution, but secondary storage (disk, browser
       databases, unencrypted telemetry caches) is treated as an insecure
@@ -177,31 +209,38 @@ Table of Contents
 
    A conformant ZTDS transformation T operates locally as follows:
 
-   1. An in-memory transformation T: S -> M is computed locally:
-      M = {m_1, m_2, ..., m_k}, where each m_i is a structured surrogate
-      token.
+   1.  An in-memory transformation T: S -> M is computed locally: M =
+       {m_1, m_2, ..., m_k}, where each m_i is a structured surrogate
+       token.
 
-   2. The ephemeral reverse dictionary R = {(m_i, s_i)} is allocated
-      strictly in volatile RAM scoped to the active execution context.
+   2.  The ephemeral reverse dictionary R = {(m_i, s_i)} is allocated
+       strictly in volatile RAM scoped to the active execution context.
 
-   3. The payload serialized and dispatched over the network contains
-      strictly U union M.
+   3.  The payload serialized and dispatched over the network contains
+       strictly U union M.
 
-   4. Upon receipt of the AI inference response P_out containing
-      surrogate tokens M, the local inverse transformation T^(-1): M -> S
-      restores the cleartext entities exclusively on the local
-      presentation layer:
-      P_final = T^(-1)(P_out, R).
 
-   5. Upon process termination or session destruction, R MUST be purged
-      from memory.
+
+Sibiryakov                Expires 30 March 2027                 [Page 4]
+
+Internet-Draft                ZTDS Protocol               September 2026
+
+
+   4.  Upon receipt of the AI inference response P_out containing
+       surrogate tokens M, the local inverse transformation T^(-1): M ->
+       S restores the cleartext entities exclusively on the local
+       presentation layer: P_final = T^(-1)(P_out, R).
+
+   5.  Upon process termination or session destruction, R MUST be purged
+       from memory.
 
 5.  The Four Protocol Invariants
 
-   Every compliant implementation of the ZTDS protocol MUST satisfy
-   four normative invariants:
+   Every compliant implementation of the ZTDS protocol MUST satisfy four
+   normative invariants, with formal mathematical proofs detailed in
+   [ZTDS-PROOF]:
 
-5.1.  Invariant 1: Volatile Memory Boundary (RAM Isolation)
+5.1.  Invariant 1: Volatile Memory Boundary (RAM-Only Isolation)
 
    Under no circumstances SHALL cleartext entity values S or mapping
    pairs R be persisted to secondary storage.  Implementations MUST NOT
@@ -226,49 +265,107 @@ Table of Contents
    spacing of the original entity to prevent LLM reasoning degradation.
    The transformation MUST guarantee:
 
-                           T^(-1)( T(S) ) == S
+                            T^(-1)( T(S) ) == S
 
    The sanitization engine MUST execute with a deterministic latency
    bound: Latency(T) < 2.0 ms for standard payloads up to 15,000
    characters on standard computing architectures.
 
-5.3.  Invariant 3: Zero Outgoing Network Transmission
+
+
+
+
+
+
+Sibiryakov                Expires 30 March 2027                 [Page 5]
+
+Internet-Draft                ZTDS Protocol               September 2026
+
+
+5.3.  Invariant 3: Zero Outgoing Network Transmission (Airplane Mode
+      Standard)
 
    The sanitization and de-tokenization mechanisms MUST be completely
    self-contained within local runtime code.  Implementations MUST be
    verifiable via the 5-step Airplane Mode Audit:
 
-   1. Ingest sensitive payload into application memory.
-   2. Sever all physical and virtual network interfaces.
-   3. Execute sanitization transformation T.
-   4. Execute reverse re-identification transformation T^(-1).
-   5. Confirm 100% functional execution with 0 socket errors and 0 bytes
-      egressed.
+   1.  Ingest sensitive payload into application memory.
+
+   2.  Sever all physical and virtual network interfaces.
+
+   3.  Execute sanitization transformation T.
+
+   4.  Execute reverse re-identification transformation T^(-1).
+
+   5.  Confirm 100% functional execution with 0 socket errors and 0
+       bytes egressed.
 
 5.4.  Invariant 4: Zero Sub-Processor Chain
 
    The sanitization engine MUST operate as a pure computational utility
-   on the host device.  It MUST NOT transmit telemetry, telemetry
-   pings, entity frequencies, or usage metrics to external collection
-   servers.  This exclusion relieves the deployment from third-party
-   Data Processing Agreements under European Union GDPR Article 28.
+   on the host device.  It MUST NOT transmit telemetry, telemetry pings,
+   entity frequencies, or usage metrics to external collection servers.
+   This exclusion relieves the deployment from third-party Data
+   Processing Agreements under European Union GDPR Article 28.
 
 6.  Surrogate Token Taxonomy
 
-   Surrogate tokens follow standardized bracketed notation:
+   Surrogate tokens follow standardized bracketed notation to ensure
+   cross-vendor compatibility:
 
-   +-----------------------+-----------------------+-------------------+
-   | Entity Class          | Canonical Syntax      | Example           |
-   +-----------------------+-----------------------+-------------------+
-   | Personal Name         | [NAME_N]              | John -> [NAME_1]  |
-   | Email Address         | [EMAIL_N]             | a@b.com -> [EMAIL]|
-   | Phone Number          | [PHONE_N]             | +1555 -> [PHONE_1]|
-   | National ID / SSN     | [ID_N] / [SSN_N]      | 123-45 -> [SSN_1] |
-   | Financial / IBAN      | [IBAN_N] / [CARD_N]   | GB29... -> [IBAN] |
-   | Protected Health / PHI| [MRN_N] / [PATIENT_N] | MRN99 -> [MRN_1]  |
-   | Developer Secrets     | [SECRET_KEY_N]        | sk-... -> [SECRET]|
-   | IP / Host Address     | [IP_ADDR_N]           | 10.0.0.1 -> [IP_1]|
-   +-----------------------+-----------------------+-------------------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sibiryakov                Expires 30 March 2027                 [Page 6]
+
+Internet-Draft                ZTDS Protocol               September 2026
+
+
+    +===============+========================+========================+
+    | Entity Class  | Canonical Token Syntax | Example Transformation |
+    +===============+========================+========================+
+    | Personal Name | [NAME_N]               | John Doe -> [NAME_1]   |
+    +---------------+------------------------+------------------------+
+    | Email Address | [EMAIL_N]              | john@example.com ->    |
+    |               |                        | [EMAIL_1]              |
+    +---------------+------------------------+------------------------+
+    | Phone Number  | [PHONE_N]              | +1-555-0199 ->         |
+    |               |                        | [PHONE_1]              |
+    +---------------+------------------------+------------------------+
+    | National ID / | [ID_N] / [SSN_N]       | 123-45-6789 -> [SSN_1] |
+    | SSN           |                        |                        |
+    +---------------+------------------------+------------------------+
+    | Financial /   | [IBAN_N] / [CARD_N]    | GB29XAAA... ->         |
+    | IBAN          |                        | [IBAN_1]               |
+    +---------------+------------------------+------------------------+
+    | Protected     | [MRN_N] / [PATIENT_N]  | MRN-90123 -> [MRN_1]   |
+    | Health / PHI  |                        |                        |
+    +---------------+------------------------+------------------------+
+    | Developer     | [SECRET_KEY_N]         | sk-ant-... ->          |
+    | Secrets       |                        | [SECRET_KEY_1]         |
+    +---------------+------------------------+------------------------+
+    | IP / Host     | [IP_ADDR_N]            | 192.0.2.1 ->           |
+    | Address       |                        | [IP_ADDR_1]            |
+    +---------------+------------------------+------------------------+
+
+               Table 1: Standardized Surrogate Token Notation
 
 7.  Cryptographic Transport Handoff
 
@@ -276,26 +373,36 @@ Table of Contents
    require transferring mapping state across trust boundaries, mapping
    dictionaries MUST be encrypted prior to transit:
 
-   *  Key Derivation: Argon2id as specified in [RFC9106] with a minimum
-      of 19 MiB memory cost and 2 iterations.
+   *  *Key Derivation:* Argon2id as specified in [RFC9106] with a
+      minimum of 19 MiB memory cost and 2 iterations.
 
-   *  Authenticated Symmetric Encryption: XChaCha20-Poly1305 with a 24-
-      byte (192-bit) cryptographically secure random nonce generated via
-      a CSPRNG, conforming to [RFC8439] principles.
+   *  *Authenticated Symmetric Encryption:* XChaCha20-Poly1305 with a
+      24-byte (192-bit) cryptographically secure random nonce generated
+      via a CSPRNG, conforming to [RFC8439] principles.
 
-   *  Zero Relay Custody: Coordination relays act exclusively as blind
+   *  *Zero Relay Custody:* Coordination relays act exclusively as blind
       encrypted conduits with zero mathematical capability to derive
       keys or inspect mapping pairs.
+
+
+
+
+
+
+Sibiryakov                Expires 30 March 2027                 [Page 7]
+
+Internet-Draft                ZTDS Protocol               September 2026
+
 
 8.  Conformance Attestation Architecture
 
    Conformant implementations MAY generate cryptographically signed
    Conformance Certificates:
 
-               ZTDS-CERT-v1.{payload_b64url}.{signature_b64url}
+             ZTDS-CERT-v1.{payload_b64url}.{signature_b64url}
 
-   Signatures are generated using Ed25519 as specified in [RFC8032].  The
-   payload encompasses a canonicalized JSON structure containing the
+   Signatures are generated using Ed25519 as specified in [RFC8032].
+   The payload encompasses a canonicalized JSON structure containing the
    SHA-256 tree hash of the audited source code, invariant evaluation
    statuses, and a 365-day validity window.
 
@@ -324,16 +431,24 @@ Table of Contents
 10.3.  Surrogate Collision and Entropy
 
    Surrogate token assignment MUST be deterministic within a given
-   session to ensure co-reference resolution, while maintaining fresh
-   indexing per session.
+   session to ensure co-reference resolution (e.g., the same person
+   mentioned five times receives the identical [NAME_1] surrogate across
+   all mentions), while maintaining fresh indexing per session.
 
 11.  Privacy and Regulatory Considerations
 
    By eliminating intermediate data processors, ZTDS satisfies European
    Union GDPR Article 28 exemption requirements, Article 17 Right to be
    Forgotten within vector databases (embeddings contain zero
-   extractable cleartext PII), and HIPAA 45 CFR § 164.514(b) Safe Harbor
-   de-identification rules.
+   extractable cleartext PII), and HIPAA 45 CFR Section 164.514(b) Safe
+   Harbor de-identification rules, as analyzed in [ZTDS-LEGAL].
+
+
+
+Sibiryakov                Expires 30 March 2027                 [Page 8]
+
+Internet-Draft                ZTDS Protocol               September 2026
+
 
 12.  References
 
@@ -343,13 +458,13 @@ Table of Contents
               Requirement Levels", BCP 14, RFC 2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-   [RFC8032]  Josefsson, S. and I. Liusvaara, "Edwards-Curve Digital
-              Signature Algorithm (EdDSA)", RFC 8032, January 2017,
-              <https://www.rfc-editor.org/info/rfc8032>.
-
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, May 2017,
               <https://www.rfc-editor.org/info/rfc8174>.
+
+   [RFC8032]  Josefsson, S. and I. Liusvaara, "Edwards-Curve Digital
+              Signature Algorithm (EdDSA)", RFC 8032, January 2017,
+              <https://www.rfc-editor.org/info/rfc8032>.
 
    [RFC8439]  Nir, Y. and A. Langley, "ChaCha20 and Poly1305 for IETF
               Protocols", RFC 8439, June 2018,
@@ -362,25 +477,84 @@ Table of Contents
 
 12.2.  Informative References
 
-   [ZTDS-LATENCY]
-              Sibiryakov, I., "Empirical Latency Benchmark: In-Memory
-              Client RAM Masking vs. Cloud DLP Proxies", DOI
-              10.17605/OSF.IO/5BYJF, 2026.
-
-   [ZTDS-LEGAL]
-              Sibiryakov, I., "Enterprise Compliance Under the EU AI Act
-              and UK GDPR via Ephemeral Client-Side Sanitization", SSRN
-              7335581, 2026.
-
    [ZTDS-PROOF]
               Sibiryakov, I., "Zero-Trust Data Sanitization (ZTDS):
               Mathematical Proof and Operational Framework for Client-
               Side AI Prompt Privacy", DOI 10.5281/zenodo.22058770,
-              2026.
+              2026, <https://doi.org/10.5281/zenodo.22058770>.
+
+   [ZTDS-LATENCY]
+              Sibiryakov, I., "Empirical Latency Benchmark: In-Memory
+              Client RAM Masking vs. Cloud DLP Proxies",
+              DOI 10.17605/OSF.IO/5BYJF, 2026,
+              <https://doi.org/10.17605/OSF.IO/5BYJF>.
+
+   [ZTDS-LEGAL]
+              Sibiryakov, I., "Enterprise Compliance Under the EU AI Act
+              and UK GDPR via Ephemeral Client-Side Sanitization",
+              SSRN 7335581, 2026, <https://papers.ssrn.com/sol3/
+              papers.cfm?abstract_id=7335581>.
 
 Author's Address
+
+
+
+
+
+Sibiryakov                Expires 30 March 2027                 [Page 9]
+
+Internet-Draft                ZTDS Protocol               September 2026
+
 
    Ilya Sibiryakov
    ZTDS AI Consortium / BrandMeWeb
    Email: ilya@brandmeweb.com
    URI:   https://ztds.ai
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sibiryakov                Expires 30 March 2027                [Page 10]
