@@ -1,7 +1,7 @@
 # ZTDS.ai — Commercial PLG Flywheel & Chrome Web Store Package
 
 **Target Product:** PrivacyScrubber (Web, Chrome Extension, MCP Server, Headless SDK)  
-**Standard Authority:** ZTDS AI Consortium (RFC v1.0 / IETF draft-sibiryakov-ztds-protocol-00)  
+**Standard Authority:** ZTDS AI Consortium (RFC v1.0 / IETF draft-sibiryakov-ztds-protocol-02)  
 **Parent Ecosystem:** BrandMeWeb (Founder: Ilya Sibiryakov)  
 **Revenue Goal:** 40,000 ILS (~$11,000 USD) MRR by 14/05/2027  
 
@@ -21,7 +21,7 @@ The Product-Led Growth (PLG) flywheel creates a deterministic transition from in
 |                                                                         |
 | 2. Trust Anchor: Institutional Verification                             |
 |    - ZTDS RFC v1.0 Conformance Badge (https://ztds.ai/badge/)           |
-|    - IETF Internet-Draft draft-sibiryakov-ztds-protocol-00              |
+|    - IETF Internet-Draft draft-sibiryakov-ztds-protocol-02              |
 |    - Independent 3rd-Party White-Box Audit (0 Critical / 0 High)        |
 |    - Offline Web Crypto Ed25519 Token Validator (https://ztds.ai/verify/)|
 |                                                                         |
@@ -50,7 +50,7 @@ The Product-Led Growth (PLG) flywheel creates a deterministic transition from in
 PrivacyScrubber is the pioneer reference implementation of the ZTDS (Zero-Trust Data Sanitization) open standard. It sanitizes sensitive corporate data, PII, PHI, API keys, and financial credentials directly in browser memory before prompts reach AI model providers.
 
 INSTITUTIONAL TRUST ANCHORS:
-- Standardized under IETF Internet-Draft: draft-sibiryakov-ztds-protocol-00
+- Standardized under IETF Internet-Draft: draft-sibiryakov-ztds-protocol-02 (https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/)
 - Conforms to ZTDS RFC v1.0 (Zero Network Egress, Deterministic Tokens, In-Memory Isolation, Zero Subprocessors)
 - Independent Third-Party White-Box Security Audit: 0 Critical / 0 High findings
 - Cryptographically verifiable via offline Web Crypto Ed25519 signatures

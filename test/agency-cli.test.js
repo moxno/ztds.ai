@@ -44,7 +44,7 @@ console.log('\n--> Test 2: Tailored SOW Generation ($2,500 + $500/mo)');
   assert(output.includes('https://ztds.ai/agency/'), 'Must link to Proposal Workbench');
   assert(output.includes('https://ztds.ai/verify/'), 'Must link to Ed25519 validator');
   assert(output.includes('IL 331905'), 'Must cite Israel Patent IL 331905');
-  assert(output.includes('draft-sibiryakov-ztds-protocol-00'), 'Must cite IETF Internet-Draft');
+  assert(output.includes('draft-sibiryakov-ztds-protocol-02'), 'Must cite IETF Internet-Draft');
 
   console.log('    [PASS] Tailored fintech SOW and commercial milestones validated.');
 }

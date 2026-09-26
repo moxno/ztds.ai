@@ -78,9 +78,10 @@ console.log('\n--> Test 3: Institutional Authority Anchors & Key Content');
   const html = fs.readFileSync(CERTIFICATION_HTML_PATH, 'utf8');
 
   // IETF Internet-Draft
-  assert(html.includes('draft-sibiryakov-ztds-protocol-00'), 'Must reference IETF Internet-Draft identifier');
-  assert(html.includes('/docs/ietf/draft-sibiryakov-ztds-protocol-00.txt'), 'Must link to IETF txt artifact');
-  assert(html.includes('/docs/ietf/draft-sibiryakov-ztds-protocol-00.xml'), 'Must link to IETF xml artifact');
+  assert(html.includes('draft-sibiryakov-ztds-protocol-02'), 'Must reference IETF Internet-Draft identifier');
+  assert(html.includes('/docs/ietf/draft-sibiryakov-ztds-protocol-02.txt'), 'Must link to IETF txt artifact');
+  assert(html.includes('/docs/ietf/draft-sibiryakov-ztds-protocol-02.xml'), 'Must link to IETF xml artifact');
+  assert(html.includes('https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/'), 'Must link to live IETF Datatracker');
 
   // WIPO Patent Anchor
   assert(html.includes('IL 331905'), 'Must reference Israel Patent Application IL 331905');

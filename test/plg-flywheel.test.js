@@ -93,7 +93,7 @@ console.log('\n--> Test 5: Chrome Web Store Permissions Justifications');
   assert(content.includes('activeTab:'), 'Must justify activeTab permission');
   assert(content.includes('storage:'), 'Must justify storage permission');
   assert(content.includes('scripting:'), 'Must justify scripting permission');
-  assert(content.includes('draft-sibiryakov-ztds-protocol-00'), 'Must cite IETF Internet-Draft in store listing');
+  assert(content.includes('draft-sibiryakov-ztds-protocol-02'), 'Must cite IETF Internet-Draft in store listing');
   assert(content.includes('IL 331905'), 'Must cite patent IL 331905');
   assert(content.includes('0 Critical / 0 High'), 'Must cite 0-finding independent audit');
 

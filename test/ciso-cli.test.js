@@ -38,7 +38,7 @@ console.log('\n--> Test 2: Tailored Industry Dossier & Institutional Anchors');
   assert(output.includes('**Target Organization:** Pfizer Global'), 'Must personalize target organization');
   assert(output.includes('**Attn:** Dr. John Vance'), 'Must personalize CISO recipient');
   assert(output.includes('HIPAA Safe Harbor (45 CFR § 164.514)'), 'Must cite HIPAA Safe Harbor for healthcare');
-  assert(output.includes('draft-sibiryakov-ztds-protocol-00'), 'Must cite IETF Internet-Draft');
+  assert(output.includes('draft-sibiryakov-ztds-protocol-02'), 'Must cite IETF Internet-Draft');
   assert(output.includes('IL 331905'), 'Must cite Israel Patent Application IL 331905');
   assert(output.includes('B17B'), 'Must cite WIPO DAS Access Code B17B');
   assert(output.includes('182655957'), 'Must cite Trademark Order #182655957');

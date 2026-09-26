@@ -119,8 +119,8 @@ By executing sanitization strictly inside client volatile RAM prior to network s
 
 ## 4. Institutional Authority & Intellectual Property Anchors
 
-* **IETF Standards Track:** Published under Internet-Draft \`draft-sibiryakov-ztds-protocol-00\` (RFC 8785 Canonical JSON, RFC 8032 Ed25519 Signatures).  
-  *Text Specification:* https://ztds.ai/docs/ietf/draft-sibiryakov-ztds-protocol-00.txt
+* **IETF Standards Track:** Published under Internet-Draft \`draft-sibiryakov-ztds-protocol-02\` (RFC 8785 Canonical JSON, RFC 8032 Ed25519 Signatures).  
+  *Live Datatracker:* https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/ | *Text Mirror:* https://ztds.ai/docs/ietf/draft-sibiryakov-ztds-protocol-02.txt
 * **WIPO International Patent Anchor:** Israel Patent Office Application **IL 331905** (Filed 14/09/2026, WIPO DAS Access Code: **B17B**, 20 PCT Claims covering client-side ephemeral surrogate mapping).  
   *PCT Specification:* https://ztds.ai/docs/legal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.txt
 * **WIPO International Trademark:** ILPO Order **#182655957** (Nice Classes 9 & 42, Madrid System Form MM2).  

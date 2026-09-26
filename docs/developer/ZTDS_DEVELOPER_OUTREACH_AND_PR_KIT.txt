@@ -3,7 +3,7 @@
 **Target Audience:** Open-Source Maintainers, AI Engineers, RAG Architects, InfoSec Hackers  
 **Standards Authority:** ZTDS AI Consortium & BrandMeWeb Ecosystem  
 **Repository:** https://github.com/moxno/ztds.ai  
-**Standards Track:** IETF Internet-Draft `draft-sibiryakov-ztds-protocol-00`  
+**Standards Track:** IETF Internet-Draft `draft-sibiryakov-ztds-protocol-02` (https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/)  
 **Web Crypto Validator:** https://ztds.ai/verify/  
 
 ---
@@ -32,15 +32,16 @@ ZTDS defines 4 mathematical and architectural invariants:
 4. Zero Subprocessors: Eliminates vendor data processor liability under GDPR Art. 28.
 
 Standards & Independent Verification:
-- IETF Internet-Draft: draft-sibiryakov-ztds-protocol-00 (RFC 8785 canonical JSON, RFC 8032 Ed25519 signatures): https://ztds.ai/docs/ietf/draft-sibiryakov-ztds-protocol-00.txt
+- IETF Internet-Draft: draft-sibiryakov-ztds-protocol-02 published in official IETF Datatracker: https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/
 - Independent Security Audit: White-box security audit completed with a Clean Bill of Health (0 Critical, 0 High vulnerabilities across 5 testing modules): https://ztds.ai/docs/security/ZTDS_Independent_Security_Audit_Report.txt
 - Client-Side Web Crypto Validator: https://ztds.ai/verify/ runs 100% in browser RAM using the SubtleCrypto API. You can drop any .cert token into the validator with your WiFi/Ethernet disconnected (Airplane Mode) and verify the Ed25519 signature with zero bytes egress.
+- Patent Pending: Israel Patent Office Application IL 331905 (WIPO DAS Access Code: B17B)
 
 CLI Auditor:
 You can audit your local codebase or RAG pipeline right now in <10ms:
 $ npx ztds-audit --dir ./src
 
-Code, specifications, and reference blueprints (LangChain, LlamaIndex, CrewAI, MCP) are live at https://ztds.ai/sdk/
+Code, specifications, and reference blueprints (LangChain, LlamaIndex, CrewAI, FastMCP, LiteLLM) are live at https://ztds.ai/sdk/
 
 Feedback and critique on the RFC and threat model are warmly welcome!
 ```
@@ -70,33 +71,107 @@ Feedback and critique on the RFC and threat model are warmly welcome!
 
 ---
 
-## 3. GitHub Pull Request Kit for Top Repositories
+## 3. GitHub Pull Request Kit for Top 5 Frameworks
 
 ### Target 1: LangChain (Python & TypeScript)
 * **Target Repo:** `langchain-ai/langchain`
 * **Feature:** ZTDS Zero-Egress Middleware Callback
-* **PR Title:** `feat(community): add ZTDS zero-trust in-memory sanitization callback (IETF draft-sibiryakov-ztds-00)`
+* **PR Title:** `feat(community): add ZTDS zero-trust in-memory sanitization callback (IETF draft-sibiryakov-ztds-02)`
 * **PR Description:**
   > This PR introduces a ZTDS-compliant in-memory callback for LangChain pipelines.
   > It intercepts prompt strings before WAN socket dispatch, replaces sensitive entities with deterministic reversible surrogates in RAM, and restores cleartext upon model return.
-  > - Conforms to IETF `draft-sibiryakov-ztds-protocol-00`
+  > - Conforms to IETF `draft-sibiryakov-ztds-protocol-02` (https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/)
   > - In-memory execution: 0 external network requests
   > - Includes automated invariant unit test (`npx ztds-audit`)
+* **Reference Code:**
+  ```python
+  from langchain_core.callbacks import BaseCallbackHandler
+
+  class ZTDSCallbackHandler(BaseCallbackHandler):
+      """Zero-Trust Data Sanitization in-memory callback (RFC v1.0)."""
+      def __init__(self, sanitizer_engine):
+          self.engine = sanitizer_engine
+          self._session_maps = {}
+
+      def on_llm_start(self, serialized, prompts, **kwargs):
+          sanitized = []
+          for i, prompt in enumerate(prompts):
+              masked_text, token_map = self.engine.sanitize(prompt)
+              self._session_maps[i] = token_map
+              sanitized.append(masked_text)
+          prompts[:] = sanitized
+
+      def on_llm_end(self, response, **kwargs):
+          for i, gen_list in enumerate(response.generations):
+              token_map = self._session_maps.pop(i, {})
+              for gen in gen_list:
+                  gen.text = self.engine.restore(gen.text, token_map)
+  ```
 
 ### Target 2: LlamaIndex (Python)
 * **Target Repo:** `run-llama/llama_index`
 * **Feature:** ZTDS Ingestion Pre-Processor
-* **PR Title:** `feat(ingestion): add ZTDS air-gapped sanitization node to prevent RAG vector database poisoning`
+* **PR Title:** `feat(ingestion): add ZTDS air-gapped sanitization node to prevent RAG vector database poisoning (IETF draft-sibiryakov-ztds-02)`
 * **PR Description:**
   > Implements an air-gapped `ZTDSNodePostprocessor` that sanitizes clinical PHI and corporate secrets before embeddings are computed and indexed.
   > Prevents irreversible vector database poisoning under GDPR Article 17 (Right to Erasure).
+  > - Conforms to IETF `draft-sibiryakov-ztds-protocol-02`
+  > - RAM-only surrogate tokenization with zero WAN egress
+* **Reference Code:**
+  ```python
+  from llama_index.core.postprocessor.types import BaseNodePostprocessor
+  from llama_index.core.schema import NodeWithScore
+  from typing import List, Optional
 
-### Target 3: Model Context Protocol (FastMCP / Claude Desktop)
+  class ZTDSNodePostprocessor(BaseNodePostprocessor):
+      """Sanitizes sensitive nodes prior to embedding or synthesis."""
+      def __init__(self, engine):
+          self.engine = engine
+
+      def _postprocess_nodes(self, nodes: List[NodeWithScore], **kwargs) -> List[NodeWithScore]:
+          for node_with_score in nodes:
+              sanitized_text, _ = self.engine.sanitize(node_with_score.node.get_content())
+              node_with_score.node.set_content(sanitized_text)
+          return nodes
+  ```
+
+### Target 3: CrewAI (Python)
+* **Target Repo:** `joaomdmoura/crewAI`
+* **Feature:** ZTDS Agent Boundary Guard
+* **PR Title:** `feat(security): add ZTDS in-memory prompt sanitization guard for autonomous agent swarms`
+* **PR Description:**
+  > Adds a zero-trust sanitization guard across multi-agent communications in CrewAI. Intercepts task outputs and tool arguments so API secrets, employee credentials, and private customer data are never passed into cloud LLM completions.
+  > - Conforms to IETF `draft-sibiryakov-ztds-protocol-02`
+* **Reference Code:**
+  ```python
+  class ZTDSTaskGuard:
+      """Protects autonomous agent task execution from credential and PII leakage."""
+      def __init__(self, engine):
+          self.engine = engine
+
+      def sanitize_task_input(self, task_description: str) -> tuple[str, dict]:
+          return self.engine.sanitize(task_description)
+
+      def restore_task_output(self, raw_output: str, token_map: dict) -> str:
+          return self.engine.restore(raw_output, token_map)
+  ```
+
+### Target 4: Model Context Protocol (FastMCP / Claude Desktop)
 * **Target Repo:** `punkpeye/fastmcp` or `modelcontextprotocol/servers`
 * **Feature:** ZTDS Stdio Middleware
-* **PR Title:** `feat(middleware): add ZTDS zero-trust stdio proxy for Cursor and Claude Desktop`
+* **PR Title:** `feat(middleware): add ZTDS zero-trust stdio proxy for Cursor and Claude Desktop (IETF draft-sibiryakov-ztds-02)`
 * **PR Description:**
   > Wraps MCP stdio tool calls in a local in-memory tokenization layer. Raw developer secrets (API keys, connection strings) never enter the model's context window.
+  > - Conforms to IETF `draft-sibiryakov-ztds-protocol-02`
+  > - Uses local stdio stream interception with zero network egress
+
+### Target 5: LiteLLM (Python)
+* **Target Repo:** `BerriAI/litellm`
+* **Feature:** ZTDS Pre-Call and Post-Call Hook
+* **PR Title:** `feat(proxy): add ZTDS client-side zero-egress prompt sanitization hook`
+* **PR Description:**
+  > Adds custom pre-call and post-call hooks in LiteLLM proxy enforcing the 4 ZTDS invariants. Sanitizes prompts before dispatch to OpenAI/Anthropic/Bedrock and restores original entities upon response return.
+  > - Conforms to IETF `draft-sibiryakov-ztds-protocol-02`
 
 ---
 
@@ -118,7 +193,7 @@ For any open-source or commercial tool in the registry:
 
 ### Verification Link:
 ```markdown
-[Verify Ed25519 Certificate](https://ztds.ai/verify/?token=ZTDS-CERT-v1...)
+[Verify Ed25519 Certificate](https://ztds.ai/verify/#cert=ZTDS-CERT-v1.eyJhdXRob3JpdHkiOiJaVERTIEFJIENvbnNvcnRpdW0gJiBTdGFuZGFyZHMgQXV0aG9yaXR5IChCcmFuZE1lV2ViIEVjb3N5c3RlbSkiLCJiYWRnZV91cmwiOiJodHRwczovL3p0ZHMuYWkvYmFkZ2UvcHJpdmFjeXNjcnViYmVyLXdlYi5zdmciLCJjZXJ0aWZpY2F0ZV9pZCI6IlpURFMtQ0VSVC0yMDI2LVBSSVZBQ1lTQ1JVQkJFUi1XRUItRDAyREM2In0...)
 ```
 
 ---
