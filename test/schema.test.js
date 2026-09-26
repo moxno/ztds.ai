@@ -22,6 +22,8 @@ const prodPages = [
   'fellows/index.html',
   'governance/index.html',
   'badge/index.html',
+  'verify/index.html',
+  'certification/index.html',
   'apply/index.html',
   'roi/index.html',
   'security/index.html',

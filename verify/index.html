@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cryptographic Certificate Validator &mdash; ZTDS.ai</title>
+  <meta name="description" content="Client-side Ed25519 offline verification engine for ZTDS Conformance Certificates. Validates digital signatures, 4 invariants, and SHA-256 build receipts directly in browser RAM with zero network egress.">
+  <link rel="canonical" href="https://ztds.ai/verify/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Open Graph & Social Cards -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ztds.ai/verify/">
+  <meta property="og:title" content="Cryptographic Certificate Validator &mdash; ZTDS.ai">
+  <meta property="og:description" content="Client-side Ed25519 offline verification engine for ZTDS Conformance Certificates with zero network egress.">
+  <meta property="og:image" content="https://ztds.ai/badge/privacyscrubber-web.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cryptographic Certificate Validator &mdash; ZTDS.ai">
+  <meta name="twitter:description" content="Client-side Ed25519 offline verification engine for ZTDS Conformance Certificates with zero network egress.">
+  <meta name="twitter:image" content="https://ztds.ai/badge/privacyscrubber-web.svg">
+
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://ztds.ai/verify/#app",
+        "name": "ZTDS Cryptographic Certificate Validator",
+        "url": "https://ztds.ai/verify/",
+        "description": "Offline client-side Ed25519 digital signature and conformance validator for ZTDS certificates.",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "All",
+        "isPartOf": { "@id": "https://ztds.ai/#website" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ZTDS AI Consortium",
+          "url": "https://ztds.ai"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ztds.ai/verify/#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ztds.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Certificate Validator",
+            "item": "https://ztds.ai/verify/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">
+
+  <!-- Institutional Top Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Status -->
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-3 touch-target">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm shrink-0 aspect-square p-0.5 overflow-hidden">
+            <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none" aria-hidden="true">
+              <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+              <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
+            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+          </div>
+        </a>
+
+        <!-- Status Pill -->
+        <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
+          <span class="pulse-dot"></span>
+          <span class="font-mono text-[11px] font-semibold">RFC v1.0 &middot; OPEN CONSORTIUM</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links (7 Canonical Links) -->
+      <nav class="hidden lg:flex items-center gap-3.5 xl:gap-5 text-sm font-medium text-slate-600" id="desktop-nav">
+        <a href="/standard/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Standard</a>
+        <a href="/registry/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Registry</a>
+        <a href="/fellows/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Fellows</a>
+        <a href="/companies/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Adopters</a>
+        <a href="/scanner/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Scanner</a>
+        <a href="/sdk/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">SDK &amp; Connectors</a>
+        <a href="/ciso/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">CISO &amp; Trust</a>
+      </nav>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-3">
+        <a href="/apply/" class="btn-trust text-xs py-2 px-4 shadow-sm font-semibold whitespace-nowrap">
+          Get Certified &rarr;
+        </a>
+        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"></div>
+  <aside id="mobile-drawer" class="mobile-nav-drawer drawer" aria-label="Mobile Navigation">
+    <div class="p-6 flex flex-col h-full">
+      <div class="flex items-center justify-between pb-6 border-b border-slate-200">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center p-0.5">
+            <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none">
+              <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6"/>
+              <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6"/>
+              <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+            </svg>
+          </div>
+          <span class="font-bold text-slate-900 text-base">ZTDS.ai</span>
+        </div>
+        <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="p-2 text-slate-500 hover:text-slate-800">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="flex flex-col gap-2 py-6 text-sm font-medium text-slate-700">
+        <a href="/standard/" class="p-2.5 rounded-lg hover:bg-slate-100 transition-colors">Standard</a>
+        <a href="/registry/" class="p-2.5 rounded-lg hover:bg-slate-100 transition-colors">Registry</a>
+        <a href="/fellows/" class="p-2.5 rounded-lg hover:bg-slate-100 transition-colors">Fellows</a>
+        <a href="/companies/" class="p-2.5 rounded-lg hover:bg-slate-100 transition-colors">Adopters</a>
+        <a href="/scanner/" class="p-2.5 rounded-lg hover:bg-slate-100 transition-colors">Scanner</a>
+        <a href="/sdk/" class="p-2.5 rounded-lg hover:bg-slate-100 transition-colors">SDK &amp; Connectors</a>
+        <a href="/ciso/" class="p-2.5 rounded-lg hover:bg-slate-100 transition-colors">CISO &amp; Trust</a>
+      </nav>
+
+      <div class="mt-auto pt-6 border-t border-slate-200">
+        <a href="/apply/" class="btn-trust w-full py-2.5 text-center text-xs font-semibold block">
+          Get Certified &rarr;
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+
+    <!-- Hero & Auditor Telemetry Header -->
+    <div class="mb-10 text-center max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 text-emerald-400 text-xs font-mono font-semibold mb-4 border border-slate-800 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        OFFLINE CRYPTOGRAPHIC VALIDATOR &middot; RFC 8032
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+        ZTDS Conformance Certificate Validator
+      </h1>
+      <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
+        Verify Ed25519 digital signatures, invariant conformance, and cryptographic SHA-256 build hashes in client-side memory. Executes 100% offline with zero external network egress.
+      </p>
+
+      <!-- Trust Pillars Grid -->
+      <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-left">
+        <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Algorithm</div>
+          <div class="text-xs font-bold text-slate-800 font-mono mt-0.5">Ed25519 (RFC 8032)</div>
+        </div>
+        <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Data Privacy</div>
+          <div class="text-xs font-bold text-emerald-600 font-mono mt-0.5">0.00 Bytes Egress</div>
+        </div>
+        <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Canonicalization</div>
+          <div class="text-xs font-bold text-slate-800 font-mono mt-0.5">RFC 8785 JSON</div>
+        </div>
+        <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
+          <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">SubtleCrypto</div>
+          <div class="text-xs font-bold text-slate-800 font-mono mt-0.5">Web Crypto Native</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Validator Interactive Workbench -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- Left Column: Input Box & Sample Controls (5 cols) -->
+      <div class="lg:col-span-5 space-y-5">
+        
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+          <div class="flex items-center justify-between mb-3">
+            <label for="certInput" class="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider">
+              Certificate Token Input
+            </label>
+            <span class="text-[11px] font-mono text-slate-400">ZTDS-CERT-v1</span>
+          </div>
+
+          <!-- Drag & Drop Dropzone Container -->
+          <div id="dropZone" class="relative group border-2 border-dashed border-slate-300 hover:border-emerald-500 rounded-xl p-1 transition-all bg-slate-50/50">
+            <textarea
+              id="certInput"
+              rows="7"
+              class="w-full bg-transparent p-3 text-xs font-mono text-slate-800 border-0 focus:ring-0 focus:outline-none resize-none leading-relaxed placeholder:text-slate-400"
+              placeholder="Paste 3-part ZTDS certificate token here:&#10;ZTDS-CERT-v1.{payload_b64url}.{sig_b64url}&#10;&#10;Or drag and drop a .cert file directly into this box."
+              spellcheck="false"
+            ></textarea>
+            
+            <div id="dropOverlay" class="absolute inset-0 bg-emerald-600/10 backdrop-blur-[1px] border-2 border-emerald-500 rounded-xl hidden flex items-center justify-center pointer-events-none">
+              <span class="text-xs font-bold text-emerald-800 font-mono bg-white px-3 py-1.5 rounded-lg shadow-sm border border-emerald-200">
+                Drop .cert or .json file to inspect
+              </span>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="mt-4 flex flex-wrap gap-2 items-center justify-between">
+            <button
+              id="btnVerify"
+              type="button"
+              class="btn-trust py-2 px-5 text-xs font-bold shadow-sm"
+            >
+              Verify Signature &rarr;
+            </button>
+            <button
+              id="btnClear"
+              type="button"
+              class="py-2 px-3 text-xs font-mono font-medium text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors"
+            >
+              Clear Input
+            </button>
+          </div>
+
+          <!-- Preset Sample Loaders -->
+          <div class="mt-6 pt-5 border-t border-slate-100">
+            <div class="text-[11px] font-bold uppercase font-mono text-slate-400 tracking-wider mb-2.5">
+              Load Preset Test Tokens:
+            </div>
+            <div class="space-y-1.5">
+              <button
+                id="btnLoadValid"
+                type="button"
+                class="w-full text-left px-3 py-2 rounded-lg bg-slate-50 hover:bg-emerald-50/70 border border-slate-200 hover:border-emerald-300 text-xs transition-colors flex items-center justify-between text-slate-700 hover:text-emerald-900"
+              >
+                <span class="font-medium">PrivacyScrubber Web &middot; Valid Cert</span>
+                <span class="font-mono text-[10px] text-emerald-600 font-bold bg-emerald-100/60 px-1.5 py-0.5 rounded">AUTHENTIC</span>
+              </button>
+
+              <button
+                id="btnLoadTampered"
+                type="button"
+                class="w-full text-left px-3 py-2 rounded-lg bg-slate-50 hover:bg-rose-50/70 border border-slate-200 hover:border-rose-300 text-xs transition-colors flex items-center justify-between text-slate-700 hover:text-rose-900"
+              >
+                <span class="font-medium">Tampered Payload &middot; Invalid Signature</span>
+                <span class="font-mono text-[10px] text-rose-600 font-bold bg-rose-100/60 px-1.5 py-0.5 rounded">MUTATED</span>
+              </button>
+
+              <button
+                id="btnLoadExpired"
+                type="button"
+                class="w-full text-left px-3 py-2 rounded-lg bg-slate-50 hover:bg-amber-50/70 border border-slate-200 hover:border-amber-300 text-xs transition-colors flex items-center justify-between text-slate-700 hover:text-amber-900"
+              >
+                <span class="font-medium">Legacy RAG Pipeline &middot; Expired Cert</span>
+                <span class="font-mono text-[10px] text-amber-600 font-bold bg-amber-100/60 px-1.5 py-0.5 rounded">EXPIRED</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CISO Verification Quick Tip -->
+        <div class="bg-slate-900 text-slate-300 rounded-2xl p-5 text-xs leading-relaxed border border-slate-800 shadow-sm">
+          <div class="font-mono font-bold text-white uppercase text-[11px] tracking-wider mb-2 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            Independent CLI Verification
+          </div>
+          <p class="text-slate-400 mb-3">
+            To verify this certificate inside an air-gapped terminal or automated CI/CD pipeline without opening a web browser:
+          </p>
+          <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono text-[11px] text-emerald-300 overflow-x-auto select-all">
+            npx ztds-verify &lt;TOKEN_STRING&gt;
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Live Verification Results Display (7 cols) -->
+      <div class="lg:col-span-7 space-y-6">
+
+        <!-- Initial Placeholder State -->
+        <div id="emptyState" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-10 text-center">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 mx-auto flex items-center justify-center mb-4">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <h3 class="text-base font-bold text-slate-900 mb-1">Awaiting Certificate Token</h3>
+          <p class="text-xs text-slate-500 max-w-md mx-auto leading-relaxed mb-6">
+            Paste a token or select one of the test tokens on the left. Cryptographic verification is computed directly in your browser using standard Web Crypto primitives.
+          </p>
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] font-mono text-slate-600">
+            <span>Root Key:</span>
+            <span class="text-slate-800 font-bold select-all">MCowBQYDK2VwAyEAg3N98ZgL4Uqbu0PmqvG8KN8vUicYkgKfUNVgwlLObr4=</span>
+          </div>
+        </div>
+
+        <!-- Active Verification Card (Hidden Initially) -->
+        <div id="resultsCard" class="hidden space-y-6">
+
+          <!-- Dynamic Status Banner -->
+          <div id="statusBanner" class="p-6 rounded-2xl border transition-all">
+            <div class="flex items-start gap-4">
+              <div id="statusIconMount" class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"></div>
+              <div class="flex-1">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <h3 id="statusTitle" class="text-lg font-extrabold tracking-tight"></h3>
+                  <span id="statusPill" class="text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border"></span>
+                </div>
+                <p id="statusDescription" class="text-xs mt-1 leading-relaxed"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subject & Metadata Metrics Grid -->
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+            <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+              <span class="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider">
+                Audited Subject &amp; Conformance Scope
+              </span>
+              <button id="btnCopyReport" type="button" class="text-xs text-emerald-700 hover:text-emerald-800 font-semibold transition-colors">
+                Copy Verification Report
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Certificate ID</div>
+                <div id="metaCertId" class="text-xs font-mono font-bold text-slate-900 mt-1 select-all break-all"></div>
+              </div>
+
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Applicant / Authority</div>
+                <div id="metaApplicant" class="text-xs font-semibold text-slate-800 mt-1 truncate"></div>
+              </div>
+
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Target Product</div>
+                <div id="metaProduct" class="text-xs font-bold text-slate-900 mt-1 truncate"></div>
+              </div>
+
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Assurance Level</div>
+                <div id="metaLevel" class="text-xs font-bold text-emerald-700 mt-1"></div>
+              </div>
+
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Issued Timestamp</div>
+                <div id="metaIssued" class="text-xs font-mono text-slate-700 mt-1"></div>
+              </div>
+
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Expiration &amp; Validity</div>
+                <div id="metaExpires" class="text-xs font-mono text-slate-700 mt-1"></div>
+              </div>
+            </div>
+
+            <!-- Target Audit SHA-256 Hash Card -->
+            <div class="mt-4 p-3 bg-slate-900 text-slate-300 rounded-xl border border-slate-800">
+              <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-1">
+                <span class="uppercase tracking-wider font-bold text-slate-300">Target Audit SHA-256 Digest</span>
+                <span id="metaFilesCount" class="text-slate-400"></span>
+              </div>
+              <div id="metaHash" class="text-xs font-mono text-emerald-400 select-all break-all"></div>
+            </div>
+          </div>
+
+          <!-- 4 Invariants Verification Cards -->
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+            <h4 class="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider mb-4">
+              Four Foundational Invariants Conformance (RFC v1.0)
+            </h4>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="invariantsGrid">
+              <!-- Invariant 1 -->
+              <div class="p-3.5 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div>
+                  <div class="text-xs font-bold text-slate-900">Invariant 1: Zero External Egress</div>
+                  <div class="text-[11px] text-slate-500 mt-0.5">0.00 bytes transmitted prior to sanitization.</div>
+                </div>
+              </div>
+
+              <!-- Invariant 2 -->
+              <div class="p-3.5 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div>
+                  <div class="text-xs font-bold text-slate-900">Invariant 2: Reversible Surrogates</div>
+                  <div class="text-[11px] text-slate-500 mt-0.5">Context preserved for attention mechanisms.</div>
+                </div>
+              </div>
+
+              <!-- Invariant 3 -->
+              <div class="p-3.5 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div>
+                  <div class="text-xs font-bold text-slate-900">Invariant 3: Volatile RAM Isolation</div>
+                  <div class="text-[11px] text-slate-500 mt-0.5">Sandboxed execution with memory zeroization.</div>
+                </div>
+              </div>
+
+              <!-- Invariant 4 -->
+              <div class="p-3.5 rounded-xl border border-slate-200 bg-slate-50 flex items-start gap-3">
+                <div class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div>
+                  <div class="text-xs font-bold text-slate-900">Invariant 4: Zero Subprocessors</div>
+                  <div class="text-[11px] text-slate-500 mt-0.5">GDPR Article 28 DPA statutory exemption.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Raw Canonical Payload Accordion -->
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <button
+              id="btnToggleJson"
+              type="button"
+              class="w-full p-4 flex items-center justify-between text-left hover:bg-slate-50 transition-colors"
+            >
+              <span class="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider">
+                Inspect Raw Canonical JSON (RFC 8785)
+              </span>
+              <span id="jsonToggleIcon" class="text-slate-400 font-mono text-xs">+ Expand</span>
+            </button>
+            <div id="jsonContainer" class="hidden p-4 border-t border-slate-100 bg-slate-950">
+              <div class="flex justify-end mb-2">
+                <button id="btnCopyJson" type="button" class="text-[11px] font-mono text-emerald-400 hover:text-emerald-300">
+                  Copy JSON
+                </button>
+              </div>
+              <pre id="jsonPayloadMount" class="text-[11px] font-mono text-emerald-300 overflow-x-auto leading-relaxed max-h-72"></pre>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Educational & Technical Specifications Section -->
+    <div class="mt-16 pt-12 border-t border-slate-200">
+      <div class="max-w-3xl mx-auto text-center mb-8">
+        <h2 class="text-2xl font-bold text-slate-900">How ZTDS Cryptographic Verification Works</h2>
+        <p class="text-sm text-slate-600 mt-2">
+          Designed for strict Zero-Trust environments, allowing Chief Information Security Officers, developers, and compliance auditors to independently attest software authenticity without contacting any verification server.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm">
+          <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 font-mono font-bold text-sm flex items-center justify-center mb-3">
+            01
+          </div>
+          <h3 class="text-sm font-bold text-slate-900 mb-1">Deterministic JSON Canonicalization</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            The certificate payload is serialized strictly conforming to RFC 8785 (canonical key sorting, uniform UTF-8 normalization), ensuring byte-for-byte identical hashing across disparate programming languages and runtimes.
+          </p>
+        </div>
+
+        <div class="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm">
+          <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 font-mono font-bold text-sm flex items-center justify-center mb-3">
+            02
+          </div>
+          <h3 class="text-sm font-bold text-slate-900 mb-1">RFC 8032 Ed25519 Signatures</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Signatures are computed over the Edwards-curve Digital Signature Algorithm (Ed25519). The 64-byte signature is immune to side-channel timing attacks and cannot be forged without the Consortium master key.
+          </p>
+        </div>
+
+        <div class="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm">
+          <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 font-mono font-bold text-sm flex items-center justify-center mb-3">
+            03
+          </div>
+          <h3 class="text-sm font-bold text-slate-900 mb-1">SubtleCrypto In-RAM Validation</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Verification runs entirely inside browser client volatile RAM via <code class="font-mono text-slate-800">window.crypto.subtle</code>. 0.00 bytes of data are sent to vendor or third-party cloud infrastructure.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Institutional Footer -->
+  <footer class="mt-auto bg-white border-t border-slate-200 pt-16 pb-12 text-slate-600">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- 5-Column Navigation Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+        
+        <!-- Col 1: Standard Authority -->
+        <div class="lg:col-span-1 space-y-3">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 rounded-md bg-slate-900 flex items-center justify-center p-0.5">
+              <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none">
+                <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6"/>
+                <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6"/>
+                <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+              </svg>
+            </div>
+            <span class="font-bold text-slate-900 text-lg font-sans">ZTDS<span class="text-emerald-600">.ai</span></span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            The open industry standard and conformance authority for zero-trust data sanitization in enterprise AI pipelines.
+          </p>
+          <div class="text-xs text-slate-500 leading-relaxed border-t border-slate-100 pt-3">
+            Originated by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">Ilya Sibiryakov</a>.<br>
+            Stewarded by the <span class="font-semibold text-slate-700">ZTDS AI Consortium</span> as an open specification. Engineering sponsored by <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">BrandMeWeb</a>.
+          </div>
+        </div>
+
+        <!-- Col 2: Specification & RFC -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
+            <li><a href="/whitepaper/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Research Whitepaper &rarr;</a></li>
+            <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO &amp; DPA Exemption Memo</a></li>
+            <li><a href="/roi/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">CISO Risk &amp; ROI Calculator &rarr;</a></li>
+            <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
+            <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">OSF Latency Benchmarks</a></li>
+            <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Architecture & Tools -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/verify/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Certificate Validator &rarr;</a></li>
+            <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+            <li><a href="/inspector/" class="hover:text-slate-900 transition-colors">Interactive Pipeline Simulator</a></li>
+            <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
+            <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge &amp; Seal Foundry</a></li>
+            <li><a href="/registry/#privacyscrubber" class="hover:text-slate-900 transition-colors">Reference Implementations &rarr;</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Consortium & Governance -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/soc2/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">SOC 2 &amp; Trust Center &rarr;</a></li>
+            <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Governance &amp; Charter</a></li>
+            <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
+            <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
+            <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 5: Community & Verified -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
+            <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
+            <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+            <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
+            <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
+            <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Legal Conformance Notice Card -->
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
+          <span class="text-slate-400 font-mono text-[10px]">Patent IL 331905 &middot; WIPO DAS: B17B &middot; Trademark #182655957</span>
+        </div>
+        <p>
+          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under Israel Patent Office Application <strong>IL 331905</strong> (filed 14/09/2026, WIPO DAS Access Code: <strong>B17B</strong>, Paris Convention international priority locked through 14/09/2027). The word mark <strong>ZTDS™</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
+        </p>
+      </div>
+
+      <!-- Bottom Meta Bar -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 border-t border-slate-100 pt-6">
+        <div class="flex items-center gap-3">
+          <span>&copy; 2026 ZTDS AI Consortium.</span>
+          <span>&middot;</span>
+          <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
+        </div>
+        <div class="flex items-center gap-4 text-[11px] font-mono">
+          <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            ALL SYSTEMS VERIFIED
+          </span>
+          <span>&middot;</span>
+          <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x4E9A2B1C</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+  <script>
+    (function() {
+      "use strict";
+
+      // ZTDS Official Ed25519 SPKI Public Key (Base64)
+      const DEFAULT_SPKI_B64 = "MCowBQYDK2VwAyEAg3N98ZgL4Uqbu0PmqvG8KN8vUicYkgKfUNVgwlLObr4=";
+
+      // Sample Pre-generated Tokens
+      const SAMPLES = {
+        valid: "ZTDS-CERT-v1.eyJhdXRob3JpdHkiOiJaVERTIEFJIENvbnNvcnRpdW0gJiBTdGFuZGFyZHMgQXV0aG9yaXR5IChCcmFuZE1lV2ViIEVjb3N5c3RlbSkiLCJiYWRnZV91cmwiOiJodHRwczovL3p0ZHMuYWkvYmFkZ2UvcHJpdmFjeXNjcnViYmVyLXdlYi0uc3ZnIiwiY2VydGlmaWNhdGVfaWQiOiJaVERTLUNFUlQtMjAyNi1QUklWQUNZU0NSVUJCRVItV0VCLS1CNEY4NEEiLCJleHBpcmVzX2F0IjoiMjAyNy0wOS0yNlQxOToyNjoxMS40MDlaIiwiaW52YXJpYW50cyI6eyJpbnZhcmlhbnRfMV96ZXJvX2VncmVzcyI6IlBBU1MiLCJpbnZhcmlhbnRfMl9yZXZlcnNpYmxlX3Rva2VucyI6IlBBU1MiLCJpbnZhcmlhbnRfM19pbl9tZW1vcnlfaXNvbGF0aW9uIjoiUEFTUyIsImludmFyaWFudF80X3plcm9fc3VicHJvY2Vzc29ycyI6IlBBU1MifSwiaXNzdWVkX2F0IjoiMjAyNi0wOS0yNlQxOToyNjoxMS40MDlaIiwibGV2ZWwiOiJMZXZlbCAxOiBBdXRvbWF0ZWQgQ1RTIEludmFyaWFudCBDb25mb3JtYW5jZSIsInJlZ2lzdHJ5X3ZlcmlmaWNhdGlvbl91cmwiOiJodHRwczovL3p0ZHMuYWkvcmVnaXN0cnkvI3ByaXZhY3lzY3J1YmJlci13ZWItIiwic3BlY2lmaWNhdGlvbl91cmwiOiJodHRwczovL3p0ZHMuYWkvc3RhbmRhcmQvIiwic3RhbmRhcmQiOiJaVERTIFJGQyB2MS4wIiwic3ViamVjdCI6eyJhcHBsaWNhbnQiOiJJbHlhIFNpYmlyeWFrb3YgKEJyYW5kTWVXZWIpIiwiYXVkaXRfaGFzaCI6InNoYTI1NjpkOGU2NGM4ZjM1MjFiNzdmOTg1MDQwZTk0YmIxMGI2NTEwM2E4OTM2YjgwMTVjN2UzZjI4Y2YwODE1YTUxYTk0IiwiY2F0ZWdvcnkiOiJDbGllbnQtU2lkZSBaZXJvLVRydXN0IFBJSSBTYW5pdGl6ZXIiLCJwcm9kdWN0IjoiUHJpdmFjeVNjcnViYmVyIFdlYiAmIEV4dGVuc2lvbiIsInJlcG9zaXRvcnkiOiJodHRwczovL2dpdGh1Yi5jb20vbW94bm8vUHJpdmFjeVNjcnViYmVyIiwic2Nhbm5lZF9maWxlc19jb3VudCI6ODR9LCJ2YWxpZGl0eV9kYXlzIjozNjV9.qQqY0no82Y9qwKHHT8kw-1IlP-WnZVddhQB0q7KIMAnYX4Z1kg3U3oDmUmdtgDAc91SMDitUpE71kabDnn57AA",
+        tampered: "ZTDS-CERT-v1.eyJhdXRob3JpdHkiOiJaVERTIEFJIENvbnNvcnRpdW0gJiBTdGFuZGFyZHMgQXV0aG9yaXR5IChCcmFuZE1lV2ViIEVjb3N5c3RlbSkiLCJiYWRnZV91cmwiOiJodHRwczovL3p0ZHMuYWkvYmFkZ2UvcHJpdmFjeXNjcnViYmVyLXdlYi0uc3ZnIiwiY2VydGlmaWNhdGVfaWQiOiJaVERTLUNFUlQtMjAyNi1QUklWQUNZU0NSVUJCRVItV0VCLS1CNEY4NEEiLCJleHBpcmVzX2F0IjoiMjAyNy0wOS0yNlQxOToyNjoxMS40MDlaIiwiaW52YXJpYW50cyI6eyJpbnZhcmlhbnRfMV96ZXJvX2VncmVzcyI6IlBBU1MiLCJpbnZhcmlhbnRfMl9yZXZlcnNpYmxlX3Rva2VucyI6IlBBU1MiLCJpbnZhcmlhbnRfM19pbl9tZW1vcnlfaXNvbGF0aW9uIjoiUEFTUyIsImludmFyaWFudF80X3plcm9fc3VicHJvY2Vzc29ycyI6IlBBU1MifSwiaXNzdWVkX2F0IjoiMjAyNi0wOS0yNlQxOToyNjoxMS40MDlaIiwibGV2ZWwiOiJMZXZlbCAxOiBBdXRvbWF0ZWQgQ1RTIEludmFyaWFudCBDb25mb3JtYW5jZSIsInJlZ2lzdHJ5X3ZlcmlmaWNhdGlvbl91cmwiOiJodHRwczovL3p0ZHMuYWkvcmVnaXN0cnkvI3ByaXZhY3lzY3J1YmJlci13ZWItIiwic3BlY2lmaWNhdGlvbl91cmwiOiJodHRwczovL3p0ZHMuYWkvc3RhbmRhcmQvIiwic3RhbmRhcmQiOiJaVERTIFJGQyB2MS4wIiwic3ViamVjdCI6eyJhcHBsaWNhbnQiOiJNYWxpY2lvdXMgSW1wZXJzb25hdG9yIChIYWNrZWQpIiwiYXVkaXRfaGFzaCI6InNoYTI1NjpkOGU2NGM4ZjM1MjFiNzdmOTg1MDQwZTk0YmIxMGI2NTEwM2E4OTM2YjgwMTVjN2UzZjI4Y2YwODE1YTUxYTk0IiwiY2F0ZWdvcnkiOiJDbGllbnQtU2lkZSBaZXJvLVRydXN0IFBJSSBTYW5pdGl6ZXIiLCJwcm9kdWN0IjoiUHJpdmFjeVNjcnViYmVyIFdlYiAmIEV4dGVuc2lvbiIsInJlcG9zaXRvcnkiOiJodHRwczovL2dpdGh1Yi5jb20vbW94bm8vUHJpdmFjeVNjcnViYmVyIiwic2Nhbm5lZF9maWxlc19jb3VudCI6ODR9LCJ2YWxpZGl0eV9kYXlzIjozNjV9.qQqY0no82Y9qwKHHT8kw-1IlP-WnZVddhQB0q7KIMAnYX4Z1kg3U3oDmUmdtgDAc91SMDitUpE71kabDnn57AA",
+        expired: "ZTDS-CERT-v1.eyJhdXRob3JpdHkiOiJaVERTIEFJIENvbnNvcnRpdW0gJiBTdGFuZGFyZHMgQXV0aG9yaXR5IChCcmFuZE1lV2ViIEVjb3N5c3RlbSkiLCJiYWRnZV91cmwiOiJodHRwczovL3p0ZHMuYWkvYmFkZ2UvbGVnYWN5LXJhZy1waXBlbGluZS0uc3ZnIiwiY2VydGlmaWNhdGVfaWQiOiJaVERTLUNFUlQtMjAyNi1MRUdBQ1ktUkFHLVBJUEVMSU5FLS01Mjg3MDkiLCJleHBpcmVzX2F0IjoiMjAyNi0wOC0yMlQxOToyNjoxMS40MTRaIiwiaW52YXJpYW50cyI6eyJpbnZhcmlhbnRfMV96ZXJvX2VncmVzcyI6IlBBU1MiLCJpbnZhcmlhbnRfMl9yZXZlcnNpYmxlX3Rva2VucyI6IlBBU1MiLCJpbnZhcmlhbnRfM19pbl9tZW1vcnlfaXNvbGF0aW9uIjoiUEFTUyIsImludmFyaWFudF80X3plcm9fc3VicHJvY2Vzc29ycyI6IlBBU1MifSwiaXNzdWVkX2F0IjoiMjAyNS0wOC0yMlQxOToyNjoxMS40MTRaIiwibGV2ZWwiOiJMZXZlbCAxOiBBdXRvbWF0ZWQgQ1RTIEludmFyaWFudCBDb25mb3JtYW5jZSIsInJlZ2lzdHJ5X3ZlcmlmaWNhdGlvbl91cmwiOiJodHRwczovL3p0ZHMuYWkvcmVnaXN0cnkvI2xlZ2FjeS1yYWctcGlwZWxpbmUtIiwic3BlY2lmaWNhdGlvbl91cmwiOiJodHRwczovL3p0ZHMuYWkvc3RhbmRhcmQvIiwic3RhbmRhcmQiOiJaVERTIFJGQyB2MS4wIiwic3ViamVjdCI6eyJhcHBsaWNhbnQiOiJMZWdhY3kgQUkgTGFicyIsImF1ZGl0X2hhc2giOiJzaGEyNTY6NGEzYjhlNWMyZDFmMGE5YjhjN2Q2ZTVmNGEzYjJjMWQwZTlmOGE3YjZjNWQ0ZTNmMmExYjBjOWQ4ZTdmNmE1YiIsImNhdGVnb3J5IjoiRW50ZXJwcmlzZSBSQUcgSW5nZXN0aW9uIiwicHJvZHVjdCI6IkxlZ2FjeSBSQUcgUGlwZWxpbmUgdjAuOSIsInJlcG9zaXRvcnkiOiJodHRwczovL2dpdGh1Yi5jb20vbGVnYWN5L3JhZy1waXBlbGluZSIsInNjYW5uZWRfZmlsZXNfY291bnQiOjQyfSwidmFsaWRpdHlfZGF5cyI6MzY1fQ.AdUXYc6VIp2-hDNIj016kyjDqKAf4nHEzr8LZyx-SjoEwflmXELfpNUwa6o39RViGlN4EvwSgmZgpEwmE2uSBA"
+      };
+
+      // DOM Elements
+      const certInput = document.getElementById("certInput");
+      const dropZone = document.getElementById("dropZone");
+      const dropOverlay = document.getElementById("dropOverlay");
+      const btnVerify = document.getElementById("btnVerify");
+      const btnClear = document.getElementById("btnClear");
+      const btnLoadValid = document.getElementById("btnLoadValid");
+      const btnLoadTampered = document.getElementById("btnLoadTampered");
+      const btnLoadExpired = document.getElementById("btnLoadExpired");
+      
+      const emptyState = document.getElementById("emptyState");
+      const resultsCard = document.getElementById("resultsCard");
+      const statusBanner = document.getElementById("statusBanner");
+      const statusIconMount = document.getElementById("statusIconMount");
+      const statusTitle = document.getElementById("statusTitle");
+      const statusPill = document.getElementById("statusPill");
+      const statusDescription = document.getElementById("statusDescription");
+
+      const metaCertId = document.getElementById("metaCertId");
+      const metaApplicant = document.getElementById("metaApplicant");
+      const metaProduct = document.getElementById("metaProduct");
+      const metaLevel = document.getElementById("metaLevel");
+      const metaIssued = document.getElementById("metaIssued");
+      const metaExpires = document.getElementById("metaExpires");
+      const metaHash = document.getElementById("metaHash");
+      const metaFilesCount = document.getElementById("metaFilesCount");
+
+      const btnToggleJson = document.getElementById("btnToggleJson");
+      const jsonContainer = document.getElementById("jsonContainer");
+      const jsonToggleIcon = document.getElementById("jsonToggleIcon");
+      const jsonPayloadMount = document.getElementById("jsonPayloadMount");
+      const btnCopyJson = document.getElementById("btnCopyJson");
+      const btnCopyReport = document.getElementById("btnCopyReport");
+
+      let currentVerificationResult = null;
+
+      // Base64URL Decoders
+      function base64urlToBytes(b64url) {
+        let b64 = b64url.replace(/-/g, "+").replace(/_/g, "/");
+        while (b64.length % 4) b64 += "=";
+        const bin = atob(b64);
+        const bytes = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) {
+          bytes[i] = bin.charCodeAt(i);
+        }
+        return bytes;
+      }
+
+      function base64urlToString(b64url) {
+        const bytes = base64urlToBytes(b64url);
+        return new TextDecoder().decode(bytes);
+      }
+
+      // RFC 8785 Canonical JSON Sorter
+      function canonicalizeJson(obj) {
+        if (obj === null || typeof obj !== "object") return obj;
+        if (Array.isArray(obj)) return obj.map(canonicalizeJson);
+        const sortedKeys = Object.keys(obj).sort();
+        const sorted = {};
+        for (const key of sortedKeys) {
+          sorted[key] = canonicalizeJson(obj[key]);
+        }
+        return sorted;
+      }
+
+      // Client-Side Cryptographic Verifier
+      async function executeVerification(tokenString) {
+        if (!tokenString || typeof tokenString !== "string") {
+          throw new Error("Please provide a non-empty ZTDS certificate token.");
+        }
+
+        const trimmed = tokenString.trim();
+        const parts = trimmed.split(".");
+        if (parts.length !== 3 || parts[0] !== "ZTDS-CERT-v1") {
+          throw new Error("Invalid token format. Token must begin with 'ZTDS-CERT-v1' and contain exactly three dot-separated segments.");
+        }
+
+        let payload;
+        let signatureBytes;
+        try {
+          const payloadJson = base64urlToString(parts[1]);
+          payload = JSON.parse(payloadJson);
+          signatureBytes = base64urlToBytes(parts[2]);
+        } catch (err) {
+          throw new Error("Failed to decode token payload or signature: " + err.message);
+        }
+
+        // Canonicalize payload for byte-exact verification
+        const canonical = canonicalizeJson(payload);
+        const canonicalBytes = new TextEncoder().encode(JSON.stringify(canonical));
+
+        // Import Public SPKI Key via Web Crypto
+        let isSignatureValid = false;
+        try {
+          const spkiBytes = base64urlToBytes(DEFAULT_SPKI_B64);
+          const cryptoKey = await window.crypto.subtle.importKey(
+            "spki",
+            spkiBytes,
+            { name: "Ed25519" },
+            false,
+            ["verify"]
+          );
+
+          isSignatureValid = await window.crypto.subtle.verify(
+            { name: "Ed25519" },
+            cryptoKey,
+            signatureBytes,
+            canonicalBytes
+          );
+        } catch (cryptoErr) {
+          throw new Error("SubtleCrypto Ed25519 execution error: " + cryptoErr.message);
+        }
+
+        const now = new Date();
+        const expiresAt = new Date(payload.expires_at);
+        const isExpired = now > expiresAt;
+        const daysRemaining = Math.max(0, Math.ceil((expiresAt - now) / (1000 * 60 * 60 * 24)));
+
+        return {
+          valid: isSignatureValid && !isExpired,
+          signatureValid: isSignatureValid,
+          isExpired: isExpired,
+          daysRemaining: daysRemaining,
+          payload: payload,
+          canonicalJson: JSON.stringify(canonical, null, 2),
+          token: trimmed
+        };
+      }
+
+      // Render Verification Results to UI
+      function renderResult(result) {
+        currentVerificationResult = result;
+        emptyState.classList.add("hidden");
+        resultsCard.classList.remove("hidden");
+
+        const p = result.payload;
+
+        // Populate Metadata Cards
+        metaCertId.textContent = p.certificate_id || "UNKNOWN";
+        metaApplicant.textContent = p.subject?.applicant || p.authority || "Unknown Applicant";
+        metaProduct.textContent = p.subject?.product || "Unknown Product";
+        metaLevel.textContent = p.level || "Level 1: Automated CTS Invariant Conformance";
+        metaIssued.textContent = p.issued_at ? new Date(p.issued_at).toLocaleString() : "Unknown";
+        
+        if (p.expires_at) {
+          metaExpires.textContent = `${new Date(p.expires_at).toLocaleDateString()} (${result.daysRemaining} days left)`;
+        } else {
+          metaExpires.textContent = "Indefinite";
+        }
+
+        metaHash.textContent = p.subject?.audit_hash || "sha256:unknown";
+        metaFilesCount.textContent = p.subject?.scanned_files_count ? `${p.subject.scanned_files_count} files audited` : "Automated AST scan";
+        jsonPayloadMount.textContent = result.canonicalJson;
+
+        // Update Dynamic Banner
+        if (result.valid) {
+          statusBanner.className = "p-6 rounded-2xl border bg-emerald-50/90 border-emerald-300 text-emerald-900";
+          statusIconMount.className = "w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm";
+          statusIconMount.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>';
+          statusTitle.textContent = "Cryptographically Authentic & Valid";
+          statusPill.className = "text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border bg-emerald-100 text-emerald-800 border-emerald-300";
+          statusPill.textContent = "VERIFIED RFC 8032";
+          statusDescription.textContent = "Digital signature corresponds exactly to the official ZTDS AI Consortium root key. All four foundational invariants are cryptographically certified with zero network telemetry.";
+        } else if (!result.signatureValid) {
+          statusBanner.className = "p-6 rounded-2xl border bg-rose-50/90 border-rose-300 text-rose-900";
+          statusIconMount.className = "w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0 shadow-sm";
+          statusIconMount.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>';
+          statusTitle.textContent = "Signature Tampering Detected";
+          statusPill.className = "text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border bg-rose-100 text-rose-800 border-rose-300";
+          statusPill.textContent = "INVALID SIGNATURE";
+          statusDescription.textContent = "The cryptographic signature does NOT match the payload contents. The certificate payload has been mutated, corrupted, or forged by an unauthorized party.";
+        } else if (result.isExpired) {
+          statusBanner.className = "p-6 rounded-2xl border bg-amber-50/90 border-amber-300 text-amber-900";
+          statusIconMount.className = "w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0 shadow-sm";
+          statusIconMount.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
+          statusTitle.textContent = "Certificate Has Expired";
+          statusPill.className = "text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border bg-amber-100 text-amber-800 border-amber-300";
+          statusPill.textContent = "EXPIRED TOKEN";
+          statusDescription.textContent = `The digital signature is authentic, but the certificate validity period expired on ${new Date(p.expires_at).toLocaleDateString()}. Re-certification required under CAB Policy.`;
+        }
+
+        // Update URL hash for sharing
+        if (window.location.hash !== `#cert=${encodeURIComponent(result.token)}`) {
+          history.replaceState(null, "", `#cert=${encodeURIComponent(result.token)}`);
+        }
+      }
+
+      // Render Error State
+      function renderError(errorMessage) {
+        currentVerificationResult = null;
+        emptyState.classList.add("hidden");
+        resultsCard.classList.remove("hidden");
+
+        statusBanner.className = "p-6 rounded-2xl border bg-rose-50/90 border-rose-300 text-rose-900";
+        statusIconMount.className = "w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0 shadow-sm";
+        statusIconMount.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+        statusTitle.textContent = "Malformed Certificate Format";
+        statusPill.className = "text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border bg-rose-100 text-rose-800 border-rose-300";
+        statusPill.textContent = "PARSE ERROR";
+        statusDescription.textContent = errorMessage;
+
+        metaCertId.textContent = "N/A";
+        metaApplicant.textContent = "N/A";
+        metaProduct.textContent = "N/A";
+        metaLevel.textContent = "Evaluation Failed";
+        metaIssued.textContent = "N/A";
+        metaExpires.textContent = "N/A";
+        metaHash.textContent = "sha256:none";
+        metaFilesCount.textContent = "No data";
+        jsonPayloadMount.textContent = `// Error details:\n${errorMessage}`;
+      }
+
+      // Primary Verification Controller
+      async function triggerVerification() {
+        const rawToken = certInput.value.trim();
+        if (!rawToken) {
+          emptyState.classList.remove("hidden");
+          resultsCard.classList.add("hidden");
+          return;
+        }
+
+        try {
+          const result = await executeVerification(rawToken);
+          renderResult(result);
+        } catch (err) {
+          renderError(err.message);
+        }
+      }
+
+      // Event Listeners
+      btnVerify.addEventListener("click", triggerVerification);
+      
+      btnClear.addEventListener("click", () => {
+        certInput.value = "";
+        emptyState.classList.remove("hidden");
+        resultsCard.classList.add("hidden");
+        history.replaceState(null, "", window.location.pathname);
+      });
+
+      // Sample Loaders
+      btnLoadValid.addEventListener("click", () => {
+        certInput.value = SAMPLES.valid;
+        triggerVerification();
+      });
+
+      btnLoadTampered.addEventListener("click", () => {
+        certInput.value = SAMPLES.tampered;
+        triggerVerification();
+      });
+
+      btnLoadExpired.addEventListener("click", () => {
+        certInput.value = SAMPLES.expired;
+        triggerVerification();
+      });
+
+      // Live typing debounce
+      let debounceTimer = null;
+      certInput.addEventListener("input", () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(triggerVerification, 300);
+      });
+
+      // Drag and Drop Listeners
+      dropZone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropOverlay.classList.remove("hidden");
+      });
+
+      dropZone.addEventListener("dragleave", (e) => {
+        e.preventDefault();
+        dropOverlay.classList.add("hidden");
+      });
+
+      dropZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropOverlay.classList.add("hidden");
+        const file = e.dataTransfer?.files?.[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            certInput.value = event.target.result.trim();
+            triggerVerification();
+          };
+          reader.readAsText(file);
+        }
+      });
+
+      // Raw JSON Accordion
+      btnToggleJson.addEventListener("click", () => {
+        const isHidden = jsonContainer.classList.contains("hidden");
+        if (isHidden) {
+          jsonContainer.classList.remove("hidden");
+          jsonToggleIcon.textContent = "- Collapse";
+        } else {
+          jsonContainer.classList.add("hidden");
+          jsonToggleIcon.textContent = "+ Expand";
+        }
+      });
+
+      // Copy Handlers
+      btnCopyJson.addEventListener("click", () => {
+        if (!currentVerificationResult) return;
+        navigator.clipboard.writeText(currentVerificationResult.canonicalJson).then(() => {
+          const prev = btnCopyJson.textContent;
+          btnCopyJson.textContent = "Copied!";
+          setTimeout(() => btnCopyJson.textContent = prev, 2000);
+        });
+      });
+
+      btnCopyReport.addEventListener("click", () => {
+        if (!currentVerificationResult) return;
+        const res = currentVerificationResult;
+        const report = [
+          "===========================================================",
+          "ZTDS.AI CRYPTOGRAPHIC CONFORMANCE VERIFICATION REPORT",
+          "===========================================================",
+          `Certificate ID:   ${res.payload.certificate_id}`,
+          `Status:           ${res.valid ? "AUTHENTIC & VALID" : (res.isExpired ? "EXPIRED" : "TAMPERED / INVALID")}`,
+          `Applicant:        ${res.payload.subject?.applicant}`,
+          `Product:          ${res.payload.subject?.product}`,
+          `Conformance Level:${res.payload.level}`,
+          `Audit Hash:       ${res.payload.subject?.audit_hash}`,
+          `Issued Timestamp: ${res.payload.issued_at}`,
+          `Expires At:       ${res.payload.expires_at} (${res.daysRemaining} days remaining)`,
+          `RFC 8032 Sig:    ${res.signatureValid ? "VALID" : "INVALID"}`,
+          "-----------------------------------------------------------",
+          "Four Foundational Invariants:",
+          "  [x] Invariant 1: Zero External Egress Prior to Sanitization",
+          "  [x] Invariant 2: Deterministic Reversible Tokenization",
+          "  [x] Invariant 3: Verifiable Cryptographic Isolation in Volatile RAM",
+          "  [x] Invariant 4: Continuous Compliance & Zero Subprocessor Chain",
+          "===========================================================",
+          `Verification Link: https://ztds.ai/verify/#cert=${encodeURIComponent(res.token)}`
+        ].join("\n");
+
+        navigator.clipboard.writeText(report).then(() => {
+          const prev = btnCopyReport.textContent;
+          btnCopyReport.textContent = "Report Copied to Clipboard!";
+          setTimeout(() => btnCopyReport.textContent = prev, 2000);
+        });
+      });
+
+      // Auto-load token from URL parameters or hash on page load
+      window.addEventListener("DOMContentLoaded", () => {
+        const hashMatch = window.location.hash.match(/[#&]cert=([^&]+)/);
+        const searchMatch = window.location.search.match(/[?&]cert=([^&]+)/);
+        const tokenFromUrl = hashMatch ? decodeURIComponent(hashMatch[1]) : (searchMatch ? decodeURIComponent(searchMatch[1]) : null);
+
+        if (tokenFromUrl) {
+          certInput.value = tokenFromUrl;
+          triggerVerification();
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>

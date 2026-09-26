@@ -17,11 +17,62 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { mintCertificate, verifyCertificate } = require('../lib/certificate-manager');
 
 const ARGS = process.argv.slice(2);
 const IS_JSON = ARGS.includes('--json');
 const TARGET_DIR_IDX = ARGS.indexOf('--dir') !== -1 ? ARGS.indexOf('--dir') + 1 : (ARGS.indexOf('-d') !== -1 ? ARGS.indexOf('-d') + 1 : -1);
 const TARGET_DIR = TARGET_DIR_IDX !== -1 && ARGS[TARGET_DIR_IDX] ? path.resolve(ARGS[TARGET_DIR_IDX]) : process.cwd();
+
+// Certificate options
+const WANT_CERT = ARGS.includes('--cert') || ARGS.includes('--generate-cert');
+const APPLICANT_IDX = ARGS.indexOf('--applicant') !== -1 ? ARGS.indexOf('--applicant') + 1 : -1;
+const PRODUCT_IDX = ARGS.indexOf('--product') !== -1 ? ARGS.indexOf('--product') + 1 : -1;
+const OUT_CERT_IDX = ARGS.indexOf('--out-cert') !== -1 ? ARGS.indexOf('--out-cert') + 1 : -1;
+const VERIFY_IDX = ARGS.indexOf('--verify') !== -1 ? ARGS.indexOf('--verify') + 1 : -1;
+
+const certApplicant = (APPLICANT_IDX !== -1 && ARGS[APPLICANT_IDX]) ? ARGS[APPLICANT_IDX] : path.basename(TARGET_DIR);
+const certProduct = (PRODUCT_IDX !== -1 && ARGS[PRODUCT_IDX]) ? ARGS[PRODUCT_IDX] : path.basename(TARGET_DIR);
+const outCertPath = (OUT_CERT_IDX !== -1 && ARGS[OUT_CERT_IDX]) ? ARGS[OUT_CERT_IDX] : null;
+
+// Standalone Certificate Verification Mode
+if (VERIFY_IDX !== -1 && ARGS[VERIFY_IDX]) {
+  const verifyTarget = ARGS[VERIFY_IDX];
+  let token = verifyTarget;
+  if (fs.existsSync(verifyTarget)) {
+    try {
+      token = fs.readFileSync(verifyTarget, 'utf8').trim();
+    } catch (e) {
+      console.error(`Error reading certificate file '${verifyTarget}': ${e.message}`);
+      process.exit(1);
+    }
+  }
+
+  try {
+    const cert = verifyCertificate(token);
+    if (IS_JSON) {
+      console.log(JSON.stringify(cert, null, 2));
+      process.exit(0);
+    }
+    console.log('\n\x1b[1m\x1b[36m[ZTDS]\x1b[0m \x1b[1mConformance Certificate Verifier\x1b[0m');
+    console.log('\x1b[90m----------------------------------------------------------------------\x1b[0m');
+    console.log(`Certificate ID: \x1b[1m\x1b[33m${cert.certificate_id}\x1b[0m`);
+    console.log(`Applicant:      \x1b[37m${cert.subject.applicant}\x1b[0m`);
+    console.log(`Product:        \x1b[37m${cert.subject.product}\x1b[0m`);
+    console.log(`Audit Hash:     \x1b[90m${cert.subject.audit_hash}\x1b[0m`);
+    console.log(`Validity:       \x1b[32mActive (${cert.days_remaining} days remaining)\x1b[0m`);
+    console.log('\x1b[90m----------------------------------------------------------------------\x1b[0m\n');
+    console.log('\x1b[1m\x1b[32m[PASS] CRYPTOGRAPHIC SIGNATURE VALIDATED (Ed25519 / RFC 8032)\x1b[0m\n');
+    process.exit(0);
+  } catch (err) {
+    if (IS_JSON) {
+      console.log(JSON.stringify({ valid: false, error: err.message, code: err.code || 'ERR_VERIFY_FAIL' }, null, 2));
+      process.exit(1);
+    }
+    console.error(`\x1b[31m[FAIL] CERTIFICATE VERIFICATION ERROR: ${err.message}\x1b[0m`);
+    process.exit(1);
+  }
+}
 
 if (ARGS.includes('--help') || ARGS.includes('-h')) {
   console.log(`
@@ -34,6 +85,11 @@ Usage:
 Options:
   -d, --dir <path>     Directory to audit (default: current directory)
   --json               Output machine-readable JSON format
+  --cert               Generate Ed25519-signed Conformance Certificate on pass
+  --applicant <name>   Applicant name for certificate issuance
+  --product <name>     Product name for certificate issuance
+  --out-cert <path>    Write signed certificate token to designated file
+  --verify <token|path> Verify a cryptographic certificate token or file
   -h, --help           Show this help message
   --strict             Fail on any low-severity warning
 
@@ -208,6 +264,37 @@ const result = {
   }
 };
 
+if (WANT_CERT) {
+  if (passed) {
+    try {
+      const cert = mintCertificate({
+        applicant: certApplicant,
+        product: certProduct,
+        auditHash: auditHash,
+        scannedFilesCount: files.length,
+        category: 'Autonomous AI Software & Sanitization Node'
+      });
+      result.certificate = {
+        certificate_id: cert.certificate_id,
+        token: cert.token,
+        expires_at: cert.payload.expires_at,
+        status: 'ISSUED'
+      };
+      if (outCertPath) {
+        fs.writeFileSync(outCertPath, cert.token, 'utf8');
+        result.certificate.saved_to = outCertPath;
+      }
+    } catch (e) {
+      result.certificate_error = e.message;
+    }
+  } else {
+    result.certificate = {
+      status: 'DENIED',
+      reason: `${criticalCount + highCount} invariant violations detected`
+    };
+  }
+}
+
 if (IS_JSON) {
   console.log(JSON.stringify(result, null, 2));
   process.exit(passed ? 0 : 1);
@@ -226,6 +313,17 @@ if (findings.length === 0) {
   console.log('\x1b[90mAll scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RAM isolation).\x1b[0m\n');
   console.log('\x1b[1m\x1b[32m[LEGAL STATUS] Qualifies for GDPR Article 28 DPA Exemption (Zero-Subprocessor Chain)\x1b[0m');
   console.log('\x1b[1m\x1b[36m[PERFORMANCE]  0.00 Bytes Sensitive WAN Egress | Pure In-Memory Execution\x1b[0m\n');
+
+  if (result.certificate && result.certificate.status === 'ISSUED') {
+    console.log('\x1b[1m\x1b[35m[CERTIFICATE MINTED]\x1b[0m \x1b[1mCryptographically Signed ZTDS Conformance Certificate\x1b[0m');
+    console.log(`Certificate ID: \x1b[33m${result.certificate.certificate_id}\x1b[0m`);
+    console.log(`Signed Token:   \x1b[36m${result.certificate.token}\x1b[0m`);
+    if (result.certificate.saved_to) {
+      console.log(`Saved To:       \x1b[32m${result.certificate.saved_to}\x1b[0m`);
+    }
+    console.log(`Verify with:    \x1b[33mnpx ztds-verify ${result.certificate.saved_to || result.certificate.token}\x1b[0m\n`);
+  }
+
   console.log('\x1b[1mNext Steps for Builders & Maintainers:\x1b[0m');
   console.log(`1. Include this audit hash in your pull request: \x1b[36mhttps://ztds.ai/apply/\x1b[0m`);
   console.log(`2. Embed your Verified Trust Badge in README.md to claim your registry backlink:`);

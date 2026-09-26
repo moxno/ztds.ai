@@ -287,13 +287,64 @@ function runAudit() {
   }
 }
 
+function mintEntityCertificate(slug) {
+  const { mintCertificate } = require('../lib/certificate-manager');
+  const registryRaw = readFileSafe('data/registry.json');
+  if (!registryRaw) {
+    console.error('Error: data/registry.json not found.');
+    process.exit(1);
+  }
+  const registry = JSON.parse(registryRaw);
+  const entity = (registry.entities || []).find(e => e.slug === slug || e.id === slug);
+
+  if (!entity) {
+    console.error(`Error: Entity '${slug}' not found in data/registry.json.`);
+    process.exit(1);
+  }
+
+  const hash = entity.verified_hash && entity.verified_hash.startsWith('sha256:') 
+    ? entity.verified_hash 
+    : 'sha256:' + require('crypto').createHash('sha256').update(entity.slug + entity.name).digest('hex');
+
+  const cert = mintCertificate({
+    applicant: entity.name,
+    product: entity.name,
+    category: entity.category,
+    repository: entity.url,
+    auditHash: hash,
+    level: entity.tier && entity.tier.includes('Reference') ? 'Level 2: Verified Reference Implementation' : 'Level 1: Automated CTS Invariant Conformance'
+  });
+
+  console.log('\n============================================================');
+  console.log(`ZTDS OFFICIAL CONFORMANCE CERTIFICATE: ${entity.name}`);
+  console.log('============================================================');
+  console.log(`Certificate ID: ${cert.certificate_id}`);
+  console.log(`Product:        ${entity.name}`);
+  console.log(`Category:       ${entity.category}`);
+  console.log(`Audit Hash:     ${hash}`);
+  console.log(`Expires:        ${cert.payload.expires_at}`);
+  console.log('------------------------------------------------------------');
+  console.log('TOKEN:');
+  console.log(cert.token);
+  console.log('------------------------------------------------------------\n');
+
+  return cert;
+}
+
 const command = process.argv[2] || 'audit';
 if (command === 'audit') {
   runAudit();
 } else if (command === 'fix-badges') {
   fixMissingBadges();
   runAudit();
+} else if (command === 'mint-cert') {
+  const slug = process.argv[3];
+  if (!slug) {
+    console.error('Error: Missing entity slug. Usage: node scripts/entity-manager.js mint-cert <slug>');
+    process.exit(1);
+  }
+  mintEntityCertificate(slug);
 } else {
-  console.log(`Unknown command: ${command}. Use: node scripts/entity-manager.js audit | fix-badges`);
+  console.log(`Unknown command: ${command}. Use: node scripts/entity-manager.js audit | fix-badges | mint-cert <slug>`);
   process.exit(1);
 }

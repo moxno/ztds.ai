@@ -6,6 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
+const { verifyCertificate } = require('../lib/certificate-manager');
 
 console.log('[TEST] Starting ZTDS Registry & Ecosystem Schema Verification Suite...\n');
 
@@ -40,8 +41,19 @@ for (const item of registry.entities) {
   const isValidHash = sha256Regex.test(item.verified_hash) || item.verified_hash.startsWith('pending-');
   assert(isValidHash, `Invalid verified_hash (must be sha256:64hex or pending-*) for ${item.id}: ${item.verified_hash}`);
   assert(Array.isArray(item.frameworks) && item.frameworks.length > 0, `Missing frameworks array for ${item.id}`);
+
+  // Cryptographic Ed25519 Conformance Certificate Verification
+  assert(item.certificate && typeof item.certificate === 'object', `Missing certificate object for ${item.id}`);
+  assert(item.certificate.id && item.certificate.id.startsWith('ZTDS-CERT-'), `Invalid certificate id for ${item.id}`);
+  assert(item.certificate.token && item.certificate.token.startsWith('ZTDS-CERT-v1.'), `Invalid certificate token for ${item.id}`);
+  assert(item.certificate.verify_url && item.certificate.verify_url.startsWith('https://ztds.ai/verify/#cert='), `Invalid verify_url for ${item.id}`);
+
+  const certVerification = verifyCertificate(item.certificate.token);
+  assert(certVerification.valid, `Cryptographic signature validation failed for ${item.id}`);
+  assert.strictEqual(certVerification.invariants.invariant_1_zero_egress, 'PASS');
+  assert.strictEqual(certVerification.invariants.invariant_4_zero_subprocessors, 'PASS');
 }
-console.log(`    [PASS] Verified ${registry.entities.length} certified entities in registry.json.`);
+console.log(`    [PASS] Verified ${registry.entities.length} certified entities and Ed25519 certificates in registry.json.`);
 
 // Test 2: Corporate Members (data/companies.json)
 console.log('--> Test 2: data/companies.json Conformance');

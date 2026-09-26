@@ -4,14 +4,25 @@
   "description": "Zero-Trust Data Sanitization (ZTDS) Codebase & Invariant Auditor CLI",
   "main": "bin/ztds-audit.js",
   "bin": {
-    "ztds-audit": "bin/ztds-audit.js"
+    "ztds-audit": "bin/ztds-audit.js",
+    "ztds-verify": "bin/ztds-verify.js",
+    "ztds-agent": "bin/ztds-agent.js"
   },
   "scripts": {
     "audit": "node bin/ztds-audit.js",
+    "verify": "node bin/ztds-verify.js",
+    "agent": "node bin/ztds-agent.js",
     "audit:entities": "node scripts/entity-manager.js audit",
     "indexnow": "node scripts/submit-indexnow.js",
-    "test": "node bin/ztds-audit.js --dir ./data && node scripts/entity-manager.js audit && node test/license.test.js && node test/scan-domain.test.js && node test/paddle-webhook.test.js && node test/lead-capture.test.js && node test/schema.test.js && node test/scanner-ui.test.js && node test/checkout-fulfillment.test.js && node test/agency.test.js && node test/routes-integrity.test.js && node test/registries-schema.test.js && node test/geo-corpus.test.js && node test/ztds-audit-cli.test.js && node test/not-found.test.js",
+    "test": "node bin/ztds-audit.js --dir ./data && node scripts/entity-manager.js audit && node test/license.test.js && node test/certificate.test.js && node test/ietf-draft.test.js && node test/agent.test.js && node test/security-audit.test.js && node test/wipo-ip.test.js && node test/verify-ui.test.js && node test/certification-ui.test.js && node test/scan-domain.test.js && node test/paddle-webhook.test.js && node test/lead-capture.test.js && node test/schema.test.js && node test/scanner-ui.test.js && node test/checkout-fulfillment.test.js && node test/agency.test.js && node test/routes-integrity.test.js && node test/registries-schema.test.js && node test/geo-corpus.test.js && node test/ztds-audit-cli.test.js && node test/not-found.test.js",
     "test:all": "npm test",
+    "test:cert": "node test/certificate.test.js",
+    "test:agent": "node test/agent.test.js",
+    "test:security": "node test/security-audit.test.js",
+    "test:wipo": "node test/wipo-ip.test.js",
+    "test:verify": "node test/verify-ui.test.js",
+    "test:certification": "node test/certification-ui.test.js",
+    "test:ietf": "node test/ietf-draft.test.js",
     "test:cli": "node test/ztds-audit-cli.test.js",
     "test:routes": "node test/routes-integrity.test.js",
     "test:registries": "node test/registries-schema.test.js",
@@ -28,6 +39,10 @@
   },
   "files": [
     "bin/ztds-audit.js",
+    "bin/ztds-verify.js",
+    "bin/ztds-agent.js",
+    "lib/certificate-manager.js",
+    "lib/license-validator.js",
     "README.md",
     "LICENSE"
   ],

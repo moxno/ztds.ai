@@ -1,0 +1,100 @@
+name: ZTDS Autonomous Certification Agent
+
+on:
+  pull_request:
+    paths:
+      - "data/registry.json"
+      - "bin/**"
+      - "lib/**"
+  workflow_dispatch:
+    inputs:
+      repo_url:
+        description: "Target Git Repository URL to Audit & Certify"
+        required: false
+        type: string
+      applicant:
+        description: "Legal Name of Applicant / Organization"
+        required: true
+        default: "Community Builder"
+        type: string
+      product:
+        description: "Product / Agent Name"
+        required: true
+        default: "AI Agent Node"
+        type: string
+      category:
+        description: "Product Category"
+        required: false
+        default: "Autonomous AI Software & Sanitization Node"
+        type: string
+      gitops_register:
+        description: "Automatically register in data/registry.json if conformant"
+        required: false
+        default: false
+        type: boolean
+
+concurrency:
+  group: ztds-agent-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  certify-and-attest:
+    name: Autonomous Invariant CTS & Cryptographic Attestation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout ZTDS Infrastructure
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Execute Autonomous Certification Agent
+        id: ztds_agent
+        run: |
+          mkdir -p .agent-output
+
+          CMD="node bin/ztds-agent.js --applicant \"${{ inputs.applicant || 'PR Applicant' }}\" --product \"${{ inputs.product || 'PR Submission' }}\" --category \"${{ inputs.category || 'AI Agent' }}\" --out-report .agent-output/report.md --out-cert .agent-output/certificate.cert --json"
+
+          if [ -n "${{ inputs.repo_url }}" ]; then
+            CMD="$CMD --repo \"${{ inputs.repo_url }}\""
+          else
+            CMD="$CMD --dir ./data"
+          fi
+
+          if [ "${{ inputs.gitops_register }}" = "true" ]; then
+            CMD="$CMD --gitops"
+          fi
+
+          echo "Running agent command..."
+          eval $CMD > .agent-output/summary.json || {
+            echo "STATUS=FAIL" >> $GITHUB_ENV
+            cat .agent-output/summary.json || true
+            exit 1
+          }
+
+          echo "STATUS=PASS" >> $GITHUB_ENV
+          cat .agent-output/summary.json
+
+      - name: Publish GitHub Step Summary
+        if: always()
+        run: |
+          if [ -f .agent-output/report.md ]; then
+            cat .agent-output/report.md >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ZTDS Autonomous Certification Agent Failed" >> $GITHUB_STEP_SUMMARY
+            echo "Invariant violations detected. Review workflow execution logs for remediation details." >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Upload Attestation Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ztds-certification-artifacts
+          path: .agent-output/
+          retention-days: 60
