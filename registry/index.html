@@ -958,11 +958,18 @@
           <div>
             <div class="flex items-center justify-between mb-1.5">
               <span class="font-bold text-slate-900 text-xs font-mono uppercase">Embed Verified Trust Badge</span>
-              <button id="btnCopyEmbed" type="button" class="text-emerald-700 hover:text-emerald-800 text-[11px] font-semibold flex items-center gap-1">
-                <span>Copy Embed Code</span>
+              <div class="flex items-center gap-1" id="modalFormatSelector">
+                <button type="button" class="embed-format-btn px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-slate-900 text-white" data-format="markdown">Markdown</button>
+                <button type="button" class="embed-format-btn px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200" data-format="html">HTML</button>
+                <button type="button" class="embed-format-btn px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200" data-format="jsx">JSX</button>
+              </div>
+            </div>
+            <div class="relative">
+              <pre class="p-3 pr-24 rounded-lg bg-slate-900 text-emerald-300 font-mono text-[11px] overflow-x-auto"><code id="modalEmbedCode"></code></pre>
+              <button id="btnCopyEmbed" type="button" class="absolute top-2 right-2 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[10px] font-sans font-medium transition-colors">
+                Copy Snippet
               </button>
             </div>
-            <pre class="p-3 rounded-lg bg-slate-900 text-emerald-300 font-mono text-[11px] overflow-x-auto"><code id="modalEmbedCode">&lt;a href="https://ztds.ai/registry/"&gt;&lt;img src="..." alt="ZTDS Verified" /&gt;&lt;/a&gt;</code></pre>
           </div>
 
         </div>
@@ -1137,14 +1144,35 @@
     const modalDoneBtn = document.getElementById('modalDoneBtn');
     const btnCopySha = document.getElementById('btnCopySha');
     const btnCopyEmbed = document.getElementById('btnCopyEmbed');
+    const modalDownloadCertBtn = document.getElementById('modalDownloadCertBtn');
+    const modalCopyTokenBtn = document.getElementById('modalCopyTokenBtn');
+    const formatBtns = document.querySelectorAll('.embed-format-btn');
 
     let activeModalCertToken = "";
     let activeModalCertSlug = "";
+    let activeModalBadgeUrl = "";
+    let currentEmbedFormat = "markdown";
+
+    function updateEmbedCode() {
+      const codeEl = document.getElementById('modalEmbedCode');
+      if (!codeEl) return;
+      const targetUrl = `https://ztds.ai/registry/#${activeModalCertSlug}`;
+      const badgeUrl = activeModalBadgeUrl || 'https://ztds.ai/badge/privacyscrubber-web.svg';
+
+      if (currentEmbedFormat === 'markdown') {
+        codeEl.textContent = `[![ZTDS Verified](${badgeUrl})](${targetUrl})`;
+      } else if (currentEmbedFormat === 'html') {
+        codeEl.textContent = `<a href="${targetUrl}" target="_blank" rel="noopener"><img src="${badgeUrl}" alt="ZTDS Verified Conformance" width="168" height="32" /></a>`;
+      } else if (currentEmbedFormat === 'jsx') {
+        codeEl.textContent = `<a href="${targetUrl}" target="_blank" rel="noopener">\n  <img src="${badgeUrl}" alt="ZTDS Verified Conformance" width={168} height={32} />\n</a>`;
+      }
+    }
 
     function openCertModal(data) {
       document.getElementById('modalTitle').textContent = data.name || 'Verified Solution';
       activeModalCertToken = data.certToken || "";
-      activeModalCertSlug = (data.name || "certificate").toLowerCase().replace(/[^a-z0-9]/g, "-");
+      activeModalCertSlug = (data.name || "certificate").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+      activeModalBadgeUrl = data.badge || "https://ztds.ai/badge/privacyscrubber-web.svg";
       
       const modalCertId = document.getElementById("modalCertId");
       if (modalCertId) modalCertId.textContent = data.certId || "ZTDS-CERT-PENDING";
@@ -1165,9 +1193,7 @@
       docLink.href = data.url || '/standard/';
       docLink.textContent = data.url && data.url.startsWith('http') ? 'Visit Solution Website &rarr;' : 'View Technical Blueprint &rarr;';
 
-      const badgeUrl = data.badge || 'https://ztds.ai/badge/privacyscrubber-web.svg';
-      const embedCode = `<a href="https://ztds.ai/registry/"><img src="${badgeUrl}" alt="ZTDS Verified Compliance Seal" /></a>`;
-      document.getElementById('modalEmbedCode').textContent = embedCode;
+      updateEmbedCode();
 
       certModal.classList.remove('hidden');
       certModal.classList.add('flex');
@@ -1179,6 +1205,17 @@
       certModal.classList.remove('flex');
       document.body.style.overflow = '';
     }
+
+    formatBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        formatBtns.forEach(b => {
+          b.className = 'embed-format-btn px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200';
+        });
+        btn.className = 'embed-format-btn px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-slate-900 text-white';
+        currentEmbedFormat = btn.getAttribute('data-format');
+        updateEmbedCode();
+      });
+    });
 
     document.querySelectorAll('.btn-cert').forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -1227,12 +1264,43 @@
     btnCopyEmbed.addEventListener('click', () => {
       const embedText = document.getElementById('modalEmbedCode').textContent;
       window.ztdsCopy(embedText, () => {
-        btnCopyEmbed.innerHTML = '<span class="text-emerald-600 font-bold">&check; Copied Snippet!</span>';
+        btnCopyEmbed.textContent = 'Copied!';
+        btnCopyEmbed.classList.add('text-emerald-400');
         setTimeout(() => {
-          btnCopyEmbed.innerHTML = '<span>Copy Embed Code</span>';
+          btnCopyEmbed.textContent = 'Copy Snippet';
+          btnCopyEmbed.classList.remove('text-emerald-400');
         }, 2000);
       });
     });
+
+    if (modalCopyTokenBtn) {
+      modalCopyTokenBtn.addEventListener('click', () => {
+        if (!activeModalCertToken) return;
+        window.ztdsCopy(activeModalCertToken, () => {
+          modalCopyTokenBtn.textContent = 'Copied!';
+          modalCopyTokenBtn.classList.add('text-emerald-400');
+          setTimeout(() => {
+            modalCopyTokenBtn.textContent = 'Copy Token';
+            modalCopyTokenBtn.classList.remove('text-emerald-400');
+          }, 2000);
+        });
+      });
+    }
+
+    if (modalDownloadCertBtn) {
+      modalDownloadCertBtn.addEventListener('click', () => {
+        if (!activeModalCertToken) return;
+        const blob = new Blob([activeModalCertToken], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = (activeModalCertSlug || 'ztds-certificate') + '.cert';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+    }
   </script>
 </body>
 </html>

@@ -107,7 +107,7 @@ npx ztds-audit [path] [flags]
 
 Automate zero-trust compliance on every Pull Request to prevent sensitive data or unmasked prompts from entering production.
 
-### Official Action: `ztds-ai/ztds-audit-action@v1`
+### Official Action: `moxno/ztds.ai@main`
 
 ### Ready-to-Use Workflow Template: `.github/workflows/ztds-audit.yml`
 ```yaml
@@ -128,18 +128,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js Runtime
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
       - name: Run ZTDS Pipeline Audit
-        uses: ztds-ai/ztds-audit-action@v1
+        uses: moxno/ztds.ai@main
         with:
-          path: "./src"
+          dir: "./src"
           profile: "healthcare"
-          fail-on-leak: true
-          strict: true
+          strict: "true"
+          cert: "true"
 
       - name: Upload Audit Receipt Artifact
         if: always()
