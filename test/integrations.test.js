@@ -31,4 +31,37 @@ console.log('--> Test 2: LiteLLM Guardrail Invariants');
   console.log('    [PASS] LiteLLM guardrail verified (Pre/Post call hooks, deterministic surrogates, RAM zeroization).');
 }
 
-console.log('\n[SUMMARY] ALL REFERENCE INTEGRATIONS TESTS PASSED WITH 100% CONFORMANCE.\n');
+// Test 3: CrewAI Sanitizer Tool Invariants
+console.log('--> Test 3: CrewAI Sanitizer Tool Invariants');
+{
+  const testCrewAIPath = path.join(__dirname, '..', 'integrations', 'crewai', 'test_crewai_ztds.py');
+  const output = execSync(`python3 -m unittest "${testCrewAIPath}"`, {
+    encoding: 'utf8',
+    env: { ...process.env, PYTHONPATH: path.join(__dirname, '..', 'integrations', 'crewai') }
+  });
+  console.log('    [PASS] CrewAI tool verified (Task sanitization, response restore, RAM zeroization).');
+}
+
+// Test 4: LlamaIndex Postprocessor Invariants
+console.log('--> Test 4: LlamaIndex Postprocessor Invariants');
+{
+  const testLlamaPath = path.join(__dirname, '..', 'integrations', 'llamaindex', 'test_llamaindex_ztds.py');
+  const output = execSync(`python3 -m unittest "${testLlamaPath}"`, {
+    encoding: 'utf8',
+    env: { ...process.env, PYTHONPATH: path.join(__dirname, '..', 'integrations', 'llamaindex') }
+  });
+  console.log('    [PASS] LlamaIndex postprocessor verified (Node content sanitization, restore, RAM zeroization).');
+}
+
+// Test 5: LangChain Callback Invariants
+console.log('--> Test 5: LangChain Callback Invariants');
+{
+  const testLangChainPath = path.join(__dirname, '..', 'integrations', 'langchain', 'test_langchain_ztds.py');
+  const output = execSync(`python3 -m unittest "${testLangChainPath}"`, {
+    encoding: 'utf8',
+    env: { ...process.env, PYTHONPATH: path.join(__dirname, '..', 'integrations', 'langchain') }
+  });
+  console.log('    [PASS] LangChain callback verified (on_llm_start, on_llm_end, RAM zeroization).');
+}
+
+console.log('\n[SUMMARY] ALL 5 REFERENCE INTEGRATIONS TESTS PASSED WITH 100% CONFORMANCE.\n');

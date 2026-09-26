@@ -975,6 +975,8 @@
       const queryDomain = urlParams.get('domain');
       const queryProfile = urlParams.get('profile') || urlParams.get('industry');
       const queryOrg = urlParams.get('org') || urlParams.get('company');
+      const querySavings = urlParams.get('savings');
+      const querySource = urlParams.get('source');
 
       if (queryDomain) inputDomain.value = queryDomain.toLowerCase().trim();
       if (queryOrg) inputCompanyName.value = queryOrg.trim();
@@ -985,6 +987,9 @@
       }
       if (queryProfile && INDUSTRY_MAP[queryProfile]) {
         selectIndustry.value = queryProfile;
+      }
+      if (querySavings && inputNotes) {
+        inputNotes.value = `Identified Risk Mitigation from ROI Calculator: ${querySavings}`;
       }
     } catch (err) {}
 
@@ -1153,6 +1158,8 @@ BrandMeWeb: Ilya Sibiryakov, Chief Architect (brandmeweb.com)`;
             email: email,
             domain: domain,
             role: 'agency_client',
+            source: (new URLSearchParams(window.location.search).get('source')) || 'agency_workbench',
+            industryProfile: indKey,
             notes: `BrandMeWeb Snapshot Audit ($2,500) & Retainer ($500/mo). Org: ${org}, Industry: ${indKey}. Special Notes: ${notes}`
           })
         });

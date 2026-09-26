@@ -427,6 +427,7 @@
               <div class="text-[10px] font-mono uppercase text-slate-400 font-semibold">Calculated ROI</div>
               <div class="text-3xl font-extrabold text-emerald-400 font-mono mt-0.5" id="dispRoiMultiple">46.7x</div>
               <div class="text-[10px] text-slate-400 mt-0.5">Return on investment multiple</div>
+              <a id="heroRoiAgencyLink" href="/agency/" class="text-[11px] text-emerald-400 hover:text-emerald-300 font-semibold underline block mt-2">Book Audit ($2,500) &rarr;</a>
             </div>
           </div>
 
@@ -705,6 +706,22 @@
               </svg>
               <span>Download Memo (.md)</span>
             </button>
+          </div>
+
+          <!-- BrandMeWeb Turn-Key Advisory & Audit Bridge -->
+          <div class="p-4 rounded-xl bg-gradient-to-r from-slate-900 to-slate-800 border border-slate-700 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">Turn-Key Advisory</span>
+                <span class="text-xs text-slate-300 font-medium">BrandMeWeb Enterprise Snapshot ($2,500)</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                Zero-effort audit: BrandMeWeb scans your pipeline, drafts your CISO memo, and delivers verified ZTDS conformance in 30 minutes.
+              </p>
+            </div>
+            <a id="roiAgencyBridgeBtn" href="/agency/" class="btn-trust shrink-0 py-2.5 px-4 text-xs font-semibold shadow-sm whitespace-nowrap">
+              Book BrandMeWeb Audit &rarr;
+            </a>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -1052,6 +1069,13 @@
         if (printParamVendors) printParamVendors.textContent = vendors + ' providers';
         if (printParamRevenue) printParamRevenue.textContent = fmtCur.format(revenue);
         if (printParamRegime) printParamRegime.textContent = regimeCode;
+
+        // Update BrandMeWeb Agency Bridge Links
+        const agencyTargetUrl = `/agency/?profile=${encodeURIComponent(selectIndustry.value || 'saas')}&savings=${encodeURIComponent(fmtCur.format(netSavings))}&source=roi_calculator`;
+        const roiAgencyBridgeBtn = document.getElementById('roiAgencyBridgeBtn');
+        if (roiAgencyBridgeBtn) roiAgencyBridgeBtn.href = agencyTargetUrl;
+        const heroRoiAgencyLink = document.getElementById('heroRoiAgencyLink');
+        if (heroRoiAgencyLink) heroRoiAgencyLink.href = agencyTargetUrl;
       }
 
       function generateMemoMarkdown() {
