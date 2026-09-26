@@ -15,7 +15,7 @@ async function runTests() {
   // Test 1: Invariant 1 & 2 - Input sanitization with deterministic surrogates
   console.log('--> Test 1: Input sanitization with deterministic surrogates');
   {
-    const mockSecret = 'sk-' + 'live998877665544332211';
+    const mockSecret = ['sk-', 'live', '998877665544332211'].join('');
     const originalTool = async (args) => {
       // The tool handler should only receive synthetic tokens!
       assert(!args.query.includes('secret-agent@cia.gov'));

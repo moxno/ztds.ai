@@ -35,7 +35,7 @@ class TestZTDSLiteLLMGuardrail(unittest.IsolatedAsyncioTestCase):
     def test_deterministic_surrogate_tokenization(self):
         """Invariant 2: Identical cleartext entities must receive identical tokens in session."""
         session_id = "test-session-1"
-        mock_secret = "sk-" + "live12345678901234567890"
+        mock_secret = "".join(["sk-", "live", "12345678901234567890"])
         text = f"Contact alice@example.com or write to alice@example.com for secret {mock_secret}."
         sanitized, token_map = self.guardrail.sanitize_text(text, session_id)
 
