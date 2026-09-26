@@ -464,6 +464,28 @@
               </div>
               <pre id="jsonPayloadMount" class="text-[11px] font-mono text-emerald-300 overflow-x-auto leading-relaxed max-h-72"></pre>
             </div>
+          <!-- Social Attestation & Shareable Status Bar -->
+          <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+              <div class="text-xs font-bold text-slate-900 flex items-center gap-2 font-mono">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span>Signal Zero-Trust Readiness to Enterprise Buyers</span>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed max-w-xl">
+                Broaden network trust: share this immutable cryptographic verification on LinkedIn or X, or embed your verified badge in your repository.
+              </p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 shrink-0">
+              <a id="btnShareX" href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-mono font-semibold transition-colors inline-flex items-center gap-1.5 shadow-sm">
+                <span>Post to X</span>
+              </a>
+              <a id="btnShareLinkedin" href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white text-xs font-mono font-semibold transition-colors inline-flex items-center gap-1.5 shadow-sm">
+                <span>Share on LinkedIn</span>
+              </a>
+              <button id="btnCopyBadgeCode" type="button" class="px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-mono font-semibold transition-colors shadow-sm">
+                Copy Badge Markdown
+              </button>
+            </div>
           </div>
 
         </div>
@@ -829,6 +851,33 @@
         // Update URL hash for sharing
         if (window.location.hash !== `#cert=${encodeURIComponent(result.token)}`) {
           history.replaceState(null, "", `#cert=${encodeURIComponent(result.token)}`);
+        }
+
+        // Configure Social Attestation & Share Actions
+        const shareX = document.getElementById('btnShareX');
+        const shareLinkedin = document.getElementById('btnShareLinkedin');
+        const copyBadgeCode = document.getElementById('btnCopyBadgeCode');
+        const certUrl = `https://ztds.ai/verify/#cert=${encodeURIComponent(result.token)}`;
+        const hashAbbr = p.subject?.audit_hash ? p.subject.audit_hash.slice(0, 16) + '...' : 'audited';
+        const productName = p.subject?.product || 'AI pipeline';
+        const tweetText = `Our ${productName} verified 0.00 B data egress and GDPR Art. 28 exemption under the ZTDS RFC v1.0 standard (Receipt: ${hashAbbr}). Audited offline in browser RAM:`;
+
+        if (shareX) {
+          shareX.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(certUrl)}`;
+        }
+        if (shareLinkedin) {
+          shareLinkedin.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(certUrl)}`;
+        }
+        if (copyBadgeCode) {
+          const productSlug = (p.subject?.product || 'verified').toLowerCase().replace(/[^a-z0-9-]/g, '-');
+          copyBadgeCode.onclick = () => {
+            const badgeSnippet = `[![ZTDS Verified](https://ztds.ai/badge/${productSlug}.svg)](https://ztds.ai/verify/#cert=${result.token})`;
+            navigator.clipboard.writeText(badgeSnippet).then(() => {
+              const prev = copyBadgeCode.textContent;
+              copyBadgeCode.textContent = 'Badge Copied!';
+              setTimeout(() => copyBadgeCode.textContent = prev, 2000);
+            });
+          };
         }
       }
 
