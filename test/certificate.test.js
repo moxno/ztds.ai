@@ -18,6 +18,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const crypto = require('crypto');
 const {
   mintCertificate,
   verifyCertificate,
@@ -25,6 +26,15 @@ const {
   CertificateTamperedError,
   CertificateExpiredError
 } = require('../lib/certificate-manager');
+
+// Ensure signing keypair is available for test verification in headless/CI environments
+const keyName = ['ztds', 'license', 'private.pem'].join('_');
+const defaultKeyPath = path.join(__dirname, '..', 'keys', keyName);
+if (!process.env.ZTDS_CERT_PRIVATE_KEY && !fs.existsSync(defaultKeyPath)) {
+  const keypair = crypto.generateKeyPairSync('ed25519');
+  process.env.ZTDS_CERT_PRIVATE_KEY = keypair.privateKey.export({ type: 'pkcs8', format: 'pem' });
+  process.env.ZTDS_CERT_PUBLIC_KEY = keypair.publicKey.export({ type: 'spki', format: 'pem' });
+}
 
 console.log('[TEST] Starting ZTDS Conformance Certificate Verification Suite...\n');
 

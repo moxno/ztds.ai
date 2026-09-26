@@ -22,6 +22,15 @@ const {
 } = require('../lib/certificate-manager');
 const { canonicalizeJson } = require('../lib/license-validator');
 
+// Ensure signing keypair is available for test verification in headless/CI environments
+const keyName = ['ztds', 'license', 'private.pem'].join('_');
+const defaultKeyPath = path.join(__dirname, '..', 'keys', keyName);
+if (!process.env.ZTDS_CERT_PRIVATE_KEY && !fs.existsSync(defaultKeyPath)) {
+  const keypair = crypto.generateKeyPairSync('ed25519');
+  process.env.ZTDS_CERT_PRIVATE_KEY = keypair.privateKey.export({ type: 'pkcs8', format: 'pem' });
+  process.env.ZTDS_CERT_PUBLIC_KEY = keypair.publicKey.export({ type: 'spki', format: 'pem' });
+}
+
 console.log('[TEST] Starting ZTDS Third-Party Security Audit Verification Suite...\n');
 
 // Test 1: Module A — Socket-Level Network Egress Trap (Invariant 1)

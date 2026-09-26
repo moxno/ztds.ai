@@ -56,6 +56,8 @@ jobs:
 
       - name: Execute Autonomous Certification Agent
         id: ztds_agent
+        env:
+          ZTDS_CERT_PRIVATE_KEY: ${{ secrets.ZTDS_CERT_PRIVATE_KEY }}
         run: |
           mkdir -p .agent-output
 

@@ -36,10 +36,13 @@ jobs:
       - name: Run Full Test Suite
         env:
           NODE_ENV: test
+          ZTDS_CERT_PRIVATE_KEY: ${{ secrets.ZTDS_CERT_PRIVATE_KEY }}
         run: |
           npm test
 
       - name: Run Dedicated Invariant Codebase Audit
+        env:
+          ZTDS_CERT_PRIVATE_KEY: ${{ secrets.ZTDS_CERT_PRIVATE_KEY }}
         run: |
           node bin/ztds-audit.js --json > ztds-audit-receipt.json
           cat ztds-audit-receipt.json
