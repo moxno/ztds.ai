@@ -385,6 +385,14 @@
             </div>
             <pre class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-xs font-mono text-sky-400 select-all overflow-x-auto max-w-full break-all whitespace-pre-wrap"><code id="codeSvg"></code></pre>
           </div>
+
+          <div class="min-w-0 max-w-full">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-xs text-slate-500 uppercase font-semibold">React / Next.js Component (JSX)</span>
+              <button id="copyReactBtn" class="text-xs text-emerald-700 hover:text-emerald-800 font-bold touch-target">Copy JSX</button>
+            </div>
+            <pre class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-xs font-mono text-amber-300 select-all overflow-x-auto max-w-full break-all whitespace-pre-wrap"><code id="codeReact"></code></pre>
+          </div>
         </div>
 
       </div>
@@ -681,6 +689,7 @@
       const codeMd = document.getElementById('codeMd');
       const codeHtml = document.getElementById('codeHtml');
       const codeSvg = document.getElementById('codeSvg');
+      const codeReact = document.getElementById('codeReact');
       const btnDownloadBadgeSvg = document.getElementById('btnDownloadBadgeSvg');
       const tierBtns = document.querySelectorAll('.tier-btn');
 
@@ -788,6 +797,9 @@
         codeMd.textContent = `[![ZTDS ${effectiveLabel}](${remoteUrl})](https://ztds.ai/registry/)`;
         codeHtml.textContent = `<a href="https://ztds.ai/registry/"><img src="${remoteUrl}" alt="ZTDS ${effectiveLabel}"></a>`;
         codeSvg.textContent = currentSvgXml;
+        if (codeReact) {
+          codeReact.textContent = `<a href="https://ztds.ai/registry/" target="_blank" rel="noopener noreferrer">\n  <img src="${remoteUrl}" alt="ZTDS ${effectiveLabel}" width={168} height={20} />\n</a>`;
+        }
       }
 
       // Tier Selector handlers
@@ -863,6 +875,17 @@
           setTimeout(() => btn.textContent = 'Copy SVG', 2000);
         });
       });
+
+      // Copy React / Next.js JSX
+      const copyReactBtn = document.getElementById('copyReactBtn');
+      if (copyReactBtn) {
+        copyReactBtn.addEventListener('click', () => {
+          window.ztdsCopy(codeReact.textContent, () => {
+            copyReactBtn.textContent = 'Copied!';
+            setTimeout(() => copyReactBtn.textContent = 'Copy JSX', 2000);
+          });
+        });
+      }
 
       // Copy Seal HTML Embed
       document.querySelectorAll('.copy-seal-btn').forEach(btn => {

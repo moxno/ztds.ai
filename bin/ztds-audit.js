@@ -324,6 +324,9 @@ if (findings.length === 0) {
     console.log(`Verify with:    \x1b[33mnpx ztds-verify ${result.certificate.saved_to || result.certificate.token}\x1b[0m\n`);
   }
 
+  console.log('\x1b[1m\x1b[33m[ENTERPRISE VELOCITY] Hand this audit receipt to enterprise buyers to bypass 6-week vendor reviews (0-Day Approval).\x1b[0m');
+  console.log('\x1b[1m\x1b[36m[CI/CD PIPELINE] Enforce zero-egress in GitHub Actions: npx ztds-audit --dir ./src --strict\x1b[0m\n');
+
   console.log('\x1b[1mNext Steps for Builders & Maintainers:\x1b[0m');
   console.log(`1. Include this audit hash in your pull request: \x1b[36mhttps://ztds.ai/apply/\x1b[0m`);
   console.log(`2. Embed your Verified Trust Badge in README.md to claim your registry backlink:`);
