@@ -87,26 +87,26 @@ console.log('\n--> Test 3: Institutional Authority Anchors & Key Content');
   assert(html.includes('B17B'), 'Must reference WIPO DAS Access Code B17B');
   assert(html.includes('14/09/2026'), 'Must reference patent filing date');
   assert(html.includes('14/09/2027'), 'Must reference patent international priority deadline');
-  assert(html.includes('/docs/legal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.md'), 'Must link to WIPO PCT claims document');
+  assert(html.includes('/docs/legal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.txt'), 'Must link to WIPO PCT claims document');
 
   // WIPO Trademark & Certification Mark Anchor
   assert(html.includes('182655957'), 'Must reference ILPO Trademark Order #182655957');
   assert(html.includes('20/09/2026'), 'Must reference trademark filing date');
   assert(html.includes('20/03/2027'), 'Must reference trademark Paris priority deadline');
   assert(html.includes('Classes 9 &amp; 42') || html.includes('Classes 9 & 42'), 'Must reference Nice Classes 9 & 42');
-  assert(html.includes('/docs/legal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.md'), 'Must link to Madrid filing dossier');
+  assert(html.includes('/docs/legal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.txt'), 'Must link to Madrid filing dossier');
 
   // Conformity Assessment Body (CAB) Governance
   assert(html.includes('Conformity Assessment Body') || html.includes('CAB Governance'), 'Must describe CAB Governance');
   assert(html.includes('Track A') && html.includes('Track B') && html.includes('Track C'), 'Must detail Tracks A, B, and C');
   assert(html.includes('24-Hour Emergency Zero-Day Revocation') || html.includes('24-Hour Zero-Day Revocation') || html.includes('24 hours'), 'Must specify emergency revocation protocol');
-  assert(html.includes('/docs/legal/ZTDS_Conformity_Assessment_Policy.md'), 'Must link to CAB conformity assessment policy');
+  assert(html.includes('/docs/legal/ZTDS_Conformity_Assessment_Policy.txt'), 'Must link to CAB conformity assessment policy');
 
   // Independent Security Audit
   assert(html.includes('Independent Security Audit') || html.includes('Clean Bill of Health'), 'Must reference Independent Security Audit');
   assert(html.includes('0 Critical') || html.includes('Zero Critical'), 'Must cite 0 Critical findings');
   assert(html.includes('0 High') || html.includes('Zero High'), 'Must cite 0 High findings');
-  assert(html.includes('/docs/security/ZTDS_Independent_Security_Audit_Report.md'), 'Must link to Security Audit Report');
+  assert(html.includes('/docs/security/ZTDS_Independent_Security_Audit_Report.txt'), 'Must link to Security Audit Report');
 
   // Four Foundational Invariants
   assert(html.includes('Invariant 1') && html.includes('Zero External Egress'), 'Must detail Invariant 1');
@@ -161,16 +161,18 @@ console.log('\n--> Test 5: Static Documentation Artifacts Physical Existence');
     'public/docs/ietf/draft-sibiryakov-ztds-protocol-00.txt',
     'docs/ietf/draft-sibiryakov-ztds-protocol-00.xml',
     'public/docs/ietf/draft-sibiryakov-ztds-protocol-00.xml',
-    'docs/legal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.md',
-    'public/docs/legal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.md',
-    'docs/legal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.md',
-    'public/docs/legal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.md',
-    'docs/legal/WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.md',
-    'public/docs/legal/WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.md',
-    'docs/legal/ZTDS_Conformity_Assessment_Policy.md',
-    'public/docs/legal/ZTDS_Conformity_Assessment_Policy.md',
-    'docs/security/ZTDS_Independent_Security_Audit_Report.md',
-    'public/docs/security/ZTDS_Independent_Security_Audit_Report.md'
+    'docs/legal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.txt',
+    'public/docs/legal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.txt',
+    'docs/legal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.txt',
+    'public/docs/legal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.txt',
+    'docs/legal/WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.txt',
+    'public/docs/legal/WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.txt',
+    'docs/legal/ZTDS_Conformity_Assessment_Policy.txt',
+    'public/docs/legal/ZTDS_Conformity_Assessment_Policy.txt',
+    'docs/security/ZTDS_Independent_Security_Audit_Report.txt',
+    'public/docs/security/ZTDS_Independent_Security_Audit_Report.txt',
+    'docs/security/ZTDS_Third_Party_Security_Audit_Specification.txt',
+    'public/docs/security/ZTDS_Third_Party_Security_Audit_Specification.txt'
   ];
 
   requiredArtifacts.forEach(relPath => {
