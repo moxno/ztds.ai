@@ -1,0 +1,45 @@
+name: 'ZTDS Invariant Auditor'
+description: 'Automated CI/CD security auditor verifying codebases and AI pipelines against ZTDS RFC v1.0 zero-egress invariants.'
+author: 'ZTDS AI Consortium'
+branding:
+  icon: 'shield'
+  color: 'green'
+
+inputs:
+  dir:
+    description: 'Target directory to audit (default: .)'
+    required: false
+    default: '.'
+  strict:
+    description: 'Fail build on warnings (default: false)'
+    required: false
+    default: 'false'
+  json:
+    description: 'Output structured machine-readable JSON (default: false)'
+    required: false
+    default: 'false'
+  cert:
+    description: 'Generate cryptographic Ed25519 Conformance Certificate on pass (default: false)'
+    required: false
+    default: 'false'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run ZTDS Invariant Auditor
+      shell: bash
+      run: |
+        ARGS=""
+        if [ -n "${{ inputs.dir }}" ]; then
+          ARGS="$ARGS --dir ${{ inputs.dir }}"
+        fi
+        if [ "${{ inputs.strict }}" = "true" ]; then
+          ARGS="$ARGS --strict"
+        fi
+        if [ "${{ inputs.json }}" = "true" ]; then
+          ARGS="$ARGS --json"
+        fi
+        if [ "${{ inputs.cert }}" = "true" ]; then
+          ARGS="$ARGS --cert"
+        fi
+        node ${{ github.action_path }}/bin/ztds-audit.js $ARGS

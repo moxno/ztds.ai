@@ -92,7 +92,15 @@ jobs:
           node-version: '20'
 
       - name: Execute ZTDS Invariant Audit
-        run: npx ztds-audit --dir ./src --strict
+        uses: moxno/ztds.ai@main
+        with:
+          dir: './src'
+          strict: true
+```
+
+Or run via npx:
+```bash
+npx ztds-audit --dir ./src --strict
 ```
 
 ---
