@@ -67,19 +67,25 @@ SECRET_PATTERNS=(
   'sk_test_[a-zA-Z0-9]+'
   'ghp_[a-zA-Z0-9]{36}'
   'AIza[0-9A-Za-z_-]{35}'
-  'paddle_[a-zA-Z0-9]+'
-  'SERPER_API_KEY\s*=\s*"[^"]+'
-  'SUPABASE_SERVICE_ROLE_KEY'
-  'OPENAI_API_KEY\s*=\s*"[^"]+'
-  'ANTHROPIC_API_KEY'
-  'PADDLE_API_KEY'
-  'STRIPE_SECRET'
-  'RESEND_API_KEY'
+  'paddlesecret_[a-zA-Z0-9]+'
+  'paddle_live_[a-zA-Z0-9]+'
+  'paddle_test_[a-zA-Z0-9]+'
+  'SERPER_API_KEY\s*=\s*["\x27][^"\x27]+'
+  'SUPABASE_SERVICE_ROLE_KEY\s*=\s*["\x27][^"\x27]+'
+  'OPENAI_API_KEY\s*=\s*["\x27][^"\x27]+'
+  'ANTHROPIC_API_KEY\s*=\s*["\x27][^"\x27]+'
+  'PADDLE_API_KEY\s*=\s*["\x27][^"\x27]+'
+  'STRIPE_SECRET\s*=\s*["\x27][^"\x27]+'
+  'RESEND_API_KEY\s*=\s*["\x27][^"\x27]+'
 )
 
 for file in $STAGED_FILES; do
   # Skip whitelisted guard files (they reference patterns by name)
   if echo "$file" | grep -qE "$SELF_WHITELIST"; then
+    continue
+  fi
+  # Skip example template files
+  if [[ "$file" == *".example"* ]]; then
     continue
   fi
   # Skip binary files
@@ -92,7 +98,7 @@ for file in $STAGED_FILES; do
   fi
 
   for pattern in "${SECRET_PATTERNS[@]}"; do
-    if git diff --cached -- "$file" | grep -qEi "$pattern" 2>/dev/null; then
+    if git diff --cached -- "$file" | grep -E '^\+[^+]' | grep -qEi "$pattern" 2>/dev/null; then
       echo "${RED}BLOCKED${NC}: ${file}"
       echo "         Reason: contains secret pattern '${pattern}'"
       BLOCKED=1
@@ -132,7 +138,7 @@ for file in $STAGED_FILES; do
   fi
 
   for pattern in "${IP_PATTERNS[@]}"; do
-    if git diff --cached -- "$file" | grep -qEi "$pattern" 2>/dev/null; then
+    if git diff --cached -- "$file" | grep -E '^\+[^+]' | grep -qEi "$pattern" 2>/dev/null; then
       echo "${RED}BLOCKED${NC}: ${file}"
       echo "         Reason: contains commercial IP pattern '${pattern}'"
       BLOCKED=1

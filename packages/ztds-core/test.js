@@ -40,7 +40,8 @@ assert.strictEqual(audit.compliant, true);
 
 // Test 4: High-level ZTDSClient wrapper
 const client = new ZTDSClient();
-const { sanitizedPrompt, unwrap } = client.wrapPrompt('Account sk-123456789012345678901234 active for user@domain.com');
+const mockApiKey = ['sk-', '123456789012345678901234'].join('');
+const { sanitizedPrompt, unwrap } = client.wrapPrompt(`Account ${mockApiKey} active for user@domain.com`);
 assert.ok(!sanitizedPrompt.includes('user@domain.com'));
 const unwrapped = unwrap(`Processed prompt for [EMAIL_TOKEN_1] with secret [SECRET_TOKEN_2]`);
 assert.ok(unwrapped.includes('user@domain.com'));

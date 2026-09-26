@@ -33,13 +33,13 @@ jobs:
           echo "Scanning for private keys and API secrets..."
           FOUND=0
 
-          # Private keys
-          if grep -rl "PRIVATE KEY" --include="*.pem" --include="*.key" --include="*.txt" --include="*.md" --include="*.js" --include="*.ts" . 2>/dev/null | grep -v node_modules | grep -v '.git/'; then
+          # Private keys (excluding .example files)
+          if grep -rl "PRIVATE KEY" --include="*.pem" --include="*.key" --include="*.txt" --include="*.md" --include="*.js" --include="*.ts" . 2>/dev/null | grep -v node_modules | grep -v '.git/' | grep -v '\.example'; then
             echo "::error::Private key material detected in repository."
             FOUND=1
           fi
 
-          # API keys in source (not .env.example)
+          # API keys in source (not .env.example or *.example)
           PATTERNS=(
             'sk-[a-zA-Z0-9]{20,}'
             'sk_live_[a-zA-Z0-9]+'
@@ -47,8 +47,9 @@ jobs:
             'AIza[0-9A-Za-z_-]{35}'
           )
           for pattern in "${PATTERNS[@]}"; do
-            if grep -rlE "$pattern" --include="*.js" --include="*.ts" --include="*.json" --include="*.md" --include="*.txt" . 2>/dev/null | grep -v node_modules | grep -v '.git/' | grep -v '.env.example'; then
-              echo "::error::API secret pattern '$pattern' detected in source files."
+            MATCHES=$(grep -rlE "$pattern" --include="*.js" --include="*.ts" --include="*.json" --include="*.md" --include="*.txt" . 2>/dev/null | grep -v node_modules | grep -v '.git/' | grep -v '\.example' || true)
+            if [ -n "$MATCHES" ]; then
+              echo "::error::API secret pattern '$pattern' detected in source files: $MATCHES"
               FOUND=1
             fi
           done

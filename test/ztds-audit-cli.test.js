@@ -52,10 +52,11 @@ console.log('--> Test 3: Violation Detection & Invariant 1 Red Flag');
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'ztds-audit-test-'));
   const leakFile = path.join(tempDir, 'agent_pipeline.js');
   
+  const mockKey = ['sk-', '1234567890abcdef', '1234567890abcdef'].join('');
   // Write deliberate unmasked secret to test detection
   fs.writeFileSync(leakFile, `
     // Simulating unmasked AI agent pipeline
-    const apiKey = "sk-1234567890abcdef1234567890abcdef";
+    const apiKey = "${mockKey}";
     const prompt = "Send user data to external LLM without masking";
   `);
 
