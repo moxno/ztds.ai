@@ -553,31 +553,31 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
       </div>
     </div>
 
-    <!-- 3 Physical Delivery Form Factors Matrix -->
+    <!-- 5 Physical Execution Surfaces Matrix -->
     <div id="form-factors" class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-5">
         <div>
           <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-semibold text-blue-800 mb-1.5">
             <span>PHYSICAL DEPLOYMENT TOPOLOGIES</span>
           </div>
-          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">3 Physical Delivery Form Factors</h2>
-          <p class="text-xs sm:text-sm text-slate-500 mt-1">ZTDS does not mandate hosting models; it enforces an in-RAM execution perimeter across three physical runtime form factors.</p>
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">5 Physical Execution Surfaces</h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">ZTDS does not mandate hosting models; it enforces an in-RAM execution perimeter across five physical runtime execution surfaces.</p>
         </div>
         <span class="text-xs font-mono px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold w-fit shrink-0">
           Zero Cloud Proxies
         </span>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         
-        <!-- Form Factor 1: Web & Browser Client -->
+        <!-- Surface 1: Web & Browser Client -->
         <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
           <div>
             <div class="flex items-center justify-between mb-3">
-              <span class="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">Form Factor 01</span>
+              <span class="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">Surface 01</span>
               <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-mono font-bold">&lt; 0.20 ms</span>
             </div>
-            <h3 class="text-base font-bold text-slate-900 mb-2">Web &amp; Browser Client Engine</h3>
+            <h3 class="text-base font-bold text-slate-900 mb-2">Client-Side Web Application</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               Executes in-memory directly on the end-user device before data leaves the browser window. Zero cleartext hits web servers, reverse proxies, or external clouds.
             </p>
@@ -588,7 +588,7 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
               </div>
               <div class="flex justify-between font-mono text-[11px]">
                 <span class="text-slate-500">Distribution:</span>
-                <span class="font-semibold text-slate-900">WASM / WebWorker / MV3</span>
+                <span class="font-semibold text-slate-900">V8 / WebWorker / WASM</span>
               </div>
               <div class="flex justify-between font-mono text-[11px]">
                 <span class="text-slate-500">Perimeter:</span>
@@ -597,70 +597,132 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
             </div>
           </div>
           <div class="mt-5 pt-3 border-t border-slate-200 font-mono text-[11px] text-slate-500">
-            <code>&lt;script src="@privacyscrubber/web"&gt;</code>
+            <code>privacyscrubber.com</code>
           </div>
         </div>
 
-        <!-- Form Factor 2: Native Desktop & Endpoint Binary -->
-        <div class="p-6 rounded-xl bg-emerald-50/40 border border-emerald-300 flex flex-col justify-between shadow-xs">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-[11px] font-mono font-bold text-emerald-800 uppercase tracking-wider">Form Factor 02</span>
-              <span class="px-2 py-0.5 rounded bg-emerald-200 text-emerald-900 text-[10px] font-mono font-bold">&lt; 0.05 ms</span>
-            </div>
-            <h3 class="text-base font-bold text-slate-900 mb-2">Native Endpoint Binary</h3>
-            <p class="text-xs text-slate-700 leading-relaxed mb-4">
-              Pre-compiled native dynamic library with zero dependencies. Runs inside local host process memory with C-ABI bindings for maximum throughput.
-            </p>
-            <div class="space-y-2 text-xs border-t border-emerald-200 pt-3 text-slate-700">
-              <div class="flex justify-between font-mono text-[11px]">
-                <span class="text-slate-500">Target:</span>
-                <span class="font-semibold text-slate-900">Electron, C++, Rust, Go, Python</span>
-              </div>
-              <div class="flex justify-between font-mono text-[11px]">
-                <span class="text-slate-500">Distribution:</span>
-                <span class="font-semibold text-slate-900">.dylib / .so / .dll / Native WASM</span>
-              </div>
-              <div class="flex justify-between font-mono text-[11px]">
-                <span class="text-slate-500">Perimeter:</span>
-                <span class="font-semibold text-emerald-700">OS Process Address Space</span>
-              </div>
-            </div>
-          </div>
-          <div class="mt-5 pt-3 border-t border-emerald-200 font-mono text-[11px] text-emerald-800">
-            <code>dlopen("libztds_engine.so")</code>
-          </div>
-        </div>
-
-        <!-- Form Factor 3: Headless Runtime SDK & MCP Stdio -->
+        <!-- Surface 2: Browser DOM Interceptor Extension -->
         <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
           <div>
             <div class="flex items-center justify-between mb-3">
-              <span class="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">Form Factor 03</span>
-              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-[10px] font-mono font-bold">&lt; 0.80 ms</span>
+              <span class="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">Surface 02</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-mono font-bold">&lt; 0.25 ms</span>
             </div>
-            <h3 class="text-base font-bold text-slate-900 mb-2">Headless Runtime &amp; MCP Stdio</h3>
+            <h3 class="text-base font-bold text-slate-900 mb-2">Browser DOM Extension (MV3)</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
-              Process-isolated middleware for modern AI pipelines. Sanitizes prompts and tool payloads over stdio pipes or direct function calls before model dispatch.
+              Manifest V3 content scripts intercepting user prompts directly inside ChatGPT, Claude, and Gemini before network packet serialization.
             </p>
             <div class="space-y-2 text-xs border-t border-slate-200 pt-3 text-slate-700">
               <div class="flex justify-between font-mono text-[11px]">
                 <span class="text-slate-500">Target:</span>
-                <span class="font-semibold text-slate-900">Node.js, LangChain, MCP, Cursor</span>
+                <span class="font-semibold text-slate-900">Chrome, Edge, Brave, Opera</span>
               </div>
               <div class="flex justify-between font-mono text-[11px]">
                 <span class="text-slate-500">Distribution:</span>
-                <span class="font-semibold text-slate-900">npm / pip / MCP Stdio Server</span>
+                <span class="font-semibold text-slate-900">Chrome Web Store (MV3)</span>
               </div>
               <div class="flex justify-between font-mono text-[11px]">
                 <span class="text-slate-500">Perimeter:</span>
-                <span class="font-semibold text-emerald-700">Volatile Runtime Sandbox</span>
+                <span class="font-semibold text-emerald-700">Isolated DOM Context</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-slate-200 font-mono text-[11px] text-slate-500">
+            <code>privacyscrubber-extension</code>
+          </div>
+        </div>
+
+        <!-- Surface 3: Process-Isolated MCP Stdio Server -->
+        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">Surface 03</span>
+              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-[10px] font-mono font-bold">&lt; 0.50 ms</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 mb-2">Process-Isolated MCP Server</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Model Context Protocol stdio daemon for AI IDEs and desktop agents. Strips code secrets, tokens, and DB credentials over local stdio JSON-RPC pipes.
+            </p>
+            <div class="space-y-2 text-xs border-t border-slate-200 pt-3 text-slate-700">
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Target:</span>
+                <span class="font-semibold text-slate-900">Cursor, Windsurf, Claude Desktop</span>
+              </div>
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Distribution:</span>
+                <span class="font-semibold text-slate-900">npx @privacyscrubber/mcp-server</span>
+              </div>
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Perimeter:</span>
+                <span class="font-semibold text-emerald-700">Stdio Process Sandbox</span>
               </div>
             </div>
           </div>
           <div class="mt-5 pt-3 border-t border-slate-200 flex items-center justify-between font-mono text-[11px] text-slate-500">
+            <code>JSON-RPC 2.0 stdio</code>
+            <a href="#mcp" class="text-blue-700 font-sans font-semibold hover:underline">Config &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Surface 4: Headless Runtime SDK & CLI -->
+        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">Surface 04</span>
+              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-[10px] font-mono font-bold">&lt; 0.80 ms</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 mb-2">Headless Runtime SDK &amp; CLI</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Embedded privacy fiduciary for backend microservices, LangChain/LlamaIndex RAG pipelines, and automated pre-merge CI/CD audit gates.
+            </p>
+            <div class="space-y-2 text-xs border-t border-slate-200 pt-3 text-slate-700">
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Target:</span>
+                <span class="font-semibold text-slate-900">Node.js, Python, RAG Ingestion</span>
+              </div>
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Distribution:</span>
+                <span class="font-semibold text-slate-900">npm / npx ztds-audit</span>
+              </div>
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Perimeter:</span>
+                <span class="font-semibold text-emerald-700">Host Runtime RAM</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-slate-200 font-mono text-[11px] text-slate-500">
             <code>npm install @privacyscrubber/sdk</code>
-            <a href="#mcp" class="text-blue-700 font-sans font-semibold hover:underline">MCP Stdio &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Surface 5: Air-Gapped Enclaves & Edge Proxy -->
+        <div class="p-6 rounded-xl bg-emerald-50/40 border border-emerald-300 flex flex-col justify-between shadow-xs">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[11px] font-mono font-bold text-emerald-800 uppercase tracking-wider">Surface 05</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-200 text-emerald-900 text-[10px] font-mono font-bold">&lt; 0.05 ms</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 mb-2">Air-Gapped Enclaves &amp; Proxy</h3>
+            <p class="text-xs text-slate-700 leading-relaxed mb-4">
+              Hardware-attested sovereign execution in AWS Nitro Enclaves, military SCIF networks, and Proxy-WASM filters (Envoy/Istio) with offline Ed25519 token licensing.
+            </p>
+            <div class="space-y-2 text-xs border-t border-emerald-200 pt-3 text-slate-700">
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Target:</span>
+                <span class="font-semibold text-slate-900">Defense, Banks, SCIF, Private VPC</span>
+              </div>
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Distribution:</span>
+                <span class="font-semibold text-slate-900">Nitro Enclaves / Proxy-WASM</span>
+              </div>
+              <div class="flex justify-between font-mono text-[11px]">
+                <span class="text-slate-500">Perimeter:</span>
+                <span class="font-semibold text-emerald-700">Hardware Enclave Boundary</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-emerald-200 font-mono text-[11px] text-emerald-800">
+            <code>ZTDS-LIC-v1 (Ed25519)</code>
           </div>
         </div>
 

@@ -37,10 +37,12 @@ In team environments, collaborative de-masking uses Argon2id (RFC 9106) key deri
 ### Invariant 4: Continuous Compliance & Zero Sub-Processor Chain
 Eliminates third-party data processing liability. Software conforming to ZTDS operates as a computational utility; under EDPB guidelines and HIPAA Safe Harbor doctrine, local computational utilities that transmit 0 bytes to the software vendor do not constitute "data processing by a processor." Consequently, DPAs and BAAs are legally unnecessary.
 
-### 2.5 The 3 Physical Delivery Form Factors (In-RAM Execution)
-1. **Web & Browser Client Engine**: WASM / WebWorker / Manifest V3 extension / `<script>` tag. Executes in-memory directly on the end-user device before data leaves the browser window. Client Device RAM perimeter (<0.20ms).
-2. **Native Desktop & Endpoint Binary**: Pre-compiled native dynamic library (.dylib, .so, .dll) with C-ABI bindings. Runs inside local host process memory address space (<0.05ms).
-3. **Headless Runtime SDK & MCP Stdio**: Process-isolated middleware for Node.js (`@privacyscrubber/sdk`), Python, LangChain, and Cursor/Claude Desktop MCP stdio (<0.80ms).
+### 2.5 The 5 Physical Execution Surfaces (In-RAM Execution)
+1. **Client-Side Web Application**: WASM / WebWorker / `<script>` tag. Executes in-memory directly on the end-user device before data leaves the browser window. Client Device RAM perimeter (<0.20ms).
+2. **Browser DOM Interceptor Extension**: Manifest V3 background and isolated content script intercepting prompts in ChatGPT, Claude, Gemini in-place before network serialization (<0.25ms).
+3. **Process-Isolated MCP Stdio Server**: Model Context Protocol stdio daemon (`@privacyscrubber/mcp-server`) for AI IDEs (Cursor, Windsurf, Claude Desktop, VS Code) over local JSON-RPC pipes (<0.50ms).
+4. **Headless Runtime SDK & CLI**: Embedded middleware for backend microservices, LangChain/LlamaIndex RAG pipelines, and pre-merge CI/CD scanners (`@privacyscrubber/sdk` & `npx ztds-audit`) (<0.80ms).
+5. **Air-Gapped Enclaves & Edge Proxy**: Hardware-attested execution inside AWS Nitro Enclaves, military SCIF environments, and Proxy-WASM filters (Envoy/Istio) with cryptographic offline Ed25519 token licensing (<0.05ms).
 
 ---
 
