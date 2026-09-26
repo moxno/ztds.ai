@@ -33,6 +33,10 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Install System Utilities (libxml2-utils for xmllint)
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq libxml2-utils
+
       - name: Run Full Test Suite
         env:
           NODE_ENV: test

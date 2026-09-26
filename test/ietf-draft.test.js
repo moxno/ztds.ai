@@ -38,11 +38,46 @@ console.log('--> Test 1: IETF Draft File Presence');
 // Test 2: xmllint Syntax Validation
 console.log('--> Test 2: xmllint Strict Syntax Validation');
 {
+  let hasXmllint = false;
   try {
-    execSync(`xmllint --noout "${xmlPath}"`, { stdio: 'pipe' });
-    console.log('    [PASS] xmllint confirmed zero XML syntax errors or unclosed tags.');
-  } catch (err) {
-    assert.fail(`xmllint validation failed: ${err.message}`);
+    execSync('xmllint --version', { stdio: 'ignore' });
+    hasXmllint = true;
+  } catch (e) {
+    hasXmllint = false;
+  }
+
+  if (hasXmllint) {
+    try {
+      execSync(`xmllint --noout "${xmlPath}"`, { stdio: 'pipe' });
+      console.log('    [PASS] xmllint confirmed zero XML syntax errors or unclosed tags.');
+    } catch (err) {
+      assert.fail(`xmllint validation failed: ${err.message}`);
+    }
+  } else {
+    // Pure JS Stack-Based XML well-formedness validator fallback
+    const xmlContent = fs.readFileSync(xmlPath, 'utf8');
+    assert(xmlContent.startsWith('<?xml'), 'Must start with <?xml declaration');
+    assert(xmlContent.includes('</rfc>'), 'Must contain closing </rfc> tag');
+
+    const clean = xmlContent.replace(/<!--[\s\S]*?-->/g, '').replace(/<!\[CDATA\[[\s\S]*?\]\]>/g, '');
+    const stack = [];
+    const tagRegex = /<(\/)?([a-zA-Z0-9_\-:]+)((?:\s+[^>]*?)?)(\/)?>/g;
+    let match;
+    while ((match = tagRegex.exec(clean)) !== null) {
+      const isClosing = match[1] === '/';
+      const tagName = match[2];
+      const isSelfClosing = match[4] === '/' || match[3].trim().endsWith('/');
+      if (isSelfClosing) continue;
+      if (isClosing) {
+        assert(stack.length > 0, `Unexpected closing tag </${tagName}> without open tag`);
+        const expectedTag = stack.pop();
+        assert.strictEqual(tagName, expectedTag, `Mismatched closing tag </${tagName}>, expected </${expectedTag}>`);
+      } else {
+        stack.push(tagName);
+      }
+    }
+    assert.strictEqual(stack.length, 0, `Unclosed XML tags remaining: ${stack.join(', ')}`);
+    console.log('    [PASS] Stack-based pure JS XML syntax confirmed zero syntax errors or unclosed tags.');
   }
 }
 
