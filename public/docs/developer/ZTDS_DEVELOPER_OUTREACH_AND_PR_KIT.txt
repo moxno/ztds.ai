@@ -75,103 +75,38 @@ Feedback and critique on the RFC and threat model are warmly welcome!
 
 ### Target 1: LangChain (Python & TypeScript)
 * **Target Repo:** `langchain-ai/langchain`
-* **Feature:** ZTDS Zero-Egress Middleware Callback
-* **PR Title:** `feat(community): add ZTDS zero-trust in-memory sanitization callback (IETF draft-sibiryakov-ztds-02)`
-* **PR Description:**
-  > This PR introduces a ZTDS-compliant in-memory callback for LangChain pipelines.
-  > It intercepts prompt strings before WAN socket dispatch, replaces sensitive entities with deterministic reversible surrogates in RAM, and restores cleartext upon model return.
-  > - Conforms to IETF `draft-sibiryakov-ztds-protocol-02` (https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/)
-  > - In-memory execution: 0 external network requests
-  > - Includes automated invariant unit test (`npx ztds-audit`)
-* **Reference Code:**
-  ```python
-  from langchain_core.callbacks import BaseCallbackHandler
-
-  class ZTDSCallbackHandler(BaseCallbackHandler):
-      """Zero-Trust Data Sanitization in-memory callback (RFC v1.0)."""
-      def __init__(self, sanitizer_engine):
-          self.engine = sanitizer_engine
-          self._session_maps = {}
-
-      def on_llm_start(self, serialized, prompts, **kwargs):
-          sanitized = []
-          for i, prompt in enumerate(prompts):
-              masked_text, token_map = self.engine.sanitize(prompt)
-              self._session_maps[i] = token_map
-              sanitized.append(masked_text)
-          prompts[:] = sanitized
-
-      def on_llm_end(self, response, **kwargs):
-          for i, gen_list in enumerate(response.generations):
-              token_map = self._session_maps.pop(i, {})
-              for gen in gen_list:
-                  gen.text = self.engine.restore(gen.text, token_map)
-  ```
+* **Live Pull Request:** https://github.com/langchain-ai/langchain/pull/40850 (PR #40850)
+* **Fork Branch:** `moxno/langchain:feat/ztds-zero-egress-callback`
+* **Feature:** ZTDS Zero-Egress Callback Handler
+* **PR Title:** `feat(callbacks): add ZTDS zero-trust in-memory sanitizing callback (IETF draft-02)`
 
 ### Target 2: LlamaIndex (Python)
 * **Target Repo:** `run-llama/llama_index`
-* **Feature:** ZTDS Ingestion Pre-Processor
-* **PR Title:** `feat(ingestion): add ZTDS air-gapped sanitization node to prevent RAG vector database poisoning (IETF draft-sibiryakov-ztds-02)`
-* **PR Description:**
-  > Implements an air-gapped `ZTDSNodePostprocessor` that sanitizes clinical PHI and corporate secrets before embeddings are computed and indexed.
-  > Prevents irreversible vector database poisoning under GDPR Article 17 (Right to Erasure).
-  > - Conforms to IETF `draft-sibiryakov-ztds-protocol-02`
-  > - RAM-only surrogate tokenization with zero WAN egress
-* **Reference Code:**
-  ```python
-  from llama_index.core.postprocessor.types import BaseNodePostprocessor
-  from llama_index.core.schema import NodeWithScore
-  from typing import List, Optional
-
-  class ZTDSNodePostprocessor(BaseNodePostprocessor):
-      """Sanitizes sensitive nodes prior to embedding or synthesis."""
-      def __init__(self, engine):
-          self.engine = engine
-
-      def _postprocess_nodes(self, nodes: List[NodeWithScore], **kwargs) -> List[NodeWithScore]:
-          for node_with_score in nodes:
-              sanitized_text, _ = self.engine.sanitize(node_with_score.node.get_content())
-              node_with_score.node.set_content(sanitized_text)
-          return nodes
-  ```
+* **Live Pull Request:** https://github.com/run-llama/llama_index/pull/23266 (PR #23266)
+* **Fork Branch:** `moxno/llama_index:feat/ztds-zero-egress-postprocessor`
+* **Feature:** ZTDS Ingestion Pre-Processor & Node Postprocessor
+* **PR Title:** `feat(postprocessor): add ZTDS zero-trust in-memory node postprocessor (IETF draft-02)`
 
 ### Target 3: CrewAI (Python)
-* **Target Repo:** `joaomdmoura/crewAI`
-* **Feature:** ZTDS Agent Boundary Guard
-* **PR Title:** `feat(security): add ZTDS in-memory prompt sanitization guard for autonomous agent swarms`
-* **PR Description:**
-  > Adds a zero-trust sanitization guard across multi-agent communications in CrewAI. Intercepts task outputs and tool arguments so API secrets, employee credentials, and private customer data are never passed into cloud LLM completions.
-  > - Conforms to IETF `draft-sibiryakov-ztds-protocol-02`
-* **Reference Code:**
-  ```python
-  class ZTDSTaskGuard:
-      """Protects autonomous agent task execution from credential and PII leakage."""
-      def __init__(self, engine):
-          self.engine = engine
-
-      def sanitize_task_input(self, task_description: str) -> tuple[str, dict]:
-          return self.engine.sanitize(task_description)
-
-      def restore_task_output(self, raw_output: str, token_map: dict) -> str:
-          return self.engine.restore(raw_output, token_map)
-  ```
+* **Target Repo:** `crewAIInc/crewAI`
+* **Live Pull Request:** https://github.com/crewAIInc/crewAI/pull/7785 (PR #7785)
+* **Fork Branch:** `moxno/crewAI:feat/ztds-zero-egress-sanitizer`
+* **Feature:** ZTDS Agent Boundary Guard & Sanitizer Tool
+* **PR Title:** `feat(tools): add ZTDS zero-trust in-memory sanitizer tool (IETF draft-02)`
 
 ### Target 4: Model Context Protocol (FastMCP / Claude Desktop)
-* **Target Repo:** `punkpeye/fastmcp` or `modelcontextprotocol/servers`
-* **Feature:** ZTDS Stdio Middleware
-* **PR Title:** `feat(middleware): add ZTDS zero-trust stdio proxy for Cursor and Claude Desktop (IETF draft-sibiryakov-ztds-02)`
-* **PR Description:**
-  > Wraps MCP stdio tool calls in a local in-memory tokenization layer. Raw developer secrets (API keys, connection strings) never enter the model's context window.
-  > - Conforms to IETF `draft-sibiryakov-ztds-protocol-02`
-  > - Uses local stdio stream interception with zero network egress
+* **Target Repo:** `punkpeye/fastmcp`
+* **Live Pull Request:** https://github.com/punkpeye/fastmcp/pull/402 (PR #402)
+* **Fork Branch:** `moxno/fastmcp:feat/ztds-zero-egress-middleware`
+* **Feature:** ZTDS Stdio & HTTP Middleware
+* **PR Title:** `feat(middleware): add ZTDS zero-trust in-memory sanitization middleware (IETF draft-02)`
 
 ### Target 5: LiteLLM (Python)
 * **Target Repo:** `BerriAI/litellm`
-* **Feature:** ZTDS Pre-Call and Post-Call Hook
-* **PR Title:** `feat(proxy): add ZTDS client-side zero-egress prompt sanitization hook`
-* **PR Description:**
-  > Adds custom pre-call and post-call hooks in LiteLLM proxy enforcing the 4 ZTDS invariants. Sanitizes prompts before dispatch to OpenAI/Anthropic/Bedrock and restores original entities upon response return.
-  > - Conforms to IETF `draft-sibiryakov-ztds-protocol-02`
+* **Live Pull Request:** https://github.com/BerriAI/litellm/pull/43353 (PR #43353)
+* **Fork Branch:** `moxno/litellm:feat/ztds-zero-egress-guardrail`
+* **Feature:** ZTDS Pre-Call and Post-Call CustomGuardrail Hook
+* **PR Title:** `feat(guardrails): add ZTDS zero-trust in-memory sanitization guardrail (IETF draft-02)`
 
 ---
 
