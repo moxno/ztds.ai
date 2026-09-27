@@ -14,7 +14,7 @@ Invariants Enforced:
 
 import re
 import uuid
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional
 
 try:
     from langchain_core.callbacks import BaseCallbackHandler
@@ -36,7 +36,7 @@ class ZTDSSanitizingCallbackHandler(BaseCallbackHandler):
     """
 
     PATTERNS: Dict[str, re.Pattern] = {
-        "EMAIL": re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b"),
+        "EMAIL": re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,24}\b"),
         "IPV4": re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b"),
         "IBAN": re.compile(r"\b[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}([A-Z0-9]?){0,16}\b"),
         "CREDIT_CARD": re.compile(r"\b(?:\d{4}[-\s]?){3}\d{4}\b"),
@@ -49,12 +49,15 @@ class ZTDSSanitizingCallbackHandler(BaseCallbackHandler):
         self,
         enabled_entities: Optional[List[str]] = None,
         unmask_on_end: bool = True,
+        secure_surrogates: bool = False,
     ) -> None:
         super().__init__()
         self.enabled_entities = enabled_entities or list(self.PATTERNS.keys())
         self.unmask_on_end = unmask_on_end
+        self.secure_surrogates = secure_surrogates
         self._run_maps: Dict[str, Dict[str, str]] = {}
         self._entity_maps: Dict[str, Dict[str, str]] = {}
+        self._run_salts: Dict[str, str] = {}
 
     def sanitize_text(self, text: str, run_id_str: str) -> str:
         if run_id_str not in self._run_maps:
@@ -76,8 +79,15 @@ class ZTDSSanitizingCallbackHandler(BaseCallbackHandler):
                 if original in entity_map:
                     token = entity_map[original]
                 else:
-                    count = len([k for k in token_map if k.startswith(f"[{entity_type}_TOKEN_")]) + 1
-                    token = f"[{entity_type}_TOKEN_{count}]"
+                    if self.secure_surrogates:
+                        if run_id_str not in self._run_salts:
+                            self._run_salts[run_id_str] = uuid.uuid4().hex[:6]
+                        salt = self._run_salts[run_id_str]
+                        count = len([k for k in token_map if k.startswith(f"[{entity_type}_TOKEN_{salt}_")]) + 1
+                        token = f"[{entity_type}_TOKEN_{salt}_{count}]"
+                    else:
+                        count = len([k for k in token_map if k.startswith(f"[{entity_type}_TOKEN_")]) + 1
+                        token = f"[{entity_type}_TOKEN_{count}]"
                     token_map[token] = original
                     entity_map[original] = token
 
@@ -101,6 +111,8 @@ class ZTDSSanitizingCallbackHandler(BaseCallbackHandler):
         if run_id_str in self._entity_maps:
             self._entity_maps[run_id_str].clear()
             del self._entity_maps[run_id_str]
+        if run_id_str in self._run_salts:
+            del self._run_salts[run_id_str]
 
     def on_llm_start(
         self,
@@ -139,3 +151,16 @@ class ZTDSSanitizingCallbackHandler(BaseCallbackHandler):
                                 gen.message.content = self.restore_text(gen.message.content, run_id_str)
         finally:
             self.zeroize_run(run_id_str)
+
+    def on_llm_error(
+        self,
+        error: BaseException,
+        *,
+        run_id: Optional[uuid.UUID] = None,
+        parent_run_id: Optional[uuid.UUID] = None,
+        **kwargs: Any,
+    ) -> Any:
+        """Theorem 2: Guarantees volatile memory zeroization when LLM pipeline fails."""
+        run_id_str = str(run_id) if run_id else "default-run"
+        self.zeroize_run(run_id_str)
+

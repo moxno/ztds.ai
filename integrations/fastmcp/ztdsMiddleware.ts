@@ -17,7 +17,7 @@ export interface ZTDSOptions {
 }
 
 export const ZTDS_PATTERNS: Record<string, RegExp> = {
-  EMAIL: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b/g,
+  EMAIL: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,24}\b/g,
   IPV4: /\b(?:\d{1,3}\.){3}\d{1,3}\b/g,
   IBAN: /\b[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}(?:[A-Z0-9]?){0,16}\b/g,
   CREDIT_CARD: /\b(?:\d{4}[-\s]?){3}\d{4}\b/g,

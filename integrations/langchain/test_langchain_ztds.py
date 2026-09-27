@@ -46,6 +46,34 @@ class TestLangChainZTDSCallback(unittest.TestCase):
         self.assertNotIn(str(run_id), self.handler._run_maps)
         self.assertNotIn(str(run_id), self.handler._entity_maps)
 
+    def test_secure_surrogates_prevents_token_prediction(self):
+        """Secure surrogates inject an unpredictable cryptographic salt into tokens."""
+        secure_handler = ZTDSSanitizingCallbackHandler(secure_surrogates=True)
+        run_id = uuid.uuid4()
+        prompts = ["Contact user victim@domain.com"]
+
+        secure_handler.on_llm_start(serialized={}, prompts=prompts, run_id=run_id)
+        # Token format should be [EMAIL_TOKEN_<salt>_1], NOT predictable [EMAIL_TOKEN_1]
+        self.assertNotIn("[EMAIL_TOKEN_1]", prompts[0])
+        self.assertRegex(prompts[0], r"\[EMAIL_TOKEN_[a-f0-9]{6}_1\]")
+
+        # Restoration verifies reverse reveal
+        mock_result = MockLLMResult(f"Echoing {prompts[0]}")
+        secure_handler.on_llm_end(mock_result, run_id=run_id)
+        self.assertIn("victim@domain.com", mock_result.generations[0][0].text)
+
+    def test_on_llm_error_zeroization(self):
+        """Guarantees Theorem 2 RAM zeroization when an LLM error occurs."""
+        run_id = uuid.uuid4()
+        prompts = ["Contact dev@corp.io"]
+        self.handler.on_llm_start(serialized={}, prompts=prompts, run_id=run_id)
+        self.assertIn(str(run_id), self.handler._run_maps)
+
+        self.handler.on_llm_error(RuntimeError("API timeout"), run_id=run_id)
+        self.assertNotIn(str(run_id), self.handler._run_maps)
+        self.assertNotIn(str(run_id), self.handler._entity_maps)
+
 
 if __name__ == "__main__":
     unittest.main()
+
