@@ -112,8 +112,9 @@ If `ztds-audit` detects sensitive credentials, unmasked PII, or third-party tele
 | Tier | Package | License | Role & Deployment |
 | :--- | :--- | :--- | :--- |
 | **Open Reference Core** | `@ztds/core` | Apache-2.0 | Vendor-neutral in-memory TypeScript/JS baseline. Universal regex rules (Email, Phone, PAN, SSN, API Keys). [Docs](https://ztds.ai/sdk/) |
+| **Open Reference MCP** | `ztds-mcp` | Apache-2.0 | Official zero-dependency reference MCP server (`io.github.moxno/ztds` on Anthropic Registry) for Cursor, Claude Desktop, and Zed. [MCP Guide](https://ztds.ai/sdk/) |
 | **Certified Pioneer SDK** | `@privacyscrubber/sdk` | Commercial / Air-Gapped | High-throughput WASM engine with 30 high-ACV industry profiles (HIPAA, PCI-DSS, Legal FRE-502), multi-threaded pipeline bindings, offline Ed25519 node licensing. [Get SDK](https://privacyscrubber.com/pricing/?tier=SDK) |
-| **Air-Gapped IDE MCP** | `@privacyscrubber/mcp-server` | Commercial / Stdio | Stdio MCP proxy for Cursor, Windsurf, Claude Code, and autonomous developer agents. [MCP Guide](https://ztds.ai/sdk/) |
+| **Air-Gapped IDE MCP** | `@privacyscrubber/mcp-server` | Commercial / Stdio | Stdio MCP proxy (`io.github.moxno/privacyscrubber-mcp`) for Cursor, Windsurf, Claude Code, and autonomous developer agents with 30 enterprise profiles. [MCP Guide](https://ztds.ai/sdk/) |
 
 ---
 

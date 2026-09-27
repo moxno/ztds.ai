@@ -120,7 +120,7 @@
             "name": "How do I configure ZTDS with Model Context Protocol (MCP) in Cursor IDE or Claude Desktop?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Add @privacyscrubber/mcp-server to your .cursor/mcp.json or claude_desktop_config.json using the stdio transport with command 'npx' and args ['-y', '@privacyscrubber/mcp-server@latest']. It runs locally as a child process communicating over stdin/stdout with zero network telemetry."
+              "text": "Add ztds-mcp (open reference server) or @privacyscrubber/mcp-server (enterprise 30-profile suite) to your .cursor/mcp.json or claude_desktop_config.json using stdio transport with command 'npx' and args ['-y', 'ztds-mcp']. It executes locally over stdin/stdout with zero network telemetry."
             }
           },
           {
@@ -650,7 +650,7 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
               </div>
               <div class="flex justify-between font-mono text-[11px]">
                 <span class="text-slate-500">Distribution:</span>
-                <span class="font-semibold text-slate-900">npx @privacyscrubber/mcp-server</span>
+                <span class="font-semibold text-slate-900">npx ztds-mcp / @privacyscrubber/mcp-server</span>
               </div>
               <div class="flex justify-between font-mono text-[11px]">
                 <span class="text-slate-500">Perimeter:</span>
@@ -1250,7 +1250,7 @@ static_resources:
             <span class="text-[10px] text-slate-500">Zero Socket Telemetry</span>
           </div>
           <div class="p-3 bg-slate-800 rounded-lg w-full md:w-auto border border-emerald-500/40">
-            <strong class="text-emerald-300 block">@privacyscrubber/mcp-server</strong>
+            <strong class="text-emerald-300 block">ztds-mcp / @privacyscrubber/mcp-server</strong>
             <span class="text-[10px] text-slate-400">Volatile RAM Sanitization Engine</span>
           </div>
         </div>
@@ -1313,6 +1313,10 @@ static_resources:
           </div>
           <pre class="p-4 bg-slate-950 text-slate-200 font-mono text-xs rounded-b-lg overflow-x-auto leading-relaxed border border-slate-800"><code id="mcpConfigCodeDisplay">{
   "mcpServers": {
+    "ztds": {
+      "command": "npx",
+      "args": ["-y", "ztds-mcp"]
+    },
     "privacyscrubber": {
       "command": "npx",
       "args": ["-y", "@privacyscrubber/mcp-server@latest"],
@@ -1788,7 +1792,7 @@ jobs:
             <span class="text-slate-400 group-open:rotate-180 transition-transform font-mono text-sm">&darr;</span>
           </summary>
           <p class="mt-3 text-slate-600 leading-relaxed text-xs">
-            Add <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">@privacyscrubber/mcp-server</code> to your <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">.cursor/mcp.json</code> or <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">claude_desktop_config.json</code> using the stdio transport with command <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">npx</code> and args <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">["-y", "@privacyscrubber/mcp-server@latest"]</code>. The MCP server executes as a process-isolated child process communicating strictly over local JSON-RPC 2.0 stdio pipes with 0.00 bytes network telemetry.
+            Add <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">ztds-mcp</code> (the open-source reference server) or <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">@privacyscrubber/mcp-server</code> (enterprise edition) to your <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">.cursor/mcp.json</code> or <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">claude_desktop_config.json</code> using the stdio transport with command <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">npx</code> and args <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">["-y", "ztds-mcp"]</code>. The MCP server executes as a process-isolated child process communicating strictly over local JSON-RPC 2.0 stdio pipes with 0.00 bytes network telemetry.
           </p>
         </details>
 
@@ -2132,19 +2136,19 @@ jobs:
       const mcpConfigs = {
         cursor: {
           path: '.cursor/mcp.json',
-          code: `{\n  "mcpServers": {\n    "privacyscrubber": {\n      "command": "npx",\n      "args": ["-y", "@privacyscrubber/mcp-server@latest"],\n      "env": {\n        "ZTDS_PROFILE": "dev",\n        "ZTDS_LOCAL_ONLY": "true"\n      }\n    }\n  }\n}`
+          code: `{\n  "mcpServers": {\n    "ztds": {\n      "command": "npx",\n      "args": ["-y", "ztds-mcp"]\n    },\n    "privacyscrubber": {\n      "command": "npx",\n      "args": ["-y", "@privacyscrubber/mcp-server@latest"],\n      "env": {\n        "ZTDS_PROFILE": "dev",\n        "ZTDS_LOCAL_ONLY": "true"\n      }\n    }\n  }\n}`
         },
         desktop: {
           path: 'claude_desktop_config.json',
-          code: `{\n  "mcpServers": {\n    "privacyscrubber": {\n      "command": "npx",\n      "args": ["-y", "@privacyscrubber/mcp-server@latest"],\n      "env": {\n        "ZTDS_PROFILE": "dev"\n      }\n    }\n  }\n}`
+          code: `{\n  "mcpServers": {\n    "ztds": {\n      "command": "npx",\n      "args": ["-y", "ztds-mcp"]\n    },\n    "privacyscrubber": {\n      "command": "npx",\n      "args": ["-y", "@privacyscrubber/mcp-server@latest"],\n      "env": {\n        "ZTDS_PROFILE": "dev"\n      }\n    }\n  }\n}`
         },
         cli: {
           path: 'Terminal Command',
-          code: `claude mcp add privacyscrubber npx -y @privacyscrubber/mcp-server@latest`
+          code: `# Open Reference Server (Anthropic Registry io.github.moxno/ztds):\nclaude mcp add ztds npx -y ztds-mcp\n\n# Enterprise 30-Profile Suite (Anthropic Registry io.github.moxno/privacyscrubber-mcp):\nclaude mcp add privacyscrubber npx -y @privacyscrubber/mcp-server@latest`
         },
         zed: {
           path: 'settings.json (context_servers)',
-          code: `{\n  "context_servers": {\n    "privacyscrubber": {\n      "command": "npx",\n      "args": ["-y", "@privacyscrubber/mcp-server@latest"]\n    }\n  }\n}`
+          code: `{\n  "context_servers": {\n    "ztds": {\n      "command": "npx",\n      "args": ["-y", "ztds-mcp"]\n    },\n    "privacyscrubber": {\n      "command": "npx",\n      "args": ["-y", "@privacyscrubber/mcp-server@latest"]\n    }\n  }\n}`
         }
       };
 
