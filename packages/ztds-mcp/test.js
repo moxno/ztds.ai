@@ -168,7 +168,62 @@ async function runTests() {
   assert(promptGet.result.messages[0].content.text.includes('Analyze database records'));
   console.log('    [PASS] MCP prompts verified.');
 
-  console.log('\n[SUMMARY] ALL 8 ZTDS MCP SERVER TESTS PASSED (100% CONFORMANCE).\n');
+  // 9. Formatted Credit Cards (Dashes & Spaces)
+  console.log('--> Test 9: Formatted Credit Cards (Dashes & Spaces)');
+  const cardText = 'Visa: 4532-1234-5678-9010, Mastercard: 5412 3456 7890 1234';
+  const cardRes = sanitizeText(cardText, 'sess-cards');
+  assert(!cardRes.sanitizedText.includes('4532-1234-5678-9010'));
+  assert(!cardRes.sanitizedText.includes('5412 3456 7890 1234'));
+  assert.strictEqual(cardRes.entitiesMasked, 2);
+  const cardRestored = restoreText(cardRes.sanitizedText, 'sess-cards');
+  assert.strictEqual(cardRestored.restoredText, cardText);
+  console.log('    [PASS] Formatted credit cards sanitized and restored accurately.');
+
+  // 10. Non-Phone Numeric Sequences (SKUs, Order IDs, Ports)
+  console.log('--> Test 10: Non-Phone Numeric Sequences Protection (No False Positives)');
+  const nonPhoneText = 'Product SKU 123456789012345 and Order #182655957 on port 8080 in year 2026';
+  const nonPhoneRes = sanitizeText(nonPhoneText, 'sess-non-phone');
+  assert.strictEqual(nonPhoneRes.sanitizedText, nonPhoneText, 'Non-phone numeric sequences must not be masked');
+  assert.strictEqual(nonPhoneRes.entitiesMasked, 0);
+  console.log('    [PASS] Numeric IDs and ports preserved without false-positive masking.');
+
+  // 11. International Phone Formats
+  console.log('--> Test 11: International Phone Formats');
+  const intlText = 'Call Tel Aviv: +972 54 123 4567, London: +44 20 7946 0912, Mobile: 054-1234567';
+  const intlRes = sanitizeText(intlText, 'sess-intl');
+  assert(!intlRes.sanitizedText.includes('+972 54 123 4567'));
+  assert(!intlRes.sanitizedText.includes('+44 20 7946 0912'));
+  assert(!intlRes.sanitizedText.includes('054-1234567'));
+  assert.strictEqual(intlRes.entitiesMasked, 3);
+  const intlRestored = restoreText(intlRes.sanitizedText, 'sess-intl');
+  assert.strictEqual(intlRestored.restoredText, intlText);
+  console.log('    [PASS] International and local phone numbers masked and restored accurately.');
+
+  // 12. Second-Order Token Injection Resistance (Atomic Single-Pass Unmasking)
+  console.log('--> Test 12: Second-Order Token Injection Resistance');
+  const store = (await import('./index.js')).resetSessionStore('sess-inject');
+  // Adversarial cleartext containing another token
+  const injectText = 'Target: secret_with_[EMAIL_TOKEN_1] and real: admin@secure.net';
+  const injectRes = sanitizeText(injectText, 'sess-inject');
+  // LLM echoes back the sanitized text
+  const injectRestored = restoreText(injectRes.sanitizedText, 'sess-inject');
+  assert.strictEqual(injectRestored.restoredText, injectText);
+  console.log('    [PASS] Atomic single-pass replacement immune to cascade injection.');
+
+  // 13. Input Length Safety Boundary (DoS Protection)
+  console.log('--> Test 13: Input Length Safety Boundary');
+  const oversizedText = 'A'.repeat(500001);
+  let errorCaught = false;
+  try {
+    sanitizeText(oversizedText, 'sess-oversized');
+  } catch (err) {
+    errorCaught = true;
+    assert(err.message.includes('exceeds maximum safety limit'));
+  }
+  assert(errorCaught, 'Oversized text must be rejected');
+  console.log('    [PASS] DoS safety boundary verified (500 KB limit enforced).');
+
+  console.log('\n[SUMMARY] ALL 13 ZTDS MCP SERVER TESTS PASSED (100% CONFORMANCE).\n');
 }
 
 runTests().catch((err) => {

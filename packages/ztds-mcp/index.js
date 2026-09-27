@@ -22,31 +22,57 @@ const SERVER_NAME = 'ztds-mcp';
 const SERVER_VERSION = '1.0.0';
 const PROTOCOL_VERSION = '2024-11-05';
 
+// Security & Resource Constraints (DoS Prevention)
+const MAX_INPUT_LENGTH = 500000; // 500 KB per turn
+const MAX_SESSIONS = 500;        // Maximum concurrent active sessions
+const MAX_TOKENS_PER_SESSION = 5000;
+
 // Universal PII & Secrets Regex Patterns (Free Baseline per RFC v1.0)
-// Ordered by pattern specificity to avoid false positives (e.g. phone consuming secret digits)
+// Ordered strictly by pattern specificity to prevent false-positive masking
 const PATTERNS = {
   API_SECRET: /\b(?:sk-(?:ant-|proj-)?[a-zA-Z0-9_-]{20,64}|ghp_[a-zA-Z0-9]{36}|AIza[0-9A-Za-z-_]{35}|eyJ[a-zA-Z0-9_-]{20,}\.[a-zA-Z0-9_-]{20,}\.[a-zA-Z0-9_-]{20,})\b/g,
   EMAIL: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,24}\b/g,
-  CREDIT_CARD: /\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12})\b/g,
-  IBAN: /\b[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}(?:[A-Z0-9]?){0,16}\b/g,
+  CREDIT_CARD: /(?<!\d)(?:4\d{3}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}|5[1-5]\d{2}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}|3[47]\d{2}[-\s]?\d{6}[-\s]?\d{5}|6(?:011|5\d{2})[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4})(?!\d)/g,
+  IBAN: /\b[A-Z]{2}[0-9]{2}[A-Z0-9]{11,26}\b/g,
   SSN: /\b\d{3}-\d{2}-\d{4}\b/g,
   IPV4: /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/g,
-  PHONE: /(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?/g
+  PHONE: /(?<!\w)(?:\+\d{1,3}[-.\s]?)?(?:\(\d{2,4}\)[-.\s]?|\d{2,4}[-.\s])\d{2,4}[-.\s]?\d{3,4}(?: *(?:ext|x|ext\.) *\d{1,5})?(?!\w)/g
 };
 
 // Volatile in-memory token storage (Theorem 2 Ephemeral RAM Isolation)
-// Format: sessionId -> { tokenToCleartext: Map, cleartextToToken: Map, counters: Object }
+// Format: sessionId -> { tokenToCleartext: Map, cleartextToToken: Map, counters: Object, lastAccessed: number }
 const sessionStores = new Map();
 
 function getSessionStore(sessionId = 'default') {
-  if (!sessionStores.has(sessionId)) {
-    sessionStores.set(sessionId, {
-      tokenToCleartext: new Map(),
-      cleartextToToken: new Map(),
-      counters: {}
-    });
+  if (sessionStores.has(sessionId)) {
+    const store = sessionStores.get(sessionId);
+    store.lastAccessed = Date.now();
+    return store;
   }
-  return sessionStores.get(sessionId);
+
+  // Evict oldest session if limit reached (LRU)
+  if (sessionStores.size >= MAX_SESSIONS) {
+    let oldestKey = null;
+    let oldestTime = Infinity;
+    for (const [key, store] of sessionStores) {
+      if (store.lastAccessed < oldestTime) {
+        oldestTime = store.lastAccessed;
+        oldestKey = key;
+      }
+    }
+    if (oldestKey) {
+      resetSessionStore(oldestKey);
+    }
+  }
+
+  const newStore = {
+    tokenToCleartext: new Map(),
+    cleartextToToken: new Map(),
+    counters: {},
+    lastAccessed: Date.now()
+  };
+  sessionStores.set(sessionId, newStore);
+  return newStore;
 }
 
 function resetSessionStore(sessionId) {
@@ -70,6 +96,11 @@ function resetSessionStore(sessionId) {
  * Sanitizes input text, substituting sensitive matches with deterministic surrogate tokens.
  */
 function sanitizeText(text, sessionId = 'default') {
+  if (typeof text !== 'string') return { sanitizedText: '', entitiesMasked: 0, categories: [], executionUs: 0 };
+  if (text.length > MAX_INPUT_LENGTH) {
+    throw new Error(`Input length (${text.length} chars) exceeds maximum safety limit (${MAX_INPUT_LENGTH} chars)`);
+  }
+
   const startUs = process.hrtime.bigint();
   const store = getSessionStore(sessionId);
   let sanitized = text;
@@ -84,8 +115,16 @@ function sanitizeText(text, sessionId = 'default') {
       if (store.cleartextToToken.has(match)) {
         return store.cleartextToToken.get(match);
       }
+      if (store.cleartextToToken.size >= MAX_TOKENS_PER_SESSION) {
+        return match; // Prevent memory exhaustion
+      }
       store.counters[category] = (store.counters[category] || 0) + 1;
-      const token = `[${category}_TOKEN_${store.counters[category]}]`;
+      let token = `[${category}_TOKEN_${store.counters[category]}]`;
+      // Prevent token collision if input text already contains this literal token
+      while (text.includes(token)) {
+        store.counters[category]++;
+        token = `[${category}_TOKEN_${store.counters[category]}]`;
+      }
       store.cleartextToToken.set(match, token);
       store.tokenToCleartext.set(token, match);
       totalMasked++;
@@ -109,19 +148,32 @@ function sanitizeText(text, sessionId = 'default') {
 
 /**
  * Restores cleartext values into LLM-generated text using volatile session tokens.
+ * Uses atomic single-pass regex replacement to completely eliminate second-order token injection cascades.
  */
 function restoreText(text, sessionId = 'default') {
+  if (typeof text !== 'string') return { restoredText: '', tokensRestored: 0, executionUs: 0 };
+
   const startUs = process.hrtime.bigint();
   const store = getSessionStore(sessionId);
-  let restored = text;
-  let totalRestored = 0;
 
-  for (const [token, cleartext] of store.tokenToCleartext) {
-    if (restored.includes(token)) {
-      restored = restored.split(token).join(cleartext);
-      totalRestored++;
-    }
+  if (store.tokenToCleartext.size === 0) {
+    return {
+      restoredText: text,
+      tokensRestored: 0,
+      executionUs: 0
+    };
   }
+
+  // Build atomic single-pass replacement pattern
+  const escapedTokens = Array.from(store.tokenToCleartext.keys())
+    .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const tokenRegex = new RegExp(escapedTokens.join('|'), 'g');
+
+  let totalRestored = 0;
+  const restored = text.replace(tokenRegex, (match) => {
+    totalRestored++;
+    return store.tokenToCleartext.get(match);
+  });
 
   const endUs = process.hrtime.bigint();
   const durationUs = Number(endUs - startUs) / 1000;
