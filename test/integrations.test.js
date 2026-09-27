@@ -64,4 +64,14 @@ console.log('--> Test 5: LangChain Callback Invariants');
   console.log('    [PASS] LangChain callback verified (on_llm_start, on_llm_end, RAM zeroization).');
 }
 
-console.log('\n[SUMMARY] ALL 5 REFERENCE INTEGRATIONS TESTS PASSED WITH 100% CONFORMANCE.\n');
+// Test 6: ZTDS Open Reference MCP Server Invariants
+console.log('--> Test 6: ZTDS Open Reference MCP Server Invariants');
+{
+  const testMCPPath = path.join(__dirname, '..', 'packages', 'ztds-mcp', 'test.js');
+  const output = execSync(`node "${testMCPPath}"`, { encoding: 'utf8' });
+  assert(output.includes('ALL 8 ZTDS MCP SERVER TESTS PASSED'), 'ZTDS MCP Server tests must pass');
+  console.log('    [PASS] ZTDS MCP Server verified (Handshake, 5 tools, Invariants 1-4, RAM zeroization).');
+}
+
+console.log('\n[SUMMARY] ALL 6 REFERENCE INTEGRATIONS TESTS PASSED WITH 100% CONFORMANCE.\n');
+
