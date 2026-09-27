@@ -75,7 +75,8 @@ Feedback and critique on the RFC and threat model are warmly welcome!
 
 ### Target 1: LangChain (Python & TypeScript)
 * **Target Repo:** `langchain-ai/langchain`
-* **Live Pull Request:** https://github.com/langchain-ai/langchain/pull/40850 (PR #40850)
+* **Historical Pull Requests:** https://github.com/langchain-ai/langchain/pull/40850 (PR #40850), https://github.com/langchain-ai/langchain/pull/40856 (PR #40856 / Issue #40855)
+* **Status:** Core repo triage bot marked as external/not_planned; canonical integration path targeted to `langchain-community`
 * **Fork Branch:** `moxno/langchain:feat/ztds-zero-egress-callback`
 * **Feature:** ZTDS Zero-Egress Callback Handler
 * **PR Title:** `feat(callbacks): add ZTDS zero-trust in-memory sanitizing callback (IETF draft-02)`
@@ -89,7 +90,8 @@ Feedback and critique on the RFC and threat model are warmly welcome!
 
 ### Target 3: CrewAI (Python)
 * **Target Repo:** `crewAIInc/crewAI`
-* **Live Pull Request:** https://github.com/crewAIInc/crewAI/pull/7785 (PR #7785)
+* **Live Pull Request:** https://github.com/crewAIInc/crewAI/pull/7790 (PR #7790, replaces #7785)
+* **Associated Issue:** https://github.com/crewAIInc/crewAI/issues/7789 (Issue #7789)
 * **Fork Branch:** `moxno/crewAI:feat/ztds-zero-egress-sanitizer`
 * **Feature:** ZTDS Agent Boundary Guard & Sanitizer Tool
 * **PR Title:** `feat(tools): add ZTDS zero-trust in-memory sanitizer tool (IETF draft-02)`
