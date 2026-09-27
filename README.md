@@ -112,7 +112,7 @@ If `ztds-audit` detects sensitive credentials, unmasked PII, or third-party tele
 | Tier | Package | License | Role & Deployment |
 | :--- | :--- | :--- | :--- |
 | **Open Reference Core** | `@ztds/core` | Apache-2.0 | Vendor-neutral in-memory TypeScript/JS baseline. Universal regex rules (Email, Phone, PAN, SSN, API Keys). [Docs](https://ztds.ai/sdk/) |
-| **Certified Pioneer SDK** | `@privacyscrubber/sdk` | Commercial / Air-Gapped | High-throughput WASM engine with 30 high-ACV industry profiles (HIPAA, PCI-DSS, Legal FRE-502), multi-threaded pipeline bindings, offline Ed25519 node licensing. [Get SDK](https://privacyscrubber.com/pricing/?tier=SDK) |
+| **Certified Pioneer SDK** | `@privacyscrubber/sdk` | Commercial / Air-Gapped | High-throughput WASM engine with 30 high-ACV industry profiles (HIPAA, PCI-DSS, Legal FRE-502), multi-threaded pipeline bindings, offline Ed25519 node licensing. [Get SDK](https://ztds.ai/sdk/) |
 | **Air-Gapped IDE MCP** | `@privacyscrubber/mcp-server` | Commercial / Stdio | Stdio MCP proxy for Cursor, Windsurf, Claude Code, and autonomous developer agents. [MCP Guide](https://ztds.ai/sdk/) |
 
 ---
@@ -120,7 +120,7 @@ If `ztds-audit` detects sensitive credentials, unmasked PII, or third-party tele
 ## 5. Ecosystem Demarcation & Neutrality
 
 - **ZTDS.ai (`ztds.ai`)**: Independent, vendor-neutral open standard, certification authority, and technical consortium. Governs RFC v1.0 specifications under Apache 2.0 / CC BY 4.0.
-- **PrivacyScrubber (`privacyscrubber.com`)**: Commercial reference implementation and pioneer engine provider.
+- **PrivacyScrubber Engine (`@privacyscrubber/sdk` & `@privacyscrubber/mcp-server`)**: Commercial reference implementation and pioneer engine provider.
 
 ---
 

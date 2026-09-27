@@ -597,7 +597,7 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
             </div>
           </div>
           <div class="mt-5 pt-3 border-t border-slate-200 font-mono text-[11px] text-slate-500">
-            <code>privacyscrubber.com</code>
+            <code>@privacyscrubber/sdk</code>
           </div>
         </div>
 
@@ -2638,19 +2638,18 @@ jobs:
           const email = (document.getElementById('checkoutEmail')?.value || '').trim();
           const domain = (document.getElementById('checkoutDomain')?.value || '').trim();
 
-          // If explicit direct Paddle parameter is provided (?paddle_direct=true), allow in-modal Paddle overlay
-          if (urlParams.get('paddle_direct') === 'true' && window.Paddle && window.Paddle.Checkout && typeof Paddle.Checkout.open === 'function') {
-            if (!company || company.length < 2) {
-              alert('Please enter your company or organization name.');
-              document.getElementById('checkoutCompany')?.focus();
-              return;
-            }
-            if (!email || !email.includes('@')) {
-              alert('Please enter a valid developer or billing email address.');
-              document.getElementById('checkoutEmail')?.focus();
-              return;
-            }
+          if (!company || company.length < 2) {
+            alert('Please enter your company or organization name.');
+            document.getElementById('checkoutCompany')?.focus();
+            return;
+          }
+          if (!email || !email.includes('@')) {
+            alert('Please enter a valid developer or billing email address.');
+            document.getElementById('checkoutEmail')?.focus();
+            return;
+          }
 
+          if (window.Paddle && window.Paddle.Checkout && typeof Paddle.Checkout.open === 'function') {
             const tierPrices = activeEnvConfig[currentTier] || activeEnvConfig.developer_pro;
             const priceId = currentInterval === 'annual' ? tierPrices.annual : tierPrices.monthly;
             Paddle.Checkout.open({
@@ -2667,19 +2666,8 @@ jobs:
             return;
           }
 
-          // Canonical Commercial Flow: Unified billing via PrivacyScrubber (Implementation #001)
-          const targetUrl = new URL('https://privacyscrubber.com/pricing/');
-          const targetTier = currentTier === 'developer_pro' ? 'SDK' : 'TEAMS';
-          targetUrl.searchParams.set('tier', targetTier);
-          targetUrl.searchParams.set('interval', currentInterval);
-          if (company) targetUrl.searchParams.set('company', company);
-          if (email) targetUrl.searchParams.set('email', email);
-          if (domain) targetUrl.searchParams.set('domain', domain);
-          targetUrl.searchParams.set('utm_source', 'ztds.ai');
-          targetUrl.searchParams.set('utm_medium', 'consortium_ref');
-          targetUrl.searchParams.set('utm_campaign', 'sdk_pricing');
-
-          window.open(targetUrl.toString(), '_blank', 'noopener,noreferrer');
+          // Fallback if Paddle script is blocked: direct procurement dispatch
+          window.location.href = `mailto:support@ztds.ai?subject=ZTDS%20SDK%20License%20Procurement%20(${encodeURIComponent(company)})&body=Company:%20${encodeURIComponent(company)}%0AEmail:%20${encodeURIComponent(email)}%0ATier:%20${encodeURIComponent(currentTier)}%0AInterval:%20${encodeURIComponent(currentInterval)}`;
         });
       }
 
@@ -2896,9 +2884,9 @@ jobs:
           </button>
 
           <div class="pt-2 text-center">
-            <span class="text-[11px] text-slate-500">Need corporate wire transfer, PO, or PayPal?</span>
-            <a href="https://privacyscrubber.com/pricing/?tier=SDK&interval=annual&utm_source=ztds.ai&utm_medium=sdk_modal&utm_campaign=checkout_fallback" target="_blank" rel="noopener" class="text-[11px] text-emerald-700 font-semibold hover:underline ml-1">
-              Checkout on PrivacyScrubber.com &rarr;
+            <span class="text-[11px] text-slate-500">Need corporate wire transfer, PO, or custom terms?</span>
+            <a href="mailto:support@ztds.ai?subject=ZTDS%20Enterprise%20Procurement%20Inquiry" class="text-[11px] text-emerald-700 font-semibold hover:underline ml-1">
+              Contact Enterprise Procurement &rarr;
             </a>
           </div>
         </div>
