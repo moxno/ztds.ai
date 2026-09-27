@@ -3,7 +3,11 @@ Unit tests for CrewAI ZTDS Sanitizer Tool
 Validates 4 Core Protocol Invariants (IETF draft-sibiryakov-ztds-protocol-02)
 """
 
+import sys
+from pathlib import Path
 import unittest
+
+sys.path.insert(0, str(Path(__file__).parent))
 from ztds_sanitizer_tool import ZTDSSanitizerTool
 
 
@@ -60,6 +64,16 @@ class TestCrewAIZTDSTool(unittest.TestCase):
         self.assertIn("[CREDIT_CARD_TOKEN_1]", sanitized)
         self.assertIn("[API_SECRET_TOKEN_1]", sanitized)
 
+        restored = self.tool.restore(sanitized, session_id=session_id)
+        self.assertEqual(restored, raw)
+
+    def test_token_collision_avoidance(self):
+        session_id = "agent-task-collision"
+        raw = "Contact alice@example.com but preserve [EMAIL_TOKEN_1] literal"
+        sanitized = self.tool._run(raw, session_id=session_id)
+        self.assertIn("[EMAIL_TOKEN_2]", sanitized)
+        self.assertIn("[EMAIL_TOKEN_1]", sanitized)
+        self.assertEqual(sanitized, "Contact [EMAIL_TOKEN_2] but preserve [EMAIL_TOKEN_1] literal")
         restored = self.tool.restore(sanitized, session_id=session_id)
         self.assertEqual(restored, raw)
 
