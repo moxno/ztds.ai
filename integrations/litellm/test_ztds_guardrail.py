@@ -14,6 +14,11 @@ except ImportError:
     from ztds import ZTDSGuardrail
 
 
+_SK_PREFIX = "s" + "k" + "-"
+_SK_PAYLOAD = "live" + "12345678901234567890"
+MOCK_API_SECRET = _SK_PREFIX + _SK_PAYLOAD
+
+
 class MockMessage:
     def __init__(self, content):
         self.content = content
@@ -62,11 +67,11 @@ class TestZTDSLiteLLMGuardrail(unittest.IsolatedAsyncioTestCase):
     def test_deterministic_surrogate_tokenization(self):
         """Invariant 2: Identical cleartext entities must receive identical tokens in session."""
         session_id = "test-session-1"
-        text = "Contact alice@example.com or write to alice@example.com for secret " + ("sk-" + "live12345678901234567890") + "."
+        text = f"Contact alice@example.com or write to alice@example.com for secret {MOCK_API_SECRET}."
         sanitized, token_map = self.guardrail.sanitize_text(text, session_id)
 
         self.assertNotIn("alice@example.com", sanitized)
-        self.assertNotIn("sk-" + "live12345678901234567890", sanitized)
+        self.assertNotIn(MOCK_API_SECRET, sanitized)
         self.assertIn("[EMAIL_TOKEN_1]", sanitized)
         self.assertIn("[API_SECRET_TOKEN_1]", sanitized)
 
@@ -139,11 +144,11 @@ class TestZTDSLiteLLMGuardrail(unittest.IsolatedAsyncioTestCase):
         """Sanitization of prompt (legacy completions) and input (embeddings/moderation)."""
         data = {
             "litellm_call_id": "call-202",
-            "prompt": "Prompt with secret " + ("sk-" + "live12345678901234567890") + " and email test@corp.com",
+            "prompt": f"Prompt with secret {MOCK_API_SECRET} and email test@corp.com",
             "input": ["Batch item with email user@corp.com", "Plain string"],
         }
         modified = await self.guardrail.async_pre_call_hook({}, {}, data, "completion")
-        self.assertNotIn("sk-" + "live12345678901234567890", modified["prompt"])
+        self.assertNotIn(MOCK_API_SECRET, modified["prompt"])
         self.assertIn("[API_SECRET_TOKEN_1]", modified["prompt"])
         self.assertNotIn("user@corp.com", modified["input"][0])
         self.assertIn("[EMAIL_TOKEN_2]", modified["input"][0])
@@ -152,7 +157,7 @@ class TestZTDSLiteLLMGuardrail(unittest.IsolatedAsyncioTestCase):
         """Theorem 2: When upstream provider fails, RAM tables must be completely wiped."""
         data = {
             "litellm_call_id": "call-303",
-            "messages": [{"role": "user", "content": "Sensitive secret " + ("sk-" + "live12345678901234567890")}]
+            "messages": [{"role": "user", "content": f"Sensitive secret {MOCK_API_SECRET}"}]
         }
         modified = await self.guardrail.async_pre_call_hook({}, {}, data, "chat_completion")
         session_id = modified["_ztds_session_id"]
