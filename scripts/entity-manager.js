@@ -225,7 +225,7 @@ function runAudit() {
   for (const company of companiesData.companies) {
     totalEntities++;
     const slug = company.slug;
-    const isProductionEntity = (company.tier && (company.tier.includes('Founding') || company.tier.includes('Evaluator') || company.tier.includes('Pioneer')));
+    const isProductionEntity = true;
     const errors = [];
 
     // Facet 2: Standalone Profile (for production verified entities)

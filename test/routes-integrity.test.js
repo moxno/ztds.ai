@@ -38,6 +38,14 @@ const prodPages = [
   'fellows/ilya-sibiryakov/index.html',
   'fellows/cliford-fanyuy/index.html',
   'companies/brandmeweb/index.html',
+  'companies/privacyscrubber/index.html',
+  'companies/apex-health-ai/index.html',
+  'companies/lex-veritas-legal/index.html',
+  'companies/aegis-fintech/index.html',
+  'companies/cloudscale-saas/index.html',
+  'companies/valkyrie-defense/index.html',
+  'companies/cybershield-siem/index.html',
+  'companies/talenthub-hr/index.html',
   'case-studies/index.html',
   '404.html'
 ];
