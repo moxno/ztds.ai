@@ -6,7 +6,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22058770.svg)](https://doi.org/10.5281/zenodo.22058770)
 [![Zero Network Egress](https://img.shields.io/badge/Zero_Network_Egress-Attested-brightgreen.svg)](https://ztds.ai)
 
-Open-source reference implementation of the **Zero-Trust Data Sanitization (ZTDS)** protocol for the Model Context Protocol (MCP) ecosystem. Conforms to [RFC v1.0](https://ztds.ai/standard/) and IETF draft `draft-sibiryakov-ztds-protocol-02`.
+Open-source reference implementation of the **Zero-Trust Data Sanitization (ZTDS)** protocol for the Model Context Protocol (MCP) ecosystem. Conforms to the open architectural specification and IETF Internet-Draft `draft-sibiryakov-ztds-protocol-00`.
 
 Runs **100% locally** with zero network calls, zero external subprocessors, zero disk writes, and zero telemetry.
 

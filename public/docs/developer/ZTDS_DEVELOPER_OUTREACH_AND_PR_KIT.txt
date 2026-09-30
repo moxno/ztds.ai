@@ -97,11 +97,11 @@ Feedback and critique on the RFC and threat model are warmly welcome!
 * **PR Title:** `feat(tools): add ZTDS zero-trust in-memory sanitizer tool (IETF draft-02)`
 
 ### Target 4: Model Context Protocol (FastMCP / Claude Desktop)
-* **Target Repo:** `punkpeye/fastmcp`
-* **Live Pull Request:** https://github.com/punkpeye/fastmcp/pull/402 (PR #402)
-* **Fork Branch:** `moxno/fastmcp:feat/ztds-zero-egress-middleware`
-* **Feature:** ZTDS Stdio & HTTP Middleware
-* **PR Title:** `feat(middleware): add ZTDS zero-trust in-memory sanitization middleware (IETF draft-02)`
+* **Target Ecosystem:** Model Context Protocol (MCP) & FastMCP Servers
+* **Architecture:** Standalone Zero-Invasive Security Proxy / Stdio Gateway (`@privacyscrubber/mcp-server`)
+* **Historical Pull Request:** https://github.com/punkpeye/fastmcp/pull/402 (PR #402, Closed by maintainer — core middleware out of scope, standalone wrapper recommended)
+* **Canonical Integration Path:** External Stdio Gateway & FastMCP Tool Wrapper via `@privacyscrubber/sdk`
+* **Distribution Channels:** Glama.ai, Smithery.ai, Claude Desktop 1-Click Config
 
 ### Target 5: LiteLLM (Python)
 * **Target Repo:** `BerriAI/litellm`
