@@ -3,7 +3,7 @@
 **Target Audience:** Open-Source Maintainers, AI Engineers, RAG Architects, InfoSec Hackers  
 **Standards Authority:** ZTDS AI Consortium & BrandMeWeb Ecosystem  
 **Repository:** https://github.com/moxno/ztds.ai  
-**Standards Track:** IETF Internet-Draft `draft-sibiryakov-ztds-protocol-00`  
+**Standards Track:** IETF Internet-Draft `draft-sibiryakov-ztds-protocol-02` (https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/)  
 **Web Crypto Validator:** https://ztds.ai/verify/  
 
 ---
@@ -32,15 +32,16 @@ ZTDS defines 4 mathematical and architectural invariants:
 4. Zero Subprocessors: Eliminates vendor data processor liability under GDPR Art. 28.
 
 Standards & Independent Verification:
-- IETF Internet-Draft: draft-sibiryakov-ztds-protocol-00 (RFC 8785 canonical JSON, RFC 8032 Ed25519 signatures): https://ztds.ai/docs/ietf/draft-sibiryakov-ztds-protocol-00.txt
+- IETF Internet-Draft: draft-sibiryakov-ztds-protocol-02 published in official IETF Datatracker: https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/
 - Independent Security Audit: White-box security audit completed with a Clean Bill of Health (0 Critical, 0 High vulnerabilities across 5 testing modules): https://ztds.ai/docs/security/ZTDS_Independent_Security_Audit_Report.txt
 - Client-Side Web Crypto Validator: https://ztds.ai/verify/ runs 100% in browser RAM using the SubtleCrypto API. You can drop any .cert token into the validator with your WiFi/Ethernet disconnected (Airplane Mode) and verify the Ed25519 signature with zero bytes egress.
+- Patent Pending: Israel Patent Office Application IL 331905 (WIPO DAS Access Code: B17B)
 
 CLI Auditor:
 You can audit your local codebase or RAG pipeline right now in <10ms:
 $ npx ztds-audit --dir ./src
 
-Code, specifications, and reference blueprints (LangChain, LlamaIndex, CrewAI, MCP) are live at https://ztds.ai/sdk/
+Code, specifications, and reference blueprints (LangChain, LlamaIndex, CrewAI, FastMCP, LiteLLM) are live at https://ztds.ai/sdk/
 
 Feedback and critique on the RFC and threat model are warmly welcome!
 ```
@@ -70,33 +71,44 @@ Feedback and critique on the RFC and threat model are warmly welcome!
 
 ---
 
-## 3. GitHub Pull Request Kit for Top Repositories
+## 3. GitHub Pull Request Kit for Top 5 Frameworks
 
 ### Target 1: LangChain (Python & TypeScript)
 * **Target Repo:** `langchain-ai/langchain`
-* **Feature:** ZTDS Zero-Egress Middleware Callback
-* **PR Title:** `feat(community): add ZTDS zero-trust in-memory sanitization callback (IETF draft-sibiryakov-ztds-00)`
-* **PR Description:**
-  > This PR introduces a ZTDS-compliant in-memory callback for LangChain pipelines.
-  > It intercepts prompt strings before WAN socket dispatch, replaces sensitive entities with deterministic reversible surrogates in RAM, and restores cleartext upon model return.
-  > - Conforms to IETF `draft-sibiryakov-ztds-protocol-00`
-  > - In-memory execution: 0 external network requests
-  > - Includes automated invariant unit test (`npx ztds-audit`)
+* **Historical Pull Requests:** https://github.com/langchain-ai/langchain/pull/40850 (PR #40850), https://github.com/langchain-ai/langchain/pull/40856 (PR #40856 / Issue #40855)
+* **Status:** Core repo triage bot marked as external/not_planned; canonical integration path targeted to `langchain-community`
+* **Fork Branch:** `moxno/langchain:feat/ztds-zero-egress-callback`
+* **Feature:** ZTDS Zero-Egress Callback Handler
+* **PR Title:** `feat(callbacks): add ZTDS zero-trust in-memory sanitizing callback (IETF draft-02)`
 
 ### Target 2: LlamaIndex (Python)
 * **Target Repo:** `run-llama/llama_index`
-* **Feature:** ZTDS Ingestion Pre-Processor
-* **PR Title:** `feat(ingestion): add ZTDS air-gapped sanitization node to prevent RAG vector database poisoning`
-* **PR Description:**
-  > Implements an air-gapped `ZTDSNodePostprocessor` that sanitizes clinical PHI and corporate secrets before embeddings are computed and indexed.
-  > Prevents irreversible vector database poisoning under GDPR Article 17 (Right to Erasure).
+* **Live Pull Request:** https://github.com/run-llama/llama_index/pull/23266 (PR #23266)
+* **Fork Branch:** `moxno/llama_index:feat/ztds-zero-egress-postprocessor`
+* **Feature:** ZTDS Ingestion Pre-Processor & Node Postprocessor
+* **PR Title:** `feat(postprocessor): add ZTDS zero-trust in-memory node postprocessor (IETF draft-02)`
 
-### Target 3: Model Context Protocol (FastMCP / Claude Desktop)
-* **Target Repo:** `punkpeye/fastmcp` or `modelcontextprotocol/servers`
-* **Feature:** ZTDS Stdio Middleware
-* **PR Title:** `feat(middleware): add ZTDS zero-trust stdio proxy for Cursor and Claude Desktop`
-* **PR Description:**
-  > Wraps MCP stdio tool calls in a local in-memory tokenization layer. Raw developer secrets (API keys, connection strings) never enter the model's context window.
+### Target 3: CrewAI (Python)
+* **Target Repo:** `crewAIInc/crewAI`
+* **Live Pull Request:** https://github.com/crewAIInc/crewAI/pull/7790 (PR #7790, replaces #7785)
+* **Associated Issue:** https://github.com/crewAIInc/crewAI/issues/7789 (Issue #7789)
+* **Fork Branch:** `moxno/crewAI:feat/ztds-zero-egress-sanitizer`
+* **Feature:** ZTDS Agent Boundary Guard & Sanitizer Tool
+* **PR Title:** `feat(tools): add ZTDS zero-trust in-memory sanitizer tool (IETF draft-02)`
+
+### Target 4: Model Context Protocol (FastMCP / Claude Desktop)
+* **Target Ecosystem:** Model Context Protocol (MCP) & FastMCP Servers
+* **Architecture:** Standalone Zero-Invasive Security Proxy / Stdio Gateway (`@privacyscrubber/mcp-server`)
+* **Historical Pull Request:** https://github.com/punkpeye/fastmcp/pull/402 (PR #402, Closed by maintainer — core middleware out of scope, standalone wrapper recommended)
+* **Canonical Integration Path:** External Stdio Gateway & FastMCP Tool Wrapper via `@privacyscrubber/sdk`
+* **Distribution Channels:** Glama.ai, Smithery.ai, Claude Desktop 1-Click Config
+
+### Target 5: LiteLLM (Python)
+* **Target Repo:** `BerriAI/litellm`
+* **Live Pull Request:** https://github.com/BerriAI/litellm/pull/43353 (PR #43353)
+* **Fork Branch:** `moxno/litellm:feat/ztds-zero-egress-guardrail`
+* **Feature:** ZTDS Pre-Call and Post-Call CustomGuardrail Hook
+* **PR Title:** `feat(guardrails): add ZTDS zero-trust in-memory sanitization guardrail (IETF draft-02)`
 
 ---
 
@@ -118,7 +130,7 @@ For any open-source or commercial tool in the registry:
 
 ### Verification Link:
 ```markdown
-[Verify Ed25519 Certificate](https://ztds.ai/verify/?token=ZTDS-CERT-v1...)
+[Verify Ed25519 Certificate](https://ztds.ai/verify/#cert=ZTDS-CERT-v1.eyJhdXRob3JpdHkiOiJaVERTIEFJIENvbnNvcnRpdW0gJiBTdGFuZGFyZHMgQXV0aG9yaXR5IChCcmFuZE1lV2ViIEVjb3N5c3RlbSkiLCJiYWRnZV91cmwiOiJodHRwczovL3p0ZHMuYWkvYmFkZ2UvcHJpdmFjeXNjcnViYmVyLXdlYi5zdmciLCJjZXJ0aWZpY2F0ZV9pZCI6IlpURFMtQ0VSVC0yMDI2LVBSSVZBQ1lTQ1JVQkJFUi1XRUItRDAyREM2In0...)
 ```
 
 ---
@@ -142,9 +154,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
       - name: Run ZTDS Invariant Scanner
-        run: npx ztds-audit --dir ./src --strict
+        uses: moxno/ztds.ai@main
+        with:
+          dir: './src'
+          strict: 'true'
+          cert: 'true'
 ```
