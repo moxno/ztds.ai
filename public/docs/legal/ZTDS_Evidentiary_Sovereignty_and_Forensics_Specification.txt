@@ -1,0 +1,165 @@
+# ZTDS.ai — Evidentiary Sovereignty and Forensics Specification
+## Normative Conformance Specification for Crypto Asset Investigations, AML Intelligence and Judicial Chain of Custody (RFC v1.0 Extension)
+
+Standards Authority: ZTDS AI Consortium & Standards Authority (BrandMeWeb Ecosystem)
+Lead Author & Chief Architect: Ilya Sibiryakov (ORCID: 0009-0002-0642-5985)
+Document ID: ZTDS-SPEC-2026-FORENSIC-V1
+Status: Canonical Technical & Legal Specification · Standards Track Extension
+Effective Date: 02 October 2026
+Permanent Repository Anchor: https://ztds.ai/docs/legal/ZTDS_Evidentiary_Sovereignty_and_Forensics_Specification.txt
+
+================================================================================
+1. EXECUTIVE SUMMARY & THE WEB3 ARCHITECTURAL PARADOX
+================================================================================
+
+The foundational ethos of decentralized cryptography and blockchain intelligence
+is encapsulated in a single non-negotiable axiom: "Don't trust, verify." In the
+financial crime, anti-money laundering (AML), and crypto-forensic domains, no
+certified investigator would ever entrust private keys, investigative clusters,
+or seed phrases to unverified third-party promises.
+
+Yet, with the rapid enterprise adoption of Generative Artificial Intelligence (GAI)
+and autonomous agent workflows, the industry has encountered a profound systemic
+paradox:
+1. Forensic analysts, compliance officers, and financial intelligence units (FIUs)
+   paste raw suspect wallet addresses, unconfirmed transaction links, peel-chain
+   graphs, and confidential Suspicious Activity Report (SAR / STR) drafts
+   directly into external cloud-hosted Large Language Models (e.g., OpenAI,
+   Microsoft Azure, Anthropic).
+2. Organizations rely upon corporate Data Processing Agreements (DPAs) and
+   administrative settings (such as "do not train on customer data") as
+   substitute security perimeters.
+3. In doing so, organizations surrender Evidentiary Sovereignty—physically
+   transmitting unadjudicated suspect identifiers, proprietary cluster tags, and
+   investigative working hypotheses into multi-tenant remote memory outside local
+   jurisdictional custody.
+
+This specification formalizes the ZTDS Evidentiary Sovereignty Profile
+(ZTDS-FORENSIC), establishing mathematical and operational requirements that
+enable investigators to leverage the full reasoning and topological intelligence
+of leading language models while guaranteeing absolute zero data egress
+(Delta Egress = 0.00 B) and providing a cryptographically verifiable
+Chain-of-Custody Docket Receipt.
+
+================================================================================
+2. THREAT MODEL: THE FOUR VECTORS OF INVESTIGATIVE DEGRADATION
+================================================================================
+
+Conforming implementations must defend against four distinct attack and exposure
+vectors:
+
+2.1. Vector 1: Unauthorized Third-Party Ingestion & Breach of Statutory Secrecy
+Under statutory financial intelligence regimes—including the US Bank Secrecy Act
+(BSA, 31 U.S.C. Section 5318(g)(2)) and equivalent international regulations—the
+unauthorized disclosure of a SAR or of the fact that an investigation is underway
+is a statutory felony ("tipping off"). Transmitting raw SAR narratives or target
+wallet clusters to commercial cloud APIs creates an external copy stored on
+third-party infrastructure, presenting direct regulatory liability.
+
+2.2. Vector 2: Subpoena & Third-Party Discovery Exposure
+In criminal prosecutions and contested civil asset forfeiture proceedings, defense
+counsel routinely subpoena external cloud service providers for all prompt logs,
+interaction histories, and model completions associated with the investigative team.
+If raw suspect addresses or draft theories were submitted to external models:
+* Defense counsel can challenge investigative bias, exploratory hallucinations,
+  or procedural irregularities.
+* Premature disclosure of unindicted co-conspirators or confidential informants
+  embedded in prompt context can compromise parallel operations.
+* A signed DPA does not shield an enterprise from federal subpoenas, national
+  security letters, or cross-border discovery orders served directly upon the
+  cloud provider.
+
+2.3. Vector 3: Evidentiary Chain of Custody Degradation
+Under US Federal Rules of Evidence (FRE 901/902), FRE 502, and international
+equivalents, evidence derived from computational processing must maintain an
+unbroken, verifiable chain of custody. When cleartext evidence is processed by
+proprietary, non-deterministic third-party black-box models:
+* The investigator cannot mathematically prove that the model did not interpolate,
+  fabricate, or cross-contaminate data with other multi-tenant enterprise sessions.
+* The integrity of the evidentiary chain is vulnerable to severe challenge
+  during cross-examination.
+
+2.4. Vector 4: On-Chain Correlation & Heuristic Re-Identification
+Masking only public keys (e.g., converting 0x71C... to [WALLET_1]) does not
+prevent re-identification if high-precision transaction amounts (e.g.,
+14.89214712 ETH) or exact block timestamps are submitted in cleartext. An
+adversary or untrusted cloud provider can query public block explorers (Etherscan,
+Mempool, Blockchain.info) and trivially recover the masked public addresses by
+matching unique floating-point outputs.
+
+================================================================================
+3. NORMATIVE CONFORMANCE REQUIREMENTS: THE FOUR FORENSIC INVARIANTS
+================================================================================
+
+To achieve and maintain ZTDS-FORENSIC accreditation, a software implementation,
+analytical agent, or investigative workbench must strictly adhere to the
+following four normative invariants:
+
+Invariant F-1: Zero External Egress of Raw Target Entities (Delta Egress = 0.00 B)
+Zero bytes of unmasked blockchain addresses, transaction hashes, smart contract
+addresses, raw private keys, SAR IDs, FIU case numbers, or cluster tags may be
+transmitted across the network interface. Sanitization must execute strictly on
+the investigator's local host in volatile RAM before socket serialization.
+
+Invariant F-2: Directed Acyclic Graph (DAG) Structural Tokenization
+The sanitization engine must substitute target entities with syntactically stable,
+context-preserving bracketed surrogates:
+* Public Addresses: [TARGET_WALLET_1], [COUNTERPARTY_WALLET_2], [INTERMEDIARY_HOP_3]
+* Transaction Hashes: [TX_HASH_1], [TX_HASH_2]
+* Clusters & Mixers: [MIXER_POOL_1], [CLUSTER_ALPHA_1]
+* Case Identifiers: [SAR_ID_1], [CASE_DOCKET_1]
+The tokenization must preserve the topological structure of fund flows (e.g.,
+peeling chains, smurfing patterns, nesting exchanges), allowing the upstream LLM
+to analyze the typology and draft investigative summaries without learning any
+cleartext identifiers. Local reconstitution occurs strictly inside local
+workstation volatile memory upon receiving the model output.
+
+Invariant F-3: Value Quantization & Temporal Clamping (Anti-Correlation)
+Conforming implementations must implement automated anti-correlation sanitization:
+1. Logarithmic Amount Binning: Floating-point transaction values must either be
+   substituted with abstract value surrogates ([TX_VALUE_1]) or clamped into
+   order-of-magnitude ranges (e.g., [RANGE_10_TO_50_ETH]).
+2. Temporal Window Clamping: Exact Unix timestamps or block heights must be mapped
+   to relative or discretized chronological intervals (e.g., [WINDOW_T0_PLUS_2H],
+   [EPOCH_2026_Q3]) to prevent block-height correlation against public ledgers.
+
+Invariant F-4: Verifiable Ephemeral In-RAM Execution
+Session mapping tables R = {(m_i, s_i)} must reside solely in non-swappable
+volatile memory (mlock or sandboxed WebAssembly linear memory). Writing session
+maps to secondary storage (disk caches, browser storage, unencrypted swap) is
+strictly prohibited. Memory zeroization must be executed immediately upon
+completion of the investigative session.
+
+================================================================================
+4. CRYPTOGRAPHIC CHAIN-OF-CUSTODY DOCKET RECEIPT (Ed25519)
+================================================================================
+
+All conforming forensic implementations must mint an asymmetric Ed25519 (RFC 8032)
+Chain-of-Custody Docket Receipt prior to dispatching prompts to external models.
+The receipt includes:
+- Canonical timestamp in UTC.
+- SHA-256 hashes of raw and sanitized payloads.
+- Quantitative audit of masked entities (wallets, TxHashes, case IDs).
+- Confirmation of active Amount Binning and Temporal Clamping.
+- Asymmetric Ed25519 digital signature verifiable offline without network access.
+
+Attaching this cryptographic receipt to a SAR filing or criminal evidence docket
+provides mathematical proof that no unadjudicated target records or confidential
+lead narratives exited local custody.
+
+================================================================================
+5. STATUTORY & REGULATORY MAPPING
+================================================================================
+
+- US Federal Rules of Evidence (FRE 901 & 902): Self-authenticating evidentiary
+  integrity; preserves admissibility under computational processing.
+- US Federal Rules of Evidence (FRE 502(b)): Prevents inadvertent waiver of
+  attorney-client and work-product privilege.
+- US Bank Secrecy Act (BSA, 31 U.S.C. Section 5318(g)(2)): Eliminates statutory
+  "tipping off" liabilities in AI-assisted suspicious activity analysis.
+- EU Anti-Money Laundering Directive (AMLD6, Directive 2018/1673): Preserves
+  strict FIU confidentiality rules.
+- EU GDPR Article 28 & Recital 26: Eliminates third-party processor status;
+  topological surrogate prompts fall outside personal data scope.
+- FATF Recommendation 15: Implements provable, risk-based AI security safeguards
+  for virtual asset service providers and law enforcement bodies.
