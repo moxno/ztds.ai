@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evidentiary Sovereignty &amp; Forensic Chain of Custody &mdash; ZTDS.ai</title>
+  <meta name="description" content="Zero-Trust Data Sanitization architecture for crypto asset investigations, blockchain forensics, AML intelligence, and judicial chain of custody. Extending Web3 trustless principles to enterprise generative AI.">
+  <link rel="canonical" href="https://ztds.ai/evidentiary-sovereignty/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Open Graph & Social Cards -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ztds.ai/evidentiary-sovereignty/">
+  <meta property="og:title" content="Evidentiary Sovereignty &amp; Forensic Chain of Custody &mdash; ZTDS.ai">
+  <meta property="og:description" content="Zero-Trust Data Sanitization architecture for crypto asset investigations, blockchain forensics, AML intelligence, and judicial chain of custody. Extending Web3 trustless principles to enterprise generative AI.">
+  <meta property="og:image" content="https://ztds.ai/badge/privacyscrubber-web.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Evidentiary Sovereignty &amp; Forensic Chain of Custody &mdash; ZTDS.ai">
+  <meta name="twitter:description" content="Zero-Trust Data Sanitization architecture for crypto asset investigations, blockchain forensics, AML intelligence, and judicial chain of custody. Extending Web3 trustless principles to enterprise generative AI.">
+  <meta name="twitter:image" content="https://ztds.ai/badge/privacyscrubber-web.svg">
+
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/styles.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://ztds.ai/evidentiary-sovereignty/#article",
+        "headline": "Evidentiary Sovereignty: Zero-Trust AI Architecture for Crypto Forensics, AML & Financial Investigations",
+        "description": "Zero-Trust Data Sanitization architecture for crypto asset investigations, blockchain forensics, AML intelligence, and judicial chain of custody. Extending Web3 trustless principles to enterprise generative AI.",
+        "url": "https://ztds.ai/evidentiary-sovereignty/",
+        "datePublished": "2026-10-02",
+        "dateModified": "2026-10-02",
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://ztds.ai/#website" },
+        "author": {
+          "@type": "Person",
+          "name": "Ilya Sibiryakov",
+          "url": "https://orcid.org/0009-0002-0642-5985",
+          "sameAs": [
+            "https://www.linkedin.com/in/ilya-sibiryakov/",
+            "https://brandmeweb.com"
+          ]
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ZTDS AI Consortium",
+          "url": "https://ztds.ai"
+        },
+        "about": [
+          "Crypto Asset Forensics",
+          "Anti-Money Laundering AML",
+          "Chain of Custody",
+          "Federal Rules of Evidence FRE 901",
+          "Zero-Trust Data Sanitization"
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ztds.ai/evidentiary-sovereignty/#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ztds.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Evidentiary Sovereignty",
+            "item": "https://ztds.ai/evidentiary-sovereignty/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://ztds.ai/evidentiary-sovereignty/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Evidentiary Sovereignty in AI-assisted crypto investigations?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Evidentiary Sovereignty is an architectural doctrine guaranteeing that sensitive targets, blockchain wallet addresses, transaction hashes, and SAR drafts remain strictly within volatile local client RAM. Outbound language models operate solely on abstract topological surrogates, ensuring zero cloud subpoena exposure and preserving an unbroken judicial chain of custody under FRE 901 and 902."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does a signed corporate DPA fail to protect investigative work-product?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A corporate Data Processing Agreement (DPA) governs commercial and civil terms between vendor and client, but provides zero protection against criminal subpoenas, discovery orders, or national security letters served directly on the cloud AI provider. Submitting unmasked target data creates a third-party discovery surface accessible to defense counsel."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does ZTDS prevent on-chain correlation and heuristic re-identification attacks?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Under the ZTDS-FORENSIC profile, masking public addresses is paired with logarithmic amount binning (e.g. mapping 14.892147 ETH to a quantized order-of-magnitude range) and temporal window clamping. This prevents adversaries or cloud model operators from triangulating the masked graph against public block explorers like Etherscan or Mempool."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">
+
+  <!-- Institutional Top Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Status -->
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-3 touch-target">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm shrink-0 aspect-square p-0.5 overflow-hidden">
+            <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none" aria-hidden="true">
+              <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+              <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
+            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+          </div>
+        </a>
+
+        <!-- Status Pill -->
+        <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
+          <span class="pulse-dot"></span>
+          <span class="font-mono text-[11px] font-semibold">ZTDS-FORENSIC &middot; CAB TRACK D</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links (7 Canonical Links) -->
+      <nav class="hidden lg:flex items-center gap-3.5 xl:gap-5 text-sm font-medium text-slate-600" id="desktop-nav">
+        <a href="/standard/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Standard</a>
+        <a href="/registry/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Registry</a>
+        <a href="/fellows/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Fellows</a>
+        <a href="/companies/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Adopters</a>
+        <a href="/scanner/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Scanner</a>
+        <a href="/sdk/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">SDK &amp; Connectors</a>
+        <a href="/ciso/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">CISO &amp; Trust</a>
+      </nav>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-3">
+        <a href="/apply/" class="btn-trust text-xs py-2 px-4 shadow-sm font-semibold whitespace-nowrap">
+          Get Certified &rarr;
+        </a>
+        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"></div>
+  <aside id="mobile-drawer" class="mobile-nav-drawer drawer" aria-label="Mobile Navigation">
+    <div class="p-6 flex flex-col h-full">
+      <div class="flex items-center justify-between pb-6 border-b border-slate-200">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center p-0.5">
+            <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none">
+              <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6"/>
+              <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6"/>
+              <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+            </svg>
+          </div>
+          <span class="font-bold text-slate-900 text-base">ZTDS.ai</span>
+        </div>
+        <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="p-2 text-slate-500 hover:text-slate-800">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="flex flex-col gap-2 py-6 text-sm font-medium text-slate-700">
+        <a href="/standard/" class="p-2.5 rounded-lg hover:bg-slate-100 transition-colors">Standard</a>
+        <a href="/registry/" class="p-2.5 rounded-lg hover:bg-slate-100 transition-colors">Registry</a>
+        <a href="/fellows/" class="p-2.5 rounded-lg hover:bg-slate-100 transition-colors">Fellows</a>
+        <a href="/companies/" class="p-2.5 rounded-lg hover:bg-slate-100 transition-colors">Adopters</a>
+        <a href="/scanner/" class="p-2.5 rounded-lg hover:bg-slate-100 transition-colors">Scanner</a>
+        <a href="/sdk/" class="p-2.5 rounded-lg hover:bg-slate-100 transition-colors">SDK &amp; Connectors</a>
+        <a href="/ciso/" class="p-2.5 rounded-lg hover:bg-slate-100 transition-colors">CISO &amp; Trust</a>
+      </nav>
+
+      <div class="mt-auto pt-6 border-t border-slate-200">
+        <a href="/apply/" class="btn-trust w-full py-2.5 text-center text-xs font-semibold block">
+          Get Certified &rarr;
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+
+    <!-- Hero Header -->
+    <div class="mb-14 text-center max-w-4xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-900 text-emerald-400 text-xs font-mono font-semibold mb-4 border border-slate-800 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        ZTDS-FORENSIC &middot; EVIDENTIARY SOVEREIGNTY SPECIFICATION
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight mb-4 leading-tight">
+        Evidentiary Sovereignty: Zero-Trust AI Architecture for Crypto Forensics &amp; AML
+      </h1>
+      <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+        Extending Web3 trustless principles to generative AI. Transform external frontier models into zero-knowledge topological processors while guaranteeing an unbroken judicial chain of custody.
+      </p>
+
+      <!-- Quick Action Buttons -->
+      <div class="mt-8 flex flex-wrap justify-center gap-3 text-xs font-mono">
+        <a href="/docs/legal/ZTDS_Evidentiary_Sovereignty_and_Forensics_Specification.txt" target="_blank" rel="noopener" class="btn-trust py-2.5 px-5 font-semibold text-xs shadow-sm">
+          Read Formal Specification (TXT) &rarr;
+        </a>
+        <a href="/certification/#track-d" class="py-2.5 px-4 rounded-lg bg-white border border-slate-200 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 shadow-sm transition-colors font-medium">
+          CAB Certification Track D
+        </a>
+        <a href="/verify/" class="py-2.5 px-4 rounded-lg bg-white border border-slate-200 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 shadow-sm transition-colors font-medium">
+          Verify Docket Receipt
+        </a>
+      </div>
+    </div>
+
+    <!-- Section 1: The Central Paradox of Web3 -->
+    <section class="mb-14">
+      <div class="p-8 sm:p-10 bg-slate-900 text-white rounded-3xl border border-slate-800 shadow-xl relative overflow-hidden">
+        <div class="max-w-3xl relative z-10">
+          <div class="text-xs font-mono text-emerald-400 font-bold uppercase tracking-widest mb-3">
+            The Fundamental Contradiction
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-4">
+            The Blockchain Industry Was Built on &ldquo;Don&rsquo;t Trust, Verify.&rdquo; Why Do Investigators Operate on Blind Faith in AI?
+          </h2>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+            No certified blockchain analyst, AML officer, or digital forensics expert would ever entrust private keys or sensitive seed phrases to a commercial third party on verbal goodwill. Yet, the moment generative AI tools entered investigative workflows, the industry experienced a collective lapse in security hygiene:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-mono text-slate-300">
+            <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
+              <span class="text-rose-400 font-bold block mb-1">01. Cleartext Ingestion</span>
+              Investigators paste raw suspect addresses, peel-chain clusters, and unconfirmed transaction hashes into cloud LLMs.
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
+              <span class="text-rose-400 font-bold block mb-1">02. Paper Shield Fallacy</span>
+              Teams assume an enterprise DPA or a &ldquo;do not train&rdquo; toggle physically shields data from subpoenas or multi-tenant leaks.
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
+              <span class="text-rose-400 font-bold block mb-1">03. Broken Custody</span>
+              Investigative work-product decrypts in remote memory outside jurisdictional custody, jeopardizing court admissibility.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Which Side Are You On? (The Two Camps Comparison Matrix) -->
+    <section class="mb-14">
+      <div class="text-center max-w-2xl mx-auto mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+          Which Side Are You On?
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-600 mt-2">
+          The institutional divergence between legacy paper compliance and verifiable architectural sovereignty.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- Side 1: Paper Compliance Card -->
+        <div class="p-8 bg-white rounded-2xl border border-rose-200 shadow-sm flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-rose-50 rounded-bl-full -z-0"></div>
+          <div class="relative z-10">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono font-bold uppercase text-rose-700 bg-rose-50 px-3 py-1 rounded-md border border-rose-200">
+                SIDE 1: PAPER COMPLIANCE
+              </span>
+              <span class="text-xs font-mono text-slate-400">&ldquo;Paper Officers&rdquo;</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">
+              The Illusion of Administrative Agreements
+            </h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-6">
+              Reliance on legal contracts, SOC 2 certificates, and vendor Data Processing Agreements (DPAs) to justify sending sensitive data into third-party cloud perimeters.
+            </p>
+
+            <div class="space-y-3 text-xs text-slate-600">
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <strong class="text-slate-900 block mb-0.5">Core Posture:</strong>
+                &ldquo;We signed an Enterprise agreement with OpenAI/Microsoft. Our legal counsel approved the DPA. Data is safe.&rdquo;
+              </div>
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <strong class="text-slate-900 block mb-0.5">Physical Reality:</strong>
+                Data physically traverses network interfaces into multi-tenant remote clusters. Cleartext payloads decrypt in remote memory subject to judicial subpoenas.
+              </div>
+              <div class="p-3.5 bg-rose-50/60 rounded-xl border border-rose-200 text-rose-900">
+                <strong class="block mb-0.5 font-bold">Judicial Consequence:</strong>
+                Subpoena to Cloud Provider vulnerability. Defense counsel can discover prompt logs, challenging investigative integrity and chain of custody.
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-100 text-xs font-mono text-slate-500">
+            Outcome: Web2 Feudalism &middot; Surrendered Sovereign Control
+          </div>
+        </div>
+
+        <!-- Side 2: Architectural Sovereignty Card -->
+        <div class="p-8 bg-white rounded-2xl border-2 border-emerald-500/80 shadow-md flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-bl-full -z-0"></div>
+          <div class="relative z-10">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono font-bold uppercase text-emerald-800 bg-emerald-50 px-3 py-1 rounded-md border border-emerald-300">
+                SIDE 2: ARCHITECTURAL SOVEREIGNTY
+              </span>
+              <span class="text-xs font-mono text-emerald-700 font-bold">&Delta;Egress &equiv; 0.00 B</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">
+              The Reality of Mathematical Invariants
+            </h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-6">
+              Security anchored in the physical laws of network architecture and non-swappable local memory. Data that never leaves the workstation cannot be leaked or subpoenaed.
+            </p>
+
+            <div class="space-y-3 text-xs text-slate-600">
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <strong class="text-slate-900 block mb-0.5">Core Posture:</strong>
+                &ldquo;Data security is enforced by network physics, not contracts. If 0.00 bytes cross the socket, breach is physically impossible.&rdquo;
+              </div>
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <strong class="text-slate-900 block mb-0.5">Physical Reality:</strong>
+                Language models act as pure topological coprocessors. Raw addresses are replaced with bijective bracketed surrogates; cleartext mapping stays in RAM.
+              </div>
+              <div class="p-3.5 bg-emerald-50/70 rounded-xl border border-emerald-200 text-emerald-950">
+                <strong class="block mb-0.5 font-bold">Judicial Consequence:</strong>
+                Complete subpoena immunity. Ed25519 Chain-of-Custody Docket Receipts establish indisputable evidentiary authenticity under FRE 901/902.
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-100 text-xs font-mono text-emerald-800 font-bold">
+            Outcome: True Cryptographic Sovereignty &middot; Not Your RAM, Not Your Data
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 3: The Three Theses of Evidentiary Sovereignty -->
+    <section class="mb-14">
+      <div class="p-8 sm:p-10 bg-white rounded-2xl border border-slate-200 shadow-sm">
+        <div class="max-w-3xl mb-8">
+          <div class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 inline-block mb-2">
+            INSTITUTIONAL DOCTRINE
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+            The Three Pillars of Evidentiary AI Security
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+            Essential foundational principles for Chief Compliance Officers, Risk Directors, and Financial Crime Investigators:
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-600 leading-relaxed">
+          
+          <div class="p-5 bg-slate-50 rounded-xl border border-slate-200 flex flex-col justify-between">
+            <div>
+              <div class="w-8 h-8 rounded-lg bg-slate-900 text-emerald-400 font-mono font-bold flex items-center justify-center mb-3">
+                1
+              </div>
+              <h3 class="text-sm font-bold text-slate-900 mb-2">
+                Paper Compliance Is Dead in the Age of Agentic AI
+              </h3>
+              <p>
+                A signed DPA provides legal recourse <em>post-factum</em>, after a breach has already occurred or logs have been subpoenaed. In high-stakes financial crime investigations, a post-breach financial penalty cannot repair a blown investigative lead or restore statutory secrecy. ZTDS operates <em>pre-factum</em> at the protocol layer, rendering data leakage physically impossible.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-200 font-mono text-[11px] text-slate-500">
+              Protocol Defense &gt; Paper Contract
+            </div>
+          </div>
+
+          <div class="p-5 bg-slate-50 rounded-xl border border-slate-200 flex flex-col justify-between">
+            <div>
+              <div class="w-8 h-8 rounded-lg bg-slate-900 text-emerald-400 font-mono font-bold flex items-center justify-center mb-3">
+                2
+              </div>
+              <h3 class="text-sm font-bold text-slate-900 mb-2">
+                Intelligence to Cloud, Data on Device
+              </h3>
+              <p>
+                Banning generative AI within investigative units is counter-productive; analysts will inevitably resort to Shadow AI to manage workload pressures. The solution is architectural: feed frontier models synthetic topological abstractions (`[TARGET_WALLET_1]`, `[INTERMEDIARY_HOP_2]`), allowing the model to draft typologies and synthesize patterns while originals remain strictly in local RAM.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-200 font-mono text-[11px] text-slate-500">
+              Topological Graph Reasoning
+            </div>
+          </div>
+
+          <div class="p-5 bg-slate-50 rounded-xl border border-slate-200 flex flex-col justify-between">
+            <div>
+              <div class="w-8 h-8 rounded-lg bg-slate-900 text-emerald-400 font-mono font-bold flex items-center justify-center mb-3">
+                3
+              </div>
+              <h3 class="text-sm font-bold text-slate-900 mb-2">
+                Evidentiary Sovereignty &amp; Chain of Custody
+              </h3>
+              <p>
+                In criminal proceedings and regulatory forfeitures, the evidentiary chain of custody is inviolable. If defense counsel proves that unmasked target links were fed into an external commercial model, the integrity of the evidence is placed in jeopardy. Under Federal Rules of Evidence 901/902, ZTDS delivers an asymmetric cryptographic docket receipt that verifies data authenticity without compromise.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-200 font-mono text-[11px] text-slate-500">
+              FRE 901/902 &middot; FRE 502 Shield
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Technical Anti-Correlation Invariants -->
+    <section class="mb-14">
+      <div class="p-8 sm:p-10 bg-white rounded-2xl border border-slate-200 shadow-sm">
+        <div class="max-w-3xl mb-8">
+          <div class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 inline-block mb-2">
+            NORMATIVE CONFORMANCE REQUIREMENTS
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+            The ZTDS-FORENSIC Conformance Invariants
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+            Eliminating both direct cleartext socket leaks and sophisticated heuristic correlation attacks against public blockchain state:
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="text-[10px] font-mono text-emerald-700 font-bold uppercase mb-1">Invariant F-1</div>
+            <div class="text-sm font-bold text-slate-900 mb-1">Zero Address Egress</div>
+            <p class="text-slate-500 leading-relaxed">
+              Base58, Bech32, and EVM hex addresses are substituted in local volatile RAM prior to network serialization. Exactly 0.00 bytes exit the host.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="text-[10px] font-mono text-emerald-700 font-bold uppercase mb-1">Invariant F-2</div>
+            <div class="text-sm font-bold text-slate-900 mb-1">DAG Topological Surrogates</div>
+            <p class="text-slate-500 leading-relaxed">
+              Maintains directed graph semantics (`[TARGET_WALLET_1]`, `[MIXER_HOP_1]`) so upstream models analyze fund-flow structure without hallucination.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="text-[10px] font-mono text-emerald-700 font-bold uppercase mb-1">Invariant F-3</div>
+            <div class="text-sm font-bold text-slate-900 mb-1">Amount &amp; Time Binning</div>
+            <p class="text-slate-500 leading-relaxed">
+              High-precision float values and exact block timestamps are quantized into logarithmic intervals, neutralizing mempool and block explorer triangulation.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <div class="text-[10px] font-mono text-emerald-700 font-bold uppercase mb-1">Invariant F-4</div>
+            <div class="text-sm font-bold text-slate-900 mb-1">In-RAM Zeroization</div>
+            <p class="text-slate-500 leading-relaxed">
+              Session mappings are confined to non-swappable volatile RAM (`mlock`), auto-purged on thread exit with zero disk or secondary storage persistence.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Cryptographic Chain-of-Custody Docket Receipt -->
+    <section class="mb-14">
+      <div class="p-8 sm:p-10 bg-slate-900 text-slate-200 rounded-2xl border border-slate-800 shadow-md">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+          <div>
+            <div class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider mb-1">
+              CRYPTOGRAPHIC EVIDENCE ARTIFACT &middot; RFC 8032 Ed25519
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold text-white">
+              Chain-of-Custody Docket Receipt Schema
+            </h2>
+          </div>
+          <a href="/verify/" class="btn-trust py-2 px-4 text-xs font-semibold whitespace-nowrap self-start md:self-auto">
+            Open Interactive Validator &rarr;
+          </a>
+        </div>
+
+        <p class="text-xs text-slate-400 mt-4 leading-relaxed max-w-3xl">
+          Conforming implementations automatically mint an asymmetric, Ed25519-signed receipt before dispatching prompts to external LLMs. This artifact can be attached directly to Suspicious Activity Reports (SAR/STR) or court exhibits as self-authenticating proof under FRE 902.
+        </p>
+
+        <!-- Code Block -->
+        <div class="mt-6 rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs overflow-x-auto text-emerald-400 leading-relaxed">
+<pre><code>{
+  <span class="text-slate-500">"$schema":</span> <span class="text-slate-300">"https://ztds.ai/schemas/v1/forensic-docket-receipt.json"</span>,
+  <span class="text-slate-500">"version":</span> <span class="text-slate-300">"ZTDS-FORENSIC-v1.0"</span>,
+  <span class="text-slate-500">"receipt_id":</span> <span class="text-slate-300">"ztds-rec-8f9c1e2b-4d6a-4c8e-9a1b-3f7d2e5a8b0c"</span>,
+  <span class="text-slate-500">"timestamp_utc":</span> <span class="text-slate-300">"2026-10-02T00:55:00.000Z"</span>,
+  <span class="text-slate-500">"attestation":</span> {
+    <span class="text-slate-500">"standard":</span> <span class="text-slate-300">"ZTDS-RFC-v1.0"</span>,
+    <span class="text-slate-500">"profile":</span> <span class="text-slate-300">"FORENSIC-AML-EVIDENTIARY"</span>,
+    <span class="text-slate-500">"egress_bytes_detected":</span> <span class="text-amber-300">0.00</span>,
+    <span class="text-slate-500">"input_payload_hash":</span> <span class="text-slate-300">"sha256:9d4e1b...3f8a"</span>,
+    <span class="text-slate-500">"sanitized_payload_hash":</span> <span class="text-slate-300">"sha256:4a7c2e...8d1f"</span>,
+    <span class="text-slate-500">"correlation_safeguards":</span> {
+      <span class="text-slate-500">"amount_binning_applied":</span> <span class="text-emerald-400">true</span>,
+      <span class="text-slate-500">"temporal_clamping_applied":</span> <span class="text-emerald-400">true</span>
+    }
+  },
+  <span class="text-slate-500">"cryptographic_signature":</span> {
+    <span class="text-slate-500">"algorithm":</span> <span class="text-slate-300">"Ed25519"</span>,
+    <span class="text-slate-500">"public_key":</span> <span class="text-slate-300">"ed25519:e4b2...8f9a"</span>,
+    <span class="text-slate-500">"signature_b64url":</span> <span class="text-slate-300">"MEQCIE3v8K...9aF1="</span>
+  }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Institutional Certification CTA Banner -->
+    <section class="mb-14">
+      <div class="p-8 sm:p-10 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div>
+          <span class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200 uppercase">
+            CERTIFICATION &amp; ACCREDITATION
+          </span>
+          <h2 class="text-2xl font-bold text-slate-900 mt-2">
+            Get Your Investigative AI Workflow Certified
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl leading-relaxed">
+            Submit your analytical pipeline or software tool for conformity assessment under the ZTDS AI Consortium CAB Track D. Receive an official cryptographic verification seal for enterprise procurement.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3 shrink-0">
+          <a href="/apply/" class="btn-trust py-3 px-6 text-xs font-semibold whitespace-nowrap shadow-sm">
+            Apply for Certification &rarr;
+          </a>
+          <a href="/certification/" class="py-3 px-4 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-mono font-medium transition-colors whitespace-nowrap">
+            View CAB Governance
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Institutional Footer -->
+  <footer class="mt-auto bg-white border-t border-slate-200 pt-16 pb-12 text-slate-600">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- 5-Column Navigation Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+        
+        <!-- Col 1: Standard Authority -->
+        <div class="lg:col-span-1 space-y-3">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 rounded-md bg-slate-900 flex items-center justify-center p-0.5">
+              <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none">
+                <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6"/>
+                <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6"/>
+                <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+              </svg>
+            </div>
+            <span class="font-bold text-slate-900 text-lg font-sans">ZTDS<span class="text-emerald-600">.ai</span></span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            The open industry standard and conformance authority for zero-trust data sanitization in enterprise AI pipelines.
+          </p>
+          <div class="text-xs text-slate-500 leading-relaxed border-t border-slate-100 pt-3">
+            Originated by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">Ilya Sibiryakov</a>.<br>
+            Stewarded by the <span class="font-semibold text-slate-700">ZTDS AI Consortium</span> as an open specification. Engineering sponsored by <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">BrandMeWeb</a>.
+          </div>
+        </div>
+
+        <!-- Col 2: Specification & RFC -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
+            <li><a href="/evidentiary-sovereignty/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Evidentiary Sovereignty &rarr;</a></li>
+            <li><a href="/certification/" class="hover:text-slate-900 transition-colors">Standardization &amp; CAB</a></li>
+            <li><a href="/whitepaper/" class="hover:text-slate-900 transition-colors">Research Whitepaper</a></li>
+            <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO &amp; DPA Exemption Memo</a></li>
+            <li><a href="/roi/" class="hover:text-slate-900 transition-colors">CISO Risk &amp; ROI Calculator</a></li>
+            <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Architecture & Tools -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/verify/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Certificate Validator &rarr;</a></li>
+            <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+            <li><a href="/inspector/" class="hover:text-slate-900 transition-colors">Interactive Pipeline Simulator</a></li>
+            <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
+            <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge &amp; Seal Foundry</a></li>
+            <li><a href="/registry/#privacyscrubber" class="hover:text-slate-900 transition-colors">Reference Implementations &rarr;</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Consortium & Governance -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/certification/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Accreditation Authority &rarr;</a></li>
+            <li><a href="/soc2/" class="hover:text-slate-900 transition-colors">SOC 2 &amp; Trust Center</a></li>
+            <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Governance &amp; Charter</a></li>
+            <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
+            <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
+            <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 5: Community & Verified -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
+            <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
+            <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+            <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
+            <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
+            <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Legal Conformance Notice Card -->
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
+          <span class="text-slate-400 font-mono text-[10px]">Patent IL 331905 &middot; WIPO DAS: B17B &middot; Trademark #182655957</span>
+        </div>
+        <p>
+          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under Israel Patent Office Application <strong>IL 331905</strong> (filed 14/09/2026, WIPO DAS Access Code: <strong>B17B</strong>, Paris Convention international priority locked through 14/09/2027). The word mark <strong>ZTDS™</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
+        </p>
+      </div>
+
+      <!-- Bottom Meta Bar -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 border-t border-slate-100 pt-6">
+        <div class="flex items-center gap-3">
+          <span>&copy; 2026 ZTDS AI Consortium.</span>
+          <span>&middot;</span>
+          <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
+        </div>
+        <div class="flex items-center gap-4 text-[11px] font-mono">
+          <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            ALL SYSTEMS VERIFIED
+          </span>
+          <span>&middot;</span>
+          <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x4E9A2B1C</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+</body>
+</html>

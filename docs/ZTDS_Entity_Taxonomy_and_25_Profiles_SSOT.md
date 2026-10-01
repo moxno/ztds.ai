@@ -277,6 +277,29 @@ The separation between `REGEX_RULES` and `PROFILE_RULES` is an immutable economi
 * **Target Personas**: Consumer users, generic AI prompt sanitization.
 * **Target Entities**: Relies purely on the zero-trust universal `REGEX_RULES` baseline (15,000 character allowance).
 
+### 4.31. Crypto Forensics, Web3 AML & Evidentiary Investigations (`crypto_forensics`)
+* **Target Personas**: Crypto AML Officers, Blockchain Forensic Analysts, Financial Intelligence Units (FIU), Risk Managers, Fraud Investigators, Sanctions Compliance Officers.
+* **Target Entities**:
+  * Blockchain Public Addresses:
+    * Bitcoin: Base58 P2PKH/P2SH (`^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$`), Bech32/Bech32m SegWit (`^bc1[a-z0-9]{39,59}$`).
+    * Ethereum & EVM Chains: Hexadecimal account & contract addresses (`^0x[a-fA-F0-9]{40}$`).
+    * Solana: Base58 public keys (`^[1-9A-HJ-NP-Za-km-z]{32,44}$`).
+    * TRON: Base58 addresses (`^T[1-9A-HJ-NP-Za-km-z]{33}$`).
+    * Monero: Stealth addresses (`^4[0-9AB][1-9A-HJ-NP-Za-km-z]{93}$`, subaddresses `^8[0-9AB]...`).
+    * Ripple / XRP: Base58 accounts (`^r[1-9A-HJ-NP-Za-km-z]{24,34}$`).
+  * On-Chain Transaction & State Identifiers:
+    * Transaction Hashes: 64-character hexadecimal EVM/Bitcoin TxHashes (`0x[a-fA-F0-9]{64}`, `[a-fA-F0-9]{64}`).
+    * Block Hashes & Heights: Raw block hashes, internal UTXO references (`txid:vout`).
+    * Solana Signatures: 88-character Base58 transaction signatures.
+  * Forensic Attribution & Clustering Labels:
+    * Intelligence Cluster Tags: Chainalysis Reactor cluster IDs (`Cluster #XXXXXX`), Elliptic entity risk IDs, TRM Labs entity attribution labels, Crystal Intelligence tags.
+    * Mixer & Hop Identifiers: Peel chain hop sequence markers, Wasabi/Tornado Cash anonymity pool identifiers, bridge contract routing hops.
+  * Statutory AML Filings & Investigation Dockets:
+    * FinCEN / FIU Identifiers: Suspicious Activity Report filing IDs (`SAR-XXXX`, `BSA-XXXX`), Suspicious Transaction Reports (`STR-XXXX`).
+    * Investigative Case Numbers: Financial crimes docket numbers (`CASE-FININT-XXXX`, `MLO-XXXX`).
+    * Sanctions & Watchlists: OFAC Specially Designated Nationals (SDN) match identifiers, Interpol red notice references.
+
+
 ---
 
 ## 5. Adversarial Red-Team Gym Rules (Spark Invariants)
@@ -306,6 +329,16 @@ When parsing scanned documents (PDFs/images via Tesseract.js OCR), letters and n
 In financial and accounting documents, the contextual label (e.g., `Settlement Amount:`, `Rent:`, `Total Paid:`) must remain in cleartext to provide the LLM with semantic comprehension of what the masked token represents:
 * **Calibrated Standard**:
   `/(?<=\b(?:Settlement(?:\s+Amount)?|Retainer(?:\s+Fee)?|Hourly\s+Rate|Damages(?:\s+Claimed)?|Legal\s+Fees?)[:\s]+)(?:...amount regex...)/gi`
+
+### 5.6. Blockchain Graph Correlation & Temporal Clamping (Anti-Reidentification Invariants)
+In crypto-forensics and AML graph investigations, masking only public keys/addresses (`0x...` -> `[TARGET_WALLET_1]`) is structurally insufficient. An adversary or untrusted model provider can correlate high-precision transaction amounts and exact block timestamps against public on-chain ledgers (Etherscan, Mempool) to de-anonymize the target graph:
+* **Invariant 5.6.1: Amount Binning & Logarithmic Quantization**:
+  * Raw token values with high decimal precision (e.g., `14.89214712 ETH`) must be tokenized as discrete surrogate values (`[TX_VALUE_1]`) or clamped into logarithmic order-of-magnitude ranges (`[RANGE_10_TO_50_ETH]`).
+  * Under no circumstance may raw multi-decimal satoshi/wei values be forwarded unmasked in topological prompts.
+* **Invariant 5.6.2: Temporal Clamping & Block Height Interval Obfuscation**:
+  * Exact Unix epoch timestamps or block numbers must be clamped to broad chronological windows (e.g., `[Q3_2024_WINDOW]`, `[EPOCH_INTERVAL_4]`, `[BLOCK_EPOCH_N]`) to prevent exact block-sequence triangulation.
+* **Invariant 5.6.3: Multi-Input UTXO Graph Anonymization**:
+  * Peeling chain hops and multi-input transaction clusters must assign consistent surrogate identifiers within the same investigation thread (`[HOP_1]`, `[HOP_2]`, `[CHANGE_OUTPUT_1]`), preserving structural directed acyclic graph (DAG) topology for AI reasoning without exposing the underlying public key hash.
 
 ---
 
