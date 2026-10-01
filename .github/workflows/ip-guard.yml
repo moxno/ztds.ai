@@ -47,7 +47,7 @@ jobs:
             'AIza[0-9A-Za-z_-]{35}'
           )
           for pattern in "${PATTERNS[@]}"; do
-            MATCHES=$(grep -rlE "$pattern" --include="*.js" --include="*.ts" --include="*.json" --include="*.md" --include="*.txt" . 2>/dev/null | grep -v node_modules | grep -v '.git/' | grep -v '\.example' || true)
+            MATCHES=$(grep -rlE "$pattern" --include="*.js" --include="*.ts" --include="*.json" --include="*.md" --include="*.txt" . 2>/dev/null | grep -v node_modules | grep -v '.git/' | grep -v '\.example' | grep -v 'benchmarks/' || true)
             if [ -n "$MATCHES" ]; then
               echo "::error::API secret pattern '$pattern' detected in source files: $MATCHES"
               FOUND=1

@@ -105,7 +105,30 @@ npx ztds-audit --dir ./src --strict
 
 ---
 
-## 4. Remediation & Certified Implementation Engines
+## 4. Empirical AI Safety Benchmark (Frontier LLMs)
+
+Verify cleartext leakage prevention, bijective fidelity, and microsecond latency across OpenAI GPT-4o, Anthropic Claude 3.5 Sonnet, Google Gemini 2.0 Pro, and DeepSeek-V3:
+
+```bash
+# Execute 25 multi-domain enterprise scenarios across 4 frontier LLM families
+npx ztds-bench
+
+# Generate formal Markdown evaluation report & Ed25519 cryptographic certificate
+npx ztds-bench --out-report benchmark-report.md --cert
+```
+
+| Frontier Model | Raw Egress (No ZTDS) | Protected Egress (ZTDS) | Leakage Prevention Rate | Bijective Fidelity |
+| :--- | :--- | :--- | :--- | :--- |
+| `openai/gpt-4o` | **100.0%** | **0.00%** | **100.0%** | **100.0%** |
+| `anthropic/claude-3-5-sonnet` | **100.0%** | **0.00%** | **100.0%** | **100.0%** |
+| `google/gemini-2.0-pro` | **100.0%** | **0.00%** | **100.0%** | **100.0%** |
+| `deepseek/deepseek-v3` | **100.0%** | **0.00%** | **100.0%** | **100.0%** |
+
+Full report: [ZTDS AI Safety Benchmark Report (2026)](docs/security/ZTDS_AI_SAFETY_BENCHMARK_2026.md)
+
+---
+
+## 5. Remediation & Certified Implementation Engines
 
 If `ztds-audit` detects sensitive credentials, unmasked PII, or third-party telemetry in your AI pipeline, install a certified ZTDS execution engine to achieve instant conformance:
 
@@ -113,19 +136,19 @@ If `ztds-audit` detects sensitive credentials, unmasked PII, or third-party tele
 | :--- | :--- | :--- | :--- |
 | **Open Reference Core** | `@ztds/core` | Apache-2.0 | Vendor-neutral in-memory TypeScript/JS baseline. Universal regex rules (Email, Phone, PAN, SSN, API Keys). [Docs](https://ztds.ai/sdk/) |
 | **Open Reference MCP** | `ztds-mcp` | Apache-2.0 | Official zero-dependency reference MCP server (`io.github.moxno/ztds` on Anthropic Registry) for Cursor, Claude Desktop, and Zed. [MCP Guide](https://ztds.ai/sdk/) |
-| **Certified Pioneer SDK** | `@privacyscrubber/sdk` | Commercial / Air-Gapped | High-throughput WASM engine with 30 high-ACV industry profiles (HIPAA, PCI-DSS, Legal FRE-502), multi-threaded pipeline bindings, offline Ed25519 node licensing. [Get SDK](https://privacyscrubber.com/pricing/?tier=SDK) |
+| **Certified Pioneer SDK** | `@privacyscrubber/sdk` | Commercial / Air-Gapped | High-throughput WASM engine with 30 high-ACV industry profiles (HIPAA, PCI-DSS, Legal FRE-502), multi-threaded pipeline bindings, offline Ed25519 node licensing. [Get SDK](https://privacyscrubber.com/sdk/?utm_source=ztds.ai&utm_medium=readme&utm_campaign=certified_pioneer) |
 | **Air-Gapped IDE MCP** | `@privacyscrubber/mcp-server` | Commercial / Stdio | Stdio MCP proxy (`io.github.moxno/privacyscrubber-mcp`) for Cursor, Windsurf, Claude Code, and autonomous developer agents with 30 enterprise profiles. [MCP Guide](https://ztds.ai/sdk/) |
 
 ---
 
-## 5. Ecosystem Demarcation & Neutrality
+## 6. Ecosystem Demarcation & Neutrality
 
 - **ZTDS.ai (`ztds.ai`)**: Independent, vendor-neutral open standard, certification authority, and technical consortium. Governs RFC v1.0 specifications under Apache 2.0 / CC BY 4.0.
 - **PrivacyScrubber (`privacyscrubber.com`)**: Commercial reference implementation and pioneer engine provider.
 
 ---
 
-## 6. Intellectual Property & Statutory Governance
+## 7. Intellectual Property & Statutory Governance
 
 - **Patent Application**: Israel Patent Office (ILPO) Application No. **IL 331905** (*System and Method for Client-Side Zero-Trust Data Sanitization and Cryptographic Multi-Party Pipeline Handoff*). WIPO DAS Access Code: **B17B**. Paris Convention international priority locked through 14/09/2027.
 - **Registered Trademark**: **ZTDS™** (ILPO Order #182655957, Classes 9 & 42).
@@ -137,7 +160,7 @@ If `ztds-audit` detects sensitive credentials, unmasked PII, or third-party tele
 
 ---
 
-## 7. License
+## 8. License
 
 Licensed under the [Apache License, Version 2.0](LICENSE).
 Copyright 2024–2026 Ilya Sibiryakov (ZTDS AI Consortium / BrandMeWeb).

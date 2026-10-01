@@ -8,7 +8,8 @@
     "ztds-verify": "bin/ztds-verify.js",
     "ztds-agent": "bin/ztds-agent.js",
     "ztds-ciso": "bin/ztds-ciso.js",
-    "ztds-agency": "bin/ztds-agency.js"
+    "ztds-agency": "bin/ztds-agency.js",
+    "ztds-bench": "bin/ztds-bench.js"
   },
   "scripts": {
     "audit": "node bin/ztds-audit.js",
@@ -16,10 +17,12 @@
     "agent": "node bin/ztds-agent.js",
     "ciso": "node bin/ztds-ciso.js",
     "agency": "node bin/ztds-agency.js",
+    "bench": "node bin/ztds-bench.js",
     "audit:entities": "node scripts/entity-manager.js audit",
     "indexnow": "node scripts/submit-indexnow.js",
-    "test": "node bin/ztds-audit.js --dir ./data && node scripts/entity-manager.js audit && node test/license.test.js && node test/certificate.test.js && node test/ietf-draft.test.js && node test/agent.test.js && node test/security-audit.test.js && node test/wipo-ip.test.js && node test/verify-ui.test.js && node test/certification-ui.test.js && node test/ciso-cli.test.js && node test/agency-cli.test.js && node test/plg-flywheel.test.js && node test/scan-domain.test.js && node test/paddle-webhook.test.js && node test/lead-capture.test.js && node test/schema.test.js && node test/scanner-ui.test.js && node test/checkout-fulfillment.test.js && node test/agency.test.js && node test/routes-integrity.test.js && node test/registries-schema.test.js && node test/geo-corpus.test.js && node test/ztds-audit-cli.test.js && node test/not-found.test.js && node test/integrations.test.js",
+    "test": "node bin/ztds-audit.js --dir ./data && node scripts/entity-manager.js audit && node test/license.test.js && node test/certificate.test.js && node test/ietf-draft.test.js && node test/agent.test.js && node test/security-audit.test.js && node test/wipo-ip.test.js && node test/verify-ui.test.js && node test/certification-ui.test.js && node test/ciso-cli.test.js && node test/agency-cli.test.js && node test/plg-flywheel.test.js && node test/scan-domain.test.js && node test/paddle-webhook.test.js && node test/lead-capture.test.js && node test/schema.test.js && node test/scanner-ui.test.js && node test/checkout-fulfillment.test.js && node test/agency.test.js && node test/routes-integrity.test.js && node test/registries-schema.test.js && node test/geo-corpus.test.js && node test/ztds-audit-cli.test.js && node test/not-found.test.js && node test/integrations.test.js && node test/benchmark.test.js",
     "test:all": "npm test",
+    "test:bench": "node test/benchmark.test.js",
     "test:integrations": "node test/integrations.test.js",
     "test:plg": "node test/plg-flywheel.test.js",
     "test:cert": "node test/certificate.test.js",
@@ -51,8 +54,11 @@
     "bin/ztds-agent.js",
     "bin/ztds-ciso.js",
     "bin/ztds-agency.js",
+    "bin/ztds-bench.js",
     "lib/certificate-manager.js",
     "lib/license-validator.js",
+    "lib/benchmark-runner.js",
+    "benchmarks/ai-safety-benchmark.json",
     "README.md",
     "LICENSE"
   ],

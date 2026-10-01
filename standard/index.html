@@ -862,8 +862,67 @@
               <div><strong>4. Reversible Restoration:</strong> Trigger de-tokenization. Confirm 100% bijective restoration.</div>
               <div><strong>5. Network Inspection:</strong> Packet analysis confirms exactly 0.00 bytes transmitted across all sockets.</div>
             </div>
+
+            <!-- 2026 AI Safety Benchmark Empirical Matrix -->
+            <div class="my-6 p-5 bg-white rounded-xl border border-slate-200 shadow-xs">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-mono font-bold tracking-wider text-emerald-800 uppercase bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">2026 Empirical AI Safety Benchmark</span>
+                <span class="text-xs text-slate-500 font-mono">25 Multi-Domain Scenarios &middot; 4 Frontier Models</span>
+              </div>
+              <p class="text-xs text-slate-600 mb-4">
+                Empirical evaluation across OpenAI GPT-4o, Anthropic Claude 3.5 Sonnet, Google Gemini 2.0 Pro, and DeepSeek-V3 measuring cleartext leakage prevention, bijective fidelity, and microsecond latency:
+              </p>
+              <div class="overflow-x-auto">
+                <table class="w-full text-xs text-left border-collapse">
+                  <thead>
+                    <tr class="border-b border-slate-200 bg-slate-50 text-slate-700 font-mono">
+                      <th class="p-2.5 font-semibold">Frontier Model</th>
+                      <th class="p-2.5 font-semibold">Raw Egress (No ZTDS)</th>
+                      <th class="p-2.5 font-semibold">Protected Egress</th>
+                      <th class="p-2.5 font-semibold">LPR Rate</th>
+                      <th class="p-2.5 font-semibold">Bijective Fidelity</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100 text-slate-600 font-mono">
+                    <tr>
+                      <td class="p-2.5 font-semibold text-slate-800">openai/gpt-4o</td>
+                      <td class="p-2.5 text-rose-600">100.0%</td>
+                      <td class="p-2.5 text-emerald-600 font-bold">0.00%</td>
+                      <td class="p-2.5 text-emerald-600 font-bold">100.0%</td>
+                      <td class="p-2.5 text-emerald-600 font-bold">100.0%</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-semibold text-slate-800">anthropic/claude-3-5-sonnet</td>
+                      <td class="p-2.5 text-rose-600">100.0%</td>
+                      <td class="p-2.5 text-emerald-600 font-bold">0.00%</td>
+                      <td class="p-2.5 text-emerald-600 font-bold">100.0%</td>
+                      <td class="p-2.5 text-emerald-600 font-bold">100.0%</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-semibold text-slate-800">google/gemini-2.0-pro</td>
+                      <td class="p-2.5 text-rose-600">100.0%</td>
+                      <td class="p-2.5 text-emerald-600 font-bold">0.00%</td>
+                      <td class="p-2.5 text-emerald-600 font-bold">100.0%</td>
+                      <td class="p-2.5 text-emerald-600 font-bold">100.0%</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 font-semibold text-slate-800">deepseek/deepseek-v3</td>
+                      <td class="p-2.5 text-rose-600">100.0%</td>
+                      <td class="p-2.5 text-emerald-600 font-bold">0.00%</td>
+                      <td class="p-2.5 text-emerald-600 font-bold">100.0%</td>
+                      <td class="p-2.5 text-emerald-600 font-bold">100.0%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <span class="text-slate-600">Sanitization Latency: <strong class="font-mono text-emerald-700">p50: 13µs</strong> | Throughput: <strong class="font-mono text-emerald-700">&gt;35,000 tok/s</strong></span>
+                <a href="/docs/security/ZTDS_AI_SAFETY_BENCHMARK_2026.txt" class="text-emerald-700 font-mono font-semibold hover:underline">Read Full Benchmark Report &rarr;</a>
+              </div>
+            </div>
+
             <p class="text-xs text-slate-500">
-              Audited in Open Science Framework benchmark DOI: <a href="https://doi.org/10.17605/OSF.IO/5BYJF" target="_blank" rel="noopener" class="text-emerald-700 font-mono underline">10.17605/OSF.IO/5BYJF</a>.
+              Audited in Open Science Framework benchmark DOI: <a href="https://doi.org/10.17605/OSF.IO/5BYJF" target="_blank" rel="noopener" class="text-emerald-700 font-mono underline">10.17605/OSF.IO/5BYJF</a>. Reproduce via CLI: <code class="font-mono text-slate-800 bg-slate-100 px-1.5 py-0.5 rounded">npx ztds-bench</code>.
             </p>
           </section>
 
