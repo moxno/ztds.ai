@@ -92,3 +92,20 @@ flawlessness, or suitability for particular commercial purposes. ZTDS.ai and its
 expressly disclaim all liability for any direct, indirect, incidental, or consequential 
 damages resulting from third-party implementations, software errors, or data breaches.
 ```
+
+---
+
+## 6. Multi-Vertical Statutory Risk Analysis & Defensive Doctrines
+
+To eliminate downstream civil, criminal, and regulatory liability across specialized commercial sectors, the ZTDS standard establishes normative statutory non-reliance schedules defined in [`docs/legal/ZTDS_Multi_Vertical_Statutory_Insulation_Specification.md`](file:///Users/ilya/Desktop/ZTDS%20AI/docs/legal/ZTDS_Multi_Vertical_Statutory_Insulation_Specification.md):
+
+1. **Healthcare & Life Sciences (HIPAA / HITECH / FDA)**: Software executes strictly in client volatile memory with zero server-side storage; maintainers are excluded from Business Associate status under 45 CFR § 160.103. Software assists with 45 CFR § 164.514(b)(2) Safe Harbor 18 identifiers; covered entities maintain the affirmative non-delegable duty of pre-dispatch clinical audit.
+2. **Legal Practice & Litigation (FRE 502 / ABA Model Rule 1.6)**: Software performs mathematical tokenization; it does not render legal advice or evaluate privilege doctrine. Counsel retains the ethical obligation to ensure external AI terms do not waive work-product or attorney-client privilege.
+3. **Financial Services & Capital Markets (GLBA / SEC / PCI DSS)**: Software does not persist PAN/SAD to disk (PCI DSS non-storage). Regulated institutions must configure custom regex for proprietary M&A codenames and Material Non-Public Information (MNPI).
+4. **Crypto-Forensics & Financial Crimes (BSA / FinCEN / AMLD6)**: Investigative officers retain exclusive statutory liability under 31 U.S.C. § 5318(g)(2) for external prompt disclosures. Ed25519 docket receipts verify local mathematical invariant execution, not sworn expert witness testimony.
+5. **Human Resources & Talent (EEOC / Title VII / NYC LL 144)**: Software is a redaction utility, NOT an Automated Employment Decision Tool (AEDT) or certified bias audit. Employers remain responsible for downstream LLM disparate impact auditing.
+6. **Defense & Aerospace (ITAR / EAR / CMMC)**: Processing USML technical data or EAR defense articles on standard browser extensions is strictly prohibited. Export-controlled data requires dedicated air-gapped SCIF / AWS Nitro deployments.
+7. **Cybersecurity Incident Response (SEC 8-K / GDPR Art 33)**: Sanitization software does NOT toll, delay, or satisfy statutory 4-day SEC Form 8-K or 72-hour GDPR breach notification windows.
+8. **Education & Minor Privacy (FERPA / COPPA)**: Educational institutions remain designated custodians under 34 CFR § 99.31 and must obtain requisite parental/student consents.
+9. **AI Agents & Model Context Protocol (EU AI Act)**: SDKs and MCP servers are deterministic tokenization middlewares, not High-Risk AI Providers under EU AI Act Article 3(3). No warranty against semantic prompt injection or external model hallucination.
+
