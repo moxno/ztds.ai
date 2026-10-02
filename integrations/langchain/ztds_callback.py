@@ -35,14 +35,16 @@ class ZTDSSanitizingCallbackHandler(BaseCallbackHandler):
     surrogate tokens, and unmasks model outputs strictly in local RAM.
     """
 
+    TOKEN_PATTERN: re.Pattern = re.compile(r"\[[A-Z_]+_TOKEN_[a-zA-Z0-9_-]+\]")
+
     PATTERNS: Dict[str, re.Pattern] = {
-        "EMAIL": re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,24}\b"),
+        "EMAIL": re.compile(r"\b[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9-]{1,63}(?:\.[A-Za-z0-9-]{1,63})*\.[A-Za-z]{2,24}\b"),
         "IPV4": re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b"),
         "IBAN": re.compile(r"\b[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}([A-Z0-9]?){0,16}\b"),
         "CREDIT_CARD": re.compile(r"\b(?:\d{4}[-\s]?){3}\d{4}\b"),
         "SSN": re.compile(r"\b\d{3}-\d{2}-\d{4}\b"),
         "PHONE": re.compile(r"\b(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b"),
-        "API_SECRET": re.compile(r"\b(?:sk-[a-zA-Z0-9]{20,}|ghp_[a-zA-Z0-9]{20,}|eyJ[a-zA-Z0-9_-]{20,}\.[a-zA-Z0-9_-]{20,}\.[a-zA-Z0-9_-]{20,})\b"),
+        "API_SECRET": re.compile(r"\b(?:sk-[a-zA-Z0-9_-]{20,}|ghp_[a-zA-Z0-9]{20,}|eyJ[a-zA-Z0-9_-]{20,}\.[a-zA-Z0-9_-]{20,}\.[a-zA-Z0-9_-]{20,})\b"),
     }
 
     def __init__(
@@ -60,48 +62,64 @@ class ZTDSSanitizingCallbackHandler(BaseCallbackHandler):
         self._run_salts: Dict[str, str] = {}
 
     def sanitize_text(self, text: str, run_id_str: str) -> str:
+        if not text or not isinstance(text, str):
+            return text
+
         if run_id_str not in self._run_maps:
             self._run_maps[run_id_str] = {}
             self._entity_maps[run_id_str] = {}
 
         token_map = self._run_maps[run_id_str]
         entity_map = self._entity_maps[run_id_str]
-        sanitized = text
+        existing_tokens = set(self.TOKEN_PATTERN.findall(text))
 
+        sanitized = text
         for entity_type in self.enabled_entities:
+            if entity_type == "EMAIL" and "@" not in sanitized:
+                continue
+
             pattern = self.PATTERNS.get(entity_type)
             if not pattern:
                 continue
 
-            matches = list(pattern.finditer(sanitized))
-            for match in sorted(matches, key=lambda m: m.start(), reverse=True):
+            salt = None
+            if self.secure_surrogates:
+                if run_id_str not in self._run_salts:
+                    self._run_salts[run_id_str] = uuid.uuid4().hex[:6]
+                salt = self._run_salts[run_id_str]
+
+            entity_counter = sum(1 for k in token_map if k.startswith(f"[{entity_type}_TOKEN_"))
+
+            def _replace_match(match: re.Match, et: str = entity_type, s: Optional[str] = salt) -> str:
+                nonlocal entity_counter
                 original = match.group(0)
                 if original in entity_map:
                     token = entity_map[original]
                 else:
-                    if self.secure_surrogates:
-                        if run_id_str not in self._run_salts:
-                            self._run_salts[run_id_str] = uuid.uuid4().hex[:6]
-                        salt = self._run_salts[run_id_str]
-                        count = len([k for k in token_map if k.startswith(f"[{entity_type}_TOKEN_{salt}_")]) + 1
-                        token = f"[{entity_type}_TOKEN_{salt}_{count}]"
-                    else:
-                        count = len([k for k in token_map if k.startswith(f"[{entity_type}_TOKEN_")]) + 1
-                        token = f"[{entity_type}_TOKEN_{count}]"
+                    while True:
+                        entity_counter += 1
+                        candidate = f"[{et}_TOKEN_{s}_{entity_counter}]" if s else f"[{et}_TOKEN_{entity_counter}]"
+                        if candidate not in existing_tokens and candidate not in token_map:
+                            token = candidate
+                            break
                     token_map[token] = original
                     entity_map[original] = token
+                return token
 
-                start, end = match.span()
-                sanitized = sanitized[:start] + token + sanitized[end:]
+            sanitized = pattern.sub(_replace_match, sanitized)
 
         return sanitized
 
     def restore_text(self, text: str, run_id_str: str) -> str:
         token_map = self._run_maps.get(run_id_str, {})
-        restored = text
-        for token, original in token_map.items():
-            restored = restored.replace(token, original)
-        return restored
+        if not token_map:
+            return text
+
+        def _replace_token(match: re.Match) -> str:
+            tok = match.group(0)
+            return token_map.get(tok, tok)
+
+        return self.TOKEN_PATTERN.sub(_replace_token, text)
 
     def zeroize_run(self, run_id_str: str) -> None:
         """Theorem 2: RAM Zeroization."""
