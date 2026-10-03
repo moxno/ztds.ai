@@ -1,0 +1,667 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   ZTDS.ai — Light Institutional Trust & Certification Portal Design System
+   High-contrast, authoritative, accessible, executive-friendly
+   ========================================================================== */
+
+:root {
+  --bg-canvas: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-subtle: #f1f5f9;
+  --bg-surface-elevated: #ffffff;
+  --bg-dark-accent: #0f172a;
+  
+  --border-subtle: #e2e8f0;
+  --border-subtle-hover: #cbd5e1;
+  --border-trust: #059669;
+  --border-dev: #2563eb;
+  
+  --accent-trust: #059669;
+  --accent-trust-light: #ecfdf5;
+  --accent-trust-glow: rgba(5, 150, 105, 0.15);
+  --accent-dev: #2563eb;
+  --accent-dev-light: #eff6ff;
+  --accent-amber: #d97706;
+  --accent-amber-light: #fffbeb;
+  --accent-purple: #7c3aed;
+  
+  --text-heading: #0f172a;
+  --text-body: #334155;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+  
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-canvas);
+  color: var(--text-body);
+  overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background-color: var(--bg-canvas);
+  background-image: 
+    radial-gradient(ellipse 60% 30% at 50% -5%, rgba(5, 150, 105, 0.05), transparent 70%),
+    linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100vw;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   Component Primitives
+   ========================================================================== */
+
+/* Clean White Surface Cards */
+.ztds-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  position: relative;
+}
+
+.ztds-card:hover {
+  border-color: var(--border-subtle-hover);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+}
+
+.ztds-card-elevated {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+}
+
+/* Clean Button Styles */
+.btn-trust {
+  background-color: var(--accent-trust);
+  color: #ffffff !important;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  min-height: 44px;
+  box-sizing: border-box;
+  letter-spacing: -0.01em;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-trust:hover {
+  background-color: #047857;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-navy {
+  background-color: var(--bg-dark-accent);
+  color: #ffffff !important;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  min-height: 44px;
+  box-sizing: border-box;
+  letter-spacing: -0.01em;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-navy:hover {
+  background-color: #1e293b;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: var(--text-heading) !important;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  min-height: 44px;
+  box-sizing: border-box;
+  letter-spacing: -0.01em;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+/* Dark Outline Button for dark cards and headers */
+.btn-outline-dark {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  color: #f8fafc !important;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-outline-dark:hover {
+  background-color: #334155;
+  border-color: #475569;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+/* Backward compatibility button mappings */
+.btn-mint {
+  background-color: var(--accent-trust);
+  color: #ffffff !important;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.55rem 1.15rem;
+  font-size: 0.875rem;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+}
+.btn-mint:hover {
+  background-color: #047857;
+  transform: translateY(-1px);
+}
+
+/* Pill Badges */
+.pill-trust {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--accent-trust-light);
+  color: #047857;
+  border: 1px solid rgba(5, 150, 105, 0.25);
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.pill-dev {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--accent-dev-light);
+  color: #1d4ed8;
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.pill-amber {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--accent-amber-light);
+  color: #b45309;
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Pulsating Signal Dot */
+@keyframes pulse-signal {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.pulse-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--accent-trust);
+  box-shadow: 0 0 6px var(--accent-trust);
+  animation: pulse-signal 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.pulse-dot-amber {
+  background-color: var(--accent-amber);
+  box-shadow: 0 0 6px var(--accent-amber);
+}
+
+/* Navigation Links */
+.nav-link {
+  color: var(--text-body);
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: color 0.15s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--text-heading);
+}
+
+.nav-link.active {
+  color: var(--accent-trust);
+  font-weight: 600;
+}
+
+/* Touch Targets */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Code Snippet Container */
+.code-container {
+  background-color: #0f172a;
+  color: #e2e8f0;
+  border-radius: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.825rem;
+  border: 1px solid #1e293b;
+  overflow: hidden;
+}
+
+.code-header {
+  background-color: #090d16;
+  border-bottom: 1px solid #1e293b;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+/* Institutional Callouts */
+.ztds-callout {
+  border-left: 4px solid var(--accent-trust);
+  background-color: #ffffff;
+  padding: 1rem 1.25rem;
+  border-radius: 0 8px 8px 0;
+  border-top: 1px solid var(--border-subtle);
+  border-right: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.ztds-callout.callout-dev {
+  border-left-color: var(--accent-dev);
+}
+
+.ztds-callout.callout-amber {
+  border-left-color: var(--accent-amber);
+}
+
+/* Entity Token Badges */
+.entity-token {
+  font-family: var(--font-mono);
+  font-size: 0.775rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.entity-token.token-name {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.entity-token.token-email {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.entity-token.token-phone {
+  background-color: #dbeafe;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.entity-token.token-id {
+  background-color: #ede9fe;
+  color: #5b21b6;
+  border: 1px solid #ddd6fe;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ==========================================================================
+   Mobile Slide-Over Navigation Drawer
+   ========================================================================== */
+.mobile-nav-backdrop,
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.mobile-nav-backdrop.active,
+.drawer-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.mobile-nav-drawer,
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 85%;
+  max-width: 360px;
+  background-color: #ffffff;
+  border-left: 1px solid var(--border-subtle);
+  box-shadow: -8px 0 25px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  transform: translateX(100%);
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 1.5rem;
+  padding-top: max(1.5rem, env(safe-area-inset-top));
+  padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+}
+
+.mobile-nav-drawer.active,
+.drawer.active {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Custom Range Sliders */
+.ztds-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 9999px;
+  outline: none;
+  transition: background 0.15s ease;
+}
+
+.ztds-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #059669;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.15s ease;
+}
+
+.ztds-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background: #047857;
+}
+
+.ztds-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #059669;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.15s ease;
+}
+
+/* ==========================================================================
+   Domain Perimeter Scanner & Architecture Diagnostician Components
+   ========================================================================== */
+
+.scanner-hero-bar {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  box-shadow: 0 4px 14px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+  border-radius: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.scanner-hero-bar:focus-within {
+  border-color: var(--accent-trust);
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15), 0 8px 20px -4px rgba(15, 23, 42, 0.1);
+}
+
+.scanner-progress-ticker {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.scan-pulse-ring {
+  animation: scan-pulse 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes scan-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.08); }
+}
+
+/* Minimalist GPU-Accelerated Audit Perimeter Button Pulse */
+.btn-audit-pulse {
+  position: relative;
+  animation: ztds-audit-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  will-change: box-shadow, filter;
+}
+
+@keyframes ztds-audit-pulse {
+  0%, 100% {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 0 rgba(5, 150, 105, 0.5);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35), 0 0 0 5px rgba(5, 150, 105, 0);
+    filter: brightness(1.07);
+  }
+}
+
+.btn-audit-pulse:hover,
+.btn-audit-pulse:focus-visible {
+  animation: none;
+  background-color: #047857;
+  box-shadow: 0 4px 16px rgba(5, 150, 105, 0.4);
+  transform: translateY(-1px);
+}
+
+.score-badge-optimal {
+  background-color: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.score-badge-moderate {
+  background-color: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.score-badge-exposure {
+  background-color: #fff1f2;
+  color: #be123c;
+  border: 1px solid #fecdd3;
+}
+
+/* Print Styles for CISO Board Memo Export */
+@media print {
+  header, footer, #mobile-drawer, #mobile-backdrop, .no-print, button {
+    display: none !important;
+  }
+  
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 12pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+  
+  .ztds-card {
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* ==========================================================================
+   Responsive Table-to-Card Transformation (Mobile < 768px)
+   Converts multi-column compliance & legal matrices into vertical parameter cards
+   ========================================================================== */
+@media (max-width: 767px) {
+  .table-responsive-cards {
+    display: block !important;
+    width: 100% !important;
+    border: none !important;
+    background: transparent !important;
+  }
+  .table-responsive-cards thead {
+    display: none !important;
+  }
+  .table-responsive-cards tbody {
+    display: block !important;
+    width: 100% !important;
+    border: none !important;
+  }
+  .table-responsive-cards tbody.divide-y > * + * {
+    border-top-width: 0px !important;
+  }
+  .table-responsive-cards tbody > tr {
+    display: block !important;
+    width: 100% !important;
+    margin-bottom: 1rem !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 0.75rem !important;
+    padding: 1rem !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.02) !important;
+    box-sizing: border-box !important;
+  }
+  .table-responsive-cards tbody > tr:hover {
+    background: #ffffff !important;
+  }
+  .table-responsive-cards td {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    padding: 0.5rem 0 !important;
+    border: none !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    text-align: left !important;
+    box-sizing: border-box !important;
+  }
+  .table-responsive-cards td:last-child {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+  }
+  .table-responsive-cards td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    margin-bottom: 0.25rem;
+  }
+}
+

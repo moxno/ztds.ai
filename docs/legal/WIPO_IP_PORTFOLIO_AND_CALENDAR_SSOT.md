@@ -16,7 +16,7 @@ The intellectual property (IP) portfolio of the ZTDS standard and engine is anch
                 +----------------------+----------------------+
                 |                                             |
         [PATENT ANCHOR]                               [TRADEMARK ANCHOR]
-    Israel Patent App IL 331905                  ILPO Order #182655957
+    Israel Patent App IL 331905                  ILPO Application #397119 (Order #182655957)
        Filed: 14/09/2026                             Filed: 20/09/2026
       WIPO DAS Code: B17B                           Nice Classes: 9 & 42
                 |                                             |
@@ -60,8 +60,9 @@ The intellectual property (IP) portfolio of the ZTDS standard and engine is anch
 ### Asset 2: Trademark & Certification Mark Portfolio
 - **Mark:** **ZTDS** (Word Mark) and **ZTDS VERIFIED** (Certification Mark)
 - **Basic Application Office:** Israel Patent and Trademark Office (ILPO)
-- **Basic Application Number:** Order **#182655957**
+- **Basic Application Official File Number:** Application **#397119** (Filing Order **#182655957**)
 - **Basic Application Filing Date:** **September 20, 2026 (20/09/2026)**
+- **Examination Status:** Pending Examination (ממתין לבחינה)
 - **Nice Classification:** **Class 9** (Software, WASM, SDKs, MCP interceptors, cryptographic receipts) and **Class 42** (SaaS, testing, auditing, standardization, compliance certification).
 - **International Madrid Protocol Filing Deadline:** **March 20, 2027 (20/03/2027)** (Strict 6-month statutory bar).
 - **International Designation Scope:** United States (USPTO), European Union (EUIPO), United Kingdom (UKIPO), Japan (JPO), Canada (CIPO), Switzerland (IPI), Australia (IP Australia), Singapore (IPOS).
@@ -73,7 +74,7 @@ The intellectual property (IP) portfolio of the ZTDS standard and engine is anch
 | Date | Portfolio Timeline | Milestone & Statutory Action | Governing Rule / Treaty | Responsible Party |
 | :--- | :--- | :--- | :--- | :--- |
 | **14/09/2026** | **Month 0** | **Filing of Priority Patent Application IL 331905** at Israel Patent Office. Received official filing receipt & WIPO DAS Access Code: `B17B`. | Israel Patent Law 5727-1967 | Founder & IL Patent Attorney |
-| **20/09/2026** | **Month 0.2** | **Filing of Basic Trademark Application #182655957** at ILPO for classes 9 & 42. | Israel Trade Marks Ordinance 1972 | Founder & IL Trademark Attorney |
+| **20/09/2026** | **Month 0.2** | **Filing of Basic Trademark Application #397119** (Order #182655957) at ILPO for classes 9 & 42. Status: Pending examination. | Israel Trade Marks Ordinance 1972 | Founder & IL Trademark Attorney |
 | **01/02/2027** | **Month 4.5** | **Pre-Madrid Review & Formalities Audit.** Finalize designated contracting parties and execute Form MM18 (Intent to Use in US Commerce). | Madrid Common Regs Rule 9 | Chief Architect |
 | **20/03/2027** | **Month 6** | **STATUTORY DEADLINE: WIPO Madrid Protocol Filing.** File Form MM2 with ILPO as Office of Origin, claiming priority from ILPO #182655957. Pay WIPO fees in Swiss Francs (CHF). | Paris Convention Art. 4(C)(1); Madrid Protocol Art. 4 | Founder & WIPO E-Filing |
 | **14/06/2027** | **Month 9** | **PCT Draft Finalization & Formal Claims Audit.** Review international prior art search results and finalize 20 claims tree in English. | PCT Rule 11 | Patent Attorney & Chief Architect |

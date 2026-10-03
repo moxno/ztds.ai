@@ -23,7 +23,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/styles.css?v=2">
 
   <!-- JSON-LD Structured Data -->
@@ -158,7 +157,7 @@
 
   <!-- Mobile Slide-Over Drawer -->
   <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"></div>
-  <aside id="mobile-drawer" class="mobile-nav-drawer drawer">
+  <aside id="mobile-drawer" class="mobile-nav-drawer drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
     <div class="flex items-center justify-between pb-5 border-b border-slate-200">
       <div class="flex items-center gap-2.5">
         <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 aspect-square p-0.5 overflow-hidden">
@@ -2160,12 +2159,23 @@ https://ztds.ai &middot; Apache 2.0 &middot; CC BY 4.0`;
         if (modalBody) modalBody.classList.remove('hidden');
         if (successState) successState.classList.add('hidden');
 
-        leadModal.classList.remove('hidden');
-        if (emailInput) emailInput.focus();
+        if (window.ztdsModal) {
+          window.ztdsModal.open(leadModal, emailInput);
+        } else {
+          leadModal.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+          if (emailInput) emailInput.focus();
+        }
       }
 
       function closeCisoLeadModal() {
-        if (leadModal) leadModal.classList.add('hidden');
+        if (!leadModal) return;
+        if (window.ztdsModal) {
+          window.ztdsModal.close(leadModal);
+        } else {
+          leadModal.classList.add('hidden');
+          document.body.style.overflow = '';
+        }
       }
 
       if (closeLeadModalBtn) {

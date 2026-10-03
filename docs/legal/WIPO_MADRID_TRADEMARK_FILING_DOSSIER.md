@@ -11,7 +11,7 @@
 | :--- | :--- |
 | **Mark Name** | **ZTDS** (Standard Character Word Mark) & **ZTDS VERIFIED** (Certification Mark) |
 | **Basic Application Office** | Israel Patent Office (ILPO) / Trademark Department, Jerusalem, Israel |
-| **Basic Application / Order Number** | **#182655957** |
+| **Basic Application Official File Number** | Application **#397119** (Filing Order **#182655957**) |
 | **Basic Application Filing Date** | **September 20, 2026 (20/09/2026)** |
 | **Governing Treaty** | Protocol Relating to the Madrid Agreement Concerning the International Registration of Marks (Madrid Protocol) |
 | **International Priority Basis** | Article 4 of the Paris Convention for the Protection of Industrial Property |
@@ -47,15 +47,15 @@
 - **Correspondence Address:** As designated in the national register.
 
 ### MM2 Item 5: Basic Application or Basic Registration
-- **Basic Application Number:** Order #182655957
+- **Basic Application Official Number:** Application #397119 (Order #182655957)
 - **Filing Date of Basic Application:** 20/09/2026 (September 20, 2026)
 - **Country:** Israel (IL)
-- **Status:** Pending examination / active priority claim
+- **Status:** Pending examination (ממתין לבחינה) / active priority claim
 
 ### MM2 Item 6: Priority Claimed under the Paris Convention
 - **Contracting Party:** Israel (IL)
 - **Filing Date:** September 20, 2026
-- **Application Number:** 182655957
+- **Application Number:** 397119 (Order #182655957)
 - **Goods and Services Covered:** All goods and services listed in Classes 9 and 42 of the basic application.
 
 ### MM2 Item 7: The Mark

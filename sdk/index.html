@@ -23,7 +23,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/styles.css">
   <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 
@@ -2386,8 +2385,12 @@ jobs:
 
       function openModal(preselectedTier = null) {
         if (modal) {
-          modal.classList.remove('hidden');
-          document.body.style.overflow = 'hidden';
+          if (window.ztdsModal) {
+            window.ztdsModal.open(modal, '#btnCloseCheckoutModal');
+          } else {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+          }
           switchTab('buy');
           if (preselectedTier) selectTier(preselectedTier);
         }
@@ -2395,8 +2398,12 @@ jobs:
 
       function closeModal() {
         if (modal) {
-          modal.classList.add('hidden');
-          document.body.style.overflow = '';
+          if (window.ztdsModal) {
+            window.ztdsModal.close(modal);
+          } else {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+          }
         }
       }
 

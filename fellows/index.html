@@ -23,7 +23,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
@@ -1232,14 +1231,22 @@ gh pr create --title "feat(fellow): Nominate [Full Name]" --body "ZTDS Fellowshi
         fellowModalBadgeUrlText.textContent = badgeUrl;
         fellowModalDirectSvgLink.href = badgeUrl;
 
-        fellowBadgeModal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
+        if (window.ztdsModal) {
+          window.ztdsModal.open(fellowBadgeModal, fellowModalCloseBtn);
+        } else {
+          fellowBadgeModal.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        }
       }
 
       function closeFellowBadgeModal() {
         if (!fellowBadgeModal) return;
-        fellowBadgeModal.classList.add('hidden');
-        document.body.style.overflow = '';
+        if (window.ztdsModal) {
+          window.ztdsModal.close(fellowBadgeModal);
+        } else {
+          fellowBadgeModal.classList.add('hidden');
+          document.body.style.overflow = '';
+        }
       }
 
       document.querySelectorAll('.btn-embed-fellow-seal').forEach(btn => {

@@ -20,6 +20,8 @@
     "bench": "node bin/ztds-bench.js",
     "audit:entities": "node scripts/entity-manager.js audit",
     "indexnow": "node scripts/submit-indexnow.js",
+    "build:css": "tailwindcss -i src/input.css -o styles.css --minify",
+    "build": "npm run build:css",
     "test": "node bin/ztds-audit.js --dir ./data && node scripts/entity-manager.js audit && node test/license.test.js && node test/certificate.test.js && node test/ietf-draft.test.js && node test/agent.test.js && node test/security-audit.test.js && node test/wipo-ip.test.js && node test/verify-ui.test.js && node test/certification-ui.test.js && node test/ciso-cli.test.js && node test/agency-cli.test.js && node test/plg-flywheel.test.js && node test/scan-domain.test.js && node test/paddle-webhook.test.js && node test/lead-capture.test.js && node test/schema.test.js && node test/scanner-ui.test.js && node test/checkout-fulfillment.test.js && node test/agency.test.js && node test/routes-integrity.test.js && node test/registries-schema.test.js && node test/geo-corpus.test.js && node test/ztds-audit-cli.test.js && node test/not-found.test.js && node test/integrations.test.js && node test/benchmark.test.js",
     "test:all": "npm test",
     "test:bench": "node test/benchmark.test.js",
@@ -82,5 +84,11 @@
   },
   "bugs": {
     "url": "https://github.com/moxno/ztds.ai/issues"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.6.1",
+    "clean-css-cli": "^5.6.3",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^3.4.17"
   }
 }

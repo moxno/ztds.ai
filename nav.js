@@ -8,49 +8,158 @@ document.addEventListener('DOMContentLoaded', () => {
   const drawer = document.getElementById('mobile-drawer');
   const backdrop = document.getElementById('mobile-backdrop');
 
-  if (!toggleBtn || !drawer || !backdrop) return;
+  let lastDrawerTrigger = null;
 
-  function openMenu() {
-    drawer.classList.add('active');
-    backdrop.classList.add('active');
-    toggleBtn.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-  }
+  if (toggleBtn && drawer && backdrop) {
+    if (!drawer.getAttribute('role')) drawer.setAttribute('role', 'dialog');
+    if (!drawer.getAttribute('aria-modal')) drawer.setAttribute('aria-modal', 'true');
+    if (!drawer.getAttribute('aria-label')) drawer.setAttribute('aria-label', 'Mobile Navigation');
 
-  function closeMenu() {
-    drawer.classList.remove('active');
-    backdrop.classList.remove('active');
-    toggleBtn.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-  }
-
-  toggleBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (drawer.classList.contains('active')) {
-      closeMenu();
-    } else {
-      openMenu();
+    function openMenu() {
+      lastDrawerTrigger = document.activeElement;
+      drawer.classList.add('active');
+      backdrop.classList.add('active');
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      if (closeBtn) setTimeout(() => closeBtn.focus(), 50);
     }
-  });
 
-  if (closeBtn) {
-    closeBtn.addEventListener('click', (e) => {
+    function closeMenu() {
+      drawer.classList.remove('active');
+      backdrop.classList.remove('active');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      
+      const openModals = document.querySelectorAll('[role="dialog"]:not(.hidden)');
+      if (openModals.length === 0) {
+        document.body.style.overflow = '';
+      }
+      
+      if (lastDrawerTrigger && typeof lastDrawerTrigger.focus === 'function') {
+        try { lastDrawerTrigger.focus(); } catch (_) {}
+        lastDrawerTrigger = null;
+      }
+    }
+
+    toggleBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      closeMenu();
+      if (drawer.classList.contains('active')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeMenu();
+      });
+    }
+
+    backdrop.addEventListener('click', closeMenu);
+
+    drawer.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        closeMenu();
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (drawer.classList.contains('active')) {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          closeMenu();
+        } else if (e.key === 'Tab') {
+          const focusables = drawer.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+          if (!focusables.length) {
+            e.preventDefault();
+            return;
+          }
+          const first = focusables[0];
+          const last = focusables[focusables.length - 1];
+          if (e.shiftKey && (document.activeElement === first || !drawer.contains(document.activeElement))) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && (document.activeElement === last || !drawer.contains(document.activeElement))) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
     });
   }
 
-  backdrop.addEventListener('click', closeMenu);
+  // Universal Accessible Modal Manager
+  window.ztdsModal = {
+    triggerMap: new WeakMap(),
 
-  drawer.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      closeMenu();
-    });
-  });
+    open: function(modalEl, focusTarget) {
+      if (!modalEl) return;
+      this.triggerMap.set(modalEl, document.activeElement);
+      modalEl.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
 
+      let target = focusTarget;
+      if (typeof target === 'string') {
+        target = modalEl.querySelector(target);
+      }
+      if (!target) {
+        target = modalEl.querySelector('input:not([disabled]):not([type="hidden"]), textarea:not([disabled]), button:not([disabled]):not([aria-label*="lose"]), [tabindex]:not([tabindex="-1"])') ||
+                 modalEl.querySelector('button, [href], input');
+      }
+      if (target && typeof target.focus === 'function') {
+        setTimeout(() => target.focus(), 50);
+      }
+    },
+
+    close: function(modalEl) {
+      if (!modalEl) return;
+      modalEl.classList.add('hidden');
+      modalEl.classList.remove('flex');
+
+      const openModals = document.querySelectorAll('[role="dialog"]:not(.hidden)');
+      if (openModals.length === 0) {
+        document.body.style.overflow = '';
+      }
+
+      const prev = this.triggerMap.get(modalEl);
+      if (prev && typeof prev.focus === 'function') {
+        try { prev.focus(); } catch (_) {}
+        this.triggerMap.delete(modalEl);
+      }
+    },
+
+    trapFocus: function(e, modalEl) {
+      if (!modalEl || modalEl.classList.contains('hidden')) return;
+      if (e.key === 'Tab') {
+        const focusables = modalEl.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+        if (!focusables.length) {
+          e.preventDefault();
+          return;
+        }
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (e.shiftKey && (document.activeElement === first || !modalEl.contains(document.activeElement))) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && (document.activeElement === last || !modalEl.contains(document.activeElement))) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+  };
+
+  // Global keydown handler for open dialogs
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && drawer.classList.contains('active')) {
-      closeMenu();
+    const openDialog = document.querySelector('[role="dialog"]:not(.hidden)');
+    if (openDialog && openDialog.id !== 'mobile-drawer') {
+      if (e.key === 'Escape') {
+        window.ztdsModal.close(openDialog);
+      } else if (e.key === 'Tab') {
+        window.ztdsModal.trapFocus(e, openDialog);
+      }
     }
   });
 

@@ -19,7 +19,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
@@ -2583,12 +2582,23 @@ https://ztds.ai &middot; Apache 2.0 &middot; CC BY 4.0`;
         if (modalBody) modalBody.classList.remove('hidden');
         if (successState) successState.classList.add('hidden');
 
-        leadModalM0.classList.remove('hidden');
-        if (emailInput) emailInput.focus();
+        if (window.ztdsModal) {
+          window.ztdsModal.open(leadModalM0, emailInput);
+        } else {
+          leadModalM0.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+          if (emailInput) emailInput.focus();
+        }
       }
 
       function closeCisoLeadModalM0() {
-        if (leadModalM0) leadModalM0.classList.add('hidden');
+        if (!leadModalM0) return;
+        if (window.ztdsModal) {
+          window.ztdsModal.close(leadModalM0);
+        } else {
+          leadModalM0.classList.add('hidden');
+          document.body.style.overflow = '';
+        }
       }
 
       if (closeLeadModalBtnM0) {

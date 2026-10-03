@@ -23,7 +23,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
@@ -1867,14 +1866,22 @@ export function CandidateScreeningForm() {
           csModalClaimCta.href = `/apply/?track=company&company=${encodeURIComponent(data.title)}&industry=${encodeURIComponent(data.sector)}`;
         }
 
-        caseStudyModal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
+        if (window.ztdsModal) {
+          window.ztdsModal.open(caseStudyModal, caseStudyCloseBtn);
+        } else {
+          caseStudyModal.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        }
       }
 
       function closeCaseStudyModal() {
         if (!caseStudyModal) return;
-        caseStudyModal.classList.add('hidden');
-        document.body.style.overflow = '';
+        if (window.ztdsModal) {
+          window.ztdsModal.close(caseStudyModal);
+        } else {
+          caseStudyModal.classList.add('hidden');
+          document.body.style.overflow = '';
+        }
       }
 
       document.querySelectorAll('.btn-view-case-study').forEach(btn => {
@@ -1930,14 +1937,22 @@ export function CandidateScreeningForm() {
         modalBadgeUrlText.textContent = badgeUrl;
         modalDirectSvgLink.href = badgeUrl;
 
-        badgeModal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
+        if (window.ztdsModal) {
+          window.ztdsModal.open(badgeModal, modalCloseBtn);
+        } else {
+          badgeModal.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        }
       }
 
       function closeBadgeModal() {
         if (!badgeModal) return;
-        badgeModal.classList.add('hidden');
-        document.body.style.overflow = '';
+        if (window.ztdsModal) {
+          window.ztdsModal.close(badgeModal);
+        } else {
+          badgeModal.classList.add('hidden');
+          document.body.style.overflow = '';
+        }
       }
 
       document.querySelectorAll('.btn-embed-seal').forEach(btn => {
