@@ -46,6 +46,9 @@
   </script>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col antialiased selection:bg-emerald-100 selection:text-emerald-900">
+  <!-- Skip to main content -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
 
   <!-- Institutional Top Header -->
   <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
@@ -105,7 +108,7 @@
 
   <!-- Mobile Slide-Over Drawer -->
   <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"></div>
-  <aside id="mobile-drawer" class="mobile-nav-drawer drawer">
+  <aside id="mobile-drawer" class="mobile-nav-drawer drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
     <div class="space-y-6">
       <div class="flex items-center justify-between pb-4 border-b border-slate-100">
         <div class="flex items-center gap-2">
@@ -137,7 +140,7 @@
   </aside>
 
   <!-- Main Error Content -->
-  <main class="flex-grow py-12 md:py-20">
+  <main id="main-content" class="flex-grow py-12 md:py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
       
       <!-- Status Badge & Core Headline -->

@@ -91,6 +91,9 @@
   </script>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col antialiased">
+  <!-- Skip to main content -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
 <!-- Institutional Top Header -->
   <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
@@ -146,7 +149,7 @@
 
   <!-- Mobile Slide-Over Drawer -->
   <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"></div>
-  <aside id="mobile-drawer" class="mobile-nav-drawer drawer">
+  <aside id="mobile-drawer" class="mobile-nav-drawer drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
     <div class="flex items-center justify-between pb-5 border-b border-slate-200">
       <div class="flex items-center gap-2.5">
         <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 aspect-square p-0.5 overflow-hidden">
@@ -287,7 +290,7 @@
     </aside>
 
     <!-- Main Whitepaper Paper Surface -->
-    <main class="flex-grow min-w-0 bg-white border border-slate-200 rounded-2xl p-6 sm:p-12 shadow-sm">
+    <main id="main-content" class="flex-grow min-w-0 bg-white border border-slate-200 rounded-2xl p-6 sm:p-12 shadow-sm">
       
       <!-- Academic Paper Header -->
       <article class="prose prose-slate max-w-none space-y-12">

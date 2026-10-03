@@ -669,3 +669,32 @@ body {
   }
 }
 
+/* ==========================================================================
+   Accessible Skip Navigation Link (WCAG 2.1 AA)
+   Hidden offscreen by default; slides down on keyboard Tab focus
+   ========================================================================== */
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background-color: #0f172a;
+  color: #ffffff !important;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform 0.15s ease-in-out;
+  outline: none;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+}

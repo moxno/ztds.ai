@@ -87,7 +87,7 @@ for (const relPath of allPages) {
     }
   }
 
-  // 2. Sync Mobile Backdrop and Drawer classes
+  // 2. Sync Mobile Backdrop and Drawer classes + A11y Attributes
   const backdropRegex = /<div id="mobile-backdrop" class="([^"]*)"/i;
   const backdropMatch = content.match(backdropRegex);
   if (backdropMatch) {
@@ -102,18 +102,35 @@ for (const relPath of allPages) {
     }
   }
 
-  const drawerRegex = /<aside id="mobile-drawer" class="([^"]*)"/i;
+  const drawerRegex = /<aside id="mobile-drawer"[^>]*>/i;
   const drawerMatch = content.match(drawerRegex);
   if (drawerMatch) {
-    const classList = drawerMatch[1].trim().split(/\s+/);
-    if (!classList.includes('mobile-nav-drawer') || !classList.includes('drawer')) {
-      content = content.replace(
-        drawerRegex,
-        '<aside id="mobile-drawer" class="mobile-nav-drawer drawer"'
-      );
+    const expectedDrawer = '<aside id="mobile-drawer" class="mobile-nav-drawer drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">';
+    if (drawerMatch[0] !== expectedDrawer) {
+      content = content.replace(drawerRegex, expectedDrawer);
       changed = true;
       drawerUpdated++;
     }
+  }
+
+  // 3. Sync Skip-to-Main-Content Accessible Link
+  if (content.includes('<header') && content.includes('<main') && !content.includes('class="skip-link"')) {
+    const bodyMatch = content.match(/(<body[^>]*>)/i);
+    if (bodyMatch) {
+      const skipLinkTag = '\n  <!-- Skip to main content -->\n  <a href="#main-content" class="skip-link">Skip to main content</a>\n';
+      content = content.replace(bodyMatch[0], `${bodyMatch[0]}${skipLinkTag}`);
+      changed = true;
+    }
+  }
+
+  // 4. Ensure <main> has id="main-content"
+  if (content.includes('<main') && !content.includes('id="main-content"')) {
+    content = content.replace(/<main(\s+[^>]*)?>/i, (match, attrs) => {
+      if (!attrs) return '<main id="main-content">';
+      if (/id=["'][^"']*["']/i.test(attrs)) return match;
+      return `<main id="main-content"${attrs}>`;
+    });
+    changed = true;
   }
 
   if (changed) {
@@ -123,4 +140,4 @@ for (const relPath of allPages) {
 
 console.log(`Scan completed across ${allPages.length} HTML files.`);
 console.log(`Updated desktop navigation in ${navUpdated} pages.`);
-console.log(`Normalized mobile drawer classes in ${drawerUpdated} pages.`);
+console.log(`Normalized mobile drawer classes & a11y in ${drawerUpdated} pages.`);

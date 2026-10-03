@@ -137,6 +137,9 @@
   </script>
 </head>
 <body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">
+  <!-- Skip to main content -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
 
   <!-- Institutional Top Header -->
   <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
@@ -193,7 +196,7 @@
 
   <!-- Mobile Slide-Over Drawer -->
   <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"></div>
-  <aside id="mobile-drawer" class="mobile-nav-drawer drawer">
+  <aside id="mobile-drawer" class="mobile-nav-drawer drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
     <div class="flex items-center justify-between pb-5 border-b border-slate-200">
       <div class="flex items-center gap-2.5">
         <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 aspect-square p-0.5 overflow-hidden">
@@ -301,7 +304,7 @@
     </aside>
 
     <!-- Main RFC Document Surface -->
-    <main class="flex-grow max-w-3xl">
+    <main id="main-content" class="flex-grow max-w-3xl">
       <div class="ztds-card p-6 sm:p-10 bg-white border border-slate-200 shadow-sm rounded-xl">
         
         <!-- Document Header & Metadata -->
@@ -440,48 +443,48 @@
               <!-- Invariant 1 -->
               <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
                 <div class="flex items-center justify-between text-xs mb-2">
-                  <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono">Invariant 1 &middot; Zero External Egress Prior to Sanitization</span>
+                  <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono"><dfn class="not-italic">Invariant 1 &middot; Zero External Egress Prior to Sanitization</dfn></span>
                   <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">MANDATORY</span>
                 </div>
                 <h3 class="text-base font-bold text-slate-900 mb-2">Mathematical Socket Egress Elimination</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                  Raw PII, PHI, financial accounts, or credentials must NEVER traverse an external network socket unmasked. Sanitization occurs strictly prior to socket write. Evaluated via raw TCP/TLS packet inspection: <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">Egress(S) == 0.00 bytes</code>.
+                  The mandatory security rule that raw personally identifiable information (PII), protected health information (PHI), financial accounts, or corporate secrets must never cross the local hardware or process perimeter unmasked. Sanitization occurs strictly prior to socket write, mathematically guaranteeing zero external data egress: <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">Egress(S) == 0.00 bytes</code>.
                 </p>
               </div>
 
               <!-- Invariant 2 -->
               <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
                 <div class="flex items-center justify-between text-xs mb-2">
-                  <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono">Invariant 2 &middot; Deterministic Reversible Tokenization</span>
+                  <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono"><dfn class="not-italic">Invariant 2 &middot; Deterministic Reversible Tokenization</dfn></span>
                   <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">MANDATORY</span>
                 </div>
                 <h3 class="text-base font-bold text-slate-900 mb-2">Bijective Semantic Preservation &amp; Sub-2ms Latency</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                  Surrogate tokens (<code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">[PATIENT_1]</code>, <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">[EMAIL_1]</code>) preserve semantic context and grammatical category for LLM synthesis. Inversion <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">T^(-1)</code> must be bijective and execute with deterministic speed under 2.0ms per 15,000 characters.
+                  The mandatory requirement that sensitive entities are replaced with grammatically consistent surrogate tokens (<code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">[PATIENT_1]</code>, <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">[EMAIL_1]</code>) that preserve model reasoning context while token mapping dictionaries remain exclusively in local volatile memory. Reversible inversion must be strictly bijective and execute deterministically with sub-2.0ms latency per 15,000 characters.
                 </p>
               </div>
 
               <!-- Invariant 3 -->
               <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
                 <div class="flex items-center justify-between text-xs mb-2">
-                  <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono">Invariant 3 &middot; Verifiable Cryptographic Isolation</span>
+                  <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono"><dfn class="not-italic">Invariant 3 &middot; Verifiable Cryptographic Isolation</dfn></span>
                   <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">MANDATORY</span>
                 </div>
                 <h3 class="text-base font-bold text-slate-900 mb-2">Volatile Memory Boundary &amp; Zero Secondary Storage</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                  Cleartext entity mappings <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">R</code> MUST exist exclusively in volatile RAM. Writing session state to localStorage, cookies, IndexedDB, unencrypted swap, or analytics disk logs is strictly prohibited. Multi-user session sharing mandates Argon2id and XChaCha20-Poly1305 encryption.
+                  The execution boundary rule requiring that all cleartext entity mappings <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">R</code>, surrogate lookup tables, and session keys exist exclusively within local volatile RAM (or sandboxed WebAssembly/Nitro Enclave perimeters). Writing unencrypted session state to disk, browser storage, unencrypted swap, or third-party telemetry sockets is strictly prohibited.
                 </p>
               </div>
 
               <!-- Invariant 4 -->
               <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
                 <div class="flex items-center justify-between text-xs mb-2">
-                  <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono">Invariant 4 &middot; Continuous Compliance &amp; Zero Subprocessor Chain</span>
+                  <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono"><dfn class="not-italic">Invariant 4 &middot; Continuous Compliance &amp; Zero Subprocessor Chain</dfn></span>
                   <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">MANDATORY</span>
                 </div>
                 <h3 class="text-base font-bold text-slate-900 mb-2">Complete DPA Exemption under GDPR Article 28</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                  The software provider acts strictly as a localized computational utility executing inside the customer's hardware perimeter. Because exactly 0.00 bytes of data are transmitted to the vendor, the vendor is legally excluded from GDPR Article 28 Data Processor status (under CJEU Case C-582/14 <em>Breyer</em> and EDPB Guidelines 07/2020). Conforming deployments require zero third-party vendor DPAs or BAA chains.
+                  The statutory compliance invariant establishing that the sanitization engine functions as a localized computational utility within customer premises rather than a hosted SaaS subprocessor. Because zero customer data egresses to vendor infrastructure, the vendor is excluded from Data Processor classification under GDPR Article 28 (CJEU Case C-582/14 <em>Breyer</em>), eliminating third-party DPA and BAA liabilities.
                 </p>
               </div>
             </div>
