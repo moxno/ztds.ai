@@ -1,4 +1,4 @@
-# ztds-audit — Zero-Trust Data Sanitization (ZTDS RFC v1.0) Invariant Auditor
+# ztds-audit — Zero-Trust Data Sanitization (ZTDS™ RFC v1.0) Invariant Auditor
 
 [![Specification](https://img.shields.io/badge/RFC-v1.0_Proposed_Standard-059669.svg)](https://ztds.ai/standard/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -7,9 +7,9 @@
 [![Patent Pending](https://img.shields.io/badge/Patent_Pending-IL_331905_%2F_DAS_B17B-purple.svg)](https://ztds.ai/standard/)
 [![WAN Egress](https://img.shields.io/badge/Sensitive_WAN_Egress-0.00_Bytes-emerald.svg)](https://ztds.ai/scanner/)
 
-The official developer CLI and automated CI/CD auditor for the **Zero-Trust Data Sanitization (ZTDS RFC v1.0)** architecture. Maintained by the **ZTDS AI Consortium**.
+The official developer CLI and automated CI/CD auditor for the **Zero-Trust Data Sanitization (ZTDS™ RFC v1.0)** architecture. Maintained by the **ZTDS AI Consortium**.
 
-ZTDS is an open industry standard governing in-memory data sanitization for artificial intelligence, retrieval-augmented generation (RAG), and Large Language Model (LLM) pipelines.
+ZTDS™ is an open industry standard governing in-memory data sanitization for artificial intelligence, retrieval-augmented generation (RAG), and Large Language Model (LLM) pipelines.
 
 ---
 

@@ -54,7 +54,7 @@ if (VERIFY_IDX !== -1 && ARGS[VERIFY_IDX]) {
       console.log(JSON.stringify(cert, null, 2));
       process.exit(0);
     }
-    console.log('\n\x1b[1m\x1b[36m[ZTDS]\x1b[0m \x1b[1mConformance Certificate Verifier\x1b[0m');
+    console.log('\n\x1b[1m\x1b[36m[ZTDS™]\x1b[0m \x1b[1mConformance Certificate Verifier\x1b[0m');
     console.log('\x1b[90m----------------------------------------------------------------------\x1b[0m');
     console.log(`Certificate ID: \x1b[1m\x1b[33m${cert.certificate_id}\x1b[0m`);
     console.log(`Applicant:      \x1b[37m${cert.subject.applicant}\x1b[0m`);
@@ -302,7 +302,7 @@ if (IS_JSON) {
 }
 
 // Terminal Print UI
-console.log('\n\x1b[1m\x1b[36m[ZTDS]\x1b[0m \x1b[1mZTDS.ai In-Memory Codebase Auditor\x1b[0m \x1b[90m(RFC v1.0 Conformance)\x1b[0m');
+console.log('\n\x1b[1m\x1b[36m[ZTDS™]\x1b[0m \x1b[1mZTDS.ai In-Memory Codebase Auditor\x1b[0m \x1b[90m(RFC v1.0 Conformance)\x1b[0m');
 console.log('\x1b[90m----------------------------------------------------------------------\x1b[0m');
 console.log(`Directory:     \x1b[37m${TARGET_DIR}\x1b[0m`);
 console.log(`Files Scanned: \x1b[37m${files.length} files in ${durationMs}ms\x1b[0m`);
