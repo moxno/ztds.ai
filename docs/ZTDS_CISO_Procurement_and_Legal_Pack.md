@@ -36,8 +36,17 @@ Consequently, ZTDS software is **legally exempt from Data Processing Agreement (
 - **ZTDS Exemption Basis:** Under the Safe Harbor method (45 CFR § 164.514(b)), clinical text stripped of the 18 designated personal identifiers is legally classified as de-identified and ceases to be PHI. Because the de-identification occurs locally inside client RAM before transmission, the cloud AI provider receives only legally de-identified surrogate tokens. 
 - **Conclusion:** No BAA is required with the ZTDS software provider or cloud AI endpoints for sanitized workflows.
 
-#### 4. ISO/IEC 27001:2022 — Control A.8.11 (Data Masking)
-- ZTDS directly satisfies Control A.8.11 ("Data masking shall be applied in accordance with the organization's topic-specific policy on access control...") by enforcing deterministic, contextual pseudonymization at the presentation layer.
+#### 4. European Union AI Act (Regulation (EU) 2024/1689) — Phase 2 & Article 10 Data Governance
+- **Statutory Requirement:** Article 10 mandates strict data governance, bias prevention, and training data protection for high-risk and General-Purpose AI (GPAI) systems. Phase 2 (August 2026+) imposes direct liability on deployers of agentic systems for unmanaged data egress.
+- **ZTDS Conformance Basis:** ZTDS acts as a client-side firewall for autonomous AI agents and MCP loops. Contextual surrogates ensure that cleartext customer records, proprietary source code, and employee identifiers are physically stripped before model dispatch, satisfying Article 10 data minimization and Article 50 transparency requirements.
+
+#### 5. NIST AI Risk Management Framework (NIST SP 600-1) — Generative AI Profile
+- **Statutory Requirement:** NIST SP 600-1 establishes risk management standards for generative AI, designating Risk 12 (Sensitive Data Disclosure) as a critical enterprise vulnerability.
+- **ZTDS Conformance Basis:** Fulfills NIST AI RMF core controls GOVERN-1.2, MAP-1.5, and MANAGE-2.4 by enforcing an in-process RAM boundary that eliminates cleartext prompt transmission, prompt injection data exfiltration, and model training set contamination.
+
+#### 6. ISO/IEC 42001:2023 & ISO/IEC 27001:2022 — AI Management Systems (AIMS) & Control A.8.11
+- **Statutory Requirement:** ISO/IEC 42001 Annex A.6 (AI Data Lifecycle), A.7 (AI Security), and A.8 (AI Supplier Risk) mandate strict control over third-party foundation model integrations. ISO/IEC 27001 Control A.8.11 mandates presentation-layer data masking.
+- **ZTDS Conformance Basis:** Enforces deterministic client-side pseudonymization and reversible re-identification, satisfying ISO/IEC 42001 AIMS controls and eliminating third-party subprocessor risk in commercial LLM integration.
 
 ---
 

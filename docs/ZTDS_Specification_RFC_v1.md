@@ -15,7 +15,7 @@ Zero-Trust Data Sanitization (ZTDS) defines a formal architectural standard and 
 
 Under the ZTDS standard, sensitive information—including Personally Identifiable Information (PII), Protected Health Information (PHI), financial account credentials, and developer secrets—is intercepted and transformed into synthetic surrogate tokens strictly within the volatile RAM of the originating client or private host node before network egress. 
 
-This eliminates reliance on intermediary cloud Data Loss Prevention (DLP) proxies, satisfies European Union General Data Protection Regulation (GDPR) Article 28 data processor exemption criteria, guarantees mathematical compliance with the Right to be Forgotten (GDPR Article 17) within vector embeddings, and achieves sub-2-millisecond runtime execution.
+This eliminates reliance on intermediary cloud Data Loss Prevention (DLP) proxies, satisfies European Union General Data Protection Regulation (GDPR) Article 28 data processor exemption criteria, guarantees mathematical compliance with the Right to be Forgotten (GDPR Article 17) within vector embeddings, and achieves sub-2-millisecond runtime execution. Furthermore, ZTDS provides deterministic technical conformance with the European Union AI Act (Regulation (EU) 2024/1689 Phase 2 Data Governance), the NIST AI Risk Management Framework Generative AI Profile (NIST SP 600-1), and ISO/IEC 42001:2023 Artificial Intelligence Management Systems (AIMS).
 
 ---
 
@@ -111,8 +111,22 @@ synthesizes clinical logic, contraindications, and formatting identically to cle
 - Safe Harbor De-Identification: Local extraction and removal of all 18 specified Protected Health Information (PHI) identifiers renders clinical text legally de-identified prior to cloud transmission.
 - Business Associate Agreement (BAA) Exemption: Because cloud AI endpoints receive only de-identified surrogate tokens, healthcare providers do not require a BAA with AI vendors for sanitized workflows.
 
-### 5.3 European Union AI Act (Regulation 2024/1689)
-- Article 50 (Transparency and Traceability): ZTDS engines generate cryptographically verifiable audit receipts (anchored by SHA-256 digests) confirming the entity types sanitized and regulatory frameworks triggered, without recording cleartext.
+### 5.3 European Union AI Act (Regulation (EU) 2024/1689)
+- Article 50 (Transparency and Traceability): ZTDS engines generate cryptographically verifiable audit receipts (anchored by SHA-256 digests and Ed25519 signatures) confirming the entity types sanitized and regulatory frameworks triggered, without persisting or recording cleartext.
+- Article 10 (Data and Data Governance): For high-risk AI deployments and General-Purpose AI (GPAI) model integration, ZTDS provides pre-egress sanitization preventing training set contamination, prompt leakage, and inadvertent ingestion of proprietary assets.
+- Phase 2 AI Agentic Governance (August 2026+ Enforcement): Prohibits autonomous AI agents and Tool Use / Model Context Protocol (MCP) clients from executing unauthenticated, unmasked egress of enterprise credentials, secrets, or identifiable customer records to foundation model providers.
+
+### 5.4 NIST AI Risk Management Framework (NIST AI RMF 1.0 & NIST SP 600-1)
+- NIST SP 600-1 (Generative AI Profile - July 2024): Directly fulfills mitigation requirements for Generative AI Risk 12 (Sensitive Data Disclosure) and Risk 1 (CBRN and Cybersecurity Vulnerabilities):
+  - GOVERN-1.2 & MAP-1.5: Enforces organizational data boundaries prior to model dispatch.
+  - MEASURE-2.6: Evaluates residual risk via deterministic zero-egress network inspection.
+  - MANAGE-2.4: Controls data transmission channels by replacing cleartext with context-preserving surrogate tokens in volatile memory.
+
+### 5.5 ISO/IEC 42001:2023 (Artificial Intelligence Management System - AIMS)
+- Annex A.6 (Data for AI Systems): Establishes data quality, provenance, and privacy preservation by ensuring training and inference prompts undergo client-side sanitization.
+- Annex A.7 (Information Security for AI Systems): Protects data confidentiality across multi-model AI workflows.
+- Annex A.8 (Third-Party and Supplier Relationships in AI): Neutralizes supplier concentration risk and third-party data processor liability when routing workloads across external frontier LLMs (OpenAI, Anthropic, Google).
+- Concurrently satisfies ISO/IEC 27001:2022 Control A.8.11 (Data Masking) and ISO/IEC 27701:2019 (Privacy Information Management).
 
 ---
 
