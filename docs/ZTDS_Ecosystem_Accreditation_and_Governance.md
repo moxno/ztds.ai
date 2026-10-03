@@ -43,11 +43,11 @@ Track A certifies software products, browser extensions, open-source libraries, 
 ### Purpose & Benefits
 Track B showcases corporations, law firms, healthcare systems, and agencies that enforce client-side ZTDS protocols across their internal employee workflows.
 
-### Flagship Founding Member: BrandMeWeb
+### Flagship Founding Member & Accredited Audit Partner: BrandMeWeb
 - **Company:** BrandMeWeb (brandmeweb.com)
 - **Sector:** Technical SEO & Generative Engine Optimization (GEO)
-- **Role:** Founding Corporate Member
-- **Compliance Policy:** Enforces 100% client-side sanitization across internal AI copywriting, keyword intelligence, and client analytics workflows to prevent client IP leakage into LLM training sets.
+- **Role:** Founding Corporate Member & Accredited Implementation Partner
+- **Compliance Policy:** Enforces 100% client-side sanitization across internal AI copywriting, keyword intelligence, and client analytics workflows to prevent client IP leakage into LLM training sets. Accredited to perform third-party ZTDS architecture audits and CISO verification.
 
 ### Corporate Adopter Benefits
 1. Verified profile in the ZTDS corporate catalog.

@@ -77,3 +77,19 @@ Consequently, ZTDS software is **legally exempt from Data Processing Agreement (
 3. **Restrictions:** Customer shall not reverse engineer to sell a competing standalone PII sanitization SaaS, sublicense, distribute, or make the source code publicly available.
 4. **Air-Gapped Operation:** Customer is authorized to deploy the engine in 100% disconnected, SCIF, or classified environments with zero telemetry or licensing heartbeats required.
 5. **Warranty & Support:** Licensor provides annual regulatory regex updates, security patches, and direct architectural advisory.
+
+---
+
+## 4. Enterprise Competitive Architecture Matrix & Cloud DLP Disclaimers
+
+| Competitor Category | Vendor Examples | Architectural Flaw in AI Workflows | ZTDS RFC v1.0 Advantage |
+| :--- | :--- | :--- | :--- |
+| **Enterprise Cloud Gateways & Hyperscalers** | Microsoft Purview, AWS Macie, Google Cloud DLP | Coarse file-level boundaries or remote API calls adding 250ms–500ms latency per prompt; per-gigabyte cloud bills; destructive redaction breaks reasoning. | In-process volatile RAM execution (<1.2ms); reversible tokenization; zero marginal cloud API costs. |
+| **Cloud Data Privacy Vaults** | Skyflow | Mandates double WAN network hops (prompt tokenization + response de-tokenization); creates a centralized third-party cloud vault honeypot and GDPR subprocessor liability. | Client-side in-memory mapping table; zero external network calls; legally exempt from GDPR Article 28 subprocessor classification. |
+| **Endpoint Lineage DLP** | Cyberhaven | Relies on OS-level kernel drivers to passively log leaks (after the fact) or hard-block AI interactions (paralyzing employee productivity and prompting shadow AI). | Preventive in-memory transformation: deterministically tokenizes sensitive data before socket creation and transparently restores it upon return. |
+| **Cloud SaaS Proxies** | Nightfall AI, Netskope | Multi-tenant SaaS requires routing raw cleartext prompts to third-party cloud webhooks; concentrates corporate secrets in external SaaS infrastructure. | Zero external egress (0.00 bytes); 100% disconnected operation in Airplane Mode; zero third-party cloud dependencies. |
+| **DSPM & Data Discovery** | BigID, Securiti.ai | Asynchronous scanning designed exclusively for Data at Rest (S3, Snowflake); lacks inline runtime data-plane interceptors for live streaming prompts. | Real-time runtime data-plane transformer for Data in Flight and Data in Use during active LLM inference and agent tool execution. |
+| **Ad-Hoc Community MCP Scripts** | CloakLLM, MCP Conceal, mcp-pvp | Unverified regex wrappers; no formal specification; high false-negative rates on complex enterprise schemas; unauthenticated table state leaks between agent turns; zero GRC auditability. | Mathematically proven RFC v1.0 standard; automated Conformance Test Suite (CTS); cryptographic SHA-256 receipts; audited alignment with EU AI Act Phase 2, NIST AI RMF 600-1, and ISO/IEC 42001. |
+
+*Nominative Fair Use Disclaimer:* All product names, logos, and brands are property of their respective owners. Mention of Microsoft Purview, AWS Macie, Google Cloud DLP, Skyflow, Cyberhaven, Nightfall AI, BigID, CloakLLM, and MCP Conceal is strictly for nominative architectural comparison based on publicly available documentation as of Q3 2026.
+

@@ -291,7 +291,7 @@
           <span>Pitch Deck (PDF)</span>
         </a>
         <a href="/agency/" class="px-3.5 py-2.5 rounded-lg border border-emerald-500/40 bg-emerald-950/40 text-emerald-300 hover:bg-emerald-900/60 text-xs font-semibold shadow-sm flex items-center gap-1.5 transition-colors">
-          <span>Book Enterprise Audit ($2,500)</span> &rarr;
+          <span>Accredited Partner Audit</span> &rarr;
         </a>
         <a href="/roi/" class="px-3.5 py-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 shadow-sm flex items-center gap-1.5 transition-colors">
           <span>ROI Calculator &rarr;</span>
@@ -928,6 +928,15 @@
         <button type="button" id="tabBtnCloudApis" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm" data-target="paneCloudApis">
           AWS Macie &amp; Google Cloud DLP
         </button>
+        <button type="button" id="tabBtnCyberhaven" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm" data-target="paneCyberhaven">
+          Cyberhaven (Endpoint Lineage)
+        </button>
+        <button type="button" id="tabBtnSkyflow" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm" data-target="paneSkyflow">
+          Skyflow (Cloud Vaults)
+        </button>
+        <button type="button" id="tabBtnMcp" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm" data-target="paneMcp">
+          Ad-Hoc MCP Tools (CloakLLM, Conceal)
+        </button>
       </div>
 
       <!-- Nominative Fair Use & Architectural Citation Notice -->
@@ -936,13 +945,15 @@
           <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Nominative Fair Use &amp; Technical Source Citations
         </div>
         <p>
-          Microsoft Purview, Nightfall AI, BigID, AWS Macie, and Google Cloud Sensitive Data Protection (DLP) are registered trademarks of their respective proprietors. Comparative analyses are strictly architectural, evaluating local in-memory execution boundaries against cloud network proxy topologies based on publicly available vendor documentation as of Q3 2026:
+          Microsoft Purview, Nightfall AI, BigID, AWS Macie, Google Cloud Sensitive Data Protection (DLP), Cyberhaven, Skyflow, CloakLLM, and MCP Conceal are registered trademarks or open projects of their respective proprietors. Comparative analyses are strictly architectural, evaluating local in-memory execution boundaries against cloud network proxy topologies, centralized vaults, and unverified scripts based on publicly available documentation as of Q3 2026:
         </p>
         <ul class="list-disc list-inside text-[11px] text-slate-500 space-y-0.5 font-mono">
           <li>Microsoft Purview: Endpoint &amp; Exchange Information Protection Architecture (docs.microsoft.com/purview)</li>
-          <li>Google Cloud DLP: Sensitive Data Protection API latency characteristics and volumetric inspection pricing (cloud.google.com/dlp)</li>
-          <li>AWS Macie: S3 Data Security &amp; Automated Discovery topology (aws.amazon.com/macie)</li>
-          <li>Nightfall AI: Cloud API proxy webhook &amp; SaaS integration patterns (docs.nightfall.ai)</li>
+          <li>Google Cloud DLP &amp; AWS Macie: Cloud API latency characteristics &amp; automated discovery (cloud.google.com/dlp &amp; aws.amazon.com/macie)</li>
+          <li>Nightfall AI &amp; BigID: Cloud API SaaS proxy webhooks &amp; DSPM datastore discovery (docs.nightfall.ai &amp; bigid.com)</li>
+          <li>Cyberhaven: Kernel/browser extension data lineage vs. in-memory tokenization (cyberhaven.com)</li>
+          <li>Skyflow: Centralized cloud data privacy vault latency &amp; subprocessor chain (skyflow.com)</li>
+          <li>Local MCP Utilities (CloakLLM, MCP Conceal, mcp-pvp): Unauthenticated single-heuristic regex vs. RFC v1.0 4 Invariants</li>
         </ul>
       </div>
 
@@ -1190,19 +1201,223 @@
         </div>
       </div>
 
+      <!-- TAB PANE 5: Cyberhaven (Endpoint Lineage DLP) -->
+      <div id="paneCyberhaven" class="bc-pane hidden space-y-6">
+        <div class="ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+            <div>
+              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
+              <h3 class="text-xl font-bold text-slate-900">Cyberhaven (Data Lineage &amp; Endpoint Agent DLP)</h3>
+            </div>
+            <div class="inline-flex items-center px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-mono font-bold">
+              FLAW: Passive Logging or Disruptive Blocking
+            </div>
+          </div>
+
+          <!-- The Architectural Vulnerability -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <h4 class="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider">The Architectural Vulnerability</h4>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              Cyberhaven relies on heavy OS-level kernel drivers and browser extension hooks to track data lineage across clipboards, files, and URLs. In generative AI workflows, Cyberhaven either passively logs the prompt (allowing sensitive data to leak to the LLM) or hard-blocks the user action (breaking productivity). It possesses no in-memory data plane to replace sensitive entities with synthetic context-preserving surrogates and transparently reconstruct them upon return.
+            </p>
+          </div>
+
+          <!-- Objection Handling Script Playbook -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider">CISO Objection Handling Playbook</h4>
+            
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
+              <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span>"Cyberhaven already gives us complete data lineage visibility over shadow AI."</span>
+                </div>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+              </div>
+              <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
+                <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
+                "Data lineage without inline transformation is merely passive breach documentation. You will receive an alert that an engineer pasted client bank details into Claude, but the breach has already occurred, triggering mandatory 72-hour notifications under GDPR Article 33. ZTDS is preventive: it intercepts data in volatile RAM before socket creation, guaranteeing that unmasked sensitive data physically never leaves the local perimeter."
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
+              <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span>"Can't Cyberhaven just block users from pasting sensitive customer files into AI tools?"</span>
+                </div>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+              </div>
+              <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
+                <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
+                "Hard blocking kills AI adoption and incentivizes shadow AI on personal devices. If support reps cannot paste customer tickets into AI for triage, support velocity collapses. ZTDS allows users to proceed seamlessly: it substitutes sensitive values with synthetic tokens (e.g. <code>[ACCOUNT_NUM_1]</code>), allows the LLM to complete its analysis, and seamlessly de-tokenizes the output on device. Zero data risk, zero business friction."
+              </div>
+            </div>
+
+          </div>
+
+          <!-- The One-Sentence CISO Defense -->
+          <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
+              <span class="text-xs font-semibold text-emerald-950">"Cyberhaven records the breach after your data leaves; ZTDS sanitizes payloads in volatile RAM so raw secrets never cross your perimeter in the first place."</span>
+            </div>
+            <a href="/roi/" class="btn-trust text-xs py-2 px-3.5 shrink-0">Model ROI &rarr;</a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB PANE 6: Skyflow (Cloud Privacy Vault) -->
+      <div id="paneSkyflow" class="bc-pane hidden space-y-6">
+        <div class="ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+            <div>
+              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
+              <h3 class="text-xl font-bold text-slate-900">Skyflow (Cloud Data Privacy Vault &amp; Tokenization Gateway)</h3>
+            </div>
+            <div class="inline-flex items-center px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-mono font-bold">
+              FLAW: Cloud Ingress, Subprocessor Chain &amp; High Latency
+            </div>
+          </div>
+
+          <!-- The Architectural Vulnerability -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <h4 class="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider">The Architectural Vulnerability</h4>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              Skyflow operates as an external cloud-hosted privacy vault. Sanitizing a prompt requires sending cleartext data over the public internet to Skyflow's API, receiving tokens, calling the LLM, and making another remote roundtrip to de-tokenize. This introduces 300ms–800ms of cumulative network latency per prompt, designates Skyflow as a GDPR Article 28 subprocessor requiring extensive DPA governance, and centralizes corporate secrets in a third-party multi-tenant cloud vault.
+            </p>
+          </div>
+
+          <!-- Objection Handling Script Playbook -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider">CISO Objection Handling Playbook</h4>
+            
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
+              <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span>"Skyflow is already our enterprise data vault for PCI-DSS credit card tokenization."</span>
+                </div>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+              </div>
+              <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
+                <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
+                "Skyflow is built for relational databases at rest. For streaming generative AI prompts and agentic tool calls, serial WAN API calls add 300ms–800ms of lag per prompt, destroying real-time conversational UX. More critically, sending live prompts to Skyflow makes them a cloud subprocessor, requiring vendor risk assessments and cloud egress costs. ZTDS executes in &lt;1.2ms directly in device volatile memory with zero cloud egress, rendering DPAs completely unnecessary."
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
+              <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span>"Can Skyflow de-identify data in our private cloud VPC?"</span>
+                </div>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+              </div>
+              <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
+                <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
+                "Even self-hosted VPC vault deployments require maintaining dedicated container clusters, persistent state storage, and complex networking. ZTDS runs purely in-process in client volatile RAM or browser extensions without any server infrastructure whatsoever. Invariant 3 ensures cryptographic isolation with zero persistence on disk, zero maintenance overhead, and zero per-call cloud compute fees."
+              </div>
+            </div>
+
+          </div>
+
+          <!-- The One-Sentence CISO Defense -->
+          <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
+              <span class="text-xs font-semibold text-emerald-950">"Skyflow stores your secrets in an external cloud vault; ZTDS keeps tokenization strictly in local volatile RAM with zero egress and zero subprocessor overhead."</span>
+            </div>
+            <a href="/roi/" class="btn-trust text-xs py-2 px-3.5 shrink-0">Model ROI &rarr;</a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB PANE 7: Ad-Hoc MCP Utilities (CloakLLM, MCP Conceal, mcp-pvp) -->
+      <div id="paneMcp" class="bc-pane hidden space-y-6">
+        <div class="ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+            <div>
+              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
+              <h3 class="text-xl font-bold text-slate-900">Ad-Hoc MCP Utilities &amp; Regex Scripts (CloakLLM, MCP Conceal, mcp-pvp)</h3>
+            </div>
+            <div class="inline-flex items-center px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-mono font-bold">
+              FLAW: Unverified Regex, Table Leakage &amp; Zero GRC Compliance
+            </div>
+          </div>
+
+          <!-- The Architectural Vulnerability -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <h4 class="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider">The Architectural Vulnerability</h4>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              Open-source MCP community scripts (such as CloakLLM, MCP Conceal, or mcp-pvp) are single-heuristic regex wrappers created for personal developer experimentation. They lack a formal specification, have no automated Conformance Test Suite (CTS), fail edge cases (OCR noise, foreign names, Scandinavian tax IDs, multi-line medical charts), and store mapping tables in unauthenticated global variables that leak across agent threads. They provide zero audit receipts or regulatory alignment with EU AI Act Phase 2, NIST AI RMF 600-1, or ISO/IEC 42001.
+            </p>
+          </div>
+
+          <!-- Objection Handling Script Playbook -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider">CISO Objection Handling Playbook</h4>
+            
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
+              <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span>"Our developers can just configure an open-source MCP redaction tool in Cursor or Claude Desktop."</span>
+                </div>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+              </div>
+              <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
+                <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
+                "When enterprise auditors or regulators under EU AI Act Phase 2 ask for your AI conformity assessment, an unvetted GitHub script cannot provide cryptographic SHA-256 receipts, Ed25519 offline validation, or formal GRC mappings. Ad-hoc regex scripts frequently miss obfuscated PII, and their token state can bleed across concurrent agent tool calls. ZTDS is a formal RFC v1.0 standard with 4 mathematical invariants, automated CTS suites, and full ISO/IEC 42001:2023 control mapping."
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
+              <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span>"Why standardize on ZTDS instead of letting each team use their own regex filters?"</span>
+                </div>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+              </div>
+              <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
+                <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
+                "Fragmented regex filters create catastrophic compliance blindspots: a 2% false-negative rate across millions of enterprise prompts means tens of thousands of customer records and secrets leak silently to LLM providers. ZTDS delivers unified governance: a single audited standard, verifiable offline receipts (<code>npx ztds-audit</code>), and reference implementations across browser extensions, headless SDKs, and MCP stdio servers."
+              </div>
+            </div>
+
+          </div>
+
+          <!-- The One-Sentence CISO Defense -->
+          <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
+              <span class="text-xs font-semibold text-emerald-950">"Hobbyist MCP regex scripts offer zero legal defense; ZTDS provides mathematically verified RFC v1.0 invariants and audited GRC regulatory compliance."</span>
+            </div>
+            <a href="/roi/" class="btn-trust text-xs py-2 px-3.5 shrink-0">Model ROI &rarr;</a>
+          </div>
+
+        </div>
+      </div>
+
     </section>
 
-    <!-- BrandMeWeb Enterprise Turn-Key Audit Banner -->
+    <!-- Accredited Implementation Partner Turn-Key Audit Banner -->
     <section class="mt-12 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-slate-700 text-white shadow-lg no-print">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div class="space-y-2">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-800/80 text-[11px] font-mono font-bold text-emerald-400">
             <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span>BrandMeWeb Turn-Key Engagement</span>
+            <span>Accredited Implementation Partner</span>
           </div>
           <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Need an Audited CISO Exemption Pack for Your Architecture?</h3>
           <p class="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-            BrandMeWeb Chief Architect Ilya Sibiryakov conducts an end-to-end 30-minute turn-key audit ($2,500 initial snapshot + $500/mo retainer). We verify zero network egress across your pipelines, prepare your custom CISO legal memorandum, and deploy machine-readable GEO infrastructure (llms.txt).
+            Engage an Accredited ZTDS Implementation Partner (such as founding member BrandMeWeb) for an end-to-end technical audit. Independent engineers verify zero network egress across your pipelines, prepare your custom CISO legal memorandum, and deploy machine-readable GEO infrastructure (llms.txt).
           </p>
         </div>
         <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0">

@@ -63,27 +63,31 @@ Multiplication      Irreversible Latent Space         Mandatory Audit      Attor
 
 ---
 
-## Slide 3: Why Existing Solutions Fail (The Cloud DLP Trap)
+## Slide 3: Why Existing Solutions Fail (The Architectural Landscape)
 
-### Slide Visual & Comparison Table
-| Metric / Vulnerability | Cloud DLP Proxies (Netskope, Nightfall, Macie) | ZTDS RFC v1.0 In-Memory Engine |
-| :--- | :--- | :--- |
-| **Sanitization Latency** | 250 ms – 800 ms (Network roundtrip + SaaS queue) | **< 1.8 ms (Local CPU / RAM execution)** |
-| **Data Egress** | Transmits cleartext to vendor cloud proxy | **0.00 Bytes (Air-gapped local memory)** |
-| **Subprocessor Status** | Yes (Requires full GDPR DPA & Security Review) | **Exempt (No external infrastructure)** |
-| **LLM Reasoning Quality** | Destroys context via naive redaction `[REDACTED]` | **Preserves syntax, entity class, & token distance** |
-| **Vector DB Compatibility** | Raw embeddings remain vulnerable | **Embeddings generated on surrogate tokens** |
-| **Air-Gapped / SCIF Ready** | No (Requires persistent cloud connection) | **Yes (100% disconnected Ed25519 token)** |
+### Slide Visual & Comparison Matrix
+| Architectural Dimension | Cloud DLP Proxies (Purview, Nightfall, Macie) | Cloud Privacy Vaults (Skyflow) | Endpoint Lineage DLP (Cyberhaven) | Ad-Hoc MCP Scripts (CloakLLM, Conceal) | ZTDS RFC v1.0 In-Memory Engine |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Sanitization Latency** | 250 ms – 800 ms (WAN hop + SaaS queue) | 300 ms – 800 ms (Double WAN roundtrip) | OS Hook Overhead (Blocking latency) | Variable (Regex backtracking) | **< 1.2 ms (Local RAM execution)** |
+| **Cleartext Data Egress** | Transmits raw data to vendor cloud proxy | Transmits cleartext to cloud vault API | Passively logs or blocks at endpoint | Leaves process unencrypted | **0.00 Bytes (Strict local memory)** |
+| **Subprocessor Status** | Yes (Mandates GDPR Art. 28 DPA) | Yes (Third-party SaaS vault processor) | Local agent, but SaaS telemetry cloud | Community script (No GRC warranty) | **Exempt (Zero network egress, no DPA)** |
+| **Model Context Quality** | Destructive redaction (`[REDACTED]`) | Token replacement via remote lookup | Binary block (breaks AI execution) | Naive regex (syntax destruction) | **Preserves syntax, entity class & distance** |
+| **Local Bijective Reversal** | No (Destructive one-way masking) | Requires second WAN de-tokenize call | None (Alert/block only) | None or insecure in-memory table | **Yes (Reversible in client RAM)** |
+| **Enterprise GRC Attestation** | Generic cloud compliance (SOC 2) | Cloud vault SOC 2 / HIPAA BAA | Endpoint security compliance | Zero compliance (Hobbyist OSS) | **EU AI Act Phase 2, NIST SP 600-1, ISO 42001** |
+| **Air-Gapped / Disconnected** | No (Requires active cloud connection) | No (Dependent on cloud vault API) | No (Requires cloud management plane) | Yes (Local script, zero attestability) | **Yes (100% offline Ed25519 token)** |
 
-### Slide Content (Key Bullets)
-* **The 400ms Latency Tax:** In multi-agent loops (LangChain, CrewAI, AutoGen) requiring 10-15 sequential LLM calls, cloud DLP adds 5-10 seconds of cumulative latency, crippling user experience.
-* **The Vendor Trust Paradox:** To protect your data from OpenAI, cloud DLP asks you to send all your data to another third-party SaaS vendor, doubling your breach exposure.
-* **Context Destruction:** Replacing sensitive values with generic asterisks or hashes degrades LLM semantic reasoning and instruction-following.
+### Slide Content (Key Architectural Takeaways)
+* **The Cloud Proxy & Vault Trap:** To prevent data leakage to OpenAI or Anthropic, legacy tools (Nightfall, Skyflow) force enterprises to route raw cleartext through another cloud provider, creating additional GDPR subprocessors and introducing 300ms–800ms of lag per prompt.
+* **The Endpoint Blocking Paralysis:** Endpoint DLP (Cyberhaven) relies on OS hooks to either passively record breaches after they happen or hard-block AI interactions, driving knowledge workers toward untracked personal devices.
+* **The Hobbyist MCP Vulnerability:** Ad-hoc community regex scripts (CloakLLM, MCP Conceal) lack cryptographic verification, fail on noisy enterprise OCR or multilingual entities, and offer zero regulatory auditability under EU AI Act or ISO/IEC 42001.
+* **The ZTDS In-Memory Data Plane:** Runs 100% locally in device RAM (<1.2ms), performs context-preserving reversible tokenization, leaves zero footprint on disk, and eliminates third-party subprocessor risk by physical law.
 
 ### Verbatim Speaker Notes
-> "When organizations try to address this problem, they typically evaluate cloud DLP proxies. But cloud proxies were designed for 2015 email scanning, not 2026 agentic AI. 
+> "When enterprise security teams try to solve AI data privacy, they usually evaluate three legacy categories. First, cloud DLP proxies like Microsoft Purview, AWS Macie, and Nightfall, or cloud privacy vaults like Skyflow. Every prompt must make multiple roundtrips across the internet before reaching the model, adding half a second of lag and turning the DLP vendor into a GDPR subprocessor with full cleartext visibility.
 > 
-> First, the latency tax: Cloud DLP adds 250 to 800 milliseconds to every call. In a multi-agent loop with ten sequential reasoning steps, your users wait an extra eight seconds. Second, the vendor trust paradox: you are trying to stop data leakage to OpenAI by routing all cleartext data through yet another cloud vendor! That vendor now requires their own DPA, their own SOC 2 audit, and represents another breach surface. ZTDS replaces the cloud proxy with a zero-latency micro-engine embedded directly in your runtime."
+> Second, endpoint tools like Cyberhaven. They can track clipboard events, but their only enforcement mechanism is hard blocking. If your engineers or customer support teams are blocked from using AI, your enterprise AI initiatives stall, and employees bypass controls using personal phones.
+> 
+> Third, developers sometimes attempt to drop in community MCP regex scripts like CloakLLM or MCP Conceal. But unvetted regex scripts fail edge cases, leak table state between agent turns, and cannot provide the cryptographic SHA-256 receipts demanded by EU AI Act Phase 2 and ISO/IEC 42001 auditors. ZTDS replaces these flawed paradigms with an in-memory, mathematically verified RFC standard that executes in sub-millisecond RAM with zero egress."
 
 ---
 
