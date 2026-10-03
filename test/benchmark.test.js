@@ -24,10 +24,17 @@ console.log('--> Test 1: benchmarks/ai-safety-benchmark.json Schema & Coverage')
   assert(fs.existsSync(datasetPath), 'Benchmark dataset must exist');
 
   const dataset = JSON.parse(fs.readFileSync(datasetPath, 'utf8'));
-  assert.strictEqual(dataset.scenarios.length, 25, 'Dataset must contain exactly 25 test scenarios');
+  assert.strictEqual(dataset.scenarios.length, 30, 'Dataset must contain exactly 30 test scenarios');
   assert(Array.isArray(dataset.benchmark_metadata.target_models), 'Target models must be listed');
 
-  const requiredModels = ['openai/gpt-4o', 'anthropic/claude-3-5-sonnet', 'google/gemini-2.0-pro', 'deepseek/deepseek-v3'];
+  const requiredModels = [
+    'openai/gpt-4o',
+    'anthropic/claude-3-5-sonnet',
+    'google/gemini-2.0-pro',
+    'deepseek/deepseek-v3',
+    'openai/o3',
+    'anthropic/claude-3.7-sonnet'
+  ];
   for (const model of requiredModels) {
     assert(dataset.benchmark_metadata.target_models.includes(model), `Model ${model} must be configured in metadata`);
   }
@@ -48,7 +55,7 @@ console.log('--> Test 1: benchmarks/ai-safety-benchmark.json Schema & Coverage')
       assert(scenario.simulated_llm_responses[model], `Scenario ${scenario.id} must define simulated response for ${model}`);
     }
   }
-  console.log('    [PASS] Verified 25 scenarios, 6 enterprise domains, and 4 frontier model templates.');
+  console.log('    [PASS] Verified 30 scenarios, 7 enterprise domains, and 6 frontier model templates.');
 }
 
 // Test 2: In-Memory Sanitizer Core Invariants
@@ -116,7 +123,10 @@ console.log('--> Test 4: runAISafetyBenchmark() End-to-End Execution');
   const results = await runAISafetyBenchmark();
   const m = results.aggregate_metrics;
 
-  assert.strictEqual(results.total_scenarios, 25, 'Must evaluate 25 scenarios');
+  assert.strictEqual(results.total_scenarios, 30, 'Must evaluate 30 scenarios');
+  assert.strictEqual(m.multimodal_scenarios_evaluated, 5, 'Must evaluate 5 multimodal scenarios');
+  assert.strictEqual(m.multimodal_pixel_redaction_verified, true, 'Multimodal pixel redaction must be verified true');
+  assert.strictEqual(m.pixel_leakage_prevented_pct, 100.0, 'Pixel leakage prevention rate must be exactly 100.0%');
   assert.strictEqual(m.leakage_prevention_rate_pct, 100.0, 'Leakage prevention rate must be exactly 100.0%');
   assert.strictEqual(m.bijective_fidelity_score_pct, 100.0, 'Bijective fidelity score must be 100.0%');
   assert.strictEqual(m.context_preservation_score_pct, 100.0, 'Context preservation score must be 100.0%');
@@ -131,7 +141,7 @@ console.log('--> Test 4: runAISafetyBenchmark() End-to-End Execution');
     assert.strictEqual(stat.leakage_prevention_rate_pct, 100.0);
     assert.strictEqual(stat.bijective_fidelity_score_pct, 100.0);
   }
-  console.log('    [PASS] 100% KPI conformance confirmed across all 4 frontier model families.');
+  console.log('    [PASS] 100% KPI conformance confirmed across all 6 frontier model families.');
 
   // Test 5: CLI Output Verification
   console.log('--> Test 5: bin/ztds-bench.js CLI Execution & JSON Mode');
@@ -141,6 +151,7 @@ console.log('--> Test 4: runAISafetyBenchmark() End-to-End Execution');
     assert(parsed.benchmark_id.startsWith('ZTDS-BENCH-'), 'Benchmark ID must be generated');
     assert.strictEqual(parsed.aggregate_metrics.leakage_prevention_rate_pct, 100.0);
     assert.strictEqual(parsed.aggregate_metrics.ram_zeroization_verified, true);
+    assert.strictEqual(parsed.aggregate_metrics.multimodal_scenarios_evaluated, 5);
     console.log('    [PASS] CLI --json output validated with 100% invariant conformance.');
   }
 
@@ -184,5 +195,29 @@ console.log('--> Test 4: runAISafetyBenchmark() End-to-End Execution');
     console.log('    [PASS] 0 brand spelling defects found. "BrandMeWeb" strictly verified.');
   }
 
-  console.log('\n[SUMMARY] ALL 7 AI SAFETY BENCHMARK TESTS PASSED WITH 100% CONFORMANCE.\n');
+  // Test 8: Multimodal Pixel-Level Invariant & Bounding Box Integrity
+  console.log('--> Test 8: Multimodal Pixel-Level Invariant & Bounding Box Integrity');
+  {
+    const datasetPath = path.join(__dirname, '..', 'benchmarks', 'ai-safety-benchmark.json');
+    const dataset = JSON.parse(fs.readFileSync(datasetPath, 'utf8'));
+    const multimodalScenarios = dataset.scenarios.filter(s => s.modality === 'multimodal/image');
+
+    assert.strictEqual(multimodalScenarios.length, 5, 'Must contain exactly 5 multimodal scenarios');
+    for (const ms of multimodalScenarios) {
+      assert(ms.image_metadata, `Multimodal scenario ${ms.id} must declare image_metadata`);
+      assert(ms.image_metadata.width > 0 && ms.image_metadata.height > 0, `Valid dimensions required for ${ms.id}`);
+      assert.strictEqual(ms.image_metadata.pixel_redaction_status, 'ZERO_EGRESS_ATTESTED', `Pixel redaction attested required for ${ms.id}`);
+      assert.strictEqual(ms.image_metadata.redaction_method, 'SOLID_BLACK_BURN_IN', `Solid blackout required for ${ms.id}`);
+      assert(Array.isArray(ms.image_metadata.bounding_boxes) && ms.image_metadata.bounding_boxes.length > 0, `Bounding boxes required for ${ms.id}`);
+
+      for (const bb of ms.image_metadata.bounding_boxes) {
+        assert.strictEqual(bb.redacted, true, `All declared bounding boxes must be redacted in ${ms.id}`);
+        assert(bb.padding_px >= 6, `Protective antialiasing padding (>=6px) required in ${ms.id}`);
+        assert(Array.isArray(bb.box) && bb.box.length === 4, `4-coordinate bounding box required in ${ms.id}`);
+      }
+    }
+    console.log('    [PASS] 5 multimodal scenarios validated with solid black burn-in and protective padding.');
+  }
+
+  console.log('\n[SUMMARY] ALL 8 AI SAFETY BENCHMARK TESTS PASSED WITH 100% CONFORMANCE.\n');
 })();
