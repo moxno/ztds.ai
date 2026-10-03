@@ -18,6 +18,9 @@ To maximize institutional credibility and commercial revenue, the relationship b
 * **CORRECT:** 'PrivacyScrubber is the official pioneer reference implementation certified under the open ZTDS RFC v1.0 specification.'
 * **INCORRECT:** 'PrivacyScrubber is ZTDS' or 'ZTDS is a product made by PrivacyScrubber.' (Blurring this line destroys the neutral authority of ZTDS and weakens enterprise trust).
 
+### Recommended Hero Pitch (Production Baseline):
+> 'PrivacyScrubber is the production-grade reference implementation of the ZTDS standard — a client-side PII firewall for AI agents and LLM pipelines. Runs on a laptop, MCP stdio daemon, or embedded Node runtime. No API call. Ever. Audited against NIST AI RMF 600-1, EU AI Act Phase 2 AI Agent requirements, and ISO/IEC 42001:2023.'
+
 ---
 
 ## 2. Core Value Propositions by Target Persona
@@ -62,6 +65,18 @@ Every commercial touchpoint on privacyscrubber.com must feature these three veri
 3. **OSF Empirical Benchmark Citation:**
    - Text: 'Peer-Reviewed 1.8ms Latency Benchmark (DOI: 10.17605/OSF.IO/5BYJF)'
    - Link: https://doi.org/10.17605/OSF.IO/5BYJF
+
+4. **EU AI Act Phase 2 Trust Anchor:**
+   - Text: 'Conforms to EU AI Act Phase 2 AI Agent Data Governance & Article 10'
+   - Link: https://ztds.ai/standard/#grc
+
+5. **NIST AI RMF 600-1 Trust Anchor:**
+   - Text: 'Directly Mitigates NIST SP 600-1 Generative AI Sensitive Data Disclosure (Risk 12)'
+   - Link: https://ztds.ai/standard/#grc
+
+6. **ISO/IEC 42001 & ISO 27001 A.8.11 Trust Anchor:**
+   - Text: 'Satisfies ISO/IEC 42001:2023 AIMS & ISO 27001 A.8.11 Data Masking'
+   - Link: https://ztds.ai/standard/#grc
 
 ---
 

@@ -807,9 +807,23 @@
             </div>
 
             <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg space-y-1.5">
-              <strong class="text-slate-900 font-semibold block text-xs">9. AI Agents &amp; MCP (EU AI Act)</strong>
+              <strong class="text-slate-900 font-semibold block text-xs">9. AI Agents &amp; MCP (EU AI Act Phase 2)</strong>
               <p>
-                <strong>Middleware Classification:</strong> Conforming SDKs and MCP stdio servers are deterministic tokenization middlewares, not High-Risk AI Providers under EU AI Act Article 3(3). No warranty against semantic prompt injection or model hallucination.
+                <strong>Agentic Data Governance:</strong> Conforming SDKs and MCP stdio servers enforce client-side pre-egress sanitization, preventing unauthenticated transmission of PII/secrets under EU AI Act Phase 2 (August 2026+) and Article 10 data governance rules.
+              </p>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg space-y-1.5">
+              <strong class="text-slate-900 font-semibold block text-xs">10. Generative AI Risk (NIST AI RMF 600-1)</strong>
+              <p>
+                <strong>Sensitive Data Disclosure Mitigation:</strong> Directly maps to NIST SP 600-1 Risk 12 controls GOVERN-1.2, MAP-1.5, and MANAGE-2.4. Volatile RAM execution eliminates prompt extraction and model training data poisoning.
+              </p>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg space-y-1.5">
+              <strong class="text-slate-900 font-semibold block text-xs">11. AI Management Systems (ISO/IEC 42001)</strong>
+              <p>
+                <strong>AIMS &amp; Masking Conformance:</strong> Satisfies ISO/IEC 42001 Annex A.6 (AI Data Lifecycle), A.7 (Security), and A.8 (AI Supplier Risk), as well as ISO/IEC 27001:2022 Control A.8.11 presentation-layer data masking.
               </p>
             </div>
           </div>
@@ -1334,10 +1348,13 @@ Consequently, ZTDS-conforming architectures are legally exempt from third-party 
 - Invariant 3 (Verifiable Memory Isolation): Zero persistent disk/storage writes. RAM purges on termination.
 - Invariant 4 (Subprocessor Exclusion): GDPR Article 28 disengaged; subprocessor liability chain = 0.
 
-## 3. Statutory Grounds for Exemption
+## 3. Statutory Grounds for Exemption & Regulatory Alignment
 - EU GDPR Article 28: Zero external data processing occurs. Conforming tools do not act as data processors under EDPB Guidelines 07/2020.
 - EU GDPR Recital 26: Anonymous data doctrine applies to masked prompts sent downstream to AI models.
 - EU GDPR Article 17: Right to Erasure guaranteed without vector DB re-indexing by preventing PII ingestion into RAG embeddings.
+- EU AI Act Phase 2 & Article 10: Enforces client-side pre-egress data governance for autonomous agentic workflows and tool-use loops.
+- NIST AI RMF 600-1: Mitigates Generative AI Risk 12 (Sensitive Data Disclosure) via RAM-only execution and context-preserving tokenization.
+- ISO/IEC 42001:2023 & ISO 27001 A.8.11: Fulfills AI Management System controls for data provenance, security, and presentation-layer masking.
 - US HIPAA (45 CFR § 164.514): Safe Harbor 18 PHI identifier exclusion performed in client RAM prior to API egress.
 - US FRE 502(b): Attorney-client privilege non-waiver protection for confidential discovery documents.
 

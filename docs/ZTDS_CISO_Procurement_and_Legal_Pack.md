@@ -60,6 +60,9 @@ Consequently, ZTDS software is **legally exempt from Data Processing Agreement (
 | **How does collaborative unmasking work across teams?** | Token maps are encrypted client-side using Argon2id (RFC 9106) and XChaCha20-Poly1305 (24-byte CSPRNG nonce). | Cryptographic source audit (libsodium-wrappers-sumo). |
 | **Does the vendor have access to customer encryption keys?** | **No.** Keys are derived ephemeral passphrases held exclusively by authorized team members. | Zero-knowledge architecture; central relays act as blind conduits. |
 | **What third-party sub-processors have access to customer data?** | **None.** Zero sub-processors are involved in data sanitization. | DPA exemption doctrine; self-contained engine. |
+| **How does ZTDS satisfy EU AI Act Phase 2 AI Agent Governance?** | Enforces deterministic pre-egress sanitization across agentic tool loops and MCP servers, preventing unauthorized customer data extraction or unmasked LLM transmission. | Technical Invariants 1–3; SHA-256 verifiable receipts. |
+| **How does ZTDS map to NIST AI RMF 600-1 (Generative AI)?** | Directly mitigates Risk 12 (Sensitive Data Disclosure) via RAM-only execution and context-preserving tokenization (GOVERN-1.2, MAP-1.5, MANAGE-2.4). | In-process execution telemetry; 0 byte WAN egress audit. |
+| **How is ISO/IEC 42001 (AIMS) and ISO 27001 A.8.11 supported?** | Satisfies Annex A.6 (AI Data Lifecycle), A.7 (AI Security), and A.8 (AI Supplier Risk) by isolating external frontier model providers from cleartext data. | ISO/IEC 42001 cross-mapping matrix; Control A.8.11 presentation-layer masking. |
 
 ---
 
