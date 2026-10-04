@@ -30,6 +30,20 @@
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "WebPage",
+        "@id": "https://ztds.ai/apply/#page",
+        "name": "ZTDS Accreditation Gateway & Verification Portal",
+        "description": "Apply for ZTDS Verified™ certification for your AI application, register as a corporate member, or nominate an open specification contributor.",
+        "url": "https://ztds.ai/apply/",
+        "isPartOf": { "@id": "https://ztds.ai/#website" },
+        "inLanguage": "en-US",
+        "about": {
+          "@type": "Thing",
+          "name": "Zero-Trust Data Sanitization Accreditation",
+          "description": "Verification gateway for software products, enterprise adopters, and research fellows conforming to RFC v1.0 standard."
+        }
+      },
+      {
         "@type": "ContactPage",
         "@id": "https://ztds.ai/apply/#contact",
         "name": "ZTDS Accreditation Gateway & Verification Portal",
@@ -187,13 +201,13 @@
         ZTDS Accreditation &amp; Governance Gateway
       </h1>
       <p class="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
-        Join the global movement establishing client-side Zero-Trust Data Sanitization as the default architecture for Artificial Intelligence. Choose your participation track below.
+        Certify software compliance with the open ZTDS RFC v1.0 standard, register enterprise zero-trust adoption, or nominate research contributors. Choose your track below to generate an attested GitOps verification record.
       </p>
     </div>
 
-    <!-- 3 Tracks Overview Visual -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
-      <div class="ztds-card p-5 bg-white border border-slate-200 rounded-xl flex flex-col justify-between">
+    <!-- 3 Tracks Overview Visual (Interactive Quick-Select) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10" id="trackOverviewCards">
+      <div class="track-card ztds-card p-5 bg-white border-2 border-emerald-600 ring-2 ring-emerald-500/20 rounded-xl flex flex-col justify-between cursor-pointer shadow-md text-left transition-all" data-track-card="product" role="button" tabindex="0" aria-label="Select Track A: Product Certification" aria-selected="true">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="w-7 h-7 rounded-full bg-slate-900 text-white font-bold text-xs flex items-center justify-center">A</span>
@@ -204,12 +218,13 @@
             Verify AI applications, SaaS platforms, browser extensions, and SDKs against RFC v1.0. Earn the ZTDS Verified™ trust seal and public registry listing.
           </div>
         </div>
-        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500 font-mono">
-          Registry: data/registry.json
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+          <span>data/registry.json</span>
+          <span class="text-emerald-700 font-semibold font-sans">Active Track &rarr;</span>
         </div>
       </div>
 
-      <div class="ztds-card p-5 bg-white border border-slate-200 rounded-xl flex flex-col justify-between">
+      <div class="track-card ztds-card p-5 bg-white border border-slate-200 rounded-xl flex flex-col justify-between cursor-pointer hover:border-slate-300 hover:shadow-sm text-left opacity-90 hover:opacity-100 transition-all" data-track-card="company" role="button" tabindex="0" aria-label="Select Track B: Corporate Adopter" aria-selected="false">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="w-7 h-7 rounded-full bg-blue-900 text-white font-bold text-xs flex items-center justify-center">B</span>
@@ -220,12 +235,13 @@
             Register your enterprise as enforcing client-side Zero-Trust data isolation. Eliminate shadow AI risk, bypass DPA liability, and join the corporate adopter council.
           </div>
         </div>
-        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500 font-mono">
-          Pool: data/companies.json
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+          <span>data/companies.json</span>
+          <span class="text-blue-700 font-semibold font-sans">Select Track &rarr;</span>
         </div>
       </div>
 
-      <div class="ztds-card p-5 bg-white border border-slate-200 rounded-xl flex flex-col justify-between">
+      <div class="track-card ztds-card p-5 bg-white border border-slate-200 rounded-xl flex flex-col justify-between cursor-pointer hover:border-slate-300 hover:shadow-sm text-left opacity-90 hover:opacity-100 transition-all" data-track-card="fellow" role="button" tabindex="0" aria-label="Select Track C: Research Fellow Council" aria-selected="false">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="w-7 h-7 rounded-full bg-emerald-700 text-white font-bold text-xs flex items-center justify-center">C</span>
@@ -236,8 +252,9 @@
             Nominate researchers and security architects contributing peer-reviewed cryptography, legal treatises, or open runtime code to the ZTDS specification.
           </div>
         </div>
-        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500 font-mono">
-          Council: data/fellows.json
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+          <span>data/fellows.json</span>
+          <span class="text-purple-700 font-semibold font-sans">Select Track &rarr;</span>
         </div>
       </div>
     </div>
@@ -247,10 +264,10 @@
       <div class="max-w-3xl mb-6">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-3">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-          Enterprise Sales Acceleration &amp; Backlink Flywheel
+          Enterprise Trust &amp; Procurement Acceleration
         </div>
         <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-white">
-          Why High-Growth AI Builders &amp; SaaS Founders Get Certified
+          Why Engineering Teams &amp; SaaS Founders Certify with ZTDS
         </h2>
         <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
           Over 68% of enterprise AI contracts stall during vendor security reviews due to fear of third-party PII exposure. ZTDS certification transforms compliance from a 90-day sales bottleneck into your primary competitive moat.
@@ -293,7 +310,7 @@
             <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold text-xs mb-3 font-mono">
               03
             </div>
-            <div class="text-sm font-bold text-white mb-2">High-DR Proof Over Promises</div>
+            <div class="text-sm font-bold text-white mb-2">Verifiable Cryptographic Proof</div>
             <p class="text-xs text-slate-300 leading-relaxed">
               Move beyond unverified privacy claims. Embed the live dynamic SVG trust badge in your GitHub README, documentation footer, and pricing page with authoritative backlinks connecting to your cryptographic verification receipt.
             </p>
@@ -306,27 +323,27 @@
     </div>
 
     <!-- Track Selector Tabs -->
-    <div class="flex flex-wrap items-center justify-center gap-2 mb-8" role="tablist">
-      <button id="trackProductBtn" class="track-btn px-4 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-white shadow-sm" data-track="product" role="tab" aria-selected="true">
+    <div class="flex flex-wrap items-center justify-center gap-2 mb-8" role="tablist" aria-label="Accreditation Tracks">
+      <button id="trackProductBtn" class="track-btn px-4 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-white shadow-sm min-h-[44px] touch-target" data-track="product" role="tab" aria-selected="true" aria-controls="applyForm">
         Track A: Product Certification
       </button>
-      <button id="trackCompanyBtn" class="track-btn px-4 py-2.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-track="company" role="tab" aria-selected="false">
+      <button id="trackCompanyBtn" class="track-btn px-4 py-2.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 min-h-[44px] touch-target" data-track="company" role="tab" aria-selected="false" aria-controls="applyForm">
         Track B: Corporate Adopter
       </button>
-      <button id="trackFellowBtn" class="track-btn px-4 py-2.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-track="fellow" role="tab" aria-selected="false">
+      <button id="trackFellowBtn" class="track-btn px-4 py-2.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 min-h-[44px] touch-target" data-track="fellow" role="tab" aria-selected="false" aria-controls="applyForm">
         Track C: Research Fellow
       </button>
-      <a href="https://privacyscrubber.com/sdk/?utm_source=ztds.ai&amp;utm_medium=consortium_ref&amp;utm_campaign=apply_tab" target="_blank" rel="noopener" class="px-4 py-2.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm flex items-center gap-1.5 transition-colors">
+      <a href="https://privacyscrubber.com/sdk/?utm_source=ztds.ai&amp;utm_medium=consortium_ref&amp;utm_campaign=apply_tab" target="_blank" rel="noopener" class="px-4 py-2.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm flex items-center gap-1.5 transition-colors min-h-[44px] touch-target">
         <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
         <span>Developer SDK License ($299/mo) &rarr;</span>
       </a>
     </div>
 
     <!-- Main Intake Form & Live Badge Preview -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16" id="applyFormSection">
       
       <!-- Form Panel (Left 7 cols) -->
-      <div class="lg:col-span-7 ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm">
+      <div id="applyFormContainer" class="lg:col-span-7 ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm">
         <div class="pb-5 mb-5 border-b border-slate-200 flex items-center justify-between">
           <div>
             <h2 class="text-xl font-bold text-slate-900" id="formTitle">Product Certification Application</h2>
@@ -340,11 +357,11 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label for="appName" class="block text-xs font-semibold text-slate-700 mb-1" id="labelAppName">Product or Library Name *</label>
-              <input type="text" id="appName" name="appName" required aria-label="Product or Library Name" placeholder="e.g. My AI SaaS, AgentProxy" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+              <input type="text" id="appName" name="appName" required aria-label="Product or Library Name" placeholder="e.g. My AI SaaS, AgentProxy" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
             </div>
             <div>
               <label for="appUrl" class="block text-xs font-semibold text-slate-700 mb-1" id="labelAppUrl">Website or Repository URL *</label>
-              <input type="url" id="appUrl" name="appUrl" required aria-label="Website or Repository URL" placeholder="https://example.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+              <input type="url" id="appUrl" name="appUrl" required aria-label="Website or Repository URL" placeholder="https://example.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
             </div>
           </div>
 
@@ -352,11 +369,11 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label for="orgName" class="block text-xs font-semibold text-slate-700 mb-1" id="labelOrgName">Organization / Maintainer Name *</label>
-              <input type="text" id="orgName" name="orgName" required aria-label="Organization or Maintainer Name" placeholder="Acme Inc. or Jane Doe" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+              <input type="text" id="orgName" name="orgName" required aria-label="Organization or Maintainer Name" placeholder="Acme Inc. or Jane Doe" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
             </div>
             <div>
               <label for="contactEmail" class="block text-xs font-semibold text-slate-700 mb-1" id="labelContactEmail">Contact Email *</label>
-              <input type="email" id="contactEmail" name="contactEmail" required aria-label="Contact Email" placeholder="ciso@example.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+              <input type="email" id="contactEmail" name="contactEmail" required aria-label="Contact Email" placeholder="ciso@example.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
             </div>
           </div>
 
@@ -365,7 +382,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label for="appCategory" class="block text-xs font-semibold text-slate-700 mb-1">Solution Category</label>
-                <select id="appCategory" name="appCategory" aria-label="Solution Category" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                <select id="appCategory" name="appCategory" aria-label="Solution Category" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
                   <option value="WebPlatform">Web Application / SaaS</option>
                   <option value="BrowserExtension">Browser Extension</option>
                   <option value="DeveloperSDK">Developer Library / SDK</option>
@@ -375,7 +392,7 @@
               </div>
               <div>
                 <label for="appProfile" class="block text-xs font-semibold text-slate-700 mb-1">Industry Profile &amp; Rule Matrix (30 Profiles)</label>
-                <select id="appProfile" name="appProfile" aria-label="Industry Profile &amp; Rule Matrix" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                <select id="appProfile" name="appProfile" aria-label="Industry Profile &amp; Rule Matrix" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
                   <optgroup label="General &amp; Cross-Industry">
                     <option value="general">00. Enterprise General (GDPR Recital 26, CCPA, Core PII &amp; Secrets)</option>
                   </optgroup>
@@ -438,8 +455,8 @@
                 Run this command in your repository to audit for external egress, verify volatile RAM zeroization, and compute your verifiable SHA-256 hash:
               </p>
               <div class="flex items-center gap-2 bg-black/60 p-2.5 rounded-lg border border-slate-800 font-mono text-xs overflow-x-auto">
-                <code id="cliAuditCommand" class="text-emerald-300 flex-1 select-all whitespace-nowrap">npx ztds-audit --target https://example.com --dir ./src --profile healthcare</code>
-                <button type="button" id="copyCliCommandBtn" class="shrink-0 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-sans font-medium transition-colors touch-target">
+                <code id="cliAuditCommand" class="text-emerald-300 flex-1 select-all whitespace-nowrap">npx ztds-audit --target https://example.com --dir ./src --profile medical</code>
+                <button type="button" id="copyCliCommandBtn" aria-label="Copy CLI command" class="shrink-0 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-sans font-medium transition-colors touch-target min-h-[32px]">
                   Copy CLI
                 </button>
               </div>
@@ -453,7 +470,7 @@
 
             <div>
               <label for="auditHash" class="block text-xs font-semibold text-slate-700 mb-1">Cryptographic Verification Hash *</label>
-              <input type="text" id="auditHash" name="auditHash" required aria-label="Cryptographic Verification Hash" placeholder="e.g. sha256:7f83b1659a72d3e1104e6c70b8a245d8b76c94fa10b981e7d23f46a81e9d0c24" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono text-xs">
+              <input type="text" id="auditHash" name="auditHash" required aria-label="Cryptographic Verification Hash" placeholder="e.g. sha256:7f83b1659a72d3e1104e6c70b8a245d8b76c94fa10b981e7d23f46a81e9d0c24" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-xs text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono min-h-[44px]">
               <p class="text-[11px] text-slate-500 mt-1">Generated automatically via <code class="font-mono bg-slate-100 px-1 py-0.5 rounded border border-slate-200 text-slate-700">npx ztds-audit</code> or simulated above.</p>
             </div>
 
@@ -493,7 +510,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label for="companyIndustry" class="block text-xs font-semibold text-slate-700 mb-1">Industry Sector</label>
-                <select id="companyIndustry" name="companyIndustry" aria-label="Industry Sector" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                <select id="companyIndustry" name="companyIndustry" aria-label="Industry Sector" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
                   <option value="Healthcare & Hospital EHR">Healthcare &amp; Hospital EHR</option>
                   <option value="Commercial Banking & FinTech">Commercial Banking &amp; FinTech</option>
                   <option value="Corporate Law & LegalTech">Corporate Law &amp; LegalTech</option>
@@ -504,12 +521,12 @@
               </div>
               <div>
                 <label for="companyHeadquarters" class="block text-xs font-semibold text-slate-700 mb-1">Headquarters Location</label>
-                <input type="text" id="companyHeadquarters" name="companyHeadquarters" aria-label="Headquarters Location" placeholder="e.g. United States, Germany, Israel" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                <input type="text" id="companyHeadquarters" name="companyHeadquarters" aria-label="Headquarters Location" placeholder="e.g. United States, Germany, Israel" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
               </div>
             </div>
             <div>
               <label for="companyScope" class="block text-xs font-semibold text-slate-700 mb-1">Primary Internal AI Mandate</label>
-              <input type="text" id="companyScope" name="companyScope" aria-label="Primary Internal AI Mandate" placeholder="e.g. Workstation coding agents (Cursor), Internal LLM chat, RAG ingestion" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+              <input type="text" id="companyScope" name="companyScope" aria-label="Primary Internal AI Mandate" placeholder="e.g. Workstation coding agents (Cursor), Internal LLM chat, RAG ingestion" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
             </div>
           </div>
 
@@ -518,7 +535,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label for="fellowTrack" class="block text-xs font-semibold text-slate-700 mb-1">Working Group Focus</label>
-                <select id="fellowTrack" name="fellowTrack" aria-label="Working Group Focus" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                <select id="fellowTrack" name="fellowTrack" aria-label="Working Group Focus" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
                   <option value="WG-1 Architecture & Cryptography">WG-1 Architecture &amp; Cryptography</option>
                   <option value="WG-2 GRC & Regulatory Standard">WG-2 GRC &amp; Regulatory Standard</option>
                   <option value="WG-3 Systems, Enclaves & WASM Runtime">WG-3 Systems, Enclaves &amp; WASM Runtime</option>
@@ -527,7 +544,7 @@
               </div>
               <div>
                 <label for="fellowOrcid" class="block text-xs font-semibold text-slate-700 mb-1">ORCID iD or Zenodo DOI</label>
-                <input type="text" id="fellowOrcid" name="fellowOrcid" aria-label="ORCID iD or Zenodo DOI" placeholder="e.g. 0009-0002-0642-5985" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono text-xs">
+                <input type="text" id="fellowOrcid" name="fellowOrcid" aria-label="ORCID iD or Zenodo DOI" placeholder="e.g. 0009-0002-0642-5985" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-xs text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono min-h-[44px]">
               </div>
             </div>
             <div>
@@ -538,17 +555,17 @@
 
           <!-- Confirmation Checkbox -->
           <div>
-            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-600 space-y-2">
-              <label for="confirmCheckbox" class="flex items-start gap-2.5 cursor-pointer">
-                <input type="checkbox" id="confirmCheckbox" name="confirmCheckbox" required aria-label="Affirmation of Zero-Egress Invariants" class="mt-0.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 w-4 h-4">
-                <span id="checkboxConfirmationText">I confirm that this software executes de-identification locally in client volatile memory with <strong>0.00 bytes</strong> cleartext PII/PHI transmitted across external network sockets prior to sanitization.</span>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 space-y-2">
+              <label for="confirmCheckbox" class="flex items-start gap-3 cursor-pointer">
+                <input type="checkbox" id="confirmCheckbox" name="confirmCheckbox" required aria-label="Affirmation of Zero-Egress Invariants" class="mt-0.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 w-5 h-5 shrink-0">
+                <span id="checkboxConfirmationText" class="leading-relaxed">I confirm that this software executes de-identification locally in client volatile memory with <strong>0.00 bytes</strong> cleartext PII/PHI transmitted across external network sockets prior to sanitization.</span>
               </label>
             </div>
           </div>
 
           <!-- Submit Button -->
           <div class="pt-2">
-            <button type="submit" id="submitBtn" class="btn-trust w-full py-3 text-sm shadow-sm min-h-[44px] touch-target">
+            <button type="submit" id="submitBtn" class="btn-trust w-full py-3.5 text-sm sm:text-base font-bold shadow-sm min-h-[48px] touch-target flex items-center justify-center gap-2">
               Generate GitOps Submission &amp; Claim Badge &rarr;
             </button>
           </div>
@@ -570,10 +587,10 @@
 
           <!-- Dual Primary Actions -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-            <a id="githubIssueLink" href="https://github.com/brandmeweb/ztds/issues/new" target="_blank" rel="noopener" class="btn-trust text-xs py-2.5 px-4 text-center justify-center font-bold touch-target">
-              Submit via GitHub PR / Issue &rarr;
+            <a id="githubIssueLink" href="https://github.com/moxno/ztds.ai/issues/new" target="_blank" rel="noopener" class="btn-trust text-xs py-2.5 px-4 text-center justify-center font-bold touch-target min-h-[44px] flex items-center">
+              Submit via GitHub Issue / PR Intake &rarr;
             </a>
-            <a id="mailtoLink" href="#" class="btn-outline text-xs py-2.5 px-4 text-center justify-center font-semibold bg-slate-800 border-slate-700 text-white hover:bg-slate-700 touch-target">
+            <a id="mailtoLink" href="mailto:security@ztds.ai?subject=ZTDS%20Accreditation%20Inquiry" class="btn-outline text-xs py-2.5 px-4 text-center justify-center font-semibold bg-slate-800 border-slate-700 text-white hover:bg-slate-700 touch-target min-h-[44px] flex items-center">
               Dispatch Direct Email &rarr;
             </a>
           </div>
@@ -581,14 +598,14 @@
           <!-- Secondary Action Bar -->
           <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800 text-xs">
             <div class="flex items-center gap-2">
-              <button id="copyMarkdownBtn" type="button" class="btn-outline text-xs py-1.5 px-3 bg-slate-800 border-slate-700 text-slate-200 hover:text-white touch-target">
+              <button id="copyMarkdownBtn" type="button" class="btn-outline text-xs py-1.5 px-3 bg-slate-800 border-slate-700 text-slate-200 hover:text-white touch-target min-h-[36px]">
                 Copy PR Description (.md)
               </button>
-              <button id="copyJsonBtn" type="button" class="btn-outline text-xs py-1.5 px-3 bg-slate-800 border-slate-700 text-slate-200 hover:text-white touch-target">
+              <button id="copyJsonBtn" type="button" class="btn-outline text-xs py-1.5 px-3 bg-slate-800 border-slate-700 text-slate-200 hover:text-white touch-target min-h-[36px]">
                 Copy JSON
               </button>
             </div>
-            <button id="downloadJsonBtn" type="button" class="text-xs text-emerald-400 hover:text-emerald-300 font-mono underline touch-target">
+            <button id="downloadJsonBtn" type="button" class="text-xs text-emerald-400 hover:text-emerald-300 font-mono underline touch-target min-h-[36px]">
               Download Entry (.json)
             </button>
           </div>
@@ -622,21 +639,21 @@
             <div>
               <div class="flex items-center justify-between mb-1">
                 <label for="badgeMarkdownSnippet" class="text-xs font-semibold text-slate-700">GitHub README Embed (.md)</label>
-                <button id="copyMarkdownSnippetBtn" type="button" class="text-[11px] text-emerald-700 font-semibold hover:underline touch-target">Copy</button>
+                <button id="copyMarkdownSnippetBtn" type="button" aria-label="Copy Markdown embed snippet" class="text-[11px] text-emerald-700 font-semibold hover:underline touch-target py-0.5 px-1.5 rounded hover:bg-emerald-50">Copy</button>
               </div>
-              <input type="text" id="badgeMarkdownSnippet" readonly aria-label="GitHub README Embed Markdown" class="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-xs font-mono text-slate-800 focus:outline-none">
+              <input type="text" id="badgeMarkdownSnippet" readonly aria-label="GitHub README Embed Markdown" class="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-xs font-mono text-slate-800 focus:outline-none min-h-[38px]">
             </div>
 
             <div>
               <div class="flex items-center justify-between mb-1">
                 <label for="badgeHtmlSnippet" class="text-xs font-semibold text-slate-700">HTML Website Embed</label>
-                <button id="copyHtmlSnippetBtn" type="button" class="text-[11px] text-emerald-700 font-semibold hover:underline touch-target">Copy</button>
+                <button id="copyHtmlSnippetBtn" type="button" aria-label="Copy HTML embed snippet" class="text-[11px] text-emerald-700 font-semibold hover:underline touch-target py-0.5 px-1.5 rounded hover:bg-emerald-50">Copy</button>
               </div>
-              <input type="text" id="badgeHtmlSnippet" readonly aria-label="HTML Website Embed" class="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-xs font-mono text-slate-800 focus:outline-none">
+              <input type="text" id="badgeHtmlSnippet" readonly aria-label="HTML Website Embed" class="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-xs font-mono text-slate-800 focus:outline-none min-h-[38px]">
             </div>
 
             <div class="pt-1">
-              <button id="downloadBadgeSvgBtn" type="button" class="w-full btn-outline text-xs py-2 flex items-center justify-center gap-1.5 touch-target">
+              <button id="downloadBadgeSvgBtn" type="button" class="w-full btn-outline text-xs py-2.5 flex items-center justify-center gap-1.5 touch-target min-h-[40px]">
                 <svg class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                 Download Vector Badge (.svg)
               </button>
@@ -888,7 +905,7 @@
       function updateCliCommand() {
         if (!cliAuditCommand) return;
         const rawUrl = appUrlInput.value.trim() || 'https://example.com';
-        const profile = appProfileSelect ? appProfileSelect.value : 'healthcare';
+        const profile = appProfileSelect ? appProfileSelect.value : 'medical';
         cliAuditCommand.textContent = `npx ztds-audit --target ${rawUrl} --dir ./src --profile ${profile}`;
       }
 
@@ -925,8 +942,8 @@
 
         const badgeUrl = `https://ztds.ai/badge/${slug}.svg`;
         const targetUrl = currentTrack === 'company' 
-          ? `https://ztds.ai/companies/#${slug}` 
-          : (currentTrack === 'fellow' ? `https://ztds.ai/fellows/#${slug}` : `https://ztds.ai/registry/#${slug}`);
+          ? `https://ztds.ai/companies/${slug}/` 
+          : (currentTrack === 'fellow' ? `https://ztds.ai/fellows/${slug}/` : `https://ztds.ai/registry/#${slug}`);
 
         badgeMarkdownSnippet.value = `[![ZTDS ${badgeLabel}](${badgeUrl})](${targetUrl})`;
         badgeHtmlSnippet.value = `<a href="${targetUrl}" target="_blank" rel="noopener"><img src="${badgeUrl}" alt="ZTDS Conformance"></a>`;
@@ -970,12 +987,35 @@
         });
       }
 
+      function safeCopyText(text, btn, successLabel) {
+        if (!text) return;
+        const orig = btn.textContent;
+        const notify = () => {
+          btn.textContent = successLabel || 'Copied!';
+          setTimeout(() => { btn.textContent = orig; }, 1800);
+        };
+        if (typeof window.ztdsCopy === 'function') {
+          window.ztdsCopy(text, notify);
+        } else if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(notify).catch(() => {});
+        } else {
+          try {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            notify();
+          } catch (_) {}
+        }
+      }
+
       if (copyCliCommandBtn) {
         copyCliCommandBtn.addEventListener('click', () => {
-          window.ztdsCopy(cliAuditCommand.textContent, () => {
-            copyCliCommandBtn.textContent = 'Copied!';
-            setTimeout(() => { copyCliCommandBtn.textContent = 'Copy CLI'; }, 2000);
-          });
+          safeCopyText(cliAuditCommand.textContent, copyCliCommandBtn, 'Copied!');
         });
       }
 
@@ -1000,9 +1040,36 @@
           const isCurrent = b.getAttribute('data-track') === track;
           b.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
           if (isCurrent) {
-            b.className = 'track-btn px-4 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-white shadow-sm';
+            b.className = 'track-btn px-4 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-white shadow-sm min-h-[44px] touch-target';
           } else {
-            b.className = 'track-btn px-4 py-2.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50';
+            b.className = 'track-btn px-4 py-2.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 min-h-[44px] touch-target';
+          }
+        });
+
+        // Sync Overview Cards
+        const trackCards = document.querySelectorAll('[data-track-card]');
+        trackCards.forEach(card => {
+          const cardTrack = card.getAttribute('data-track-card');
+          const isSelected = cardTrack === track;
+          card.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+          const actionLabel = card.querySelector('.font-sans');
+          if (isSelected) {
+            if (track === 'product') {
+              card.className = 'track-card ztds-card p-5 bg-white border-2 border-emerald-600 ring-2 ring-emerald-500/20 rounded-xl flex flex-col justify-between cursor-pointer shadow-md text-left transition-all';
+              if (actionLabel) { actionLabel.textContent = 'Active Track \u2192'; actionLabel.className = 'text-emerald-700 font-semibold font-sans'; }
+            } else if (track === 'company') {
+              card.className = 'track-card ztds-card p-5 bg-white border-2 border-blue-600 ring-2 ring-blue-500/20 rounded-xl flex flex-col justify-between cursor-pointer shadow-md text-left transition-all';
+              if (actionLabel) { actionLabel.textContent = 'Active Track \u2192'; actionLabel.className = 'text-blue-700 font-semibold font-sans'; }
+            } else {
+              card.className = 'track-card ztds-card p-5 bg-white border-2 border-purple-600 ring-2 ring-purple-500/20 rounded-xl flex flex-col justify-between cursor-pointer shadow-md text-left transition-all';
+              if (actionLabel) { actionLabel.textContent = 'Active Track \u2192'; actionLabel.className = 'text-purple-700 font-semibold font-sans'; }
+            }
+          } else {
+            card.className = 'track-card ztds-card p-5 bg-white border border-slate-200 rounded-xl flex flex-col justify-between cursor-pointer hover:border-slate-300 hover:shadow-sm text-left opacity-90 hover:opacity-100 transition-all';
+            if (actionLabel) {
+              actionLabel.textContent = 'Select Track \u2192';
+              actionLabel.className = (cardTrack === 'company' ? 'text-blue-700' : (cardTrack === 'fellow' ? 'text-purple-700' : 'text-emerald-700')) + ' font-semibold font-sans';
+            }
           }
         });
 
@@ -1010,10 +1077,11 @@
           formTitle.textContent = 'Product Certification Application';
           formSubtitle.textContent = 'Self-serve GitOps intake for software applications, browser extensions, and developer libraries.';
           trackBadge.textContent = 'Track A';
+          trackBadge.className = 'pill-trust shrink-0';
           labelAppName.textContent = 'Product or Library Name *';
           appNameInput.placeholder = 'e.g. My AI SaaS, AgentProxy';
           labelAppUrl.textContent = 'Website or Repository URL *';
-          labelOrgName.textContent = 'Organization / Developer Name *';
+          labelOrgName.textContent = 'Organization / Maintainer Name *';
           productFields.classList.remove('hidden');
           companyFields.classList.add('hidden');
           fellowFields.classList.add('hidden');
@@ -1023,6 +1091,7 @@
           formTitle.textContent = 'Corporate Enterprise Adopter Registration';
           formSubtitle.textContent = 'Register your enterprise as enforcing client-side Zero-Trust data sanitization across internal AI workflows.';
           trackBadge.textContent = 'Track B';
+          trackBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-semibold bg-blue-50 text-blue-700 border border-blue-200 shrink-0';
           labelAppName.textContent = 'Company / Enterprise Name *';
           appNameInput.placeholder = 'e.g. Acme Health Corp, TechGlobal';
           labelAppUrl.textContent = 'Company Website URL *';
@@ -1036,6 +1105,7 @@
           formTitle.textContent = 'Research Fellow & Contributor Nomination';
           formSubtitle.textContent = 'Nominate an academic researcher, cryptographer, or security architect to the ZTDS Fellows Council.';
           trackBadge.textContent = 'Track C';
+          trackBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-semibold bg-purple-50 text-purple-700 border border-purple-200 shrink-0';
           labelAppName.textContent = 'Nominee Full Name *';
           appNameInput.placeholder = 'e.g. Dr. Jane Doe, Prof. Alan Turing';
           labelAppUrl.textContent = 'Academic Profile, ORCID, or Portfolio URL *';
@@ -1050,9 +1120,32 @@
         updateBadgeAndSnippets();
       }
 
+      // Wire Tab Buttons
       trackBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           setTrack(btn.getAttribute('data-track'));
+        });
+      });
+
+      // Wire Overview Cards (Interactive quick selection)
+      const trackOverviewCards = document.querySelectorAll('[data-track-card]');
+      trackOverviewCards.forEach(card => {
+        const handleCardSelect = () => {
+          const track = card.getAttribute('data-track-card');
+          if (track) {
+            setTrack(track);
+            const formCard = document.getElementById('applyFormContainer');
+            if (formCard) {
+              formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+        };
+        card.addEventListener('click', handleCardSelect);
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleCardSelect();
+          }
         });
       });
 
@@ -1075,11 +1168,7 @@
         const input = document.getElementById(inputId);
         if (!btn || !input) return;
         btn.addEventListener('click', () => {
-          window.ztdsCopy(input.value, () => {
-            const orig = btn.textContent;
-            btn.textContent = 'Copied!';
-            setTimeout(() => { btn.textContent = orig; }, 1800);
-          });
+          safeCopyText(input.value, btn, 'Copied!');
         });
       }
       attachCopyButton('copyMarkdownSnippetBtn', 'badgeMarkdownSnippet');
@@ -1237,7 +1326,7 @@
         const issueTitle = encodeURIComponent(`${titlePrefix} ${appName}`);
         const issueBody = encodeURIComponent(compiledMarkdown);
 
-        const githubIssueUrl = `https://github.com/brandmeweb/ztds/issues/new?title=${issueTitle}&body=${issueBody}`;
+        const githubIssueUrl = `https://github.com/moxno/ztds.ai/issues/new?title=${issueTitle}&body=${issueBody}`;
         const mailtoUrl = `mailto:security@ztds.ai?subject=${issueTitle}&body=${issueBody}`;
 
         githubIssueLink.href = githubIssueUrl;
@@ -1249,20 +1338,12 @@
 
       copyJsonBtn.addEventListener('click', () => {
         if (!compiledJson) return;
-        window.ztdsCopy(compiledJson, () => {
-          const orig = copyJsonBtn.textContent;
-          copyJsonBtn.textContent = 'Copied JSON!';
-          setTimeout(() => { copyJsonBtn.textContent = orig; }, 2000);
-        });
+        safeCopyText(compiledJson, copyJsonBtn, 'Copied JSON!');
       });
 
       copyMarkdownBtn.addEventListener('click', () => {
         if (!compiledMarkdown) return;
-        window.ztdsCopy(compiledMarkdown, () => {
-          const orig = copyMarkdownBtn.textContent;
-          copyMarkdownBtn.textContent = 'Copied PR (.md)!';
-          setTimeout(() => { copyMarkdownBtn.textContent = orig; }, 2000);
-        });
+        safeCopyText(compiledMarkdown, copyMarkdownBtn, 'Copied PR (.md)!');
       });
 
       downloadJsonBtn.addEventListener('click', () => {
