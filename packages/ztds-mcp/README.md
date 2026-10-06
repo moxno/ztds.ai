@@ -3,11 +3,11 @@
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Specification: RFC v1.0](https://img.shields.io/badge/Specification-RFC_v1.0-emerald.svg)](https://ztds.ai/standard/)
-[![IETF Draft](https://img.shields.io/badge/IETF_Draft-sibiryakov--ztds--protocol--02-purple.svg)](https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/)
+[![IETF Standards Track](https://img.shields.io/badge/IETF_Standards_Track-sibiryakov--ztds--protocol-purple.svg)](https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22058770.svg)](https://doi.org/10.5281/zenodo.22058770)
 [![Zero Network Egress](https://img.shields.io/badge/Zero_Network_Egress-Attested-brightgreen.svg)](https://ztds.ai)
 
-Open-source reference implementation of the **Zero-Trust Data Sanitization (ZTDS)** protocol for the Model Context Protocol (MCP) ecosystem. Conforms to the open architectural specification RFC v1.0 and IETF Internet-Draft `draft-sibiryakov-ztds-protocol-02`.
+Open-source reference implementation of the **Zero-Trust Data Sanitization (ZTDS)** protocol for the Model Context Protocol (MCP) ecosystem. Conforms to the open architectural specification RFC v1.0 and IETF Standards Track `sibiryakov-ztds-protocol`.
 
 Runs **100% locally in device volatile memory (RAM)** with zero network calls, zero external subprocessors, zero disk writes, and zero telemetry.
 
@@ -186,4 +186,4 @@ Conforms to standard JSON-RPC 2.0 stdio protocol. Zero runtime dependencies.
 
 Apache-2.0. Maintained by the ZTDS AI Consortium (Working Group WG-1).  
 Website: [https://ztds.ai](https://ztds.ai)  
-Lead Architect: Ilya Sibiryakov (Author of IETF `draft-sibiryakov-ztds-protocol`, Patent App IL 331905).
+Lead Architect: Ilya Sibiryakov (Author of ZTDS RFC v1.0, IETF Standards Track `sibiryakov-ztds-protocol`, Patent App IL 331905).

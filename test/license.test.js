@@ -5,7 +5,7 @@
  * 1. Cryptographic Ed25519 signature validation
  * 2. Tampering detection on payload and signature
  * 3. Expiration and 60-day operational grace period mechanics
- * 4. Anti-Cannibalization Mandate (25 Industry Profiles gating)
+ * 4. Anti-Cannibalization Mandate (30 Industry Profiles gating)
  * 5. Latency benchmark & zero-network execution
  */
 

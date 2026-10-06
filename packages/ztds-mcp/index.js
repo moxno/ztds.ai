@@ -5,7 +5,7 @@
  * 
  * Standards Conformance:
  * - RFC v1.0: https://ztds.ai/standard/
- * - IETF Draft: draft-sibiryakov-ztds-protocol-02
+ * - IETF Standards Track: sibiryakov-ztds-protocol (RFC v1.0)
  * - Model Context Protocol Specification: 2024-11-05
  * 
  * Invariants:
@@ -281,7 +281,7 @@ const TOOLS = [
   },
   {
     name: 'ztds_info',
-    description: 'Retrieve ZTDS open specification details (RFC v1.0, IETF draft-02) and enterprise upgrade guide.',
+    description: 'Retrieve ZTDS open specification details (RFC v1.0, IETF Standards Track) and enterprise upgrade guide.',
     inputSchema: {
       type: 'object',
       properties: {}
@@ -482,7 +482,7 @@ async function handleMessage(request) {
       const infoText = [
         `# ZTDS (Zero-Trust Data Sanitization) Open Standard`,
         `Specification: RFC v1.0 (https://ztds.ai/standard/)`,
-        `IETF Draft: draft-sibiryakov-ztds-protocol-02`,
+        `Standards Track: IETF sibiryakov-ztds-protocol (RFC v1.0)`,
         `Academic DOI: 10.5281/zenodo.22058770`,
         ``,
         `## The 4 Protocol Invariants:`,
@@ -689,7 +689,7 @@ function runInit(args = []) {
 
   console.log('======================================================================');
   console.log('  ZTDS MCP — Local Security Firewall for AI Agents & IDEs');
-  console.log('  Standards: IETF draft-sibiryakov-ztds-protocol-02 | RFC v1.0');
+  console.log('  Standards: ZTDS RFC v1.0 (IETF Standards Track)');
   console.log(`  Patent App: IL 331905 (WIPO DAS Code: B17B) | Version: ${SERVER_VERSION}`);
   console.log('======================================================================\n');
 
@@ -955,7 +955,7 @@ function runCliAudit(args = []) {
     const jsonOutput = {
       auditor: 'ztds-mcp',
       version: SERVER_VERSION,
-      standards: ['RFC v1.0', 'IETF draft-sibiryakov-ztds-protocol-02'],
+      standards: ['ZTDS RFC v1.0', 'IETF Standards Track: sibiryakov-ztds-protocol'],
       targetPath,
       filesScanned: auditedFiles.length,
       totalFindings: grandTotalFindings,
@@ -973,7 +973,7 @@ function runCliAudit(args = []) {
 
   console.log('======================================================================');
   console.log('  ZTDS MCP — Zero-Trust Privacy & Credential Pre-Execution Auditor');
-  console.log('  Standards: IETF draft-sibiryakov-ztds-protocol-02 | RFC v1.0');
+  console.log('  Standards: ZTDS RFC v1.0 (IETF Standards Track)');
   console.log(`  Patent App: IL 331905 (WIPO DAS Code: B17B) | Version: ${SERVER_VERSION}`);
   console.log('======================================================================\n');
   console.log(`Scanning target: ${targetPath}`);
@@ -1005,7 +1005,7 @@ function runCliAudit(args = []) {
     console.log('RECOMMENDED REMEDIATION:');
     console.log('1. Enable real-time IDE firewall:');
     console.log('   Run "npx ztds-mcp init" to mask credentials before AI prompt transmission.');
-    console.log('2. For Enterprise 25 Industry Profiles (HIPAA, SOX, ITAR, PCI-DSS):');
+    console.log('2. For Enterprise 30 Industry Profiles (HIPAA, SOX, ITAR, PCI-DSS):');
     console.log('   Deploy PrivacyScrubber TEAMS or SDK: https://privacyscrubber.com');
     console.log('======================================================================');
 

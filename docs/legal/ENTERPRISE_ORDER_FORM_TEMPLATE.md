@@ -39,7 +39,7 @@
 * **Scope of Deployment:**
   - Up to 5 Production Nodes, Hardware Enclaves (AWS Nitro), or Isolated SCIF VPC instances.
   - 100% disconnected, zero-telemetry offline execution guarantee.
-  - Access to full **25 Specialized Industry Profiles** (HIPAA Clinical PHI, Financial PAN/IBAN, Legal Privilege, Cloud Secrets).
+  - Access to full **30 Specialized Industry Profiles** (HIPAA Clinical PHI, Financial PAN/IBAN, Legal Privilege, Cloud Secrets).
   - Continuous Compliance Evidence Binder (`ztds-evidence-binder.json`) for Drata, Vanta, and AuditBoard SOC 2 Type II ingestion.
   - Quarterly regulatory entity taxonomy updates (GDPR, EU AI Act, HIPAA).
   - Priority engineering support (4-hour SLA during business hours).
