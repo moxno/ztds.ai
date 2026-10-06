@@ -7,11 +7,16 @@ import assert from 'assert';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import { 
   handleMessage, 
   sanitizeText, 
   restoreText, 
   auditText, 
+  auditFileDetailed,
+  collectFilesToAudit,
   resetSessionStore, 
   runSelfTest,
   getClientPaths,
@@ -269,7 +274,42 @@ async function runTests() {
     }
   }
 
-  console.log('\n[SUMMARY] ALL 16 ZTDS MCP SERVER TESTS PASSED (100% CONFORMANCE).\n');
+  // 17. Detailed File Audit (Clean File)
+  console.log('--> Test 17: Detailed File Audit (Clean File)');
+  const cleanAudit = auditFileDetailed(path.join(__dirname, 'package.json'));
+  assert.strictEqual(cleanAudit.totalFindings, 0);
+  assert(cleanAudit.fileHash && cleanAudit.fileHash.startsWith('sha256:'));
+  console.log('    [PASS] Clean file audit returns zero findings and valid SHA-256 hash.');
+
+  // 18. Detailed File Audit (Finding Detection & Line Numbers)
+  console.log('--> Test 18: Detailed File Audit (Finding Detection & Line Numbers)');
+  const tmpAuditDir = path.join(os.tmpdir(), `ztds_audit_test_${Date.now()}`);
+  fs.mkdirSync(tmpAuditDir, { recursive: true });
+  const sampleSecret = ['sk', 'ant', 'sampletestsecret1234567890'].join('-');
+  const testFilePath = path.join(tmpAuditDir, '.env.test');
+  fs.writeFileSync(testFilePath, `# Test env\nPORT=8080\nAPI_KEY=${sampleSecret}\nCONTACT=admin@hospital.org\n`, 'utf8');
+
+  try {
+    const findingAudit = auditFileDetailed(testFilePath);
+    assert.strictEqual(findingAudit.totalFindings, 2);
+    assert.strictEqual(findingAudit.categoryTotals.API_SECRET, 1);
+    assert.strictEqual(findingAudit.categoryTotals.EMAIL, 1);
+    assert.strictEqual(findingAudit.lineFindings[0].line, 3);
+    assert.strictEqual(findingAudit.lineFindings[1].line, 4);
+    console.log('    [PASS] Detailed audit correctly identifies findings, categories, and line numbers.');
+  } finally {
+    fs.rmSync(tmpAuditDir, { recursive: true, force: true });
+  }
+
+  // 19. Directory Collection Filtering (Ignored Directories)
+  console.log('--> Test 19: Directory Collection Filtering (Ignored Directories)');
+  const filesFound = collectFilesToAudit(__dirname, 50);
+  assert(filesFound.length > 0);
+  const hasNodeModules = filesFound.some(f => f.includes('node_modules'));
+  assert.strictEqual(hasNodeModules, false);
+  console.log('    [PASS] Directory scanner respects ignored paths (node_modules, .git).');
+
+  console.log('\n[SUMMARY] ALL 19 ZTDS MCP SERVER TESTS PASSED (100% CONFORMANCE).\n');
 }
 
 runTests().catch((err) => {

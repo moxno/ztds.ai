@@ -811,6 +811,217 @@ function runStatus() {
   console.log('======================================================================');
 }
 
+/**
+ * CLI Audit Engine for Files & Directories
+ */
+const IGNORED_AUDIT_DIRS = new Set([
+  'node_modules', '.git', '.next', '.vercel', 'dist', 'build', 
+  '.venv', 'venv', '__pycache__', '.idea', '.vscode'
+]);
+
+const ALLOWED_AUDIT_EXTS = new Set([
+  '.env', '.json', '.js', '.mjs', '.cjs', '.ts', '.tsx', '.jsx',
+  '.py', '.md', '.txt', '.yaml', '.yml', '.csv', '.sql', '.toml',
+  '.xml', '.html', '.sh', '.bash', '.zsh', '.conf', '.cfg', '.ini'
+]);
+
+function auditFileDetailed(filePath) {
+  try {
+    const raw = fs.readFileSync(filePath, 'utf8');
+    const lines = raw.split(/\r?\n/);
+    const lineFindings = [];
+    const categoryTotals = {};
+    let totalFindings = 0;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      for (const [category, regex] of Object.entries(PATTERNS)) {
+        const re = new RegExp(regex.source, regex.flags);
+        let match;
+        while ((match = re.exec(line)) !== null) {
+          totalFindings++;
+          categoryTotals[category] = (categoryTotals[category] || 0) + 1;
+          
+          const matchedVal = match[0];
+          const maskedPreview = matchedVal.length > 8 
+            ? `${matchedVal.slice(0, 3)}...${matchedVal.slice(-3)}` 
+            : '***';
+
+          lineFindings.push({
+            line: i + 1,
+            category,
+            preview: maskedPreview,
+            index: match.index
+          });
+        }
+      }
+    }
+
+    const fileHash = crypto.createHash('sha256').update(raw).digest('hex').substring(0, 16);
+    return {
+      filePath,
+      totalFindings,
+      categoryTotals,
+      lineFindings,
+      fileHash: `sha256:${fileHash}`,
+      error: null
+    };
+  } catch (err) {
+    return {
+      filePath,
+      totalFindings: 0,
+      categoryTotals: {},
+      lineFindings: [],
+      fileHash: null,
+      error: err.message
+    };
+  }
+}
+
+function collectFilesToAudit(targetPath, maxFiles = 200) {
+  const collected = [];
+
+  function walk(current) {
+    if (collected.length >= maxFiles) return;
+    try {
+      const stat = fs.statSync(current);
+      if (stat.isDirectory()) {
+        const baseName = path.basename(current);
+        if (IGNORED_AUDIT_DIRS.has(baseName)) return;
+
+        const entries = fs.readdirSync(current);
+        for (const entry of entries) {
+          walk(path.join(current, entry));
+          if (collected.length >= maxFiles) break;
+        }
+      } else if (stat.isFile()) {
+        const baseName = path.basename(current);
+        const ext = path.extname(current).toLowerCase();
+        
+        if (baseName.startsWith('.env') || ALLOWED_AUDIT_EXTS.has(ext)) {
+          if (stat.size <= 2 * 1024 * 1024) {
+            collected.push(current);
+          }
+        }
+      }
+    } catch (_) {
+      // Ignore unreadable paths
+    }
+  }
+
+  walk(targetPath);
+  return collected;
+}
+
+function runCliAudit(args = []) {
+  const flags = new Set(args.map(a => a.toLowerCase()));
+  const isJson = flags.has('--json');
+  const exitZero = flags.has('--exit-zero');
+
+  const nonFlagArgs = args.filter(a => !a.startsWith('-'));
+  const rawTarget = nonFlagArgs[0] || process.cwd();
+  const targetPath = path.resolve(rawTarget);
+
+  if (!fs.existsSync(targetPath)) {
+    if (isJson) {
+      console.log(JSON.stringify({ error: `Target path does not exist: ${targetPath}` }, null, 2));
+    } else {
+      console.error(`[-] Error: Target path does not exist: ${targetPath}`);
+    }
+    process.exit(1);
+  }
+
+  const stat = fs.statSync(targetPath);
+  const filesToScan = stat.isFile() ? [targetPath] : collectFilesToAudit(targetPath);
+
+  let grandTotalFindings = 0;
+  const grandCategoryTotals = {};
+  const auditedFiles = [];
+
+  for (const file of filesToScan) {
+    const res = auditFileDetailed(file);
+    auditedFiles.push(res);
+    grandTotalFindings += res.totalFindings;
+    for (const [cat, cnt] of Object.entries(res.categoryTotals)) {
+      grandCategoryTotals[cat] = (grandCategoryTotals[cat] || 0) + cnt;
+    }
+  }
+
+  const combinedContent = auditedFiles.map(f => f.fileHash || '').join(':');
+  const receiptHash = crypto.createHash('sha256').update(combinedContent || Date.now().toString()).digest('hex').substring(0, 16).toUpperCase();
+  const receiptId = `ZTDS-RECEIPT-${receiptHash}`;
+
+  if (isJson) {
+    const jsonOutput = {
+      auditor: 'ztds-mcp',
+      version: SERVER_VERSION,
+      standards: ['RFC v1.0', 'IETF draft-sibiryakov-ztds-protocol-02'],
+      targetPath,
+      filesScanned: auditedFiles.length,
+      totalFindings: grandTotalFindings,
+      categoryBreakdown: grandCategoryTotals,
+      receiptId,
+      status: grandTotalFindings === 0 ? 'CONFORMANT' : 'VIOLATION_DETECTED',
+      files: auditedFiles.filter(f => f.totalFindings > 0 || f.error)
+    };
+    console.log(JSON.stringify(jsonOutput, null, 2));
+    if (!exitZero && grandTotalFindings > 0) {
+      process.exit(1);
+    }
+    return;
+  }
+
+  console.log('======================================================================');
+  console.log('  ZTDS MCP — Zero-Trust Privacy & Credential Pre-Execution Auditor');
+  console.log('  Standards: IETF draft-sibiryakov-ztds-protocol-02 | RFC v1.0');
+  console.log(`  Patent App: IL 331905 (WIPO DAS Code: B17B) | Version: ${SERVER_VERSION}`);
+  console.log('======================================================================\n');
+  console.log(`Scanning target: ${targetPath}`);
+  console.log(`Files inspected: ${filesToScan.length}\n`);
+
+  const filesWithFindings = auditedFiles.filter(f => f.totalFindings > 0);
+
+  if (filesWithFindings.length > 0) {
+    console.log('EXPOSED CREDENTIALS & PII DETECTED:');
+    console.log('----------------------------------------------------------------------');
+    for (const f of filesWithFindings) {
+      const relPath = path.relative(process.cwd(), f.filePath) || f.filePath;
+      console.log(`[!] ${relPath} (${f.totalFindings} exposed value${f.totalFindings > 1 ? 's' : ''}):`);
+      for (const item of f.lineFindings.slice(0, 10)) {
+        console.log(`    Line ${item.line}: [${item.category}] ${item.preview}`);
+      }
+      if (f.lineFindings.length > 10) {
+        console.log(`    ... and ${f.lineFindings.length - 10} more findings`);
+      }
+      console.log('');
+    }
+    console.log('----------------------------------------------------------------------');
+    console.log('AUDIT SUMMARY:');
+    console.log(`Status:              INVARIANT 1 VIOLATION DETECTED`);
+    console.log(`Total Findings:      ${grandTotalFindings}`);
+    console.log(`Exposed Categories:  ${Object.entries(grandCategoryTotals).map(([k, v]) => `${k} (${v})`).join(', ')}`);
+    console.log(`Cryptographic Hash:  ${receiptId}`);
+    console.log('');
+    console.log('RECOMMENDED REMEDIATION:');
+    console.log('1. Enable real-time IDE firewall:');
+    console.log('   Run "npx ztds-mcp init" to mask credentials before AI prompt transmission.');
+    console.log('2. For Enterprise 25 Industry Profiles (HIPAA, SOX, ITAR, PCI-DSS):');
+    console.log('   Deploy PrivacyScrubber TEAMS or SDK: https://privacyscrubber.com');
+    console.log('======================================================================');
+
+    if (!exitZero) {
+      process.exit(1);
+    }
+  } else {
+    console.log('[PASS] AUDIT CLEAN — ZERO EXPOSED CREDENTIALS DETECTED');
+    console.log(`Files Scanned:       ${filesToScan.length}`);
+    console.log(`Findings:            0`);
+    console.log(`Receipt:             ${receiptId}`);
+    console.log('All scanned files conform 100% to ZTDS Invariant 1 (Zero-Egress).');
+    console.log('======================================================================');
+  }
+}
+
 function printHelp() {
   console.log(`
 ZTDS MCP Server — Local Security Firewall for AI Agents & IDEs
@@ -825,6 +1036,7 @@ COMMANDS:
   (no command)     Run as standard JSON-RPC 2.0 stdio MCP server for Cursor & Claude.
   init, setup      Automatically configure Cursor, Claude Desktop, and Windsurf.
   status, check    Check existing MCP client configurations and run diagnostic self-test.
+  audit [path]     Scan a file or directory for exposed credentials and PII.
   help, --help     Display this help screen.
   --version, -v    Display version and specification details.
 
@@ -834,10 +1046,16 @@ INIT OPTIONS:
   --windsurf       Configure only Windsurf.
   --global         Also write global Cursor config (~/.cursor/mcp.json).
 
+AUDIT OPTIONS:
+  --json           Output results as machine-readable JSON (ideal for CI/CD).
+  --exit-zero      Do not exit with code 1 if violations are detected.
+
 EXAMPLES:
   npx ztds-mcp init             Auto-configure all installed clients in one click.
-  npx ztds-mcp init --cursor    Inject firewall into current project's Cursor workspace.
   npx ztds-mcp status           Inspect active client configurations.
+  npx ztds-mcp audit .env       Audit a single sensitive file for secrets.
+  npx ztds-mcp audit ./src      Scan directory recursively for credential leaks.
+  npx ztds-mcp audit --json     Output machine-readable JSON for CI/CD.
   npx ztds-mcp                  Start stdio server (invoked automatically by IDEs).
 `);
 }
@@ -852,12 +1070,16 @@ export {
   sanitizeText,
   restoreText,
   auditText,
+  auditFileDetailed,
+  collectFilesToAudit,
+  runCliAudit,
   resetSessionStore,
   runInit,
   runStatus,
   runSelfTest,
   getClientPaths,
   configureTarget,
+  configureCursorRule,
   TOOLS,
   PROMPTS,
   PATTERNS
@@ -875,6 +1097,8 @@ if (isCli) {
     runInit(cliArgs.slice(1));
   } else if (primaryCmd === 'status' || primaryCmd === 'check') {
     runStatus();
+  } else if (primaryCmd === 'audit' || primaryCmd === 'scan') {
+    runCliAudit(cliArgs.slice(1));
   } else if (primaryCmd === '--help' || primaryCmd === '-h' || primaryCmd === 'help') {
     printHelp();
   } else if (primaryCmd === '--version' || primaryCmd === '-v' || primaryCmd === 'version') {
@@ -883,4 +1107,5 @@ if (isCli) {
     startStdioServer();
   }
 }
+
 

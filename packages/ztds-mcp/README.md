@@ -34,6 +34,25 @@ npx ztds-mcp status
 
 ---
 
+## Standalone CLI Pre-Execution Auditor
+
+Audit sensitive files, configuration directories, or CI/CD pipelines for credential leakage prior to AI agent ingestion:
+
+```bash
+# Scan a single sensitive file
+npx ztds-mcp audit .env
+
+# Scan an entire repository/source directory
+npx ztds-mcp audit ./src
+
+# Machine-readable JSON output for CI/CD gates (exits 1 on violation)
+npx ztds-mcp audit --json
+```
+
+Outputs line-by-line category breakdowns, risk assessment, and cryptographic SHA-256 attestation receipts.
+
+---
+
 ## Why AI IDEs Leak Data & How ZTDS Stops It
 
 Autonomous agents in modern IDEs (Cursor, Claude Code, Windsurf) routinely index repository files, including `.env` secrets, database credentials, production logs, customer emails, and API keys. When an agent crafts a prompt or calls a tool, these sensitive strings are transmitted in cleartext across the internet to frontier LLM APIs.
