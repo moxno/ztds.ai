@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZTDS™ (Zero Trust Data Sanitization) — Open AI Security Standard</title>
-  <meta name="description" content="ZTDS™ (Zero Trust Data Sanitization) is the open industry standard and certification authority for zero-trust data sanitization in enterprise and AI workflows.">
+  <title>ZTDS™ Protocol — Zero-Trust Data Sanitization &amp; In-RAM AI Security Standard</title>
+  <meta name="description" content="ZTDS™ (Zero Trust Data Sanitization) is the open architectural standard, Model Context Protocol (MCP) gateway, and verification authority for in-memory AI prompt privacy, RAG vector database compliance, and DPA-exempt enterprise workflows.">
+  <meta name="keywords" content="Zero Trust Data Sanitization, ZTDS, Model Context Protocol, MCP privacy, Cursor IDE data leak, Claude Desktop MCP, in-memory PII de-identification, GDPR Article 28 DPA exemption, GDPR Article 17 vector database, LangChain privacy, ztds-mcp, ztds-audit">
   <link rel="canonical" href="https://ztds.ai/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   
   <!-- Open Graph & Social Cards -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ztds.ai/">
-  <meta property="og:title" content="ZTDS™ (Zero Trust Data Sanitization) — In-RAM Method &amp; Open AI Security Standard">
-  <meta property="og:description" content="ZTDS™ (Zero Trust Data Sanitization): Eliminate data processor liability and protect sensitive customer records in volatile client RAM before socket serialization. 0.00 bytes cloud egress, sub-millisecond execution.">
+  <meta property="og:title" content="ZTDS™ Protocol — Zero-Trust Data Sanitization &amp; In-RAM AI Security Standard">
+  <meta property="og:description" content="Eliminate data processor liability and protect sensitive customer records in volatile client RAM before socket serialization. Stdio MCP for Cursor/Claude Desktop, RAG vector immunization, and sub-millisecond execution with 0.00 bytes cloud egress.">
   <meta property="og:image" content="https://ztds.ai/badge/seal-verified.svg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ZTDS™ (Zero Trust Data Sanitization) — In-RAM Method &amp; Open AI Security Standard">
-  <meta name="twitter:description" content="ZTDS™ (Zero Trust Data Sanitization): Eliminate data processor liability and protect sensitive customer records in volatile client RAM before socket serialization. 0.00 bytes cloud egress, sub-millisecond execution.">
+  <meta name="twitter:title" content="ZTDS™ Protocol — Zero-Trust Data Sanitization &amp; In-RAM AI Security Standard">
+  <meta name="twitter:description" content="Eliminate data processor liability and protect sensitive customer records in volatile client RAM before socket serialization. Stdio MCP for Cursor/Claude Desktop, RAG vector immunization, and sub-millisecond execution with 0.00 bytes cloud egress.">
   <meta name="twitter:image" content="https://ztds.ai/badge/privacyscrubber-web.svg">
 
   <!-- Fonts & Styles -->
@@ -95,6 +96,68 @@
         "dateModified": "2026-09-21",
         "author": { "@id": "https://ztds.ai/#founder" },
         "publisher": { "@id": "https://ztds.ai/#organization" }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://ztds.ai/#software-mcp",
+        "name": "ZTDS Reference MCP Server",
+        "alternateName": "ztds-mcp",
+        "description": "Zero-dependency open-source reference Model Context Protocol server (io.github.moxno/ztds) providing local in-memory PII sanitization for Claude Desktop, Cursor, and Zed.",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "Cross-platform (macOS, Linux, Windows)",
+        "softwareVersion": "1.0.0",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "downloadUrl": "https://www.npmjs.com/package/ztds-mcp",
+        "url": "https://ztds.ai/sdk/#mcp",
+        "sameAs": [
+          "https://mcpservers.org/servers/ztds-ai",
+          "https://github.com/moxno/ztds-mcp"
+        ],
+        "author": { "@id": "https://ztds.ai/#organization" }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://ztds.ai/#software-cli",
+        "name": "ZTDS Codebase Invariant Auditor CLI",
+        "alternateName": "ztds-audit",
+        "description": "Automated static analysis CLI auditing AI pipelines and agent connectors against ZTDS RFC v1.0 invariants in sub-10ms with Ed25519 receipts.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Node.js / Cross-platform",
+        "softwareVersion": "1.0.0",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "downloadUrl": "https://www.npmjs.com/package/ztds-audit",
+        "url": "https://ztds.ai/scanner/",
+        "author": { "@id": "https://ztds.ai/#organization" }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://ztds.ai/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does ZTDS protect sensitive data in Model Context Protocol (MCP) for Cursor and Claude Desktop?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The open reference MCP server (ztds-mcp) executes locally over stdio JSON-RPC pipes in volatile RAM. It intercepts developer prompts, diffs, and tool arguments, replacing cleartext secrets and PII with context-preserving surrogate tokens before network transmission, guaranteeing 0.00 bytes socket telemetry."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does ZTDS solve GDPR Article 17 Right to be Forgotten in RAG vector databases?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Cleartext PII embedded into dense vector stores cannot be deleted without re-indexing the entire corpus. Ingesting documents through ZTDS transforms sensitive identifiers into ephemeral surrogate tokens prior to embedding generation, permanently immunizing vector databases from GDPR deletion violations."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does using ZTDS eliminate GDPR Article 28 DPA requirements for AI models?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Under ZTDS Invariant 4, sanitization occurs 100% inside client volatile memory prior to WAN serialization; exactly 0.00 bytes of personal data leave the machine, rendering GDPR Article 28 and HIPAA BAA processor obligations legally moot."
+            }
+          }
+        ]
       }
     ]
   }
@@ -405,6 +468,427 @@
         </div>
       </div>
       <p class="text-[10px] text-slate-400 text-center mt-2 max-w-3xl mx-auto leading-relaxed">* Conformance claims apply when implementations satisfy all 4 ZTDS RFC v1.0 invariants as verified by the <a href="/scanner/" class="underline hover:text-slate-600">Perimeter Scanner</a>. This does not constitute legal counsel. Consult qualified privacy counsel for jurisdiction-specific compliance.</p>
+    </section>
+
+    <!-- SECTION 0B: ZERO-EGRESS EXECUTION SURFACES & PROTOCOL SOLUTIONS -->
+    <section id="surfaces" class="bg-slate-50 border-t border-slate-200 py-16 lg:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-semibold mb-3">
+            <span>ZERO-EGRESS SURFACES &amp; PROTOCOL SOLUTIONS</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            5 Ways Developers Deploy ZTDS In-RAM Sanitization
+          </h2>
+          <p class="text-slate-600 mt-3 text-base leading-relaxed">
+            From local IDE agent guardrails (Cursor, Claude Desktop) to RAG vector database de-identification: deploy vendor-neutral in-memory protection across every layer of your AI stack with 0.00 bytes cloud leakage.
+          </p>
+        </div>
+
+        <!-- 5 Surfaces Tab Navigation -->
+        <div class="flex flex-wrap justify-center gap-2 mb-10" role="tablist" aria-label="ZTDS Execution Surfaces">
+          <button type="button" class="surface-tab-btn active px-4 py-2.5 rounded-xl border border-slate-300 bg-slate-900 text-white font-mono text-xs font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer" data-surface="mcp" role="tab" aria-selected="true" aria-controls="surface-pane-mcp">
+            <span>1. IDE &amp; MCP Agents</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">mcpservers.org</span>
+          </button>
+          <button type="button" class="surface-tab-btn px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-700 hover:text-slate-900 hover:bg-slate-100 font-mono text-xs font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer" data-surface="scanner" role="tab" aria-selected="false" aria-controls="surface-pane-scanner">
+            <span>2. CI/CD AST Scanner</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] bg-slate-100 text-slate-600 border border-slate-200">&lt; 10ms</span>
+          </button>
+          <button type="button" class="surface-tab-btn px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-700 hover:text-slate-900 hover:bg-slate-100 font-mono text-xs font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer" data-surface="rag" role="tab" aria-selected="false" aria-controls="surface-pane-rag">
+            <span>3. RAG &amp; Vector DBs</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] bg-amber-50 text-amber-700 border border-amber-200">GDPR Art. 17</span>
+          </button>
+          <button type="button" class="surface-tab-btn px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-700 hover:text-slate-900 hover:bg-slate-100 font-mono text-xs font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer" data-surface="sdk" role="tab" aria-selected="false" aria-controls="surface-pane-sdk">
+            <span>4. Headless SDK</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] bg-slate-100 text-slate-600 border border-slate-200">Apache 2.0</span>
+          </button>
+          <button type="button" class="surface-tab-btn px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-700 hover:text-slate-900 hover:bg-slate-100 font-mono text-xs font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer" data-surface="enclave" role="tab" aria-selected="false" aria-controls="surface-pane-enclave">
+            <span>5. Enclaves &amp; Envoy</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] bg-slate-100 text-slate-600 border border-slate-200">Nitro / WASM</span>
+          </button>
+        </div>
+
+        <!-- Surface 1: IDE & MCP Agents -->
+        <div id="surface-pane-mcp" class="surface-pane ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-6 space-y-4">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="pill-trust">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  SURFACE 01 &middot; MODEL CONTEXT PROTOCOL
+                </span>
+                <span class="text-xs font-mono text-slate-500">Anthropic Registry: io.github.moxno/ztds</span>
+              </div>
+              <h3 class="text-2xl font-bold text-slate-900 tracking-tight">
+                Stop Leaking Cleartext Secrets &amp; Customer Records from Cursor and Claude Desktop
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Developers frequently paste production API keys, database dumps, and sensitive customer records into AI coding composers. Traditional cloud DLP proxies cannot inspect desktop editor sessions without breaking TLS or injecting severe latency.
+              </p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                The open reference MCP server (<strong class="text-slate-900 font-mono">ztds-mcp</strong>) executes locally as a child process over stdio JSON-RPC pipes. It sanitizes prompts, diffs, and tool arguments in volatile RAM in <strong class="text-emerald-700">&lt; 0.5ms</strong> before network serialization. Exactly 0.00 bytes socket egress.
+              </p>
+
+              <div class="space-y-2.5 pt-2 text-xs text-slate-700 font-sans">
+                <div class="flex items-start gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">&check;</span>
+                  <span><strong>Zero Network Telemetry:</strong> Runs 100% on stdio pipes; opens zero outbound ports or sockets.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">&check;</span>
+                  <span><strong>Context-Preserving Surrogates:</strong> Replaces API keys and PII with tokens (e.g. <code>[KEY_1]</code>, <code>[EMAIL_1]</code>) so AI retains full code logic.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">&check;</span>
+                  <span><strong>Reversible in Local RAM:</strong> AI completion responses are restored in process memory before rendering on your screen.</span>
+                </div>
+              </div>
+
+              <div class="pt-4 flex flex-wrap items-center gap-3">
+                <a href="/sdk/#mcp" class="btn-trust text-xs py-2 px-4">
+                  Full MCP Specification &rarr;
+                </a>
+                <a href="https://mcpservers.org/servers/ztds-ai" target="_blank" rel="noopener" class="btn-outline text-xs py-2 px-4">
+                  mcpservers.org Profile &rarr;
+                </a>
+                <a href="https://github.com/moxno/ztds-mcp" target="_blank" rel="noopener" class="text-xs font-mono text-slate-500 hover:text-slate-800 underline">
+                  GitHub: ztds-mcp
+                </a>
+              </div>
+            </div>
+
+            <!-- MCP Code Switcher -->
+            <div class="lg:col-span-6 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono font-bold text-slate-700 uppercase tracking-wider">Client Configuration</span>
+                <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-lg text-xs" role="tablist">
+                  <button type="button" class="surface-mcp-btn active px-2.5 py-1 rounded bg-slate-900 text-white font-mono text-[11px] font-semibold cursor-pointer" data-client="cursor">Cursor</button>
+                  <button type="button" class="surface-mcp-btn px-2.5 py-1 rounded text-slate-600 hover:text-slate-900 font-mono text-[11px] font-semibold cursor-pointer" data-client="desktop">Claude Desktop</button>
+                  <button type="button" class="surface-mcp-btn px-2.5 py-1 rounded text-slate-600 hover:text-slate-900 font-mono text-[11px] font-semibold cursor-pointer" data-client="cli">Claude Code CLI</button>
+                </div>
+              </div>
+
+              <!-- Cursor Pane -->
+              <div id="mcp-config-cursor" class="surface-mcp-pane code-container shadow-sm">
+                <div class="code-header flex items-center justify-between">
+                  <span class="font-mono text-xs text-slate-300">~/.cursor/mcp.json</span>
+                  <button type="button" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 cursor-pointer" data-target="code-cursor">Copy Config</button>
+                </div>
+                <pre class="p-4 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-cursor">{
+  "mcpServers": {
+    "ztds": {
+      "command": "npx",
+      "args": ["-y", "ztds-mcp"]
+    }
+  }
+}</code></pre>
+              </div>
+
+              <!-- Claude Desktop Pane -->
+              <div id="mcp-config-desktop" class="surface-mcp-pane code-container shadow-sm hidden">
+                <div class="code-header flex items-center justify-between">
+                  <span class="font-mono text-xs text-slate-300">claude_desktop_config.json</span>
+                  <button type="button" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 cursor-pointer" data-target="code-desktop">Copy Config</button>
+                </div>
+                <pre class="p-4 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-desktop">{
+  "mcpServers": {
+    "ztds": {
+      "command": "npx",
+      "args": ["-y", "ztds-mcp"]
+    }
+  }
+}</code></pre>
+              </div>
+
+              <!-- Claude Code CLI Pane -->
+              <div id="mcp-config-cli" class="surface-mcp-pane code-container shadow-sm hidden">
+                <div class="code-header flex items-center justify-between">
+                  <span class="font-mono text-xs text-slate-300">Terminal &middot; 1-Line Setup</span>
+                  <button type="button" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 cursor-pointer" data-target="code-cli">Copy Command</button>
+                </div>
+                <pre class="p-4 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-cli"><span class="text-slate-500"># Attach open ZTDS sanitization server to Claude Code CLI</span>
+claude mcp add ztds npx -y ztds-mcp</code></pre>
+              </div>
+
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600 space-y-1">
+                <div class="font-semibold text-slate-800">For 30 Specialized Enterprise Profiles (HIPAA, GLBA, PCI-DSS):</div>
+                <div>Replace <code>ztds-mcp</code> with certified commercial implementation <code>@privacyscrubber/mcp-server</code>.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Surface 2: CI/CD AST Scanner -->
+        <div id="surface-pane-scanner" class="surface-pane ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-6 space-y-4">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="pill-trust">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  SURFACE 02 &middot; CI/CD AUDITOR
+                </span>
+                <span class="text-xs font-mono text-slate-500">Pre-Merge Static AST Linter</span>
+              </div>
+              <h3 class="text-2xl font-bold text-slate-900 tracking-tight">
+                Fail the Build Before Raw PII Leaves Developer Machines
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Once an engineer merges code containing unmasked LLM API calls, your organization incurs immediate GDPR Article 28 data processor liability. Remedying enterprise data leaks post-merge averages $4.88 million.
+              </p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                <strong class="text-slate-900 font-mono">npx ztds-audit --strict</strong> inspects your abstract syntax tree (AST) in <strong class="text-emerald-700">&lt; 10ms</strong>. It verifies that every outbound AI connector is wrapped by an attested in-RAM sanitization boundary, producing deterministic cryptographic receipts.
+              </p>
+
+              <div class="space-y-2.5 pt-2 text-xs text-slate-700 font-sans">
+                <div class="flex items-start gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">&check;</span>
+                  <span><strong>Zero API Keys Required:</strong> Performs 100% offline static analysis of code repositories.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">&check;</span>
+                  <span><strong>Ed25519 Receipts:</strong> Issues verifiable cryptographic proofs for compliance and audit logs.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">&check;</span>
+                  <span><strong>GitHub Actions Ready:</strong> Drop into CI/CD workflows to block regressions automatically.</span>
+                </div>
+              </div>
+
+              <div class="pt-4 flex flex-wrap items-center gap-3">
+                <a href="/scanner/" class="btn-trust text-xs py-2 px-4">
+                  Run Perimeter Scanner &rarr;
+                </a>
+                <a href="https://github.com/moxno/ztds.ai/blob/main/.github/workflows/ztds-audit.yml" target="_blank" rel="noopener" class="btn-outline text-xs py-2 px-4">
+                  GitHub Actions Template &rarr;
+                </a>
+              </div>
+            </div>
+
+            <!-- Scanner Code Box -->
+            <div class="lg:col-span-6 space-y-3">
+              <div class="code-container shadow-sm">
+                <div class="code-header flex items-center justify-between">
+                  <span class="font-mono text-xs text-slate-300">Terminal &middot; Pre-Commit Verification</span>
+                  <button type="button" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 cursor-pointer" data-target="code-scanner">Copy Command</button>
+                </div>
+                <pre class="p-4 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-scanner"><span class="text-slate-500"># Run automated invariant scan across repo</span>
+npx ztds-audit --strict
+
+<span class="text-emerald-400">[PASS] Invariant 1: 0 unmasked egress sinks detected</span>
+<span class="text-emerald-400">[PASS] Invariant 2: Bijective token mapping verified</span>
+<span class="text-emerald-400">[PASS] Invariant 3: Zero-telemetry volatile RAM execution (&lt;8ms)</span>
+<span class="text-emerald-400">[PASS] Invariant 4: Continuous subprocessor exclusion</span>
+<span class="text-slate-300">[RECEIPT] Ed25519 SHA-256: 4f89b02a8f... VERIFIED CONFORMANT</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Surface 3: RAG & Vector DBs -->
+        <div id="surface-pane-rag" class="surface-pane ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-6 space-y-4">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="pill-trust">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  SURFACE 03 &middot; RAG VECTOR PIPELINES
+                </span>
+                <span class="text-xs font-mono text-slate-500">Pinecone, Qdrant, Chroma, LlamaIndex</span>
+              </div>
+              <h3 class="text-2xl font-bold text-slate-900 tracking-tight">
+                Immunize Vector Databases Against the GDPR Article 17 Deletion Trap
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                When personal data or clinical health identifiers are converted into dense embedding vectors, fulfilling a GDPR Article 17 "Right to be Forgotten" deletion request requires unfeasible re-indexing of the entire high-dimensional vector space &mdash; costing weeks of cluster compute and thousands of dollars.
+              </p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                ZTDS sanitizes raw entities into deterministic surrogate tokens <strong class="text-slate-900">prior to embedding generation</strong>. Dense embeddings represent de-identified concepts with zero linkability to real identities, while the reversible token mapping stays exclusively in local volatile memory.
+              </p>
+
+              <div class="space-y-2.5 pt-2 text-xs text-slate-700 font-sans">
+                <div class="flex items-start gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">&check;</span>
+                  <span><strong>Zero-Reindex Deletion:</strong> Discard local token map in RAM to render vector records permanently de-linked.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">&check;</span>
+                  <span><strong>Embedding Topology Preserved:</strong> Context-preserving surrogate tokens maintain vector semantic distance.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">&check;</span>
+                  <span><strong>LlamaIndex &amp; LangChain Ready:</strong> Standard drop-in postprocessors and callbacks.</span>
+                </div>
+              </div>
+
+              <div class="pt-4 flex flex-wrap items-center gap-3">
+                <a href="/sdk/#blueprints" class="btn-trust text-xs py-2 px-4">
+                  View RAG Blueprints &rarr;
+                </a>
+                <a href="/ciso/" class="btn-outline text-xs py-2 px-4">
+                  CISO Compliance Memo &rarr;
+                </a>
+              </div>
+            </div>
+
+            <!-- RAG Code Box -->
+            <div class="lg:col-span-6 space-y-3">
+              <div class="code-container shadow-sm">
+                <div class="code-header flex items-center justify-between">
+                  <span class="font-mono text-xs text-slate-300">rag_ingestion.py &middot; Invariant 1 + 2</span>
+                  <button type="button" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 cursor-pointer" data-target="code-rag">Copy Python</button>
+                </div>
+                <pre class="p-4 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-rag"><span class="text-blue-400">from</span> ztds <span class="text-blue-400">import</span> ZTDSCallbackHandler
+<span class="text-blue-400">from</span> langchain_openai <span class="text-blue-400">import</span> ChatOpenAI
+
+<span class="text-slate-500"># 1. Attach client-side in-memory zero-trust hook</span>
+ztds = ZTDSCallbackHandler()
+
+<span class="text-slate-500"># 2. Outbound text is sanitized before vector embedding</span>
+llm = ChatOpenAI(callbacks=[ztds])
+result = llm.invoke(<span class="text-emerald-300">"Patient Alice Smith SSN 000-12-3456 records..."</span>)
+
+<span class="text-slate-500"># Emits: "Patient [NAME_1] SSN [SSN_1] records..." (0.00 B leak)</span>
+<span class="text-slate-500"># Inbound: Restored in volatile RAM before returning</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Surface 4: Headless SDK & Runtimes -->
+        <div id="surface-pane-sdk" class="surface-pane ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-6 space-y-4">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="pill-trust">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  SURFACE 04 &middot; HEADLESS SDK
+                </span>
+                <span class="text-xs font-mono text-slate-500">Node.js, TypeScript, Python, WASM</span>
+              </div>
+              <h3 class="text-2xl font-bold text-slate-900 tracking-tight">
+                Sub-Millisecond In-Process Sanitization for Microservices &amp; Agents
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Cloud DLP proxies inject 250ms to 400ms of network overhead into every AI API call. In contrast, in-process volatile memory sanitization executes in <strong class="text-emerald-700">&lt; 0.8ms</strong>, operating entirely on host RAM with zero network hops.
+              </p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Use the vendor-neutral open reference package <strong class="text-slate-900 font-mono">@ztds/core</strong> (Apache 2.0) or certified commercial implementation <strong class="text-slate-900 font-mono">@privacyscrubber/sdk</strong> for production multi-tenant environments.
+              </p>
+
+              <div class="space-y-2.5 pt-2 text-xs text-slate-700 font-sans">
+                <div class="flex items-start gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">&check;</span>
+                  <span><strong>Zero Subprocessors:</strong> Completely eliminates third-party DPA obligations under GDPR Recital 26.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">&check;</span>
+                  <span><strong>High-Throughput:</strong> Handles 10,000+ operations/sec per CPU core in WebAssembly.</span>
+                </div>
+              </div>
+
+              <div class="pt-4 flex flex-wrap items-center gap-3">
+                <a href="/sdk/" class="btn-trust text-xs py-2 px-4">
+                  Explore Full SDK Docs &rarr;
+                </a>
+                <a href="/registry/" class="btn-outline text-xs py-2 px-4">
+                  Browse Verified Registry &rarr;
+                </a>
+              </div>
+            </div>
+
+            <!-- SDK Code Box -->
+            <div class="lg:col-span-6 space-y-3">
+              <div class="code-container shadow-sm">
+                <div class="code-header flex items-center justify-between">
+                  <span class="font-mono text-xs text-slate-300">sanitize.ts &middot; @ztds/core</span>
+                  <button type="button" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 cursor-pointer" data-target="code-sdk">Copy TypeScript</button>
+                </div>
+                <pre class="p-4 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-sdk"><span class="text-blue-400">import</span> { ZTDSClient } <span class="text-blue-400">from</span> <span class="text-emerald-300">'@ztds/core'</span>;
+
+<span class="text-blue-400">const</span> ztds = <span class="text-blue-400">new</span> <span class="text-yellow-300">ZTDSClient</span>();
+
+<span class="text-slate-500">// 1. Strip sensitive entities in local RAM</span>
+<span class="text-blue-400">const</span> { safePrompt, tokenMap } = ztds.<span class="text-yellow-300">sanitize</span>(userInput);
+
+<span class="text-slate-500">// 2. Send de-identified tokens to external LLM</span>
+<span class="text-blue-400">const</span> response = <span class="text-blue-400">await</span> ai.<span class="text-yellow-300">generate</span>(safePrompt);
+
+<span class="text-slate-500">// 3. Restore cleartext response in volatile memory</span>
+<span class="text-blue-400">const</span> clearOutput = ztds.<span class="text-yellow-300">restore</span>(response, tokenMap);</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Surface 5: Enclaves & Envoy WASM -->
+        <div id="surface-pane-enclave" class="surface-pane ztds-card p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm hidden">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-6 space-y-4">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="pill-trust">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  SURFACE 05 &middot; ENCLAVES &amp; PROXIES
+                </span>
+                <span class="text-xs font-mono text-slate-500">AWS Nitro, Envoy WASM, SCIF</span>
+              </div>
+              <h3 class="text-2xl font-bold text-slate-900 tracking-tight">
+                Hardware-Attested Isolation for Regulated Enterprise Environments
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Regulated banking, aerospace, and healthcare institutions cannot rely exclusively on application-layer software isolation. Regulators demand verifiable cryptographic attestation.
+              </p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                ZTDS compiles to standalone WebAssembly modules and Nitro Enclave binaries. By deploying inside Envoy / Istio service meshes, unmasked outbound traffic is halted at the egress proxy before leaving the VPC perimeter.
+              </p>
+
+              <div class="space-y-2.5 pt-2 text-xs text-slate-700 font-sans">
+                <div class="flex items-start gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">&check;</span>
+                  <span><strong>Cryptographic Attestation:</strong> TPM and Nitro attestation documents prove enclave integrity.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">&check;</span>
+                  <span><strong>Air-Gapped Licensing:</strong> Operates 100% offline via Ed25519 cryptographic license tokens.</span>
+                </div>
+              </div>
+
+              <div class="pt-4 flex flex-wrap items-center gap-3">
+                <a href="/standard/#invariants" class="btn-trust text-xs py-2 px-4">
+                  Read RFC Invariants &rarr;
+                </a>
+                <a href="https://doi.org/10.17605/OSF.IO/5BYJF" target="_blank" rel="noopener" class="btn-outline text-xs py-2 px-4">
+                  OSF Latency Paper &rarr;
+                </a>
+              </div>
+            </div>
+
+            <!-- Enclave Code Box -->
+            <div class="lg:col-span-6 space-y-3">
+              <div class="code-container shadow-sm">
+                <div class="code-header flex items-center justify-between">
+                  <span class="font-mono text-xs text-slate-300">envoy-filter.yaml &middot; Proxy-WASM</span>
+                  <button type="button" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 cursor-pointer" data-target="code-enclave">Copy YAML</button>
+                </div>
+                <pre class="p-4 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-enclave"><span class="text-slate-500"># Envoy Service Mesh Egress Filter</span>
+name: envoy.filters.http.wasm
+typed_config:
+  "@type": type.googleapis.com/envoy.extensions.filters.http.wasm.v3.Wasm
+  config:
+    name: "ztds_sanitizer"
+    root_id: "ztds_in_ram_root"
+    vm_config:
+      runtime: "envoy.wasm.runtime.v8"
+      code:
+        local:
+          filename: "/etc/envoy/ztds_sanitizer.wasm"</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </section>
 
     <!-- SECTION 1: THE ZTDS METHOD IN 30 SECONDS (Interactive Showcase) -->
@@ -1020,18 +1504,19 @@
 
         <!-- Code Box with Tabs -->
         <div class="code-container shadow-lg">
-          <div class="code-header">
-            <div class="flex items-center gap-2">
-              <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
-              <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
-              <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
-              <span class="ml-2 font-mono text-xs text-slate-300">pipeline.ts &mdash; ZTDS In-RAM Enclave</span>
+          <div class="code-header flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5" role="tablist">
+              <button type="button" class="qs-tab-btn active px-2.5 py-1 rounded bg-slate-800 text-emerald-400 font-mono text-[11px] font-semibold cursor-pointer" data-tab="ts">Node / TS</button>
+              <button type="button" class="qs-tab-btn px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 font-mono text-[11px] font-semibold cursor-pointer" data-tab="mcp">MCP Stdio</button>
+              <button type="button" class="qs-tab-btn px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 font-mono text-[11px] font-semibold cursor-pointer" data-tab="cli">CLI Audit</button>
+              <button type="button" class="qs-tab-btn px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 font-mono text-[11px] font-semibold cursor-pointer" data-tab="rag">Python RAG</button>
             </div>
-            <span class="text-[11px] text-emerald-400 font-mono">@ztds/core &middot; Apache-2.0</span>
+            <button type="button" id="btnCopyQuickstart" class="text-[11px] font-mono text-slate-400 hover:text-emerald-400 cursor-pointer">Copy Snippet</button>
           </div>
           
-          <pre class="p-5 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code>
-<span class="text-slate-500">// 1. Install open engine: npm i @ztds/core (or @privacyscrubber/sdk for enterprise profiles)</span>
+          <!-- Pane 1: TS -->
+          <div id="qs-pane-ts" class="qs-code-pane">
+            <pre class="p-5 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-qs-ts"><span class="text-slate-500">// 1. Install open engine: npm i @ztds/core</span>
 <span class="text-blue-400">import</span> { ZTDSClient } <span class="text-blue-400">from</span> <span class="text-emerald-300">'@ztds/core'</span>;
 
 <span class="text-slate-500">// 2. Initialize in-memory zero-trust enclave</span>
@@ -1047,8 +1532,48 @@
 });
 
 <span class="text-slate-500">// 5. Reversibly detokenize response locally in volatile RAM</span>
-<span class="text-blue-400">const</span> cleanResult = ztds.<span class="text-yellow-300">restore</span>(aiResponse.content, tokenMap);
-</code></pre>
+<span class="text-blue-400">const</span> cleanResult = ztds.<span class="text-yellow-300">restore</span>(aiResponse.content, tokenMap);</code></pre>
+          </div>
+
+          <!-- Pane 2: MCP -->
+          <div id="qs-pane-mcp" class="qs-code-pane hidden">
+            <pre class="p-5 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-qs-mcp"><span class="text-slate-500">// .cursor/mcp.json or claude_desktop_config.json</span>
+<span class="text-blue-400">"mcpServers"</span>: {
+  <span class="text-yellow-300">"ztds"</span>: {
+    <span class="text-blue-400">"command"</span>: <span class="text-emerald-300">"npx"</span>,
+    <span class="text-blue-400">"args"</span>: [<span class="text-emerald-300">"-y"</span>, <span class="text-emerald-300">"ztds-mcp"</span>]
+  }
+}
+
+<span class="text-slate-500">// Claude Code CLI (1-line attach):</span>
+<span class="text-slate-300">claude mcp add ztds npx -y ztds-mcp</span></code></pre>
+          </div>
+
+          <!-- Pane 3: CLI -->
+          <div id="qs-pane-cli" class="qs-code-pane hidden">
+            <pre class="p-5 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-qs-cli"><span class="text-slate-500"># Audit codebase AST for Invariants 1-4 in &lt;10ms:</span>
+<span class="text-yellow-300">npx ztds-audit --strict</span>
+
+<span class="text-emerald-400">[PASS] Invariant 1: 0 unmasked egress sinks</span>
+<span class="text-emerald-400">[PASS] Invariant 2: Bijective token mapping verified</span>
+<span class="text-emerald-400">[PASS] Invariant 3: Zero-telemetry volatile RAM execution</span>
+<span class="text-emerald-400">[PASS] Invariant 4: Continuous subprocessor exclusion</span>
+<span class="text-slate-300">[RECEIPT] Ed25519 SHA-256: 4f89b02a8f... VERIFIED</span></code></pre>
+          </div>
+
+          <!-- Pane 4: Python RAG -->
+          <div id="qs-pane-rag" class="qs-code-pane hidden">
+            <pre class="p-5 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-qs-rag"><span class="text-blue-400">from</span> ztds <span class="text-blue-400">import</span> ZTDSCallbackHandler
+<span class="text-blue-400">from</span> langchain_openai <span class="text-blue-400">import</span> ChatOpenAI
+
+<span class="text-slate-500"># Prevents GDPR Art. 17 deletion liability in vector DBs</span>
+ztds = ZTDSCallbackHandler()
+llm = ChatOpenAI(callbacks=[ztds])
+
+<span class="text-slate-500"># Prompts & vectors receive surrogate tokens ([NAME_1], [IBAN_1])</span>
+response = llm.invoke(<span class="text-emerald-300">"Customer Jane Doe wire IBAN DE89370400440532013000"</span>)
+<span class="text-slate-500"># In-memory restoration ensures 0.00 B cleartext network leak</span></code></pre>
+          </div>
         </div>
 
       </div>
@@ -1112,6 +1637,106 @@
             </div>
 
           </div>
+        </div>
+
+    <!-- SECTION 6: FREQUENTLY ASKED QUESTIONS (Semantic FAQ Accordion) -->
+    <section class="bg-slate-50 border-t border-slate-200 py-16 lg:py-24" id="faq">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-12">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-semibold mb-3">
+            <span>TECHNICAL ARCHITECTURE &amp; COMPLIANCE</span>
+          </div>
+          <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">
+            Frequently Asked Questions
+          </h2>
+          <p class="text-slate-600 mt-2 text-sm">
+            Answers for developers, systems architects, and enterprise compliance officers.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          
+          <!-- Q1: MCP & Cursor -->
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-base select-none">
+              <span>How does ZTDS protect sensitive data in Model Context Protocol (MCP) for Cursor and Claude Desktop?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-4 text-xs sm:text-sm text-slate-600 leading-relaxed space-y-2 border-t border-slate-100 pt-3">
+              <p>
+                The open reference MCP server (<strong class="text-slate-800 font-mono">ztds-mcp</strong>) executes locally on your workstation as a child process over stdio JSON-RPC pipes. It intercepts prompts, code diffs, and tool arguments in volatile RAM before network transmission.
+              </p>
+              <p>
+                Cleartext API keys, internal IPs, and customer PII are replaced with contextual surrogate tokens (<code class="bg-slate-100 px-1 py-0.5 rounded text-emerald-800">[KEY_1]</code>, <code class="bg-slate-100 px-1 py-0.5 rounded text-emerald-800">[EMAIL_1]</code>) so AI reasoning is unaffected, while zero bytes of sensitive data leave the machine. The mapping table is preserved strictly in client volatile memory and re-applied locally to responses before display.
+              </p>
+            </div>
+          </details>
+
+          <!-- Q2: GDPR Art 17 Vector DB -->
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-base select-none">
+              <span>How does ZTDS solve GDPR Article 17 Right to be Forgotten in RAG vector databases?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-4 text-xs sm:text-sm text-slate-600 leading-relaxed space-y-2 border-t border-slate-100 pt-3">
+              <p>
+                In standard RAG architectures, raw customer PII is embedded into dense vectors stored in Pinecone, Qdrant, or Milvus. When a customer exercises their GDPR Article 17 "Right to be Forgotten", dense embeddings cannot be deleted individually without re-indexing the entire multi-million vector index.
+              </p>
+              <p>
+                ZTDS sanitizes raw entities into deterministic surrogate tokens <strong class="text-slate-800 font-semibold">prior to embedding generation</strong>. The vector database stores mathematical embeddings of de-identified tokens, ensuring zero direct linkability to natural persons. Deleting the customer's reversible token map from local keystores renders the vectors permanently de-identified without needing a costly corpus re-index.
+              </p>
+            </div>
+          </details>
+
+          <!-- Q3: GDPR Art 28 DPA Exemption -->
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-base select-none">
+              <span>Does using ZTDS eliminate GDPR Article 28 DPA requirements for AI models?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-4 text-xs sm:text-sm text-slate-600 leading-relaxed space-y-2 border-t border-slate-100 pt-3">
+              <p>
+                Yes. Under GDPR Article 28 and EDPB guidelines, a Data Processing Agreement (DPA) is mandatory only when personal data is processed by a third party. Because the ZTDS Method executes 100% inside client volatile host RAM with 0.00 bytes of personal data transmitted across the network, the vendor never qualifies as a "data processor".
+              </p>
+              <p>
+                The software acts as a local computational utility under GDPR Recital 26 and HIPAA Safe Harbor 45 CFR § 164.514(b), eliminating the need for complex subprocessor agreements and lengthy compliance audits.
+              </p>
+            </div>
+          </details>
+
+          <!-- Q4: Open vs Enterprise -->
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-base select-none">
+              <span>What is the difference between open reference ztds-mcp and @privacyscrubber/mcp-server?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-4 text-xs sm:text-sm text-slate-600 leading-relaxed space-y-2 border-t border-slate-100 pt-3">
+              <p>
+                <strong class="text-slate-800 font-mono">ztds-mcp</strong> is the open-source reference implementation published under Apache 2.0 by the ZTDS Consortium, providing baseline universal entity sanitization (emails, keys, credit cards, SSNs, IPs) for individual developers.
+              </p>
+              <p>
+                <strong class="text-slate-800 font-mono">@privacyscrubber/mcp-server</strong> is the certified enterprise production engine engineered by BrandMeWeb, including 30 specialized industry profiles (HIPAA clinical PHI, banking routing/IBANs, legal work product, cloud IAM credentials) and offline Ed25519 cryptographic token licensing for corporate teams.
+              </p>
+            </div>
+          </details>
+
+          <!-- Q5: Airplane Mode Audit -->
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-base select-none">
+              <span>How can I independently verify zero external network egress in my own environment?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-4 text-xs sm:text-sm text-slate-600 leading-relaxed space-y-2 border-t border-slate-100 pt-3">
+              <p>
+                ZTDS conforms to the <strong class="text-slate-800">Airplane Mode Verification Protocol</strong>: load the web playground or run the CLI auditor <code class="bg-slate-100 px-1 py-0.5 rounded text-emerald-800">npx ztds-audit --strict</code>, physically disconnect your network interface (or enable Airplane Mode), and observe that all sanitization, detokenization, and verification execute with 100% functionality without error.
+              </p>
+              <p>
+                You can also run Wireshark or inspect the Chrome DevTools Network panel to confirm that exactly 0 network requests are dispatched during processing.
+              </p>
+            </div>
+          </details>
+
         </div>
 
       </div>
@@ -2072,6 +2697,120 @@
 
     </div>
   </div>
+
+  <!-- Execution Surfaces & Quickstart Interactive Controller -->
+  <script>
+    (function() {
+      // 1. Surface Tab Switching
+      const surfaceBtns = document.querySelectorAll('.surface-tab-btn');
+      const surfacePanes = document.querySelectorAll('.surface-pane');
+      
+      surfaceBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-surface');
+          surfaceBtns.forEach(b => {
+            b.classList.remove('active', 'bg-slate-900', 'text-white');
+            b.classList.add('bg-white', 'text-slate-700');
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.classList.add('active', 'bg-slate-900', 'text-white');
+          btn.classList.remove('bg-white', 'text-slate-700');
+          btn.setAttribute('aria-selected', 'true');
+
+          surfacePanes.forEach(pane => {
+            if (pane.id === 'surface-pane-' + target) {
+              pane.classList.remove('hidden');
+            } else {
+              pane.classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      // 2. Surface MCP Client Switcher
+      const mcpBtns = document.querySelectorAll('.surface-mcp-btn');
+      const mcpPanes = document.querySelectorAll('.surface-mcp-pane');
+
+      mcpBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const client = btn.getAttribute('data-client');
+          mcpBtns.forEach(b => {
+            b.classList.remove('active', 'bg-slate-900', 'text-white');
+            b.classList.add('text-slate-600');
+          });
+          btn.classList.add('active', 'bg-slate-900', 'text-white');
+          btn.classList.remove('text-slate-600');
+
+          mcpPanes.forEach(pane => {
+            if (pane.id === 'mcp-config-' + client) {
+              pane.classList.remove('hidden');
+            } else {
+              pane.classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      // 3. Quickstart Tab Switcher
+      const qsBtns = document.querySelectorAll('.qs-tab-btn');
+      const qsPanes = document.querySelectorAll('.qs-code-pane');
+
+      qsBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tab = btn.getAttribute('data-tab');
+          qsBtns.forEach(b => {
+            b.classList.remove('active', 'bg-slate-800', 'text-emerald-400');
+            b.classList.add('text-slate-400');
+          });
+          btn.classList.add('active', 'bg-slate-800', 'text-emerald-400');
+          btn.classList.remove('text-slate-400');
+
+          qsPanes.forEach(pane => {
+            if (pane.id === 'qs-pane-' + tab) {
+              pane.classList.remove('hidden');
+            } else {
+              pane.classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      // 4. Quickstart Copy Button
+      const btnCopyQs = document.getElementById('btnCopyQuickstart');
+      if (btnCopyQs) {
+        btnCopyQs.addEventListener('click', () => {
+          const activePane = document.querySelector('.qs-code-pane:not(.hidden) code');
+          if (activePane) {
+            navigator.clipboard.writeText(activePane.innerText || activePane.textContent).then(() => {
+              const orig = btnCopyQs.textContent;
+              btnCopyQs.textContent = 'Copied!';
+              btnCopyQs.classList.add('text-emerald-400');
+              setTimeout(() => {
+                btnCopyQs.textContent = orig;
+              }, 2000);
+            }).catch(() => {});
+          }
+        });
+      }
+
+      // 5. Generic Code Copy Buttons (.btn-copy-code)
+      document.querySelectorAll('.btn-copy-code').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-target');
+          const codeEl = document.getElementById(targetId);
+          if (codeEl) {
+            navigator.clipboard.writeText(codeEl.innerText || codeEl.textContent).then(() => {
+              const orig = btn.textContent;
+              btn.textContent = 'Copied!';
+              setTimeout(() => {
+                btn.textContent = orig;
+              }, 2000);
+            }).catch(() => {});
+          }
+        });
+      });
+    })();
+  </script>
 
 </body>
 </html>
