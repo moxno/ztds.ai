@@ -21,18 +21,28 @@ console.log('[TEST] Starting ZTDS IETF Internet-Draft Verification Suite...\n');
 const ROOT = path.resolve(__dirname, '..');
 const xmlPath = path.join(ROOT, 'docs/ietf/draft-sibiryakov-ztds-protocol-00.xml');
 const txtPath = path.join(ROOT, 'docs/ietf/draft-sibiryakov-ztds-protocol-00.txt');
+const xmlPath02 = path.join(ROOT, 'docs/ietf/draft-sibiryakov-ztds-protocol-02.xml');
+const txtPath02 = path.join(ROOT, 'docs/ietf/draft-sibiryakov-ztds-protocol-02.txt');
+const dispatchPath = path.join(ROOT, 'docs/ietf/SECDISPATCH_SUBMISSION_REQUEST.md');
 
 // Test 1: File Presence & Non-Empty
 console.log('--> Test 1: IETF Draft File Presence');
 {
   assert(fs.existsSync(xmlPath), 'XML draft must exist at docs/ietf/draft-sibiryakov-ztds-protocol-00.xml');
   assert(fs.existsSync(txtPath), 'TXT draft must exist at docs/ietf/draft-sibiryakov-ztds-protocol-00.txt');
+  assert(fs.existsSync(xmlPath02), 'XML draft must exist at docs/ietf/draft-sibiryakov-ztds-protocol-02.xml');
+  assert(fs.existsSync(txtPath02), 'TXT draft must exist at docs/ietf/draft-sibiryakov-ztds-protocol-02.txt');
+  assert(fs.existsSync(dispatchPath), 'SECDISPATCH submission request must exist');
   
   const xmlStats = fs.statSync(xmlPath);
   const txtStats = fs.statSync(txtPath);
+  const xmlStats02 = fs.statSync(xmlPath02);
+  const txtStats02 = fs.statSync(txtPath02);
   assert(xmlStats.size > 2000, `XML draft too small: ${xmlStats.size} bytes`);
   assert(txtStats.size > 2000, `TXT draft too small: ${txtStats.size} bytes`);
-  console.log(`    [PASS] XML draft (${xmlStats.size} B) and TXT draft (${txtStats.size} B) verified.`);
+  assert(xmlStats02.size > 2000, `XML draft-02 too small: ${xmlStats02.size} bytes`);
+  assert(txtStats02.size > 2000, `TXT draft-02 too small: ${txtStats02.size} bytes`);
+  console.log(`    [PASS] XML drafts (00: ${xmlStats.size} B, 02: ${xmlStats02.size} B) and TXT drafts verified.`);
 }
 
 // Test 2: xmllint Syntax Validation
@@ -49,7 +59,8 @@ console.log('--> Test 2: xmllint Strict Syntax Validation');
   if (hasXmllint) {
     try {
       execSync(`xmllint --noout "${xmlPath}"`, { stdio: 'pipe' });
-      console.log('    [PASS] xmllint confirmed zero XML syntax errors or unclosed tags.');
+      execSync(`xmllint --noout "${xmlPath02}"`, { stdio: 'pipe' });
+      console.log('    [PASS] xmllint confirmed zero XML syntax errors across draft-00 and draft-02.');
     } catch (err) {
       assert.fail(`xmllint validation failed: ${err.message}`);
     }
