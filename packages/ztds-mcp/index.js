@@ -422,9 +422,9 @@ async function handleMessage(request) {
       const textOutput = [
         res.sanitizedText,
         '',
-        `> 🛡️ [ZTDS Invariant 1 Attested] Zero external egress.`,
+        `> [ZTDS Invariant 1 Attested] Zero external network egress.`,
         `> Receipt: ${res.auditReceipt} | Execution: ${res.executionUs}µs | Entities Masked: ${res.entitiesMasked}`,
-        `> Need 30+ enterprise profiles (HIPAA, PCI-DSS, SOC 2)? See @privacyscrubber/mcp-server (https://privacyscrubber.com)`
+        `> Certified Reference Implementation (30 Profiles): @privacyscrubber/mcp-server (https://privacyscrubber.com)`
       ].join('\n');
 
       return {
@@ -491,12 +491,12 @@ async function handleMessage(request) {
         `3. Verifiable Cryptographic RAM Isolation (Theorem 2 Zeroization).`,
         `4. Subprocessor Chain Exclusion (GDPR Recital 26 / EU AI Act Article 10).`,
         ``,
-        `## Commercial Production Profiles:`,
-        `The open standard reference engine covers universal baseline entities.`,
-        `For 30+ specialized vertical industry profiles (HIPAA PHI, PCI-DSS Cardholder, GLBA Financial, CJIS Law Enforcement, FERPA Student Records) and enterprise team key management, deploy the commercial engine:`,
-        `- NPM Package: @privacyscrubber/mcp-server`,
-        `- Backend SDK: npm install @privacyscrubber/sdk`,
-        `- Web & Licensing: https://privacyscrubber.com`
+        `## Certified Reference Implementation (PrivacyScrubber):`,
+        `ZTDS is an open, vendor-neutral standard. The reference open-source engine covers universal baseline entities.`,
+        `For enterprise production environments requiring 30 certified vertical industry profiles (HIPAA PHI-18, PCI-DSS 4.0, GLBA Financial, CJIS, FERPA, Defense ITAR/CMMC, FRE-502) and air-gapped node licensing, deploy the certified pioneer implementation:`,
+        `- Local MCP Firewall: @privacyscrubber/mcp-server`,
+        `- Headless Backend SDK: npm install @privacyscrubber/sdk`,
+        `- Commercial Hub & Licensing: https://privacyscrubber.com`
       ].join('\n');
 
       return {

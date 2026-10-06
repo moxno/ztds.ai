@@ -8,7 +8,7 @@ The official vendor-neutral open reference implementation and TypeScript interfa
 
 ---
 
-## 🏛️ Ecosystem Architecture & Demarcation
+## Ecosystem Architecture & Demarcation
 
 ZTDS is an open industry standard. To preserve vendor neutrality while delivering production performance, the ecosystem operates on a two-tier implementation model:
 
@@ -55,7 +55,7 @@ engine.flush();
 
 ---
 
-## 🛡️ The 4 Fundamental Invariants (RFC v1.0)
+## The 4 Fundamental Invariants (RFC v1.0)
 
 1. **Invariant 1: Zero External Egress Prior to Sanitization**: Raw sensitive cleartext never leaves host volatile RAM.
 2. **Invariant 2: Deterministic Reversible Tokenization**: Semantic context is preserved for LLM reasoning while mapping tables remain isolated locally.

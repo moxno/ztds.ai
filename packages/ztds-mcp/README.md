@@ -146,17 +146,18 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
 
 ---
 
-## Universal Baseline vs Enterprise Production Engine
+## Certified Commercial Reference Implementation (PrivacyScrubber)
 
-This open-source server covers universal baseline entities (Email, Phone, SSN, Credit Cards, IPv4, IBAN, API Secrets).
+ZTDS is an open, vendor-neutral standard. The open-source `ztds-mcp` package serves as the reference implementation covering universal baseline entities (Email, Phone, SSN, Credit Cards, IPv4, IBAN, API Secrets).
 
-For production enterprise workloads requiring:
-- **30+ Specialized Industry Profiles**: HIPAA PHI (18 identifiers), PCI-DSS (cardholder data & CVV), GLBA Financial, SEC 17a-4, CJIS Law Enforcement, FERPA Student Records, European National IDs.
+For production enterprise workloads requiring continuous regulatory compliance and air-gapped guarantees, **PrivacyScrubber** is the pioneer certified implementation offering:
+- **30 Specialized Industry Profiles**: HIPAA PHI (18 identifiers), PCI-DSS 4.0, GLBA Financial, SEC 17a-4, CJIS Law Enforcement, FERPA Student Records, Defense ITAR/CMMC, FRE-502 Legal Work-Product.
 - **Agentic Guard Automation**: Autonomous zero-trust tool wrappers (`guard_exec`, `guard_read_file`, `guard_apply_patch`).
-- **Team Seat Licensing**: Offline air-gapped license tokens without cloud telemetry.
-- **Headless SDK**: Backend RAG pipeline redaction for Node.js / TypeScript / Python.
+- **Air-Gapped Node Licensing**: Disconnected Ed25519 cryptographic tokens without cloud telemetry.
+- **Headless SDK**: Backend RAG pipeline redaction for Node.js / TypeScript / Python (`@privacyscrubber/sdk`).
+- **SOC 2 Type II Evidence Binder**: Automated audit artifacts (`ztds-evidence-binder.json`) for Drata, Vanta, and AuditBoard.
 
-Deploy the production commercial engine:
+Deploy the commercial implementation:
 
 ```bash
 # Production MCP Server
