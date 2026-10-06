@@ -43,8 +43,11 @@ The intellectual property (IP) portfolio of the ZTDS standard and engine is anch
 ### Asset 1: Patent Portfolio
 - **Title:** ZERO-TRUST DATA SANITIZATION METHOD, SYSTEM, APPARATUS, AND COMPUTER-READABLE MEDIUM FOR DETERMINISTIC IN-RAM PRIVACY PRESERVATION IN ARTIFICIAL INTELLIGENCE AND DISTRIBUTED WORKFLOWS
 - **Priority Application Number:** Israel Patent Application **IL 331905**
+- **Internal System Tracking Number:** **94221**
 - **Priority Filing Date:** **September 14, 2026 (14/09/2026)**
 - **WIPO Digital Access Service (DAS) Code:** **B17B**
+- **Official Google Drive Patent Repository (Submitted & In-Review):** [Google Drive Patent Folder](https://drive.google.com/drive/folders/1VYRH6RL9iyOmUP3hHMEU8weP4HZz1LA9)
+- **Local Ingested Dossier Packages:** `docs/legal/ilpo-filing-package/` and `/Users/ilya/Documents/Legal/ZTDS_Patents/ZTDS_Patent_Package`
 - **Priority Validity:** Recognized under Paris Convention for the Protection of Industrial Property (Article 4) and Patent Cooperation Treaty (PCT Article 8).
 - **International PCT Filing Deadline:** **September 14, 2027 (14/09/2027)** (Strict 12-month statutory bar).
 - **Subject Matter Scope:** 
