@@ -1,0 +1,14 @@
+---
+description: ZTDS Local Security Firewall - Automatic In-RAM PII & Secret Sanitization
+globs: *
+alwaysApply: false
+---
+# ZTDS Local Security Firewall Instructions for AI Agents
+
+You have the ZTDS (Zero-Trust Data Sanitization) MCP server active in this workspace.
+When handling sensitive files, customer PII, logs, database dumps, or credentials:
+
+1. Use the `ztds_sanitize` tool to mask sensitive values (emails, phones, credentials, API secrets) into synthetic surrogate tokens before passing them into reasoning or external tools.
+2. The surrogate tokens (e.g. [API_SECRET_TOKEN_1], [EMAIL_TOKEN_1]) preserve context while protecting cleartext in local RAM.
+3. If output contains surrogate tokens and the user requests the final readable text, call `ztds_restore` to unmask values locally.
+4. Call `ztds_audit` on code or config files to check for credential leakage and generate a cryptographic SHA-256 receipt.

@@ -648,6 +648,35 @@ function runSelfTest() {
   return isMasked && isReversible;
 }
 
+function configureCursorRule(workspaceDir) {
+  try {
+    const rulesDir = path.join(workspaceDir, '.cursor', 'rules');
+    if (!fs.existsSync(rulesDir)) {
+      fs.mkdirSync(rulesDir, { recursive: true });
+    }
+    const rulePath = path.join(rulesDir, 'ztds.mdc');
+    const ruleContent = `---
+description: ZTDS Local Security Firewall - Automatic In-RAM PII & Secret Sanitization
+globs: *
+alwaysApply: false
+---
+# ZTDS Local Security Firewall Instructions for AI Agents
+
+You have the ZTDS (Zero-Trust Data Sanitization) MCP server active in this workspace.
+When handling sensitive files, customer PII, logs, database dumps, or credentials:
+
+1. Use the \`ztds_sanitize\` tool to mask sensitive values (emails, phones, credentials, API secrets) into synthetic surrogate tokens before passing them into reasoning or external tools.
+2. The surrogate tokens (e.g. [API_SECRET_TOKEN_1], [EMAIL_TOKEN_1]) preserve context while protecting cleartext in local RAM.
+3. If output contains surrogate tokens and the user requests the final readable text, call \`ztds_restore\` to unmask values locally.
+4. Call \`ztds_audit\` on code or config files to check for credential leakage and generate a cryptographic SHA-256 receipt.
+`;
+    fs.writeFileSync(rulePath, ruleContent, 'utf8');
+    return { success: true, path: rulePath };
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
+}
+
 function runInit(args = []) {
   const flags = new Set(args.map(a => a.toLowerCase()));
   const onlyCursor = flags.has('--cursor');
@@ -668,7 +697,12 @@ function runInit(args = []) {
   if (!onlyClaude && !onlyWindsurf) {
     const res = configureTarget('Cursor IDE (Workspace)', paths.cursorWorkspace);
     results.push({ name: 'Cursor IDE (Workspace)', ...res });
-    
+
+    const ruleRes = configureCursorRule(process.cwd());
+    if (ruleRes.success) {
+      results.push({ name: 'Cursor Agent Rule (.cursor/rules/ztds.mdc)', success: true, path: ruleRes.path, alreadyConfigured: false });
+    }
+
     if (includeGlobal) {
       const gRes = configureTarget('Cursor IDE (Global)', paths.cursorGlobal);
       results.push({ name: 'Cursor IDE (Global)', ...gRes });
@@ -712,10 +746,31 @@ function runInit(args = []) {
     console.log('[FAIL] Engine Self-Test failed.');
   }
 
-  console.log('\nProtection active. Restart your AI client (Cursor / Claude) to load the firewall.');
+  console.log('\n----------------------------------------------------------------------');
+  console.log('HOW TO USE (INSTRUCTIONS FOR DEVELOPER & AI AGENT):');
+  console.log('----------------------------------------------------------------------');
+  console.log('1. Automated AI Rule:');
+  console.log('   The rule file (.cursor/rules/ztds.mdc) is active in your workspace.');
+  console.log('   Cursor agents automatically know to call ztds_sanitize on sensitive data.');
+  console.log('');
+  console.log('2. Direct Prompts (Type these in Cursor or Claude Desktop chat):');
+  console.log('   - "Sanitize this text with ztds before analyzing: <paste data>"');
+  console.log('   - "Audit my .env file using ztds_audit for credentials."');
+  console.log('   - "Mask all PII in my database query output."');
+  console.log('   - "Restore the cleartext values using ztds_restore."');
+  console.log('');
+  console.log('3. Available MCP Tools (Check MCP panel in Cursor / Claude):');
+  console.log('   - ztds_sanitize: In-memory masking of secrets and PII.');
+  console.log('   - ztds_restore:  Restores cleartext from local session memory.');
+  console.log('   - ztds_audit:    Inspects text and outputs SHA-256 integrity receipt.');
+  console.log('   - ztds_info:     View RFC v1.0 standard and compliance specs.');
+  console.log('   - ztds_reset_session: Instantly purges volatile memory session.');
+  console.log('----------------------------------------------------------------------');
+  console.log('Restart your AI client (Cursor / Claude Desktop) to load the firewall.');
   console.log('Documentation: https://ztds.ai/standard/ | Enterprise: https://privacyscrubber.com');
   console.log('======================================================================');
 }
+
 
 function runStatus() {
   const paths = getClientPaths();
