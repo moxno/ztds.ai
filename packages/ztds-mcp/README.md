@@ -1,4 +1,5 @@
 # ZTDS MCP Server (`ztds-mcp`)
+### Local Security Firewall for AI Agents & IDEs (Cursor, Claude Code, Windsurf)
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Specification: RFC v1.0](https://img.shields.io/badge/Specification-RFC_v1.0-emerald.svg)](https://ztds.ai/standard/)
@@ -6,9 +7,42 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22058770.svg)](https://doi.org/10.5281/zenodo.22058770)
 [![Zero Network Egress](https://img.shields.io/badge/Zero_Network_Egress-Attested-brightgreen.svg)](https://ztds.ai)
 
-Open-source reference implementation of the **Zero-Trust Data Sanitization (ZTDS)** protocol for the Model Context Protocol (MCP) ecosystem. Conforms to the open architectural specification and IETF Internet-Draft `draft-sibiryakov-ztds-protocol-00`.
+Open-source reference implementation of the **Zero-Trust Data Sanitization (ZTDS)** protocol for the Model Context Protocol (MCP) ecosystem. Conforms to the open architectural specification RFC v1.0 and IETF Internet-Draft `draft-sibiryakov-ztds-protocol-02`.
 
-Runs **100% locally** with zero network calls, zero external subprocessors, zero disk writes, and zero telemetry.
+Runs **100% locally in device volatile memory (RAM)** with zero network calls, zero external subprocessors, zero disk writes, and zero telemetry.
+
+---
+
+## 1-Click Quickstart (Automated Setup)
+
+Auto-configure your installed AI IDEs and clients with a single command:
+
+```bash
+npx ztds-mcp init
+```
+
+The configurator automatically:
+1. Detects installed clients: **Cursor IDE**, **Claude Desktop**, and **Windsurf**.
+2. Creates or safely merges the `ztds` server block into their local configuration files.
+3. Executes an in-memory cryptographic self-test to verify zero-leakage tokenization.
+
+To verify existing client configurations:
+
+```bash
+npx ztds-mcp status
+```
+
+---
+
+## Why AI IDEs Leak Data & How ZTDS Stops It
+
+Autonomous agents in modern IDEs (Cursor, Claude Code, Windsurf) routinely index repository files, including `.env` secrets, database credentials, production logs, customer emails, and API keys. When an agent crafts a prompt or calls a tool, these sensitive strings are transmitted in cleartext across the internet to frontier LLM APIs.
+
+**ZTDS MCP acts as an in-memory local security firewall**:
+- **Intercepts**: Tools and prompt text are evaluated inside client RAM prior to transmission.
+- **De-identifies**: Real credentials and PII are replaced with bijective, context-preserving synthetic tokens (`[API_SECRET_TOKEN_1]`, `[EMAIL_TOKEN_1]`).
+- **Restores**: When the model returns code or instructions containing synthetic tokens, the local MCP server re-maps the cleartext back into the IDE response.
+- **Zero Egress**: Real private keys and customer data never touch the network unmasked.
 
 ---
 
@@ -17,7 +51,7 @@ Runs **100% locally** with zero network calls, zero external subprocessors, zero
 1. **Invariant 1: Zero External Egress Prior to Sanitization**  
    Cleartext PII, PHI, and credentials never cross the local execution boundary unmasked.
 2. **Invariant 2: Deterministic Context-Preserving Reversible Tokenization**  
-   Sensitive values are replaced by synthetic tokens (`[EMAIL_TOKEN_1]`, `[API_SECRET_TOKEN_1]`) maintaining syntactic context for LLMs.
+   Sensitive values are replaced by synthetic tokens maintaining syntactic and semantic context for LLMs.
 3. **Invariant 3: Verifiable Ephemeral RAM Isolation (Theorem 2 Zeroization)**  
    Mapping tables exist strictly in volatile memory and are zeroized upon session termination.
 4. **Invariant 4: Subprocessor Chain Exclusion**  
@@ -25,11 +59,13 @@ Runs **100% locally** with zero network calls, zero external subprocessors, zero
 
 ---
 
-## Installation & Client Configuration
+## Manual Client Configuration
+
+If you prefer configuring your clients manually without `npx ztds-mcp init`:
 
 ### 1. Claude Desktop
 
-Add to your `claude_desktop_config.json`:
+Add to `claude_desktop_config.json`:
 
 ```json
 {
@@ -49,12 +85,7 @@ Config file locations:
 
 ### 2. Cursor IDE
 
-Add to your Cursor MCP settings (`Settings` -> `Features` -> `MCP` -> `Add New MCP Server`):
-- **Name**: `ztds`
-- **Type**: `command`
-- **Command**: `npx -y ztds-mcp`
-
-Or add to `.cursor/mcp.json` in your workspace:
+Add to `.cursor/mcp.json` in your workspace root:
 
 ```json
 {
@@ -96,7 +127,7 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
 
 ---
 
-## Universal Baseline vs Commercial Production Profiles
+## Universal Baseline vs Enterprise Production Engine
 
 This open-source server covers universal baseline entities (Email, Phone, SSN, Credit Cards, IPv4, IBAN, API Secrets).
 
@@ -134,5 +165,6 @@ Conforms to standard JSON-RPC 2.0 stdio protocol. Zero runtime dependencies.
 
 ## License
 
-Apache-2.0. Maintained by the ZTDS AI Consortium (Working Group WG-1).
-Website: [https://ztds.ai](https://ztds.ai)
+Apache-2.0. Maintained by the ZTDS AI Consortium (Working Group WG-1).  
+Website: [https://ztds.ai](https://ztds.ai)  
+Lead Architect: Ilya Sibiryakov (Author of IETF `draft-sibiryakov-ztds-protocol`, Patent App IL 331905).

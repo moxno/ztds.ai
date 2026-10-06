@@ -4,7 +4,20 @@
  */
 
 import assert from 'assert';
-import { handleMessage, sanitizeText, restoreText, auditText, resetSessionStore, TOOLS } from './index.js';
+import fs from 'fs';
+import path from 'path';
+import os from 'os';
+import { 
+  handleMessage, 
+  sanitizeText, 
+  restoreText, 
+  auditText, 
+  resetSessionStore, 
+  runSelfTest,
+  getClientPaths,
+  configureTarget,
+  TOOLS 
+} from './index.js';
 
 async function runTests() {
   console.log('[TEST] Starting ZTDS MCP Server Verification Suite...');
@@ -223,7 +236,40 @@ async function runTests() {
   assert(errorCaught, 'Oversized text must be rejected');
   console.log('    [PASS] DoS safety boundary verified (500 KB limit enforced).');
 
-  console.log('\n[SUMMARY] ALL 13 ZTDS MCP SERVER TESTS PASSED (100% CONFORMANCE).\n');
+  // 14. In-RAM Self-Test Engine
+  console.log('--> Test 14: In-RAM Engine Self-Test Verification');
+  const selfTestResult = runSelfTest();
+  assert.strictEqual(selfTestResult, true, 'runSelfTest must return true');
+  console.log('    [PASS] In-RAM engine self-test passed (mask, restore, zeroize).');
+
+  // 15. Client Paths Resolution
+  console.log('--> Test 15: Client Paths Resolution');
+  const clientPaths = getClientPaths();
+  assert(clientPaths.claude && typeof clientPaths.claude === 'string');
+  assert(clientPaths.cursorWorkspace && typeof clientPaths.cursorWorkspace === 'string');
+  assert(clientPaths.windsurf && typeof clientPaths.windsurf === 'string');
+  console.log('    [PASS] Client configuration paths resolved accurately across platforms.');
+
+  // 16. Target Configurator on Isolated Temp Directory
+  console.log('--> Test 16: Target Configurator (Isolated Temp Target)');
+  const tmpDir = path.join(os.tmpdir(), `ztds_test_${Date.now()}`);
+  const tmpTarget = path.join(tmpDir, 'mcp.json');
+  try {
+    const configResult = configureTarget('Test Client', tmpTarget);
+    assert.strictEqual(configResult.success, true);
+    assert(fs.existsSync(tmpTarget));
+    const savedConfig = JSON.parse(fs.readFileSync(tmpTarget, 'utf8'));
+    assert(savedConfig.mcpServers && savedConfig.mcpServers.ztds);
+    assert.strictEqual(savedConfig.mcpServers.ztds.command, 'npx');
+    assert(savedConfig.mcpServers.ztds.args.includes('ztds-mcp'));
+    console.log('    [PASS] Configurator generates valid MCP configuration without error.');
+  } finally {
+    if (fs.existsSync(tmpDir)) {
+      fs.rmSync(tmpDir, { recursive: true, force: true });
+    }
+  }
+
+  console.log('\n[SUMMARY] ALL 16 ZTDS MCP SERVER TESTS PASSED (100% CONFORMANCE).\n');
 }
 
 runTests().catch((err) => {
