@@ -85,17 +85,15 @@ console.log('\n--> Test 3: Institutional Authority Anchors & Key Content');
 
   // WIPO Patent Anchor
   assert(html.includes('IL 331905'), 'Must reference Israel Patent Application IL 331905');
-  assert(html.includes('B17B'), 'Must reference WIPO DAS Access Code B17B');
   assert(html.includes('14/09/2026'), 'Must reference patent filing date');
   assert(html.includes('14/09/2027'), 'Must reference patent international priority deadline');
-  assert(html.includes('/docs/legal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.txt'), 'Must link to WIPO PCT claims document');
+  assert(html.includes('Counsel NDA') || html.includes('NDA'), 'Must link claims request to Counsel NDA');
 
   // WIPO Trademark & Certification Mark Anchor
   assert(html.includes('182655957'), 'Must reference ILPO Trademark Order #182655957');
   assert(html.includes('20/09/2026'), 'Must reference trademark filing date');
   assert(html.includes('20/03/2027'), 'Must reference trademark Paris priority deadline');
   assert(html.includes('Classes 9 &amp; 42') || html.includes('Classes 9 & 42'), 'Must reference Nice Classes 9 & 42');
-  assert(html.includes('/docs/legal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.txt'), 'Must link to Madrid filing dossier');
 
   // Conformity Assessment Body (CAB) Governance
   assert(html.includes('Conformity Assessment Body') || html.includes('CAB Governance'), 'Must describe CAB Governance');
@@ -162,12 +160,6 @@ console.log('\n--> Test 5: Static Documentation Artifacts Physical Existence');
     'public/docs/ietf/draft-sibiryakov-ztds-protocol-00.txt',
     'docs/ietf/draft-sibiryakov-ztds-protocol-00.xml',
     'public/docs/ietf/draft-sibiryakov-ztds-protocol-00.xml',
-    'docs/legal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.txt',
-    'public/docs/legal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.txt',
-    'docs/legal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.txt',
-    'public/docs/legal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.txt',
-    'docs/legal/WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.txt',
-    'public/docs/legal/WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.txt',
     'docs/legal/ZTDS_Conformity_Assessment_Policy.txt',
     'public/docs/legal/ZTDS_Conformity_Assessment_Policy.txt',
     'docs/security/ZTDS_Independent_Security_Audit_Report.txt',

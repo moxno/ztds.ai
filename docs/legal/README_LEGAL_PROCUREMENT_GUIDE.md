@@ -18,10 +18,9 @@ This suite provides the four foundational contracts to close enterprise sales ef
 | **`ENTERPRISE_MASTER_SERVICES_AGREEMENT_MSA.md`** | Master terms, IP defense, liability cap | Attached to Order Form (Schedule A). |
 | **`AIR_GAPPED_ENTERPRISE_EULA.md`** | License for SCIF, Nitro Enclave, VPC nodes | Attached when customer deploys on-premise or offline. |
 | **`ZTDS_Conformity_Assessment_Policy.md`** | Formal certification & revocation governance | Attached to enterprise InfoSec audit & RFP submissions. |
-| **`../security/ZTDS_Independent_Security_Audit_Report.md`** | Independent white-box audit & clean bill of health | Attached to CISO InfoSec review & VSAQ/CAIQ response. |
-| **`WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.md`** | PCT international patent specification & 20 claims | Attached for IP due diligence & M&A / licensing reviews. |
-| **`WIPO_MADRID_TRADEMARK_FILING_DOSSIER.md`** | Madrid System international trademark dossier | Form MM2 particulars for international trademark registration. |
-| **`WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.md`** | Master IP portfolio & statutory prosecution calendar | Single source of truth for priority deadlines & national phase. |
+| **`internal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.md`** | PCT international patent specification & 20 claims | Attached under Counsel NDA for IP due diligence & M&A / licensing reviews. |
+| **`internal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.md`** | Madrid System international trademark dossier | Form MM2 particulars for international trademark registration (Confidential). |
+| **`internal/WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.md`** | Master IP portfolio & statutory prosecution calendar | Single source of truth for priority deadlines & national phase (Confidential). |
 
 ---
 

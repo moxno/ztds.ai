@@ -40,7 +40,7 @@ console.log('\n--> Test 2: Tailored Industry Dossier & Institutional Anchors');
   assert(output.includes('HIPAA Safe Harbor (45 CFR § 164.514)'), 'Must cite HIPAA Safe Harbor for healthcare');
   assert(output.includes('draft-sibiryakov-ztds-protocol-02'), 'Must cite IETF Internet-Draft');
   assert(output.includes('IL 331905'), 'Must cite Israel Patent Application IL 331905');
-  assert(output.includes('B17B'), 'Must cite WIPO DAS Access Code B17B');
+  assert(output.includes('Patent Pending'), 'Must cite Patent Pending status');
   assert(output.includes('182655957'), 'Must cite Trademark Order #182655957');
   assert(output.includes('0 Critical, 0 High Vulnerabilities'), 'Must cite Independent Security Audit findings');
   assert(output.includes('https://ztds.ai/verify/'), 'Must link to Web Crypto validator');

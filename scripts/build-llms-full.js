@@ -76,6 +76,18 @@ const docs = [
     title: 'The Zero-Trust Data Sanitization (ZTDS) Protocol for Frontier Artificial Intelligence Ingestion',
     relPath: 'docs/ietf/draft-sibiryakov-ztds-protocol-02.txt',
     url: 'https://ztds.ai/ietf/draft-sibiryakov-ztds-protocol-02/'
+  },
+  {
+    part: 'PART 13: CRYPTOGRAPHIC CONFORMANCE ATTESTATION, ZTDS-CERT-V1 TOKENS & VERIFIER BENCHMARK',
+    title: 'Cryptographic Conformance Attestation, RFC 8785 Canonical JSON & Ed25519 Token Specification',
+    relPath: 'docs/ZTDS_Cryptographic_Attestation_and_Certificates_Spec.md',
+    url: 'https://ztds.ai/verify/'
+  },
+  {
+    part: 'PART 14: PERIMETER SCANNER, NETWORK LEAK EMULATION & DYNAMIC BADGE FOUNDRY SPECIFICATION',
+    title: 'Perimeter Scanner, Network Egress Leak Emulation Presets & Dynamic Vector Badge Foundry Specification',
+    relPath: 'docs/ZTDS_Scanner_and_Badge_Foundry_Spec.md',
+    url: 'https://ztds.ai/badge/'
   }
 ];
 

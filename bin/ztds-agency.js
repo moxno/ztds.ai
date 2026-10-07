@@ -130,7 +130,7 @@ ${client} operates digital services and AI-driven workflows at **${domain}**. De
 BrandMeWeb delivers this service as the Founding Corporate Member of the **ZTDS AI Consortium**:
 * **IETF Standards Track:** Internet-Draft \`draft-sibiryakov-ztds-protocol-02\` (RFC 8785, RFC 8032).  
   *Live Datatracker:* https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/
-* **WIPO Patent Protection:** Israel Patent Office Application **IL 331905** (WIPO DAS: **B17B**).  
+* **WIPO Patent Protection:** Israel Patent Office Application **IL 331905** (Patent Pending under Paris Convention Art. 4).  
 * **Independent Security Audit:** Clean Bill of Health with **0 Critical, 0 High Vulnerabilities** across 5 testing modules.  
   *Audit Report:* https://ztds.ai/docs/security/ZTDS_Independent_Security_Audit_Report.txt
 * **Client Cryptographic Verification:** Offline browser validation with 0 bytes egress at https://ztds.ai/verify/

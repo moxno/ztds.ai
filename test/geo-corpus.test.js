@@ -111,4 +111,63 @@ console.log('\n--> Test 4: ZTDS-CERT-v1 Cryptographic Attestation & Verifier Ali
   console.log('    [PASS] ZTDS-CERT-v1 token specifications, SPKI keys, RFC 8785/8032 references, and Part 13 validated.');
 }
 
-console.log('\n[SUMMARY] ALL 4 GEO CORPUS & MACHINE-READABLE TESTS PASSED.');
+// Test 5: PART 14 Perimeter Scanner Leak Presets & Dynamic Badge Foundry Alignment
+console.log('\n--> Test 5: PART 14 Scanner Egress Presets & Dynamic Badge Foundry Alignment');
+{
+  const llmsPaths = [
+    'llms.txt',
+    'llms-full.txt',
+    'public/llms.txt',
+    'public/llms-full.txt'
+  ];
+
+  const leakPresets = [
+    'Frontier AI API Call',
+    'Analytics Tracker Beacon',
+    'Unprotected HTTP Egress',
+    'Zero-Trust Sanitized Stream'
+  ];
+
+  const badgeTiers = [
+    'VERIFIED',
+    'SOVEREIGN',
+    'DPA EXEMPT',
+    'AIR-GAPPED',
+    'SELF-ATTESTED'
+  ];
+
+  for (const relPath of llmsPaths) {
+    const fullPath = path.join(rootDir, relPath);
+    const content = fs.readFileSync(fullPath, 'utf8');
+
+    // Check scanner leak presets
+    for (const preset of leakPresets) {
+      assert(content.includes(preset), `Missing leak preset "${preset}" in ${relPath}`);
+    }
+
+    // Check CISO report capabilities
+    assert(content.includes('CISO Compliance Audit Report') || content.includes('CISO Executive Audit Memorandum'), `Missing CISO audit report reference in ${relPath}`);
+    assert(content.includes('Airplane Mode'), `Missing Airplane Mode reference in ${relPath}`);
+
+    // Check badge themes and tiers
+    assert(content.includes('theme=dark') && content.includes('theme=light'), `Missing theme=dark/light in ${relPath}`);
+    for (const tier of badgeTiers) {
+      assert(content.includes(tier), `Missing badge tier "${tier}" in ${relPath}`);
+    }
+    assert(content.includes('/api/badge/'), `Missing dynamic /api/badge/ endpoint in ${relPath}`);
+
+    // Check custom label presets
+    assert(content.includes('WASM-ONLY') && content.includes('SOC-2-READY'), `Missing custom label presets in ${relPath}`);
+  }
+
+  // Ensure full compendium includes Part 14
+  const fullContent = fs.readFileSync(path.join(rootDir, 'llms-full.txt'), 'utf8');
+  assert(fullContent.includes('PART 14: PERIMETER SCANNER, NETWORK LEAK EMULATION'), 'llms-full.txt must contain PART 14');
+
+  const publicFullContent = fs.readFileSync(path.join(rootDir, 'public/llms-full.txt'), 'utf8');
+  assert(publicFullContent.includes('PART 14: PERIMETER SCANNER, NETWORK LEAK EMULATION'), 'public/llms-full.txt must contain PART 14');
+
+  console.log('    [PASS] PART 14 specifications, 4 leak presets, CISO audit exporter, and dynamic badge theme/tier parameters validated.');
+}
+
+console.log('\n[SUMMARY] ALL 5 GEO CORPUS & MACHINE-READABLE TESTS PASSED.');

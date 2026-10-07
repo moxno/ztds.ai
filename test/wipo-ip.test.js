@@ -19,10 +19,18 @@ const path = require('path');
 console.log('[TEST] Starting ZTDS WIPO International IP Portfolio & Statutory Compliance Suite...\n');
 
 const LEGAL_DIR = path.join(__dirname, '..', 'docs', 'legal');
-const PCT_SPEC_PATH = path.join(LEGAL_DIR, 'WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.md');
-const MADRID_DOSSIER_PATH = path.join(LEGAL_DIR, 'WIPO_MADRID_TRADEMARK_FILING_DOSSIER.md');
-const MASTER_IP_SSOT_PATH = path.join(LEGAL_DIR, 'WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.md');
-const README_GUIDE_PATH = path.join(LEGAL_DIR, 'README_LEGAL_PROCUREMENT_GUIDE.md');
+const resolveLegalDoc = (fileName) => {
+  const internalCandidate = path.join(LEGAL_DIR, 'internal', fileName);
+  if (fs.existsSync(internalCandidate)) {
+    return internalCandidate;
+  }
+  return path.join(LEGAL_DIR, fileName);
+};
+
+const PCT_SPEC_PATH = resolveLegalDoc('WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.md');
+const MADRID_DOSSIER_PATH = resolveLegalDoc('WIPO_MADRID_TRADEMARK_FILING_DOSSIER.md');
+const MASTER_IP_SSOT_PATH = resolveLegalDoc('WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.md');
+const README_GUIDE_PATH = resolveLegalDoc('README_LEGAL_PROCUREMENT_GUIDE.md');
 
 // Test 1: Patent IL 331905 Integrity & Statutory Dates
 console.log('--> Test 1: Patent IL 331905 Priority Anchor & WIPO DAS Verification');
