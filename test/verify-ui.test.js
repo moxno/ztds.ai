@@ -78,6 +78,19 @@ console.log('\n--> Test 3: Essential DOM IDs & Interactive Workbench Controls');
     'certInput',
     'dropZone',
     'dropOverlay',
+    'fileInput',
+    'btnBrowseFile',
+    'fileInfoPill',
+    'fileNameMount',
+    'fileSizeMount',
+    'btnRemoveFile',
+    'tokenDiagnosticsBar',
+    'tokenPartsIndicator',
+    'tagPartHeader',
+    'tagPartPayload',
+    'tagPartSig',
+    'tokenLengthCount',
+    'formatStatusPill',
     'btnVerify',
     'btnClear',
     'btnLoadValid',
@@ -103,7 +116,15 @@ console.log('\n--> Test 3: Essential DOM IDs & Interactive Workbench Controls');
     'jsonContainer',
     'jsonPayloadMount',
     'btnCopyJson',
-    'btnCopyReport'
+    'btnCopyReport',
+    'badgeShowcaseCard',
+    'verifiedBadgeMount',
+    'btnDownloadBadgeSvg',
+    'btnDownloadCertJson',
+    'badgeMarkdownInput',
+    'badgeHtmlInput',
+    'btnCopyBadgeMd',
+    'btnCopyBadgeHtml'
   ];
 
   for (const id of requiredIds) {
@@ -116,7 +137,15 @@ console.log('\n--> Test 3: Essential DOM IDs & Interactive Workbench Controls');
   assert(html.includes('Invariant 3: Volatile RAM Isolation'), 'Must include Invariant 3 card');
   assert(html.includes('Invariant 4: Zero Subprocessors'), 'Must include Invariant 4 card');
 
-  console.log(`    [PASS] All ${requiredIds.length} required DOM IDs and invariant cards verified.`);
+  // Verify mobile touch target ergonomics
+  assert(html.includes('touch-target') || html.includes('min-h-[44px]'), 'Buttons must follow mobile touch target guidelines');
+
+  // Verify dynamic badge generator functions
+  assert(html.includes('generateVerifiedBadgeSvg'), 'Script must include generateVerifiedBadgeSvg');
+  assert(html.includes('downloadFile'), 'Script must include downloadFile helper');
+  assert(html.includes('updateDiagnostics'), 'Script must include real-time updateDiagnostics');
+
+  console.log(`    [PASS] All ${requiredIds.length} required DOM IDs, invariant cards, and interactive helpers verified.`);
 }
 
 // Test 4: Embedded Sample Tokens Cryptographic Conformance

@@ -217,14 +217,51 @@
           </div>
 
           <!-- Drag & Drop Dropzone Container -->
-          <div id="dropZone" class="relative group border-2 border-dashed border-slate-300 hover:border-emerald-500 rounded-xl p-1 transition-all bg-slate-50/50">
+          <div id="dropZone" class="relative group border-2 border-dashed border-slate-300 hover:border-emerald-500 rounded-xl p-3 transition-all bg-slate-50/50">
+            <!-- Hidden File Input for Native File Picker -->
+            <input type="file" id="fileInput" accept=".cert,.json,.txt" class="hidden">
+
+            <!-- Loaded File Pill (Hidden by default) -->
+            <div id="fileInfoPill" class="hidden mb-2.5 p-2 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs">
+              <div class="flex items-center gap-2 truncate">
+                <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <span id="fileNameMount" class="font-mono font-bold text-slate-800 truncate"></span>
+                <span id="fileSizeMount" class="text-slate-500 font-mono text-[11px] shrink-0"></span>
+              </div>
+              <button id="btnRemoveFile" type="button" class="text-slate-400 hover:text-rose-600 p-1 rounded-lg transition-colors ml-2 touch-target" title="Remove loaded file">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+
             <textarea
               id="certInput"
-              rows="7"
-              class="w-full bg-transparent p-3 text-xs font-mono text-slate-800 border-0 focus:ring-0 focus:outline-none resize-none leading-relaxed placeholder:text-slate-400"
-              placeholder="Paste 3-part ZTDS certificate token here:&#10;ZTDS-CERT-v1.{payload_b64url}.{sig_b64url}&#10;&#10;Or drag and drop a .cert file directly into this box."
+              rows="6"
+              class="w-full bg-transparent p-1 text-xs font-mono text-slate-800 border-0 focus:ring-0 focus:outline-none resize-none leading-relaxed placeholder:text-slate-400"
+              placeholder="Paste 3-part ZTDS certificate token here:&#10;ZTDS-CERT-v1.{payload_b64url}.{sig_b64url}&#10;&#10;Or drop a .cert/.json file, or click Browse File below."
               spellcheck="false"
             ></textarea>
+
+            <!-- Real-time Token Diagnostics Bar -->
+            <div id="tokenDiagnosticsBar" class="mt-2 pt-2.5 border-t border-slate-200/70 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
+              <div class="flex items-center gap-1.5">
+                <span class="text-slate-400">Segments:</span>
+                <span id="tokenPartsIndicator" class="inline-flex items-center gap-1">
+                  <span id="tagPartHeader" class="px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]">Header</span>
+                  <span class="text-slate-300">.</span>
+                  <span id="tagPartPayload" class="px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]">Payload</span>
+                  <span class="text-slate-300">.</span>
+                  <span id="tagPartSig" class="px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]">Sig (64B)</span>
+                </span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span id="tokenLengthCount" class="text-slate-400">0 chars</span>
+                <span id="formatStatusPill" class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-slate-100 text-slate-500 border border-slate-200">Awaiting Input</span>
+              </div>
+            </div>
             
             <div id="dropOverlay" class="absolute inset-0 bg-emerald-600/10 backdrop-blur-[1px] border-2 border-emerald-500 rounded-xl hidden flex items-center justify-center pointer-events-none">
               <span class="text-xs font-bold text-emerald-800 font-mono bg-white px-3 py-1.5 rounded-lg shadow-sm border border-emerald-200">
@@ -235,17 +272,30 @@
 
           <!-- Action Buttons -->
           <div class="mt-4 flex flex-wrap gap-2 items-center justify-between">
-            <button
-              id="btnVerify"
-              type="button"
-              class="btn-trust py-2 px-5 text-xs font-bold shadow-sm"
-            >
-              Verify Signature &rarr;
-            </button>
+            <div class="flex flex-wrap items-center gap-2">
+              <button
+                id="btnVerify"
+                type="button"
+                class="btn-trust py-2 px-4 text-xs font-bold shadow-sm min-h-[44px] touch-target inline-flex items-center gap-1.5"
+              >
+                <span>Verify Signature</span>
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+              <button
+                id="btnBrowseFile"
+                type="button"
+                class="py-2 px-3 text-xs font-mono font-medium text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl border border-slate-200 transition-colors min-h-[44px] touch-target inline-flex items-center gap-1.5"
+              >
+                <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                </svg>
+                <span>Browse File</span>
+              </button>
+            </div>
             <button
               id="btnClear"
               type="button"
-              class="py-2 px-3 text-xs font-mono font-medium text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors"
+              class="py-2 px-3 text-xs font-mono font-medium text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors min-h-[44px] touch-target"
             >
               Clear Input
             </button>
@@ -466,6 +516,92 @@
               </div>
               <pre id="jsonPayloadMount" class="text-[11px] font-mono text-emerald-300 overflow-x-auto leading-relaxed max-h-72"></pre>
             </div>
+          </div>
+
+          <!-- Verified Trust Seal & Badge Showcase Card (Shown on Valid Cryptographic Attestation) -->
+          <div id="badgeShowcaseCard" class="hidden bg-slate-900 text-white rounded-2xl border border-slate-800 shadow-md p-6 overflow-hidden relative">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5 pb-5 border-b border-slate-800">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span class="text-xs font-mono uppercase font-bold text-emerald-400 tracking-wider">Official Verified Trust Seal</span>
+                </div>
+                <h4 class="text-base font-bold text-white tracking-tight">Cryptographically Certified Vector Badge</h4>
+                <p class="text-xs text-slate-400 max-w-lg leading-relaxed">
+                  Generated directly from verified Ed25519 signature payload. Embed this vector seal in your GitHub README, documentation, and enterprise trust portal.
+                </p>
+              </div>
+
+              <!-- Live Badge Mount & Quick Download Buttons -->
+              <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0">
+                <div id="verifiedBadgeMount" class="p-2 bg-slate-950/90 rounded-xl border border-slate-800 flex items-center justify-center shadow-inner min-h-[44px]">
+                  <!-- SVG dynamically rendered here -->
+                </div>
+                <div class="flex flex-wrap sm:flex-nowrap gap-2 w-full sm:w-auto">
+                  <button
+                    id="btnDownloadBadgeSvg"
+                    type="button"
+                    class="min-h-[44px] touch-target px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold font-mono transition-colors shadow-sm inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                    </svg>
+                    <span>Download SVG</span>
+                  </button>
+                  <button
+                    id="btnDownloadCertJson"
+                    type="button"
+                    class="min-h-[44px] touch-target px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-mono font-medium transition-colors shadow-sm inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    <span>Download JSON</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Embed Code Snippets -->
+            <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Markdown Snippet -->
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+                  <span>Markdown Embed (GitHub / GitLab)</span>
+                  <button id="btnCopyBadgeMd" type="button" class="text-emerald-400 hover:text-emerald-300 font-bold transition-colors cursor-pointer">
+                    Copy Markdown
+                  </button>
+                </div>
+                <div class="relative">
+                  <input
+                    id="badgeMarkdownInput"
+                    type="text"
+                    readonly
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-[11px] font-mono text-slate-300 select-all focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+              </div>
+
+              <!-- HTML Snippet -->
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+                  <span>HTML Embed (Trust Center / Docs)</span>
+                  <button id="btnCopyBadgeHtml" type="button" class="text-emerald-400 hover:text-emerald-300 font-bold transition-colors cursor-pointer">
+                    Copy HTML
+                  </button>
+                </div>
+                <div class="relative">
+                  <input
+                    id="badgeHtmlInput"
+                    type="text"
+                    readonly
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-[11px] font-mono text-slate-300 select-all focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Social Attestation & Shareable Status Bar -->
           <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div class="space-y-1">
@@ -673,6 +809,21 @@
       const certInput = document.getElementById("certInput");
       const dropZone = document.getElementById("dropZone");
       const dropOverlay = document.getElementById("dropOverlay");
+      const fileInput = document.getElementById("fileInput");
+      const btnBrowseFile = document.getElementById("btnBrowseFile");
+      const fileInfoPill = document.getElementById("fileInfoPill");
+      const fileNameMount = document.getElementById("fileNameMount");
+      const fileSizeMount = document.getElementById("fileSizeMount");
+      const btnRemoveFile = document.getElementById("btnRemoveFile");
+
+      const tokenDiagnosticsBar = document.getElementById("tokenDiagnosticsBar");
+      const tokenPartsIndicator = document.getElementById("tokenPartsIndicator");
+      const tagPartHeader = document.getElementById("tagPartHeader");
+      const tagPartPayload = document.getElementById("tagPartPayload");
+      const tagPartSig = document.getElementById("tagPartSig");
+      const tokenLengthCount = document.getElementById("tokenLengthCount");
+      const formatStatusPill = document.getElementById("formatStatusPill");
+
       const btnVerify = document.getElementById("btnVerify");
       const btnClear = document.getElementById("btnClear");
       const btnLoadValid = document.getElementById("btnLoadValid");
@@ -695,6 +846,15 @@
       const metaExpires = document.getElementById("metaExpires");
       const metaHash = document.getElementById("metaHash");
       const metaFilesCount = document.getElementById("metaFilesCount");
+
+      const badgeShowcaseCard = document.getElementById("badgeShowcaseCard");
+      const verifiedBadgeMount = document.getElementById("verifiedBadgeMount");
+      const btnDownloadBadgeSvg = document.getElementById("btnDownloadBadgeSvg");
+      const btnDownloadCertJson = document.getElementById("btnDownloadCertJson");
+      const badgeMarkdownInput = document.getElementById("badgeMarkdownInput");
+      const btnCopyBadgeMd = document.getElementById("btnCopyBadgeMd");
+      const badgeHtmlInput = document.getElementById("badgeHtmlInput");
+      const btnCopyBadgeHtml = document.getElementById("btnCopyBadgeHtml");
 
       const btnToggleJson = document.getElementById("btnToggleJson");
       const jsonContainer = document.getElementById("jsonContainer");
@@ -732,6 +892,181 @@
           sorted[key] = canonicalizeJson(obj[key]);
         }
         return sorted;
+      }
+
+      // Dynamic Verified Badge SVG Generator (RFC 8032 / ZTDS Standard Geometry)
+      function generateVerifiedBadgeSvg(labelRight = "VERIFIED") {
+        const wLeft = 58;
+        const charWidth = 6.8;
+        const cleanLabel = String(labelRight).toUpperCase().trim();
+        const wRight = Math.max(64, Math.round(cleanLabel.length * charWidth + 16));
+        const totalWidth = wLeft + wRight;
+        const textXRight = wLeft + Math.round(wRight / 2);
+        const colorRight = "#059669";
+
+        return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${totalWidth}" height="22" viewBox="0 0 ${totalWidth} 22" fill="none">
+  <defs>
+    <clipPath id="ztdsVerifyClip">
+      <rect width="${totalWidth}" height="22" rx="4"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#ztdsVerifyClip)">
+    <rect width="${wLeft}" height="22" fill="#0f172a"/>
+    <rect x="${wLeft}" width="${wRight}" height="22" fill="${colorRight}"/>
+    <rect width="${totalWidth}" height="22" stroke="#0f172a" stroke-width="1" fill="none"/>
+    <g transform="translate(6, 4)">
+      <path d="M5.5 1.5C2.5 1.5 1 3.5 1 7C1 10.5 2.5 12.5 5.5 12.5V9.5C3.5 9.5 3.2 8 3.2 7C3.2 6 3.5 4.5 5.5 4.5V1.5Z" fill="#020617" stroke="#10b981" stroke-width="0.8"/>
+      <path d="M8.5 1.5C11.5 1.5 13 3.5 13 7C13 10.5 11.5 12.5 8.5 12.5V9.5C10.5 9.5 10.8 8 10.8 7C10.8 6 10.5 4.5 8.5 4.5V1.5Z" fill="#020617" stroke="#10b981" stroke-width="0.8"/>
+      <path d="M7 3L9.5 7L7 11L4.5 7Z" fill="#10b981"/>
+      <circle cx="7" cy="7" r="1" fill="#38bdf8"/>
+    </g>
+    <text x="24" y="15" font-family="-apple-system, BlinkMacSystemFont, 'Inter', Roboto, sans-serif" font-size="10" font-weight="700" fill="#f8fafc" letter-spacing="0.5">ZTDS</text>
+    <text x="${textXRight}" y="15" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Inter', Roboto, sans-serif" font-size="9" font-weight="700" fill="#ffffff" letter-spacing="0.6">${cleanLabel}</text>
+  </g>
+</svg>`.trim();
+      }
+
+      // Download Helper
+      function downloadFile(filename, content, mimeType) {
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      // Real-time Token Diagnostics Bar Updater
+      function updateDiagnostics(rawToken) {
+        const trimmed = (rawToken || "").trim();
+        if (!trimmed) {
+          if (tokenLengthCount) tokenLengthCount.textContent = "0 chars";
+          if (formatStatusPill) {
+            formatStatusPill.className = "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-slate-100 text-slate-500 border border-slate-200";
+            formatStatusPill.textContent = "Awaiting Input";
+          }
+          if (tagPartHeader) {
+            tagPartHeader.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]";
+            tagPartHeader.textContent = "Header";
+          }
+          if (tagPartPayload) {
+            tagPartPayload.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]";
+            tagPartPayload.textContent = "Payload";
+          }
+          if (tagPartSig) {
+            tagPartSig.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]";
+            tagPartSig.textContent = "Sig (64B)";
+          }
+          return;
+        }
+
+        const charCount = trimmed.length;
+        const byteCount = new TextEncoder().encode(trimmed).length;
+        if (tokenLengthCount) tokenLengthCount.textContent = `${charCount} chars (${byteCount} B)`;
+
+        const parts = trimmed.split(".");
+
+        // Header check
+        if (parts[0] === "ZTDS-CERT-v1") {
+          if (tagPartHeader) {
+            tagPartHeader.className = "px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]";
+            tagPartHeader.textContent = "Header: v1";
+          }
+        } else if (parts[0].length > 0) {
+          if (tagPartHeader) {
+            tagPartHeader.className = "px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 text-[10px]";
+            tagPartHeader.textContent = "Invalid Header";
+          }
+        } else {
+          if (tagPartHeader) {
+            tagPartHeader.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]";
+            tagPartHeader.textContent = "Header";
+          }
+        }
+
+        // Payload check
+        if (parts.length > 1 && parts[1].length > 0) {
+          if (tagPartPayload) {
+            tagPartPayload.className = "px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]";
+            tagPartPayload.textContent = `Payload (${parts[1].length}c)`;
+          }
+        } else {
+          if (tagPartPayload) {
+            tagPartPayload.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]";
+            tagPartPayload.textContent = "Payload";
+          }
+        }
+
+        // Sig check
+        if (parts.length > 2 && parts[2].length > 0) {
+          const isSig64B = parts[2].length >= 80 && parts[2].length <= 90;
+          if (tagPartSig) {
+            tagPartSig.className = isSig64B
+              ? "px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]"
+              : "px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px]";
+            tagPartSig.textContent = isSig64B ? "Sig: 64B" : `Sig (${parts[2].length}c)`;
+          }
+        } else {
+          if (tagPartSig) {
+            tagPartSig.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]";
+            tagPartSig.textContent = "Sig (64B)";
+          }
+        }
+
+        // Overall format status pill
+        if (formatStatusPill) {
+          if (parts.length === 3 && parts[0] === "ZTDS-CERT-v1" && parts[1].length > 0 && parts[2].length > 0) {
+            formatStatusPill.className = "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-emerald-100 text-emerald-800 border border-emerald-300";
+            formatStatusPill.textContent = "3 Segments OK";
+          } else if (parts.length > 3) {
+            formatStatusPill.className = "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-rose-100 text-rose-800 border border-rose-300";
+            formatStatusPill.textContent = `${parts.length} Segments (Invalid)`;
+          } else {
+            formatStatusPill.className = "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-amber-100 text-amber-800 border border-amber-300";
+            formatStatusPill.textContent = `${parts.length}/3 Segments`;
+          }
+        }
+      }
+
+      // File loader helper
+      function handleLoadedFile(file) {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          let content = String(event.target.result || "").trim();
+          try {
+            if (content.startsWith("{") && content.endsWith("}")) {
+              const parsed = JSON.parse(content);
+              if (typeof parsed.token === "string") content = parsed.token.trim();
+              else if (typeof parsed.certificate_token === "string") content = parsed.certificate_token.trim();
+              else if (typeof parsed.cert === "string") content = parsed.cert.trim();
+            }
+          } catch (ignore) {
+            // Keep raw content
+          }
+
+          certInput.value = content;
+          updateDiagnostics(content);
+
+          if (fileNameMount) fileNameMount.textContent = file.name;
+          if (fileSizeMount) {
+            const sizeStr = file.size > 1024 ? `${(file.size / 1024).toFixed(1)} KB` : `${file.size} B`;
+            fileSizeMount.textContent = sizeStr;
+          }
+          if (fileInfoPill) fileInfoPill.classList.remove("hidden");
+
+          triggerVerification();
+        };
+        reader.readAsText(file);
+      }
+
+      function clearLoadedFile() {
+        if (fileInfoPill) fileInfoPill.classList.add("hidden");
+        if (fileInput) fileInput.value = "";
       }
 
       // Client-Side Cryptographic Verifier
@@ -823,7 +1158,7 @@
         metaFilesCount.textContent = p.subject?.scanned_files_count ? `${p.subject.scanned_files_count} files audited` : "Automated AST scan";
         jsonPayloadMount.textContent = result.canonicalJson;
 
-        // Update Dynamic Banner
+        // Update Dynamic Banner & Trust Seal
         if (result.valid) {
           statusBanner.className = "p-6 rounded-2xl border bg-emerald-50/90 border-emerald-300 text-emerald-900";
           statusIconMount.className = "w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm";
@@ -832,7 +1167,58 @@
           statusPill.className = "text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border bg-emerald-100 text-emerald-800 border-emerald-300";
           statusPill.textContent = "VERIFIED RFC 8032";
           statusDescription.textContent = "Digital signature corresponds exactly to the official ZTDS AI Consortium root key. All four foundational invariants are cryptographically certified with zero network telemetry.";
+
+          // Activate Verified Trust Seal Showcase Card
+          if (badgeShowcaseCard) {
+            badgeShowcaseCard.classList.remove("hidden");
+            const productSlug = (p.subject?.product || "verified").toLowerCase().replace(/[^a-z0-9-]/g, "-").replace(/-+/g, "-");
+            const svgXml = generateVerifiedBadgeSvg("VERIFIED");
+            if (verifiedBadgeMount) verifiedBadgeMount.innerHTML = svgXml;
+
+            const certUrl = `https://ztds.ai/verify/#cert=${encodeURIComponent(result.token)}`;
+            const badgeUrl = `https://ztds.ai/badge/${productSlug}.svg`;
+            const mdSnippet = `[![ZTDS Verified](${badgeUrl})](${certUrl})`;
+            const htmlSnippet = `<a href="${certUrl}" target="_blank" rel="noopener noreferrer"><img src="${badgeUrl}" alt="ZTDS Verified" height="22" /></a>`;
+
+            if (badgeMarkdownInput) badgeMarkdownInput.value = mdSnippet;
+            if (badgeHtmlInput) badgeHtmlInput.value = htmlSnippet;
+
+            if (btnDownloadBadgeSvg) {
+              btnDownloadBadgeSvg.onclick = () => {
+                downloadFile(`${productSlug}-ztds-verified.svg`, svgXml, "image/svg+xml;charset=utf-8");
+              };
+            }
+
+            if (btnDownloadCertJson) {
+              btnDownloadCertJson.onclick = () => {
+                const jsonContent = JSON.stringify(p, null, 2);
+                const certIdSlug = (p.certificate_id || productSlug).toLowerCase().replace(/[^a-z0-9-]/g, "-");
+                downloadFile(`${certIdSlug}.json`, jsonContent, "application/json;charset=utf-8");
+              };
+            }
+
+            if (btnCopyBadgeMd) {
+              btnCopyBadgeMd.onclick = () => {
+                navigator.clipboard.writeText(mdSnippet).then(() => {
+                  const prev = btnCopyBadgeMd.textContent;
+                  btnCopyBadgeMd.textContent = "Copied!";
+                  setTimeout(() => btnCopyBadgeMd.textContent = prev, 2000);
+                });
+              };
+            }
+
+            if (btnCopyBadgeHtml) {
+              btnCopyBadgeHtml.onclick = () => {
+                navigator.clipboard.writeText(htmlSnippet).then(() => {
+                  const prev = btnCopyBadgeHtml.textContent;
+                  btnCopyBadgeHtml.textContent = "Copied!";
+                  setTimeout(() => btnCopyBadgeHtml.textContent = prev, 2000);
+                });
+              };
+            }
+          }
         } else if (!result.signatureValid) {
+          if (badgeShowcaseCard) badgeShowcaseCard.classList.add("hidden");
           statusBanner.className = "p-6 rounded-2xl border bg-rose-50/90 border-rose-300 text-rose-900";
           statusIconMount.className = "w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0 shadow-sm";
           statusIconMount.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>';
@@ -841,6 +1227,7 @@
           statusPill.textContent = "INVALID SIGNATURE";
           statusDescription.textContent = "The cryptographic signature does NOT match the payload contents. The certificate payload has been mutated, corrupted, or forged by an unauthorized party.";
         } else if (result.isExpired) {
+          if (badgeShowcaseCard) badgeShowcaseCard.classList.add("hidden");
           statusBanner.className = "p-6 rounded-2xl border bg-amber-50/90 border-amber-300 text-amber-900";
           statusIconMount.className = "w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0 shadow-sm";
           statusIconMount.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
@@ -856,12 +1243,12 @@
         }
 
         // Configure Social Attestation & Share Actions
-        const shareX = document.getElementById('btnShareX');
-        const shareLinkedin = document.getElementById('btnShareLinkedin');
-        const copyBadgeCode = document.getElementById('btnCopyBadgeCode');
+        const shareX = document.getElementById("btnShareX");
+        const shareLinkedin = document.getElementById("btnShareLinkedin");
+        const copyBadgeCode = document.getElementById("btnCopyBadgeCode");
         const certUrl = `https://ztds.ai/verify/#cert=${encodeURIComponent(result.token)}`;
-        const hashAbbr = p.subject?.audit_hash ? p.subject.audit_hash.slice(0, 16) + '...' : 'audited';
-        const productName = p.subject?.product || 'AI pipeline';
+        const hashAbbr = p.subject?.audit_hash ? p.subject.audit_hash.slice(0, 16) + "..." : "audited";
+        const productName = p.subject?.product || "AI pipeline";
         const tweetText = `Our ${productName} verified 0.00 B data egress and GDPR Art. 28 exemption under the ZTDS RFC v1.0 standard (Receipt: ${hashAbbr}). Audited offline in browser RAM:`;
 
         if (shareX) {
@@ -871,12 +1258,12 @@
           shareLinkedin.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(certUrl)}`;
         }
         if (copyBadgeCode) {
-          const productSlug = (p.subject?.product || 'verified').toLowerCase().replace(/[^a-z0-9-]/g, '-');
+          const productSlug = (p.subject?.product || "verified").toLowerCase().replace(/[^a-z0-9-]/g, "-");
           copyBadgeCode.onclick = () => {
             const badgeSnippet = `[![ZTDS Verified](https://ztds.ai/badge/${productSlug}.svg)](https://ztds.ai/verify/#cert=${result.token})`;
             navigator.clipboard.writeText(badgeSnippet).then(() => {
               const prev = copyBadgeCode.textContent;
-              copyBadgeCode.textContent = 'Badge Copied!';
+              copyBadgeCode.textContent = "Badge Copied!";
               setTimeout(() => copyBadgeCode.textContent = prev, 2000);
             });
           };
@@ -888,6 +1275,7 @@
         currentVerificationResult = null;
         emptyState.classList.add("hidden");
         resultsCard.classList.remove("hidden");
+        if (badgeShowcaseCard) badgeShowcaseCard.classList.add("hidden");
 
         statusBanner.className = "p-6 rounded-2xl border bg-rose-50/90 border-rose-300 text-rose-900";
         statusIconMount.className = "w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0 shadow-sm";
@@ -914,6 +1302,7 @@
         if (!rawToken) {
           emptyState.classList.remove("hidden");
           resultsCard.classList.add("hidden");
+          if (badgeShowcaseCard) badgeShowcaseCard.classList.add("hidden");
           return;
         }
 
@@ -930,30 +1319,60 @@
       
       btnClear.addEventListener("click", () => {
         certInput.value = "";
+        clearLoadedFile();
+        updateDiagnostics("");
         emptyState.classList.remove("hidden");
         resultsCard.classList.add("hidden");
+        if (badgeShowcaseCard) badgeShowcaseCard.classList.add("hidden");
         history.replaceState(null, "", window.location.pathname);
       });
 
+      if (btnRemoveFile) {
+        btnRemoveFile.addEventListener("click", () => {
+          certInput.value = "";
+          clearLoadedFile();
+          updateDiagnostics("");
+          emptyState.classList.remove("hidden");
+          resultsCard.classList.add("hidden");
+          if (badgeShowcaseCard) badgeShowcaseCard.classList.add("hidden");
+          history.replaceState(null, "", window.location.pathname);
+        });
+      }
+
+      if (btnBrowseFile && fileInput) {
+        btnBrowseFile.addEventListener("click", () => fileInput.click());
+        fileInput.addEventListener("change", (e) => {
+          const file = e.target?.files?.[0];
+          if (file) handleLoadedFile(file);
+        });
+      }
+
       // Sample Loaders
       btnLoadValid.addEventListener("click", () => {
+        clearLoadedFile();
         certInput.value = SAMPLES.valid;
+        updateDiagnostics(certInput.value);
         triggerVerification();
       });
 
       btnLoadTampered.addEventListener("click", () => {
+        clearLoadedFile();
         certInput.value = SAMPLES.tampered;
+        updateDiagnostics(certInput.value);
         triggerVerification();
       });
 
       btnLoadExpired.addEventListener("click", () => {
+        clearLoadedFile();
         certInput.value = SAMPLES.expired;
+        updateDiagnostics(certInput.value);
         triggerVerification();
       });
 
-      // Live typing debounce
+      // Live typing debounce & diagnostics
       let debounceTimer = null;
       certInput.addEventListener("input", () => {
+        updateDiagnostics(certInput.value);
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(triggerVerification, 300);
       });
@@ -974,12 +1393,7 @@
         dropOverlay.classList.add("hidden");
         const file = e.dataTransfer?.files?.[0];
         if (file) {
-          const reader = new FileReader();
-          reader.onload = (event) => {
-            certInput.value = event.target.result.trim();
-            triggerVerification();
-          };
-          reader.readAsText(file);
+          handleLoadedFile(file);
         }
       });
 
@@ -1046,6 +1460,7 @@
 
         if (tokenFromUrl) {
           certInput.value = tokenFromUrl;
+          updateDiagnostics(tokenFromUrl);
           triggerVerification();
         }
       });
