@@ -224,7 +224,7 @@ const AUDIT_RULES = [
 ];
 
 const IGNORED_DIRS = new Set([
-  'node_modules', '.git', '.next', 'dist', 'build', '.vercel', 'coverage', '.cache', 'public/badge', 'vendor', 'fixtures', 'benchmarks'
+  'node_modules', '.git', '.next', 'dist', 'build', '.vercel', 'coverage', '.cache', 'public/badge', 'vendor', 'fixtures', 'benchmarks', 'conformance'
 ]);
 
 const ALLOWED_EXTS = new Set([
