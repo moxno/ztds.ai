@@ -20,7 +20,7 @@ const vectorsPath = path.join(__dirname, '../conformance/ztds-test-vectors.json'
 assert.ok(fs.existsSync(vectorsPath), 'conformance/ztds-test-vectors.json must exist');
 
 const vectorData = JSON.parse(fs.readFileSync(vectorsPath, 'utf8'));
-assert.strictEqual(vectorData.version, '1.0.0');
+assert.strictEqual(vectorData.version, '1.1.0');
 assert.ok(Array.isArray(vectorData.test_vectors) && vectorData.test_vectors.length >= 8, 'Must contain >= 8 test vectors');
 
 console.log(`--> Test 1: Test Vectors Schema & Metadata Conformance`);

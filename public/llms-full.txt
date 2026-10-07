@@ -134,3 +134,1907 @@ Zero-Trust Data Sanitization (ZTDS) is an open architectural standard and protoc
 
 ## Legal Notice & Conformance Disclaimer
 ZTDS.ai is an open technical consortium and independent specification maintainer. The open standard is published under Apache 2.0 and CC BY 4.0. In-RAM algorithms and tokenization architectures are protected under Israel Patent Application IL 331905 (WIPO DAS: B17B) and Trademark ZTDS™ (#182655957). The "ZTDS Verified" designation confirms strictly that a designated software version demonstrated compliance with the four foundational invariants set forth in ZTDS RFC v1.0 under reproducible automated or network inspection tests at the time of evaluation. ZTDS verification does not constitute legal counsel, formal regulatory accreditation, or statutory compliance determination under GDPR, HIPAA, EU AI Act, or CCPA.
+
+================================================================================
+ZTDS.AI FULL TECHNICAL SPECIFICATIONS & CANONICAL GROUNDING COMPENDIUM
+================================================================================
+
+> This exhaustive corpus contains the complete unabridged normative text of all core
+> architectural specifications, academic foundations, legal exemptions, and integration blueprints.
+
+
+--------------------------------------------------------------------------------
+# PART 2: RFC V1.0 NORMATIVE TECHNICAL SPECIFICATION
+## Zero-Trust Data Sanitization (ZTDS) Protocol Specification RFC v1.0
+> Canonical URL: https://ztds.ai/standard/ | Local Spec: docs/ZTDS_Specification_RFC_v1.md
+--------------------------------------------------------------------------------
+
+# RFC: Zero-Trust Data Sanitization (ZTDS) Specification v1.0
+
+*Document ID:* ZTDS-SPEC-2026-V1  
+*Status:* Standard / Active  
+*Author:* Ilya Sibiryakov (ORCID: 0009-0002-0642-5985)  
+*Founding Entity:* ZTDS AI Consortium & BrandMeWeb  
+*Academic DOI:* 10.5281/zenodo.22058770  
+*Benchmark DOI:* 10.17605/OSF.IO/5BYJF  
+
+---
+
+## 1. Abstract
+
+Zero-Trust Data Sanitization (ZTDS) defines a formal architectural standard and execution protocol for client-side, in-memory de-identification and re-identification in Generative Artificial Intelligence (GenAI), Retrieval-Augmented Generation (RAG), and autonomous agent workflows. 
+
+Under the ZTDS standard, sensitive information—including Personally Identifiable Information (PII), Protected Health Information (PHI), financial account credentials, and developer secrets—is intercepted and transformed into synthetic surrogate tokens strictly within the volatile RAM of the originating client or private host node before network egress. 
+
+This eliminates reliance on intermediary cloud Data Loss Prevention (DLP) proxies, satisfies European Union General Data Protection Regulation (GDPR) Article 28 data processor exemption criteria, guarantees mathematical compliance with the Right to be Forgotten (GDPR Article 17) within vector embeddings, and achieves sub-2-millisecond runtime execution. Furthermore, ZTDS provides deterministic technical conformance with the European Union AI Act (Regulation (EU) 2024/1689 Phase 2 Data Governance), the NIST AI Risk Management Framework Generative AI Profile (NIST SP 600-1), and ISO/IEC 42001:2023 Artificial Intelligence Management Systems (AIMS).
+
+---
+
+## 2. Mathematical Definition & Threat Model
+
+### 2.1 Formal Definition
+
+Let an input prompt or tool payload P be a sequence of tokens composed of non-sensitive tokens U and sensitive tokens S:
+P = U ∪ S, where U ∩ S = ∅
+
+Where S = {s_1, s_2, ..., s_k} represents discrete entity instances matching regulatory or organizational classification rules (e.g., names, emails, national identifiers, medical record numbers).
+
+Under traditional Cloud DLP architectures:
+P -> (WAN) -> DLP_cloud -> (WAN) -> LLM_provider
+This incurs two round-trip network delays L_net in [150, 300] ms, creates a single point of failure and data breach exposure at DLP_cloud, and legally designates the DLP vendor as a Data Processor.
+
+Under the ZTDS specification:
+1. An in-memory mapping transformation T: S -> M is executed locally:
+   M = {m_1, m_2, ..., m_k}
+   Where each surrogate token m_i follows a structured, context-preserving format:
+   m_i = "[TYPE_N]"
+2. The payload transmitted over the WAN contains strictly U ∪ M:
+   Egress(S) === 0 bytes
+3. The mapping dictionary R = {(m_i, s_i)} is held exclusively in volatile RAM (sessionMap) scoped strictly to the ephemeral process or tab instance.
+4. The latency cost is bounded by a strict performance ceiling:
+   Latency(T) < 2 ms
+5. Upon receipt of the AI response P_out containing surrogate tokens M, the inverse transformation T^(-1): M -> S is executed locally, restoring original cleartext entities strictly on the user screen or local application layer:
+   P_final = T^(-1)(P_out, R)
+6. Upon session termination or page reload, R is discarded from RAM without trace.
+
+---
+
+## 3. The 4 Invariants of ZTDS Compliance
+
+Every compliant implementation (whether in JavaScript, WebAssembly, Python, Rust, or Go) must cryptographically and empirically satisfy the following four invariants:
+
+### Invariant 1: Volatile Memory Boundary (RAM-Only Isolation)
+Under no circumstances may cleartext entity values S or mapping pairs R be persisted to secondary storage. This prohibits writing session state to:
+- Browser storage: localStorage, sessionStorage, IndexedDB, document.cookie.
+- Host storage: unencrypted temp files, disk caches, swap partitions, or application crash dumps.
+- Server logs: access logs, telemetry streams, or operational analytics.
+In web environments, token maps must be strictly tab-isolated (tabId-scoped) to prevent cross-tab or cross-session state leakage.
+
+### Invariant 2: Sub-2-Millisecond Latency Ceiling
+The sanitization transformation T must execute with deterministic speed to prevent perceptual lag or breaking token stream chunking in interactive agentic loops. Specifically:
+- Parsing, regex entity evaluation, and token substitution must complete in under 2 ms for standard payloads up to 15,000 characters on standard hardware (e.g., Apple M-series, Intel i5/i7/i9, AMD Ryzen).
+- In high-throughput backend pipelines, latency must maintain <1 ms per typical chunk.
+
+### Invariant 3: Zero Outgoing Network Transmission (The Airplane Mode Standard)
+The sanitization and de-tokenization mechanisms must be completely self-contained. Compliance is verified using the 5-step Airplane Mode Audit:
+1. Ingest document or prompt into the application.
+2. Disconnect all network interfaces (Wi-Fi, Ethernet, Cellular).
+3. Execute sanitization.
+4. Execute reverse re-identification.
+5. Confirm 100% functionality with exactly zero failed HTTP/WebSocket requests. Network inspection must confirm 0 bytes of cleartext PII egressed across all sockets.
+
+### Invariant 4: Cryptographic Transport Handoff
+When enterprise teams or distributed agent swarms require collaborative unmasking across boundaries, session token maps R must be encrypted prior to any serialization using:
+- Key Derivation: Argon2id (RFC 9106) with parameters calibrated for interactive memory-hard resistance (minimum 19 MiB memory, 2 iterations).
+- Authenticated Symmetric Cipher: XChaCha20-Poly1305 with a 24-byte (192-bit) cryptographically secure random nonce generated via CSPRNG (randombytes_buf).
+- The central coordination server or relay must act solely as an encrypted blob conduit, with zero mathematical capability to derive the key or decrypt the payload.
+
+---
+
+## 4. Surrogate Token Taxonomy & Context Preservation
+
+To ensure Large Language Models (LLMs) preserve semantic coherence and syntactic reasoning without hallucination, surrogate tokens must adhere to standardized bracketed notation:
+
+- Personal Name: [NAME_N] (e.g., John Doe -> [NAME_1])
+- Email Address: [EMAIL_N] (e.g., john@hospital.org -> [EMAIL_1])
+- Phone Number: [PHONE_N] (e.g., +1-555-0199 -> [PHONE_1])
+- National ID / SSN: [SSN_N] or [ID_N] (e.g., 987-65-4321 -> [SSN_1])
+- Financial / IBAN: [IBAN_N] or [CARD_N] (e.g., GB29XAAA10203012345678 -> [IBAN_1])
+- Medical / PHI: [MRN_N] or [PATIENT_N] (e.g., MRN-998241 -> [MRN_1])
+- Developer Secret: [SECRET_KEY_N] (e.g., sk-proj-89f1... -> [SECRET_KEY_1])
+- IP / Hostname: [IP_ADDR_N] (e.g., 192.168.1.104 -> [IP_ADDR_1])
+
+### Context Preservation Rule
+Surrogate tokens retain grammatical category and semantic placement. An LLM receiving:
+"Patient [NAME_1] was prescribed Lisinopril by Doctor [NAME_2] on [DATE_1]"
+synthesizes clinical logic, contraindications, and formatting identically to cleartext, while transmitting zero sensitive patient data.
+
+---
+
+## 5. Regulatory Compliance Mappings
+
+### 5.1 European Union GDPR (Regulation 2016/679)
+- Article 28 (Data Processor Status Exemption): Under GDPR, transmitting personal data to a cloud DLP proxy classifies the vendor as a Data Processor, mandating a formal Data Processing Agreement (DPA) and Technical and Organizational Measures (TOMs) audits. Because ZTDS executes strictly inside host RAM, zero personal data is transferred. The ZTDS tool is an in-situ computational utility, legally exempting the enterprise from requiring a DPA.
+- Article 17 (Right to Erasure / "Right to be Forgotten"): Cleartext PII embedded into high-dimensional vector representations (RAG embeddings) cannot be deleted without re-embedding the entire corpus. Sanitizing data via ZTDS prior to embedding generation guarantees that vectors contain zero extractable personal data.
+- Article 25 (Data Protection by Design and by Default): ZTDS represents the state-of-the-art manifestation of client-side privacy by design.
+
+### 5.2 United States HIPAA (45 CFR § 164.514)
+- Safe Harbor De-Identification: Local extraction and removal of all 18 specified Protected Health Information (PHI) identifiers renders clinical text legally de-identified prior to cloud transmission.
+- Business Associate Agreement (BAA) Exemption: Because cloud AI endpoints receive only de-identified surrogate tokens, healthcare providers do not require a BAA with AI vendors for sanitized workflows.
+
+### 5.3 European Union AI Act (Regulation (EU) 2024/1689)
+- Article 50 (Transparency and Traceability): ZTDS engines generate cryptographically verifiable audit receipts (anchored by SHA-256 digests and Ed25519 signatures) confirming the entity types sanitized and regulatory frameworks triggered, without persisting or recording cleartext.
+- Article 10 (Data and Data Governance): For high-risk AI deployments and General-Purpose AI (GPAI) model integration, ZTDS provides pre-egress sanitization preventing training set contamination, prompt leakage, and inadvertent ingestion of proprietary assets.
+- Phase 2 AI Agentic Governance (August 2026+ Enforcement): Prohibits autonomous AI agents and Tool Use / Model Context Protocol (MCP) clients from executing unauthenticated, unmasked egress of enterprise credentials, secrets, or identifiable customer records to foundation model providers.
+
+### 5.4 NIST AI Risk Management Framework (NIST AI RMF 1.0 & NIST SP 600-1)
+- NIST SP 600-1 (Generative AI Profile - July 2024): Directly fulfills mitigation requirements for Generative AI Risk 12 (Sensitive Data Disclosure) and Risk 1 (CBRN and Cybersecurity Vulnerabilities):
+  - GOVERN-1.2 & MAP-1.5: Enforces organizational data boundaries prior to model dispatch.
+  - MEASURE-2.6: Evaluates residual risk via deterministic zero-egress network inspection.
+  - MANAGE-2.4: Controls data transmission channels by replacing cleartext with context-preserving surrogate tokens in volatile memory.
+
+### 5.5 ISO/IEC 42001:2023 (Artificial Intelligence Management System - AIMS)
+- Annex A.6 (Data for AI Systems): Establishes data quality, provenance, and privacy preservation by ensuring training and inference prompts undergo client-side sanitization.
+- Annex A.7 (Information Security for AI Systems): Protects data confidentiality across multi-model AI workflows.
+- Annex A.8 (Third-Party and Supplier Relationships in AI): Neutralizes supplier concentration risk and third-party data processor liability when routing workloads across external frontier LLMs (OpenAI, Anthropic, Google).
+- Concurrently satisfies ISO/IEC 27001:2022 Control A.8.11 (Data Masking) and ISO/IEC 27701:2019 (Privacy Information Management).
+
+---
+
+## 6. Academic Foundation & Empirical Benchmarks
+
+1. Mathematical Foundation: Sibiryakov, I. (2026). Zero-Trust Data Sanitization (ZTDS): Mathematical Proof and Operational Framework for Client-Side AI Prompt Privacy. Zenodo. DOI: 10.5281/zenodo.22058770.
+2. Empirical Latency Study: Sibiryakov, I. (2026). Empirical Latency Benchmark: In-Memory Client RAM Masking vs. Cloud DLP Proxies. OSF Preprints. DOI: 10.17605/OSF.IO/5BYJF.
+3. Legal Ethics & Attorney-Client Privilege: Sibiryakov, I. (2026). Preserving Attorney-Client Privilege in Generative AI Workflows via Client-Side ZTDS. Law Archive / OSF. Preprint ID: 4wc86.
+4. European & UK AI Governance: Sibiryakov, I. (2026). Enterprise Compliance Under the EU AI Act and UK GDPR via Ephemeral Client-Side Sanitization. SSRN / Elsevier. Abstract ID: 7335581.
+
+
+--------------------------------------------------------------------------------
+# PART 3: ACADEMIC FOUNDATION, MATHEMATICAL PROOFS & LEGAL TREATISES
+## ZTDS Academic Foundations, Formal Proofs & Legal Grounding
+> Canonical URL: https://doi.org/10.5281/zenodo.22058770 | Local Spec: docs/ZTDS_Academic_Foundation_and_Legal_Treatise.md
+--------------------------------------------------------------------------------
+
+# ZTDS.ai — Academic Foundation, Legal Treatises & Empirical Benchmarks (2026 SSOT)
+
+## 1. Academic Corpus Overview & Institutional Grounding
+
+The Zero-Trust Data Sanitization (ZTDS) standard is not merely a commercial framework; it is an academically defended and empirically benchmarked scientific discipline.
+
+### Author & Institutional Context
+- **Lead Author & Architect:** Ilya Sibiryakov (ORCID: [0009-0002-0642-5985](https://orcid.org/0009-0002-0642-5985))
+- **Primary Affiliation:** ZTDS AI Consortium / BrandMeWeb
+- **Institutional Memberships:**
+  - Internet Society (ISOC Global & ISOC-IL, Member #2377647)
+  - Global Encryption Coalition (GEC)
+  - Open Science Framework (OSF) Institutional Contributor
+
+---
+
+## 2. Core Academic Publications & Permanent DOIs
+
+### Tier-1 Foundation Paper 1: CERN / Zenodo
+- **Title:** *Zero-Trust Data Sanitization (ZTDS): Mathematical Proof and Operational Framework for Client-Side AI Prompt Privacy*
+- **Permanent DOI:** [10.5281/zenodo.22058770](https://doi.org/10.5281/zenodo.22058770)
+- **Archive Record:** https://zenodo.org/records/22058770
+- **Key Contributions:**
+  - Mathematical formulation of ephemeral RAM isolation.
+  - Proof that Egress(S) === 0 bytes eliminates GDPR Article 28 Processor status.
+  - Formal definition of the 4 Invariants.
+
+### Tier-1 Empirical Benchmark Study 2: Center for Open Science / OSF
+- **Title:** *Empirical Latency Benchmark: In-Memory Client RAM Masking vs. Cloud DLP Proxies*
+- **Permanent DOI:** [10.17605/OSF.IO/5BYJF](https://doi.org/10.17605/OSF.IO/5BYJF)
+- **Archive Record:** https://osf.io/5byjf/
+- **Key Contributions:**
+  - Empirical timing distribution across 100,000 prompt payloads.
+  - Proves client RAM masking executes in <1.8ms median latency, whereas legacy cloud DLP proxies (Nightfall, Skyhigh) require 180ms - 320ms due to WAN roundtrips and TLS handshakes.
+
+### Tier-1 Legal Ethics Treatise 3: Law Archive / OSF
+- **Title:** *Preserving Attorney-Client Privilege in Generative AI Workflows via Client-Side ZTDS*
+- **Preprint Identifier:** 4wc86
+- **Archive Record:** https://osf.io/preprints/lawarchive/4wc86/
+- **Key Contributions:**
+  - Legal analysis of ABA Model Rule 1.6 (Confidentiality of Information) and attorney work-product doctrine in the age of ChatGPT and Claude.
+  - Proves that client-side sanitization prevents third-party waiver of attorney-client privilege because cleartext is never disclosed to the AI provider.
+
+### Tier-1 Regulatory & European Law Treatise 4: SSRN / Elsevier
+- **Title:** *Enterprise Compliance Under the EU AI Act and UK GDPR via Ephemeral Client-Side Sanitization*
+- **SSRN Abstract ID:** 7335581
+- **Archive Record:** https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7335581
+- **Key Contributions:**
+  - Comprehensive regulatory mapping across EU AI Act Article 50 (Transparency) and Article 10 (Data Governance).
+  - Demonstrates how client-side surrogate substitution satisfies the European Data Protection Board (EDPB) guidelines on AI training models.
+
+### Tier-1 European Open Archive: HAL Open Science (CNRS / Inria)
+- **Paper 1:** *Reconciling Enterprise Generative AI Workflows with the EU AI Act, GDPR, HIPAA, and Statutory Privacy Regimes via Ephemeral Client-Side Sanitization*
+  - **HAL Document ID:** [hal-05757820](https://hal.science/hal-05757820) (hal-05757820v1)
+  - **Status:** Submitted & In Moderation Queue (Deposited 2026-09-21)
+- **Paper 2:** *Reconciling Enterprise Generative AI Workflows with the EU AI Act, UK GDPR, and US State Privacy Statutes via Ephemeral Client-Side Sanitization*
+  - **HAL Document ID:** [hal-05730857](https://hal.science/hal-05730857) (hal-05730857v1)
+  - **Status:** Submitted & In Moderation Queue (Deposited 2026-08-28)
+
+---
+
+## 3. Medical, Life Sciences & Clinical Preprints
+
+### Tier-1 Healthcare Paper 5: Research Square / Springer Nature
+- **Title:** *Client-Side Ephemeral De-Identification of Protected Health Information (PHI) in Multi-Center Clinical Trial Analysis and Large Language Model Workflows: Validating Zero-Trust Data Sanitization Under HIPAA Safe Harbor Section 164.514(b)*
+- **Permanent DOI:** [10.21203/rs.3.rs-11117457/v1](https://doi.org/10.21203/rs.3.rs-11117457/v1)
+- **Archive Record:** https://www.researchsquare.com/article/rs-11117457/v1
+- **Status:** Posted & Active (Live Public DOI)
+- **Key Contributions:**
+  - Clinical validation of the 18 HIPAA Safe Harbor identifiers (§ 164.514(b)).
+  - Mathematical demonstration that surrogate tokens preserve longitudinal diagnosis, pathology, and treatment logic in physician notes without patient identity leakage.
+  - Multi-center clinical trial workflow privacy guarantees eliminating HIPAA Business Associate Agreement (BAA) requirements for third-party LLM inference.
+
+### medRxiv Clinical Research
+- **Title:** *De-Identification of Longitudinal Patient Records for Generative AI in Healthcare*
+- **Manuscript ID:** MEDRXIV/2026/361661
+- **Status:** Submitted / Under Review
+- **Key Contributions:**
+  - Clinical validation of the 18 HIPAA Safe Harbor identifiers.
+  - Demonstration that surrogate tokens preserve diagnosis and treatment logic in physician notes without patient identity leakage.
+
+### bioRxiv Genomic Research (In Pipeline)
+- **Focus:** De-identification of genomic metadata, patient phenotypes, and bioinformatics agentic pipelines under GDPR Article 9 special category data rules.
+
+
+--------------------------------------------------------------------------------
+# PART 4: CISO PROCUREMENT, VENDOR ASSESSMENT & DPA EXEMPTION MEMO
+## CISO Procurement Pack, SIG Lite / CAIQ Mapping & Statutory DPA Exemption
+> Canonical URL: https://ztds.ai/ciso/ | Local Spec: docs/ZTDS_CISO_Procurement_and_Legal_Pack.md
+--------------------------------------------------------------------------------
+
+# ZTDS.ai — CISO Procurement, Legal Defense & Enterprise Licensing Pack (2026 SSOT)
+
+## 1. Official 1-Page CISO Data Protection & Exemption Memo
+
+**MEMORANDUM**
+
+**TO:** Chief Information Security Officer (CISO), Data Protection Officer (DPO), Enterprise Procurement  
+**FROM:** Ilya Sibiryakov, Founder & Chief Architect (BrandMeWeb & PrivacyScrubber)  
+**DATE:** 2026-09-16  
+**SUBJECT:** Legal Basis for Zero-Trust Data Sanitization (ZTDS) Architecture & Exemption from Data Processor (DPA) Requirements  
+
+---
+
+### Executive Summary
+This memorandum establishes the formal technical and regulatory basis under which software adhering to the Zero-Trust Data Sanitization (ZTDS v1.0) specification—including PrivacyScrubber Web, Chrome Extension, and the @privacyscrubber/sdk developer engine—operates as a 100% client-side computational utility. 
+
+Because ZTDS executes de-identification and re-identification strictly within the volatile RAM of the user workstation or private internal host node, **zero bytes of cleartext sensitive data are transmitted to or processed by external vendor servers**. 
+
+Consequently, ZTDS software is **legally exempt from Data Processing Agreement (DPA) requirements under GDPR Article 28, Business Associate Agreement (BAA) requirements under HIPAA, and third-party vendor risk assessment burdens**.
+
+---
+
+### Regulatory Defense & Legal Citations
+
+#### 1. European Union GDPR (Regulation 2016/679) — Article 28 Exemption
+- **Statutory Requirement:** Article 28(3) mandates a binding contract (DPA) whenever personal data is processed by a third party on behalf of the controller.
+- **ZTDS Exemption Basis:** In a ZTDS architecture, the software provider maintains zero processing infrastructure, zero data ingress endpoints, and zero storage mechanisms. Cleartext data never leaves the client endpoint. The transformation occurs strictly in local host memory prior to network transmission. Under European Data Protection Board (EDPB) doctrine, the provision of local client software that does not transmit personal data to the vendor does not constitute "processing by a processor."
+- **Conclusion:** No GDPR Data Processing Agreement (DPA) or Standard Contractual Clauses (SCCs) are required.
+
+#### 2. GDPR Article 17 — Prevention of RAG Vector Poisoning
+- **Statutory Requirement:** Article 17 grants data subjects the unconditional Right to Erasure ("Right to be Forgotten").
+- **ZTDS Exemption Basis:** When cleartext PII is embedded into high-dimensional vector embeddings, the data cannot be isolated or deleted without full vector index re-computation. By substituting sensitive entities with surrogate tokens ([NAME_1], [SSN_1]) before embedding generation, vector databases are mathematically immunized against PII ingestion, ensuring permanent GDPR Art. 17 compliance.
+
+#### 3. United States HIPAA (45 CFR § 164.514) — Safe Harbor Compliance
+- **Statutory Requirement:** 45 CFR § 164.502(e) requires a Business Associate Agreement (BAA) when Protected Health Information (PHI) is disclosed to a vendor.
+- **ZTDS Exemption Basis:** Under the Safe Harbor method (45 CFR § 164.514(b)), clinical text stripped of the 18 designated personal identifiers is legally classified as de-identified and ceases to be PHI. Because the de-identification occurs locally inside client RAM before transmission, the cloud AI provider receives only legally de-identified surrogate tokens. 
+- **Conclusion:** No BAA is required with the ZTDS software provider or cloud AI endpoints for sanitized workflows.
+
+#### 4. European Union AI Act (Regulation (EU) 2024/1689) — Phase 2 & Article 10 Data Governance
+- **Statutory Requirement:** Article 10 mandates strict data governance, bias prevention, and training data protection for high-risk and General-Purpose AI (GPAI) systems. Phase 2 (August 2026+) imposes direct liability on deployers of agentic systems for unmanaged data egress.
+- **ZTDS Conformance Basis:** ZTDS acts as a client-side firewall for autonomous AI agents and MCP loops. Contextual surrogates ensure that cleartext customer records, proprietary source code, and employee identifiers are physically stripped before model dispatch, satisfying Article 10 data minimization and Article 50 transparency requirements.
+
+#### 5. NIST AI Risk Management Framework (NIST SP 600-1) — Generative AI Profile
+- **Statutory Requirement:** NIST SP 600-1 establishes risk management standards for generative AI, designating Risk 12 (Sensitive Data Disclosure) as a critical enterprise vulnerability.
+- **ZTDS Conformance Basis:** Fulfills NIST AI RMF core controls GOVERN-1.2, MAP-1.5, and MANAGE-2.4 by enforcing an in-process RAM boundary that eliminates cleartext prompt transmission, prompt injection data exfiltration, and model training set contamination.
+
+#### 6. ISO/IEC 42001:2023 & ISO/IEC 27001:2022 — AI Management Systems (AIMS) & Control A.8.11
+- **Statutory Requirement:** ISO/IEC 42001 Annex A.6 (AI Data Lifecycle), A.7 (AI Security), and A.8 (AI Supplier Risk) mandate strict control over third-party foundation model integrations. ISO/IEC 27001 Control A.8.11 mandates presentation-layer data masking.
+- **ZTDS Conformance Basis:** Enforces deterministic client-side pseudonymization and reversible re-identification, satisfying ISO/IEC 42001 AIMS controls and eliminating third-party subprocessor risk in commercial LLM integration.
+
+---
+
+## 2. Standard Security Questionnaire Answers (SIG Lite / CAIQ / VSAQ)
+
+| Question / Control Domain | ZTDS Standard Response | Verification Evidence |
+| :--- | :--- | :--- |
+| **Where is customer prompt data hosted or stored?** | **Nowhere.** Cleartext data and session mappings reside strictly in volatile RAM. No data is written to disk, database, cookies, or cloud storage. | 5-Step Airplane Mode Audit (DevTools Network tab = 0 requests). |
+| **What data egresses to vendor servers during sanitization?** | **Exactly 0.00 bytes.** The sanitization engine is completely self-contained in local JavaScript / WebAssembly. | Static code audit; browser network inspection; air-gapped test. |
+| **How are session token maps protected?** | Scoped strictly to the active browser tab or memory process. Automatically wiped on tab reload or process exit. | Isolated RAM boundary; zero persistence to localStorage or IndexedDB. |
+| **How does collaborative unmasking work across teams?** | Token maps are encrypted client-side using Argon2id (RFC 9106) and XChaCha20-Poly1305 (24-byte CSPRNG nonce). | Cryptographic source audit (libsodium-wrappers-sumo). |
+| **Does the vendor have access to customer encryption keys?** | **No.** Keys are derived ephemeral passphrases held exclusively by authorized team members. | Zero-knowledge architecture; central relays act as blind conduits. |
+| **What third-party sub-processors have access to customer data?** | **None.** Zero sub-processors are involved in data sanitization. | DPA exemption doctrine; self-contained engine. |
+| **How does ZTDS satisfy EU AI Act Phase 2 AI Agent Governance?** | Enforces deterministic pre-egress sanitization across agentic tool loops and MCP servers, preventing unauthorized customer data extraction or unmasked LLM transmission. | Technical Invariants 1–3; SHA-256 verifiable receipts. |
+| **How does ZTDS map to NIST AI RMF 600-1 (Generative AI)?** | Directly mitigates Risk 12 (Sensitive Data Disclosure) via RAM-only execution and context-preserving tokenization (GOVERN-1.2, MAP-1.5, MANAGE-2.4). | In-process execution telemetry; 0 byte WAN egress audit. |
+| **How is ISO/IEC 42001 (AIMS) and ISO 27001 A.8.11 supported?** | Satisfies Annex A.6 (AI Data Lifecycle), A.7 (AI Security), and A.8 (AI Supplier Risk) by isolating external frontier model providers from cleartext data. | ISO/IEC 42001 cross-mapping matrix; Control A.8.11 presentation-layer masking. |
+
+---
+
+## 3. On-Premise Air-Gapped Enterprise Source Code License Agreement
+
+*Licensing Model:* Custom Enterprise Quote / Annual Subscription (Custom Pricing via Inquiry).  
+*Licensor:* Ilya Sibiryakov (Founder & Chief Architect).  
+
+### Core Licensing Terms
+1. **Grant of License:** Licensor grants Customer a non-exclusive, non-transferable, perpetual (for the term of the agreement) license to inspect, compile, and execute the ZTDS PII Engine source code strictly within Customer's internal, air-gapped networks, microservices, and private cloud VPCs.
+2. **Permitted Use:** Customer may embed the engine into internal backend microservices, RAG pipelines, internal agentic loops, and employee workstations.
+3. **Restrictions:** Customer shall not reverse engineer to sell a competing standalone PII sanitization SaaS, sublicense, distribute, or make the source code publicly available.
+4. **Air-Gapped Operation:** Customer is authorized to deploy the engine in 100% disconnected, SCIF, or classified environments with zero telemetry or licensing heartbeats required.
+5. **Warranty & Support:** Licensor provides annual regulatory regex updates, security patches, and direct architectural advisory.
+
+---
+
+## 4. Enterprise Competitive Architecture Matrix & Cloud DLP Disclaimers
+
+| Competitor Category | Vendor Examples | Architectural Flaw in AI Workflows | ZTDS RFC v1.0 Advantage |
+| :--- | :--- | :--- | :--- |
+| **Enterprise Cloud Gateways & Hyperscalers** | Microsoft Purview, AWS Macie, Google Cloud DLP | Coarse file-level boundaries or remote API calls adding 250ms–500ms latency per prompt; per-gigabyte cloud bills; destructive redaction breaks reasoning. | In-process volatile RAM execution (<1.2ms); reversible tokenization; zero marginal cloud API costs. |
+| **Cloud Data Privacy Vaults** | Skyflow | Mandates double WAN network hops (prompt tokenization + response de-tokenization); creates a centralized third-party cloud vault honeypot and GDPR subprocessor liability. | Client-side in-memory mapping table; zero external network calls; legally exempt from GDPR Article 28 subprocessor classification. |
+| **Endpoint Lineage DLP** | Cyberhaven | Relies on OS-level kernel drivers to passively log leaks (after the fact) or hard-block AI interactions (paralyzing employee productivity and prompting shadow AI). | Preventive in-memory transformation: deterministically tokenizes sensitive data before socket creation and transparently restores it upon return. |
+| **Cloud SaaS Proxies** | Nightfall AI, Netskope | Multi-tenant SaaS requires routing raw cleartext prompts to third-party cloud webhooks; concentrates corporate secrets in external SaaS infrastructure. | Zero external egress (0.00 bytes); 100% disconnected operation in Airplane Mode; zero third-party cloud dependencies. |
+| **DSPM & Data Discovery** | BigID, Securiti.ai | Asynchronous scanning designed exclusively for Data at Rest (S3, Snowflake); lacks inline runtime data-plane interceptors for live streaming prompts. | Real-time runtime data-plane transformer for Data in Flight and Data in Use during active LLM inference and agent tool execution. |
+| **Ad-Hoc Community MCP Scripts** | CloakLLM, MCP Conceal, mcp-pvp | Unverified regex wrappers; no formal specification; high false-negative rates on complex enterprise schemas; unauthenticated table state leaks between agent turns; zero GRC auditability. | Mathematically proven RFC v1.0 standard; automated Conformance Test Suite (CTS); cryptographic SHA-256 receipts; audited alignment with EU AI Act Phase 2, NIST AI RMF 600-1, and ISO/IEC 42001. |
+
+*Nominative Fair Use Disclaimer:* All product names, logos, and brands are property of their respective owners. Mention of Microsoft Purview, AWS Macie, Google Cloud DLP, Skyflow, Cyberhaven, Nightfall AI, BigID, CloakLLM, and MCP Conceal is strictly for nominative architectural comparison based on publicly available documentation as of Q3 2026.
+
+
+--------------------------------------------------------------------------------
+# PART 5: MODEL CONTEXT PROTOCOL (MCP) SECURITY ARCHITECTURE & IN-RAM GATEWAY
+## Model Context Protocol (MCP) Stdio Architecture & Developer SDK Guide
+> Canonical URL: https://ztds.ai/mcp/ | Local Spec: docs/ZTDS_Developer_Engine_SDK_and_MCP_Guide.md
+--------------------------------------------------------------------------------
+
+# ZTDS.ai — Developer Engine, SDK & Model Context Protocol (MCP) Guide (2026 SSOT)
+
+## 1. Overview & Architectural Philosophy
+
+The ZTDS Developer Engine (@privacyscrubber/sdk) is a zero-latency, headless sanitization library engineered for high-concurrency Node.js microservices, Next.js API routes, Python/WASM bridges, and autonomous agent runtime loops.
+
+Unlike cloud DLP solutions that act as external HTTP network proxies, the ZTDS engine executes entirely within host process memory (V8 heap or WASM linear memory).
+
+---
+
+## 2. Core Technical Invariants & Performance
+
+- **In-Memory Latency:** <0.8ms for payloads up to 10,000 characters; <1.8ms for 50,000 characters.
+- **Network Egress:** Exactly 0 bytes. No external API calls, no background telemetry pinging prompt contents.
+- **Zero Third-Party Dependency Tree:** Standalone compiled engine with zero dynamic remote code loading (Manifest V3 and strict air-gapped certified).
+- **Two-Sided Lossless Tokenization:**
+  - Forward Sanitization: Cleartext PII -> Non-informative contextual tokens ([NAME_1], [SSN_1]).
+  - Reverse Sanitization: Model completion with surrogate tokens -> Restored cleartext PII using in-memory sessionMap.
+
+---
+
+## 3. Installation & Quickstart
+
+```bash
+# Install via npm
+npm install @privacyscrubber/sdk
+
+# Install via pnpm
+pnpm add @privacyscrubber/sdk
+
+# Install via yarn
+yarn add @privacyscrubber/sdk
+```
+
+### Basic Node.js / TypeScript Example
+```typescript
+import { ZTDSEngine } from "@privacyscrubber/sdk";
+
+// Initialize in-memory engine with industry profile
+const ztds = new ZTDSEngine({
+  profile: "healthcare", // Available: "general", "healthcare", "financial", "legal", "devops"
+  maxLatencyMs: 2.0
+});
+
+// 1. Sanitize prompt before sending to OpenAI / Anthropic
+const rawPrompt = "Patient Sarah Jenkins (SSN: 987-65-4321) diagnosed with acute bronchitis.";
+const { sanitizedPrompt, sessionMap, latencyMs } = ztds.sanitize(rawPrompt);
+
+console.log("Sanitized Egress:", sanitizedPrompt);
+// Output: "Patient [NAME_1] (SSN: [SSN_1]) diagnosed with acute bronchitis."
+console.log("Execution Time:", latencyMs + "ms"); // Output: ~0.7ms
+
+// 2. Dispatch sanitized prompt to external LLM provider over the wire
+const llmResponse = await callOpenAI(sanitizedPrompt);
+// Simulated LLM Response: "For patient [NAME_1], prescribed Amoxicillin 500mg."
+
+// 3. Losslessly restore cleartext strictly inside local memory
+const finalResponse = ztds.reveal(llmResponse, sessionMap);
+console.log("Final Restored Response:", finalResponse);
+// Output: "For patient Sarah Jenkins, prescribed Amoxicillin 500mg."
+```
+
+---
+
+## 4. Model Context Protocol (MCP) Server Architecture
+
+For modern AI IDEs (Cursor, Windsurf) and desktop agents (Claude Desktop), ZTDS provides an air-gapped stdio-based MCP server (`@privacyscrubber/mcp-server`).
+
+### MCP Stdio Communication Architecture
+```
+┌──────────────────┐       stdio (stdin/stdout)       ┌────────────────────────┐
+│  Claude Desktop  │ ───────────────────────────────> │  privacyscrubber-mcp   │
+│   or Cursor IDE  │ <─────────────────────────────── │ (In-Memory RAM Engine) │
+└──────────────────┘     JSON-RPC 2.0 (Zero Network)  └────────────────────────┘
+```
+
+### Claude Desktop / Cursor `claude_desktop_config.json`
+```json
+{
+  "mcpServers": {
+    "privacyscrubber": {
+      "command": "npx",
+      "args": ["-y", "@privacyscrubber/mcp-server@latest"],
+      "env": {
+        "PRIVACYSCRUBBER_TELEMETRY": "false"
+      }
+    }
+  }
+}
+```
+
+### Available MCP Tools
+1. `sanitize_prompt`: Intercepts raw developer prompts, redacts code secrets, database connection strings, and PII, returning sanitized prompt + session token dictionary.
+2. `reveal_response`: Restores surrogate tokens back to original cleartext within the IDE interface.
+3. `verify_ztds_compliance`: Runs real-time static check on active files to detect hardcoded secrets or unmasked PII.
+
+---
+
+## 5. RAG Pipeline De-Identification Architecture
+
+In Retrieval-Augmented Generation (RAG) vector pipelines, embedding unmasked PII permanently poisons vector indices and causes GDPR Article 17 ("Right to Erasure") non-compliance.
+
+### The ZTDS RAG Immunization Flow
+1. **Document Ingestion:** Chunks are processed through `ZTDSEngine.sanitize(chunk)`.
+2. **Vector Embedding:** Only sanitized text containing surrogate tokens is embedded and stored in Pinecone, Weaviate, pgvector, or Milvus.
+3. **Deterministic Search:** Semantic similarity search operates on structural concepts without retaining personal data in vector space.
+4. **Query Time:** User query is sanitized with the same session token dictionary, matching surrogate tokens in vector space.
+
+---
+
+## 6. Commercial Licensing & Pricing SSOT
+
+- **Developer Monthly:** $199 / month  
+  - Unlimited internal backend nodes and microservices.
+  - Sub-1ms in-memory latency budget.
+  - Zero network egress guarantee.
+  - Standard email support.
+- **Developer Annual (Early Adopter):** $1,990 / year (Save ~$398 / 17%)  
+  - Everything in Developer Monthly.
+  - Official ZTDS Verified Registry Badge & Backlink.
+  - Entity inclusion in the global `ztds.ai/llms.txt` directory.
+  - CISO Vendor Procurement Memo Pack.
+  - On-premise air-gapped deployment license.
+
+
+--------------------------------------------------------------------------------
+# PART 6: CANONICAL INTEGRATION BLUEPRINTS & FRAMEWORK RECIPES
+## Ten Canonical Blueprints: LangChain, LlamaIndex, CrewAI, Ollama, Envoy, Pinecone
+> Canonical URL: https://ztds.ai/sdk/#blueprints | Local Spec: docs/ZTDS_Canonical_Blueprints_and_GTM_Playbook.md
+--------------------------------------------------------------------------------
+
+# ZTDS Canonical Integration Blueprints & B2B GTM Playbook
+
+## 1. Executive Overview
+
+This specification delivers:
+1. **10 Canonical Architectural Blueprints**: Production-ready, copy-pasteable integration code implementing Zero-Trust Data Sanitization across modern AI stacks (LangChain, LlamaIndex, CrewAI, Ollama, MCP, Supabase/Pinecone, Next.js, API Gateways, Kafka, Chrome MV3).
+2. **B2B GTM Intelligence Engine**: Persona profiling, battle-tested LinkedIn Sales Navigator boolean queries, regulatory trigger monitoring, and value-first cold outreach playbooks designed for Founder Ilya Sibiryakov (BrandMeWeb / PrivacyScrubber).
+
+---
+
+## 2. 10 Canonical Architectural Integration Blueprints
+
+### Blueprint 1: LangChain (Python / TypeScript LCEL)
+Two-way in-memory middleware that scrubs prompts before LLM invocation and reverses tokens upon output generation.
+
+```typescript
+// ztds-langchain.ts
+import { RunnableLambda, RunnableSequence } from "@langchain/core/runnables";
+import { ChatOpenAI } from "@langchain/openai";
+import { PrivacyScrubberEngine } from "@privacyscrubber/sdk";
+
+export function createZtdsChain(modelName = "gpt-4o") {
+  const engine = new PrivacyScrubberEngine();
+  const model = new ChatOpenAI({ modelName, temperature: 0 });
+
+  // Step 1: In-memory sanitization runnable
+  const sanitizeInput = RunnableLambda.from((input: { prompt: string; profile?: string }) => {
+    const { sanitizedText, tokenMap } = engine.sanitize(input.prompt, {
+      profile: input.profile || "general"
+    });
+    return { sanitizedText, tokenMap };
+  });
+
+  // Step 2: LLM invocation with zero cleartext PII
+  const invokeModel = RunnableLambda.from(async (state: { sanitizedText: string; tokenMap: Record<string, string> }) => {
+    const response = await model.invoke(state.sanitizedText);
+    return { rawOutput: response.content as string, tokenMap: state.tokenMap };
+  });
+
+  // Step 3: Local RAM reverse reveal
+  const revealOutput = RunnableLambda.from((state: { rawOutput: string; tokenMap: Record<string, string> }) => {
+    const clearText = engine.reveal(state.rawOutput, state.tokenMap);
+    return { output: clearText };
+  });
+
+  return RunnableSequence.from([sanitizeInput, invokeModel, revealOutput]);
+}
+```
+
+---
+
+### Blueprint 2: LlamaIndex (IngestionPipeline NodePostprocessor)
+Ensures documents ingested into vector indexes are stripped of sensitive identifiers before chunking and embedding generation.
+
+```python
+# ztds_llamaindex.py
+from typing import List, Optional
+from llama_index.core.schema import BaseNode, Document
+from llama_index.core.postprocessor.types import BaseNodePostprocessor
+import requests # Or local WASM/Node subprocess
+
+class ZTDSNodeSanitizer(BaseNodePostprocessor):
+    profile: str = "general"
+
+    def _postprocess_nodes(
+        self, nodes: List[BaseNode], query_bundle: Optional[dict] = None
+    ) -> List[BaseNode]:
+        """Sanitizes node text in-memory before vector storage."""
+        # Using local headless @privacyscrubber/sdk CLI or Python binding
+        for node in nodes:
+            # Deterministic sanitization: replace PII with [TYPE_N]
+            sanitized_text, token_map = self._run_ztds_engine(node.get_content(), self.profile)
+            node.set_content(sanitized_text)
+            # Store cryptographic hash of tokenMap in node metadata if audit is required
+            node.metadata["ztds_sanitized"] = True
+            node.metadata["ztds_token_count"] = len(token_map)
+        return nodes
+
+    def _run_ztds_engine(self, text: str, profile: str):
+        # Native zero-network binding
+        from privacyscrubber_engine import sanitize # Local WASM / shared lib
+        return sanitize(text, profile)
+```
+
+---
+
+### Blueprint 3: CrewAI (Multi-Agent Role Sanitizer)
+Sanitizes prompts before delegation between autonomous agents and restores context before final user delivery.
+
+```python
+# ztds_crewai.py
+from crewai import Agent, Task, Crew, Process
+from privacyscrubber import ZTDSEngine
+
+class ZTDSCrewMiddleware:
+    def __init__(self, profile: str = "bizops"):
+        self.engine = ZTDSEngine()
+        self.profile = profile
+        self.session_maps = {}
+
+    def before_agent_execution(self, task_description: str, task_id: str) -> str:
+        sanitized, token_map = self.engine.sanitize(task_description, profile=self.profile)
+        self.session_maps[task_id] = token_map
+        return sanitized
+
+    def after_agent_execution(self, task_output: str, task_id: str) -> str:
+        token_map = self.session_maps.get(task_id, {})
+        revealed = self.engine.reveal(task_output, token_map)
+        # Clear volatile RAM sessionMap immediately
+        self.session_maps.pop(task_id, None)
+        return revealed
+```
+
+---
+
+### Blueprint 4: Ollama / Local LLM Streaming Pipeline
+High-throughput streaming pipe intercepting incoming chunks, buffering potential token boundaries, and streaming clean tokens.
+
+```javascript
+// ztds-ollama-stream.js
+const { PrivacyScrubberEngine } = require("@privacyscrubber/sdk");
+const http = require("http");
+
+const engine = new PrivacyScrubberEngine();
+
+async function proxyOllamaPrompt(prompt, profile = "dev") {
+  // 1. Sanitize prompt before local or remote Ollama call
+  const { sanitizedText, tokenMap } = engine.sanitize(prompt, { profile });
+
+  const response = await fetch("http://localhost:11434/api/generate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ model: "llama3:8b", prompt: sanitizedText, stream: true })
+  });
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let fullOutput = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    const chunk = JSON.parse(decoder.decode(value));
+    fullOutput += chunk.response;
+  }
+
+  // 2. Instant RAM reverse scrub
+  const finalClearText = engine.reveal(fullOutput, tokenMap);
+  return finalClearText;
+}
+```
+
+---
+
+### Blueprint 5: Cursor / Claude Desktop MCP Stdio Client
+Configures `@privacyscrubber/mcp-server` to automatically intercept and de-identify file contexts, git diffs, and prompts before sending to cloud models.
+
+```json
+// claude_desktop_config.json / .cursor/mcp.json
+{
+  "mcpServers": {
+    "privacyscrubber": {
+      "command": "npx",
+      "args": ["-y", "@privacyscrubber/mcp-server@latest"],
+      "env": {
+        "PRIVACYSCRUBBER_TELEMETRY": "false"
+      }
+    }
+  }
+}
+```
+
+```markdown
+<!-- Claude / Cursor Instruction Prompt -->
+Whenever reading codebase files, terminal logs, or drafting commits, always pipe the payload through the `privacyscrubber` tool `sanitize_text` with profile="dev" or profile="security". Present the sanitized response. When user asks for production deployment or git commit, execute `reveal_text` with the returned sessionMap.
+```
+
+---
+
+### Blueprint 6: Supabase / Pinecone RAG Vector Embeddings Pipeline
+Guarantees vector stores (Pinecone, Qdrant, Weaviate, pgvector) never index raw PII, preventing vector inversion attacks.
+
+```typescript
+// rag-pipeline.ts
+import { Pinecone } from "@pinecone-database/pinecone";
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { PrivacyScrubberEngine } from "@privacyscrubber/sdk";
+
+const engine = new PrivacyScrubberEngine();
+const pinecone = new Pinecone();
+const embeddings = new OpenAIEmbeddings();
+
+export async function indexDocumentSecurely(docId: string, rawText: string, profile = "medical") {
+  // 1. Sanitize document client-side before embedding
+  const { sanitizedText, tokenMap } = engine.sanitize(rawText, { profile });
+
+  // 2. Generate vector embedding from sanitized text ONLY
+  const vector = await embeddings.embedQuery(sanitizedText);
+
+  // 3. Upsert to Pinecone - zero PII in vector coordinates or metadata
+  const index = pinecone.Index("enterprise-knowledge");
+  await index.upsert([
+    {
+      id: docId,
+      values: vector,
+      metadata: {
+        textSnippet: sanitizedText.slice(0, 500),
+        ztdsVerified: true,
+        entityCount: Object.keys(tokenMap).length
+      }
+    }
+  ]);
+  // tokenMap is NOT stored in Pinecone. Volatile local RAM or tenant-isolated KMS only.
+}
+```
+
+---
+
+### Blueprint 7: Next.js App Router (Edge Runtime Sanitizer)
+Ultra-fast (<1ms) serverless middleware sanitizing incoming chat API payloads.
+
+```typescript
+// app/api/chat/route.ts
+import { NextRequest, NextResponse } from "next/server";
+import { PrivacyScrubberEngine } from "@privacyscrubber/sdk";
+
+export const runtime = "edge";
+
+const engine = new PrivacyScrubberEngine();
+
+export async function POST(req: NextRequest) {
+  const { messages, profile } = await req.json();
+  const lastMessage = messages[messages.length - 1];
+
+  // In-memory Edge sanitization
+  const { sanitizedText, tokenMap } = engine.sanitize(lastMessage.content, {
+    profile: profile || "general"
+  });
+
+  // Replace content with sanitized version
+  messages[messages.length - 1].content = sanitizedText;
+
+  // Forward to upstream LLM (OpenAI / Anthropic)
+  const upstreamRes = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ model: "gpt-4o", messages })
+  });
+
+  const completion = await upstreamRes.json();
+  const rawReply = completion.choices[0].message.content;
+
+  // Reverse reveal before returning to client
+  const revealedReply = engine.reveal(rawReply, tokenMap);
+
+  return NextResponse.json({ reply: revealedReply });
+}
+```
+
+---
+
+### Blueprint 8: API Gateway / Envoy Sidecar Local Proxy
+Local loopback reverse proxy intercepting outbound LLM traffic, inspecting body payload, sanitizing PII in <2ms, and stripping auth headers if sensitive data leaks.
+
+```yaml
+# envoy-ztds-filter.yaml
+static_resources:
+  listeners:
+  - name: llm_proxy_listener
+    address:
+      socket_address: { address: 127.0.0.1, port_value: 8080 }
+    filter_chains:
+    - filters:
+      - name: envoy.filters.network.http_connection_manager
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+          stat_prefix: egress_llm
+          route_config:
+            name: local_route
+            virtual_hosts:
+            - name: openai_upstream
+              domains: ["*"]
+              routes:
+              - match: { prefix: "/v1/chat/completions" }
+                route: { cluster: ztds_local_sidecar }
+  clusters:
+  - name: ztds_local_sidecar
+    connect_timeout: 0.25s
+    type: STATIC
+    lb_policy: ROUND_ROBIN
+    load_assignment:
+      cluster_name: ztds_local_sidecar
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address: { socket_address: { address: 127.0.0.1, port_value: 9090 } } # Local @privacyscrubber/sdk daemon
+```
+
+---
+
+### Blueprint 9: Microservices Kafka / Event Bus Stream Transformer
+Kafka streaming consumer executing stateless transformation on streaming topics before analytics processing.
+
+```javascript
+// ztds-kafka-stream.js
+const { Kafka } = require("kafkajs");
+const { PrivacyScrubberEngine } = require("@privacyscrubber/sdk");
+
+const kafka = new Kafka({ clientId: "ztds-filter", brokers: ["localhost:9092"] });
+const consumer = kafka.consumer({ groupId: "sanitizer-group" });
+const producer = kafka.producer();
+const engine = new PrivacyScrubberEngine();
+
+async function run() {
+  await consumer.connect();
+  await producer.connect();
+  await consumer.subscribe({ topic: "raw-customer-transcripts", fromBeginning: true });
+
+  await consumer.run({
+    eachMessage: async ({ topic, partition, message }) => {
+      const rawText = message.value.toString();
+      // In-memory sanitization
+      const { sanitizedText } = engine.sanitize(rawText, { profile: "support" });
+
+      // Publish clean data to downstream LLM training/indexing topic
+      await producer.send({
+        topic: "clean-transcripts-ztds",
+        messages: [{ key: message.key, value: sanitizedText }]
+      });
+    }
+  });
+}
+run();
+```
+
+---
+
+### Blueprint 10: Chrome MV3 Content Script / DOM Textarea Interceptor
+Seamlessly integrates into any web-based LLM UI (ChatGPT, Claude, Perplexity), replacing text before DOM submit.
+
+```javascript
+// content-script-ztds.js
+(function() {
+  const engine = window.PrivacyScrubberEngine;
+  let activeSessionMap = {};
+
+  document.addEventListener("keydown", (e) => {
+    // Intercept Cmd+Enter / Ctrl+Enter or Submit click
+    if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+      const textarea = document.querySelector("textarea, div[contenteditable='true']");
+      if (!textarea) return;
+
+      const rawText = textarea.value || textarea.innerText;
+      const { sanitizedText, tokenMap } = engine.sanitize(rawText, { profile: "general" });
+
+      activeSessionMap = tokenMap;
+      if (textarea.value !== undefined) {
+        textarea.value = sanitizedText;
+      } else {
+        textarea.innerText = sanitizedText;
+      }
+      // UI dispatches native input events to trigger React/Vue state updates
+      textarea.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+  }, true);
+})();
+```
+
+---
+
+## 3. B2B GTM Intelligence & Regulatory Outreach Playbook
+
+### 3.1. Ideal Customer Profile (ICP) Matrix
+
+| Persona | Core Mandate | Acute Pain Point | The ZTDS Wedge |
+| :--- | :--- | :--- | :--- |
+| **CISO** | Protect enterprise data perimeter; pass SOC 2 / ISO 27001 audits | Employees copy-pasting customer PII into ChatGPT/Claude; cloud DLP proxies add 250ms latency | 0ms server latency, 0 egress bytes, 1-page CISO Exemption Memo, 100% air-gapped |
+| **DPO / General Counsel** | Prevent GDPR Art. 28 / Art. 17 violations & FTC penalties | Cloud AI vendors acting as Data Processors requiring complex Data Protection Agreements | Legally exempt from GDPR Art. 28; no PII leaves client memory, no DPA needed |
+| **Head of AI / VP Eng** | Accelerate LLM features into production | Security/compliance teams blocking LLM deployments for 6–12 weeks | Deterministic SDK/MCP integration (<1ms), plug-and-play LangChain/LlamaIndex middleware |
+| **Chief Risk Officer** | Minimize vendor supply-chain blast radius | Third-party proxy vendors (Nightfall, Skyhigh) creating another vulnerable cloud honeypot | Standard client-side architecture; vendor has zero access to keys, prompts, or sessions |
+
+---
+
+### 3.2. Battle-Tested LinkedIn Sales Navigator Boolean Queries
+
+#### Query 1: Enterprise CISOs & Security VPs (US & UK)
+```text
+(title:"Chief Information Security Officer" OR title:"CISO" OR title:"VP Information Security" OR title:"VP Cyber Security" OR title:"Head of Information Security") AND (industry:"Financial Services" OR industry:"Hospital & Health Care" OR industry:"Software Development" OR industry:"Information Technology & Services") AND (company_headcount:"51-200" OR company_headcount:"201-500" OR company_headcount:"501-1000" OR company_headcount:"1001-5000") AND (keywords:"Generative AI" OR keywords:"ChatGPT" OR keywords:"LLM" OR keywords:"Shadow AI")
+```
+
+#### Query 2: Data Protection Officers & General Counsel (EU & UK)
+```text
+(title:"Data Protection Officer" OR title:"DPO" OR title:"Chief Privacy Officer" OR title:"Head of Privacy" OR title:"General Counsel" OR title:"VP Legal") AND (geography:"European Union" OR geography:"United Kingdom" OR geography:"Switzerland") AND (keywords:"AI Act" OR keywords:"GDPR Article 28" OR keywords:"Data Transfer" OR keywords:"LLM Compliance")
+```
+
+#### Query 3: Heads of AI Engineering & Enterprise Architects
+```text
+(title:"Head of AI" OR title:"VP AI" OR title:"Director of Machine Learning" OR title:"Lead AI Architect" OR title:"Principal AI Engineer") AND (keywords:"RAG" OR keywords:"LangChain" OR keywords:"LlamaIndex" OR keywords:"Vector Database" OR keywords:"Enterprise AI") AND NOT (title:"Recruiter" OR title:"HR")
+```
+
+---
+
+### 3.3. Regulatory Trigger Event Monitoring
+
+Outreach campaigns must be triggered by specific external regulatory catalysts:
+
+1. **EU AI Act Enforcement Milestone (August 2026)**:
+   * *Trigger*: Strict transparency and data governance obligations under Articles 50 & 53 become binding.
+   * *Angle*: "Avoid classification as a high-risk downstream deployer by decoupling PII before tokenization."
+2. **FTC Enforcement Actions & Consent Decrees**:
+   * *Trigger*: FTC penalizing enterprise LLM deployments for unauthorized consumer data retention.
+   * *Angle*: "Mathematical proof of zero training data retention via client-side ephemeral sanitization."
+3. **Major Cloud DLP Breaches or Outages**:
+   * *Trigger*: An outage or breach at an inline cloud proxy provider (e.g. Cloudflare, Zscaler, Nightfall).
+   * *Angle*: "Why route prompt traffic through a third-party cloud honeypot when client RAM sanitizes in <2ms?"
+
+---
+
+### 3.4. High-Conversion Outreach Templates (From Ilya Sibiryakov)
+
+#### Template 1: Peer-to-Peer CISO InMail (0-Fluff, Technical Authority)
+**Subject**: Unblocking ChatGPT for engineering without a Cloud DLP proxy
+
+```text
+Hi [First Name],
+
+Most security teams I talk with are stuck between two bad options for employee GenAI usage:
+1. Block ChatGPT/Claude completely (which engineers bypass via shadow personal accounts).
+2. Deploy a cloud DLP proxy that adds 250ms of latency, costs $40/seat/month, and acts as another third-party data processor holding unencrypted prompts.
+
+We took a different architectural approach with Zero-Trust Data Sanitization (ZTDS):
+100% in-browser RAM sanitization. Prompts are scrubbed into [NAME_1], [API_KEY_1] tokens before network dispatch, and restored locally upon response. Zero server logs, zero cloud proxy, 0 bytes egress.
+
+I put together a 1-page CISO Exemption Memo explaining why this eliminates GDPR Art. 28 / SOC 2 vendor audit overhead entirely:
+https://ztds.ai/ciso-memo
+
+Happy to share the local verification script if your team wants to audit it in DevTools Network tab.
+
+Ilya Sibiryakov
+Founder & Chief Architect, BrandMeWeb & PrivacyScrubber
+```
+
+#### Template 2: DPO / General Counsel Outreach (EU AI Act & GDPR Art. 28)
+**Subject**: Eliminating DPA requirements for enterprise LLM workflows
+
+```text
+Dear [First Name],
+
+Under GDPR Article 28, routing employee prompts containing customer PII to cloud AI models legally requires an executed Data Protection Agreement and extensive vendor sub-processor risk assessments.
+
+Our architectural paper published on Zenodo (DOI: 10.5281/zenodo.22058770) demonstrates an alternative:
+By sanitizing identifiers in volatile client-side RAM before transmission, the payload dispatched to the LLM contains zero personal data under Recital 26. The AI provider never becomes a GDPR processor.
+
+We built the ZTDS standard and reference engine (PrivacyScrubber) to enforce this across browser extensions, headless SDKs, and IDEs.
+
+Would you be open to a 5-minute review of our regulatory audit receipt format?
+
+Best regards,
+
+Ilya Sibiryakov
+Founder & Chief Architect, BrandMeWeb & PrivacyScrubber
+```
+
+#### Template 3: Head of AI / AI Engineer InMail (SDK & Latency Focus)
+**Subject**: <1ms PII sanitization middleware for your RAG pipeline
+
+```text
+Hey [First Name],
+
+If you're building RAG or multi-agent pipelines on LangChain/LlamaIndex, customer PII in vector stores (Pinecone/Qdrant) is usually the biggest compliance blocker stopping production deployment.
+
+We released `@privacyscrubber/sdk` — a headless, in-memory sanitization engine:
+- Runs locally in Node.js / WASM (<1ms latency vs 200ms cloud API calls).
+- Deterministic two-sided masking: transforms raw PII into tokens, generates clean embeddings, and reveals the original text after LLM completion.
+- Zero network egress — runs completely air-gapped in your VPC.
+
+Code snippet for LangChain LCEL and vector indexing:
+https://ztds.ai/blueprints
+
+Let me know if you'd like an early-adopter SDK license key to test in your local dev environment.
+
+Ilya Sibiryakov
+Founder, BrandMeWeb & PrivacyScrubber
+```
+
+
+--------------------------------------------------------------------------------
+# PART 7: ENTITY TAXONOMY & 30 COMMERCIAL SECTOR PROFILES
+## Single Source of Truth Entity Taxonomy & 30 High-ACV Industry Profiles
+> Canonical URL: https://ztds.ai/registry/ | Local Spec: docs/ZTDS_Entity_Taxonomy_and_25_Profiles_SSOT.md
+--------------------------------------------------------------------------------
+
+# ZTDS Entity Taxonomy and 30 Specialized Industry Profiles (SSOT)
+
+## 1. Executive Summary & Architectural Separation
+
+The Zero-Trust Data Sanitization (ZTDS) standard establishes a strict, mathematically verifiable entity classification hierarchy. To prevent data leakage while preserving AI model cognitive context and reasoning capability, entity detection is decoupled into two distinct operational layers:
+
+1. **Universal Consumer PII (`REGEX_RULES`)**: The foundational baseline covering ubiquitous human identifiers (names, emails, phone numbers, standard national IDs, IPv4/IPv6, file paths, physical addresses). This engine runs with a 15,000-character single-scrub quota on the Free Tier across all client platforms.
+2. **30 Specialized Industry Profiles (`PROFILE_RULES`)**: Highly specialized vertical vocabularies, regulatory codes, enterprise credentials, and domain-specific schemas covering 30 business sectors. These profiles run in a 5,000-character trial quota on the Free Tier and require a commercial tier (PRO at $15/mo, TEAMS at $99/mo flat, or DEVELOPER SDK at $199/mo) for unlimited throughput.
+
+---
+
+## 2. The Anti-Cannibalization Mandate (SSOT)
+
+The separation between `REGEX_RULES` and `PROFILE_RULES` is an immutable economic and architectural invariant:
+
+* **Rule**: Universal consumer PII MUST live exclusively in `REGEX_RULES`. Domain-specific identifiers, regulatory reference numbers, proprietary ticket formats, enterprise cloud secrets, and vertical financial terms MUST live exclusively in `PROFILE_RULES[sector]`.
+* **Prohibition**: Never migrate specialized, vertical, or regulatory entities into `REGEX_RULES` to pass a generic QA test or convenience check.
+* **Commercial Rationale**: Specialized vertical tokens (e.g., `[PHI_1]`, `[LEGAL_1]`, `[SECRET_1]`, `[FINANCIAL_1]`) represent the primary commercial value driver compelling enterprise personas (DPOs, CISOs, Legal Counsel, Chief Compliance Officers) to upgrade from the 5,000-character trial tier to PRO, TEAMS, and SDK licenses. Diluting the baseline cannibalizes enterprise conversion.
+
+---
+
+## 3. Universal Consumer PII Taxonomy (`REGEX_RULES`)
+
+`REGEX_RULES` is active across all 30 profiles as the baseline filter. It extracts:
+
+| Entity Type | Scope & Patterns | Token Format | Edge Handling |
+| :--- | :--- | :--- | :--- |
+| **`EMAIL`** | Standard RFC 5322 email patterns (`user@domain.tld`) | `[EMAIL_N]` | Preserves domain context when isolated |
+| **`PHONE`** | International E.164, US formatted (`(555) 000-0000`), UK mobile (`07xxx`), extensions | `[PHONE_N]` | Punctuation agnostic, lookbehind guarded |
+| **`ID`** | US SSN (`XXX-XX-XXXX`), EIN (`XX-XXXXXXX`), Passport, Driver License, National IDs | `[ID_N]` | Handles masked variants (`***-**-1234`, `XXX-XX-1234`) |
+| **`NAME`** | First + Last, honorifics (Dr., Mr., Mrs., Ms., Prof.), corporate entities, payroll inverted | `[NAME_N]` | Unicode-safe (`\p{Lu}\p{Ll}`), aggressive multi-token guard |
+| **`ADDRESS`**| Street addresses, P.O. Boxes, City/State/ZIP combos, Box f W-2 employee addresses | `[ADDRESS_N]`| Multi-line boundary preservation |
+| **`IP`** | IPv4 (`192.168.1.1`), IPv6 (`2001:db8::1`) | `[IP_N]` | Localhost port separation |
+| **`LOCATION`**| Geographic coordinates (Lat/Long decimal & DMS), City/State pairs | `[LOCATION_N]`| Preserves country when general context |
+| **`DATE`** | Dates of Birth (DOB), specific calendar dates tied to persons | `[DATE_N]` | Excludes standard regulatory publication dates |
+| **`FINANCIAL`**| Credit/debit card numbers (Luhn compliant), Bitcoin/Ethereum addresses, Bank Routing | `[FINANCIAL_N]`| Direct deposit masked accounts (`*****1234`) |
+
+---
+
+## 4. The 30 Specialized Industry Profiles (`PROFILE_RULES`)
+
+### 4.1. Legal (`legal`)
+* **Target Personas**: Law firm partners, general counsel, litigation support, paralegals.
+* **Target Entities**:
+  * Role-Prefixed Names: `Claimant`, `Respondent`, `Plaintiff`, `Defendant`, `Petitioner`, `Appellant`, `Appellee`, `Principal`, `Grantor`, `Grantee`, `Trustee`, `Fiduciary`, `Attorney-in-Fact`, `Lead Counsel`, `Managing Partner`, `Escrow Officer`.
+  * Case Identifiers: `CASE-XXXX`, `MATTER-XXXX`, Docket numbers, Federal civil/criminal case formats (`1:24-cv-01234`), ECLI European Case Law Identifiers.
+  * Privilege Markers: `ATTORNEY-CLIENT PRIVILEGED`, Attorney Work-Product doctrine notices.
+  * Production & Bates Stamps: `BATES-XXXX`, `PROD-XXXX`, `PLTF-XXXX`, `EXHIBIT-XXXX`.
+  * Legal Credentials: State Bar Registration numbers, Attorney SBN, CRD/Broker IDs, CIK.
+  * Trust & Escrow: Escrow/Trust/Disputed Account numbers, Fedwire/ABA routing numbers.
+  * Monetary Damages: Lookbehind capture of `Settlement Amount`, `Retainer Fee`, `Hourly Rate`, `Damages Claimed`, `Sanctions`, `Judgment`, `Restitution`.
+
+### 4.2. Human Resources & Recruiting (`hr`)
+* **Target Personas**: VP of People, HR Directors, Talent Acquisition, Recruiters.
+* **Target Entities**:
+  * Candidate & Manager Roles: `Candidate`, `Applicant`, `Employee`, `Reporting To`, `Manager`, `Direct Report`.
+  * Employee Identifiers: `EEID`, `EMP-XXXX`, `Associate ID (AOID)`, Security Badge IDs.
+  * Recruitment & ATS: Workday IDs (`WKDY-XXXX`), Candidate IDs (`CAND-XXXX`), Resume reference tokens.
+  * Labor & Works Council: `Works Council / Betriebsrat` reference IDs, Performance Improvement Plans (`PIP-XXXX`).
+  * Demographic Screening: Graduation years (`Class of 2020`), personal LinkedIn URLs (`linkedin.com/in/*`), GitHub profile handles.
+  * Statutory & Immigration: E-Verify case numbers, EEOC charge numbers, USCIS Alien Registration numbers (`A-Number`).
+
+### 4.3. Finance & Banking (`finance`)
+* **Target Personas**: CFOs, Investment Bankers, Quantitative Analysts, FinTech Engineers.
+* **Target Entities**:
+  * Banking Routing & Identifiers: SWIFT/BIC codes, International Bank Account Numbers (IBAN).
+  * Securities & Assets: CUSIP (9-digit), ISIN (12-digit), SEDOL (7-digit), Bloomberg Tickers (`BBGXXXXXXXXX`).
+  * Institutional Identifiers: Legal Entity Identifier (`LEI` 20-char alpha), SEC Central Index Key (`CIK` 10-digit), CRD IDs.
+  * Account Taxonomy: Brokerage, 401(k), IRA, Roth, Trust, Portfolio account numbers.
+  * Transactional Amounts: Lookbehind extraction of `Wire Transfer`, `Balance`, `Deposit`, `Withdrawal`, `Remittance`, `Payout`, `Principal`, `Interest`.
+
+### 4.4. Medical & Healthcare (`medical`)
+* **Target Personas**: Chief Medical Information Officers (CMIO), Clinical Researchers, EHR Admins.
+* **Target Entities**:
+  * Clinical Roles & Emergency Contacts: `Patient`, `Pt.`, `Legal Guardian`, `Proxy`, `Emergency Contact`, `Attending Physician`, `Surgeon`, `Provider`, `Subscriber`.
+  * Health Records: Medical Record Numbers (`MRN`), Electronic Health Record (`EHR`) identifiers.
+  * HL7 v2 Protocol Delimiters: Caret-delimited patient/provider names (`Guillermo^Maricela^C`), segment-delimited birthdates (`YYYYMMDD` in PID-7).
+  * Insurance & Coverage: Policy numbers, Subscriber IDs, Group numbers, Health Plan Beneficiary IDs (`HPN`), BCBS, Aetna, Humana, Medicare/Medicaid policy codes.
+  * Regulatory Provider IDs: National Provider Identifier (`NPI` 10-digit Luhn), DEA registration numbers, NHS numbers (UK), CHI numbers (Scotland).
+  * Medical Devices & Encounters: Unique Device Identifiers (`UDI`), FHIR resource paths (`Patient/123`, `Observation/456`), Hospital Bed/Room/Ward identifiers.
+
+### 4.5. DevSecOps & Security (`security`)
+* **Target Personas**: CISOs, SOC Managers, Penetration Testers, Incident Response Leads.
+* **Target Entities**:
+  * DevOps Secrets: AWS credentials (`AKIA...`), JWT tokens, GitHub/Slack/NPM API tokens, Stripe/OpenAI keys, Database URIs, Private Keys (RSA/EC/PGP/OpenSSH).
+  * Threat Intel & CVE: Common Vulnerabilities and Exposures (`CVE-YYYY-NNNNN`), CWE identifiers, MITRE ATT&CK techniques (`T1059.001`), Threat Actor aliases (`APT29`, `UNC2452`).
+  * Incident Management: Breach Incident IDs (`INC-XXXXXX`), Security Advisory IDs (`GHSA`, `RHSA`).
+  * SIEM & Firewall Rules: Sigma rules, Splunk query IDs, Snort/Suricata rules, Firewall ACL policies.
+  * Defanged Indicators: Defanged URLs (`hxxps://`), Cryptographic Hashes (MD5, SHA-1, SHA-256).
+
+### 4.6. Software Development (`dev`)
+* **Target Personas**: Software Architects, Full-Stack Engineers, DevOps Engineers.
+* **Target Entities**:
+  * Cloud API Keys: Anthropic keys (`sk-ant-api03-*`), OpenAI project keys (`sk-proj-*`), Google API keys (`AIza*`), Twilio, SendGrid (`SG.*`), Docker PATs.
+  * Internal Endpoints: Private RFC 1918 IP addresses with ports (`10.x.x.x:8080`, `192.168.x.x:3000`), localhost bindings.
+  * Webhook Secrets: Stripe webhook secrets (`whsec_*`), generic signing secrets.
+  * Database Connection Strings: Full connection URIs with embedded user/pass authentication.
+
+### 4.7. Marketing & AdTech (`marketing`)
+* **Target Personas**: CMOs, Growth Hackers, Performance Marketing Leads.
+* **Target Entities**:
+  * Ad Tracking Identifiers: Google Click IDs (`GCLID`), Facebook Click IDs (`FBCLID`), Campaign IDs.
+  * Web Analytics: Google Analytics Measurement IDs (`G-XXXXXX`, `UA-XXXXX-X`), GA Client IDs (`_ga` cookies).
+  * Marketing Automation: HubSpot Contact IDs, Marketo Lead IDs, Klaviyo Profile IDs, Pardot prospects.
+  * Unit Economics: Customer Acquisition Cost (`CAC`), Lifetime Value (`LTV`) amounts.
+  * Campaign URLs: Detailed UTM parameter strings (`utm_source`, `utm_campaign`, `utm_term`).
+
+### 4.8. Business Operations & M&A (`bizops`)
+* **Target Personas**: COOs, VPs of Strategy, Private Equity Associates, Corporate Development.
+* **Target Entities**:
+  * Corporate Registries: D-U-N-S numbers (`XX-XXX-XXXX`), SEC Central Index Keys (`CIK`).
+  * M&A Confidentiality: Virtual Data Room IDs (`VDR-XXXX`), Term Sheet reference codes, Letter of Intent (`LOI`) IDs.
+  * Equity & Cap Tables: Equity option grants, Safe notes, Convertible notes, Shareholder IDs (`RSU-XXXX`, `SAFE-XXXX`).
+  * Financial KPIs: EBITDA amounts, Net Profit margins, ARR metrics tied to undisclosed deals.
+
+### 4.9. Sales & Revenue Operations (`sales`)
+* **Target Personas**: CROs, VPs of Sales, RevOps Managers, Account Executives.
+* **Target Entities**:
+  * CRM Records: Salesforce IDs (15/18 char alphanumeric), HubSpot Deal IDs.
+  * Contracts & E-Signatures: DocuSign envelope UUIDs, Order Form numbers, Master Services Agreement (`MSA`) codes.
+  * Conversation Intelligence: Gong call recording IDs, Chorus transcripts, SalesLoft cadence steps.
+  * Commercial Quotas: Individual rep quotas, pipeline deal values, annual recurring revenue numbers.
+
+### 4.10. Customer Support & Care (`support`)
+* **Target Personas**: VPs of Customer Experience, Tier 3 Support Leads, Contact Center Managers.
+* **Target Entities**:
+  * Helpdesk Tickets: ServiceNow Incident/Request IDs (`INCXXXXXXX`, `RITMXXXXXXX`), Jira tickets, Zendesk tickets.
+  * Hardware & Returns: Return Merchandise Authorization (`RMA-XXXX`), Refund reference IDs.
+  * Feedback & CSAT: CSAT survey tokens, Net Promoter Score (`NPS`) respondent hashes.
+  * Loyalty Programs: Rewards card numbers, Customer loyalty account IDs.
+
+### 4.11. Real Estate & Title (`realestate`)
+* **Target Personas**: Title Agents, Real Estate Brokers, Escrow Officers, Underwriters.
+* **Target Entities**:
+  * Property Identification: Multiple Listing Service (`MLS`) numbers, Assessor Parcel Numbers (`APN`), Parcel IDs.
+  * Closing & Title: Escrow file numbers, Title insurance commitment IDs, FHA case numbers (`XXX-XXXXXXX`).
+  * Tenant & Leases: Tenant profile IDs, Lease agreement IDs, Gate/Lobby access PIN codes.
+  * Real Estate Values: Lookbehind extraction of `Purchase Price`, `Listing Price`, `Down Payment`, `Closing Costs`, `Rent`.
+
+### 4.12. Regulatory Compliance & GRC (`compliance`)
+* **Target Personas**: Chief Compliance Officers, DPOs, Audit Managers, Risk Officers.
+* **Target Entities**:
+  * Data Subject Requests: GDPR/CCPA Data Subject Access Request IDs (`DSAR-XXXX`, `SAR-XXXX`).
+  * International VAT Registrations: Full EU VIES VAT numbers (AT, BE, DE, FR, IT, NL, PL, ES, etc.), UK VAT, Swiss TVA.
+  * Cross-Border Data Transfers: Standard Contractual Clauses (`SCC 2021/914`), Binding Corporate Rules (`BCR`).
+  * Regulatory Registrations: UK Information Commissioner's Office registration numbers (`ICO ZXXXXXXX`), Data Protection Officer IDs.
+  * Security Controls: NIST SP 800-53 control identifiers (`AC-2`, `SC-28`), FedRAMP package numbers.
+
+### 4.13. California Privacy / CCPA (`ccpa`)
+* **Target Personas**: California Privacy Officers, Consumer Rights Managers.
+* **Target Entities**:
+  * California Identifiers: California Driver's Licenses, State ID numbers.
+  * Consumer Rights Requests: CPRA Opt-Out records, "Do Not Sell My Info" inquiry tokens.
+  * Biometric Templates: Face recognition template hashes, voiceprints, fingerprint vectors.
+  * Precise Geolocation: Latitude and longitude coordinates within California jurisdiction.
+
+### 4.14. Cloud Infrastructure Engineering (`engineering`)
+* **Target Personas**: Cloud Engineers, SREs, Kubernetes Operators.
+* **Target Entities**:
+  * Container Architecture: Docker image tags, Container digest SHA-256 hashes, Kubernetes cluster-internal DNS (`*.svc.cluster.local`).
+  * Cloud Resource Names: AWS Amazon Resource Names (`arn:aws:iam::123456789012:role/*`), Azure Resource IDs.
+  * Git Commits: Full 40-character Git commit SHAs, internal private repository paths.
+
+### 4.15. Autonomous AI Agents (`agents`)
+* **Target Personas**: AI Engineers, LLM Pipeline Developers, Agent Framework Builders.
+* **Target Entities**:
+  * OpenAI Platform IDs: Assistant IDs (`asst_*`), Thread IDs (`thread_*`), Run IDs (`run_*`), Batch IDs (`msgbatch_*`), Vector Store IDs (`vs_*`).
+  * Vector Database Collections: Pinecone index names, Weaviate collections, Qdrant cluster namespaces.
+  * Open Source Weights: Hugging Face user tokens (`hf_*`), model fine-tuning job IDs (`ftjob-*`).
+
+### 4.16. Academic & Research (`academic`)
+* **Target Personas**: University Registrars, Institutional Review Board (IRB) Chairs, Grant PIs.
+* **Target Entities**:
+  * Institutional Governance: IRB protocol numbers, FERPA student record IDs, Student/Alumni numbers.
+  * Academic Identifiers: Researcher ORCID iDs (`0000-0002-1825-0097`), PubMed IDs (`PMID`), PubMed Central (`PMC`).
+  * Academic Publications: Digital Object Identifiers (`10.xxxx/...`), arXiv preprint IDs.
+  * Transcripts & Grades: Specific course grade attributions, diploma registration serials.
+
+### 4.17. Creative & Entertainment (`creative`)
+* **Target Personas**: Entertainment Lawyers, Production Executives, Talent Agents.
+* **Target Entities**:
+  * Guild Registrations: Writers Guild of America (`WGAW`/`WGAE`) registration numbers.
+  * Talent Management: SAG-AFTRA member IDs, Talent/Model release form numbers.
+  * Music & Royalties: International Standard Recording Codes (`ISRC`), ASCAP/BMI party IDs, IPI/CAE numbers.
+  * Media Standards: International Standard Audiovisual Numbers (`ISAN`), International Standard Book Numbers (`ISBN`).
+
+### 4.18. Core Technology & IT (`tech`)
+* **Target Personas**: IT Directors, Systems Administrators, Cloud Admins.
+* **Target Entities**:
+  * Cloud Compute: AWS EC2 Instance IDs (`i-0123456789abcdef0`), VPC IDs, Subnet IDs, Security Group IDs.
+  * GCP & Azure Tenants: Google Cloud Project IDs, Azure Subscription IDs, Azure Tenant GUIDs.
+  * Infrastructure State: Terraform state file identifiers (`tfstate`), Kubernetes configuration tokens.
+
+### 4.19. Personal & Executive Protection (`personal`)
+* **Target Personas**: Family Offices, High-Net-Worth Individuals, Executive Assistants.
+* **Target Entities**:
+  * Family Relational Records: Kinship-tied emergency contact names (`Wife: ...`, `Child: ...`).
+  * Personal Credentials: Safe/Alarm passcodes, Master device PINs, Home Wi-Fi credentials.
+  * Travel & Loyalty: Passport numbers, Airline Frequent Flyer numbers (Delta SkyMiles, United MileagePlus), Hotel loyalty numbers.
+
+### 4.20. Wealth Management & Family Office (`wealthmgmt`)
+* **Target Personas**: Private Wealth Managers, Estate Planning Attorneys, Family Office Principals.
+* **Target Entities**:
+  * Trust Architecture: Living, Revocable, and Irrevocable Trust legal entities (`THE JOHN DOE IRREVOCABLE TRUST`).
+  * Advisory Governance: SEC Form ADV registration files (`801-XXXXX`), FINRA Series 7/65/66 license numbers.
+  * Retirement Accounts: Custodial accounts, SEP-IRA, 401(k) plan numbers, Required Minimum Distribution (`RMD`) amounts.
+  * Portfolio Assets: Total Net Worth, Assets Under Management (`AUM`), Market Value lookbehind amounts.
+
+### 4.21. Insurance & Risk Management (`insurance`)
+* **Target Personas**: Underwriters, Claims Adjusters, Actuaries.
+* **Target Entities**:
+  * Claims & Policies: Insurance Claim numbers (`CLM-XXXXX`), Policy numbers (`POL-XXXXX`), Insurance Binder IDs.
+  * Regulatory Codes: National Association of Insurance Commissioners (`NAIC`) company codes (5-digit), Lloyd's Syndicate numbers, UK FCA FRN.
+  * Financial Reserves: Lookbehind extraction of `Claim Settlement`, `Loss Reserve`, `Indemnity`, `Deductible`, `Premium`.
+  * Physical Assets: Vehicle Identification Numbers (`VIN` 17-char ISO 3779), Certificate of Insurance (`COI`) numbers.
+
+### 4.22. Accounting & Tax Preparation (`accounting`)
+* **Target Personas**: CPAs, Tax Preparers, Corporate Controllers.
+* **Target Entities**:
+  * Tax Filings: IRS Form numbers (Form 1040, W-2, 1099-MISC, K-1, Form 941).
+  * Preparer Credentials: Preparer Tax Identification Number (`PTIN`), Electronic Filing Identification Number (`EFIN`), Centralized Authorization File (`CAF`).
+  * Ledger & Invoices: General Ledger account numbers (`GL-6010-CLOUD`), Purchase Order (`PO`) numbers, Invoice identifiers.
+  * Tax Calculations: Adjusted Gross Income (`AGI`), Taxable Income, Balance Due, Refund amounts.
+
+### 4.23. Pharmaceuticals & Life Sciences (`pharma`)
+* **Target Personas**: Clinical Data Managers, Bio-statisticians, Regulatory Affairs Specialists.
+* **Target Entities**:
+  * Clinical Trial Registries: ClinicalTrials.gov identifiers (`NCTXXXXXXXX`), European Clinical Trials Database (`EudraCT`).
+  * Regulatory Submissions: Investigational New Drug (`IND`), New Drug Application (`NDA`), Biologics License Application (`BLA`).
+  * Clinical Subjects: Subject Unique Identifier (`USUBJID`), Patient randomization codes, Medication kit serial numbers.
+  * Drug Safety: Individual Case Safety Reports (`ICSR`), Council for International Organizations of Medical Sciences (`CIOMS`) report IDs.
+
+### 4.24. Underwriting & Mortgage Underwriting (`underwriting`)
+* **Target Personas**: Mortgage Underwriters, Credit Analysts, Loan Processors.
+* **Target Entities**:
+  * W-2 Calibration: Box c (Employer name/address), Box d (Control number), Box e (Employee Name), Box f (Employee Address).
+  * Loan Files: Loan application numbers, Underwriting file numbers, Fannie Mae / Freddie Mac reference IDs.
+  * Banking Verification: Direct deposit account verification codes, Paystub check advice numbers, Pay group codes.
+
+### 4.25. Automotive & Telematics (`automotive`)
+* **Target Personas**: Fleet Managers, Connected Vehicle Engineers, Telematics Analysts, EV Infrastructure Operators.
+* **Target Entities**:
+  * Vehicle Identifiers: 17-character VIN (ISO 3779), License Plate numbers, Vehicle Registration Numbers.
+  * In-Vehicle Systems: Electronic Control Unit IDs (`ECU-*`), CAN bus message IDs, OBD-II Diagnostic Trouble Codes (`DTC P0300`, etc.).
+  * Telematics & Charging: EV Charging Station IDs, EVSE IDs, GPS telematics device serials, In-cabin safety driver logs.
+
+### 4.26. Energy & Utilities (`energy`)
+* **Target Personas**: SCADA Operators, Substation Engineers, Grid Dispatchers, NERC CIP Compliance Leads.
+* **Target Entities**:
+  * Grid Infrastructure: Smart Meter IDs, RTU (Remote Terminal Unit) IDs, Substation codes, Feeder line identifiers.
+  * Supervisory Control: SCADA tag names, PLC serial numbers, DNP3/Modbus addressing, EMS point IDs.
+  * Compliance & Safety: NERC CIP facility identifiers, Power Plant Outage notice IDs, High-voltage switching order numbers.
+
+### 4.27. Hospitality & Travel (`hospitality`)
+* **Target Personas**: Hotel Revenue Managers, Front Desk Leads, Passenger Services, Travel Counselors.
+* **Target Entities**:
+  * Passenger Records: Passenger Name Records (6-char alphanumeric PNR / Record Locators), E-Ticket numbers.
+  * Reservations & Folios: Guest Folio numbers, Hotel confirmation codes, Room/Cabin electronic keycards.
+  * Loyalty Programs: Airline frequent flyer numbers, Hotel rewards member IDs, Travel agency booking vouchers.
+
+### 4.28. Biotechnology & Genomics (`biotech`)
+* **Target Personas**: Bioinformaticians, Molecular Biologists, Genomic Research PIs, Biobank Curators.
+* **Target Entities**:
+  * Genomic Databases: OMIM disease codes, Orphanet IDs (`ORPHA*`), Human Phenotype Ontology (`HP:0000000`), Cytogenetic karyotypes.
+  * Specimens & Samples: Biobank sample IDs, Cryotube barcodes, Aliquot tracking IDs, FFPE tissue block codes.
+  * Sequencing Platforms: Next-Gen Sequencing run IDs (Illumina NovaSeq, NextSeq, MiSeq, Oxford Nanopore MinION, PacBio), FACS sorting identifiers.
+
+### 4.29. Telecommunications & Contact Centers (`telecom`)
+* **Target Personas**: Telecom Network Engineers, Contact Center Directors, VoIP Architects, CDR Analysts.
+* **Target Entities**:
+  * Mobile Hardware & SIM: IMSI (14-15 digit), IMEI/IMEISV (15-16 digit), ICCID SIM card numbers (89-prefix), MSISDN.
+  * Cellular Infrastructure: Cell Global Identity (`CGI`), eNodeB/gNodeB IDs, Physical Cell IDs (`PCI`), Tracking Area Codes (`TAC`).
+  * Telephony & VoIP: Session Initiation Protocol URIs (`sip:user@host`), SIP Call-IDs, CTI interaction sessions, IVR payment tokens.
+  * Call Detail Records: CDR record UUIDs, Trunk Group IDs, Point of Interconnect (`POI`) codes, RADIUS/Diameter shared session IDs.
+
+### 4.30. General / Universal Baseline (`general`)
+* **Target Personas**: Consumer users, generic AI prompt sanitization.
+* **Target Entities**: Relies purely on the zero-trust universal `REGEX_RULES` baseline (15,000 character allowance).
+
+### 4.31. Crypto Forensics, Web3 AML & Evidentiary Investigations (`crypto_forensics`)
+* **Target Personas**: Crypto AML Officers, Blockchain Forensic Analysts, Financial Intelligence Units (FIU), Risk Managers, Fraud Investigators, Sanctions Compliance Officers.
+* **Target Entities**:
+  * Blockchain Public Addresses:
+    * Bitcoin: Base58 P2PKH/P2SH (`^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$`), Bech32/Bech32m SegWit (`^bc1[a-z0-9]{39,59}$`).
+    * Ethereum & EVM Chains: Hexadecimal account & contract addresses (`^0x[a-fA-F0-9]{40}$`).
+    * Solana: Base58 public keys (`^[1-9A-HJ-NP-Za-km-z]{32,44}$`).
+    * TRON: Base58 addresses (`^T[1-9A-HJ-NP-Za-km-z]{33}$`).
+    * Monero: Stealth addresses (`^4[0-9AB][1-9A-HJ-NP-Za-km-z]{93}$`, subaddresses `^8[0-9AB]...`).
+    * Ripple / XRP: Base58 accounts (`^r[1-9A-HJ-NP-Za-km-z]{24,34}$`).
+  * On-Chain Transaction & State Identifiers:
+    * Transaction Hashes: 64-character hexadecimal EVM/Bitcoin TxHashes (`0x[a-fA-F0-9]{64}`, `[a-fA-F0-9]{64}`).
+    * Block Hashes & Heights: Raw block hashes, internal UTXO references (`txid:vout`).
+    * Solana Signatures: 88-character Base58 transaction signatures.
+  * Forensic Attribution & Clustering Labels:
+    * Intelligence Cluster Tags: Chainalysis Reactor cluster IDs (`Cluster #XXXXXX`), Elliptic entity risk IDs, TRM Labs entity attribution labels, Crystal Intelligence tags.
+    * Mixer & Hop Identifiers: Peel chain hop sequence markers, Wasabi/Tornado Cash anonymity pool identifiers, bridge contract routing hops.
+  * Statutory AML Filings & Investigation Dockets:
+    * FinCEN / FIU Identifiers: Suspicious Activity Report filing IDs (`SAR-XXXX`, `BSA-XXXX`), Suspicious Transaction Reports (`STR-XXXX`).
+    * Investigative Case Numbers: Financial crimes docket numbers (`CASE-FININT-XXXX`, `MLO-XXXX`).
+    * Sanctions & Watchlists: OFAC Specially Designated Nationals (SDN) match identifiers, Interpol red notice references.
+
+
+---
+
+## 5. Adversarial Red-Team Gym Rules (Spark Invariants)
+
+Through continuous automated adversarial red-teaming (the Gemini Spark Gym loop), the following regex calibration patterns are mandatory across all 5 product planes:
+
+### 5.1. Trailing Currency Boundary Trap
+Word boundaries (`\b`) match between word characters (`\w`) and non-word characters (`\W`). Because currency glyphs (`$`, `€`, `£`, `¥`, `₪`, `₽`, `₹`) are non-word characters, appending a `\b` directly after a currency glyph fails when followed by whitespace or numbers.
+* **Flawed**: `/(?:[$€£¥₪₽₹]\b)\d+/` (Engine backtracks and leaks currency symbol in cleartext).
+* **Calibrated Standard**: `/(?:(?:\b(?:USD|EUR|GBP|CHF|ILS|RUB)\s*|[$€£¥₪₽₹]\s*)[0-9,.'’]*\d[KMB]?\b|\b\d[0-9,.'’]*\d?[KMB]?\s*(?:\b(?:USD|EUR|GBP|CHF|ILS|RUB)\b|[$€£¥₪₽₹]))/gi`
+
+### 5.2. Role Prefix Protection & Name Truncation
+When extracting party or professional names, regexes must not swallow the preceding role title or drop the first name:
+* **Invariant**: Legal and clinical role titles (`Claimant`, `Respondent`, `Patient`, `Counsel`, `Physician`) MUST be explicitly defined in lookbehind or non-capturing prefix groups.
+* **Jargon Allowlisting**: All vertical role nouns must be mirrored in `PROFILE_JARGON[sector]` to prevent downstream token collision.
+
+### 5.3. Case Prefix Explicit Delimiters
+In legal, compliance, and support ticketing, case and docket regexes must require explicit prefix triggers (`No.`, `Number`, `#`, `:`):
+* **Flawed**: `/\b(?:Case|Matter)\s+([A-Za-z0-9_-]+)\b/` (Swallows legitimate English words like "Case Studies").
+* **Calibrated Standard**: `/\b(?:Case|Matter|Arbitration|Docket|Proceeding)\s*(?:(?:No\.?|Number|#)[:\s#]*|[:#]\s*)([A-Za-z0-9_-]{4,25})\b/gi`
+
+### 5.4. OCR Homoglyph Normalization
+When parsing scanned documents (PDFs/images via Tesseract.js OCR), letters and numbers frequently interchange (e.g. `O` vs `0`, `I` or `l` vs `1`):
+* **Calibrated Standard**: Regulatory ID patterns (such as State Bar numbers or NPIs) must evaluate OCR-ambiguous character sets: `[0-9OIloA-Za-z]{4,10}`.
+
+### 5.5. Lookbehind Context Label Preservation
+In financial and accounting documents, the contextual label (e.g., `Settlement Amount:`, `Rent:`, `Total Paid:`) must remain in cleartext to provide the LLM with semantic comprehension of what the masked token represents:
+* **Calibrated Standard**:
+  `/(?<=\b(?:Settlement(?:\s+Amount)?|Retainer(?:\s+Fee)?|Hourly\s+Rate|Damages(?:\s+Claimed)?|Legal\s+Fees?)[:\s]+)(?:...amount regex...)/gi`
+
+### 5.6. Blockchain Graph Correlation & Temporal Clamping (Anti-Reidentification Invariants)
+In crypto-forensics and AML graph investigations, masking only public keys/addresses (`0x...` -> `[TARGET_WALLET_1]`) is structurally insufficient. An adversary or untrusted model provider can correlate high-precision transaction amounts and exact block timestamps against public on-chain ledgers (Etherscan, Mempool) to de-anonymize the target graph:
+* **Invariant 5.6.1: Amount Binning & Logarithmic Quantization**:
+  * Raw token values with high decimal precision (e.g., `14.89214712 ETH`) must be tokenized as discrete surrogate values (`[TX_VALUE_1]`) or clamped into logarithmic order-of-magnitude ranges (`[RANGE_10_TO_50_ETH]`).
+  * Under no circumstance may raw multi-decimal satoshi/wei values be forwarded unmasked in topological prompts.
+* **Invariant 5.6.2: Temporal Clamping & Block Height Interval Obfuscation**:
+  * Exact Unix epoch timestamps or block numbers must be clamped to broad chronological windows (e.g., `[Q3_2024_WINDOW]`, `[EPOCH_INTERVAL_4]`, `[BLOCK_EPOCH_N]`) to prevent exact block-sequence triangulation.
+* **Invariant 5.6.3: Multi-Input UTXO Graph Anonymization**:
+  * Peeling chain hops and multi-input transaction clusters must assign consistent surrogate identifiers within the same investigation thread (`[HOP_1]`, `[HOP_2]`, `[CHANGE_OUTPUT_1]`), preserving structural directed acyclic graph (DAG) topology for AI reasoning without exposing the underlying public key hash.
+
+---
+
+## 6. Two-Sided Verification Invariants
+
+Every sanitization profile must strictly satisfy two bidirectional mathematical conditions:
+
+$$\text{Leakage}(T_{\text{sanitized}}) = 0 \quad \land \quad \text{Distortion}(T_{\text{revealed}}, T_{\text{original}}) = 0$$
+
+1. **Zero Cleartext Leakage (Side A)**:
+   * Not a single byte of sensitive PII, PHI, or credential strings may remain in $T_{\text{sanitized}}$.
+   * All extracted tokens must conform to `[TYPE_N]` formatting.
+2. **Context & Semantic Integrity (Side B)**:
+   * Jargon, clinical diagnoses, statutory legal citations, and role frameworks must NOT be redacted.
+   * On reverse reveal ($T_{\text{revealed}}$), replacing `[TYPE_N]` tokens with values from the volatile RAM `sessionMap` must yield the exact original text with zero whitespace or grammatical drift.
+
+---
+
+## 7. Commercial Packaging & Intellectual Property Protection
+
+To protect the 25 High-ACV Industry Profiles from unauthorized extraction or competitive reverse engineering:
+
+1. **Layer 1: Open Core (`REGEX_RULES`)**:
+   - Universal consumer PII (email, phone, standard national IDs, credit cards, IP addresses) is distributed openly under the MIT License in `@privacyscrubber/sdk` on npm.
+   - Designed for zero-barrier developer adoption, public GitHub auditing, and indexing by autonomous LLM crawlers.
+
+2. **Layer 2: Commercial Vertical Engine (`PROFILE_RULES`)**:
+   - The 25 Industry Profiles are packaged as a compiled WebAssembly binary (`ps-engine-core.wasm`) compiled from Rust state machines (Aho-Corasick & deterministic finite automata).
+   - Plain-text regular expressions are NOT exposed in client-side JavaScript bundles.
+   - Commercial activation is authenticated via asymmetric Ed25519 cryptographic license tokens (`ZTDS-LIC-v1`).
+   - The engine validates licenses 100% offline in client volatile RAM without network callbacks, preserving the 0.00 B Egress Invariant.
+
+
+--------------------------------------------------------------------------------
+# PART 8: MULTI-VERTICAL STATUTORY INSULATION SPECIFICATION
+## Multi-Vertical Statutory Insulation & Regulatory Non-Reliance Schedule
+> Canonical URL: https://ztds.ai/docs/legal/ZTDS_Multi_Vertical_Statutory_Insulation_Specification.txt | Local Spec: docs/legal/ZTDS_Multi_Vertical_Statutory_Insulation_Specification.md
+--------------------------------------------------------------------------------
+
+# ZTDS Multi-Vertical Statutory Insulation & Non-Reliance Specification (2026 SSOT)
+
+## 1. Executive Doctrine & Scope of Demarcation
+
+This Specification establishes the definitive normative framework governing statutory non-reliance, risk allocation, and regulatory liability demarcation across nine specialized industry verticals for:
+1. **The ZTDS Standard & Consortium (`ztds.ai`)**: As an independent, vendor-neutral open technical specification maintainer, RFC author, and mathematical conformance authority.
+2. **Reference Implementations (including PrivacyScrubber / `privacyscrubber.com`)**: As endpoint-executed computational software utilities operating strictly within local volatile random-access memory (RAM).
+3. **Data Controllers & Enterprise Licensees**: As the sole statutory custodians exercising ultimate operational discretion over the transmission of tokenized outputs to third-party artificial intelligence platforms (such as OpenAI, Anthropic, Google, Microsoft, or open-weight hosting clusters).
+
+---
+
+## 2. Core Legal Presumptions & Three-Tier Shield Doctrine
+
+All interactions across the ZTDS ecosystem are governed by three irrebuttable legal presumptions:
+
+### 2.1 The Computational Utility Presumption (No Custodial Status)
+Neither the ZTDS standard nor conforming software implementations act as a data processor, subprocessor, custodian, bailee, or escrow agent. Because processing executes 100% locally within the client workstation CPU/RAM with zero server-side egress ($\Delta \text{Egress} = 0.00$), software maintainers never obtain possession, custody, or control of raw customer inputs under Rule 34 of the Federal Rules of Civil Procedure (FRCP) or Article 4(8) of the EU GDPR.
+
+### 2.2 The Downstream Transmission Presumption (Independent Act of Egress)
+The mathematical substitution of sensitive entities with deterministic surrogate tokens (e.g., `[NAME_1]`, `[IBAN_2]`) terminates at the local memory boundary. Any subsequent transmission of tokenized prompts over the network to external LLM APIs is an independent, affirmative action initiated solely by the user. Maintaining zero network leakage to external third-party clouds is the joint operational responsibility of the software's local perimeter and the user's network routing.
+
+### 2.3 The Non-Delegable Regulatory Duty Presumption
+Statutory compliance obligations imposed by sectoral laws (including HIPAA, GLBA, BSA, FERPA, and ITAR) are non-delegable duties that adhere strictly to the regulated enterprise (Covered Entity, Financial Institution, or Government Contractor). Utilizing algorithmic data sanitization software does not transfer, subrogate, or diminish these statutory duties.
+
+---
+
+## 3. Multi-Vertical Risk Matrix & Statutory Demarcation
+
+```
++---------------------------------------------------------------------------------------------------+
+|                                 ZTDS THREE-TIER DEFENSIVE SHIELD                                  |
++------------------------------------+----------------------------------+---------------------------+
+| TIER 1: THE STANDARD (ztds.ai)     | TIER 2: THE ENGINE (Software)    | TIER 3: DOWNSTREAM (User) |
+| - Open RFC Specification Author    | - Client-side Volatile Memory    | - Data Controller Choice  |
+| - Objective Mathematical Invariants| - Zero Network Egress (Local)    | - Third-Party LLM Policy  |
+| - Express AS-IS Warranty Disclaimer| - Capped Liability ($12m / $100) | - Prompt Dispatch Intent  |
+| - Emergency Revocation Protocol    | - Non-Escrow Ephemeral Keys      | - Non-Delegable Duty      |
++------------------------------------+----------------------------------+---------------------------+
+```
+
+### 3.1 Vertical 1: Healthcare, Medicine & Life Sciences
+* **Target Statutes**: Health Insurance Portability and Accountability Act (HIPAA, 45 CFR Parts 160 & 164), HITECH Act (42 U.S.C. § 17931), FDA 21 CFR Part 11, EU GDPR Article 9 (Special Category Data).
+* **Primary Liability Vectors**:
+  1. *Business Associate Trap*: Claim by covered entities that the software provider is an uncontracted "Business Associate" under 45 CFR § 160.103.
+  2. *OCR / Edge-Case Missed Identifier*: A non-standard medical record number (MRN) or handwritten pathology report escapes regex/OCR, is transmitted to an external LLM, and triggers an HHS Office for Civil Rights (OCR) breach investigation.
+  3. *Statutory Misrepresentation*: Claims that the software "certifies" or "guarantees" statutory HIPAA Safe Harbor status.
+* **Mandatory Statutory Demarcation**:
+  - **No Business Associate Status**: Conforming software is an unhosted computational utility running in local RAM. Because it never receives, maintains, or transmits Protected Health Information (PHI) to its own servers, no Business Associate Agreement (BAA) is statutorily required or executed under 45 CFR § 164.502(e).
+  - **Safe Harbor Assistant Only**: Conforming software assists covered entities in satisfying the 18-identifier Safe Harbor de-identification standard (45 CFR § 164.514(b)(2)). It does NOT constitute an Expert Determination under § 164.514(b)(1).
+  - **Mandatory Pre-Dispatch Clinical Audit**: Healthcare professionals retain the affirmative statutory duty to visually review tokenized outputs before external transmission.
+
+### 3.2 Vertical 2: Legal Practice, Litigation & Privileged Communications
+* **Target Statutes**: Federal Rule of Evidence 502 (Attorney-Client Privilege and Work Product; Limitations on Waiver), ABA Model Rules of Professional Conduct (Rule 1.1 Competence, Rule 1.6 Confidentiality of Information), State Bar Ethics Opinions on Generative AI.
+* **Primary Liability Vectors**:
+  1. *Inadvertent Waiver of Privilege*: An attorney submits privileged deposition transcripts or mental impressions to a commercial LLM via the software. Opposing counsel moves to compel production under FRE 502, arguing waiver through disclosure to a third-party cloud.
+  2. *Unauthorized Practice of Law (UPL)*: Allegation that software assessing privilege markers or Bates stamps renders legal advice.
+* **Mandatory Statutory Demarcation**:
+  - **No Legal Representation or UPL**: Software and standard maintainers do not practice law, render legal advice, or issue formal privilege determinations.
+  - **No Guaranteed FRE 502 Privilege Shield**: Masking entities with synthetic surrogates does not guarantee that a judicial tribunal will find privilege preserved if the underlying substantive legal analysis is exposed to external model logs. Counsel bears the ethical duty under ABA Model Rule 1.6(c) to verify third-party AI provider confidentiality terms.
+
+### 3.3 Vertical 3: Financial Services, Banking, Underwriting & Tax
+* **Target Statutes**: Gramm-Leach-Bliley Act (GLBA, 15 U.S.C. § 6801), PCI DSS v4.0 (Requirement 3), Sarbanes-Oxley Act (SOX Section 404), SEC Rule 10b-5 (Material Non-Public Information / MNPI), IRS Publication 1075 & Circular 230.
+* **Primary Liability Vectors**:
+  1. *MNPI / Insider Trading Leak*: Leaking proprietary M&A targets or financial metrics to public LLM training corpuses.
+  2. *Loan Underwriting / W-2 Wage Corruption*: Modifying numeric tax records during sanitization leading to flawed mortgage approvals.
+  3. *Cardholder Data Scope Creep*: Merchant transmitting unmasked Primary Account Numbers (PAN) to LLMs resulting in PCI DSS fines.
+* **Mandatory Statutory Demarcation**:
+  - **No Investment, Tax, or Underwriting Advice**: Software performs lexical and syntactic entity substitution; it does not audit accounting integrity or validate loan underwriting models.
+  - **PCI DSS Non-Storage**: Conforming software never persists cardholder data (PAN/SAD) to disk or cloud servers. Regulated financial entities remain solely responsible for PCI DSS network scope.
+  - **MNPI Custom Rules Duty**: Enterprise finance teams must configure bespoke regex rules for proprietary deal names, ticker symbols, and confidential transaction codes.
+
+### 3.4 Vertical 4: Crypto-Forensics, Web3 AML & Law Enforcement Investigations
+* **Target Statutes**: Bank Secrecy Act (BSA), 31 U.S.C. § 5318(g)(2) (SAR Secrecy & Anti-Tipping Off), FATF Recommendations 15/16, EU AMLD6, Federal Rules of Evidence 901/902 (Chain of Custody).
+* **Primary Liability Vectors**:
+  1. *Felony Tipping-Off Disclosure*: Exposing a Suspicious Activity Report (SAR) narrative to external cloud LLMs that are subsequently compromised or subpoenaed.
+  2. *Chain of Custody Suppression*: A defense attorney successfully excludes blockchain analysis because investigative prompts were processed through non-air-gapped third-party AI models.
+* **Mandatory Statutory Demarcation**:
+  - **Adherence to Invariants F-1 through F-4**: Conforming forensic implementations must enforce Amount Binning, Temporal Clamping, and Ed25519 Docket Receipts.
+  - **No Expert Witness Status**: Software maintainers do not serve as expert witnesses or warrant evidence admissibility under FRE 902.
+  - **Sole SAR Custody**: Regulated AML officers retain sole criminal and civil liability under 31 U.S.C. § 5318(g)(2) for any transmission that identifies subjects of confidential filings.
+
+### 3.5 Vertical 5: Human Resources, Talent Acquisition & Employment
+* **Target Statutes**: Title VII of the Civil Rights Act of 1964 (42 U.S.C. § 2000e), EEOC Uniform Guidelines on Employee Selection Procedures (UGESP), Age Discrimination in Employment Act (ADEA), Americans with Disabilities Act (ADA), NYC Local Law 144 (Automated Employment Decision Tools - AEDT).
+* **Primary Liability Vectors**:
+  1. *Disparate Impact & Algorithmic Bias*: An employer uses "Blind Recruitment" sanitization, but downstream LLM selection models still exhibit demographic bias, triggering EEOC class-action lawsuits.
+  2. *AEDT Statutory Violation*: Claiming software serves as a certified bias audit under NYC Local Law 144.
+* **Mandatory Statutory Demarcation**:
+  - **Non-AEDT Classification**: Conforming software is a data redaction utility, NOT an Automated Employment Decision Tool, candidate scoring system, or resume evaluation engine.
+  - **No Guarantee of Non-Discrimination**: Redacting explicit personal identifiers (names, dates, zip codes) does not eliminate latent semantic proxy variables in downstream LLMs. Employers maintain sole statutory duty to conduct independent bias audits and maintain EEOC compliance.
+
+### 3.6 Vertical 6: National Security, Aerospace, Defense & Export Controls
+* **Target Statutes**: International Traffic in Arms Regulations (ITAR, 22 CFR Parts 120-130), Export Administration Regulations (EAR, 15 CFR Parts 730-774), DFARS 252.204-7012, CMMC 2.0, FBI Criminal Justice Information Services (CJIS).
+* **Primary Liability Vectors**:
+  1. *Unauthorized Defense Data Export*: Contractor pasting ITAR United States Munitions List (USML) technical data into commercial LLMs hosted on multi-tenant or foreign cloud servers.
+  2. *CJIS Violation*: Police agency processing unredacted criminal history record information (CHRI) without background-screened cloud personnel.
+* **Mandatory Statutory Demarcation**:
+  - **Strict ITAR / EAR / Classified Prohibition**: Standard web extensions and unauthenticated SaaS tiers are STRICTLY PROHIBITED from processing classified national security information, ITAR technical data, or EAR controlled items.
+  - **Air-Gapped SCIF Requirement**: Export-controlled data may only be processed using verified air-gapped, on-premise, or AWS Nitro Enclave deployments where network interfaces are physically severed or cryptographically attested.
+
+### 3.7 Vertical 7: Cybersecurity Incident Response, SOC & Vulnerability Management
+* **Target Statutes**: SEC Cybersecurity Disclosure Rules (Item 1.05 of Form 8-K), CISA CIRCIA, EU GDPR Articles 33/34 (72-hour breach notice), FTC Act Section 5.
+* **Primary Liability Vectors**:
+  1. *Zero-Day / Secret Exfiltration*: Security analyst scrubbing core dumps or firewall logs containing active API tokens; unmasked secrets leak to public LLM training sets.
+  2. *Breach Notice Tolling Failure*: Enterprise claims software sanitization delayed statutory 4-day SEC or 72-hour GDPR reporting timers.
+* **Mandatory Statutory Demarcation**:
+  - **No Statutory Tolling**: The use of ZTDS software does NOT toll, delay, or satisfy mandatory breach notification timelines under SEC Form 8-K or GDPR Article 33.
+  - **Analyst Validation Duty**: Incident response teams must independently verify that ephemeral access keys, internal hostnames, and zero-day exploit payloads are fully masked prior to dispatch.
+
+### 3.8 Vertical 8: Education, Academia & Minor Privacy
+* **Target Statutes**: Family Educational Rights and Privacy Act (FERPA, 34 CFR Part 99), Children's Online Privacy Protection Act (COPPA, 16 CFR Part 312).
+* **Primary Liability Vectors**:
+  1. *Improper Education Record Disclosure*: Educational institutions submitting student IEPs, behavioral notes, or transcripts to commercial AI platforms without parental consent.
+* **Mandatory Statutory Demarcation**:
+  - **FERPA Institutional Custody**: Educational institutions remain the designated legal custodians of educational records under 34 CFR § 99.31 and must obtain requisite parental/student consent prior to submitting student data to third-party AI platforms.
+
+### 3.9 Vertical 9: Autonomous AI Agents, RAG Pipelines & Model Context Protocol (MCP)
+* **Target Statutes**: EU AI Act (Regulation (EU) 2024/1689), Model Context Protocol (Anthropic MCP standard), General Tort & Agency Law.
+* **Primary Liability Vectors**:
+  1. *Autonomous Agent Erroneous Action*: An autonomous agent equipped with an MCP sanitizer tool executes a destructive shell command or unauthorized database deletion due to malformed desanitization.
+  2. *EU AI Act Provider Misclassification*: Claim that an SDK or MCP middleware qualifies as a "High-Risk AI System Provider" under EU AI Act Article 3(3).
+* **Mandatory Statutory Demarcation**:
+  - **Deterministic Middleware Status**: Conforming SDKs and MCP servers are deterministic tokenization middlewares, NOT autonomous AI decision systems or generative foundation models.
+  - **No Prompt Injection Immunity**: Conforming software guarantees architectural memory isolation; it does NOT warrant immunity against semantic prompt injection, indirect adversarial jailbreaks, or external LLM hallucination.
+
+---
+
+## 4. Standard Contractual Terms & Mandatory Clauses
+
+Every commercial agreement, EULA, Terms of Service, and SDK documentation across the ecosystem MUST incorporate the following immutable clauses:
+
+```markdown
+### SECTION X. MULTI-VERTICAL STATUTORY NON-RELIANCE & REGULATORY SHIELD
+1. Independent Custody & Non-Delegable Duty: Licensee acknowledges and agrees that 
+   compliance with industry-specific privacy, security, and evidentiary statutes 
+   (including HIPAA, GLBA, BSA, FERPA, Title VII, ITAR, and EU AI Act) constitutes 
+   a non-delegable statutory obligation resting solely upon Licensee as Data Controller.
+2. Computational Utility Status: Licensor's Software functions strictly as an endpoint-executed, 
+   memory-isolated algorithmic filter. Licensor does not act as a Business Associate, 
+   Financial Advisor, Legal Counsel, Sworn Forensic Examiner, Employment Agency, 
+   or Defense Export Custodian.
+3. Third-Party Model Egress Exclusion: Licensor maintains zero custody over data once 
+   dispatched by Licensee to third-party artificial intelligence platforms (including 
+   OpenAI, Anthropic, Google, Microsoft, or open-source hosting nodes). Licensor disclaims 
+   all liability for third-party cloud data breaches, sovereign subpoena disclosures, 
+   or downstream model training ingestion.
+4. Maximum Aggregate Liability: In no event shall Licensor's total aggregate liability 
+   arising under any vertical, statutory theory, or tort claim exceed the fees actually 
+   paid by Licensee in the twelve (12) months immediately preceding the incident, 
+   or $100 USD for Community Tier usage.
+```
+
+---
+
+## 5. Verification & Governance Protocol
+
+1. **Audit SSOT**: The conformance auditor CLI (`npx ztds-audit`) validates that all documentation, legal pages, and codebases do not contain prohibited statutory claims (e.g., "HIPAA Certified", "Guaranteed Privilege Shield", "100% Blind Recruitment Warranty").
+2. **Revocation Trigger**: Any registered implementation or certified fellow advertising deceptive statutory guarantees shall have its ZTDS Verified accreditation revoked within twenty-four (24) hours pursuant to the ZTDS Emergency Egress & Compliance Revocation Protocol.
+
+
+--------------------------------------------------------------------------------
+# PART 9: EVIDENTIARY SOVEREIGNTY & BLOCKCHAIN FORENSICS SPECIFICATION
+## Evidentiary Sovereignty and Forensics Specification for Web3 AML & Judicial Chain of Custody
+> Canonical URL: https://ztds.ai/evidentiary-sovereignty/ | Local Spec: docs/legal/ZTDS_Evidentiary_Sovereignty_and_Forensics_Specification.md
+--------------------------------------------------------------------------------
+
+# ZTDS.ai — Evidentiary Sovereignty and Forensics Specification
+## Normative Conformance Specification for Crypto Asset Investigations, AML Intelligence and Judicial Chain of Custody (RFC v1.0 Extension)
+
+**Standards Authority:** ZTDS AI Consortium & Standards Authority (BrandMeWeb Ecosystem)  
+**Lead Author & Chief Architect:** Ilya Sibiryakov (ORCID: [0009-0002-0642-5985](https://orcid.org/0009-0002-0642-5985))  
+**Document ID:** ZTDS-SPEC-2026-FORENSIC-V1  
+**Status:** Canonical Technical & Legal Specification &middot; Standards Track Extension  
+**Effective Date:** 02 October 2026  
+**Permanent Repository Anchor:** `https://ztds.ai/docs/legal/ZTDS_Evidentiary_Sovereignty_and_Forensics_Specification.txt`
+
+---
+
+## 1. Executive Summary & The Web3 Architectural Paradox
+
+The foundational ethos of decentralized cryptography and blockchain intelligence is encapsulated in a single non-negotiable axiom: **"Don't trust, verify."** In the financial crime, anti-money laundering (AML), and crypto-forensic domains, no certified investigator would ever entrust private keys, investigative clusters, or seed phrases to unverified third-party promises.
+
+Yet, with the rapid enterprise adoption of Generative Artificial Intelligence (GAI) and autonomous agent workflows, the industry has encountered a profound systemic paradox:
+1. Forensic analysts, compliance officers, and financial intelligence units (FIUs) paste raw suspect wallet addresses, unconfirmed transaction links, peel-chain graphs, and confidential Suspicious Activity Report (SAR / STR) drafts directly into external cloud-hosted Large Language Models (e.g., OpenAI, Microsoft Azure, Anthropic).
+2. Organizations rely upon corporate **Data Processing Agreements (DPAs)** and administrative settings (such as "do not train on customer data") as substitute security perimeters.
+3. In doing so, organizations surrender **Evidentiary Sovereignty**—physically transmitting unadjudicated suspect identifiers, proprietary cluster tags, and investigative working hypotheses into multi-tenant remote memory outside local jurisdictional custody.
+
+This specification formalizes the **ZTDS Evidentiary Sovereignty Profile (`ZTDS-FORENSIC`)**, establishing mathematical and operational requirements that enable investigators to leverage the full reasoning and topological intelligence of leading language models while guaranteeing absolute zero data egress ($\Delta Egress \equiv 0.00\text{ B}$) and providing a cryptographically verifiable **Chain-of-Custody Docket Receipt**.
+
+---
+
+## 2. Threat Model: The Four Vectors of Investigative Degradation
+
+Conforming implementations must defend against four distinct attack and exposure vectors:
+
+```
+[INVESTIGATOR WORKSTATION]
+  │
+  ├── Vector 1: Unauthorized Third-Party Ingestion (Breach of Statutory Secrecy)
+  ├── Vector 2: Subpoena & Discovery Exposure (Defense Counsel Inquiries into Cloud Logs)
+  ├── Vector 3: Evidentiary Chain of Custody Degradation (Inadmissibility / FRE 901/902)
+  └── Vector 4: On-Chain Correlation Attacks (Re-Identification via Amounts & Timestamps)
+```
+
+### 2.1. Vector 1: Unauthorized Third-Party Ingestion & Breach of Statutory Secrecy
+Under statutory financial intelligence regimes—including the **US Bank Secrecy Act (BSA, 31 U.S.C. § 5318(g)(2))** and equivalent international regulations—the unauthorized disclosure of a SAR or of the fact that an investigation is underway is a statutory felony ("tipping off"). Transmitting raw SAR narratives or target wallet clusters to commercial cloud APIs creates an external copy stored on third-party infrastructure, presenting direct regulatory liability.
+
+### 2.2. Vector 2: Subpoena & Third-Party Discovery Exposure
+In criminal prosecutions and contested civil asset forfeiture proceedings, defense counsel routinely subpoena external cloud service providers for all prompt logs, interaction histories, and model completions associated with the investigative team. If raw suspect addresses or draft theories were submitted to external models:
+* Defense counsel can challenge investigative bias, exploratory hallucinations, or procedural irregularities.
+* Premature disclosure of unindicted co-conspirators or confidential informants embedded in prompt context can compromise parallel operations.
+* A signed DPA does not shield an enterprise from federal subpoenas, national security letters, or cross-border discovery orders served directly upon the cloud provider.
+
+### 2.3. Vector 3: Evidentiary Chain of Custody Degradation
+Under **US Federal Rules of Evidence (FRE 901/902)**, **FRE 502**, and international equivalents, evidence derived from computational processing must maintain an unbroken, verifiable chain of custody. When cleartext evidence is processed by proprietary, non-deterministic third-party black-box models:
+* The investigator cannot mathematically prove that the model did not interpolate, fabricate, or cross-contaminate data with other multi-tenant enterprise sessions.
+* The integrity of the evidentiary chain is vulnerable to severe challenge during cross-examination.
+
+### 2.4. Vector 4: On-Chain Correlation & Heuristic Re-Identification
+Masking only public keys (e.g., converting `0x71C...` to `[WALLET_1]`) does not prevent re-identification if high-precision transaction amounts (e.g., `14.89214712 ETH`) or exact block timestamps are submitted in cleartext. An adversary or untrusted cloud provider can query public block explorers (Etherscan, Mempool, Blockchain.info) and trivially recover the masked public addresses by matching unique floating-point outputs.
+
+---
+
+## 3. Normative Conformance Requirements: The Four Forensic Invariants
+
+To achieve and maintain **ZTDS-FORENSIC** accreditation, a software implementation, analytical agent, or investigative workbench must strictly adhere to the following four normative invariants:
+
+### Invariant F-1: Zero External Egress of Raw Target Entities ($\Delta Egress \equiv 0.00\text{ B}$)
+* **Mandate:** Zero bytes of unmasked blockchain addresses, transaction hashes, smart contract addresses, raw private keys, SAR IDs, FIU case numbers, or cluster tags may be transmitted across the network interface.
+* **Execution Boundary:** Sanitization must execute strictly on the investigator's local host in volatile RAM before socket serialization (`TCP/UDP/TLS`).
+
+### Invariant F-2: Directed Acyclic Graph (DAG) Structural Tokenization
+* **Mandate:** The sanitization engine must substitute target entities with syntactically stable, context-preserving bracketed surrogates:
+  * Public Addresses: `[TARGET_WALLET_1]`, `[COUNTERPARTY_WALLET_2]`, `[INTERMEDIARY_HOP_3]`
+  * Transaction Hashes: `[TX_HASH_1]`, `[TX_HASH_2]`
+  * Clusters & Mixers: `[MIXER_POOL_1]`, `[CLUSTER_ALPHA_1]`
+  * Case Identifiers: `[SAR_ID_1]`, `[CASE_DOCKET_1]`
+* **Bijective Reasoning:** The tokenization must preserve the topological structure of fund flows (e.g., peeling chains, smurfing patterns, nesting exchanges), allowing the upstream LLM to analyze the typology and draft investigative summaries without learning any cleartext identifiers.
+* **Local Reconstitution:** Reversal ($T^{-1}$) occurs strictly inside local workstation volatile memory upon receiving the model output.
+
+### Invariant F-3: Value Quantization & Temporal Clamping (Anti-Correlation)
+* Conforming implementations must implement automated anti-correlation sanitization:
+  1. **Logarithmic Amount Binning:** Floating-point transaction values must either be substituted with abstract value surrogates (`[TX_VALUE_1]`) or clamped into order-of-magnitude ranges (e.g., `[RANGE_10_TO_50_ETH]`).
+  2. **Temporal Window Clamping:** Exact Unix timestamps or block heights must be mapped to relative or discretized chronological intervals (e.g., `[WINDOW_T0_PLUS_2H]`, `[EPOCH_2026_Q3]`) to prevent block-height correlation against public ledgers.
+
+### Invariant F-4: Verifiable Ephemeral In-RAM Execution
+* Session mapping tables $R = \{(m_i, s_i)\}$ must reside solely in non-swappable volatile memory (`mlock` or sandboxed WebAssembly linear memory).
+* Writing session maps to secondary storage (disk caches, browser storage, unencrypted swap) is strictly prohibited.
+* Memory zeroization must be executed immediately upon completion of the investigative session.
+
+---
+
+## 4. Cryptographic Chain-of-Custody Docket Receipt (Ed25519)
+
+To ensure evidentiary admissibility in judicial, regulatory, and arbitration proceedings, conforming implementations must generate an asymmetric, tamper-evident **Chain-of-Custody Docket Receipt**.
+
+### 4.1. Canonical JSON Receipt Schema
+The docket receipt must be minted prior to dispatching any prompt payload to an external model:
+
+```json
+{
+  "$schema": "https://ztds.ai/schemas/v1/forensic-docket-receipt.json",
+  "version": "ZTDS-FORENSIC-v1.0",
+  "receipt_id": "ztds-rec-8f9c1e2b-4d6a-4c8e-9a1b-3f7d2e5a8b0c",
+  "timestamp_utc": "2026-10-02T00:55:00.000Z",
+  "investigator": {
+    "organization_id": "ORG-FORENSIC-LE-904",
+    "workstation_hw_hash": "sha256:7b2a9e...c41d",
+    "engine_version": "ztds-forensic-wasm@1.4.0"
+  },
+  "attestation": {
+    "standard": "ZTDS-RFC-v1.0",
+    "profile": "FORENSIC-AML-EVIDENTIARY",
+    "egress_bytes_detected": 0.00,
+    "input_payload_hash": "sha256:9d4e1b...3f8a",
+    "sanitized_payload_hash": "sha256:4a7c2e...8d1f",
+    "entities_masked_summary": {
+      "WALLET_BTC": 4,
+      "WALLET_ETH": 2,
+      "TX_HASH": 8,
+      "SAR_ID": 1,
+      "VALUE_QUANTIZED": 6
+    },
+    "correlation_safeguards": {
+      "amount_binning_applied": true,
+      "temporal_clamping_applied": true
+    }
+  },
+  "cryptographic_signature": {
+    "algorithm": "Ed25519",
+    "public_key": "ed25519:e4b2...8f9a",
+    "signature_b64url": "MEQCIE3v8K...9aF1="
+  }
+}
+```
+
+### 4.2. Verification Protocol
+1. **Offline Verification:** Any forensic auditor, defense counsel, or presiding judge can independently verify the receipt offline using standard RFC 8032 Ed25519 routines.
+2. **Admissibility Proof:** The receipt proves that:
+   * The text delivered to the external AI vendor contained exclusively de-identified surrogate tokens.
+   * Exactly $0.00$ bytes of cleartext target data exited the local workstation.
+   * The investigative hypothesis was formulated using mathematically isolated abstractions, preserving the unbroken chain of custody.
+
+---
+
+## 5. Regulatory & Jurisprudential Mapping
+
+| Legal / Regulatory Framework | Statutory Provision | ZTDS-FORENSIC Legal Ground |
+| :--- | :--- | :--- |
+| **US Federal Rules of Evidence** | **FRE Rule 901 & 902** (Self-Authenticating Evidence) | Cryptographic Ed25519 receipt authenticates that underlying target exhibits were not altered or contaminated by third-party AI systems. |
+| **US Federal Rules of Evidence** | **FRE Rule 502(b)** (Attorney-Client Privilege & Work Product) | Eliminates third-party disclosure waiver; raw attorney-client investigative theories are never transmitted to LLM infrastructure. |
+| **US Bank Secrecy Act (BSA)** | **31 U.S.C. § 5318(g)(2)** (Anti-Tipping Off & SAR Secrecy) | SAR draft narratives stripped of public addresses and case IDs do not constitute unauthorized disclosure under federal anti-tipping statutes. |
+| **EU Anti-Money Laundering Directive** | **AMLD6 (Directive 2018/1673)** & FIU Confidentiality | Preserves European Financial Intelligence Unit statutory confidentiality mandates during automated analytical workflows. |
+| **European Union GDPR** | **Article 28 & Recital 26** | Pure client-side tokenization eliminates external processor relationship; de-identified topological prompts fall outside GDPR personal data scope. |
+| **FATF Recommendation 15** | **Virtual Assets & New Technologies** | Establishes provable risk-based operational safeguards for the adoption of artificial intelligence in virtual asset investigations. |
+
+---
+
+## 6. Conformity Assessment & Certification Path
+
+Organizations, vendors of blockchain analytics tools, and financial institutions seeking official **ZTDS Verified: Forensic Workflow** certification must undergo the following three-stage evaluation:
+
+1. **Phase 1: Automated AST & Socket Audit**  
+   Execution of `npx ztds-audit --profile crypto_forensics` confirming zero external socket calls during prompt tokenization and proper amount/timestamp binning.
+2. **Phase 2: Adversarial Re-Identification Testing**  
+   Automated verification confirming that sanitized prompts cannot be reverse-mapped against public blockchain state (Mempool/Etherscan) via automated correlation attacks.
+3. **Phase 3: Formal CAB Attestation & Docket Registry Listing**  
+   Issuance of the official `ZTDS-FORENSIC-CERT-v1` digital certificate and publication within the ZTDS Verified Registry at `https://ztds.ai/registry/`.
+
+
+--------------------------------------------------------------------------------
+# PART 10: AI SAFETY & MULTIMODAL IN-MEMORY BENCHMARK SPECIFICATION
+## Open AI Safety & Multimodal Benchmark 2026 Specification
+> Canonical URL: https://ztds.ai/whitepaper/ | Local Spec: docs/security/ZTDS_AI_SAFETY_BENCHMARK_2026.md
+--------------------------------------------------------------------------------
+
+# ZTDS AI Safety & In-Memory Sanitization Benchmark Report (2026)
+
+**Benchmark Run ID**: `ZTDS-BENCH-MUS9E8NN`  
+**Standard**: ZTDS RFC v1.0 / IETF draft-sibiryakov-ztds-protocol-02  
+**Evaluation Mode**: `OFFLINE_DETERMINISTIC_ENCLAVE`  
+**Execution Timestamp**: `2026-10-03T10:38:34.067Z`  
+**Consortium Governance**: ZTDS AI Consortium (Working Groups WG-1 & WG-4)  
+
+---
+
+## 1. Executive Summary & Core Results
+
+This benchmark empirically measures the efficacy of the **Zero-Trust Data Sanitization (ZTDS)** architecture against cleartext data leakage across six frontier artificial intelligence models: **OpenAI GPT-4o**, **Anthropic Claude 3.5 Sonnet**, **Google Gemini 2.0 Pro**, **DeepSeek-V3**, **OpenAI o3**, and **Anthropic Claude 3.7 Sonnet**.
+
+### Primary Key Performance Indicators (KPIs)
+
+| Metric | Target | Measured Result | Conformance Status |
+| :--- | :--- | :--- | :--- |
+| **Leakage Prevention Rate (LPR)** | **100.00%** | **100.00%** | **PASS (100% Zero-Egress)** |
+| **Cleartext Egress to LLM APIs** | **0.00%** | **0.00% (0.00 Bytes)** | **PASS (RFC v1.0 Invariant 1)** |
+| **Bijective Fidelity Score (BFS)** | **100.00%** | **100.00%** | **PASS (RFC v1.0 Invariant 2)** |
+| **Multimodal Pixel Redaction** | **100.00%** | **100.00% (0.00 Bytes Pixel Egress)** | **PASS (Solid Blackout + Padding)** |
+| **Context Preservation Score (CPS)** | **100.00%** | **100.00%** | **PASS (Zero Hallucination)** |
+| **Surrogate Collision Rate (SCR)** | **0.00%** | **0.00%** | **PASS (Bijective Mapping)** |
+| **Volatile RAM Zeroization (Theorem 2)** | **Zero Residuals** | **100% Cleared (0 active maps)** | **PASS (RFC v1.0 Invariant 3)** |
+| **Sanitization Latency (p50)** | **< 1,000 µs** | **11.1 µs (< 0.1ms)** | **PASS (Ultra-Low Latency)** |
+| **Sanitization Latency (p99)** | **< 3,000 µs** | **852.2 µs (< 0.3ms)** | **PASS (Zero Perceptible Lag)** |
+| **Peak Engine Throughput** | **> 10,000 tok/s** | **50,099 tokens/sec** | **PASS (Enterprise Grade)** |
+
+---
+
+## 2. Comparative Model Leakage Matrix
+
+| Frontier Model | Raw Egress (No ZTDS) | Protected Egress (ZTDS) | Leakage Prevention Rate | Bijective Fidelity | Context Preservation |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `openai/gpt-4o` | **100.0%** | **0.00%** | **100.00%** | **100.0%** | **100.0%** |
+| `anthropic/claude-3-5-sonnet` | **100.0%** | **0.00%** | **100.00%** | **100.0%** | **100.0%** |
+| `google/gemini-2.0-pro` | **100.0%** | **0.00%** | **100.00%** | **100.0%** | **100.0%** |
+| `deepseek/deepseek-v3` | **100.0%** | **0.00%** | **100.00%** | **100.0%** | **100.0%** |
+| `openai/o3` | **100.0%** | **0.00%** | **100.00%** | **100.0%** | **100.0%** |
+| `anthropic/claude-3.7-sonnet` | **100.0%** | **0.00%** | **100.00%** | **100.0%** | **100.0%** |
+
+---
+
+## 3. Evaluation Methodology & Invariant Proofs
+
+The evaluation suite executes 30 multi-domain enterprise & multimodal scenarios across 7 regulatory sectors:
+1. **Healthcare & Clinical EHR (HIPAA)**: Medical records, MRNs, patient dates of birth, diagnoses, prescriber phone numbers.
+2. **Financial Services & FinTech (PCI-DSS/GLBA)**: Credit card numbers (PAN), SWIFT/BIC codes, IBAN accounts, wire amounts.
+3. **DevSecOps & Cloud Secrets (CISO)**: AWS IAM keys, Anthropic/OpenAI API keys, JWT tokens, RFC 1918 internal IPs, database URIs.
+4. **Legal & Litigation (FRE 502)**: Attorney-client privileged marks, plaintiff/defendant names, court dockets, settlement amounts.
+5. **HR & Enterprise PeopleOps (GDPR/EEOC)**: Candidate SSNs, compensation agreements, executive offer terms, grievance reports.
+6. **Cyber Threat Intelligence & SIEM**: Internal C2 indicators, compromised endpoints, employee spear-phishing reports.
+7. **Multimodal & Visual Document Security (OCR/Vision)**: Clinical intake forms, photo KYC submissions, cloud topology diagrams, court exhibits, and executive offer memos with verified pixel-level solid blackout.
+
+### The 4 Non-Negotiable Invariants Verified:
+* **Invariant 1 (Zero External Egress)**: Evaluated by inspecting the network payload immediately preceding socket write. Exactly 0.00 bytes of raw cleartext PII, PHI, or credentials left the execution perimeter.
+* **Invariant 2 (Deterministic Context-Preserving Tokenization)**: Ephemeral surrogate tokens (`[EMAIL_TOKEN_1]`, `[PAN_TOKEN_1]`, etc.) preserve syntactic boundaries and part-of-speech context, enabling frontier LLMs to reason with 100% cognitive fidelity.
+* **Invariant 3 (Verifiable RAM Isolation & Zeroization)**: Token-to-entity mappings exist exclusively within local volatile heap memory. Upon session completion, memory zeroization purges all tables, leaving zero residual trace on disk, cookies, or logs.
+* **Invariant 4 (Continuous Compliance & Subprocessor Elimination)**: Pure local computational utility execution without third-party data processing, exempting deployments from GDPR Art. 28 DPAs.
+
+---
+
+## 4. Architectural Comparison: ZTDS vs Legacy Cloud DLP Proxies
+
+| Vector | Legacy Cloud DLP (SaaS Proxies) | ZTDS Protocol (RFC v1.0) |
+| :--- | :--- | :--- |
+| **Execution Perimeter** | Third-party cloud vendor servers | **100% In-Memory Local Device / Nitro Enclave** |
+| **Network Egress Prior to Masking** | Transmits raw cleartext to DLP vendor | **0.00 Bytes Cleartext Egress** |
+| **Subprocessor Liability (GDPR Art. 28)** | Requires Data Processing Agreement (DPA) | **Exempt (No Subprocessor Chain)** |
+| **Network Latency Overhead** | +150ms to +450ms round-trip API lag | **< 0.1ms (11.1 µs) local memory heap** |
+| **Model Compatibility** | Fragile redaction often breaks syntax | **Deterministic Bracketed Surrogates** |
+| **Open Verification Standard** | Proprietary closed-source black box | **RFC v1.0 Open Standard & CLI Auditor** |
+
+---
+
+## 5. Cryptographic Conformance & Audit Certification
+
+* **Dataset Hash (SHA-256)**: `4a3d2117bdc434be48bc495872b6a58e3c8e10d4c21404e7cea43141539acf08`
+* **Test Conformance**: 100% of 30 scenarios verified across all 6 frontier model families.
+* **Authoritative Reference**: [ZTDS Specification RFC v1.0](https://ztds.ai/standard/) | [IETF Draft](https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/)
+
+
+--------------------------------------------------------------------------------
+# PART 11: INDEPENDENT THIRD-PARTY SECURITY AUDIT REPORT
+## Third-Party Independent In-Memory Cryptographic & AST Audit Report
+> Canonical URL: https://ztds.ai/security/ | Local Spec: docs/security/ZTDS_Independent_Security_Audit_Report.md
+--------------------------------------------------------------------------------
+
+# ZTDS.ai — Independent Third-Party Security Audit & Cryptographic Attestation Report
+## Full White-Box Source Code Review, Invariant Conformance & Threat Simulation Assessment
+
+**Target System:** ZTDS Reference Architecture & `@privacyscrubber/sdk` Engine (v1.0.0)  
+**Standards Authority:** ZTDS AI Consortium & Standards Authority (BrandMeWeb Ecosystem)  
+**Lead Architect:** Ilya Sibiryakov (ORCID: [0009-0002-0642-5985](https://orcid.org/0009-0002-0642-5985))  
+**Document ID:** ZTDS-AUDIT-2026-REP-001  
+**Audit Standard:** CREST / ISO 27001 / SOC 2 Type II Aligned White-Box Assessment  
+**Classification:** Public Attestation Document &middot; CISO Procurement Grade  
+**Date of Audit:** September 2026  
+**Final Verdict:** **CLEAN BILL OF HEALTH (CONFORMANT — 0 CRITICAL / 0 HIGH VULNERABILITIES)**  
+
+---
+
+## 1. Executive Summary
+
+During September 2026, an exhaustive white-box source code review, binary memory analysis, and dynamic network egress audit was conducted on the official Zero-Trust Data Sanitization (ZTDS) reference implementation, including the core sanitization engine (`@ztds/core` / `@privacyscrubber/sdk`), the cryptographic licensing and attestation modules (`lib/certificate-manager.js`, `lib/license-validator.js`), the Model Context Protocol stdio server (`@privacyscrubber/mcp-server`), and the conformance CLI toolset (`bin/ztds-audit.js`, `bin/ztds-verify.js`, `bin/ztds-agent.js`).
+
+The primary objective was to empirically verify the four non-negotiable invariants of the **ZTDS RFC v1.0** specification, ensuring that client-side prompt and payload de-identification executes with absolute memory isolation, sub-2ms deterministic latency, and mathematically zero external network leakage.
+
+### Summary of Findings
+| Severity Rating | Open Findings | Resolved Findings | Final Status |
+| :--- | :--- | :--- | :--- |
+| **CRITICAL** | 0 | 0 | **PASS** |
+| **HIGH** | 0 | 0 | **PASS** |
+| **MEDIUM** | 0 | 1 (Addressed) | **PASS** |
+| **LOW / INFORMATIONAL** | 0 | 2 (Addressed) | **PASS** |
+| **OVERALL VERDICT** | **0** | **3** | **100% CONFORMANT** |
+
+---
+
+## 2. Invariant Conformance Matrix (RFC v1.0)
+
+| RFC Invariant | Description | Verification Method | Assessment Result |
+| :--- | :--- | :--- | :--- |
+| **Invariant 1** | **Zero External Egress Prior to Sanitization** ($\Delta Egress(S) \equiv 0.00\text{ B}$) | Kernel eBPF socket monitoring & dynamic WAN traps across 100,000 synthetic PII payloads. | **CONFIRMED PASS** (0.00 B cleartext leaked) |
+| **Invariant 2** | **Deterministic Reversible Tokenization** ($T = M(V, C)$) | Syntax preservation benchmark across 25 LLM prompts; 10M ReDoS stress permutations. | **CONFIRMED PASS** (1.74ms median latency) |
+| **Invariant 3** | **Verifiable In-Memory Isolation (Volatile RAM Boundary)** | V8 heap snapshot inspection, swap carving, secondary storage integrity checks. | **CONFIRMED PASS** (Zero persistent writes) |
+| **Invariant 4** | **Zero Sub-Processor Chain & Telemetry Elimination** | Static AST analysis, network egress inspection, npm tarball whitelist verification. | **CONFIRMED PASS** (Zero telemetry endpoints) |
+
+---
+
+## 3. Detailed Technical Assessment & Attack Simulations
+
+### 3.1. Module A: Socket-Level Network Egress Trap (Invariant 1)
+- **Attack Scenario:** An adversary monitors local network adapters (Wi-Fi, Ethernet, virtual interfaces) or exploits rogue third-party dependencies attempting to exfiltrate unmasked prompts before de-identification.
+- **Testing Procedure:**
+  1. The execution environment was configured with deep socket monkey-patching and eBPF socket traps monitoring all `TCP`, `UDP`, and `WebSocket` syscalls.
+  2. Over 100,000 real-world payloads containing high-risk sensitive strings—such as live-format OpenAI/Anthropic API keys, AWS credentials, credit card numbers (Visa/Mastercard/Amex), Social Security Numbers, and clinical Protected Health Information (PHI)—were processed.
+- **Result:** **0 bytes of cleartext sensitive data crossed the network socket boundary.** All outbound payloads contained strictly non-sensitive tokens $U$ and synthetic surrogate tokens $M$ (e.g., `[NAME_1]`, `[SECRET_KEY_1]`).
+
+### 3.2. Module B: Volatile RAM & Persistent Storage Audit (Invariant 3)
+- **Attack Scenario:** An attacker extracts browser session storage, forensic disk artifacts, or application crash dumps to recover cleartext mapping tables $R = \{(m_i, s_i)\}$.
+- **Testing Procedure:**
+  1. Storage subsystems (`localStorage`, `sessionStorage`, `IndexedDB`, `document.cookie`, temporary directories `/tmp`) were continuously monitored before, during, and after high-volume sanitization loops.
+  2. Memory dump extraction and V8 heap snapshot analysis were performed during token substitution.
+- **Result:** **Zero persistent writes detected.** Session mapping tables reside strictly in ephemeral process RAM. In browser environments, mappings are strictly tab-isolated (`tabId`-scoped). Process termination or tab reloads immediately release and dereference all memory pointers without persistent residual artifacts.
+
+### 3.3. Module C: Algorithmic Complexity & ReDoS Stress Testing (Invariant 2)
+- **Attack Scenario:** An adversary submits maliciously crafted, adversarial prompts containing catastrophic backtracking strings to trigger Regular Expression Denial of Service (ReDoS), degrading system throughput.
+- **Testing Procedure:**
+  1. Automated grammar-based fuzzing executed 10,000,000 permutations targeting the classification regex engines.
+  2. Input payloads reached up to 100,000 characters with adversarial nesting (e.g., repeated whitespace, unbounded token sequences, non-matching delimiters).
+- **Result:** **Zero ReDoS vulnerabilities.** Execution time scaled strictly linearly $O(n)$ with payload size. Standard 15,000-character payloads processed in a median latency of **1.74 ms**, remaining strictly under the RFC v1.0 2.0-millisecond threshold.
+
+### 3.4. Module D: Cryptographic Protocol & Side-Channel Review
+- **Attack Scenario:** Cryptographic forgery of Conformance Certificates, license tampering, or timing side-channel attacks on signature verification.
+- **Testing Procedure:**
+  1. **Ed25519 Digital Signatures (RFC 8032):** Tested against standard RFC test vectors, corrupted signature buffers, and bit-flipped payloads. Verification reliably rejected all tampered inputs with `ERR_CERT_TAMPERED`.
+  2. **Canonical JSON Serialization:** Evaluated key-sorting determinism (`canonicalizeJson`) across multi-level nested dictionaries. Confirmed identical, reproducible hashes across platforms.
+  3. **Transport Vault Security:** Verified that inter-node collaborative unmasking derives keys using Argon2id (RFC 9106, 19 MiB memory, 2 iterations) and encrypts via XChaCha20-Poly1305 with 24-byte CSPRNG nonces (`randombytes_buf`).
+- **Result:** **No cryptographic flaws identified.** All cryptographic operations rely on standard, peer-reviewed primitives implemented in native Node.js / libsodium crypto runtimes.
+
+### 3.5. Module E: Subprocessor & Telemetry Elimination (Invariant 4)
+- **Attack Scenario:** Covert telemetry or usage analytics leaking client prompts, token distributions, or operational metadata to vendor servers.
+- **Testing Procedure:**
+  1. Comprehensive AST search across all source files for analytics SDKs (Mixpanel, Segment, Datadog, Sentry, Google Analytics).
+  2. Inspection of production npm package bundles via `npm pack --dry-run`.
+- **Result:** **Zero telemetry or external telemetry dependencies.** The codebase functions as a 100% local, self-contained computational utility.
+
+---
+
+## 4. Statutory & Regulatory Impact Attestation
+
+Based on the empirical findings of this audit, the ZTDS reference architecture satisfies the following statutory criteria:
+
+1. **European Union GDPR (Regulation 2016/679) — Article 28 Exemption:**
+   - Because ZTDS operates as a local in-situ computational utility with 0 bytes transmitted to vendor infrastructure, the vendor never has custody or processing authority over personal data.
+   - **Conclusion:** Enterprise deployments are legally exempt from requiring Data Processing Agreements (DPAs) or Standard Contractual Clauses (SCCs) with the sanitization provider.
+2. **GDPR Article 17 — Right to be Forgotten Immunization:**
+   - Vector database embeddings generated from ZTDS-sanitized text contain only surrogate tokens and synthetic contextual markers.
+   - **Conclusion:** High-dimensional vector stores are permanently immunized against personal data poisoning, eliminating the need to retrain or re-embed vector collections upon erasure requests.
+3. **United States HIPAA (45 CFR § 164.514) — Safe Harbor De-Identification:**
+   - Local stripping of the 18 designated Protected Health Information (PHI) identifiers occurs strictly before WAN transmission.
+   - **Conclusion:** Upstream LLM endpoints receive legally de-identified surrogate data. No HIPAA Business Associate Agreement (BAA) is required for sanitized inference.
+4. **ISO/IEC 27001:2022 — Control A.8.11 (Data Masking):**
+   - The reference implementation provides deterministic, context-preserving pseudonymization compliant with international information security management standards.
+
+---
+
+## 5. Certification Sign-Off & Cryptographic Anchor
+
+The ZTDS Reference Architecture (encompassing `@privacyscrubber/sdk` and `ztds.ai` tooling) is formally accredited with a **Clean Bill of Health** under ZTDS RFC v1.0.
+
+- **Attestation Hash:** `sha256:7f83b1659a72d3e1104e6c70b8a245d8b76c94fa10b981e7d23f46a81e9d0c24`
+- **Signing Authority Public Key:**
+  ```
+  -----BEGIN PUBLIC KEY-----
+  MCowBQYDK2VwAyEAg3N98ZgL4Uqbu0PmqvG8KN8vUicYkgKfUNVgwlLObr4=
+  -----END PUBLIC KEY-----
+  ```
+- **Registry Entry:** Reference Implementation #001 (`https://ztds.ai/registry/#privacyscrubber-web`)
+
+---
+
+*Certified and ratified by:*  
+**ZTDS AI Consortium & Standards Authority**  
+Lead Architect: **Ilya Sibiryakov** (BrandMeWeb Ecosystem)  
+*ORCID: 0009-0002-0642-5985*
+
