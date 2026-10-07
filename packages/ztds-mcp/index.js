@@ -22,7 +22,7 @@ import path from 'path';
 import os from 'os';
 
 const SERVER_NAME = 'ztds-mcp';
-const SERVER_VERSION = '1.0.0';
+const SERVER_VERSION = '1.1.0';
 const PROTOCOL_VERSION = '2024-11-05';
 
 // Security & Resource Constraints (DoS Prevention)
@@ -1087,7 +1087,7 @@ export {
 
 // Auto-start when executed as a CLI script
 const entryFile = process.argv[1] ? path.basename(process.argv[1]) : '';
-const isCli = entryFile === 'index.js' || entryFile === 'ztds-mcp' || entryFile === 'ztds-mcp.js';
+const isCli = !entryFile || entryFile.startsWith('ztds-mcp') || entryFile === 'index.js';
 
 if (isCli) {
   const cliArgs = process.argv.slice(2);
