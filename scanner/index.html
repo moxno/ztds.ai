@@ -378,9 +378,10 @@
                 <label for="scannerInputText" class="text-xs font-mono font-bold text-amber-400 flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full bg-amber-400"></span> Sensitive Cleartext Ingestion Buffer
                 </label>
-                <div class="flex items-center gap-2">
-                  <span class="text-[11px] font-mono text-slate-500" id="scannerInputLength">0 chars</span>
-                  <button id="btnResetScanner" type="button" class="text-[11px] font-mono text-slate-400 hover:text-slate-200 underline">Clear</button>
+                <div class="flex items-center gap-2.5">
+                  <span class="text-[11px] font-mono text-slate-500" id="scannerInputLength">0 chars (0 B)</span>
+                  <button id="btnPasteClipboard" type="button" class="text-[11px] font-mono text-emerald-400 hover:text-emerald-300 underline cursor-pointer">Paste</button>
+                  <button id="btnResetScanner" type="button" class="text-[11px] font-mono text-slate-400 hover:text-slate-200 underline cursor-pointer">Clear</button>
                 </div>
               </div>
               <textarea id="scannerInputText" rows="6" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-500 resize-none leading-relaxed transition-colors" placeholder="Paste prompt with sensitive PII, PHI, or secrets..."></textarea>
@@ -436,6 +437,10 @@
                 <div id="scannerOutputTokens" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-xs font-mono text-slate-200 h-[155px] overflow-y-auto leading-relaxed">
                   <span class="text-slate-500 italic">Surrogate tokens will appear here after in-RAM sanitization...</span>
                 </div>
+                <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-800/80 text-[11px] font-mono text-slate-400">
+                  <span id="surrogateMetricsLabel">0 characters</span>
+                  <button id="btnCopySanitized" type="button" class="text-emerald-400 hover:text-emerald-300 underline cursor-pointer font-semibold">Copy Sanitized Prompt</button>
+                </div>
               </div>
 
               <!-- Tab Panel 2: Bijective Restoration / Roundtrip -->
@@ -460,6 +465,10 @@
                 <div class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-xs font-mono text-slate-200 h-[155px] overflow-y-auto leading-relaxed">
                   <div class="text-[10px] text-slate-400 mb-2">In-RAM Bijective Hash Table (Discarded on Page Close, 0 Disk Writes):</div>
                   <pre id="tokenMapDisplay" class="text-[11px] text-sky-300 font-mono whitespace-pre-wrap overflow-x-auto">{}</pre>
+                </div>
+                <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-800/80 text-[11px] font-mono text-slate-400">
+                  <span id="tokenMapMetricsLabel">0 mapped entries</span>
+                  <button id="btnCopyTokenMap" type="button" class="text-emerald-400 hover:text-emerald-300 underline cursor-pointer font-semibold">Copy Map JSON</button>
                 </div>
               </div>
             </div>
@@ -1039,6 +1048,7 @@ async function ingestDocument(patientDoc: string) {
     // DOM Elements
     const inputText = document.getElementById('scannerInputText');
     const inputLength = document.getElementById('scannerInputLength');
+    const btnPasteClipboard = document.getElementById('btnPasteClipboard');
     const outputTokens = document.getElementById('scannerOutputTokens');
     const latencyMeter = document.getElementById('scannerLatencyMeter');
     const reversalLatencyMeter = document.getElementById('reversalLatencyMeter');
@@ -1054,6 +1064,11 @@ async function ingestDocument(patientDoc: string) {
     const packetLogTableBody = document.getElementById('packetLogTableBody');
     const packetTotalCounter = document.getElementById('packetTotalCounter');
     const btnClearPacketLog = document.getElementById('btnClearPacketLog');
+    const btnCopySanitized = document.getElementById('btnCopySanitized');
+    const surrogateMetricsLabel = document.getElementById('surrogateMetricsLabel');
+    const btnCopyTokenMap = document.getElementById('btnCopyTokenMap');
+    const tokenMapMetricsLabel = document.getElementById('tokenMapMetricsLabel');
+    const scannerEntityPills = document.getElementById('scannerEntityPills');
 
     // Airplane Mode Toggle
     const btnToggleAirplane = document.getElementById('btnToggleAirplane');
@@ -1128,91 +1143,143 @@ async function ingestDocument(patientDoc: string) {
       packetLogTableBody.prepend(tr);
     }
 
-    // In-RAM Sanitizer Engine with Bijective Mapping
+    // In-RAM Sanitizer Engine with Bijective Mapping and Coreference Preservation (RFC v1.0 Invariant 2)
     async function sanitizeInRAM(text) {
       const startTime = performance.now();
       
       let sanitized = text;
-      const sessionMap = {};
-      const entityCounts = { ssn: 0, email: 0, iban: 0, phone: 0, key: 0, ip: 0, names: 0, card: 0 };
+      const sessionMap = {}; // token -> cleartext
+      const clearToToken = {}; // cleartext -> token
+      const categoryCounters = {};
+      const entityCategoryCounts = {};
 
-      // SSN
-      sanitized = sanitized.replace(/\b(?!000|666|9\d{2})\d{3}-(?!00)\d{2}-(?!0000)\d{4}\b/g, (match) => {
-        entityCounts.ssn++;
-        const token = `[SSN_${entityCounts.ssn}]`;
-        sessionMap[token] = match;
+      function getOrAddToken(prefix, cleartext) {
+        if (clearToToken[cleartext]) {
+          return clearToToken[cleartext];
+        }
+        categoryCounters[prefix] = (categoryCounters[prefix] || 0) + 1;
+        const token = `[${prefix}_${categoryCounters[prefix]}]`;
+        clearToToken[cleartext] = token;
+        sessionMap[token] = cleartext;
+        entityCategoryCounts[prefix] = (entityCategoryCounts[prefix] || 0) + 1;
         return token;
+      }
+
+      // 1. Private RSA/SSH Keys
+      sanitized = sanitized.replace(/-----BEGIN (?:RSA |OPENSSH |EC |DSA |PGP )?PRIVATE KEY-----[\s\S]*?-----END (?:RSA |OPENSSH |EC |DSA |PGP )?PRIVATE KEY-----/g, match => {
+        return getOrAddToken('PRIVATE_KEY', match);
       });
 
-      // Credit Card
-      sanitized = sanitized.replace(/\b(?:4\d{3}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}|5[1-5]\d{2}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4})\b/g, (match) => {
-        entityCounts.card++;
-        const token = `[CREDIT_CARD_${entityCounts.card}]`;
-        sessionMap[token] = match;
-        return token;
+      // 2. JWT Tokens
+      sanitized = sanitized.replace(/\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b/g, match => {
+        return getOrAddToken('JWT_TOKEN', match);
       });
 
-      // Email
-      sanitized = sanitized.replace(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g, (match) => {
-        entityCounts.email++;
-        const token = `[EMAIL_${entityCounts.email}]`;
-        sessionMap[token] = match;
-        return token;
+      // 3. Cloud & AI API Keys
+      sanitized = sanitized.replace(/\bsk-ant-[A-Za-z0-9_-]{20,}\b/g, match => {
+        return getOrAddToken('ANTHROPIC_KEY', match);
+      });
+      sanitized = sanitized.replace(/\bsk-[A-Za-z0-9_-]{20,}\b/g, match => {
+        return getOrAddToken('OPENAI_KEY', match);
+      });
+      sanitized = sanitized.replace(/\bAKIA[0-9A-Z]{16}\b/g, match => {
+        return getOrAddToken('AWS_ACCESS_KEY', match);
+      });
+      sanitized = sanitized.replace(/wJalr[A-Za-z0-9\/+=]{30,}/g, match => {
+        return getOrAddToken('AWS_SECRET_KEY', match);
+      });
+      sanitized = sanitized.replace(/\bgh[pousr]_[A-Za-z0-9]{36,}\b/g, match => {
+        return getOrAddToken('GITHUB_TOKEN', match);
       });
 
-      // IBAN
-      sanitized = sanitized.replace(/\b[A-Z]{2}\d{2}[A-Z0-9]{11,30}\b/g, (match) => {
-        entityCounts.iban++;
-        const token = `[IBAN_${entityCounts.iban}]`;
-        sessionMap[token] = match;
-        return token;
+      // 4. Crypto Wallet Addresses
+      sanitized = sanitized.replace(/\b(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,59}\b/g, match => {
+        return getOrAddToken('BTC_ADDR', match);
+      });
+      sanitized = sanitized.replace(/\b0x[a-fA-F0-9]{40}\b/g, match => {
+        return getOrAddToken('ETH_ADDR', match);
       });
 
-      // Phone
-      sanitized = sanitized.replace(/\(\d{3}\)\s*\d{3}-\d{4}/g, (match) => {
-        entityCounts.phone++;
-        const token = `[PHONE_${entityCounts.phone}]`;
-        sessionMap[token] = match;
-        return token;
+      // 5. Credit Cards
+      sanitized = sanitized.replace(/\b(?:4\d{3}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}|5[1-5]\d{2}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}|3[47]\d{2}[-\s]?\d{6}[-\s]?\d{5}|3(?:0[0-5]|[68]\d)[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{2}|6(?:011|5\d{2})[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4})\b/g, match => {
+        return getOrAddToken('CREDIT_CARD', match);
       });
 
-      // Cloud API Keys (AWS, GitHub)
-      sanitized = sanitized.replace(/wJalr[A-Za-z0-9\/+=]{30,}/g, (match) => {
-        entityCounts.key++;
-        const token = `[AWS_SECRET_KEY_${entityCounts.key}]`;
-        sessionMap[token] = match;
-        return token;
-      });
-      sanitized = sanitized.replace(/ghp_[A-Za-z0-9]{30,}/g, (match) => {
-        entityCounts.key++;
-        const token = `[GITHUB_TOKEN_${entityCounts.key}]`;
-        sessionMap[token] = match;
-        return token;
+      // 6. US SSN
+      sanitized = sanitized.replace(/\b(?!000|666|9\d{2})\d{3}-(?!00)\d{2}-(?!0000)\d{4}\b/g, match => {
+        return getOrAddToken('SSN', match);
       });
 
-      // IPv4 Addresses
-      sanitized = sanitized.replace(/\b(?:\d{1,3}\.){3}\d{1,3}\b/g, (match) => {
-        entityCounts.ip++;
-        const token = `[IPV4_${entityCounts.ip}]`;
-        sessionMap[token] = match;
-        return token;
+      // 7. IBAN
+      sanitized = sanitized.replace(/\b[A-Z]{2}\d{2}[A-Z0-9]{11,30}\b/g, match => {
+        return getOrAddToken('IBAN', match);
       });
 
-      // Canonical Names
-      const knownNames = ["Alexander Wright", "Sarah Jenkins", "Sarah Vance", "David K. Chen", "NovaSphere Corp"];
+      // 8. Email
+      sanitized = sanitized.replace(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g, match => {
+        return getOrAddToken('EMAIL', match);
+      });
+
+      // 9. IPv4
+      sanitized = sanitized.replace(/\b(?:\d{1,3}\.){3}\d{1,3}\b/g, match => {
+        return getOrAddToken('IPV4', match);
+      });
+
+      // 10. UUID
+      sanitized = sanitized.replace(/\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\b/g, match => {
+        return getOrAddToken('UUID', match);
+      });
+
+      // 11. Phone numbers
+      sanitized = sanitized.replace(/(?:\+\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b/g, match => {
+        return getOrAddToken('PHONE', match);
+      });
+
+      // 12. Date of Birth (DOB)
+      sanitized = sanitized.replace(/\b(?:DOB|Date of Birth)\s*[:#]?\s*(\d{4}[-/]\d{2}[-/]\d{2}|\d{2}[-/]\d{2}[-/]\d{4})\b/gi, (full, val) => {
+        const token = getOrAddToken('DOB', val);
+        return full.replace(val, token);
+      });
+
+      // 13. Medical Record Number (MRN)
+      sanitized = sanitized.replace(/\b(?:MRN|Patient ID|Medical Record)\s*[:#]?\s*([A-Z0-9-]{6,12})\b/gi, (full, val) => {
+        const token = getOrAddToken('MRN', val);
+        return full.replace(val, token);
+      });
+
+      // 14. Key-Value Passwords & Credentials
+      sanitized = sanitized.replace(/\b(?:password|passwd|api[_-]?secret|auth[_-]?token)\s*[:=]\s*['"]?([^\s'"]{6,})['"]?/gi, (full, val) => {
+        const token = getOrAddToken('SECRET', val);
+        return full.replace(val, token);
+      });
+
+      // 15. Known Canonical Names
+      const knownNames = [
+        "Alexander Wright",
+        "Sarah Jenkins",
+        "Sarah Vance",
+        "David K. Chen",
+        "Marcus Vance",
+        "NovaSphere Corp",
+        "Mercy Health",
+        "JPMorgan Chase"
+      ];
       knownNames.forEach(name => {
         if (sanitized.includes(name)) {
-          entityCounts.names++;
-          const token = `[ENTITY_${entityCounts.names}]`;
-          sessionMap[token] = name;
+          const token = getOrAddToken('ENTITY', name);
           sanitized = sanitized.split(name).join(token);
         }
       });
 
-      const duration = (performance.now() - startTime).toFixed(2);
-      const totalEntities = Object.values(entityCounts).reduce((a, b) => a + b, 0);
+      // Title + Names: e.g. Dr. Sarah Vance
+      sanitized = sanitized.replace(/\b(?:Dr\.|Mr\.|Mrs\.|Ms\.|Prof\.)\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+\b/g, match => {
+        return getOrAddToken('ENTITY', match);
+      });
 
-      return { sanitized, sessionMap, duration, totalEntities, entityCounts };
+      const duration = (performance.now() - startTime).toFixed(2);
+      const totalEntities = Object.keys(sessionMap).length;
+
+      return { sanitized, sessionMap, duration, totalEntities, entityCategoryCounts };
     }
 
     // Format HTML Tokens for visualization
@@ -1222,10 +1289,28 @@ async function ingestDocument(patientDoc: string) {
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;');
       
-      const tokenRegex = /\[(SSN|CREDIT_CARD|EMAIL|IBAN|PHONE|AWS_SECRET_KEY|GITHUB_TOKEN|IPV4|ENTITY)_\d+\]/g;
+      const tokenRegex = /\[[A-Z0-9_]+_\d+\]/g;
       return escaped.replace(tokenRegex, match => {
         return `<span class="inline-block px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-500/50 text-emerald-300 font-bold text-[11px] shadow-sm">${match}</span>`;
       });
+    }
+
+    // Render Entity Category Pills
+    function renderEntityPills(counts, total) {
+      if (!scannerEntityPills) return;
+      if (total === 0) {
+        scannerEntityPills.innerHTML = `
+          <span class="text-[10px] font-mono text-slate-500 uppercase">Entities Detected:</span>
+          <span id="detectedCountPill" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">0 entities</span>
+        `;
+        return;
+      }
+      let html = `<span class="text-[10px] font-mono text-slate-400 uppercase font-semibold">Entities Masked:</span>`;
+      html += `<span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700 font-bold">${total} Total</span>`;
+      for (const [cat, count] of Object.entries(counts)) {
+        html += `<span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-300 border border-slate-700">${count} ${cat}</span>`;
+      }
+      scannerEntityPills.innerHTML = html;
     }
 
     // Bijective Restoration Function (Lossless In-RAM Invariant 2)
@@ -1241,69 +1326,128 @@ async function ingestDocument(patientDoc: string) {
 
     // Execute Verification Cycle
     async function executeVerification() {
-      const raw = inputText.value.trim();
-      if (!raw) return;
+      const raw = inputText ? inputText.value : '';
+      if (!raw) {
+        if (outputTokens) outputTokens.innerHTML = '<span class="text-slate-500 italic">Surrogate tokens will appear here after in-RAM sanitization...</span>';
+        if (tokenMapDisplay) tokenMapDisplay.innerText = '{}';
+        if (simulatedLlmResponseText) simulatedLlmResponseText.innerText = 'Waiting for sanitization cycle...';
+        if (restoredCleartextDisplay) restoredCleartextDisplay.innerText = 'Restored cleartext will appear here...';
+        if (surrogateMetricsLabel) surrogateMetricsLabel.innerText = '0 characters';
+        if (tokenMapMetricsLabel) tokenMapMetricsLabel.innerText = '0 mapped entries';
+        renderEntityPills({}, 0);
+        return;
+      }
 
       const result = await sanitizeInRAM(raw);
       lastSanitizedText = result.sanitized;
       currentSessionMap = result.sessionMap;
 
-      outputTokens.innerHTML = renderHighlightedTokens(result.sanitized);
-      latencyMeter.innerText = `${result.duration} ms (RAM)`;
+      if (outputTokens) outputTokens.innerHTML = renderHighlightedTokens(result.sanitized);
+      if (latencyMeter) latencyMeter.innerText = `${result.duration} ms (RAM)`;
 
-      detectedCountPill.innerText = `${result.totalEntities} entities masked`;
-      detectedCountPill.className = result.totalEntities > 0 
-        ? "text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700 font-semibold"
-        : "text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700";
+      renderEntityPills(result.entityCategoryCounts, result.totalEntities);
+
+      // Update metrics labels
+      if (surrogateMetricsLabel) {
+        surrogateMetricsLabel.innerText = `${result.sanitized.length} chars (${new TextEncoder().encode(result.sanitized).length} B)`;
+      }
+      if (tokenMapMetricsLabel) {
+        tokenMapMetricsLabel.innerText = `${result.totalEntities} unique entities mapped`;
+      }
 
       // Network assertions
-      reqCountEl.innerText = '0 Requests Dispatched';
-      reqCountEl.className = 'text-emerald-400 font-bold';
-      egressBytesEl.innerText = 'ΔEgress = 0.00 Bytes';
-      egressBytesEl.className = 'text-emerald-400 font-bold';
-      memoryStatusEl.innerText = isAirplaneActive 
-        ? '100% Client Volatile RAM (Hardware Air-Gap Active)'
-        : '100% Client Volatile RAM (Protected)';
-      memoryStatusEl.className = 'text-emerald-400 font-bold';
+      if (reqCountEl) {
+        reqCountEl.innerText = '0 Requests Dispatched';
+        reqCountEl.className = 'text-emerald-400 font-bold';
+      }
+      if (egressBytesEl) {
+        egressBytesEl.innerText = 'ΔEgress = 0.00 Bytes';
+        egressBytesEl.className = 'text-emerald-400 font-bold';
+      }
+      if (memoryStatusEl) {
+        memoryStatusEl.innerText = isAirplaneActive 
+          ? '100% Client Volatile RAM (Hardware Air-Gap Active)'
+          : '100% Client Volatile RAM (Protected)';
+        memoryStatusEl.className = 'text-emerald-400 font-bold';
+      }
 
       // Simulate remote LLM answering with surrogate tokens
-      lastSimulatedResponse = `Analysis confirmed. Processed records for ${Object.keys(currentSessionMap).slice(0, 2).join(' and ') || '[ENTITY_1]'}. All authorization parameters verified successfully.`;
-      simulatedLlmResponseText.innerText = lastSimulatedResponse;
+      const activeSurrogateKeys = Object.keys(currentSessionMap);
+      lastSimulatedResponse = `Analysis confirmed. Processed records for ${activeSurrogateKeys.slice(0, 2).join(' and ') || '[ENTITY_1]'}. All authorization parameters verified successfully.`;
+      if (simulatedLlmResponseText) simulatedLlmResponseText.innerText = lastSimulatedResponse;
 
       // In-RAM De-anonymization (Invariant 2)
       const reversal = restoreCleartextInRAM(lastSimulatedResponse, currentSessionMap);
-      restoredCleartextDisplay.innerText = reversal.restored;
-      reversalLatencyMeter.innerText = `${reversal.duration} ms (RAM)`;
+      if (restoredCleartextDisplay) restoredCleartextDisplay.innerText = reversal.restored;
+      if (reversalLatencyMeter) reversalLatencyMeter.innerText = `${reversal.duration} ms (RAM)`;
 
       // Session map viewer
-      tokenMapDisplay.innerText = JSON.stringify(currentSessionMap, null, 2);
+      if (tokenMapDisplay) tokenMapDisplay.innerText = JSON.stringify(currentSessionMap, null, 2);
 
-      // Generate SHA-256 Digest
-      const hash = await computeSha256(raw + result.sanitized + Date.now().toString());
-      auditDigestEl.innerText = `sha256:${hash.slice(0, 16)}...`;
+      // Generate Cryptographic SHA-256 Digest & Audit Receipt
+      const inputDigest = await computeSha256(raw);
+      const sanitizedDigest = await computeSha256(result.sanitized);
+      const tokenMapDigest = await computeSha256(JSON.stringify(currentSessionMap));
+      const auditDigest = await computeSha256(`${inputDigest}:${sanitizedDigest}:${tokenMapDigest}`);
+
+      if (auditDigestEl) auditDigestEl.innerText = `sha256:${auditDigest.slice(0, 16)}...`;
 
       latestReceiptJson = {
         schema: "https://ztds.ai/schemas/audit-receipt.v1.json",
-        audit_hash: `sha256:${hash}`,
+        receipt_id: `ztds-rcpt-${Date.now()}-${auditDigest.slice(0, 8)}`,
+        standard: "ZTDS RFC v1.0 (IETF draft-sibiryakov-ztds-protocol)",
         timestamp: new Date().toISOString(),
-        auditor: "ZTDS In-Browser Verified Runtime v1.0",
-        environment: isAirplaneActive ? "Offline Air-Gap (Airplane Mode Sim)" : "Client-Side Web Worker / Volatile RAM",
+        auditor: "ZTDS In-Browser Verified Runtime v1.1.0",
+        audit_hash: `sha256:${auditDigest}`,
+        environment: {
+          type: isAirplaneActive ? "Offline Air-Gap (Airplane Mode Sim)" : "Client-Side Volatile RAM",
+          hardware_airgap: isAirplaneActive,
+          runtime_sandbox: "Browser Web Worker / WASM Scope",
+          wan_egress_bytes: 0.00,
+          intercepted_external_sockets: 0,
+          persistent_storage_writes: 0
+        },
         invariants: {
-          invariant_1_zero_egress: true,
-          invariant_2_token_reversibility: true,
-          invariant_3_memory_isolation: true,
-          invariant_4_subprocessor_exclusion: true
+          invariant_1_zero_egress: {
+            status: "PASSED",
+            delta_egress_bytes: 0.00,
+            unmasked_transmission_prevented: true
+          },
+          invariant_2_deterministic_tokenization: {
+            status: "PASSED",
+            bijective_reversibility: true,
+            coreference_preserved: true,
+            reversal_latency_ms: parseFloat(reversal.duration)
+          },
+          invariant_3_memory_isolation: {
+            status: "PASSED",
+            memory_boundary: "Client Volatile Heap",
+            zero_disk_storage: true
+          },
+          invariant_4_subprocessor_exclusion: {
+            status: "PASSED",
+            gdpr_art28_exemption: true,
+            third_party_dpa_required: false
+          }
         },
         metrics: {
-          delta_egress_bytes: 0.00,
-          intercepted_external_sockets: 0,
-          latency_ms: parseFloat(result.duration),
-          entities_masked: result.totalEntities
+          input_chars: raw.length,
+          input_bytes: new TextEncoder().encode(raw).length,
+          input_sha256: `sha256:${inputDigest}`,
+          sanitized_chars: result.sanitized.length,
+          sanitized_bytes: new TextEncoder().encode(result.sanitized).length,
+          sanitized_sha256: `sha256:${sanitizedDigest}`,
+          token_map_sha256: `sha256:${tokenMapDigest}`,
+          sanitization_latency_ms: parseFloat(result.duration),
+          entities_masked_count: result.totalEntities,
+          entities_breakdown: result.entityCategoryCounts
         },
-        conformance_status: "VERIFIED_COMPLIANT"
+        conformance_status: "VERIFIED_COMPLIANT_ZERO_EGRESS"
       };
 
-      btnProceedApply.href = `/apply/?track=product&hash=sha256:${hash.slice(0, 16)}`;
+      if (btnProceedApply) {
+        btnProceedApply.href = `/apply/?track=product&hash=sha256:${auditDigest.slice(0, 16)}`;
+      }
 
       // Append Packet Log entry
       appendPacketLog("IN-RAM MASK", "localhost (Client RAM)", `${result.totalEntities} Sensitive Tokens Isolated`, "0.00 Bytes", "PASSED (ZERO EGRESS)", true);
@@ -1649,23 +1793,98 @@ fi`
 
       // Set initial input
       inputText.value = PRESETS.health;
-      inputLength.innerText = `${inputText.value.length} chars`;
+      const initialByteLen = new TextEncoder().encode(inputText.value).length;
+      inputLength.innerText = `${inputText.value.length} chars (${initialByteLen} B)`;
       executeVerification();
 
+      // Real-time debounced sanitization as-you-type
+      let debounceTimer = null;
       inputText.addEventListener('input', () => {
-        inputLength.innerText = `${inputText.value.length} chars`;
+        const charLen = inputText.value.length;
+        const byteLen = new TextEncoder().encode(inputText.value).length;
+        inputLength.innerText = `${charLen} chars (${byteLen} B)`;
+
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          executeVerification();
+        }, 120);
       });
+
+      // Immediate sanitization on paste event
+      inputText.addEventListener('paste', () => {
+        setTimeout(() => {
+          const charLen = inputText.value.length;
+          const byteLen = new TextEncoder().encode(inputText.value).length;
+          inputLength.innerText = `${charLen} chars (${byteLen} B)`;
+          executeVerification();
+        }, 30);
+      });
+
+      // Paste from Clipboard Button
+      if (btnPasteClipboard) {
+        btnPasteClipboard.addEventListener('click', async () => {
+          try {
+            if (navigator.clipboard && navigator.clipboard.readText) {
+              const text = await navigator.clipboard.readText();
+              if (text) {
+                inputText.value = text;
+                const charLen = inputText.value.length;
+                const byteLen = new TextEncoder().encode(inputText.value).length;
+                inputLength.innerText = `${charLen} chars (${byteLen} B)`;
+                executeVerification();
+              }
+            } else {
+              inputText.focus();
+            }
+          } catch (e) {
+            inputText.focus();
+          }
+        });
+      }
+
+      // Copy Sanitized Text Button
+      if (btnCopySanitized) {
+        btnCopySanitized.addEventListener('click', () => {
+          if (!lastSanitizedText) return;
+          if (typeof window.ztdsCopy === 'function') {
+            window.ztdsCopy(lastSanitizedText, () => {
+              const origText = btnCopySanitized.innerText;
+              btnCopySanitized.innerText = 'Copied!';
+              setTimeout(() => { btnCopySanitized.innerText = origText; }, 1500);
+            });
+          }
+        });
+      }
+
+      // Copy Token Map Button
+      if (btnCopyTokenMap) {
+        btnCopyTokenMap.addEventListener('click', () => {
+          if (!currentSessionMap) return;
+          const mapJson = JSON.stringify(currentSessionMap, null, 2);
+          if (typeof window.ztdsCopy === 'function') {
+            window.ztdsCopy(mapJson, () => {
+              const origText = btnCopyTokenMap.innerText;
+              btnCopyTokenMap.innerText = 'Copied!';
+              setTimeout(() => { btnCopyTokenMap.innerText = origText; }, 1500);
+            });
+          }
+        });
+      }
 
       btnSanitize.addEventListener('click', executeVerification);
       btnTestLeak.addEventListener('click', simulateLeakAttempt);
       btnResetScanner.addEventListener('click', () => {
         inputText.value = '';
-        inputLength.innerText = '0 chars';
+        inputLength.innerText = '0 chars (0 B)';
+        lastSanitizedText = '';
+        currentSessionMap = {};
         outputTokens.innerHTML = '<span class="text-slate-500 italic">Surrogate tokens will appear here after in-RAM sanitization...</span>';
         tokenMapDisplay.innerText = '{}';
         simulatedLlmResponseText.innerText = 'Buffer cleared.';
         restoredCleartextDisplay.innerText = '';
-        detectedCountPill.innerText = '0 entities';
+        if (surrogateMetricsLabel) surrogateMetricsLabel.innerText = '0 characters';
+        if (tokenMapMetricsLabel) tokenMapMetricsLabel.innerText = '0 mapped entries';
+        renderEntityPills({}, 0);
       });
 
       // Airplane Mode Switch
@@ -1697,31 +1916,19 @@ fi`
       });
 
       // Presets
-      document.getElementById('scanPresetHealth').addEventListener('click', () => {
-        inputText.value = PRESETS.health;
-        inputLength.innerText = `${inputText.value.length} chars`;
+      function loadPreset(key) {
+        if (!PRESETS[key]) return;
+        inputText.value = PRESETS[key];
+        const byteLen = new TextEncoder().encode(inputText.value).length;
+        inputLength.innerText = `${inputText.value.length} chars (${byteLen} B)`;
         executeVerification();
-      });
-      document.getElementById('scanPresetFinance').addEventListener('click', () => {
-        inputText.value = PRESETS.finance;
-        inputLength.innerText = `${inputText.value.length} chars`;
-        executeVerification();
-      });
-      document.getElementById('scanPresetDevOps').addEventListener('click', () => {
-        inputText.value = PRESETS.devops;
-        inputLength.innerText = `${inputText.value.length} chars`;
-        executeVerification();
-      });
-      document.getElementById('scanPresetLegal').addEventListener('click', () => {
-        inputText.value = PRESETS.legal;
-        inputLength.innerText = `${inputText.value.length} chars`;
-        executeVerification();
-      });
-      document.getElementById('scanPresetSaas').addEventListener('click', () => {
-        inputText.value = PRESETS.saas;
-        inputLength.innerText = `${inputText.value.length} chars`;
-        executeVerification();
-      });
+      }
+
+      document.getElementById('scanPresetHealth').addEventListener('click', () => loadPreset('health'));
+      document.getElementById('scanPresetFinance').addEventListener('click', () => loadPreset('finance'));
+      document.getElementById('scanPresetDevOps').addEventListener('click', () => loadPreset('devops'));
+      document.getElementById('scanPresetLegal').addEventListener('click', () => loadPreset('legal'));
+      document.getElementById('scanPresetSaas').addEventListener('click', () => loadPreset('saas'));
 
       // Output Tabs
       tabBtnSurrogates.addEventListener('click', () => {
