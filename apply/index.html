@@ -352,222 +352,398 @@
           <span class="pill-trust shrink-0" id="trackBadge">Track A</span>
         </div>
 
-        <form id="applyForm" class="space-y-5">
-          <!-- Row 1: Name & URL -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label for="appName" class="block text-xs font-semibold text-slate-700 mb-1" id="labelAppName">Product or Library Name *</label>
-              <input type="text" id="appName" name="appName" required aria-label="Product or Library Name" placeholder="e.g. My AI SaaS, AgentProxy" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
-            </div>
-            <div>
-              <label for="appUrl" class="block text-xs font-semibold text-slate-700 mb-1" id="labelAppUrl">Website or Repository URL *</label>
-              <input type="url" id="appUrl" name="appUrl" required aria-label="Website or Repository URL" placeholder="https://example.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
-            </div>
-          </div>
-
-          <!-- Row 2: Organization & Contact Email -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label for="orgName" class="block text-xs font-semibold text-slate-700 mb-1" id="labelOrgName">Organization / Maintainer Name *</label>
-              <input type="text" id="orgName" name="orgName" required aria-label="Organization or Maintainer Name" placeholder="Acme Inc. or Jane Doe" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
-            </div>
-            <div>
-              <label for="contactEmail" class="block text-xs font-semibold text-slate-700 mb-1" id="labelContactEmail">Contact Email *</label>
-              <input type="email" id="contactEmail" name="contactEmail" required aria-label="Contact Email" placeholder="ciso@example.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
-            </div>
-          </div>
-
-          <!-- Track A Specific: Category, Profile, CLI Generator & Audit Hash -->
-          <div id="productFieldsContainer" class="space-y-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label for="appCategory" class="block text-xs font-semibold text-slate-700 mb-1">Solution Category</label>
-                <select id="appCategory" name="appCategory" aria-label="Solution Category" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
-                  <option value="WebPlatform">Web Application / SaaS</option>
-                  <option value="BrowserExtension">Browser Extension</option>
-                  <option value="DeveloperSDK">Developer Library / SDK</option>
-                  <option value="MCPGateway">Agent Gateway / MCP Connector</option>
-                  <option value="EnterpriseProxy">Internal Enterprise Enclave</option>
-                </select>
+        <!-- 3-Step Progressive Wizard Navigation Header -->
+        <nav id="wizardStepsBar" class="mb-6" aria-label="Accreditation Wizard Steps">
+          <ol class="grid grid-cols-3 gap-2 sm:gap-3">
+            <!-- Step 1 Tab -->
+            <li id="stepIndicator1" class="step-indicator p-2.5 sm:p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 text-emerald-950 cursor-pointer transition-all shadow-xs touch-target min-h-[44px]" data-step="1" role="button" tabindex="0" aria-current="step" aria-label="Step 1: Select Accreditation Track">
+              <div class="flex items-center gap-2">
+                <span class="step-num w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0">1</span>
+                <span class="step-title text-xs font-bold text-slate-900 hidden sm:inline">Track</span>
               </div>
-              <div>
-                <label for="appProfile" class="block text-xs font-semibold text-slate-700 mb-1">Industry Profile &amp; Rule Matrix (30 Profiles)</label>
-                <select id="appProfile" name="appProfile" aria-label="Industry Profile &amp; Rule Matrix" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
-                  <optgroup label="General &amp; Cross-Industry">
-                    <option value="general">00. Enterprise General (GDPR Recital 26, CCPA, Core PII &amp; Secrets)</option>
-                  </optgroup>
-                  <optgroup label="Clinical &amp; Healthcare">
-                    <option value="medical" selected>04. Medical &amp; Clinical EHR (18 PHI Identifiers, HL7, NPI)</option>
-                    <option value="biotech">22. Biotech &amp; Genomics (FASTA, CRISPR Targets, Formulations)</option>
-                    <option value="insurance">18. Insurance &amp; Actuarial (Claims, Policies, VIN Numbers)</option>
-                  </optgroup>
-                  <optgroup label="Banking, Finance &amp; Web3">
-                    <option value="finance">03. Banking &amp; Financial Markets (SWIFT/BIC, IBAN, CUSIP, ISIN)</option>
-                    <option value="crypto">16. Crypto &amp; Web3 (Wallets, Seed Phrases, Smart Contracts)</option>
-                    <option value="accounting">27. Accounting &amp; Audit (GL Accounts, E-File IDs, Depreciation)</option>
-                    <option value="bizops">08. Business Ops &amp; M&amp;A (VDR Codes, Cap Tables, Safe Notes)</option>
-                    <option value="sales">09. Sales &amp; RevOps (Salesforce IDs, DocuSign Envelopes, Gong)</option>
-                  </optgroup>
-                  <optgroup label="Legal, GRC &amp; HR">
-                    <option value="legal">01. Corporate Law &amp; LegalTech (Bates Stamps, Dockets, FRE 502)</option>
-                    <option value="compliance">12. GRC &amp; AML/Sanctions (SAR Filings, OFAC SDN, ISO 27001)</option>
-                    <option value="hr">02. Human Resources &amp; PeopleOps (Workday CAND, EEID, Works Council)</option>
-                  </optgroup>
-                  <optgroup label="Dev, Cloud &amp; Infrastructure">
-                    <option value="security">05. DevSecOps &amp; Incident Response (API Secrets, SSH, CVEs, SIEM)</option>
-                    <option value="dev">06. Software Development (Database URIs, Webhook Secrets, Localhost)</option>
-                    <option value="telecom">23. Telecom &amp; ISP (IMEI, IMSI, SIM ICCID, Cell CGI Tuples)</option>
-                    <option value="energy">20. Energy &amp; Utilities (NERC-CIP, SCADA Telemetry, Smart Meters)</option>
-                  </optgroup>
-                  <optgroup label="Enterprise Operations">
-                    <option value="support">10. Customer Support &amp; IT (ServiceNow INC/RITM, Jira, CSAT)</option>
-                    <option value="marketing">07. Marketing &amp; AdTech (GCLID, FBCLID, GA4 Cookies, Lead IDs)</option>
-                    <option value="realestate">11. Real Estate &amp; Title (MLS, Parcel APN, Escrow Closing Files)</option>
-                    <option value="logistics">13. Supply Chain &amp; Logistics (Bill of Lading, BIC Containers)</option>
-                    <option value="retail">25. Retail &amp; E-Commerce (Shopify UUIDs, Amazon Orders, POS)</option>
-                    <option value="manufacturing">26. Manufacturing (ERP Parts, BOM Revisions, CNC Job IDs)</option>
-                  </optgroup>
-                  <optgroup label="Sovereign, Public Sector &amp; Industry">
-                    <option value="government">15. Government &amp; Defense (ITAR Controls, CUI Markers, CAGE)</option>
-                    <option value="aerospace">29. Aerospace &amp; Aviation (FAA Tail Serials, Flight Manifests)</option>
-                    <option value="automotive">21. Connected Automotive (VIN 17-char, CAN-bus Telemetry)</option>
-                    <option value="education">14. Education &amp; EdTech (FERPA Records, FAFSA, GPA Scores)</option>
-                    <option value="nonprofit">28. Non-Profit &amp; Philanthropy (Donor Ledgers, Endowments, Grants)</option>
-                    <option value="gaming">17. Gaming &amp; Virtual Worlds (Steam IDs, In-Game Wallets, Discord)</option>
-                    <option value="hospitality">19. Hospitality &amp; Travel (Amadeus/Sabre PNR, Loyalty Clubs)</option>
-                    <option value="media">24. Media &amp; Entertainment (ISAN Audiovisual, ISRC Music Codes)</option>
-                    <option value="agriculture">30. Agriculture &amp; AgriTech (Livestock RFID, Parcel GPS Bounds)</option>
-                  </optgroup>
-                </select>
+              <p class="text-[11px] text-emerald-800 font-medium mt-1 truncate hidden sm:block" id="step1Subtitle">Product Certification</p>
+              <span class="text-[10px] font-bold text-slate-900 sm:hidden block mt-0.5 text-center">Track</span>
+            </li>
+
+            <!-- Step 2 Tab -->
+            <li id="stepIndicator2" class="step-indicator p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white text-slate-600 cursor-pointer transition-all opacity-80 hover:opacity-100 touch-target min-h-[44px]" data-step="2" role="button" tabindex="0" aria-label="Step 2: Entity Profile & Blueprint">
+              <div class="flex items-center gap-2">
+                <span class="step-num w-6 h-6 rounded-full bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0">2</span>
+                <span class="step-title text-xs font-semibold text-slate-700 hidden sm:inline">Profile</span>
               </div>
+              <p class="text-[11px] text-slate-500 mt-1 truncate hidden sm:block" id="step2Subtitle">Entity Details</p>
+              <span class="text-[10px] font-semibold text-slate-600 sm:hidden block mt-0.5 text-center">Profile</span>
+            </li>
+
+            <!-- Step 3 Tab -->
+            <li id="stepIndicator3" class="step-indicator p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white text-slate-600 cursor-pointer transition-all opacity-80 hover:opacity-100 touch-target min-h-[44px]" data-step="3" role="button" tabindex="0" aria-label="Step 3: Verification & GitOps Submission">
+              <div class="flex items-center gap-2">
+                <span class="step-num w-6 h-6 rounded-full bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0">3</span>
+                <span class="step-title text-xs font-semibold text-slate-700 hidden sm:inline">Verification</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mt-1 truncate hidden sm:block">Audit &amp; PR</p>
+              <span class="text-[10px] font-semibold text-slate-600 sm:hidden block mt-0.5 text-center">Verify</span>
+            </li>
+          </ol>
+        </nav>
+
+        <form id="applyForm" class="space-y-6">
+          <!-- STEP 1 PANEL: Track Selection -->
+          <div id="step1Panel" class="wizard-panel space-y-5">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">Step 1 of 3</span>
+                <span class="text-xs text-slate-500">Accreditation Path</span>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900">Select Accreditation Track</h3>
+              <p class="text-xs text-slate-600 mt-0.5">Choose your participation track to configure corresponding technical matrices, audit scopes, and registry destination.</p>
             </div>
 
-            <!-- Automated CLI Verification Command Generator Box -->
-            <div class="p-4 bg-slate-900 text-slate-200 rounded-xl border border-slate-800 space-y-2.5">
-              <div class="flex items-center justify-between text-xs">
-                <div class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                  <span class="font-bold text-emerald-400 font-mono text-[11px]">Automated Invariant Auditor (CLI)</span>
+            <!-- Visual Track Radio Cards -->
+            <div class="grid grid-cols-1 gap-3" id="step1TrackCards">
+              <!-- Track A Option -->
+              <div class="track-choice-card p-4 rounded-xl border-2 border-emerald-600 bg-emerald-50/40 cursor-pointer transition-all flex items-start justify-between gap-3 shadow-xs touch-target min-h-[56px]" data-track-choice="product" role="radio" aria-checked="true" tabindex="0" aria-label="Select Track A: Product and Software Certification">
+                <div class="flex items-start gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 font-mono">A</div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h4 class="text-sm font-bold text-slate-900">Track A: Product &amp; Software Certification</h4>
+                      <span class="text-[10px] font-mono uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">Standard</span>
+                    </div>
+                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                      For AI applications, SaaS platforms, browser extensions, and SDKs. Attest RFC v1.0 zero-egress invariants and earn the verified trust seal.
+                    </p>
+                    <div class="text-[11px] font-mono text-emerald-700 mt-2 flex items-center gap-1">
+                      <span>Registry File:</span> <code class="bg-white px-1.5 py-0.5 rounded border border-emerald-200">data/registry.json</code>
+                    </div>
+                  </div>
                 </div>
-                <span class="text-[10px] font-mono text-slate-400">Zero-Egress Protocol</span>
+                <div class="w-5 h-5 rounded-full border-2 border-emerald-600 flex items-center justify-center shrink-0 mt-1">
+                  <div class="w-2.5 h-2.5 rounded-full bg-emerald-600 track-radio-dot"></div>
+                </div>
               </div>
-              <p class="text-[11px] text-slate-400 leading-relaxed">
-                Run this command in your repository to audit for external egress, verify volatile RAM zeroization, and compute your verifiable SHA-256 hash:
-              </p>
-              <div class="flex items-center gap-2 bg-black/60 p-2.5 rounded-lg border border-slate-800 font-mono text-xs overflow-x-auto">
-                <code id="cliAuditCommand" class="text-emerald-300 flex-1 select-all whitespace-nowrap">npx ztds-audit --target https://example.com --dir ./src --profile medical</code>
-                <button type="button" id="copyCliCommandBtn" aria-label="Copy CLI command" class="shrink-0 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-sans font-medium transition-colors touch-target min-h-[32px]">
-                  Copy CLI
-                </button>
+
+              <!-- Track B Option -->
+              <div class="track-choice-card p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition-all flex items-start justify-between gap-3 opacity-90 hover:opacity-100 touch-target min-h-[56px]" data-track-choice="company" role="radio" aria-checked="false" tabindex="0" aria-label="Select Track B: Corporate Enterprise Adopter">
+                <div class="flex items-start gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-blue-900 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 font-mono">B</div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h4 class="text-sm font-bold text-slate-900">Track B: Corporate Enterprise Adopter</h4>
+                      <span class="text-[10px] font-mono uppercase bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-semibold">Enterprise</span>
+                    </div>
+                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                      For enterprises enforcing client-side Zero-Trust data sanitization across employee workstations, coding agents, and internal LLM chats.
+                    </p>
+                    <div class="text-[11px] font-mono text-blue-700 mt-2 flex items-center gap-1">
+                      <span>Registry File:</span> <code class="bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200">data/companies.json</code>
+                    </div>
+                  </div>
+                </div>
+                <div class="w-5 h-5 rounded-full border-2 border-slate-300 flex items-center justify-center shrink-0 mt-1">
+                  <div class="w-2.5 h-2.5 rounded-full bg-transparent track-radio-dot"></div>
+                </div>
               </div>
-              <div class="flex flex-wrap items-center justify-between gap-2 pt-1.5 border-t border-slate-800 text-[11px]">
-                <span class="text-slate-400">Need an immediate verification hash for local testing?</span>
-                <button type="button" id="simulateHashBtn" class="text-emerald-400 hover:text-emerald-300 underline font-mono text-[11px] touch-target">
-                  Simulate Local Hash &rarr;
-                </button>
+
+              <!-- Track C Option -->
+              <div class="track-choice-card p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition-all flex items-start justify-between gap-3 opacity-90 hover:opacity-100 touch-target min-h-[56px]" data-track-choice="fellow" role="radio" aria-checked="false" tabindex="0" aria-label="Select Track C: Research Fellow and Contributor">
+                <div class="flex items-start gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-purple-900 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 font-mono">C</div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h4 class="text-sm font-bold text-slate-900">Track C: Research Fellow &amp; Contributor</h4>
+                      <span class="text-[10px] font-mono uppercase bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold">Academic</span>
+                    </div>
+                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                      For cryptographers, security architects, and academic researchers authoring papers, benchmarks, or WASM enclaves for the open standard.
+                    </p>
+                    <div class="text-[11px] font-mono text-purple-700 mt-2 flex items-center gap-1">
+                      <span>Registry File:</span> <code class="bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200">data/fellows.json</code>
+                    </div>
+                  </div>
+                </div>
+                <div class="w-5 h-5 rounded-full border-2 border-slate-300 flex items-center justify-center shrink-0 mt-1">
+                  <div class="w-2.5 h-2.5 rounded-full bg-transparent track-radio-dot"></div>
+                </div>
               </div>
             </div>
 
-            <div>
-              <label for="auditHash" class="block text-xs font-semibold text-slate-700 mb-1">Cryptographic Verification Hash *</label>
-              <input type="text" id="auditHash" name="auditHash" required aria-label="Cryptographic Verification Hash" placeholder="e.g. sha256:7f83b1659a72d3e1104e6c70b8a245d8b76c94fa10b981e7d23f46a81e9d0c24" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-xs text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono min-h-[44px]">
-              <p class="text-[11px] text-slate-500 mt-1">Generated automatically via <code class="font-mono bg-slate-100 px-1 py-0.5 rounded border border-slate-200 text-slate-700">npx ztds-audit</code> or simulated above.</p>
-            </div>
-
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1.5">Compliance Scope &amp; Target Frameworks</label>
-              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-                <label for="fwGdpr" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
-                  <input type="checkbox" id="fwGdpr" checked class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
-                  <span>GDPR Recital 26</span>
-                </label>
-                <label for="fwHipaa" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
-                  <input type="checkbox" id="fwHipaa" checked class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
-                  <span>HIPAA Safe Harbor</span>
-                </label>
-                <label for="fwAiAct" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
-                  <input type="checkbox" id="fwAiAct" checked class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
-                  <span>EU AI Act Art. 50</span>
-                </label>
-                <label for="fwSoc2" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
-                  <input type="checkbox" id="fwSoc2" checked class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
-                  <span>SOC 2 Type II</span>
-                </label>
-                <label for="fwFre502" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
-                  <input type="checkbox" id="fwFre502" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
-                  <span>US FRE 502(b)</span>
-                </label>
-                <label for="fwPciDss" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
-                  <input type="checkbox" id="fwPciDss" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
-                  <span>PCI-DSS v4.0</span>
-                </label>
-              </div>
+            <!-- Step 1 Action Button -->
+            <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <span class="text-xs text-slate-500 font-mono" id="step1SelectedTrackLabel">Selected: Track A (Product Certification)</span>
+              <button type="button" id="btnStep1Continue" class="btn-trust w-full sm:w-auto px-6 py-3 text-xs sm:text-sm font-bold shadow-sm min-h-[48px] touch-target flex items-center justify-center gap-2">
+                <span>Continue to Entity Profile &rarr;</span>
+              </button>
             </div>
           </div>
 
-          <!-- Track B Specific: Company Industry & Scope -->
-          <div id="companyFieldsContainer" class="hidden space-y-4">
+          <!-- STEP 2 PANEL: Entity Profile & Blueprint -->
+          <div id="step2Panel" class="wizard-panel space-y-5 hidden">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">Step 2 of 3</span>
+                <span class="text-xs text-slate-500 font-mono" id="step2TrackBadge">Track A</span>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900" id="step2Heading">Entity Profile &amp; Architecture</h3>
+              <p class="text-xs text-slate-600 mt-0.5" id="step2Subheading">Provide entity metadata, public URL, and target configuration.</p>
+            </div>
+
+            <!-- Validation Error Alert -->
+            <div id="step2Error" class="hidden p-3.5 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-800 flex items-center gap-2">
+              <span class="font-bold">Missing or invalid input:</span>
+              <span id="step2ErrorText">Please fill in all required fields and provide a valid contact email.</span>
+            </div>
+
+            <!-- Row 1: Name & URL -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label for="companyIndustry" class="block text-xs font-semibold text-slate-700 mb-1">Industry Sector</label>
-                <select id="companyIndustry" name="companyIndustry" aria-label="Industry Sector" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
-                  <option value="Healthcare & Hospital EHR">Healthcare &amp; Hospital EHR</option>
-                  <option value="Commercial Banking & FinTech">Commercial Banking &amp; FinTech</option>
-                  <option value="Corporate Law & LegalTech">Corporate Law &amp; LegalTech</option>
-                  <option value="B2B Enterprise SaaS">B2B Enterprise SaaS</option>
-                  <option value="Digital Agency & GEO Marketing">Digital Agency &amp; GEO Marketing</option>
-                  <option value="Sovereign & Defense Tech">Sovereign &amp; Defense Tech</option>
-                </select>
+                <label for="appName" class="block text-xs font-semibold text-slate-700 mb-1" id="labelAppName">Product or Library Name *</label>
+                <input type="text" id="appName" name="appName" required aria-label="Product or Library Name" placeholder="e.g. My AI SaaS, AgentProxy" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
               </div>
               <div>
-                <label for="companyHeadquarters" class="block text-xs font-semibold text-slate-700 mb-1">Headquarters Location</label>
-                <input type="text" id="companyHeadquarters" name="companyHeadquarters" aria-label="Headquarters Location" placeholder="e.g. United States, Germany, Israel" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
+                <label for="appUrl" class="block text-xs font-semibold text-slate-700 mb-1" id="labelAppUrl">Website or Repository URL *</label>
+                <input type="url" id="appUrl" name="appUrl" required aria-label="Website or Repository URL" placeholder="https://example.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
               </div>
             </div>
-            <div>
-              <label for="companyScope" class="block text-xs font-semibold text-slate-700 mb-1">Primary Internal AI Mandate</label>
-              <input type="text" id="companyScope" name="companyScope" aria-label="Primary Internal AI Mandate" placeholder="e.g. Workstation coding agents (Cursor), Internal LLM chat, RAG ingestion" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
-            </div>
-          </div>
 
-          <!-- Track C Specific: Fellow ORCID & Working Group -->
-          <div id="fellowFieldsContainer" class="hidden space-y-4">
+            <!-- Row 2: Organization & Contact Email -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label for="fellowTrack" class="block text-xs font-semibold text-slate-700 mb-1">Working Group Focus</label>
-                <select id="fellowTrack" name="fellowTrack" aria-label="Working Group Focus" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
-                  <option value="WG-1 Architecture & Cryptography">WG-1 Architecture &amp; Cryptography</option>
-                  <option value="WG-2 GRC & Regulatory Standard">WG-2 GRC &amp; Regulatory Standard</option>
-                  <option value="WG-3 Systems, Enclaves & WASM Runtime">WG-3 Systems, Enclaves &amp; WASM Runtime</option>
-                  <option value="WG-4 Industry Profiles & Entity Taxonomy">WG-4 Industry Profiles &amp; Entity Taxonomy</option>
-                </select>
+                <label for="orgName" class="block text-xs font-semibold text-slate-700 mb-1" id="labelOrgName">Organization / Maintainer Name *</label>
+                <input type="text" id="orgName" name="orgName" required aria-label="Organization or Maintainer Name" placeholder="Acme Inc. or Jane Doe" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
               </div>
               <div>
-                <label for="fellowOrcid" class="block text-xs font-semibold text-slate-700 mb-1">ORCID iD or Zenodo DOI</label>
-                <input type="text" id="fellowOrcid" name="fellowOrcid" aria-label="ORCID iD or Zenodo DOI" placeholder="e.g. 0009-0002-0642-5985" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-xs text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono min-h-[44px]">
+                <label for="contactEmail" class="block text-xs font-semibold text-slate-700 mb-1" id="labelContactEmail">Contact Email *</label>
+                <input type="email" id="contactEmail" name="contactEmail" required aria-label="Contact Email" placeholder="ciso@example.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
               </div>
             </div>
+
+            <!-- Track A Profile Fields (Category + Profile) -->
+            <div id="productFieldsContainer" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="appCategory" class="block text-xs font-semibold text-slate-700 mb-1">Solution Category</label>
+                  <select id="appCategory" name="appCategory" aria-label="Solution Category" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
+                    <option value="WebPlatform">Web Application / SaaS</option>
+                    <option value="BrowserExtension">Browser Extension</option>
+                    <option value="DeveloperSDK">Developer Library / SDK</option>
+                    <option value="MCPGateway">Agent Gateway / MCP Connector</option>
+                    <option value="EnterpriseProxy">Internal Enterprise Enclave</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="appProfile" class="block text-xs font-semibold text-slate-700 mb-1">Industry Profile &amp; Rule Matrix (30 Profiles)</label>
+                  <select id="appProfile" name="appProfile" aria-label="Industry Profile &amp; Rule Matrix" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
+                    <optgroup label="General &amp; Cross-Industry">
+                      <option value="general">00. Enterprise General (GDPR Recital 26, CCPA, Core PII &amp; Secrets)</option>
+                    </optgroup>
+                    <optgroup label="Clinical &amp; Healthcare">
+                      <option value="medical" selected>04. Medical &amp; Clinical EHR (18 PHI Identifiers, HL7, NPI)</option>
+                      <option value="biotech">22. Biotech &amp; Genomics (FASTA, CRISPR Targets, Formulations)</option>
+                      <option value="insurance">18. Insurance &amp; Actuarial (Claims, Policies, VIN Numbers)</option>
+                    </optgroup>
+                    <optgroup label="Banking, Finance &amp; Web3">
+                      <option value="finance">03. Banking &amp; Financial Markets (SWIFT/BIC, IBAN, CUSIP, ISIN)</option>
+                      <option value="crypto">16. Crypto &amp; Web3 (Wallets, Seed Phrases, Smart Contracts)</option>
+                      <option value="accounting">27. Accounting &amp; Audit (GL Accounts, E-File IDs, Depreciation)</option>
+                      <option value="bizops">08. Business Ops &amp; M&amp;A (VDR Codes, Cap Tables, Safe Notes)</option>
+                      <option value="sales">09. Sales &amp; RevOps (Salesforce IDs, DocuSign Envelopes, Gong)</option>
+                    </optgroup>
+                    <optgroup label="Legal, GRC &amp; HR">
+                      <option value="legal">01. Corporate Law &amp; LegalTech (Bates Stamps, Dockets, FRE 502)</option>
+                      <option value="compliance">12. GRC &amp; AML/Sanctions (SAR Filings, OFAC SDN, ISO 27001)</option>
+                      <option value="hr">02. Human Resources &amp; PeopleOps (Workday CAND, EEID, Works Council)</option>
+                    </optgroup>
+                    <optgroup label="Dev, Cloud &amp; Infrastructure">
+                      <option value="security">05. DevSecOps &amp; Incident Response (API Secrets, SSH, CVEs, SIEM)</option>
+                      <option value="dev">06. Software Development (Database URIs, Webhook Secrets, Localhost)</option>
+                      <option value="telecom">23. Telecom &amp; ISP (IMEI, IMSI, SIM ICCID, Cell CGI Tuples)</option>
+                      <option value="energy">20. Energy &amp; Utilities (NERC-CIP, SCADA Telemetry, Smart Meters)</option>
+                    </optgroup>
+                    <optgroup label="Enterprise Operations">
+                      <option value="support">10. Customer Support &amp; IT (ServiceNow INC/RITM, Jira, CSAT)</option>
+                      <option value="marketing">07. Marketing &amp; AdTech (GCLID, FBCLID, GA4 Cookies, Lead IDs)</option>
+                      <option value="realestate">11. Real Estate &amp; Title (MLS, Parcel APN, Escrow Closing Files)</option>
+                      <option value="logistics">13. Supply Chain &amp; Logistics (Bill of Lading, BIC Containers)</option>
+                      <option value="retail">25. Retail &amp; E-Commerce (Shopify UUIDs, Amazon Orders, POS)</option>
+                      <option value="manufacturing">26. Manufacturing (ERP Parts, BOM Revisions, CNC Job IDs)</option>
+                    </optgroup>
+                    <optgroup label="Sovereign, Public Sector &amp; Industry">
+                      <option value="government">15. Government &amp; Defense (ITAR Controls, CUI Markers, CAGE)</option>
+                      <option value="aerospace">29. Aerospace &amp; Aviation (FAA Tail Serials, Flight Manifests)</option>
+                      <option value="automotive">21. Connected Automotive (VIN 17-char, CAN-bus Telemetry)</option>
+                      <option value="education">14. Education &amp; EdTech (FERPA Records, FAFSA, GPA Scores)</option>
+                      <option value="nonprofit">28. Non-Profit &amp; Philanthropy (Donor Ledgers, Endowments, Grants)</option>
+                      <option value="gaming">17. Gaming &amp; Virtual Worlds (Steam IDs, In-Game Wallets, Discord)</option>
+                      <option value="hospitality">19. Hospitality &amp; Travel (Amadeus/Sabre PNR, Loyalty Clubs)</option>
+                      <option value="media">24. Media &amp; Entertainment (ISAN Audiovisual, ISRC Music Codes)</option>
+                      <option value="agriculture">30. Agriculture &amp; AgriTech (Livestock RFID, Parcel GPS Bounds)</option>
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Track B Specific: Company Industry & Scope -->
+            <div id="companyFieldsContainer" class="hidden space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="companyIndustry" class="block text-xs font-semibold text-slate-700 mb-1">Industry Sector</label>
+                  <select id="companyIndustry" name="companyIndustry" aria-label="Industry Sector" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
+                    <option value="Healthcare & Hospital EHR">Healthcare &amp; Hospital EHR</option>
+                    <option value="Commercial Banking & FinTech">Commercial Banking &amp; FinTech</option>
+                    <option value="Corporate Law & LegalTech">Corporate Law &amp; LegalTech</option>
+                    <option value="B2B Enterprise SaaS">B2B Enterprise SaaS</option>
+                    <option value="Digital Agency & GEO Marketing">Digital Agency &amp; GEO Marketing</option>
+                    <option value="Sovereign & Defense Tech">Sovereign &amp; Defense Tech</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="companyHeadquarters" class="block text-xs font-semibold text-slate-700 mb-1">Headquarters Location</label>
+                  <input type="text" id="companyHeadquarters" name="companyHeadquarters" aria-label="Headquarters Location" placeholder="e.g. United States, Germany, Israel" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
+                </div>
+              </div>
+              <div>
+                <label for="companyScope" class="block text-xs font-semibold text-slate-700 mb-1">Primary Internal AI Mandate</label>
+                <input type="text" id="companyScope" name="companyScope" aria-label="Primary Internal AI Mandate" placeholder="e.g. Workstation coding agents (Cursor), Internal LLM chat, RAG ingestion" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
+              </div>
+            </div>
+
+            <!-- Track C Specific: Fellow ORCID & Working Group -->
+            <div id="fellowFieldsContainer" class="hidden space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="fellowTrack" class="block text-xs font-semibold text-slate-700 mb-1">Working Group Focus</label>
+                  <select id="fellowTrack" name="fellowTrack" aria-label="Working Group Focus" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
+                    <option value="WG-1 Architecture & Cryptography">WG-1 Architecture &amp; Cryptography</option>
+                    <option value="WG-2 GRC & Regulatory Standard">WG-2 GRC &amp; Regulatory Standard</option>
+                    <option value="WG-3 Systems, Enclaves & WASM Runtime">WG-3 Systems, Enclaves &amp; WASM Runtime</option>
+                    <option value="WG-4 Industry Profiles & Entity Taxonomy">WG-4 Industry Profiles &amp; Entity Taxonomy</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="fellowOrcid" class="block text-xs font-semibold text-slate-700 mb-1">ORCID iD or Zenodo DOI</label>
+                  <input type="text" id="fellowOrcid" name="fellowOrcid" aria-label="ORCID iD or Zenodo DOI" placeholder="e.g. 0009-0002-0642-5985" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-xs text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono min-h-[44px]">
+                </div>
+              </div>
+              <div>
+                <label for="fellowContribution" class="block text-xs font-semibold text-slate-700 mb-1">Research / Engineering Contribution</label>
+                <textarea id="fellowContribution" name="fellowContribution" rows="2" aria-label="Research / Engineering Contribution" placeholder="Summary of publications, mathematical proofs, or open-source tooling contributed to zero-trust sanitization..." class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"></textarea>
+              </div>
+            </div>
+
+            <!-- Step 2 Navigation Buttons -->
+            <div class="pt-4 border-t border-slate-100 flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
+              <button type="button" id="btnStep2Back" class="btn-outline w-full sm:w-auto px-5 py-2.5 text-xs sm:text-sm font-semibold min-h-[44px] touch-target flex items-center justify-center gap-1.5">
+                <span>&larr; Back to Track</span>
+              </button>
+              <button type="button" id="btnStep2Continue" class="btn-trust w-full sm:w-auto px-6 py-3 text-xs sm:text-sm font-bold shadow-sm min-h-[48px] touch-target flex items-center justify-center gap-2">
+                <span>Continue to Verification &rarr;</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3 PANEL: Verification & GitOps Submission -->
+          <div id="step3Panel" class="wizard-panel space-y-5 hidden">
             <div>
-              <label for="fellowContribution" class="block text-xs font-semibold text-slate-700 mb-1">Research / Engineering Contribution</label>
-              <textarea id="fellowContribution" name="fellowContribution" rows="2" aria-label="Research / Engineering Contribution" placeholder="Summary of publications, mathematical proofs, or open-source tooling contributed to zero-trust sanitization..." class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"></textarea>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">Step 3 of 3</span>
+                <span class="text-xs text-slate-500 font-mono" id="step3TrackBadge">Verification &amp; PR</span>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900">Cryptographic Verification &amp; Invariant Affirmation</h3>
+              <p class="text-xs text-slate-600 mt-0.5">Audit external network sockets, verify cryptographic receipt, and generate your GitOps submission record.</p>
             </div>
-          </div>
 
-          <!-- Confirmation Checkbox -->
-          <div>
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 space-y-2">
-              <label for="confirmCheckbox" class="flex items-start gap-3 cursor-pointer">
-                <input type="checkbox" id="confirmCheckbox" name="confirmCheckbox" required aria-label="Affirmation of Zero-Egress Invariants" class="mt-0.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 w-5 h-5 shrink-0">
-                <span id="checkboxConfirmationText" class="leading-relaxed">I confirm that this software executes de-identification locally in client volatile memory with <strong>0.00 bytes</strong> cleartext PII/PHI transmitted across external network sockets prior to sanitization.</span>
-              </label>
+            <!-- Track A Verification Controls -->
+            <div id="step3ProductVerification" class="space-y-4">
+              <!-- Automated CLI Verification Command Generator Box -->
+              <div class="p-4 bg-slate-900 text-slate-200 rounded-xl border border-slate-800 space-y-2.5">
+                <div class="flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    <span class="font-bold text-emerald-400 font-mono text-[11px]">Automated Invariant Auditor (CLI)</span>
+                  </div>
+                  <span class="text-[10px] font-mono text-slate-400">Zero-Egress Protocol</span>
+                </div>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                  Run this command in your repository to audit for external egress, verify volatile RAM zeroization, and compute your verifiable SHA-256 hash:
+                </p>
+                <div class="flex items-center gap-2 bg-black/60 p-2.5 rounded-lg border border-slate-800 font-mono text-xs overflow-x-auto">
+                  <code id="cliAuditCommand" class="text-emerald-300 flex-1 select-all whitespace-nowrap">npx ztds-audit --target https://example.com --dir ./src --profile medical</code>
+                  <button type="button" id="copyCliCommandBtn" aria-label="Copy CLI command" class="shrink-0 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-sans font-medium transition-colors touch-target min-h-[32px]">
+                    Copy CLI
+                  </button>
+                </div>
+                <div class="flex flex-wrap items-center justify-between gap-2 pt-1.5 border-t border-slate-800 text-[11px]">
+                  <span class="text-slate-400">Need an immediate verification hash for local testing?</span>
+                  <button type="button" id="simulateHashBtn" class="text-emerald-400 hover:text-emerald-300 underline font-mono text-[11px] touch-target">
+                    Simulate Local Hash &rarr;
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label for="auditHash" class="block text-xs font-semibold text-slate-700 mb-1">Cryptographic Verification Hash *</label>
+                <input type="text" id="auditHash" name="auditHash" required aria-label="Cryptographic Verification Hash" placeholder="e.g. sha256:7f83b1659a72d3e1104e6c70b8a245d8b76c94fa10b981e7d23f46a81e9d0c24" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-xs text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono min-h-[44px]">
+                <p class="text-[11px] text-slate-500 mt-1">Generated automatically via <code class="font-mono bg-slate-100 px-1 py-0.5 rounded border border-slate-200 text-slate-700">npx ztds-audit</code> or simulated above.</p>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Compliance Scope &amp; Target Frameworks</label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                  <label for="fwGdpr" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
+                    <input type="checkbox" id="fwGdpr" checked class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                    <span>GDPR Recital 26</span>
+                  </label>
+                  <label for="fwHipaa" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
+                    <input type="checkbox" id="fwHipaa" checked class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                    <span>HIPAA Safe Harbor</span>
+                  </label>
+                  <label for="fwAiAct" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
+                    <input type="checkbox" id="fwAiAct" checked class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                    <span>EU AI Act Art. 50</span>
+                  </label>
+                  <label for="fwSoc2" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
+                    <input type="checkbox" id="fwSoc2" checked class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                    <span>SOC 2 Type II</span>
+                  </label>
+                  <label for="fwFre502" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
+                    <input type="checkbox" id="fwFre502" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                    <span>US FRE 502(b)</span>
+                  </label>
+                  <label for="fwPciDss" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
+                    <input type="checkbox" id="fwPciDss" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                    <span>PCI-DSS v4.0</span>
+                  </label>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <!-- Submit Button -->
-          <div class="pt-2">
-            <button type="submit" id="submitBtn" class="btn-trust w-full py-3.5 text-sm sm:text-base font-bold shadow-sm min-h-[48px] touch-target flex items-center justify-center gap-2">
-              Generate GitOps Submission &amp; Claim Badge &rarr;
-            </button>
+            <!-- Confirmation Checkbox -->
+            <div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 space-y-2">
+                <label for="confirmCheckbox" class="flex items-start gap-3 cursor-pointer">
+                  <input type="checkbox" id="confirmCheckbox" name="confirmCheckbox" required aria-label="Affirmation of Zero-Egress Invariants" class="mt-0.5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 w-5 h-5 shrink-0">
+                  <span id="checkboxConfirmationText" class="leading-relaxed">I confirm that this software executes de-identification locally in client volatile memory with <strong>0.00 bytes</strong> cleartext PII/PHI transmitted across external network sockets prior to sanitization.</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Validation Error Alert for Step 3 -->
+            <div id="step3Error" class="hidden p-3.5 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-800 flex items-center gap-2">
+              <span class="font-bold">Affirmation required:</span>
+              <span id="step3ErrorText">Please confirm the zero-egress affirmation checkbox before generating your GitOps submission.</span>
+            </div>
+
+            <!-- Step 3 Navigation Buttons -->
+            <div class="pt-4 border-t border-slate-100 flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
+              <button type="button" id="btnStep3Back" class="btn-outline w-full sm:w-auto px-5 py-2.5 text-xs sm:text-sm font-semibold min-h-[44px] touch-target flex items-center justify-center gap-1.5">
+                <span>&larr; Back to Profile</span>
+              </button>
+              <button type="submit" id="submitBtn" class="btn-trust w-full sm:w-auto px-6 py-3.5 text-xs sm:text-base font-bold shadow-sm min-h-[48px] touch-target flex items-center justify-center gap-2">
+                <span>Generate GitOps Submission &amp; Claim Badge &rarr;</span>
+              </button>
+            </div>
           </div>
         </form>
 
@@ -860,6 +1036,33 @@
       const copyJsonBtn = document.getElementById('copyJsonBtn');
       const downloadJsonBtn = document.getElementById('downloadJsonBtn');
 
+      // Wizard navigation elements
+      const wizardStepsBar = document.getElementById('wizardStepsBar');
+      const stepIndicator1 = document.getElementById('stepIndicator1');
+      const stepIndicator2 = document.getElementById('stepIndicator2');
+      const stepIndicator3 = document.getElementById('stepIndicator3');
+      const step1Panel = document.getElementById('step1Panel');
+      const step2Panel = document.getElementById('step2Panel');
+      const step3Panel = document.getElementById('step3Panel');
+      const btnStep1Continue = document.getElementById('btnStep1Continue');
+      const btnStep2Back = document.getElementById('btnStep2Back');
+      const btnStep2Continue = document.getElementById('btnStep2Continue');
+      const btnStep3Back = document.getElementById('btnStep3Back');
+      const step2Error = document.getElementById('step2Error');
+      const step2ErrorText = document.getElementById('step2ErrorText');
+      const step3Error = document.getElementById('step3Error');
+      const step3ErrorText = document.getElementById('step3ErrorText');
+      const step1Subtitle = document.getElementById('step1Subtitle');
+      const step2Subtitle = document.getElementById('step2Subtitle');
+      const step1SelectedTrackLabel = document.getElementById('step1SelectedTrackLabel');
+      const step2Heading = document.getElementById('step2Heading');
+      const step2Subheading = document.getElementById('step2Subheading');
+      const step2TrackBadge = document.getElementById('step2TrackBadge');
+      const step3TrackBadge = document.getElementById('step3TrackBadge');
+      const step3ProductVerification = document.getElementById('step3ProductVerification');
+      const applyFormEl = document.getElementById('applyForm');
+
+      let currentStep = 1;
       let currentTrack = 'product';
       let currentSvgXml = '';
       let compiledMarkdown = '';
@@ -949,6 +1152,140 @@
         badgeHtmlSnippet.value = `<a href="${targetUrl}" target="_blank" rel="noopener"><img src="${badgeUrl}" alt="ZTDS Conformance"></a>`;
 
         updateCliCommand();
+      }
+
+      function updateWizardStepsUI(step) {
+        currentStep = step;
+
+        if (step1Panel) step1Panel.classList.toggle('hidden', step !== 1);
+        if (step2Panel) step2Panel.classList.toggle('hidden', step !== 2);
+        if (step3Panel) step3Panel.classList.toggle('hidden', step !== 3);
+
+        if (stepIndicator1) {
+          const num1 = stepIndicator1.querySelector('.step-num');
+          if (step === 1) {
+            stepIndicator1.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 text-emerald-950 cursor-pointer transition-all shadow-xs touch-target min-h-[44px]';
+            stepIndicator1.setAttribute('aria-current', 'step');
+            if (num1) {
+              num1.className = 'step-num w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0';
+              num1.textContent = '1';
+            }
+          } else {
+            stepIndicator1.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border border-emerald-500 bg-white text-emerald-950 cursor-pointer transition-all touch-target min-h-[44px]';
+            stepIndicator1.removeAttribute('aria-current');
+            if (num1) {
+              num1.className = 'step-num w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0 font-mono';
+              num1.innerHTML = '&check;';
+            }
+          }
+        }
+
+        if (stepIndicator2) {
+          const num2 = stepIndicator2.querySelector('.step-num');
+          if (step === 2) {
+            stepIndicator2.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 text-emerald-950 cursor-pointer transition-all shadow-xs touch-target min-h-[44px]';
+            stepIndicator2.setAttribute('aria-current', 'step');
+            if (num2) {
+              num2.className = 'step-num w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0';
+              num2.textContent = '2';
+            }
+          } else if (step > 2) {
+            stepIndicator2.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border border-emerald-500 bg-white text-emerald-950 cursor-pointer transition-all touch-target min-h-[44px]';
+            stepIndicator2.removeAttribute('aria-current');
+            if (num2) {
+              num2.className = 'step-num w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0 font-mono';
+              num2.innerHTML = '&check;';
+            }
+          } else {
+            stepIndicator2.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white text-slate-600 cursor-pointer transition-all opacity-80 hover:opacity-100 touch-target min-h-[44px]';
+            stepIndicator2.removeAttribute('aria-current');
+            if (num2) {
+              num2.className = 'step-num w-6 h-6 rounded-full bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0';
+              num2.textContent = '2';
+            }
+          }
+        }
+
+        if (stepIndicator3) {
+          const num3 = stepIndicator3.querySelector('.step-num');
+          if (step === 3) {
+            stepIndicator3.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 text-emerald-950 cursor-pointer transition-all shadow-xs touch-target min-h-[44px]';
+            stepIndicator3.setAttribute('aria-current', 'step');
+            if (num3) {
+              num3.className = 'step-num w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0';
+              num3.textContent = '3';
+            }
+          } else {
+            stepIndicator3.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white text-slate-600 cursor-pointer transition-all opacity-80 hover:opacity-100 touch-target min-h-[44px]';
+            stepIndicator3.removeAttribute('aria-current');
+            if (num3) {
+              num3.className = 'step-num w-6 h-6 rounded-full bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0';
+              num3.textContent = '3';
+            }
+          }
+        }
+      }
+
+      function showStep2Error(msg) {
+        if (step2Error && step2ErrorText) {
+          step2ErrorText.textContent = msg;
+          step2Error.classList.remove('hidden');
+          step2Error.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+
+      function validateStep2() {
+        const name = appNameInput ? appNameInput.value.trim() : '';
+        const url = appUrlInput ? appUrlInput.value.trim() : '';
+        const org = orgNameInput ? orgNameInput.value.trim() : '';
+        const email = contactEmailInput ? contactEmailInput.value.trim() : '';
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!name) {
+          showStep2Error('Please enter a name for the product, organization, or nominee.');
+          if (appNameInput) appNameInput.focus();
+          return false;
+        }
+        if (!url) {
+          showStep2Error('Please provide a valid website or repository URL.');
+          if (appUrlInput) appUrlInput.focus();
+          return false;
+        }
+        if (!org) {
+          showStep2Error('Please enter the organization, maintainer, or nominator name.');
+          if (orgNameInput) orgNameInput.focus();
+          return false;
+        }
+        if (!email || !emailRegex.test(email)) {
+          showStep2Error('Please provide a valid contact email address (e.g. ciso@example.com).');
+          if (contactEmailInput) contactEmailInput.focus();
+          return false;
+        }
+
+        if (step2Error) step2Error.classList.add('hidden');
+        return true;
+      }
+
+      function scrollToWizardForm() {
+        const container = document.getElementById('applyFormContainer');
+        if (container) {
+          container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      function goToStep(targetStep) {
+        if (targetStep === 1) {
+          updateWizardStepsUI(1);
+          scrollToWizardForm();
+        } else if (targetStep === 2) {
+          updateWizardStepsUI(2);
+          scrollToWizardForm();
+        } else if (targetStep === 3) {
+          if (validateStep2()) {
+            updateWizardStepsUI(3);
+            scrollToWizardForm();
+          }
+        }
       }
 
       async function simulateSha256(text) {
@@ -1073,11 +1410,47 @@
           }
         });
 
+        // Sync Step 1 Radio Cards
+        const trackChoiceCards = document.querySelectorAll('[data-track-choice]');
+        trackChoiceCards.forEach(card => {
+          const cardTrack = card.getAttribute('data-track-choice');
+          const isSelected = cardTrack === track;
+          card.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+          const radioDot = card.querySelector('.track-radio-dot');
+          const radioBorder = card.querySelector('.rounded-full.border-2');
+
+          if (isSelected) {
+            if (track === 'product') {
+              card.className = 'track-choice-card p-4 rounded-xl border-2 border-emerald-600 bg-emerald-50/40 cursor-pointer transition-all flex items-start justify-between gap-3 shadow-xs touch-target min-h-[56px]';
+              if (radioBorder) radioBorder.className = 'w-5 h-5 rounded-full border-2 border-emerald-600 flex items-center justify-center shrink-0 mt-1';
+              if (radioDot) radioDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-600 track-radio-dot';
+            } else if (track === 'company') {
+              card.className = 'track-choice-card p-4 rounded-xl border-2 border-blue-600 bg-blue-50/40 cursor-pointer transition-all flex items-start justify-between gap-3 shadow-xs touch-target min-h-[56px]';
+              if (radioBorder) radioBorder.className = 'w-5 h-5 rounded-full border-2 border-blue-600 flex items-center justify-center shrink-0 mt-1';
+              if (radioDot) radioDot.className = 'w-2.5 h-2.5 rounded-full bg-blue-600 track-radio-dot';
+            } else {
+              card.className = 'track-choice-card p-4 rounded-xl border-2 border-purple-600 bg-purple-50/40 cursor-pointer transition-all flex items-start justify-between gap-3 shadow-xs touch-target min-h-[56px]';
+              if (radioBorder) radioBorder.className = 'w-5 h-5 rounded-full border-2 border-purple-600 flex items-center justify-center shrink-0 mt-1';
+              if (radioDot) radioDot.className = 'w-2.5 h-2.5 rounded-full bg-purple-600 track-radio-dot';
+            }
+          } else {
+            card.className = 'track-choice-card p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition-all flex items-start justify-between gap-3 opacity-90 hover:opacity-100 touch-target min-h-[56px]';
+            if (radioBorder) radioBorder.className = 'w-5 h-5 rounded-full border-2 border-slate-300 flex items-center justify-center shrink-0 mt-1';
+            if (radioDot) radioDot.className = 'w-2.5 h-2.5 rounded-full bg-transparent track-radio-dot';
+          }
+        });
+
         if (track === 'product') {
           formTitle.textContent = 'Product Certification Application';
           formSubtitle.textContent = 'Self-serve GitOps intake for software applications, browser extensions, and developer libraries.';
           trackBadge.textContent = 'Track A';
           trackBadge.className = 'pill-trust shrink-0';
+          if (step1Subtitle) step1Subtitle.textContent = 'Product Certification';
+          if (step1SelectedTrackLabel) step1SelectedTrackLabel.textContent = 'Selected: Track A (Product Certification)';
+          if (step2Heading) step2Heading.textContent = 'Product & Maintainer Profile';
+          if (step2Subheading) step2Subheading.textContent = 'Enter software details, public URL, and target industry profile matrix.';
+          if (step2TrackBadge) step2TrackBadge.textContent = 'Track A: Product';
+          if (step3TrackBadge) step3TrackBadge.textContent = 'Track A Verification';
           labelAppName.textContent = 'Product or Library Name *';
           appNameInput.placeholder = 'e.g. My AI SaaS, AgentProxy';
           labelAppUrl.textContent = 'Website or Repository URL *';
@@ -1085,6 +1458,8 @@
           productFields.classList.remove('hidden');
           companyFields.classList.add('hidden');
           fellowFields.classList.add('hidden');
+          if (step3ProductVerification) step3ProductVerification.classList.remove('hidden');
+          if (auditHashInput) auditHashInput.required = true;
           checkboxConfirmationText.innerHTML = 'I confirm that this software executes de-identification locally in client volatile memory with <strong>0.00 bytes</strong> cleartext PII/PHI transmitted across external network sockets prior to sanitization.';
           submitBtn.innerHTML = 'Generate GitOps Submission &amp; Claim Badge &rarr;';
         } else if (track === 'company') {
@@ -1092,6 +1467,12 @@
           formSubtitle.textContent = 'Register your enterprise as enforcing client-side Zero-Trust data sanitization across internal AI workflows.';
           trackBadge.textContent = 'Track B';
           trackBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-semibold bg-blue-50 text-blue-700 border border-blue-200 shrink-0';
+          if (step1Subtitle) step1Subtitle.textContent = 'Corporate Adopter';
+          if (step1SelectedTrackLabel) step1SelectedTrackLabel.textContent = 'Selected: Track B (Corporate Adopter)';
+          if (step2Heading) step2Heading.textContent = 'Corporate Adopter Profile';
+          if (step2Subheading) step2Subheading.textContent = 'Enter enterprise name, domain, CISO contact, and internal AI mandate scope.';
+          if (step2TrackBadge) step2TrackBadge.textContent = 'Track B: Enterprise';
+          if (step3TrackBadge) step3TrackBadge.textContent = 'Track B Attestation';
           labelAppName.textContent = 'Company / Enterprise Name *';
           appNameInput.placeholder = 'e.g. Acme Health Corp, TechGlobal';
           labelAppUrl.textContent = 'Company Website URL *';
@@ -1099,6 +1480,8 @@
           productFields.classList.add('hidden');
           companyFields.classList.remove('hidden');
           fellowFields.classList.add('hidden');
+          if (step3ProductVerification) step3ProductVerification.classList.add('hidden');
+          if (auditHashInput) auditHashInput.required = false;
           checkboxConfirmationText.innerHTML = 'I confirm that our organization mandates client-side Zero-Trust Data Sanitization across internal AI workflows to prevent data leakage and eliminate DPA overhead.';
           submitBtn.innerHTML = 'Submit Corporate Member Registration &rarr;';
         } else {
@@ -1106,6 +1489,12 @@
           formSubtitle.textContent = 'Nominate an academic researcher, cryptographer, or security architect to the ZTDS Fellows Council.';
           trackBadge.textContent = 'Track C';
           trackBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-semibold bg-purple-50 text-purple-700 border border-purple-200 shrink-0';
+          if (step1Subtitle) step1Subtitle.textContent = 'Research Fellow';
+          if (step1SelectedTrackLabel) step1SelectedTrackLabel.textContent = 'Selected: Track C (Research Fellow)';
+          if (step2Heading) step2Heading.textContent = 'Research Fellow Nomination Profile';
+          if (step2Subheading) step2Subheading.textContent = 'Enter nominee credentials, research portfolio URL, and working group focus.';
+          if (step2TrackBadge) step2TrackBadge.textContent = 'Track C: Fellow';
+          if (step3TrackBadge) step3TrackBadge.textContent = 'Track C Nomination';
           labelAppName.textContent = 'Nominee Full Name *';
           appNameInput.placeholder = 'e.g. Dr. Jane Doe, Prof. Alan Turing';
           labelAppUrl.textContent = 'Academic Profile, ORCID, or Portfolio URL *';
@@ -1113,6 +1502,8 @@
           productFields.classList.add('hidden');
           companyFields.classList.add('hidden');
           fellowFields.classList.remove('hidden');
+          if (step3ProductVerification) step3ProductVerification.classList.add('hidden');
+          if (auditHashInput) auditHashInput.required = false;
           checkboxConfirmationText.innerHTML = 'I confirm that this nominee has published peer-reviewed research, legal treatises, or engineered open cryptographic/zero-trust security tooling.';
           submitBtn.innerHTML = 'Submit Fellow Nomination &rarr;';
         }
@@ -1149,6 +1540,58 @@
         });
       });
 
+      // Wire Step 1 Radio Cards
+      const trackChoiceCards = document.querySelectorAll('[data-track-choice]');
+      trackChoiceCards.forEach(card => {
+        const handleChoice = () => {
+          const track = card.getAttribute('data-track-choice');
+          if (track) setTrack(track);
+        };
+        card.addEventListener('click', handleChoice);
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleChoice();
+          }
+        });
+      });
+
+      // Wire Step Buttons
+      if (btnStep1Continue) btnStep1Continue.addEventListener('click', () => goToStep(2));
+      if (btnStep2Back) btnStep2Back.addEventListener('click', () => goToStep(1));
+      if (btnStep2Continue) btnStep2Continue.addEventListener('click', () => goToStep(3));
+      if (btnStep3Back) btnStep3Back.addEventListener('click', () => goToStep(2));
+
+      // Wire Step Indicator Navigation
+      if (stepIndicator1) stepIndicator1.addEventListener('click', () => goToStep(1));
+      if (stepIndicator2) stepIndicator2.addEventListener('click', () => {
+        if (currentStep === 1) goToStep(2);
+        else if (currentStep === 3) goToStep(2);
+      });
+      if (stepIndicator3) stepIndicator3.addEventListener('click', () => goToStep(3));
+
+      [stepIndicator1, stepIndicator2, stepIndicator3].forEach(indicator => {
+        if (!indicator) return;
+        indicator.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const step = parseInt(indicator.getAttribute('data-step'), 10);
+            if (step) goToStep(step);
+          }
+        });
+      });
+
+      // Prevent premature submit on Enter in Steps 1 & 2
+      if (applyFormEl) {
+        applyFormEl.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && e.target.tagName === 'INPUT' && currentStep !== 3) {
+            e.preventDefault();
+            if (currentStep === 1) goToStep(2);
+            else if (currentStep === 2) goToStep(3);
+          }
+        });
+      }
+
       appNameInput.addEventListener('input', updateBadgeAndSnippets);
       appUrlInput.addEventListener('input', updateBadgeAndSnippets);
       if (appProfileSelect) appProfileSelect.addEventListener('change', updateBadgeAndSnippets);
@@ -1175,166 +1618,180 @@
       attachCopyButton('copyHtmlSnippetBtn', 'badgeHtmlSnippet');
 
       // Handle Form Submit
-      document.getElementById('applyForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const appName = appNameInput.value.trim();
-        const appUrl = appUrlInput.value.trim();
-        const orgName = orgNameInput.value.trim();
-        const contactEmail = contactEmailInput.value.trim();
-        const slug = generateSlug(appName);
-        const today = new Date().toISOString().split('T')[0];
+      if (applyFormEl) {
+        applyFormEl.addEventListener('submit', (e) => {
+          e.preventDefault();
 
-        let titlePrefix = '[Track A: Verification]';
-        let jsonTarget = 'data/registry.json';
-        let formattedJson = '';
-        let markdownBody = '';
+          const confirmCheckbox = document.getElementById('confirmCheckbox');
+          if (confirmCheckbox && !confirmCheckbox.checked) {
+            if (step3Error && step3ErrorText) {
+              step3ErrorText.textContent = 'Please confirm the zero-egress affirmation checkbox before generating your GitOps submission.';
+              step3Error.classList.remove('hidden');
+              step3Error.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            return;
+          }
+          if (step3Error) step3Error.classList.add('hidden');
 
-        if (currentTrack === 'product') {
-          const appCategory = appCategorySelect ? appCategorySelect.value : 'WebPlatform';
-          const profile = appProfileSelect ? appProfileSelect.value : 'general';
-          const auditHash = (auditHashInput ? auditHashInput.value.trim() : '') || 'sha256:7f83b1659a72d3e1104e6c70b8a245d8b76c94fa10b981e7d23f46a81e9d0c24';
+          const appName = appNameInput.value.trim();
+          const appUrl = appUrlInput.value.trim();
+          const orgName = orgNameInput.value.trim();
+          const contactEmail = contactEmailInput.value.trim();
+          const slug = generateSlug(appName);
+          const today = new Date().toISOString().split('T')[0];
 
-          const fwList = [];
-          if (document.getElementById('fwGdpr') && document.getElementById('fwGdpr').checked) fwList.push('GDPR Art. 28 Vendor Exemption');
-          if (document.getElementById('fwHipaa') && document.getElementById('fwHipaa').checked) fwList.push('HIPAA Safe Harbor');
-          if (document.getElementById('fwAiAct') && document.getElementById('fwAiAct').checked) fwList.push('EU AI Act Art. 50');
-          if (document.getElementById('fwSoc2') && document.getElementById('fwSoc2').checked) fwList.push('SOC 2 Type II');
-          if (document.getElementById('fwFre502') && document.getElementById('fwFre502').checked) fwList.push('US FRE 502(b)');
-          if (document.getElementById('fwPciDss') && document.getElementById('fwPciDss').checked) fwList.push('PCI-DSS v4.0');
+          let titlePrefix = '[Track A: Verification]';
+          let jsonTarget = 'data/registry.json';
+          let formattedJson = '';
+          let markdownBody = '';
 
-          const jsonEntry = {
-            id: slug,
-            name: appName,
-            slug: slug,
-            url: appUrl,
-            category: appCategory,
-            profile: profile,
-            tier: "Community Verified",
-            license: "Commercial / Proprietary",
-            description: `${appName} client-side zero-trust de-identification implementation.`,
-            architecture: "RAM-Only Execution / WebAssembly & Local Regex",
-            verified_date: today,
-            verified_hash: auditHash,
-            badge_url: `https://ztds.ai/badge/${slug}.svg`,
-            frameworks: fwList
-          };
+          if (currentTrack === 'product') {
+            const appCategory = appCategorySelect ? appCategorySelect.value : 'WebPlatform';
+            const profile = appProfileSelect ? appProfileSelect.value : 'general';
+            const auditHash = (auditHashInput ? auditHashInput.value.trim() : '') || 'sha256:7f83b1659a72d3e1104e6c70b8a245d8b76c94fa10b981e7d23f46a81e9d0c24';
 
-          formattedJson = JSON.stringify(jsonEntry, null, 2);
+            const fwList = [];
+            if (document.getElementById('fwGdpr') && document.getElementById('fwGdpr').checked) fwList.push('GDPR Art. 28 Vendor Exemption');
+            if (document.getElementById('fwHipaa') && document.getElementById('fwHipaa').checked) fwList.push('HIPAA Safe Harbor');
+            if (document.getElementById('fwAiAct') && document.getElementById('fwAiAct').checked) fwList.push('EU AI Act Art. 50');
+            if (document.getElementById('fwSoc2') && document.getElementById('fwSoc2').checked) fwList.push('SOC 2 Type II');
+            if (document.getElementById('fwFre502') && document.getElementById('fwFre502').checked) fwList.push('US FRE 502(b)');
+            if (document.getElementById('fwPciDss') && document.getElementById('fwPciDss').checked) fwList.push('PCI-DSS v4.0');
 
-          markdownBody = `## ZTDS Accreditation Pull Request: ${appName}\n\n` +
-            `### Submission Overview\n` +
-            `- **Track**: Track A (Software & Product Certification)\n` +
-            `- **Product Name**: ${appName}\n` +
-            `- **URL**: ${appUrl}\n` +
-            `- **Maintainer / Org**: ${orgName} (${contactEmail})\n` +
-            `- **Category**: ${appCategory}\n` +
-            `- **Target Profile**: ${profile}\n` +
-            `- **Audit Hash**: \`${auditHash}\`\n` +
-            `- **Compliance Scope**: ${fwList.join(', ')}\n\n` +
-            `### Invariant Conformance Affirmation\n` +
-            `- [x] Invariant 1: Zero External Egress Prior to Sanitization (0.00 bytes cleartext leaked)\n` +
-            `- [x] Invariant 2: Deterministic Reversible Tokenization (volatiles isolated in RAM)\n` +
-            `- [x] Invariant 3: Verifiable Cryptographic Isolation (sandboxed V8 / WASM / Enclave)\n` +
-            `- [x] Invariant 4: Continuous Compliance & Zero Subprocessor Chain (GDPR Art. 28 exempt)\n\n` +
-            `### Proposed \`data/registry.json\` Entry\n\`\`\`json\n${formattedJson}\n\`\`\`\n\n` +
-            `### GitOps Verification Command\n` +
-            `\`\`\`bash\n` +
-            `npx ztds-audit --target ${appUrl} --profile ${profile}\n` +
-            `\`\`\`\n\n` +
-            `*Submitted via ZTDS.ai GitOps Gateway*`;
+            const jsonEntry = {
+              id: slug,
+              name: appName,
+              slug: slug,
+              url: appUrl,
+              category: appCategory,
+              profile: profile,
+              tier: "Community Verified",
+              license: "Commercial / Proprietary",
+              description: `${appName} client-side zero-trust de-identification implementation.`,
+              architecture: "RAM-Only Execution / WebAssembly & Local Regex",
+              verified_date: today,
+              verified_hash: auditHash,
+              badge_url: `https://ztds.ai/badge/${slug}.svg`,
+              frameworks: fwList
+            };
 
-        } else if (currentTrack === 'company') {
-          titlePrefix = '[Track B: Corporate Adopter]';
-          jsonTarget = 'data/companies.json';
-          const industry = document.getElementById('companyIndustry').value;
-          const hq = document.getElementById('companyHeadquarters').value.trim() || 'International';
-          const scope = document.getElementById('companyScope').value.trim() || 'Client-side zero-trust AI workflows';
+            formattedJson = JSON.stringify(jsonEntry, null, 2);
 
-          const jsonEntry = {
-            id: slug,
-            slug: slug,
-            name: appName,
-            tier: "Enterprise Adopter",
-            industry: industry,
-            url: appUrl,
-            headquarters: hq,
-            description: `${appName} mandates client-side Zero-Trust Data Sanitization across internal AI workflows.`,
-            verified_date: today,
-            compliance_scope: scope
-          };
+            markdownBody = `## ZTDS Accreditation Pull Request: ${appName}\n\n` +
+              `### Submission Overview\n` +
+              `- **Track**: Track A (Software & Product Certification)\n` +
+              `- **Product Name**: ${appName}\n` +
+              `- **URL**: ${appUrl}\n` +
+              `- **Maintainer / Org**: ${orgName} (${contactEmail})\n` +
+              `- **Category**: ${appCategory}\n` +
+              `- **Target Profile**: ${profile}\n` +
+              `- **Audit Hash**: \`${auditHash}\`\n` +
+              `- **Compliance Scope**: ${fwList.join(', ')}\n\n` +
+              `### Invariant Conformance Affirmation\n` +
+              `- [x] Invariant 1: Zero External Egress Prior to Sanitization (0.00 bytes cleartext leaked)\n` +
+              `- [x] Invariant 2: Deterministic Reversible Tokenization (volatiles isolated in RAM)\n` +
+              `- [x] Invariant 3: Verifiable Cryptographic Isolation (sandboxed V8 / WASM / Enclave)\n` +
+              `- [x] Invariant 4: Continuous Compliance & Zero Subprocessor Chain (GDPR Art. 28 exempt)\n\n` +
+              `### Proposed \`data/registry.json\` Entry\n\`\`\`json\n${formattedJson}\n\`\`\`\n\n` +
+              `### GitOps Verification Command\n` +
+              `\`\`\`bash\n` +
+              `npx ztds-audit --target ${appUrl} --profile ${profile}\n` +
+              `\`\`\`\n\n` +
+              `*Submitted via ZTDS.ai GitOps Gateway*`;
 
-          formattedJson = JSON.stringify(jsonEntry, null, 2);
+          } else if (currentTrack === 'company') {
+            titlePrefix = '[Track B: Corporate Adopter]';
+            jsonTarget = 'data/companies.json';
+            const industry = document.getElementById('companyIndustry').value;
+            const hq = document.getElementById('companyHeadquarters').value.trim() || 'International';
+            const scope = document.getElementById('companyScope').value.trim() || 'Client-side zero-trust AI workflows';
 
-          markdownBody = `## ZTDS Corporate Adopter Pull Request: ${appName}\n\n` +
-            `### Enterprise Profile\n` +
-            `- **Enterprise**: ${appName}\n` +
-            `- **Website**: ${appUrl}\n` +
-            `- **Head of Security / CISO**: ${orgName} (${contactEmail})\n` +
-            `- **Industry**: ${industry}\n` +
-            `- **Headquarters**: ${hq}\n` +
-            `- **Mandate Scope**: ${scope}\n\n` +
-            `### Policy Affirmation\n` +
-            `- [x] Mandatory client-side zero-trust sanitization on employee workstations & LLM pipelines\n` +
-            `- [x] Zero-DPA compliance exclusion confirmed across cloud AI providers\n\n` +
-            `### Proposed \`data/companies.json\` Entry\n\`\`\`json\n${formattedJson}\n\`\`\`\n\n` +
-            `*Submitted via ZTDS.ai GitOps Gateway*`;
+            const jsonEntry = {
+              id: slug,
+              slug: slug,
+              name: appName,
+              tier: "Enterprise Adopter",
+              industry: industry,
+              url: appUrl,
+              headquarters: hq,
+              description: `${appName} mandates client-side Zero-Trust Data Sanitization across internal AI workflows.`,
+              verified_date: today,
+              compliance_scope: scope
+            };
 
-        } else {
-          titlePrefix = '[Track C: Research Fellow]';
-          jsonTarget = 'data/fellows.json';
-          const trackFocus = document.getElementById('fellowTrack').value;
-          const orcid = document.getElementById('fellowOrcid').value.trim() || 'ORCID Pending';
-          const contribution = document.getElementById('fellowContribution').value.trim() || 'Zero-trust privacy and cryptographic research.';
+            formattedJson = JSON.stringify(jsonEntry, null, 2);
 
-          const jsonEntry = {
-            id: slug,
-            slug: slug,
-            name: appName,
-            role: "Accredited Fellow",
-            status: "Nominated Fellow",
-            track: trackFocus,
-            affiliation: orgName,
-            location: "Global",
-            orcid: orcid,
-            contribution: contribution,
-            verified_date: today
-          };
+            markdownBody = `## ZTDS Corporate Adopter Pull Request: ${appName}\n\n` +
+              `### Enterprise Profile\n` +
+              `- **Enterprise**: ${appName}\n` +
+              `- **Website**: ${appUrl}\n` +
+              `- **Head of Security / CISO**: ${orgName} (${contactEmail})\n` +
+              `- **Industry**: ${industry}\n` +
+              `- **Headquarters**: ${hq}\n` +
+              `- **Mandate Scope**: ${scope}\n\n` +
+              `### Policy Affirmation\n` +
+              `- [x] Mandatory client-side zero-trust sanitization on employee workstations & LLM pipelines\n` +
+              `- [x] Zero-DPA compliance exclusion confirmed across cloud AI providers\n\n` +
+              `### Proposed \`data/companies.json\` Entry\n\`\`\`json\n${formattedJson}\n\`\`\`\n\n` +
+              `*Submitted via ZTDS.ai GitOps Gateway*`;
 
-          formattedJson = JSON.stringify(jsonEntry, null, 2);
+          } else {
+            titlePrefix = '[Track C: Research Fellow]';
+            jsonTarget = 'data/fellows.json';
+            const trackFocus = document.getElementById('fellowTrack').value;
+            const orcid = document.getElementById('fellowOrcid').value.trim() || 'ORCID Pending';
+            const contribution = document.getElementById('fellowContribution').value.trim() || 'Zero-trust privacy and cryptographic research.';
 
-          markdownBody = `## ZTDS Research Fellow Nomination: ${appName}\n\n` +
-            `### Nominee Credentials\n` +
-            `- **Nominee Name**: ${appName}\n` +
-            `- **Profile / Portfolio URL**: ${appUrl}\n` +
-            `- **Nominator / Affiliation**: ${orgName} (${contactEmail})\n` +
-            `- **Working Group**: ${trackFocus}\n` +
-            `- **ORCID / DOI**: ${orcid}\n` +
-            `- **Contribution Summary**: ${contribution}\n\n` +
-            `### Affirmation\n` +
-            `- [x] Verified contributions to peer-reviewed cryptography, legal treatises, or open runtime code\n\n` +
-            `### Proposed \`data/fellows.json\` Entry\n\`\`\`json\n${formattedJson}\n\`\`\`\n\n` +
-            `*Submitted via ZTDS.ai GitOps Gateway*`;
-        }
+            const jsonEntry = {
+              id: slug,
+              slug: slug,
+              name: appName,
+              role: "Accredited Fellow",
+              status: "Nominated Fellow",
+              track: trackFocus,
+              affiliation: orgName,
+              location: "Global",
+              orcid: orcid,
+              contribution: contribution,
+              verified_date: today
+            };
 
-        compiledMarkdown = markdownBody;
-        compiledJson = formattedJson;
+            formattedJson = JSON.stringify(jsonEntry, null, 2);
 
-        // Update UI
-        jsonTargetFile.textContent = `Target File: ${jsonTarget}`;
-        jsonPayloadCode.textContent = formattedJson;
+            markdownBody = `## ZTDS Research Fellow Nomination: ${appName}\n\n` +
+              `### Nominee Credentials\n` +
+              `- **Nominee Name**: ${appName}\n` +
+              `- **Profile / Portfolio URL**: ${appUrl}\n` +
+              `- **Nominator / Affiliation**: ${orgName} (${contactEmail})\n` +
+              `- **Working Group**: ${trackFocus}\n` +
+              `- **ORCID / DOI**: ${orcid}\n` +
+              `- **Contribution Summary**: ${contribution}\n\n` +
+              `### Affirmation\n` +
+              `- [x] Verified contributions to peer-reviewed cryptography, legal treatises, or open runtime code\n\n` +
+              `### Proposed \`data/fellows.json\` Entry\n\`\`\`json\n${formattedJson}\n\`\`\`\n\n` +
+              `*Submitted via ZTDS.ai GitOps Gateway*`;
+          }
 
-        const issueTitle = encodeURIComponent(`${titlePrefix} ${appName}`);
-        const issueBody = encodeURIComponent(compiledMarkdown);
+          compiledMarkdown = markdownBody;
+          compiledJson = formattedJson;
 
-        const githubIssueUrl = `https://github.com/moxno/ztds.ai/issues/new?title=${issueTitle}&body=${issueBody}`;
-        const mailtoUrl = `mailto:security@ztds.ai?subject=${issueTitle}&body=${issueBody}`;
+          // Update UI
+          jsonTargetFile.textContent = `Target File: ${jsonTarget}`;
+          jsonPayloadCode.textContent = formattedJson;
 
-        githubIssueLink.href = githubIssueUrl;
-        mailtoLink.href = mailtoUrl;
+          const issueTitle = encodeURIComponent(`${titlePrefix} ${appName}`);
+          const issueBody = encodeURIComponent(compiledMarkdown);
 
-        submissionSuccess.classList.remove('hidden');
-        submissionSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      });
+          const githubIssueUrl = `https://github.com/moxno/ztds.ai/issues/new?title=${issueTitle}&body=${issueBody}`;
+          const mailtoUrl = `mailto:security@ztds.ai?subject=${issueTitle}&body=${issueBody}`;
+
+          githubIssueLink.href = githubIssueUrl;
+          mailtoLink.href = mailtoUrl;
+
+          submissionSuccess.classList.remove('hidden');
+          submissionSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+      }
 
       copyJsonBtn.addEventListener('click', () => {
         if (!compiledJson) return;
@@ -1415,6 +1872,9 @@
         if (typeof updateBadgeAndSnippets === 'function') {
           updateBadgeAndSnippets();
         }
+
+        // Auto-advance to Step 2 so user sees pre-filled details ready for review
+        goToStep(2);
       }
     })();
   </script>
