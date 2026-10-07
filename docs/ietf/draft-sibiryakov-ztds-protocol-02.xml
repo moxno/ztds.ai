@@ -333,6 +333,59 @@ ZTDS-CERT-v1.{payload_b64url}.{signature_b64url}
         By eliminating intermediate data processors, ZTDS satisfies European Union GDPR Article 28 exemption requirements, Article 17 Right to be Forgotten within vector databases (embeddings contain zero extractable cleartext PII), and HIPAA 45 CFR Section 164.514(b) Safe Harbor de-identification rules, as analyzed in <xref target="ZTDS-LEGAL"/>.
       </t>
     </section>
+
+    <section anchor="implementation-status">
+      <name>Implementation Status</name>
+      <t>
+        [Note to RFC Editor: This section MUST be removed before the publication of this document as an RFC, in accordance with <xref target="RFC7942"/>.]
+      </t>
+      <t>
+        This section records the status of known implementations of the protocol defined by this specification at the time of posting of this Internet-Draft, and is based on a proposal described in <xref target="RFC7942"/>. The description of implementations in this section is intended to assist the IETF in its decision processes in creating and maturing specifications. Please note that the listing of any individual implementation here does not imply endorsement by the IETF. Furthermore, no effort has been spent to verify the information presented here that was supplied by IETF contributors. This is not a complete list of all implementations to date. Please send information about any other implementations to the author.
+      </t>
+
+      <section anchor="impl-privacyscrubber">
+        <name>PrivacyScrubber Commercial Reference Implementation</name>
+        <ul>
+          <li><t><strong>Organization:</strong> BrandMeWeb / PrivacyScrubber (https://privacyscrubber.com)</t></li>
+          <li><t><strong>Description:</strong> Pioneer certified commercial implementation of the ZTDS standard. Provides 100% client-side in-memory de-identification across web, browser extensions, autonomous agent IDEs, and backend microservices.</t></li>
+          <li><t><strong>Web Application &amp; Sandbox:</strong> Pure client-side single-page application executing inside browser RAM with zero telemetry pings or cloud proxy egress.</t></li>
+          <li><t><strong>Browser Extension (Manifest V3):</strong> In-DOM prompt interceptor supporting frontier model interfaces (ChatGPT, Claude, Gemini, DeepSeek, Grok, Copilot, Perplexity, Kimi, Qwen, Zendesk) with zero remote script execution.</t></li>
+          <li><t><strong>Cryptographic Handoff Protocol (V5):</strong> Inter-client encrypted session transfer using Argon2id key derivation and XChaCha20-Poly1305 AEAD with framing byte 0x05 and direct zero-knowledge payload links (&lt; 1,850 characters).</t></li>
+          <li><t><strong>Licensing:</strong> Commercial and Free Community tiers.</t></li>
+          <li><t><strong>Contact:</strong> ilya@brandmeweb.com</t></li>
+        </ul>
+      </section>
+
+      <section anchor="impl-sdk">
+        <name>Headless Developer SDK (@privacyscrubber/sdk)</name>
+        <ul>
+          <li><t><strong>Package:</strong> @privacyscrubber/sdk v2.3.3 (npm: https://www.npmjs.com/package/@privacyscrubber/sdk)</t></li>
+          <li><t><strong>Description:</strong> Zero-dependency Node.js and WebAssembly (WASM) headless runtime library for embedding deterministic in-memory data sanitization into backend ETL pipelines, LangChain, LlamaIndex, and RAG vector ingestion.</t></li>
+          <li><t><strong>Performance:</strong> Sub-millisecond (&lt; 1 ms) in-memory transformation latency; zero outbound socket bindings.</t></li>
+          <li><t><strong>Coverage:</strong> 30 specialized industry profiles covering financial, healthcare, legal, engineering, and developer secret taxonomies with zero baseline cannibalization.</t></li>
+          <li><t><strong>Status:</strong> Production release v2.3.3 published October 2026.</t></li>
+        </ul>
+      </section>
+
+      <section anchor="impl-mcp">
+        <name>Model Context Protocol Server (@privacyscrubber/mcp-server)</name>
+        <ul>
+          <li><t><strong>Package:</strong> @privacyscrubber/mcp-server v2.3.3 (npm: https://www.npmjs.com/package/@privacyscrubber/mcp-server)</t></li>
+          <li><t><strong>Description:</strong> Stdio-based Model Context Protocol (MCP) server daemon providing local air-gapped data sanitization for AI IDE agents (Cursor, Windsurf, Claude Desktop, VS Code).</t></li>
+          <li><t><strong>Protocol Binding:</strong> Implements JSON-RPC 2.0 stdio transport with multi-agent session isolation, FIFO stream de-tokenization, and zero intermediate network egress.</t></li>
+          <li><t><strong>Status:</strong> Production release v2.3.3 published October 2026.</t></li>
+        </ul>
+      </section>
+
+      <section anchor="impl-cli">
+        <name>Zero-Trust Conformance Auditor (ztds-audit)</name>
+        <ul>
+          <li><t><strong>Package:</strong> ztds-audit (npx ztds-audit / https://ztds.ai)</t></li>
+          <li><t><strong>Description:</strong> Automated command-line conformance testing utility that audits client applications against the four ZTDS invariants, verifying zero outgoing network packets during transformation under simulated air-gapped network conditions.</t></li>
+          <li><t><strong>Licensing:</strong> Open-source / vendor-neutral.</t></li>
+        </ul>
+      </section>
+    </section>
   </middle>
 
   <back>
@@ -397,6 +450,17 @@ ZTDS-CERT-v1.{payload_b64url}.{signature_b64url}
 
       <references>
         <name>Informative References</name>
+
+        <reference anchor="RFC7942" target="https://www.rfc-editor.org/info/rfc7942">
+          <front>
+            <title>Improving Awareness of Running Code: The Implementation Status Section</title>
+            <author fullname="Y. Sheffer" initials="Y." surname="Sheffer"/>
+            <author fullname="A. Farrel" initials="A." surname="Farrel"/>
+            <date month="July" year="2016"/>
+          </front>
+          <seriesInfo name="BCP" value="205"/>
+          <seriesInfo name="RFC" value="7942"/>
+        </reference>
         
         <reference anchor="ZTDS-PROOF" target="https://doi.org/10.5281/zenodo.22058770">
           <front>

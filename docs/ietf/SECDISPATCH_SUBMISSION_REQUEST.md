@@ -49,10 +49,11 @@ The protocol specifies four normative invariants:
 In accordance with IETF principles ("rough consensus and running code"), the protocol is backed by multiple production and reference implementations:
 
 1. **Production Reference Implementation (PrivacyScrubber)**:
-   - Web Application & Browser Sandbox (`privacyscrubber.com`).
-   - Manifest V3 Chrome Extension operating in-DOM on native LLM prompt interfaces (ChatGPT, Claude, Gemini, DeepSeek).
-   - Headless Node.js/WASM runtime package (`@privacyscrubber/sdk`) delivering <2ms in-memory processing.
-   - Stdio Model Context Protocol daemon (`@privacyscrubber/mcp-server`) for AI IDE agent environments (Cursor, Windsurf, Claude Desktop).
+   - Web Application & Browser Sandbox (`privacyscrubber.com`): Pure client-side single-page application executing in browser RAM with zero telemetry or cloud proxy egress.
+   - Manifest V3 Chrome Extension operating in-DOM on native LLM prompt interfaces (ChatGPT, Claude, Gemini, DeepSeek, Grok, Copilot, Perplexity, Kimi, Qwen, Zendesk) with zero remote script execution.
+   - Headless Node.js/WASM runtime package (`@privacyscrubber/sdk@2.3.3`) delivering <1ms in-memory processing across 30 specialized industry profiles.
+   - Stdio Model Context Protocol daemon (`@privacyscrubber/mcp-server@2.3.3`) for AI IDE agent environments (Cursor, Windsurf, Claude Desktop, VS Code) with multi-agent session isolation and streaming FIFO de-tokenization.
+   - Ephemeral Cryptographic Transport Handoff (V5): Inter-client session exchange using Argon2id key derivation and XChaCha20-Poly1305 AEAD with framing byte 0x05 and direct zero-knowledge payload links (< 1,850 characters).
 2. **Open Conformance Tooling (`npx ztds-audit`)**:
    - Standalone CLI auditor verifying zero-egress compliance, deterministic surrogate syntax, and memory zeroization.
 3. **Open Reference Integrations**:

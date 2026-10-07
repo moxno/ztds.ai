@@ -91,10 +91,15 @@ Table of Contents
      10.2.  Adversarial Prompt Injection . . . . . . . . . . . . . .   8
      10.3.  Surrogate Collision and Entropy  . . . . . . . . . . . .   8
    11. Privacy and Regulatory Considerations . . . . . . . . . . . .   8
-   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
-     12.1.  Normative References . . . . . . . . . . . . . . . . . .   9
-     12.2.  Informative References . . . . . . . . . . . . . . . . .   9
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   9
+   12. Implementation Status . . . . . . . . . . . . . . . . . . . .   9
+     12.1.  PrivacyScrubber Commercial Reference Implementation  . .   9
+     12.2.  Headless Developer SDK (@privacyscrubber/sdk)  . . . . .   9
+     12.3.  Model Context Protocol Server (@privacyscrubber/mcp-server) 9
+     12.4.  Zero-Trust Conformance Auditor (ztds-audit)  . . . . . .  10
+   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
+     13.1.  Normative References . . . . . . . . . . . . . . . . . .  10
+     13.2.  Informative References . . . . . . . . . . . . . . . . .  10
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  11
 
 1.  Introduction
 
@@ -450,9 +455,99 @@ Sibiryakov                Expires 31 March 2027                 [Page 8]
 Internet-Draft                ZTDS Protocol               September 2026
 
 
-12.  References
+12.  Implementation Status
 
-12.1.  Normative References
+   [Note to RFC Editor: This section MUST be removed before the
+   publication of this document as an RFC, in accordance with [RFC7942].]
+
+   This section records the status of known implementations of the
+   protocol defined by this specification at the time of posting of this
+   Internet-Draft, and is based on a proposal described in [RFC7942].
+   The description of implementations in this section is intended to
+   assist the IETF in its decision processes in creating and maturing
+   specifications.  Please note that the listing of any individual
+   implementation here does not imply endorsement by the IETF.
+   Furthermore, no effort has been spent to verify the information
+   presented here that was supplied by IETF contributors.  This is not a
+   complete list of all implementations to date.  Please send information
+   about any other implementations to the author.
+
+12.1.  PrivacyScrubber Commercial Reference Implementation
+
+   *  Organization: BrandMeWeb / PrivacyScrubber
+      (https://privacyscrubber.com)
+
+   *  Description: Pioneer certified commercial implementation of the
+      ZTDS standard.  Provides 100% client-side in-memory de-
+      identification across web, browser extensions, autonomous agent
+      IDEs, and backend microservices.
+
+   *  Web Application & Sandbox: Pure client-side single-page
+      application executing inside browser RAM with zero telemetry
+      pings or cloud proxy egress.
+
+   *  Browser Extension (Manifest V3): In-DOM prompt interceptor
+      supporting frontier model interfaces (ChatGPT, Claude, Gemini,
+      DeepSeek, Grok, Copilot, Perplexity, Kimi, Qwen, Zendesk) with
+      zero remote script execution.
+
+   *  Cryptographic Handoff Protocol (V5): Inter-client encrypted
+      session transfer using Argon2id key derivation and XChaCha20-
+      Poly1305 AEAD with framing byte 0x05 and direct zero-knowledge
+      payload links (< 1,850 characters).
+
+   *  Licensing: Commercial and Free Community tiers.
+
+   *  Contact: ilya@brandmeweb.com
+
+12.2.  Headless Developer SDK (@privacyscrubber/sdk)
+
+   *  Package: @privacyscrubber/sdk v2.3.3 (npm:
+      https://www.npmjs.com/package/@privacyscrubber/sdk)
+
+   *  Description: Zero-dependency Node.js and WebAssembly (WASM)
+      headless runtime library for embedding deterministic in-memory
+      data sanitization into backend ETL pipelines, LangChain,
+      LlamaIndex, and RAG vector ingestion.
+
+   *  Performance: Sub-millisecond (< 1 ms) in-memory transformation
+      latency; zero outbound socket bindings.
+
+   *  Coverage: 30 specialized industry profiles covering financial,
+      healthcare, legal, engineering, and developer secret taxonomies
+      with zero baseline cannibalization.
+
+   *  Status: Production release v2.3.3 published October 2026.
+
+12.3.  Model Context Protocol Server (@privacyscrubber/mcp-server)
+
+   *  Package: @privacyscrubber/mcp-server v2.3.3 (npm:
+      https://www.npmjs.com/package/@privacyscrubber/mcp-server)
+
+   *  Description: Stdio-based Model Context Protocol (MCP) server daemon
+      providing local air-gapped data sanitization for AI IDE agents
+      (Cursor, Windsurf, Claude Desktop, VS Code).
+
+   *  Protocol Binding: Implements JSON-RPC 2.0 stdio transport with
+      multi-agent session isolation, FIFO stream de-tokenization, and
+      zero intermediate network egress.
+
+   *  Status: Production release v2.3.3 published October 2026.
+
+12.4.  Zero-Trust Conformance Auditor (ztds-audit)
+
+   *  Package: ztds-audit (npx ztds-audit / https://ztds.ai)
+
+   *  Description: Automated command-line conformance testing utility
+      that audits client applications against the four ZTDS invariants,
+      verifying zero outgoing network packets during transformation under
+      simulated air-gapped network conditions.
+
+   *  Licensing: Open-source / vendor-neutral.
+
+13.  References
+
+13.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997,
@@ -475,7 +570,12 @@ Internet-Draft                ZTDS Protocol               September 2026
               Hashing and Proof-of-Work Applications", RFC 9106,
               September 2021, <https://www.rfc-editor.org/info/rfc9106>.
 
-12.2.  Informative References
+13.2.  Informative References
+
+   [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
+              Code: The Implementation Status Section", BCP 205,
+              RFC 7942, July 2016,
+              <https://www.rfc-editor.org/info/rfc7942>.
 
    [ZTDS-PROOF]
               Sibiryakov, I., "Zero-Trust Data Sanitization (ZTDS):

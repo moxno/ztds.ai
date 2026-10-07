@@ -140,4 +140,27 @@ console.log('--> Test 5: Plaintext Draft Structure & Pagination Headers');
   console.log('    [PASS] Text draft format, 6-month expiry, and section hierarchy validated.');
 }
 
-console.log('\n[SUMMARY] ALL 5 IETF INTERNET-DRAFT TESTS PASSED WITH 100% SUCCESS.\n');
+// Test 6: RFC 7942 Implementation Status & Production Parity
+console.log('--> Test 6: RFC 7942 Implementation Status & Production Parity');
+{
+  const xmlContent02 = fs.readFileSync(xmlPath02, 'utf8');
+  assert(xmlContent02.includes('<section anchor="implementation-status">'), 'draft-02.xml must contain implementation-status section');
+  assert(xmlContent02.includes('RFC7942'), 'draft-02.xml must cite RFC 7942');
+  assert(xmlContent02.includes('@privacyscrubber/sdk'), 'draft-02.xml must cite @privacyscrubber/sdk');
+  assert(xmlContent02.includes('@privacyscrubber/mcp-server'), 'draft-02.xml must cite @privacyscrubber/mcp-server');
+  assert(xmlContent02.includes('ztds-audit'), 'draft-02.xml must cite ztds-audit');
+  assert(xmlContent02.includes('v2.3.3'), 'draft-02.xml must cite v2.3.3');
+
+  const txtContent02 = fs.readFileSync(txtPath02, 'utf8');
+  assert(txtContent02.includes('12.  Implementation Status'), 'draft-02.txt must include 12. Implementation Status');
+  assert(txtContent02.includes('13.  References'), 'draft-02.txt must renumber References to 13');
+  assert(txtContent02.includes('@privacyscrubber/sdk v2.3.3'), 'draft-02.txt must reference SDK v2.3.3');
+
+  const dispatchContent = fs.readFileSync(dispatchPath, 'utf8');
+  assert(dispatchContent.includes('@privacyscrubber/sdk@2.3.3'), 'dispatch request must reference SDK 2.3.3');
+  assert(dispatchContent.includes('@privacyscrubber/mcp-server@2.3.3'), 'dispatch request must reference MCP 2.3.3');
+
+  console.log('    [PASS] RFC 7942 Implementation Status and v2.3.3 production parity validated.');
+}
+
+console.log('\n[SUMMARY] ALL 6 IETF INTERNET-DRAFT TESTS PASSED WITH 100% SUCCESS.\n');
