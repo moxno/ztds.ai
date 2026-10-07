@@ -19,8 +19,14 @@ function auditMemoryTTL(options = {}) {
   const strict = Boolean(options.strict);
 
   if (!fs.existsSync(LEARNINGS_PATH)) {
-    if (!silent) console.error('[FAIL] .agent/learnings.md not found');
-    return { success: false, errors: ['File missing'] };
+    if (strict) {
+      if (!silent) console.error('[FAIL] .agent/learnings.md not found');
+      return { success: false, errors: ['File missing'] };
+    }
+    if (!silent) {
+      console.log('[INFO] .agent/learnings.md not found (agent directory is quarantined in .gitignore for public repository). Skipping memory hygiene audit.\n');
+    }
+    return { success: true, skipped: true, warnings: ['File missing (quarantined in .gitignore)'] };
   }
 
   const content = fs.readFileSync(LEARNINGS_PATH, 'utf8');
@@ -103,7 +109,8 @@ function auditMemoryTTL(options = {}) {
 }
 
 if (require.main === module) {
-  const res = auditMemoryTTL();
+  const strict = process.argv.includes('--strict');
+  const res = auditMemoryTTL({ strict });
   process.exit(res.success ? 0 : 1);
 }
 
