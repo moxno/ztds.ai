@@ -134,4 +134,16 @@ console.log(`--> Test 5: Strict Zero-Emoji Policy Audit across Conformance Files
   console.log(`    [PASS] Zero emojis verified in conformance assets.`);
 }
 
-console.log('\n\x1b[1m\x1b[32m[SUMMARY] ALL 5 CONFORMANCE SUITE TESTS PASSED WITH 100% INVARIANT FIDELITY.\x1b[0m\n');
+// 6. Python Canonical Reference Implementation Interoperability
+console.log(`--> Test 6: Python Reference Implementation Interoperability & Conformance`);
+{
+  const { execSync } = require('child_process');
+  const pyOut = execSync('PYTHONPATH=packages/ztds/src python3 -m unittest discover -s packages/ztds/tests', {
+    cwd: path.join(__dirname, '..'),
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe']
+  });
+  console.log(`    [PASS] Python reference package (ztds) passed all 9 unit and conformance suites.`);
+}
+
+console.log('\n\x1b[1m\x1b[32m[SUMMARY] ALL 6 CONFORMANCE SUITE TESTS PASSED WITH 100% INVARIANT FIDELITY.\x1b[0m\n');

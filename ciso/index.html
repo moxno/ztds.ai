@@ -158,6 +158,16 @@
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
 
+  <!-- Top Announcement Bar: MCP Security Standard -->
+  <div class="bg-slate-900 text-white text-xs py-2 px-4 border-b border-slate-800 flex items-center justify-center gap-3 text-center no-print">
+    <span class="inline-flex items-center gap-1.5 font-mono text-[11px] text-emerald-400 font-bold uppercase tracking-wider">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      Model Context Protocol (MCP)
+    </span>
+    <span class="hidden sm:inline text-slate-300">In-RAM security specification for Cursor &amp; Claude Desktop</span>
+    <a href="/mcp/" class="text-white hover:text-emerald-300 underline font-semibold flex items-center gap-1">Read Specification &rarr;</a>
+  </div>
+
   <!-- Institutional Top Header -->
   <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
@@ -238,13 +248,16 @@
       <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
       <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
       <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
+      <a href="/mcp/" class="block px-3 py-2 rounded-lg text-emerald-700 font-semibold hover:bg-slate-100">Model Context Protocol (MCP)</a>
       <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper</a>
-      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
+      <a href="/evidentiary-sovereignty/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Evidentiary Sovereignty</a>
+      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 font-bold">CISO Procurement &amp; Legal Pack</a>
       <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
       <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 &amp; Trust Center</a>
 
       <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
       <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
+      <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">In-RAM MCP Server</a>
       <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
       <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive Inspector</a>
       <a href="/badge/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Badge Generator</a>
@@ -252,6 +265,7 @@
       <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Consortium</div>
       <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Members</a>
       <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows</a>
+      <a href="/agency/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">BrandMeWeb Enterprise Retainer</a>
       <a href="/governance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Governance &amp; Charter</a>
       <a href="/security/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Security &amp; CVD</a>
     </div>
@@ -917,26 +931,26 @@
       </div>
 
       <!-- Competitor Tab Controls -->
-      <div class="flex flex-wrap items-center gap-2 mb-6 no-print" role="tablist">
-        <button type="button" id="tabBtnPurview" class="bc-tab-btn active px-4 py-2 rounded-lg text-xs font-bold border transition-colors bg-slate-900 text-white border-slate-900 shadow-sm" data-target="panePurview">
+      <div class="flex items-center gap-2 mb-6 overflow-x-auto pb-2 sm:pb-0 sm:flex-wrap no-print max-w-full" role="tablist">
+        <button type="button" id="tabBtnPurview" class="bc-tab-btn active px-4 py-2 rounded-lg text-xs font-bold border transition-colors bg-slate-900 text-white border-slate-900 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="panePurview">
           Microsoft Purview (Egress Policy)
         </button>
-        <button type="button" id="tabBtnNightfall" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm" data-target="paneNightfall">
+        <button type="button" id="tabBtnNightfall" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneNightfall">
           Nightfall AI (Cloud SaaS)
         </button>
-        <button type="button" id="tabBtnBigid" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm" data-target="paneBigid">
+        <button type="button" id="tabBtnBigid" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneBigid">
           BigID &amp; DSPM (Discovery)
         </button>
-        <button type="button" id="tabBtnCloudApis" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm" data-target="paneCloudApis">
+        <button type="button" id="tabBtnCloudApis" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneCloudApis">
           AWS Macie &amp; Google Cloud DLP
         </button>
-        <button type="button" id="tabBtnCyberhaven" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm" data-target="paneCyberhaven">
+        <button type="button" id="tabBtnCyberhaven" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneCyberhaven">
           Cyberhaven (Endpoint Lineage)
         </button>
-        <button type="button" id="tabBtnSkyflow" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm" data-target="paneSkyflow">
+        <button type="button" id="tabBtnSkyflow" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneSkyflow">
           Skyflow (Cloud Vaults)
         </button>
-        <button type="button" id="tabBtnMcp" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm" data-target="paneMcp">
+        <button type="button" id="tabBtnMcp" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneMcp">
           Ad-Hoc MCP Tools (CloakLLM, Conceal)
         </button>
       </div>
