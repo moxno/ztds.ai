@@ -16,12 +16,9 @@
 const fs = require('fs');
 const path = require('path');
 
-let apiKey = process.env.RESEND_API_KEY;
-
-const candidateEnvs = [
-  path.join(__dirname, '../.env.local'),
-  path.join(__dirname, '../../PrivacyScrubber/.env.local')
-];
+// STRICT CONTRACT SIGNATURE GUARD: Do not dispatch until legal representation contract is signed
+console.log('HOLD: Dispatch to Naftali Levy is on legal hold (engagement contract pending signature). Aborting.');
+process.exit(0);
 
 for (const envPath of candidateEnvs) {
   if (!apiKey && fs.existsSync(envPath)) {

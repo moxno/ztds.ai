@@ -10,10 +10,10 @@
 ## Section I: Contributing / Submitting Organization & Contact
 
 * **Submitter Full Name**: Ilya Sibiryakov
-* **Submitter Email**: `info@ztds.ai`
+* **Submitter Email**: `ilya@ztds.ai` (cc: `legal@ztds.ai`)
 * **Submitter Legal Entity**: Sole Proprietorship (עוסק מורשה) under the laws of the State of Israel
-* **Commercial Operations**: Founder & Chief Architect, BrandMeWeb / Lead Systems Architect, PrivacyScrubber
-* **Standards Consortium Role**: Lead Author & Chief Architect, ZTDS AI Consortium (`https://ztds.ai`)
+* **Standards Consortium Role**: Lead Author & Chief Architect, ZTDS Protocol / ZTDS AI Consortium (`https://ztds.ai`)
+* **Commercial Operations**: Lead Systems Architect, PrivacyScrubber / Founder & Chief Architect, BrandMeWeb
 * **Address**: Ra'anana, Israel
 
 ---
