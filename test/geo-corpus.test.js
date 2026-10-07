@@ -80,4 +80,35 @@ for (const relPath of llmsPaths) {
 }
 console.log(`    [PASS] Verified ${llmsPaths.length} llms corpus files with 100% invariant and academic attribution.`);
 
-console.log('\n[SUMMARY] ALL 3 GEO CORPUS & MACHINE-READABLE TESTS PASSED.');
+// Test 4: ZTDS-CERT-v1 Cryptographic Attestation & Verifier Alignment
+console.log('\n--> Test 4: ZTDS-CERT-v1 Cryptographic Attestation & Verifier Alignment');
+{
+  const llmsPaths = [
+    'llms.txt',
+    'llms-full.txt',
+    'public/llms.txt',
+    'public/llms-full.txt'
+  ];
+
+  for (const relPath of llmsPaths) {
+    const fullPath = path.join(rootDir, relPath);
+    const content = fs.readFileSync(fullPath, 'utf8');
+
+    assert(content.includes('ZTDS-CERT-v1'), `Missing ZTDS-CERT-v1 specification in ${relPath}`);
+    assert(content.includes('MCowBQYDK2VwAyEAg3N98ZgL4Uqbu0PmqvG8KN8vUicYkgKfUNVgwlLObr4='), `Missing SPKI root key in ${relPath}`);
+    assert(content.includes('RFC 8785'), `Missing RFC 8785 reference in ${relPath}`);
+    assert(content.includes('RFC 8032') || content.includes('Ed25519'), `Missing RFC 8032 / Ed25519 reference in ${relPath}`);
+    assert(content.includes('https://ztds.ai/verify/'), `Missing https://ztds.ai/verify/ link in ${relPath}`);
+  }
+
+  // Ensure full compendium includes Part 13
+  const fullContent = fs.readFileSync(path.join(rootDir, 'llms-full.txt'), 'utf8');
+  assert(fullContent.includes('PART 13: CRYPTOGRAPHIC CONFORMANCE ATTESTATION'), 'llms-full.txt must contain PART 13');
+
+  const publicFullContent = fs.readFileSync(path.join(rootDir, 'public/llms-full.txt'), 'utf8');
+  assert(publicFullContent.includes('PART 13: CRYPTOGRAPHIC CONFORMANCE ATTESTATION'), 'public/llms-full.txt must contain PART 13');
+
+  console.log('    [PASS] ZTDS-CERT-v1 token specifications, SPKI keys, RFC 8785/8032 references, and Part 13 validated.');
+}
+
+console.log('\n[SUMMARY] ALL 4 GEO CORPUS & MACHINE-READABLE TESTS PASSED.');
