@@ -150,7 +150,7 @@ This suite provides the four foundational contracts to close enterprise sales ef
 When engaging Fortune 500 CISOs, enterprise legal counsel, and venture/M&A partners, intellectual property defense is paramount:
 
 ### 4.1 Patent Anchor (Israel Application IL 331905 & PCT Strategy)
-- **Priority Anchor:** Israel Patent Application **IL 331905**, filed **14/09/2026** (WIPO DAS Access Code: **`B17B`**).
+- **Priority Anchor:** Israel Patent Application **IL 331905**, filed **14/09/2026** (Patent Pending).
 - **International PCT Phase:** Governed by `docs/legal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.md`. International PCT application must be filed via ePCT prior to **14/09/2027** (12-month statutory bar).
 - **National Phase Targets (Month 30: 14/03/2029):** United States (USPTO), European Patent Office (EPO), Israel (ILPO), United Kingdom (UKIPO), and Japan (JPO).
 - **Enterprise Defense Utility:** Prevents hyperscalers (AWS, Microsoft, Google) or third-party DLP vendors from patenting in-RAM deterministic surrogate tokenization and claiming infringement against our customers or ecosystem.

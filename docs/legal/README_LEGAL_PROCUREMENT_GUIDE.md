@@ -149,17 +149,17 @@ This suite provides the four foundational contracts to close enterprise sales ef
 When engaging Fortune 500 CISOs, enterprise legal counsel, and venture/M&A partners, intellectual property defense is paramount:
 
 ### 4.1 Patent Anchor (Israel Application IL 331905 & PCT Strategy)
-- **Priority Anchor:** Israel Patent Application **IL 331905**, filed **14/09/2026** (WIPO DAS Access Code: **`B17B`**).
-- **International PCT Phase:** Governed by `docs/legal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.md`. International PCT application must be filed via ePCT prior to **14/09/2027** (12-month statutory bar).
+- **Priority Anchor:** Israel Patent Application **IL 331905**, filed **14/09/2026** (Paris Convention Priority Window locked through 14/09/2027; WIPO DAS code provided under Counsel NDA).
+- **International PCT Phase:** Governed by `docs/legal/internal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.md`. International PCT application must be filed via ePCT prior to **14/09/2027** (12-month statutory bar).
 - **National Phase Targets (Month 30: 14/03/2029):** United States (USPTO), European Patent Office (EPO), Israel (ILPO), United Kingdom (UKIPO), and Japan (JPO).
 - **Enterprise Defense Utility:** Prevents hyperscalers (AWS, Microsoft, Google) or third-party DLP vendors from patenting in-RAM deterministic surrogate tokenization and claiming infringement against our customers or ecosystem.
 
 ### 4.2 Trademark & Certification Mark Anchor (ILPO Order #182655957 & Madrid Protocol)
 - **Priority Anchor:** ILPO Order **#182655957**, filed **20/09/2026** for Nice Classes 9 and 42.
-- **Madrid System International Dossier:** Governed by `docs/legal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.md`. International application (Form MM2) must be filed prior to **20/03/2027** (6-month Paris Convention priority bar).
+- **Madrid System International Dossier:** Governed by `docs/legal/internal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.md`. International application (Form MM2) must be filed prior to **20/03/2027** (6-month Paris Convention priority bar).
 - **Designated Markets:** US, EU, UK, JP, CA, CH, AU, SG.
 - **Certification Mark Governance:** Protects the **"ZTDS™"** and **"ZTDS VERIFIED™"** seals against counterfeit or unverified security claims, giving enterprise customers verifiable legal trust.
 
 ### 4.3 Prosecution Timeline & Governance SSOT
-- Complete chronological prosecution calendar, statutory deadlines, budget allocations, and e-filing step-by-step procedures are maintained in **`docs/legal/WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.md`**.
+- Complete chronological prosecution calendar, statutory deadlines, budget allocations, and e-filing step-by-step procedures are maintained in **`docs/legal/internal/WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.md`**.
 

@@ -54,7 +54,7 @@ INSTITUTIONAL TRUST ANCHORS:
 - Conforms to ZTDS RFC v1.0 (Zero Network Egress, Deterministic Tokens, In-Memory Isolation, Zero Subprocessors)
 - Independent Third-Party White-Box Security Audit: 0 Critical / 0 High findings
 - Cryptographically verifiable via offline Web Crypto Ed25519 signatures
-- Patent pending under IL 331905 (WIPO DAS Access Code: B17B)
+- Patent pending under IL 331905 (Patent Pending)
 
 WHY ZERO-SERVER SANITIZATION MATTERS:
 Traditional cloud-based "privacy gateways" route your confidential data through third-party proxy servers, introducing new breach liabilities, vendor lock-in, and complex GDPR Article 28 DPA requirements. 

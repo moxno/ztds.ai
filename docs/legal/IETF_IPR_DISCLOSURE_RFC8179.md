@@ -37,11 +37,10 @@
 * **Patent Owner / Applicant**: Ilya Sibiryakov (Sole Proprietor)
 * **Country of Application**: State of Israel (Israel Patent Office / ILPO)
 * **Application Number**: **IL 331905** (Internal Filing Order: 94221)
-* **Filing Date**: **14 September 2026 (14/09/2026)**
-* **WIPO Digital Access Service (DAS) Access Code**: **`B17B`**
+* **WIPO Digital Access Service (DAS)**: Certified priority exchange available to participating Patent Offices
 * **Title of Invention**: *Zero-Trust Data Sanitization Method, System, Apparatus, and Computer-Readable Medium for Deterministic In-RAM Privacy Preservation in Artificial Intelligence and Distributed Workflows*
 * **Convention Priority**: Paris Convention Article 4 (12-month international priority locked through **14 September 2027**)
-* **Anticipated PCT Filing**: Patent Cooperation Treaty (PCT) application claiming priority from IL 331905 via WIPO DAS code `B17B` before 14/09/2027.
+* **Anticipated PCT Filing**: Patent Cooperation Treaty (PCT) application claiming priority from IL 331905 before 14/09/2027.
 
 ---
 

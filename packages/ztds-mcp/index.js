@@ -690,7 +690,7 @@ function runInit(args = []) {
   console.log('======================================================================');
   console.log('  ZTDS MCP — Local Security Firewall for AI Agents & IDEs');
   console.log('  Standards: ZTDS RFC v1.0 (IETF Standards Track)');
-  console.log(`  Patent App: IL 331905 (WIPO DAS Code: B17B) | Version: ${SERVER_VERSION}`);
+  console.log(`  Patent App: IL 331905 (Patent Pending) | Version: ${SERVER_VERSION}`);
   console.log('======================================================================\n');
 
   // Configure Cursor (Workspace)
@@ -974,7 +974,7 @@ function runCliAudit(args = []) {
   console.log('======================================================================');
   console.log('  ZTDS MCP — Zero-Trust Privacy & Credential Pre-Execution Auditor');
   console.log('  Standards: ZTDS RFC v1.0 (IETF Standards Track)');
-  console.log(`  Patent App: IL 331905 (WIPO DAS Code: B17B) | Version: ${SERVER_VERSION}`);
+  console.log(`  Patent App: IL 331905 (Patent Pending) | Version: ${SERVER_VERSION}`);
   console.log('======================================================================\n');
   console.log(`Scanning target: ${targetPath}`);
   console.log(`Files inspected: ${filesToScan.length}\n`);

@@ -4,7 +4,7 @@
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Zenodo DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22058770-blue.svg)](https://doi.org/10.5281/zenodo.22058770)
 [![OSF DOI](https://img.shields.io/badge/OSF-10.17605%2FOSF.IO%2F5BYJF-blue.svg)](https://doi.org/10.17605/OSF.IO/5BYJF)
-[![Patent Pending](https://img.shields.io/badge/Patent_Pending-IL_331905_%2F_DAS_B17B-purple.svg)](https://ztds.ai/standard/)
+[![Patent Pending](https://img.shields.io/badge/Patent_Pending-IL_331905-purple.svg)](https://ztds.ai/certification/)
 [![WAN Egress](https://img.shields.io/badge/Sensitive_WAN_Egress-0.00_Bytes-emerald.svg)](https://ztds.ai/scanner/)
 
 The official developer CLI and automated CI/CD auditor for the **Zero-Trust Data Sanitization (ZTDS™ RFC v1.0)** architecture. Maintained by the **ZTDS AI Consortium**.
@@ -150,7 +150,7 @@ If `ztds-audit` detects sensitive credentials, unmasked PII, or third-party tele
 
 ## 7. Intellectual Property & Statutory Governance
 
-- **Patent Application**: Israel Patent Office (ILPO) Application No. **IL 331905** (*System and Method for Client-Side Zero-Trust Data Sanitization and Cryptographic Multi-Party Pipeline Handoff*). WIPO DAS Access Code: **B17B**. Paris Convention international priority locked through 14/09/2027.
+- **Patent Application**: Israel Patent Office (ILPO) Application No. **IL 331905** (*System and Method for Client-Side Zero-Trust Data Sanitization and Cryptographic Multi-Party Pipeline Handoff*). Patent Pending under Paris Convention Art. 4 & 35 U.S.C. § 119 (priority locked through 14/09/2027).
 - **Registered Trademark**: **ZTDS™** (ILPO Order #182655957, Classes 9 & 42).
 - **Academic DOIs**:
   - Zenodo: [10.5281/zenodo.22058770](https://doi.org/10.5281/zenodo.22058770)

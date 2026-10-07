@@ -35,7 +35,7 @@ Standards & Independent Verification:
 - IETF Internet-Draft: draft-sibiryakov-ztds-protocol-02 published in official IETF Datatracker: https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/
 - Independent Security Audit: White-box security audit completed with a Clean Bill of Health (0 Critical, 0 High vulnerabilities across 5 testing modules): https://ztds.ai/docs/security/ZTDS_Independent_Security_Audit_Report.txt
 - Client-Side Web Crypto Validator: https://ztds.ai/verify/ runs 100% in browser RAM using the SubtleCrypto API. You can drop any .cert token into the validator with your WiFi/Ethernet disconnected (Airplane Mode) and verify the Ed25519 signature with zero bytes egress.
-- Patent Pending: Israel Patent Office Application IL 331905 (WIPO DAS Access Code: B17B)
+- Patent Pending: Israel Patent Office Application IL 331905 (Patent Pending)
 
 CLI Auditor:
 You can audit your local codebase or RAG pipeline right now in <10ms:

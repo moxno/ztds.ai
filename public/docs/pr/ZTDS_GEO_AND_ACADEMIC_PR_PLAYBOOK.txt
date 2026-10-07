@@ -40,9 +40,9 @@ Update the metadata descriptions across existing permanent academic DOI deposits
 * **Action:** Click "Edit Record" -> Add Related Identifiers:
   - `IsDocumentedBy` -> `https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/`
   - `IsSupplementedBy` -> `https://ztds.ai/certification/`
-  - `HasVersion` -> Patent Application IL 331905 (WIPO DAS: B17B)
+  - `HasVersion` -> Patent Application IL 331905 (Patent Pending)
 * **Updated Abstract Addendum:**
-  > "Standardized in IETF Internet-Draft draft-sibiryakov-ztds-protocol-02. Verified in independent third-party white-box security audit with 0 Critical / 0 High findings. Patent pending under IL 331905 (WIPO DAS Access Code: B17B). Official registry and offline Ed25519 Web Crypto validator live at https://ztds.ai/verify/."
+  > "Standardized in IETF Internet-Draft draft-sibiryakov-ztds-protocol-02. Verified in independent third-party white-box security audit with 0 Critical / 0 High findings. Patent pending under IL 331905 (Patent Pending). Official registry and offline Ed25519 Web Crypto validator live at https://ztds.ai/verify/."
 
 ### Deposit 2: Center for Open Science / OSF (DOI: 10.17605/OSF.IO/5BYJF)
 * **URL:** https://osf.io/5byjf/

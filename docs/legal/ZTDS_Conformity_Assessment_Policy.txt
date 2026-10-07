@@ -16,7 +16,7 @@ The **Zero-Trust Data Sanitization AI Consortium (ZTDS AI Consortium)** function
 
 ### 1.2. Intellectual Property & Statutory Priority
 1. **Registered Word Mark:** The word mark **ZTDS™** is registered with the Israel Patent Office (ILPO), Classes 9 and 42 (Order #182655957, filed 20/09/2026). International priority under Article 4 of the Paris Convention for the Protection of Industrial Property is locked through 20/03/2027.
-2. **Patent Application:** In-memory client-side de-identification and surrogate mapping methods are claimed under Israel Patent Application **IL 331905** (filed 14/09/2026, WIPO DAS Access Code: `B17B`), locking international Patent Cooperation Treaty (PCT) priority through 14/09/2027.
+2. **Patent Application:** In-memory client-side de-identification and surrogate mapping methods are claimed under Israel Patent Application **IL 331905** (filed 14/09/2026, Patent Pending), locking international Patent Cooperation Treaty (PCT) priority through 14/09/2027.
 3. **Open Specification:** The core technical standard [ZTDS_Specification_RFC_v1.md](https://ztds.ai/standard/) is published under Apache 2.0 (code primitives) and Creative Commons Attribution 4.0 International (CC BY 4.0) (specification prose).
 4. **Permanent Academic DOIs:**
    - Mathematical Model & Invariants: CERN / Zenodo [10.5281/zenodo.22058770](https://doi.org/10.5281/zenodo.22058770)
