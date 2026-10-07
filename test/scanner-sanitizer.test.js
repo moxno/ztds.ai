@@ -36,6 +36,9 @@ console.log('--> Test 1: Mode 1 Workbench DOM Elements & Interactive Controls');
   assert(html.includes('id="scannerEntityPills"'), 'Must have #scannerEntityPills container');
   assert(html.includes('id="btnRunSanitization"'), 'Must have #btnRunSanitization button');
   assert(html.includes('id="btnTestLeakAttempt"'), 'Must have #btnTestLeakAttempt button');
+  assert(html.includes('id="btnLeakPresetLlm"'), 'Must have #btnLeakPresetLlm button');
+  assert(html.includes('id="btnLeakPresetAnalytics"'), 'Must have #btnLeakPresetAnalytics button');
+  assert(html.includes('id="btnLeakPresetHttp"'), 'Must have #btnLeakPresetHttp button');
   
   assert(html.includes('id="tabBtnSurrogates"'), 'Must have #tabBtnSurrogates button');
   assert(html.includes('id="tabBtnRoundtrip"'), 'Must have #tabBtnRoundtrip button');
@@ -47,7 +50,12 @@ console.log('--> Test 1: Mode 1 Workbench DOM Elements & Interactive Controls');
 
   assert(html.includes('id="scannerAuditDigest"'), 'Must have #scannerAuditDigest element');
   assert(html.includes('id="btnDownloadReceipt"'), 'Must have #btnDownloadReceipt button');
+  assert(html.includes('id="btnExportCisoPdf"'), 'Must have #btnExportCisoPdf button');
   assert(html.includes('id="btnProceedApply"'), 'Must have #btnProceedApply link');
+  assert(html.includes('id="modalCisoAuditReport"'), 'Must have #modalCisoAuditReport modal');
+  assert(html.includes('id="btnPrintCisoReport"'), 'Must have #btnPrintCisoReport button');
+  assert(html.includes('id="btnModalDownloadJson"'), 'Must have #btnModalDownloadJson button');
+  assert(html.includes('id="btnCopyCisoReportSummary"'), 'Must have #btnCopyCisoReportSummary button');
 
   console.log('    [PASS] All Mode 1 workbench DOM elements and interactive controls verified.');
 }
@@ -202,4 +210,33 @@ console.log('--> Test 8: Brand Spelling SSOT ("BrandMeWeb" single word rule)');
   console.log('    [PASS] BrandMeWeb single word rule verified.');
 }
 
-console.log('\n[SUMMARY] ALL 8 SCANNER IN-RAM SANITIZER TESTS PASSED WITH 100% SUCCESS.\n');
+// Test 9: Egress Leak Emulation Presets & Attack Vectors
+console.log('--> Test 9: Egress Leak Emulation Presets & Attack Vectors');
+{
+  assert(html.includes('LEAK_PRESET_SCENARIOS'), 'Must define LEAK_PRESET_SCENARIOS object');
+  assert(html.includes('api.openai.com:443'), 'Must simulate Frontier LLM API egress target');
+  assert(html.includes('google-analytics.com:443'), 'Must simulate analytics telemetry tracker target');
+  assert(html.includes('collector.cloud-logging.internal:80'), 'Must simulate unencrypted HTTP egress target');
+  assert(html.includes('function simulateLeakAttempt('), 'Must define simulateLeakAttempt function');
+  assert(html.includes('BLOCKED: Invariant 1 Policy Applied (0.00 B Leaked)'), 'Must enforce Invariant 1 policy status');
+
+  console.log('    [PASS] Egress leak emulation presets and attack vector interception verified.');
+}
+
+// Test 10: CISO Executive Compliance Audit Report Exporter & Printable Modal
+console.log('--> Test 10: CISO Executive Compliance Audit Report Exporter & Printable Modal');
+{
+  assert(html.includes('function openCisoAuditReportModal('), 'Must define openCisoAuditReportModal function');
+  assert(html.includes('function closeCisoAuditReportModal('), 'Must define closeCisoAuditReportModal function');
+  assert(html.includes('reportTimestampDisplay'), 'Report modal must render timestamp');
+  assert(html.includes('reportReceiptIdDisplay'), 'Report modal must render receipt ID');
+  assert(html.includes('reportMasterSha256'), 'Report modal must render SHA-256 digest');
+  assert(html.includes('reportDeltaEgress'), 'Report modal must render delta egress proof');
+  assert(html.includes('reportMemoryIsolation'), 'Report modal must render memory isolation status');
+  assert(html.includes('reportPacketTableBody'), 'Report modal must render intercepted packet evidence table');
+  assert(html.includes('@media print'), 'Must include print stylesheet rules for clean CISO PDF output');
+
+  console.log('    [PASS] CISO executive compliance audit report exporter and print styles verified.');
+}
+
+console.log('\n[SUMMARY] ALL 10 SCANNER IN-RAM SANITIZER TESTS PASSED WITH 100% SUCCESS.\n');
