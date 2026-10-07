@@ -150,7 +150,7 @@ If `ztds-audit` detects sensitive credentials, unmasked PII, or third-party tele
 
 ## 7. Intellectual Property & Statutory Governance
 
-- **Patent Application**: Israel Patent Office (ILPO) Application No. **IL 331905** (*System and Method for Client-Side Zero-Trust Data Sanitization and Cryptographic Multi-Party Pipeline Handoff*). Patent Pending under Paris Convention Art. 4 & 35 U.S.C. § 119 (priority locked through 14/09/2027).
+- **Patent Application**: **U.S. & International Patents Pending** (*System and Method for Client-Side Zero-Trust Data Sanitization and Cryptographic Multi-Party Pipeline Handoff*). Paris Convention & 35 U.S.C. § 119 Priority (locked through 14/09/2027).
 - **Registered Trademark**: **ZTDS™** (ILPO Order #182655957, Classes 9 & 42).
 - **Academic DOIs**:
   - Zenodo: [10.5281/zenodo.22058770](https://doi.org/10.5281/zenodo.22058770)

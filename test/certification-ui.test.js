@@ -84,8 +84,8 @@ console.log('\n--> Test 3: Institutional Authority Anchors & Key Content');
   assert(html.includes('https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/'), 'Must link to live IETF Datatracker');
 
   // WIPO Patent Anchor
-  assert(html.includes('IL 331905'), 'Must reference Israel Patent Application IL 331905');
-  assert(html.includes('14/09/2026'), 'Must reference patent filing date');
+  assert(html.includes('Patents Pending'), 'Must reference Patents Pending status');
+  assert(html.includes('14/09/2026') || html.includes('September 14, 2026'), 'Must reference patent filing date');
   assert(html.includes('14/09/2027'), 'Must reference patent international priority deadline');
   assert(html.includes('Counsel NDA') || html.includes('NDA'), 'Must link claims request to Counsel NDA');
 

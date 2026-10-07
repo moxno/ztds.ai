@@ -4,7 +4,7 @@
  * Shared client-side runtime for domain perimeter scanning, progressive disclosure,
  * multi-framework blueprint synthesis, and CISO compliance memorandum generation.
  * 
- * Complies with ZTDS RFC v1.0, WIPO Patent IL 331905, and Trademark #182655957.
+ * Complies with ZTDS RFC v1.0, U.S. &amp; Int'l Patents Pending, and Trademark #182655957.
  * Brand: BrandMeWeb (strictly single word).
  */
 
@@ -266,7 +266,7 @@ ${bp.codeSnippet || '// ZTDS Enclave snippet'}
 
 *Signed,*
 **ZTDS AI Consortium & Standards Governance Council**
-https://ztds.ai &middot; Patent IL 331905 &middot; TM #182655957 &middot; CC BY 4.0`;
+https://ztds.ai &middot; Patents Pending &middot; TM #182655957 &middot; CC BY 4.0`;
     },
 
     /**

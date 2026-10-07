@@ -121,7 +121,7 @@ By executing sanitization strictly inside client volatile RAM prior to network s
 
 * **IETF Standards Track:** Published under Internet-Draft \`draft-sibiryakov-ztds-protocol-02\` (RFC 8785 Canonical JSON, RFC 8032 Ed25519 Signatures).  
   *Live Datatracker:* https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/ | *Text Mirror:* https://ztds.ai/docs/ietf/draft-sibiryakov-ztds-protocol-02.txt
-* **WIPO International Patent Anchor:** Israel Patent Office Application **IL 331905** (Filed 14/09/2026, Patent Pending under Paris Convention Art. 4 & 35 U.S.C. § 119). Full claims tree and priority dossier provided to authorized institutional counterparties under mutual NDA.
+* **Patent Status:** U.S. & International Patents Pending (Filed 14/09/2026, Paris Convention & 35 U.S.C. § 119 Priority). Full claims tree and priority dossier provided to authorized institutional counterparties under mutual NDA.
 * **WIPO International Trademark:** ILPO Order **#182655957** (Nice Classes 9 & 42, Madrid System Form MM2).  
   *Madrid Dossier:* https://ztds.ai/docs/legal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.txt
 * **Independent Security Audit:** Evaluated by third-party white-box auditors with a **Clean Bill of Health (0 Critical, 0 High Vulnerabilities)** across all 5 test modules.  

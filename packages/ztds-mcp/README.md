@@ -187,4 +187,4 @@ Conforms to standard JSON-RPC 2.0 stdio protocol. Zero runtime dependencies.
 
 Apache-2.0. Maintained by the ZTDS AI Consortium (Working Group WG-1).  
 Website: [https://ztds.ai](https://ztds.ai)  
-Lead Architect: Ilya Sibiryakov (Author of ZTDS RFC v1.0, IETF Standards Track `sibiryakov-ztds-protocol`, Patent App IL 331905).
+Lead Architect: Ilya Sibiryakov (Author of ZTDS RFC v1.0, IETF Standards Track `sibiryakov-ztds-protocol`, U.S. & Int'l Patents Pending).
