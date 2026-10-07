@@ -143,7 +143,7 @@ function generateHtmlCard(entity) {
 
 function syncRegistry(options = { checkOnly: false }) {
   console.log('============================================================');
-  console.log('🛡️  ZTDS Registry & 8-Facet Ecosystem Synchronizer');
+  console.log('ZTDS Registry & 8-Facet Ecosystem Synchronizer');
   console.log('============================================================\n');
 
   const registryRaw = readFile('data/registry.json');
@@ -400,11 +400,11 @@ function syncRegistry(options = { checkOnly: false }) {
 
   console.log('\n============================================================');
   if (driftCount > 0) {
-    console.error(`❌ REGISTRY DRIFT DETECTED: Found ${driftCount} out-of-sync items.`);
+    console.error(`[ERROR] REGISTRY DRIFT DETECTED: Found ${driftCount} out-of-sync items.`);
     console.error('Run `node scripts/sync-registry.js` to auto-heal all 8 facets.');
     process.exit(1);
   } else {
-    console.log('✅ REGISTRY SYNCHRONIZATION COMPLETE (100% 8-FACET FIDELITY)');
+    console.log('[PASS] REGISTRY SYNCHRONIZATION COMPLETE (100% 8-FACET FIDELITY)');
     console.log('============================================================\n');
   }
 }

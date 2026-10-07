@@ -94,8 +94,9 @@ console.log('--> Test 4: npm Tarball Contents Whitelist');
   const packData = JSON.parse(jsonStr);
   const pkg = Array.isArray(packData) ? packData[0] : packData;
 
+  const rootPkg = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'), 'utf8'));
   assert.strictEqual(pkg.name, 'ztds-audit', 'Package name must be ztds-audit');
-  assert.strictEqual(pkg.version, '1.0.0', 'Package version must be 1.0.0');
+  assert.strictEqual(pkg.version, rootPkg.version, `Package version must match package.json (${rootPkg.version})`);
 
   const filePaths = (pkg.files || []).map(f => f.path);
   assert(filePaths.includes('bin/ztds-audit.js'), 'Must include bin/ztds-audit.js');

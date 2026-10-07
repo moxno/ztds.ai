@@ -298,17 +298,29 @@
     </div>
 
     <!-- Sector Filter Tabs -->
-    <div class="flex flex-wrap items-center justify-center gap-2 mb-10" id="companyFilterTabs" role="tablist">
-      <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm" data-filter="all" role="tab" aria-selected="true">All Enterprises (<span id="countAll">10</span>)</button>
-      <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="healthcare" role="tab" aria-selected="false">Clinical Healthcare</button>
-      <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="fintech" role="tab" aria-selected="false">Banking &amp; FinTech</button>
-      <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="legal" role="tab" aria-selected="false">Corporate Law</button>
-      <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="saas" role="tab" aria-selected="false">B2B SaaS</button>
-      <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="defense" role="tab" aria-selected="false">Defense &amp; Enclaves</button>
-      <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="cyber" role="tab" aria-selected="false">Cybersecurity</button>
-      <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="hr" role="tab" aria-selected="false">Human Resources</button>
-      <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="agency" role="tab" aria-selected="false">SEO &amp; Agency</button>
-      <button class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="privacy" role="tab" aria-selected="false">Zero-Server Reference</button>
+    <!-- Sector Filter Tabs -->
+    <div class="flex flex-wrap items-center justify-center gap-2 mb-6" id="companyFilterTabs" role="tablist" aria-label="Enterprise Industry Sectors">
+      <button type="button" class="filter-btn active px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all" data-filter="all" role="tab" aria-selected="true">All Enterprises (9)</button>
+      <button type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="healthcare" role="tab" aria-selected="false">Clinical Healthcare (1)</button>
+      <button type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="fintech" role="tab" aria-selected="false">Banking &amp; FinTech (1)</button>
+      <button type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="legal" role="tab" aria-selected="false">Corporate Law (1)</button>
+      <button type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="saas" role="tab" aria-selected="false">Enterprise SaaS (1)</button>
+      <button type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="defense" role="tab" aria-selected="false">Defense &amp; Enclaves (1)</button>
+      <button type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="cyber" role="tab" aria-selected="false">Cybersecurity &amp; SOC (1)</button>
+      <button type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="hr" role="tab" aria-selected="false">Human Resources (1)</button>
+      <button type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="agency" role="tab" aria-selected="false">Agency &amp; GEO (1)</button>
+      <button type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="privacy" role="tab" aria-selected="false">Zero-Server Reference (1)</button>
+    </div>
+
+    <!-- Live Results Counter & Active Filter Indicators -->
+    <div class="flex items-center justify-between text-xs text-slate-500 mb-6 px-1 max-w-7xl mx-auto">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span id="companyResultsCount" class="font-mono font-medium text-slate-600">Showing all 9 enterprise case studies</span>
+      </div>
+      <button type="button" id="btnClearCompanyFilters" class="hidden text-xs font-mono text-emerald-700 hover:text-emerald-800 font-semibold cursor-pointer underline decoration-emerald-300">
+        Clear Search &amp; Filters
+      </button>
     </div>
 
     <!-- Institutional Demarcation Banner -->
@@ -399,7 +411,7 @@
       
 
       <!-- Card 2: Interactive Enterprise Onboarding Card -->
-      <article class="ztds-card p-6 bg-gradient-to-br from-slate-900 via-slate-900 to-blue-950 border-2 border-blue-500/40 rounded-xl shadow-md flex flex-col justify-between text-white relative overflow-hidden" id="open-company-card" data-industry="all" data-slug="claim-adopter">
+      <article class="ztds-card p-6 bg-gradient-to-br from-slate-900 via-slate-900 to-blue-950 border-2 border-blue-500/40 rounded-xl shadow-md flex flex-col justify-between text-white relative overflow-hidden" id="open-company-card" data-industry="open-seat" data-slug="claim-adopter">
         <div class="absolute -top-16 -right-16 w-36 h-36 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"></div>
 
         <div>
@@ -1014,6 +1026,27 @@
           </div>
         </div>
       </article>
+
+      <!-- Empty State (Zero Matches) -->
+      <div id="companyEmptyState" class="hidden col-span-full py-16 px-6 text-center bg-white border border-slate-200 rounded-2xl shadow-sm">
+        <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-500">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 tracking-tight mb-1">No corporate case studies found</h3>
+        <p class="text-sm text-slate-500 max-w-md mx-auto mb-6">
+          We could not find any enterprise case studies or blueprints matching your active query and sector filters.
+        </p>
+        <div class="flex items-center justify-center gap-3">
+          <button id="btnEmptyCompanyReset" type="button" class="btn-trust py-2 px-4 text-xs font-semibold cursor-pointer">
+            Reset Filters
+          </button>
+          <a href="/apply/?track=company" class="btn-navy py-2 px-4 text-xs font-semibold">
+            Register Enterprise &rarr;
+          </a>
+        </div>
+      </div>
 
     </div>
 

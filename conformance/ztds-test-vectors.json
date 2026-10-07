@@ -21,12 +21,28 @@
       "description": "Standard consumer customer intake containing personal name, email, phone number, and residential address",
       "input_cleartext": "Hello, my name is Alice Walker. You can reach me at alice.walker@example.com or by calling +1 (555) 234-5678. I reside at 742 Evergreen Terrace.",
       "expected_entities": [
-        { "value": "Alice Walker", "type": "NAME", "surrogate": "[NAME_1]" },
-        { "value": "alice.walker@example.com", "type": "EMAIL", "surrogate": "[EMAIL_1]" },
-        { "value": "+1 (555) 234-5678", "type": "PHONE", "surrogate": "[PHONE_1]" }
+        {
+          "value": "Alice Walker",
+          "type": "NAME",
+          "surrogate": "[NAME_1]"
+        },
+        {
+          "value": "alice.walker@example.com",
+          "type": "EMAIL",
+          "surrogate": "[EMAIL_1]"
+        },
+        {
+          "value": "+1 (555) 234-5678",
+          "type": "PHONE",
+          "surrogate": "[PHONE_1]"
+        }
       ],
       "expected_sanitized_pattern": "Hello, my name is [NAME_1]. You can reach me at [EMAIL_1] or by calling [PHONE_1]. I reside at 742 Evergreen Terrace.",
-      "preservation_tokens": ["Hello", "reside", "742 Evergreen Terrace"],
+      "preservation_tokens": [
+        "Hello",
+        "reside",
+        "742 Evergreen Terrace"
+      ],
       "must_zero_leakage": true
     },
     {
@@ -35,11 +51,22 @@
       "description": "Ensures that repeated references to the same entity receive identical surrogate tokens across a conversation",
       "input_cleartext": "Dr. Marcus Brody met with Marcus Brody yesterday. Marcus Brody confirmed that marcus@brody-labs.org is active.",
       "expected_entities": [
-        { "value": "Marcus Brody", "type": "NAME", "surrogate": "[NAME_1]" },
-        { "value": "marcus@brody-labs.org", "type": "EMAIL", "surrogate": "[EMAIL_1]" }
+        {
+          "value": "Marcus Brody",
+          "type": "NAME",
+          "surrogate": "[NAME_1]"
+        },
+        {
+          "value": "marcus@brody-labs.org",
+          "type": "EMAIL",
+          "surrogate": "[EMAIL_1]"
+        }
       ],
       "expected_sanitized_pattern": "Dr. [NAME_1] met with [NAME_1] yesterday. [NAME_1] confirmed that [EMAIL_1] is active.",
-      "coreference_count": { "[NAME_1]": 3, "[EMAIL_1]": 1 },
+      "coreference_count": {
+        "[NAME_1]": 3,
+        "[EMAIL_1]": 1
+      },
       "must_zero_leakage": true
     },
     {
@@ -48,11 +75,27 @@
       "description": "Clinical encounter note with patient MRN, full name, birth date, and physician email",
       "input_cleartext": "PATIENT: Jonathan Meyers (MRN: MRN-984210). DOB: 1984-06-12. Attending physician: Dr. Sarah Connor (sconnor@memorial-hospital.org). Prescribed 50mg Sertraline daily.",
       "expected_entities": [
-        { "value": "Jonathan Meyers", "type": "NAME", "surrogate": "[NAME_1]" },
-        { "value": "sconnor@memorial-hospital.org", "type": "EMAIL", "surrogate": "[EMAIL_1]" },
-        { "value": "1984-06-12", "type": "DATE", "surrogate": "[DATE_1]" }
+        {
+          "value": "Jonathan Meyers",
+          "type": "NAME",
+          "surrogate": "[NAME_1]"
+        },
+        {
+          "value": "sconnor@memorial-hospital.org",
+          "type": "EMAIL",
+          "surrogate": "[EMAIL_1]"
+        },
+        {
+          "value": "1984-06-12",
+          "type": "DATE",
+          "surrogate": "[DATE_1]"
+        }
       ],
-      "preservation_tokens": ["50mg Sertraline daily", "Prescribed", "Attending physician"],
+      "preservation_tokens": [
+        "50mg Sertraline daily",
+        "Prescribed",
+        "Attending physician"
+      ],
       "must_zero_leakage": true
     },
     {
@@ -61,11 +104,28 @@
       "description": "Wire transfer order containing IBAN, credit card, and account holder details",
       "input_cleartext": "Please transfer $24,500.00 from IBAN GB29XAAA01012345678901 to card 4532-1234-5678-9012 under the name David Sterling.",
       "expected_entities": [
-        { "value": "David Sterling", "type": "NAME", "surrogate": "[NAME_1]" },
-        { "value": "GB29XAAA01012345678901", "type": "IBAN", "surrogate": "[IBAN_1]" },
-        { "value": "4532-1234-5678-9012", "type": "CREDIT_CARD", "surrogate": "[CREDIT_CARD_1]" }
+        {
+          "value": "David Sterling",
+          "type": "NAME",
+          "surrogate": "[NAME_1]"
+        },
+        {
+          "value": "GB29XAAA01012345678901",
+          "type": "IBAN",
+          "surrogate": "[IBAN_1]"
+        },
+        {
+          "value": "4532-1234-5678-9012",
+          "type": "CREDIT_CARD",
+          "surrogate": "[CREDIT_CARD_1]"
+        }
       ],
-      "preservation_tokens": ["$24,500.00", "transfer", "IBAN", "card"],
+      "preservation_tokens": [
+        "$24,500.00",
+        "transfer",
+        "IBAN",
+        "card"
+      ],
       "must_zero_leakage": true
     },
     {
@@ -74,11 +134,26 @@
       "description": "Engineering prompt leaking Anthropic API key, AWS Access Key, and JWT session token",
       "input_cleartext": "Deploying microservice with AWS key AKIAIOSFODNN7EXAMPLE and Anthropic secret sk-ant-api03-0123456789abcdef0123456789abcdef. JWT: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c.",
       "expected_entities": [
-        { "value": "AKIAIOSFODNN7EXAMPLE", "type": "API_SECRET", "surrogate": "[API_SECRET_1]" },
-        { "value": "sk-ant-api03-0123456789abcdef0123456789abcdef", "type": "API_SECRET", "surrogate": "[API_SECRET_2]" },
-        { "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c", "type": "API_SECRET", "surrogate": "[API_SECRET_3]" }
+        {
+          "value": "AKIAIOSFODNN7EXAMPLE",
+          "type": "API_SECRET",
+          "surrogate": "[API_SECRET_1]"
+        },
+        {
+          "value": "sk-ant-api03-0123456789abcdef0123456789abcdef",
+          "type": "API_SECRET",
+          "surrogate": "[API_SECRET_2]"
+        },
+        {
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+          "type": "API_SECRET",
+          "surrogate": "[API_SECRET_3]"
+        }
       ],
-      "preservation_tokens": ["Deploying microservice with AWS key", "JWT:"],
+      "preservation_tokens": [
+        "Deploying microservice with AWS key",
+        "JWT:"
+      ],
       "must_zero_leakage": true
     },
     {
@@ -87,11 +162,27 @@
       "description": "Bilingual Hebrew and English prompt containing Israeli contact details and identification numbers",
       "input_cleartext": "שלום, שמי איליה סיביריאקוב ומספר תעודת הזהות הוא 039281745. נא לשלוח מייל לכתובת ilya@ztds.ai או להתקשר למספר 054-2041978.",
       "expected_entities": [
-        { "value": "איליה סיביריאקוב", "type": "NAME", "surrogate": "[NAME_1]" },
-        { "value": "ilya@ztds.ai", "type": "EMAIL", "surrogate": "[EMAIL_1]" },
-        { "value": "054-2041978", "type": "PHONE", "surrogate": "[PHONE_1]" }
+        {
+          "value": "איליה סיביריאקוב",
+          "type": "NAME",
+          "surrogate": "[NAME_1]"
+        },
+        {
+          "value": "ilya@ztds.ai",
+          "type": "EMAIL",
+          "surrogate": "[EMAIL_1]"
+        },
+        {
+          "value": "054-2041978",
+          "type": "PHONE",
+          "surrogate": "[PHONE_1]"
+        }
       ],
-      "preservation_tokens": ["שלום", "ומספר", "נא לשלוח מייל לכתובת"],
+      "preservation_tokens": [
+        "שלום",
+        "ומספר",
+        "נא לשלוח מייל לכתובת"
+      ],
       "must_zero_leakage": true
     },
     {
@@ -100,7 +191,11 @@
       "description": "Pathological input designed to exploit unanchored regular expressions with quadratic or exponential backtracking",
       "input_cleartext": "Contact us at aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.com. Also test (((((nested))))) brackets and 1000 repeated delimiters.",
       "expected_entities": [
-        { "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.com", "type": "EMAIL", "surrogate": "[EMAIL_1]" }
+        {
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.com",
+          "type": "EMAIL",
+          "surrogate": "[EMAIL_1]"
+        }
       ],
       "performance_budget_ms": 25,
       "must_zero_leakage": true
@@ -109,11 +204,18 @@
       "id": "VEC-UNICODE-001",
       "category": "Unicode Normalization & Homoglyphs",
       "description": "Adversarial prompt utilizing zero-width joiners, non-breaking spaces, and Cyrillic homoglyphs attempting to bypass regex boundaries",
-      "input_cleartext": "Security audit for admin\u200C@corp\u200D.internal and clean address john.doe@cyber-defense.org with zero-width non-breaking space.",
+      "input_cleartext": "Security audit for admin‌@corp‍.internal and clean address john.doe@cyber-defense.org with zero-width non-breaking space.",
       "expected_entities": [
-        { "value": "john.doe@cyber-defense.org", "type": "EMAIL", "surrogate": "[EMAIL_1]" }
+        {
+          "value": "john.doe@cyber-defense.org",
+          "type": "EMAIL",
+          "surrogate": "[EMAIL_1]"
+        }
       ],
-      "preservation_tokens": ["Security audit for", "zero-width non-breaking space"],
+      "preservation_tokens": [
+        "Security audit for",
+        "zero-width non-breaking space"
+      ],
       "must_zero_leakage": true
     }
   ]
