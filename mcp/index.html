@@ -81,6 +81,38 @@
         "author": { "@id": "https://ztds.ai/#organization" }
       },
       {
+        "@type": "HowTo",
+        "@id": "https://ztds.ai/mcp/#howto-setup",
+        "name": "How to Configure Model Context Protocol (MCP) for Zero-Trust In-Memory Data Sanitization",
+        "description": "Step-by-step setup guide to connect Cursor IDE, Claude Desktop, Claude Code CLI, Windsurf, and Zed to the local zero-trust in-RAM ZTDS MCP security server.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Select Package Edition",
+            "text": "Choose between open-source community reference (ztds-mcp, Apache-2.0) or certified commercial suite (@privacyscrubber/mcp-server with 30 enterprise profiles)."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Select AI Client and Platform OS",
+            "text": "Select your IDE (Cursor, Claude Desktop, Claude Code, Windsurf, or Zed) and operating system (macOS, Windows, Linux) to display exact file paths."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Save Configuration File",
+            "text": "Paste the generated stdio JSON-RPC configuration block into your client configuration file, or run npx ztds-mcp init to auto-configure all detected clients."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Restart Client and Audit Tool Registration",
+            "text": "Restart your IDE and verify that ztds_sanitize, ztds_restore, and ztds_audit are active in your local MCP tool palette."
+          }
+        ]
+      },
+      {
         "@type": "BreadcrumbList",
         "@id": "https://ztds.ai/mcp/#breadcrumbs",
         "itemListElement": [
@@ -733,117 +765,220 @@
 
     <!-- SECTION 4: CLIENT CONFIGURATION HUB -->
     <section id="setup" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+      <div id="configurator" class="scroll-mt-24"></div>
       
-      <div class="text-center max-w-3xl mx-auto mb-14">
-        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 font-mono">1-Click &amp; Manual Configurations</span>
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2 tracking-tight">
-          Attach ZTDS to Your AI Workspace
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-mono font-semibold uppercase tracking-wider mb-4">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          Interactive Multi-Client Configurator
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          Attach Zero-Trust MCP to Any AI Coding Client
         </h2>
         <p class="text-slate-600 mt-3 text-base leading-relaxed">
-          Configure all installed clients automatically with a single command, or add the standard JSON-RPC block manually to your client configuration file.
+          Configure Cursor, Claude Desktop, Claude Code, Windsurf, or Zed in seconds. Select your package flavor, platform OS, and environment variables to generate exact, copy-ready JSON configuration blocks.
         </p>
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs font-mono text-slate-500">
+          <span>Standards Track:</span>
+          <a href="/ietf/draft-sibiryakov-ztds-protocol-02/" class="text-emerald-600 hover:text-emerald-700 font-semibold underline decoration-emerald-300">
+            IETF draft-sibiryakov-ztds-protocol-02 (Surface 3: Process-Isolated MCP Stdio Server) &rarr;
+          </a>
+        </div>
       </div>
 
-      <!-- 1-Click Terminal Setup Box -->
-      <div class="p-6 rounded-2xl bg-slate-900 text-white shadow-xl max-w-4xl mx-auto mb-12">
-        <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+      <!-- 1-Click Terminal Automated Setup Banner -->
+      <div class="p-6 rounded-2xl bg-slate-900 text-white shadow-xl max-w-4xl mx-auto mb-10 border border-slate-800">
+        <div class="flex flex-wrap items-center justify-between pb-3 border-b border-slate-800 gap-3">
           <div class="flex items-center gap-2">
             <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
-            <span class="font-mono text-xs text-slate-300">Automated Multi-Client Setup &middot; 1 Command</span>
+            <span class="font-mono text-xs text-slate-300 font-semibold">1-Command Automated Setup &middot; Auto-Detects All Clients</span>
           </div>
           <button type="button" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 cursor-pointer" data-target="cmd-init">Copy Command</button>
         </div>
-        <pre class="p-4 font-mono text-sm text-slate-100 overflow-x-auto"><code><span class="text-slate-500"># Auto-detects Cursor, Claude Desktop, and Windsurf, then writes valid config blocks:</span>
-<span class="text-emerald-400" id="cmd-init">npx ztds-mcp init</span></code></pre>
+        <pre class="p-4 font-mono text-sm text-slate-100 overflow-x-auto"><code id="cmd-init">npx ztds-mcp init</code></pre>
+        <div class="mt-2 text-xs font-mono text-slate-400">
+          Scans filesystem for Cursor, Claude Desktop, and Windsurf config files, creates backups, and merges the zero-trust stdio definition.
+        </div>
       </div>
 
-      <!-- Tabbed Manual Config Box -->
-      <div class="max-w-4xl mx-auto">
-        <div class="flex items-center justify-between mb-4">
-          <span class="text-xs font-mono font-bold text-slate-700 uppercase tracking-wider">Manual Configuration Files</span>
-          <div class="flex flex-wrap items-center gap-1.5 p-1 bg-slate-100 rounded-lg text-xs" role="tablist">
-            <button type="button" class="client-tab-btn active px-3 py-1.5 rounded bg-slate-900 text-white font-mono text-xs font-semibold cursor-pointer" data-client="cursor">Cursor IDE</button>
-            <button type="button" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer" data-client="desktop">Claude Desktop</button>
-            <button type="button" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer" data-client="cli">Claude Code CLI</button>
-            <button type="button" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer" data-client="windsurf">Windsurf</button>
-            <button type="button" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer" data-client="zed">Zed Editor</button>
+      <!-- Interactive Multi-Client Configurator Box -->
+      <div class="max-w-4xl mx-auto bg-slate-50 border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mb-12">
+        
+        <!-- Row 1: Edition & OS Selectors -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pb-6 border-b border-slate-200">
+          <!-- Edition Switcher -->
+          <div>
+            <label class="block text-xs font-mono font-bold text-slate-700 uppercase tracking-wider mb-2">Package Edition</label>
+            <div class="grid grid-cols-2 gap-2 p-1 bg-white border border-slate-200 rounded-xl" role="radiogroup" aria-label="Package Edition">
+              <button type="button" id="btnEditionOpen" class="edition-toggle-btn active py-2 px-3 rounded-lg text-xs font-mono font-semibold transition-all bg-slate-900 text-white shadow-sm cursor-pointer text-left" data-edition="open">
+                <div class="font-bold">Open Reference</div>
+                <div class="text-[10px] text-slate-300 font-sans">ztds-mcp (Apache-2.0)</div>
+              </button>
+              <button type="button" id="btnEditionCommercial" class="edition-toggle-btn py-2 px-3 rounded-lg text-xs font-mono font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer text-left" data-edition="commercial">
+                <div class="font-bold">Certified Enterprise</div>
+                <div class="text-[10px] text-slate-500 font-sans">@privacyscrubber/mcp</div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Platform OS Switcher -->
+          <div>
+            <label class="block text-xs font-mono font-bold text-slate-700 uppercase tracking-wider mb-2">Operating System</label>
+            <div class="grid grid-cols-3 gap-2 p-1 bg-white border border-slate-200 rounded-xl" role="radiogroup" aria-label="Operating System">
+              <button type="button" class="os-toggle-btn active py-2 px-3 rounded-lg text-xs font-mono font-semibold transition-all bg-slate-900 text-white shadow-sm cursor-pointer text-center" data-os="macos">
+                macOS
+              </button>
+              <button type="button" class="os-toggle-btn py-2 px-3 rounded-lg text-xs font-mono font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer text-center" data-os="windows">
+                Windows
+              </button>
+              <button type="button" class="os-toggle-btn py-2 px-3 rounded-lg text-xs font-mono font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer text-center" data-os="linux">
+                Linux
+              </button>
+            </div>
           </div>
         </div>
 
-        <!-- Cursor Pane -->
-        <div id="pane-cursor" class="client-pane code-container shadow-sm">
-          <div class="code-header flex items-center justify-between">
-            <span class="font-mono text-xs text-slate-300">~/.cursor/mcp.json or .cursor/mcp.json</span>
-            <button type="button" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 cursor-pointer" data-target="code-cursor-json">Copy JSON</button>
+        <!-- Row 2: Environment Tuning Toggles -->
+        <div class="py-4 border-b border-slate-200 flex flex-wrap items-center justify-between gap-4">
+          <div class="text-xs font-mono font-semibold text-slate-700 uppercase tracking-wider">
+            Environment Tuning:
           </div>
-          <pre class="p-5 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-cursor-json">{
+          <div class="flex flex-wrap items-center gap-4 text-xs font-mono">
+            <label class="inline-flex items-center gap-2 cursor-pointer select-none text-slate-700 hover:text-slate-900">
+              <input type="checkbox" id="cfgToggleDebug" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer">
+              <span>DEBUG=true (Inspect Stdio Frames)</span>
+            </label>
+            <label class="inline-flex items-center gap-2 cursor-pointer select-none text-slate-700 hover:text-slate-900">
+              <input type="checkbox" id="cfgToggleTimeout" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer">
+              <span>Session Purge (30m RAM Zeroization)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Row 3: Client Tabs -->
+        <div class="pt-6">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <span class="text-xs font-mono font-bold text-slate-700 uppercase tracking-wider">Target AI Coding Client</span>
+            <div class="flex flex-wrap items-center gap-1.5 p-1 bg-white border border-slate-200 rounded-lg text-xs" role="tablist">
+              <button type="button" class="client-tab-btn active px-3 py-1.5 rounded bg-slate-900 text-white font-mono text-xs font-semibold cursor-pointer" data-client="cursor">Cursor IDE</button>
+              <button type="button" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer" data-client="desktop">Claude Desktop</button>
+              <button type="button" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer" data-client="cli">Claude Code CLI</button>
+              <button type="button" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer" data-client="windsurf">Windsurf</button>
+              <button type="button" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer" data-client="zed">Zed Editor</button>
+            </div>
+          </div>
+
+          <!-- Code Display Container -->
+          <div class="code-container shadow-md rounded-xl overflow-hidden border border-slate-800 bg-slate-950">
+            <!-- Dynamic Code Header -->
+            <div class="code-header flex flex-wrap items-center justify-between gap-2 p-3 bg-slate-900 border-b border-slate-800">
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs text-slate-400">Target File:</span>
+                <span id="cfgActivePath" class="font-mono text-xs text-emerald-400 font-semibold">~/.cursor/mcp.json</span>
+                <button type="button" id="btnCopyConfigPath" class="text-[11px] font-mono text-slate-400 hover:text-white underline cursor-pointer ml-1">Copy Path</button>
+              </div>
+              <div class="flex items-center gap-3">
+                <button type="button" id="btnCopyGeneratedCode" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 font-semibold cursor-pointer" data-target="cfgGeneratedCode">Copy Configuration</button>
+              </div>
+            </div>
+
+            <!-- Code Pre/Code block -->
+            <pre class="p-5 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="cfgGeneratedCode">{
   "mcpServers": {
     "ztds": {
       "command": "npx",
-      "args": ["-y", "ztds-mcp@latest"]
+      "args": [
+        "-y",
+        "ztds-mcp@latest"
+      ]
     }
   }
 }</code></pre>
-        </div>
 
-        <!-- Claude Desktop Pane -->
-        <div id="pane-desktop" class="client-pane code-container shadow-sm hidden">
-          <div class="code-header flex items-center justify-between">
-            <span class="font-mono text-xs text-slate-300">claude_desktop_config.json</span>
-            <button type="button" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 cursor-pointer" data-target="code-desktop-json">Copy JSON</button>
+            <!-- Quick Open Footer -->
+            <div class="px-5 py-3 bg-slate-900/60 border-t border-slate-800/80 flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-400 gap-2">
+              <span id="cfgTerminalHint">Terminal Open: cursor ~/.cursor/mcp.json</span>
+              <span class="text-slate-500">In-Memory Volatile Stdio Pipe &middot; Invariant 1 (Zero-Egress)</span>
+            </div>
           </div>
-          <pre class="p-5 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-desktop-json">{
-  "mcpServers": {
-    "ztds": {
-      "command": "npx",
-      "args": ["-y", "ztds-mcp@latest"]
-    }
-  }
-}</code></pre>
+
         </div>
 
-        <!-- Claude Code CLI Pane -->
-        <div id="pane-cli" class="client-pane code-container shadow-sm hidden">
-          <div class="code-header flex items-center justify-between">
-            <span class="font-mono text-xs text-slate-300">Terminal &middot; 1-Line Setup</span>
-            <button type="button" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 cursor-pointer" data-target="code-cli-cmd">Copy Command</button>
+      </div>
+
+      <!-- 4-Step Verification Workflow -->
+      <div class="max-w-4xl mx-auto mb-16">
+        <h3 class="text-lg font-bold text-slate-900 mb-4 text-center font-mono">
+          4-Step Verification Protocol
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+            <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 font-mono font-bold flex items-center justify-center text-xs mb-3 border border-emerald-200">01</div>
+            <div class="font-bold text-slate-900 text-sm mb-1">Copy Config</div>
+            <div class="text-xs text-slate-600 leading-relaxed">Select your IDE and copy the JSON snippet or run automated init.</div>
           </div>
-          <pre class="p-5 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-cli-cmd"><span class="text-slate-500"># Attach open ZTDS reference server to Claude Code CLI</span>
-claude mcp add ztds npx -y ztds-mcp@latest</code></pre>
-        </div>
-
-        <!-- Windsurf Pane -->
-        <div id="pane-windsurf" class="client-pane code-container shadow-sm hidden">
-          <div class="code-header flex items-center justify-between">
-            <span class="font-mono text-xs text-slate-300">~/.codeium/windsurf/mcp_config.json</span>
-            <button type="button" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 cursor-pointer" data-target="code-windsurf-json">Copy JSON</button>
+          <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+            <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 font-mono font-bold flex items-center justify-center text-xs mb-3 border border-emerald-200">02</div>
+            <div class="font-bold text-slate-900 text-sm mb-1">Save to Path</div>
+            <div class="text-xs text-slate-600 leading-relaxed">Paste configuration block into your target client file on disk.</div>
           </div>
-          <pre class="p-5 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-windsurf-json">{
-  "mcpServers": {
-    "ztds": {
-      "command": "npx",
-      "args": ["-y", "ztds-mcp@latest"]
-    }
-  }
-}</code></pre>
-        </div>
-
-        <!-- Zed Pane -->
-        <div id="pane-zed" class="client-pane code-container shadow-sm hidden">
-          <div class="code-header flex items-center justify-between">
-            <span class="font-mono text-xs text-slate-300">~/.config/zed/settings.json</span>
-            <button type="button" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 cursor-pointer" data-target="code-zed-json">Copy JSON</button>
+          <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+            <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 font-mono font-bold flex items-center justify-center text-xs mb-3 border border-emerald-200">03</div>
+            <div class="font-bold text-slate-900 text-sm mb-1">Restart Client</div>
+            <div class="text-xs text-slate-600 leading-relaxed">Relaunch Cursor, Claude Desktop, or Windsurf to spawn the stdio pipe.</div>
           </div>
-          <pre class="p-5 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code id="code-zed-json">{
-  "context_servers": {
-    "ztds": {
-      "command": "npx",
-      "args": ["-y", "ztds-mcp@latest"]
-    }
-  }
-}</code></pre>
+          <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+            <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 font-mono font-bold flex items-center justify-center text-xs mb-3 border border-emerald-200">04</div>
+            <div class="font-bold text-slate-900 text-sm mb-1">Audit Tools</div>
+            <div class="text-xs text-slate-600 leading-relaxed">Verify ztds_sanitize and ztds_restore appear in the active tools list.</div>
+          </div>
         </div>
+      </div>
 
+      <!-- Threat Model Comparison: Raw MCP vs ZTDS Protected -->
+      <div class="max-w-4xl mx-auto rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-sm">
+        <div class="p-6 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <span class="text-xs font-mono font-semibold text-emerald-400 uppercase tracking-wider">Security Architecture Demarcation</span>
+            <h3 class="text-xl font-bold mt-1">Raw MCP Server vs. ZTDS-Protected In-RAM Gateway</h3>
+          </div>
+          <a href="/ciso/" class="text-xs font-mono text-slate-300 hover:text-white underline">
+            CISO Procurement Memo &rarr;
+          </a>
+        </div>
+        <div class="p-6 overflow-x-auto">
+          <table class="w-full text-left text-xs font-mono border-collapse">
+            <thead>
+              <tr class="border-b border-slate-200 text-slate-500 uppercase tracking-wider">
+                <th class="py-3 px-4 font-semibold">Security Dimension</th>
+                <th class="py-3 px-4 font-semibold text-red-600">Standard MCP Tool / Server</th>
+                <th class="py-3 px-4 font-semibold text-emerald-600">ZTDS In-RAM Hardened MCP</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700 font-sans">
+              <tr>
+                <td class="py-3 px-4 font-mono font-semibold text-slate-900">Credential Protection</td>
+                <td class="py-3 px-4 text-slate-600">Plaintext AWS/DB secrets in tool outputs are serialized into cloud LLM context windows.</td>
+                <td class="py-3 px-4 text-emerald-700 font-medium">Intercepted in RAM; replaced with bijective surrogate tokens before serialization.</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-mono font-semibold text-slate-900">Network Egress</td>
+                <td class="py-3 px-4 text-slate-600">Sensitive payload bytes cross public WAN to model provider API endpoints.</td>
+                <td class="py-3 px-4 text-emerald-700 font-medium">0.00 bytes of raw cleartext ever leave the local machine perimeter (Invariant 1).</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-mono font-semibold text-slate-900">GDPR / HIPAA Liability</td>
+                <td class="py-3 px-4 text-slate-600">Triggers mandatory Data Processing Agreements (DPA) under GDPR Article 28.</td>
+                <td class="py-3 px-4 text-emerald-700 font-medium">Zero-subprocessor computational utility; DPA legally unnecessary under Recital 26.</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-mono font-semibold text-slate-900">Memory Persistence</td>
+                <td class="py-3 px-4 text-slate-600">May write audit trails, session logs, or cache files to disk or cloud logging sinks.</td>
+                <td class="py-3 px-4 text-emerald-700 font-medium">Strict ephemeral volatile RAM; automated cryptographic zeroization upon session close.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </section>
@@ -1174,29 +1309,217 @@ claude mcp add ztds npx -y ztds-mcp@latest</code></pre>
   <!-- Interactive Client Switcher & Code Copy Script -->
   <script>
     (function() {
-      // Client tabs switcher
-      const clientBtns = document.querySelectorAll('.client-tab-btn');
-      const clientPanes = document.querySelectorAll('.client-pane');
+      let currentEdition = 'open';
+      let currentOS = 'macos';
+      let currentClient = 'cursor';
+      let enableDebug = false;
+      let enableTimeout = false;
 
-      clientBtns.forEach(btn => {
+      const PATHS = {
+        cursor: {
+          macos: '~/.cursor/mcp.json',
+          windows: '%USERPROFILE%\\.cursor\\mcp.json',
+          linux: '~/.cursor/mcp.json',
+          openCmd: {
+            macos: 'cursor ~/.cursor/mcp.json',
+            windows: 'notepad %USERPROFILE%\\.cursor\\mcp.json',
+            linux: 'nano ~/.cursor/mcp.json'
+          }
+        },
+        desktop: {
+          macos: '~/Library/Application Support/Claude/claude_desktop_config.json',
+          windows: '%APPDATA%\\Claude\\claude_desktop_config.json',
+          linux: '~/.config/Claude/claude_desktop_config.json',
+          openCmd: {
+            macos: 'open ~/Library/Application\\ Support/Claude/claude_desktop_config.json',
+            windows: 'notepad %APPDATA%\\Claude\\claude_desktop_config.json',
+            linux: 'nano ~/.config/Claude/claude_desktop_config.json'
+          }
+        },
+        cli: {
+          macos: '~/.claude.json',
+          windows: '%USERPROFILE%\\.claude.json',
+          linux: '~/.claude.json',
+          openCmd: {
+            macos: 'claude mcp list',
+            windows: 'claude mcp list',
+            linux: 'claude mcp list'
+          }
+        },
+        windsurf: {
+          macos: '~/.codeium/windsurf/mcp_config.json',
+          windows: '%USERPROFILE%\\.codeium\\windsurf\\mcp_config.json',
+          linux: '~/.codeium/windsurf/mcp_config.json',
+          openCmd: {
+            macos: 'windsurf ~/.codeium/windsurf/mcp_config.json',
+            windows: 'notepad %USERPROFILE%\\.codeium\\windsurf\\mcp_config.json',
+            linux: 'nano ~/.codeium/windsurf/mcp_config.json'
+          }
+        },
+        zed: {
+          macos: '~/.config/zed/settings.json',
+          windows: '%APPDATA%\\Zed\\settings.json',
+          linux: '~/.config/zed/settings.json',
+          openCmd: {
+            macos: 'zed ~/.config/zed/settings.json',
+            windows: 'notepad %APPDATA%\\Zed\\settings.json',
+            linux: 'nano ~/.config/zed/settings.json'
+          }
+        }
+      };
+
+      const pathDisplay = document.getElementById('cfgActivePath');
+      const codeDisplay = document.getElementById('cfgGeneratedCode');
+      const terminalHint = document.getElementById('cfgTerminalHint');
+      const btnCopyPath = document.getElementById('btnCopyConfigPath');
+      const debugToggle = document.getElementById('cfgToggleDebug');
+      const timeoutToggle = document.getElementById('cfgToggleTimeout');
+
+      function updateConfig() {
+        const pkg = currentEdition === 'open' ? 'ztds-mcp@latest' : '@privacyscrubber/mcp-server@latest';
+        const serverKey = currentEdition === 'open' ? 'ztds' : 'privacyscrubber';
+
+        const env = {};
+        if (enableDebug) env.DEBUG = 'true';
+        if (enableTimeout) env.ZTDS_SESSION_TIMEOUT_MS = '1800000';
+        if (currentEdition === 'commercial') {
+          env.ZTDS_PROFILES = 'financial,healthcare,dev_secrets';
+        }
+
+        const hasEnv = Object.keys(env).length > 0;
+
+        let codeOutput = '';
+
+        if (currentClient === 'cli') {
+          let cmd = `claude mcp add ${serverKey} npx -y ${pkg}`;
+          if (hasEnv) {
+            for (const [k, v] of Object.entries(env)) {
+              cmd += ` -e ${k}=${v}`;
+            }
+          }
+          codeOutput = cmd;
+        } else if (currentClient === 'zed') {
+          const zedObj = {
+            context_servers: {
+              [serverKey]: {
+                command: 'npx',
+                args: ['-y', pkg]
+              }
+            }
+          };
+          if (hasEnv) zedObj.context_servers[serverKey].env = env;
+          codeOutput = JSON.stringify(zedObj, null, 2);
+        } else {
+          // Cursor, Claude Desktop, Windsurf
+          const mcpObj = {
+            mcpServers: {
+              [serverKey]: {
+                command: 'npx',
+                args: ['-y', pkg]
+              }
+            }
+          };
+          if (hasEnv) mcpObj.mcpServers[serverKey].env = env;
+          codeOutput = JSON.stringify(mcpObj, null, 2);
+        }
+
+        if (codeDisplay) codeDisplay.textContent = codeOutput;
+
+        const pathInfo = PATHS[currentClient] || PATHS.cursor;
+        const currentPath = pathInfo[currentOS] || pathInfo.macos;
+        const currentOpen = (pathInfo.openCmd && pathInfo.openCmd[currentOS]) || `open ${currentPath}`;
+
+        if (pathDisplay) pathDisplay.textContent = currentPath;
+        if (terminalHint) {
+          if (currentClient === 'cli') {
+            terminalHint.textContent = 'Run directly in terminal where claude CLI is authenticated';
+          } else {
+            terminalHint.textContent = `Terminal Open: ${currentOpen}`;
+          }
+        }
+      }
+
+      // Edition buttons
+      document.querySelectorAll('.edition-toggle-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-          const client = btn.getAttribute('data-client');
-          clientBtns.forEach(b => {
+          currentEdition = btn.getAttribute('data-edition');
+          document.querySelectorAll('.edition-toggle-btn').forEach(b => {
+            b.classList.remove('active', 'bg-slate-900', 'text-white', 'shadow-sm');
+            b.classList.add('text-slate-600');
+            const sub = b.querySelector('.text-\\[10px\\]');
+            if (sub) {
+              sub.classList.remove('text-slate-300');
+              sub.classList.add('text-slate-500');
+            }
+          });
+          btn.classList.add('active', 'bg-slate-900', 'text-white', 'shadow-sm');
+          btn.classList.remove('text-slate-600');
+          const activeSub = btn.querySelector('.text-\\[10px\\]');
+          if (activeSub) {
+            activeSub.classList.remove('text-slate-500');
+            activeSub.classList.add('text-slate-300');
+          }
+          updateConfig();
+        });
+      });
+
+      // OS buttons
+      document.querySelectorAll('.os-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentOS = btn.getAttribute('data-os');
+          document.querySelectorAll('.os-toggle-btn').forEach(b => {
+            b.classList.remove('active', 'bg-slate-900', 'text-white', 'shadow-sm');
+            b.classList.add('text-slate-600');
+          });
+          btn.classList.add('active', 'bg-slate-900', 'text-white', 'shadow-sm');
+          btn.classList.remove('text-slate-600');
+          updateConfig();
+        });
+      });
+
+      // Client tab buttons
+      document.querySelectorAll('.client-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentClient = btn.getAttribute('data-client');
+          document.querySelectorAll('.client-tab-btn').forEach(b => {
             b.classList.remove('active', 'bg-slate-900', 'text-white');
             b.classList.add('text-slate-600');
           });
           btn.classList.add('active', 'bg-slate-900', 'text-white');
           btn.classList.remove('text-slate-600');
-
-          clientPanes.forEach(pane => {
-            if (pane.id === 'pane-' + client) {
-              pane.classList.remove('hidden');
-            } else {
-              pane.classList.add('hidden');
-            }
-          });
+          updateConfig();
         });
       });
+
+      // Toggles
+      if (debugToggle) {
+        debugToggle.addEventListener('change', () => {
+          enableDebug = debugToggle.checked;
+          updateConfig();
+        });
+      }
+      if (timeoutToggle) {
+        timeoutToggle.addEventListener('change', () => {
+          enableTimeout = timeoutToggle.checked;
+          updateConfig();
+        });
+      }
+
+      // Copy Path
+      if (btnCopyPath) {
+        btnCopyPath.addEventListener('click', () => {
+          const pathText = pathDisplay ? pathDisplay.textContent : '';
+          if (pathText) {
+            navigator.clipboard.writeText(pathText).then(() => {
+              const orig = btnCopyPath.textContent;
+              btnCopyPath.textContent = 'Path Copied!';
+              setTimeout(() => {
+                btnCopyPath.textContent = orig;
+              }, 2000);
+            }).catch(() => {});
+          }
+        });
+      }
 
       // Generic code copy buttons
       document.querySelectorAll('.btn-copy-code').forEach(btn => {
@@ -1214,6 +1537,9 @@ claude mcp add ztds npx -y ztds-mcp@latest</code></pre>
           }
         });
       });
+
+      // Initial render
+      updateConfig();
     })();
 
     // Interactive MCP Protocol Simulator Controller
