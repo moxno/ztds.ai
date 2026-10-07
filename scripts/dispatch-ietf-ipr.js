@@ -42,10 +42,10 @@ const markdownContent = fs.readFileSync(docPath, 'utf8');
 const subject = '[IPR Disclosure] draft-sibiryakov-ztds-protocol-02: Ilya Sibiryakov\'s Statement about IPR (IL 331905 / WIPO DAS B17B)';
 
 const payload = {
-  from: 'Ilya Sibiryakov <ilya@brandmeweb.com>',
+  from: 'Ilya Sibiryakov <info@ztds.ai>',
   to: ['ietf-ipr@ietf.org'],
   cc: ['ilsimox@gmail.com'],
-  reply_to: ['ilya@brandmeweb.com', 'ilsimox@gmail.com'],
+  reply_to: ['info@ztds.ai'],
   subject: subject,
   text: markdownContent
 };
