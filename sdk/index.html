@@ -349,7 +349,7 @@
             </div>
           </div>
           <div class="p-3.5 overflow-x-auto leading-relaxed text-slate-200">
-            <pre id="quickstartTsBlock"><code><span class="text-blue-400">import</span> { ZTDSEngine } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@privacyscrubber/sdk"</span>;
+            <pre id="quickstartTsBlock" class="overflow-x-auto"><code><span class="text-blue-400">import</span> { ZTDSEngine } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@privacyscrubber/sdk"</span>;
 
 <span class="text-blue-400">const</span> engine = <span class="text-blue-400">new</span> <span class="text-yellow-300">ZTDSEngine</span>({ profile: <span class="text-emerald-300">"dev"</span> });
 
@@ -362,7 +362,7 @@
 
 <span class="text-slate-500">// 3. Losslessly restore surrogate tokens strictly inside local client RAM</span>
 <span class="text-blue-400">const</span> clearOutput = engine.<span class="text-yellow-300">reveal</span>(llmResponse, sessionMap);</code></pre>
-            <pre id="quickstartPyBlock" class="hidden"><code><span class="text-blue-400">from</span> privacyscrubber <span class="text-blue-400">import</span> ZTDSEngine
+            <pre id="quickstartPyBlock" class="hidden overflow-x-auto"><code><span class="text-blue-400">from</span> privacyscrubber <span class="text-blue-400">import</span> ZTDSEngine
 
 engine = <span class="text-yellow-300">ZTDSEngine</span>(profile=<span class="text-emerald-300">"dev"</span>)
 
@@ -870,7 +870,7 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
             <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 01 &middot; LangChain BaseCallbackHandler Middleware</strong>
             Transparently intercepts prompts and completions across any LCEL chain, ChatOpenAI, ChatAnthropic, or LangGraph agent with zero cleartext network egress.
           </div>
-          <pre class="text-slate-100"><code><span class="text-slate-500">// ztds-langchain-callback.ts</span>
+          <pre class="text-slate-100 overflow-x-auto"><code><span class="text-slate-500">// ztds-langchain-callback.ts</span>
 <span class="text-blue-400">import</span> { BaseCallbackHandler } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@langchain/core/callbacks/base"</span>;
 <span class="text-blue-400">import</span> { LLMResult } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@langchain/core/outputs"</span>;
 <span class="text-blue-400">import</span> { ZTDSEngine } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@privacyscrubber/sdk"</span>;
@@ -922,7 +922,7 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
             <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 02 &middot; LlamaIndex IngestionPipeline TransformComponent</strong>
             Immunizes vector stores (Pinecone, Qdrant, Chroma, Milvus) against permanent GDPR Article 17 vector poisoning by sanitizing documents before embedding generation.
           </div>
-          <pre class="text-slate-100"><code><span class="text-slate-500"># ztds_llamaindex_transform.py</span>
+          <pre class="text-slate-100 overflow-x-auto"><code><span class="text-slate-500"># ztds_llamaindex_transform.py</span>
 <span class="text-blue-400">from</span> typing <span class="text-blue-400">import</span> List, Optional
 <span class="text-blue-400">from</span> llama_index.core.schema <span class="text-blue-400">import</span> BaseNode, TransformComponent
 <span class="text-blue-400">from</span> llama_index.core.ingestion <span class="text-blue-400">import</span> IngestionPipeline
@@ -965,7 +965,7 @@ nodes = pipeline.run(documents=documents)</code></pre>
             <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 03 &middot; CrewAI Multi-Agent Role Sanitizer</strong>
             Sanitizes prompts before task delegation between autonomous agents and restores context before final user delivery in volatile host memory.
           </div>
-          <pre class="text-slate-100"><code><span class="text-slate-500"># ztds_crewai_role_filter.py</span>
+          <pre class="text-slate-100 overflow-x-auto"><code><span class="text-slate-500"># ztds_crewai_role_filter.py</span>
 <span class="text-blue-400">from</span> crewai <span class="text-blue-400">import</span> Agent, Task, Crew, Process
 <span class="text-blue-400">from</span> privacyscrubber <span class="text-blue-400">import</span> ZTDSEngine
 
@@ -995,7 +995,7 @@ nodes = pipeline.run(documents=documents)</code></pre>
             <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 04 &middot; Ollama &amp; Local vLLM Streaming Pipeline</strong>
             High-throughput streaming pipe intercepting incoming chunks, buffering token boundaries, and streaming clean tokens without network leakage.
           </div>
-          <pre class="text-slate-100"><code><span class="text-slate-500">// ztds-ollama-stream.js</span>
+          <pre class="text-slate-100 overflow-x-auto"><code><span class="text-slate-500">// ztds-ollama-stream.js</span>
 <span class="text-blue-400">const</span> { PrivacyScrubberEngine } = <span class="text-blue-400">require</span>(<span class="text-emerald-300">"@privacyscrubber/sdk"</span>);
 
 <span class="text-blue-400">const</span> engine = <span class="text-blue-400">new</span> <span class="text-yellow-300">PrivacyScrubberEngine</span>();
@@ -1032,7 +1032,7 @@ nodes = pipeline.run(documents=documents)</code></pre>
             <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 05 &middot; Model Context Protocol (MCP) Stdio Gateway</strong>
             Standard JSON-RPC 2.0 interface for Cursor IDE, Claude Desktop, and Claude Code CLI running locally with zero external network connectivity.
           </div>
-          <pre class="text-slate-100"><code><span class="text-slate-500">// ~/.cursor/mcp.json or claude_desktop_config.json</span>
+          <pre class="text-slate-100 overflow-x-auto"><code><span class="text-slate-500">// ~/.cursor/mcp.json or claude_desktop_config.json</span>
 {
   <span class="text-blue-400">"mcpServers"</span>: {
     <span class="text-blue-400">"privacyscrubber-ztds"</span>: {
@@ -1056,7 +1056,7 @@ nodes = pipeline.run(documents=documents)</code></pre>
             <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 06 &middot; Supabase &amp; Pinecone RAG Vector Embeddings Pipeline</strong>
             Guarantees vector stores (Pinecone, Qdrant, Weaviate, pgvector) never index raw PII, preventing vector inversion attacks and enabling GDPR Art. 17 erasure.
           </div>
-          <pre class="text-slate-100"><code><span class="text-slate-500">// ztds-pinecone-rag.ts</span>
+          <pre class="text-slate-100 overflow-x-auto"><code><span class="text-slate-500">// ztds-pinecone-rag.ts</span>
 <span class="text-blue-400">import</span> { Pinecone } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@pinecone-database/pinecone"</span>;
 <span class="text-blue-400">import</span> { OpenAIEmbeddings } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@langchain/openai"</span>;
 <span class="text-blue-400">import</span> { PrivacyScrubberEngine } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@privacyscrubber/sdk"</span>;
@@ -1093,7 +1093,7 @@ nodes = pipeline.run(documents=documents)</code></pre>
             <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 07 &middot; Next.js App Router (Edge Runtime Sanitizer)</strong>
             Ultra-fast (&lt;1ms) serverless middleware sanitizing incoming chat API payloads in Edge volatile memory before dispatching to upstream LLMs.
           </div>
-          <pre class="text-slate-100"><code><span class="text-slate-500">// app/api/chat/route.ts</span>
+          <pre class="text-slate-100 overflow-x-auto"><code><span class="text-slate-500">// app/api/chat/route.ts</span>
 <span class="text-blue-400">import</span> { NextRequest, NextResponse } <span class="text-blue-400">from</span> <span class="text-emerald-300">"next/server"</span>;
 <span class="text-blue-400">import</span> { PrivacyScrubberEngine } <span class="text-blue-400">from</span> <span class="text-emerald-300">"@privacyscrubber/sdk"</span>;
 
@@ -1136,7 +1136,7 @@ nodes = pipeline.run(documents=documents)</code></pre>
             <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 08 &middot; API Gateway / Envoy Sidecar Local Proxy</strong>
             Local loopback reverse proxy intercepting outbound LLM traffic, inspecting JSON payload bodies, sanitizing PII in &lt;2ms, and stripping auth headers if unmasked leaks occur.
           </div>
-          <pre class="text-slate-100"><code><span class="text-slate-500"># envoy-ztds-filter.yaml</span>
+          <pre class="text-slate-100 overflow-x-auto"><code><span class="text-slate-500"># envoy-ztds-filter.yaml</span>
 static_resources:
   listeners:
   - name: llm_proxy_listener
@@ -1175,7 +1175,7 @@ static_resources:
             <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 09 &middot; Microservices Kafka / Event Bus Stream Transformer</strong>
             Kafka streaming consumer executing stateless in-RAM transformation on streaming topics before downstream LLM fine-tuning or vector indexing.
           </div>
-          <pre class="text-slate-100"><code><span class="text-slate-500">// ztds-kafka-stream.js</span>
+          <pre class="text-slate-100 overflow-x-auto"><code><span class="text-slate-500">// ztds-kafka-stream.js</span>
 <span class="text-blue-400">const</span> { Kafka } = <span class="text-blue-400">require</span>(<span class="text-emerald-300">"kafkajs"</span>);
 <span class="text-blue-400">const</span> { PrivacyScrubberEngine } = <span class="text-blue-400">require</span>(<span class="text-emerald-300">"@privacyscrubber/sdk"</span>);
 
@@ -1212,7 +1212,7 @@ static_resources:
             <strong class="text-emerald-400 font-sans block mb-0.5">Blueprint 10 &middot; Chrome MV3 Content Script / DOM Textarea Interceptor</strong>
             Seamlessly integrates into any web-based LLM UI (ChatGPT, Claude, Perplexity), replacing sensitive text before DOM form dispatch.
           </div>
-          <pre class="text-slate-100"><code><span class="text-slate-500">// content-script-ztds.js</span>
+          <pre class="text-slate-100 overflow-x-auto"><code><span class="text-slate-500">// content-script-ztds.js</span>
 (<span class="text-blue-400">function</span>() {
   <span class="text-blue-400">const</span> engine = window.PrivacyScrubberEngine;
   <span class="text-blue-400">let</span> activeSessionMap = {};
