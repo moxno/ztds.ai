@@ -67,17 +67,41 @@ module.exports = (req, res) => {
     colorRight = '#059669';
   }
 
+  const isLight = (query.theme === 'light');
+
   // Custom label overrides via query parameters
   if (query.label) {
     labelRight = String(query.label).trim().toUpperCase();
-  } else if (query.status === 'sovereign' || slug.includes('sovereign')) {
+  } else if (query.status === 'sovereign' || query.tier === 'sovereign' || slug.includes('sovereign')) {
     labelRight = 'SOVEREIGN';
     colorRight = '#2563eb';
-  } else if (query.status === 'dpa' || slug.includes('dpa')) {
+    textColorRight = '#ffffff';
+  } else if (query.status === 'dpa' || query.tier === 'dpa' || query.tier === 'dpa exempt' || slug.includes('dpa')) {
     labelRight = 'DPA EXEMPT';
-    colorRight = '#0f172a';
-    textColorRight = '#10b981';
+    colorRight = isLight ? '#f8fafc' : '#0f172a';
+    textColorRight = isLight ? '#047857' : '#10b981';
+  } else if (query.status === 'air-gapped' || query.status === 'airgapped' || query.tier === 'air-gapped' || query.tier === 'airgapped' || slug.includes('air-gapped')) {
+    labelRight = 'AIR-GAPPED';
+    colorRight = '#4f46e5';
+    textColorRight = '#ffffff';
+  } else if (query.status === 'verified' || query.tier === 'verified') {
+    labelRight = 'VERIFIED';
+    colorRight = '#059669';
+    textColorRight = '#ffffff';
+  } else if (query.status === 'self-attested' || query.tier === 'self-attested') {
+    labelRight = 'SELF-ATTESTED';
+    colorRight = '#d97706';
+    textColorRight = '#ffffff';
   }
+
+  // Theme-specific styles
+  const bgLeft = isLight ? '#f1f5f9' : '#0f172a';
+  const textLeft = isLight ? '#0f172a' : '#f8fafc';
+  const strokeBorder = isLight ? '#cbd5e1' : '#0f172a';
+  const archFill = isLight ? '#ffffff' : '#020617';
+  const archStroke = isLight ? '#059669' : '#10b981';
+  const diamondFill = '#10b981';
+  const circleFill = isLight ? '#0284c7' : '#38bdf8';
 
   // Geometry calculations
   const wLeft = 58;
@@ -94,17 +118,17 @@ module.exports = (req, res) => {
     </clipPath>
   </defs>
   <g clip-path="url(#badgeClip)">
-    <rect width="${wLeft}" height="22" fill="#0f172a"/>
+    <rect width="${wLeft}" height="22" fill="${bgLeft}"/>
     <rect x="${wLeft}" width="${wRight}" height="22" fill="${colorRight}"/>
-    <rect width="${totalWidth}" height="22" stroke="#0f172a" stroke-width="1" fill="none"/>
+    <rect width="${totalWidth}" height="22" stroke="${strokeBorder}" stroke-width="1" fill="none"/>
     <!-- Official ZTDS Air-Gap Monolith Vector Mark -->
     <g transform="translate(6, 4)">
-      <path d="M5.5 1.5C2.5 1.5 1 3.5 1 7C1 10.5 2.5 12.5 5.5 12.5V9.5C3.5 9.5 3.2 8 3.2 7C3.2 6 3.5 4.5 5.5 4.5V1.5Z" fill="#020617" stroke="#10b981" stroke-width="0.8"/>
-      <path d="M8.5 1.5C11.5 1.5 13 3.5 13 7C13 10.5 11.5 12.5 8.5 12.5V9.5C10.5 9.5 10.8 8 10.8 7C10.8 6 10.5 4.5 8.5 4.5V1.5Z" fill="#020617" stroke="#10b981" stroke-width="0.8"/>
-      <path d="M7 3L9.5 7L7 11L4.5 7Z" fill="#10b981"/>
-      <circle cx="7" cy="7" r="1" fill="#38bdf8"/>
+      <path d="M5.5 1.5C2.5 1.5 1 3.5 1 7C1 10.5 2.5 12.5 5.5 12.5V9.5C3.5 9.5 3.2 8 3.2 7C3.2 6 3.5 4.5 5.5 4.5V1.5Z" fill="${archFill}" stroke="${archStroke}" stroke-width="0.8"/>
+      <path d="M8.5 1.5C11.5 1.5 13 3.5 13 7C13 10.5 11.5 12.5 8.5 12.5V9.5C10.5 9.5 10.8 8 10.8 7C10.8 6 10.5 4.5 8.5 4.5V1.5Z" fill="${archFill}" stroke="${archStroke}" stroke-width="0.8"/>
+      <path d="M7 3L9.5 7L7 11L4.5 7Z" fill="${diamondFill}"/>
+      <circle cx="7" cy="7" r="1" fill="${circleFill}"/>
     </g>
-    <text x="24" y="15" font-family="-apple-system, BlinkMacSystemFont, 'Inter', Roboto, sans-serif" font-size="10" font-weight="700" fill="#f8fafc" letter-spacing="0.5">ZTDS</text>
+    <text x="24" y="15" font-family="-apple-system, BlinkMacSystemFont, 'Inter', Roboto, sans-serif" font-size="10" font-weight="700" fill="${textLeft}" letter-spacing="0.5">ZTDS</text>
     <text x="${textXRight}" y="15" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Inter', Roboto, sans-serif" font-size="9" font-weight="700" fill="${textColorRight}" letter-spacing="0.6">${labelRight}</text>
   </g>
 </svg>`.trim();
