@@ -240,12 +240,24 @@
     </div>
 
     <!-- Category Filter Tabs -->
-    <div class="flex flex-wrap items-center justify-center gap-2 mb-10" id="filterTabs">
-      <button class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm" data-filter="all">All Solutions (13)</button>
-      <button class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="app">Web Applications</button>
-      <button class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="extension">Browser Extensions</button>
-      <button class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="sdk">Developer SDKs</button>
-      <button class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50" data-filter="mcp">Agent &amp; MCP Gateways</button>
+    <div class="flex flex-wrap items-center justify-center gap-2 mb-6" id="filterTabs" role="tablist" aria-label="Registry Categories">
+      <button type="button" class="filter-btn active px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all" data-filter="all">All Solutions (13)</button>
+      <button type="button" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="mcp">MCP Servers (3)</button>
+      <button type="button" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="rag">RAG &amp; Agent SDKs (3)</button>
+      <button type="button" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="sdk">Core Engines &amp; SDK (3)</button>
+      <button type="button" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="app">Apps &amp; Extensions (2)</button>
+      <button type="button" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="proxy">Proxies &amp; Local LLM (2)</button>
+    </div>
+
+    <!-- Live Results Counter & Active Filter Indicators -->
+    <div class="flex items-center justify-between text-xs text-slate-500 mb-6 px-1 max-w-7xl mx-auto">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span id="registryResultsCount" class="font-mono font-medium text-slate-600">Showing 13 of 13 certified solutions</span>
+      </div>
+      <button type="button" id="btnClearFilters" class="hidden text-xs font-mono text-emerald-700 hover:text-emerald-800 font-semibold cursor-pointer underline decoration-emerald-300">
+        Clear Search &amp; Filters
+      </button>
     </div>
 
     <!-- Directory Grid -->
@@ -407,7 +419,7 @@
       </div>
 
       <!-- Card 2: PrivacyScrubber Extension -->
-      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="extension">
+      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="app">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="pill-trust">
@@ -567,59 +579,8 @@
         </div>
       </div>
 
-      <!-- Card 4: MCP Zero-Trust Gateway -->
-      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="mcp">
-        <div>
-          <div class="flex items-center justify-between mb-4">
-            <span class="pill-trust">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-              ZTDS VERIFIED &middot; GATEWAY
-            </span>
-            <span class="text-xs font-mono text-slate-400">RFC v1.0</span>
-          </div>
-          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">ZTDS MCP Gateway</h2>
-          <div class="text-xs font-semibold text-emerald-700 mt-1 mb-3">Cursor, Windsurf &amp; Claude Desktop Connector</div>
-          <p class="text-sm text-slate-600 leading-relaxed mb-4">
-            Standard Model Context Protocol stdio adapter running on localhost. Automatically strips developer secrets, database passwords, and client PII before passing prompts to coding LLMs.
-          </p>
-
-          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 space-y-1 mb-4">
-            <div><span class="font-semibold text-slate-900">Transport:</span> stdio stream on local workstation.</div>
-            <div><span class="font-semibold text-slate-900">Egress:</span> Zero socket transmission beyond verified client.</div>
-          </div>
-
-          <div class="flex flex-wrap gap-1.5">
-            <span class="text-[11px] font-medium px-2.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">MCP Standard</span>
-            <span class="text-[11px] font-medium px-2.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">Cursor Ready</span>
-            <span class="text-[11px] font-medium px-2.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">Claude Desktop</span>
-          </div>
-        </div>
-
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-          <a href="/sdk/#mcp" class="text-emerald-700 font-semibold hover:underline flex items-center gap-1">
-            Setup MCP Stdio &rarr;
-          </a>
-          <div class="flex items-center gap-2">
-            <a href="https://ztds.ai/verify/#cert=ZTDS-CERT-v1.eyJhdXRob3JpdHkiOiJaVERTIEFJIENvbnNvcnRpdW0gJiBTdGFuZGFyZHMgQXV0aG9yaXR5IChCcmFuZE1lV2ViIEVjb3N5c3RlbSkiLCJiYWRnZV91cmwiOiJodHRwczovL3p0ZHMuYWkvYmFkZ2UvcHJpdmFjeXNjcnViYmVyLW1jcC0uc3ZnIiwiY2VydGlmaWNhdGVfaWQiOiJaVERTLUNFUlQtMjAyNi1QUklWQUNZU0NSVUJCRVItTUNQLS1BMTMwMEQiLCJleHBpcmVzX2F0IjoiMjAyNy0wOS0yNlQxOTozNTo0NS4zMzdaIiwiaW52YXJpYW50cyI6eyJpbnZhcmlhbnRfMV96ZXJvX2VncmVzcyI6IlBBU1MiLCJpbnZhcmlhbnRfMl9yZXZlcnNpYmxlX3Rva2VucyI6IlBBU1MiLCJpbnZhcmlhbnRfM19pbl9tZW1vcnlfaXNvbGF0aW9uIjoiUEFTUyIsImludmFyaWFudF80X3plcm9fc3VicHJvY2Vzc29ycyI6IlBBU1MifSwiaXNzdWVkX2F0IjoiMjAyNi0wOS0yNlQxOTozNTo0NS4zMzdaIiwibGV2ZWwiOiJMZXZlbCAyOiBWZXJpZmllZCBSZWZlcmVuY2UgSW1wbGVtZW50YXRpb24iLCJyZWdpc3RyeV92ZXJpZmljYXRpb25fdXJsIjoiaHR0cHM6Ly96dGRzLmFpL3JlZ2lzdHJ5LyNwcml2YWN5c2NydWJiZXItbWNwLSIsInNwZWNpZmljYXRpb25fdXJsIjoiaHR0cHM6Ly96dGRzLmFpL3N0YW5kYXJkLyIsInN0YW5kYXJkIjoiWlREUyBSRkMgdjEuMCIsInN1YmplY3QiOnsiYXBwbGljYW50IjoiSWx5YSBTaWJpcnlha292IChCcmFuZE1lV2ViKSIsImF1ZGl0X2hhc2giOiJzaGEyNTY6NWE5ZDgyZTE4NWE3M2IyMmNmOTRiMTU2N2QyNmI4OTllZjNkNzJhNDg3OWI2ZDM0ZTllNDJlNTY0N2E2MWQ4YSIsImNhdGVnb3J5IjoiQUkgQWdlbnQgJiBJREUgU2VjdXJpdHkgR2F0ZXdheSIsInByb2R1Y3QiOiJQcml2YWN5U2NydWJiZXIgTUNQIFNlcnZlciIsInJlcG9zaXRvcnkiOiJodHRwczovL3p0ZHMuYWkvc2RrLyNtY3AiLCJzY2FubmVkX2ZpbGVzX2NvdW50IjowfSwidmFsaWRpdHlfZGF5cyI6MzY1fQ.oFAzop0_aSPvKckGh8DtKE_4U7fjaSzhMCGdoklGQPXiq98o2Q4VHOZ28GDpRFbSf6PdIOXl1gxJyBF0IxTuAg" target="_blank" rel="noopener" class="cert-verify-link inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-50 hover:bg-emerald-100/80 border border-emerald-200 text-emerald-800 text-[10.5px] font-mono font-semibold transition-colors">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Certificate &rarr;
-            </a>
-            <button type="button" class="btn-cert text-slate-500 hover:text-emerald-700 font-mono text-[11px] flex items-center gap-1"
-            data-name="ZTDS MCP Gateway"
-            data-tier="Reference Implementation"
-            data-category-desc="AI Agent &amp; IDE Security Gateway"
-            data-sha="sha256:5b88e109283746a5182903847201948572019485720194857201948572019485"
-            data-date="2026-09-15"
-            data-url="/sdk/#mcp"
-            data-badge="https://ztds.ai/badge/privacyscrubber-mcp.svg"
-            data-frameworks="SOC 2 CC6.7 &middot; ISO 27001 A.8.11 &middot; OWASP Top 10 for LLM" data-cert-id="ZTDS-CERT-2026-PRIVACYSCRUBBER-MCP--A1300D" data-cert-token="ZTDS-CERT-v1.eyJhdXRob3JpdHkiOiJaVERTIEFJIENvbnNvcnRpdW0gJiBTdGFuZGFyZHMgQXV0aG9yaXR5IChCcmFuZE1lV2ViIEVjb3N5c3RlbSkiLCJiYWRnZV91cmwiOiJodHRwczovL3p0ZHMuYWkvYmFkZ2UvcHJpdmFjeXNjcnViYmVyLW1jcC0uc3ZnIiwiY2VydGlmaWNhdGVfaWQiOiJaVERTLUNFUlQtMjAyNi1QUklWQUNZU0NSVUJCRVItTUNQLS1BMTMwMEQiLCJleHBpcmVzX2F0IjoiMjAyNy0wOS0yNlQxOTozNTo0NS4zMzdaIiwiaW52YXJpYW50cyI6eyJpbnZhcmlhbnRfMV96ZXJvX2VncmVzcyI6IlBBU1MiLCJpbnZhcmlhbnRfMl9yZXZlcnNpYmxlX3Rva2VucyI6IlBBU1MiLCJpbnZhcmlhbnRfM19pbl9tZW1vcnlfaXNvbGF0aW9uIjoiUEFTUyIsImludmFyaWFudF80X3plcm9fc3VicHJvY2Vzc29ycyI6IlBBU1MifSwiaXNzdWVkX2F0IjoiMjAyNi0wOS0yNlQxOTozNTo0NS4zMzdaIiwibGV2ZWwiOiJMZXZlbCAyOiBWZXJpZmllZCBSZWZlcmVuY2UgSW1wbGVtZW50YXRpb24iLCJyZWdpc3RyeV92ZXJpZmljYXRpb25fdXJsIjoiaHR0cHM6Ly96dGRzLmFpL3JlZ2lzdHJ5LyNwcml2YWN5c2NydWJiZXItbWNwLSIsInNwZWNpZmljYXRpb25fdXJsIjoiaHR0cHM6Ly96dGRzLmFpL3N0YW5kYXJkLyIsInN0YW5kYXJkIjoiWlREUyBSRkMgdjEuMCIsInN1YmplY3QiOnsiYXBwbGljYW50IjoiSWx5YSBTaWJpcnlha292IChCcmFuZE1lV2ViKSIsImF1ZGl0X2hhc2giOiJzaGEyNTY6NWE5ZDgyZTE4NWE3M2IyMmNmOTRiMTU2N2QyNmI4OTllZjNkNzJhNDg3OWI2ZDM0ZTllNDJlNTY0N2E2MWQ4YSIsImNhdGVnb3J5IjoiQUkgQWdlbnQgJiBJREUgU2VjdXJpdHkgR2F0ZXdheSIsInByb2R1Y3QiOiJQcml2YWN5U2NydWJiZXIgTUNQIFNlcnZlciIsInJlcG9zaXRvcnkiOiJodHRwczovL3p0ZHMuYWkvc2RrLyNtY3AiLCJzY2FubmVkX2ZpbGVzX2NvdW50IjowfSwidmFsaWRpdHlfZGF5cyI6MzY1fQ.oFAzop0_aSPvKckGh8DtKE_4U7fjaSzhMCGdoklGQPXiq98o2Q4VHOZ28GDpRFbSf6PdIOXl1gxJyBF0IxTuAg" data-cert-verify-url="https://ztds.ai/verify/#cert=ZTDS-CERT-v1.eyJhdXRob3JpdHkiOiJaVERTIEFJIENvbnNvcnRpdW0gJiBTdGFuZGFyZHMgQXV0aG9yaXR5IChCcmFuZE1lV2ViIEVjb3N5c3RlbSkiLCJiYWRnZV91cmwiOiJodHRwczovL3p0ZHMuYWkvYmFkZ2UvcHJpdmFjeXNjcnViYmVyLW1jcC0uc3ZnIiwiY2VydGlmaWNhdGVfaWQiOiJaVERTLUNFUlQtMjAyNi1QUklWQUNZU0NSVUJCRVItTUNQLS1BMTMwMEQiLCJleHBpcmVzX2F0IjoiMjAyNy0wOS0yNlQxOTozNTo0NS4zMzdaIiwiaW52YXJpYW50cyI6eyJpbnZhcmlhbnRfMV96ZXJvX2VncmVzcyI6IlBBU1MiLCJpbnZhcmlhbnRfMl9yZXZlcnNpYmxlX3Rva2VucyI6IlBBU1MiLCJpbnZhcmlhbnRfM19pbl9tZW1vcnlfaXNvbGF0aW9uIjoiUEFTUyIsImludmFyaWFudF80X3plcm9fc3VicHJvY2Vzc29ycyI6IlBBU1MifSwiaXNzdWVkX2F0IjoiMjAyNi0wOS0yNlQxOTozNTo0NS4zMzdaIiwibGV2ZWwiOiJMZXZlbCAyOiBWZXJpZmllZCBSZWZlcmVuY2UgSW1wbGVtZW50YXRpb24iLCJyZWdpc3RyeV92ZXJpZmljYXRpb25fdXJsIjoiaHR0cHM6Ly96dGRzLmFpL3JlZ2lzdHJ5LyNwcml2YWN5c2NydWJiZXItbWNwLSIsInNwZWNpZmljYXRpb25fdXJsIjoiaHR0cHM6Ly96dGRzLmFpL3N0YW5kYXJkLyIsInN0YW5kYXJkIjoiWlREUyBSRkMgdjEuMCIsInN1YmplY3QiOnsiYXBwbGljYW50IjoiSWx5YSBTaWJpcnlha292IChCcmFuZE1lV2ViKSIsImF1ZGl0X2hhc2giOiJzaGEyNTY6NWE5ZDgyZTE4NWE3M2IyMmNmOTRiMTU2N2QyNmI4OTllZjNkNzJhNDg3OWI2ZDM0ZTllNDJlNTY0N2E2MWQ4YSIsImNhdGVnb3J5IjoiQUkgQWdlbnQgJiBJREUgU2VjdXJpdHkgR2F0ZXdheSIsInByb2R1Y3QiOiJQcml2YWN5U2NydWJiZXIgTUNQIFNlcnZlciIsInJlcG9zaXRvcnkiOiJodHRwczovL3p0ZHMuYWkvc2RrLyNtY3AiLCJzY2FubmVkX2ZpbGVzX2NvdW50IjowfSwidmFsaWRpdHlfZGF5cyI6MzY1fQ.oFAzop0_aSPvKckGh8DtKE_4U7fjaSzhMCGdoklGQPXiq98o2Q4VHOZ28GDpRFbSf6PdIOXl1gxJyBF0IxTuAg" data-cert-download-url="https://ztds.ai/certs/privacyscrubber-mcp.cert" data-cert-level="Level 2: Verified Reference Implementation">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> SHA: 5b88e109...
-          </button>
-          </div>
-        </div>
-      </div>
-
       <!-- Card 5: LangChain ZTDS Privacy Callback -->
-      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="sdk">
+      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="rag">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="pill-trust">
@@ -671,7 +632,7 @@
       </div>
 
       <!-- Card 6: LlamaIndex Air-Gap Sanitizer -->
-      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="sdk">
+      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="rag">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="pill-trust">
@@ -723,7 +684,7 @@
       </div>
 
       <!-- Card 7: Ollama Local Privacy Filter -->
-      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="app">
+      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="proxy">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="pill-trust">
@@ -775,7 +736,7 @@
       </div>
 
       <!-- Card 8: Envoy Proxy ZTDS WASM Filter -->
-      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="mcp">
+      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="proxy">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="pill-trust">
@@ -879,7 +840,7 @@
       </div>
 
       <!-- Card 10: CrewAI Autonomous Privacy Agent -->
-      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="sdk">
+      <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="rag">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="pill-trust">
@@ -931,7 +892,7 @@
       </div>
 
           <!-- Card: PrivacyScrubber MCP Server -->
-      <div class="ztds-card p-7 bg-white border-2 border-sky-500/80 rounded-xl shadow-sm flex flex-col justify-between scroll-mt-24" id="privacyscrubber-mcp" data-category="sdk">
+      <div class="ztds-card p-7 bg-white border-2 border-sky-500/80 rounded-xl shadow-sm flex flex-col justify-between scroll-mt-24" id="privacyscrubber-mcp" data-category="mcp">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="pill-trust">
@@ -978,6 +939,27 @@
               <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span> SHA: 5a9d82e1...
             </button>
           </div>
+        </div>
+      </div>
+
+      <!-- Empty State (Zero Matches) -->
+      <div id="registryEmptyState" class="hidden col-span-full py-16 px-6 text-center bg-white border border-slate-200 rounded-2xl shadow-sm">
+        <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-500">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 tracking-tight mb-1">No verified solutions found</h3>
+        <p class="text-sm text-slate-500 max-w-md mx-auto mb-6">
+          We could not find any certified implementations matching your active query and category filters.
+        </p>
+        <div class="flex items-center justify-center gap-3">
+          <button id="btnEmptyReset" type="button" class="btn-trust py-2 px-4 text-xs font-semibold cursor-pointer">
+            Reset Filters
+          </button>
+          <a href="/apply/" class="btn-navy py-2 px-4 text-xs font-semibold">
+            Apply for Certification &rarr;
+          </a>
         </div>
       </div>
 
@@ -1266,41 +1248,133 @@
 
   <script src="/nav.js"></script>
   <script>
-    // Search and Filter functionality
+    // Enhanced Search, Filter & Category Engine
     const searchInput = document.getElementById('registrySearch');
+    const filterTabsContainer = document.getElementById('filterTabs');
     const filterBtns = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('#registryGrid > div[data-category]');
+    const resultsCountEl = document.getElementById('registryResultsCount');
+    const btnClearFilters = document.getElementById('btnClearFilters');
+    const registryEmptyState = document.getElementById('registryEmptyState');
+    const btnEmptyReset = document.getElementById('btnEmptyReset');
 
-    function filterCards() {
-      const query = searchInput.value.toLowerCase();
-      const activeBtn = document.querySelector('.filter-btn.bg-slate-900');
-      const activeCategory = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+    const totalCardsCount = cards.length;
 
-      cards.forEach(card => {
-        const category = card.getAttribute('data-category');
-        const text = card.innerText.toLowerCase();
-        const matchesCategory = activeCategory === 'all' || category === activeCategory;
-        const matchesQuery = !query || text.includes(query);
-
-        if (matchesCategory && matchesQuery) {
-          card.style.display = 'flex';
+    function setActiveTab(category) {
+      filterBtns.forEach(btn => {
+        const isMatch = btn.getAttribute('data-filter') === category;
+        if (isMatch) {
+          btn.className = 'filter-btn active px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all';
+          btn.setAttribute('aria-selected', 'true');
         } else {
-          card.style.display = 'none';
+          btn.className = 'filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all';
+          btn.setAttribute('aria-selected', 'false');
         }
       });
     }
 
+    function filterCards() {
+      const query = (searchInput ? searchInput.value : '').trim().toLowerCase();
+      const activeBtn = document.querySelector('.filter-btn.active') || document.querySelector('.filter-btn[data-filter="all"]');
+      const activeCategory = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const category = card.getAttribute('data-category') || '';
+        const categories = category.split(/\s+/);
+        const text = card.innerText.toLowerCase();
+        
+        const matchesCategory = activeCategory === 'all' || categories.includes(activeCategory);
+        const matchesQuery = !query || text.includes(query);
+
+        if (matchesCategory && matchesQuery) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Update counter
+      if (resultsCountEl) {
+        if (visibleCount === 0) {
+          resultsCountEl.textContent = '0 solutions found';
+        } else if (visibleCount === totalCardsCount && !query && activeCategory === 'all') {
+          resultsCountEl.textContent = `Showing all ${totalCardsCount} certified solutions`;
+        } else {
+          resultsCountEl.textContent = `Showing ${visibleCount} of ${totalCardsCount} certified solutions`;
+        }
+      }
+
+      // Toggle Clear Filters button
+      const hasActiveFilters = query.length > 0 || activeCategory !== 'all';
+      if (btnClearFilters) {
+        if (hasActiveFilters) {
+          btnClearFilters.classList.remove('hidden');
+        } else {
+          btnClearFilters.classList.add('hidden');
+        }
+      }
+
+      // Toggle Empty State
+      if (registryEmptyState) {
+        if (visibleCount === 0) {
+          registryEmptyState.classList.remove('hidden');
+        } else {
+          registryEmptyState.classList.add('hidden');
+        }
+      }
+    }
+
+    function resetAllFilters() {
+      if (searchInput) searchInput.value = '';
+      setActiveTab('all');
+      filterCards();
+      if (window.location.hash && ['#all', '#mcp', '#rag', '#sdk', '#app', '#proxy'].includes(window.location.hash.toLowerCase())) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    }
+
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        filterBtns.forEach(b => {
-          b.className = 'filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50';
-        });
-        btn.className = 'filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm';
+        const filter = btn.getAttribute('data-filter') || 'all';
+        setActiveTab(filter);
+        if (filter !== 'all') {
+          history.replaceState(null, '', '#' + filter);
+        } else if (window.location.hash) {
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
         filterCards();
       });
     });
 
-    searchInput.addEventListener('input', filterCards);
+    if (searchInput) {
+      searchInput.addEventListener('input', filterCards);
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          searchInput.value = '';
+          filterCards();
+        }
+      });
+    }
+
+    if (btnClearFilters) {
+      btnClearFilters.addEventListener('click', resetAllFilters);
+    }
+    if (btnEmptyReset) {
+      btnEmptyReset.addEventListener('click', resetAllFilters);
+    }
+
+    // Initialize from URL hash if matching a category
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.toLowerCase().replace('#', '');
+      const validCategories = ['all', 'mcp', 'rag', 'sdk', 'app', 'proxy'];
+      if (validCategories.includes(hash)) {
+        setActiveTab(hash);
+      }
+      filterCards();
+    });
 
     // Cryptographic Certificate Modal Controller
     const certModal = document.getElementById('certModal');
