@@ -48,7 +48,7 @@ function getPrivateKey() {
   return null;
 }
 
-function mintToken({ customerName, tier = 'developer_pro', days = 14, nodes = 3 }) {
+function mintToken({ customerName, tier = 'developer_pro', days = 14, nodes = 3, profile = 'universal' }) {
   const privateKeyPem = getPrivateKey();
   if (!privateKeyPem) {
     throw new Error('Signing key unavailable on host.');
@@ -59,6 +59,25 @@ function mintToken({ customerName, tier = 'developer_pro', days = 14, nodes = 3 
   const tierPrefix = tier.includes('eval') ? 'EVAL' : (tier === 'teams' ? 'TEAMS' : 'DEV');
   const randomSuffix = Math.floor(1000 + Math.random() * 9000);
   const licenseId = `ZTDS-2026-${tierPrefix}-${randomSuffix}`;
+
+  // Configure profile authorization
+  let specializedProfiles = false;
+  let allowedProfiles = ['universal'];
+
+  const normProfile = (profile || 'universal').toLowerCase().trim();
+  if (normProfile === 'fintech' || normProfile === 'financial') {
+    specializedProfiles = true;
+    allowedProfiles = ['fintech', 'financial'];
+  } else if (normProfile === 'healthcare' || normProfile === 'hipaa') {
+    specializedProfiles = true;
+    allowedProfiles = ['healthcare', 'hipaa'];
+  } else if (normProfile === 'legal' || normProfile === 'privilege') {
+    specializedProfiles = true;
+    allowedProfiles = ['legal', 'privilege'];
+  } else if (normProfile === 'all' || normProfile === '*' || normProfile === 'enterprise') {
+    specializedProfiles = true;
+    allowedProfiles = ['*'];
+  }
 
   const payload = {
     license_id: licenseId,
@@ -71,9 +90,9 @@ function mintToken({ customerName, tier = 'developer_pro', days = 14, nodes = 3 
     max_nodes: nodes,
     features: {
       universal_pii: true,
-      specialized_profiles: false,
-      allowed_profiles: [],
-      evidence_binder: false,
+      specialized_profiles: specializedProfiles,
+      allowed_profiles: allowedProfiles,
+      evidence_binder: specializedProfiles,
       airgapped_enclave: true
     }
   };
@@ -92,6 +111,7 @@ function mintToken({ customerName, tier = 'developer_pro', days = 14, nodes = 3 
     token,
     customerName,
     tier,
+    profile: normProfile,
     expiresAt: expiresDate.toISOString(),
     maxNodes: nodes,
     payload
@@ -149,8 +169,55 @@ module.exports = async (req, res) => {
       customerName,
       tier: body.tier || 'developer_pro',
       days,
-      nodes: 3
+      nodes: 3,
+      profile: body.profile || 'universal'
     });
+
+    const mcpConfigJson = JSON.stringify({
+      mcpServers: {
+        "privacyscrubber": {
+          command: "npx",
+          args: ["-y", "@privacyscrubber/mcp-server"],
+          env: {
+            ZTDS_LICENSE: result.token
+          }
+        }
+      }
+    }, null, 2);
+
+    const nodeSnippet = `// npm install @privacyscrubber/sdk
+const { ZTDSEngine } = require("@privacyscrubber/sdk");
+
+const engine = new ZTDSEngine({
+  license: process.env.ZTDS_LICENSE || "${result.token}"
+});
+
+// In-RAM zero-trust de-identification (<0.3ms)
+const sanitized = await engine.sanitize("Patient Alice Smith SSN 000-12-3456 wire IBAN IL00123");
+console.log(sanitized.text);
+// Output: Patient [PERSON_1] SSN [SSN_2] wire [IBAN_3]`;
+
+    const pythonSnippet = `# pip install ztds
+from ztds import ZTDSEngine
+
+engine = ZTDSEngine(license="${result.token}")
+sanitized = engine.sanitize("Confidential patient diagnosis with SSN 000-12-3456")
+print(sanitized.text)`;
+
+    const dockerSnippet = `# Docker Run
+docker run -d \\
+  -e ZTDS_LICENSE="${result.token}" \\
+  -p 8080:8080 \\
+  privacyscrubber/agent-gateway:latest
+
+# Kubernetes Secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ztds-license
+type: Opaque
+stringData:
+  ZTDS_LICENSE: "${result.token}"`;
 
     return res.status(200).json({
       status: 'success',
@@ -158,12 +225,16 @@ module.exports = async (req, res) => {
       token: result.token,
       customerName: result.customerName,
       tier: result.tier,
+      profile: result.profile,
+      allowedProfiles: result.payload.features.allowed_profiles,
       expiresAt: result.expiresAt,
       maxNodes: result.maxNodes,
       quickstart: {
         envVar: `export ZTDS_LICENSE="${result.token}"`,
-        installCmd: 'npm install @privacyscrubber/sdk',
-        codeSnippet: `const { ZTDSEngine } = require("@privacyscrubber/sdk");\nconst engine = new ZTDSEngine({ license: process.env.ZTDS_LICENSE });`
+        mcp: mcpConfigJson,
+        node: nodeSnippet,
+        python: pythonSnippet,
+        docker: dockerSnippet
       }
     });
   } catch (err) {

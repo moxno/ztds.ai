@@ -376,6 +376,18 @@ llm_response = <span class="text-yellow-300">call_llm</span>(sanitized_prompt)
 <span class="text-slate-500"># 3. Restore tokens locally in RAM; token_map wiped on exit</span>
 clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, token_map)</code></pre>
           </div>
+        <!-- Hero Action Bar -->
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-3">
+          <a href="#trial" class="btn-trust text-xs py-2.5 px-4 shadow-sm font-bold flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Mint 14-Day Evaluation Key (Instant RAM) &rarr;</span>
+          </a>
+          <a href="#connectors" class="btn-outline text-xs py-2.5 px-4 font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300">
+            Browse 10 Connectors &rarr;
+          </a>
+          <a href="#licensing" class="btn-outline text-xs py-2.5 px-4 font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300">
+            Pricing &amp; Licensing &rarr;
+          </a>
         </div>
       </div>
     </div>
@@ -1437,6 +1449,243 @@ static_resources:
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+
+    <!-- 14-Day Full Evaluation Workbench & Token Minting -->
+    <div class="ztds-card bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl space-y-6 text-white scroll-mt-24" id="trial">
+      <span id="trial-workbench" class="scroll-mt-24 pointer-events-none -mt-24 block"></span>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-mono font-bold text-emerald-400 uppercase tracking-wider mb-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            14-Day Full Evaluation Workbench
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Instant Ed25519 Token Minting &amp; Onboarding</h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1 max-w-3xl leading-relaxed">
+            Generate an authentic, offline-verifiable 14-day evaluation license directly in local RAM. Zero credit card required, zero telemetric phone-home, 100% air-gap ready.
+          </p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <a href="#licensing" class="btn-outline text-xs py-2 px-3.5 text-slate-300 border-slate-700 hover:bg-slate-800 hover:text-white font-mono">
+            View Commercial Tiers &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Workbench Form -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-5 bg-slate-950/60 p-5 rounded-xl border border-slate-800/80">
+        
+        <!-- Company / Developer Name -->
+        <div class="md:col-span-4 space-y-1.5">
+          <label for="trialWorkbenchCompany" class="block text-xs font-semibold text-slate-300 font-mono">Company / Developer Name *</label>
+          <input type="text" id="trialWorkbenchCompany" value="Acme AI Technologies" placeholder="e.g. Acme Corp / Alex Mercer" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-sans">
+        </div>
+
+        <!-- Work Email -->
+        <div class="md:col-span-4 space-y-1.5">
+          <label for="trialWorkbenchEmail" class="block text-xs font-semibold text-slate-300 font-mono">Work Email (Optional for Receipt)</label>
+          <input type="email" id="trialWorkbenchEmail" placeholder="developer@company.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-sans">
+        </div>
+
+        <!-- Evaluation Vertical / Regulatory Profile -->
+        <div class="md:col-span-4 space-y-1.5">
+          <label for="trialWorkbenchProfile" class="block text-xs font-semibold text-slate-300 font-mono">Evaluation Vertical / Profile *</label>
+          <select id="trialWorkbenchProfile" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-sans">
+            <option value="universal" selected>Universal PII / Sensitive Tokens (Standard)</option>
+            <option value="fintech">Financial Services / PCI-DSS v4 &amp; IBAN</option>
+            <option value="healthcare">Healthcare / HIPAA Safe Harbor PHI</option>
+            <option value="legal">Legal Workflows / FRE 502 &amp; Privilege</option>
+            <option value="all">All Vertical Regulatory Profiles (Enterprise Wildcard [*])</option>
+          </select>
+        </div>
+
+        <!-- Integration Target Quick Select -->
+        <div class="md:col-span-8 flex flex-col justify-center space-y-1.5">
+          <div class="text-[11px] font-mono text-slate-400 font-semibold uppercase tracking-wider">Primary Integration Target</div>
+          <div class="flex flex-wrap items-center gap-2" id="trialTargetPills">
+            <button type="button" class="trial-target-pill px-3 py-1.5 rounded-lg border border-emerald-500 bg-emerald-500/20 text-emerald-300 text-xs font-mono font-bold transition-all cursor-pointer" data-target="mcp">
+              Cursor &amp; Claude MCP
+            </button>
+            <button type="button" class="trial-target-pill px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-400 hover:text-slate-200 text-xs font-mono font-medium transition-all cursor-pointer" data-target="node">
+              Node.js / TS SDK
+            </button>
+            <button type="button" class="trial-target-pill px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-400 hover:text-slate-200 text-xs font-mono font-medium transition-all cursor-pointer" data-target="python">
+              Python RAG Pipeline
+            </button>
+            <button type="button" class="trial-target-pill px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-400 hover:text-slate-200 text-xs font-mono font-medium transition-all cursor-pointer" data-target="docker">
+              Docker / K8s Enclave
+            </button>
+          </div>
+        </div>
+
+        <!-- Mint CTA Button -->
+        <div class="md:col-span-4 flex items-end">
+          <button type="button" id="btnMintWorkbench" class="btn-trust w-full py-2.5 px-4 text-xs font-bold shadow-lg flex items-center justify-center gap-2 cursor-pointer touch-target">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="btnMintWorkbenchText">Mint 14-Day Evaluation Key (Instant RAM) &rarr;</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Minting Status Message (Errors / Loading) -->
+      <div id="trialMintStatus" class="hidden text-xs font-mono p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-300"></div>
+
+      <!-- Generated License Results Container (Initially Hidden) -->
+      <div id="trialWorkbenchResults" class="hidden space-y-6 pt-2">
+        
+        <!-- Metadata Row -->
+        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
+            <div class="flex items-center gap-2">
+              <span id="workbenchStatusBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                PASS: ED25519 CRYPTOGRAPHIC SIGNATURE (RFC 8032)
+              </span>
+              <span class="text-[10px] font-mono text-slate-400">Zero Socket Telemetry</span>
+            </div>
+            <div class="text-[11px] font-mono text-emerald-400 font-semibold" id="workbenchExpiresAt">
+              Valid for 14 days
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
+            <div class="p-2.5 rounded bg-black/50 border border-slate-800/80">
+              <span class="text-slate-500 block text-[10px]">LICENSE ID</span>
+              <span id="workbenchLicenseId" class="text-white font-bold">&mdash;</span>
+            </div>
+            <div class="p-2.5 rounded bg-black/50 border border-slate-800/80">
+              <span class="text-slate-500 block text-[10px]">ORGANIZATION</span>
+              <span id="workbenchCustomerName" class="text-emerald-400 font-bold truncate block">&mdash;</span>
+            </div>
+            <div class="p-2.5 rounded bg-black/50 border border-slate-800/80">
+              <span class="text-slate-500 block text-[10px]">MAX NODES</span>
+              <span id="workbenchMaxNodes" class="text-amber-400 font-bold">2 Microservice Nodes</span>
+            </div>
+            <div class="p-2.5 rounded bg-black/50 border border-slate-800/80">
+              <span class="text-slate-500 block text-[10px]">VERTICAL PROFILES</span>
+              <span id="workbenchProfileBadge" class="text-sky-400 font-bold truncate block">Universal PII</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Token Box -->
+        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between text-xs pb-1.5 border-b border-slate-800 font-mono">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span class="text-slate-300 font-semibold">Offline Asymmetric License Token (RFC 8032)</span>
+            </div>
+            <button type="button" id="btnCopyWorkbenchToken" class="text-emerald-400 hover:text-emerald-300 font-bold transition-colors cursor-pointer text-[11px] flex items-center gap-1">
+              <span>Copy Token</span>
+            </button>
+          </div>
+          <div id="workbenchTokenDisplay" class="font-mono text-[11px] text-emerald-300 bg-black/60 p-3 rounded-lg border border-slate-800/80 break-all select-all max-h-24 overflow-y-auto"></div>
+        </div>
+
+        <!-- Multiplatform Quickstart Snippets -->
+        <div class="rounded-xl border border-slate-800 bg-slate-950 overflow-hidden font-mono text-xs">
+          <div class="flex flex-wrap items-center justify-between px-4 py-2.5 bg-slate-900 border-b border-slate-800 gap-2">
+            <div class="flex items-center gap-1.5" role="tablist">
+              <button type="button" id="tabSnippetMcp" class="snippet-tab-btn active px-2.5 py-1 rounded text-[11px] bg-slate-800 text-emerald-400 font-bold transition-colors cursor-pointer" data-target="mcp">Cursor &amp; Claude MCP</button>
+              <button type="button" id="tabSnippetNode" class="snippet-tab-btn px-2.5 py-1 rounded text-[11px] text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="node">Node.js / TS SDK</button>
+              <button type="button" id="tabSnippetPython" class="snippet-tab-btn px-2.5 py-1 rounded text-[11px] text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="python">Python RAG</button>
+              <button type="button" id="tabSnippetDocker" class="snippet-tab-btn px-2.5 py-1 rounded text-[11px] text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="docker">Docker / K8s Env</button>
+            </div>
+            <button type="button" id="btnCopyWorkbenchSnippet" class="text-slate-300 hover:text-emerald-300 text-[11px] font-sans font-semibold transition-colors flex items-center gap-1 cursor-pointer">
+              <span>Copy Snippet</span>
+            </button>
+          </div>
+          <div class="p-4 overflow-x-auto leading-relaxed text-slate-200 bg-black/40">
+            <pre id="workbenchSnippetPre"><code id="workbenchSnippetCode">// Quickstart snippet will render here</code></pre>
+          </div>
+        </div>
+
+        <!-- Utility Action Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <button type="button" id="btnDownloadWorkbenchLicenseJson" class="btn-outline text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 font-semibold text-slate-300 border-slate-700 hover:bg-slate-800 hover:text-white cursor-pointer">
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            <span>Download ztds-license.json</span>
+          </button>
+          <button type="button" id="btnVerifyWorkbenchInDecoder" class="btn-trust text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 font-semibold cursor-pointer">
+            <span>Verify in Local RAM Decoder &rarr;</span>
+          </button>
+        </div>
+
+        <!-- B2B Commercial Upgrade Transition Box (Conversion Flywheel) -->
+        <div class="p-5 rounded-xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border border-emerald-500/30 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+            <div>
+              <div class="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold">Commercial Conversion Flywheel</div>
+              <h3 class="text-base font-bold text-white mt-0.5">Ready for Team Rollout or Production Deployment?</h3>
+            </div>
+            <span class="text-xs text-slate-400">100% Offline Licensing &middot; Zero DPA Required</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            
+            <!-- Tier 1: TEAMS -->
+            <div class="p-3.5 rounded-lg bg-slate-900/90 border border-slate-800 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-mono font-bold text-slate-400 uppercase">ZTDS TEAMS</span>
+                  <span class="text-emerald-400 font-mono font-bold text-xs">$99 / mo</span>
+                </div>
+                <div class="text-xs font-semibold text-white mt-1">5 Seats &middot; 10 Nodes</div>
+                <p class="text-[11px] text-slate-400 mt-1 leading-normal">Ideal for engineering squads standardizing Cursor &amp; Claude MCP de-identification.</p>
+              </div>
+              <a href="https://privacyscrubber.com/pricing/?tier=TEAMS&utm_source=ztds.ai&utm_medium=trial_workbench" target="_blank" rel="noopener" class="btn-outline text-[11px] py-1.5 px-2.5 text-center text-emerald-400 border-emerald-500/40 hover:bg-emerald-950/40 font-semibold rounded">
+                Buy on PrivacyScrubber &rarr;
+              </a>
+            </div>
+
+            <!-- Tier 2: Developer Pro SDK -->
+            <div class="p-3.5 rounded-lg bg-emerald-950/20 border border-emerald-500/40 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-mono font-bold text-emerald-300 uppercase">Developer Pro SDK</span>
+                  <span class="text-emerald-400 font-mono font-bold text-xs">$299 / mo</span>
+                </div>
+                <div class="text-xs font-semibold text-white mt-1">Unlimited Pipeline Nodes</div>
+                <p class="text-[11px] text-slate-400 mt-1 leading-normal">Full headless SDK for Node.js, Python, and RAG pipelines with offline validation.</p>
+              </div>
+              <a href="https://privacyscrubber.com/pricing/?tier=SDK&utm_source=ztds.ai&utm_medium=trial_workbench" target="_blank" rel="noopener" class="btn-trust text-[11px] py-1.5 px-2.5 text-center font-bold rounded">
+                Buy on PrivacyScrubber &rarr;
+              </a>
+            </div>
+
+            <!-- Tier 3: Enterprise Air-Gapped -->
+            <div class="p-3.5 rounded-lg bg-slate-900/90 border border-slate-800 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-mono font-bold text-sky-400 uppercase">Enterprise</span>
+                  <span class="text-sky-300 font-mono font-bold text-xs">$12k / yr</span>
+                </div>
+                <div class="text-xs font-semibold text-white mt-1">Air-Gapped &middot; Custom MSA</div>
+                <p class="text-[11px] text-slate-400 mt-1 leading-normal">All 30 regulatory profiles, dedicated SLA, custom legal rider, and wire transfer invoicing.</p>
+              </div>
+              <a href="/ciso/#procurement" class="btn-outline text-[11px] py-1.5 px-2.5 text-center text-sky-300 border-sky-500/40 hover:bg-sky-950/40 font-semibold rounded">
+                Enterprise Quote &rarr;
+              </a>
+            </div>
+
+            <!-- Tier 4: BrandMeWeb Advisory Retainer -->
+            <div class="p-3.5 rounded-lg bg-slate-900/90 border border-slate-800 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-mono font-bold text-purple-400 uppercase">Advisory SOW</span>
+                  <span class="text-purple-300 font-mono font-bold text-xs">$2,500 + $500/mo</span>
+                </div>
+                <div class="text-xs font-semibold text-white mt-1">BrandMeWeb Advisory</div>
+                <p class="text-[11px] text-slate-400 mt-1 leading-normal">Turn-key implementation, pipeline audit, CISO exemption packet, and ongoing GEO optimization.</p>
+              </div>
+              <a href="/agency/" class="btn-outline text-[11px] py-1.5 px-2.5 text-center text-purple-300 border-purple-500/40 hover:bg-purple-950/40 font-semibold rounded">
+                BrandMeWeb Retainer &rarr;
+              </a>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -2724,7 +2973,10 @@ jobs:
         const hash = window.location.hash.toLowerCase();
         if (!hash) return;
 
-        if (hash === '#mcp' || hash === '#mcp-gateway') {
+        if (hash === '#trial' || hash === '#trial-workbench') {
+          const el = document.getElementById('trial') || document.getElementById('trial-workbench');
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (hash === '#mcp' || hash === '#mcp-gateway') {
           const el = document.getElementById('mcp') || document.getElementById('mcp-gateway');
           if (el) {
             el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -2736,7 +2988,7 @@ jobs:
           if (connectorsEl) connectorsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else if (hash.startsWith('#blueprint-') || hash.startsWith('#recipe-') || hash.startsWith('#recipe')) {
           const recipeName = hash.replace(/^#(?:blueprint|recipe)-?/, '');
-          const tab = document.querySelector('.recipe-tab-btn[data-recipe=\"' + recipeName + '\"]');
+          const tab = document.querySelector('.recipe-tab-btn[data-recipe="' + recipeName + '"]');
           if (tab) tab.click();
           const connectorsEl = document.getElementById('connectors');
           if (connectorsEl) connectorsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -2758,6 +3010,246 @@ jobs:
 
       setTimeout(handleUrlHash, 100);
       window.addEventListener('hashchange', handleUrlHash);
+
+      // ==========================================
+      // 10. TRIAL WORKBENCH CONTROLLER (#trial)
+      // ==========================================
+      const trialCompanyInput = document.getElementById('trialWorkbenchCompany');
+      const trialEmailInput = document.getElementById('trialWorkbenchEmail');
+      const trialProfileSelect = document.getElementById('trialWorkbenchProfile');
+      const targetPills = document.querySelectorAll('.trial-target-pill');
+      const btnMintWorkbench = document.getElementById('btnMintWorkbench');
+      const btnMintWorkbenchText = document.getElementById('btnMintWorkbenchText');
+      const trialMintStatus = document.getElementById('trialMintStatus');
+
+      const trialWorkbenchResults = document.getElementById('trialWorkbenchResults');
+      const workbenchStatusBadge = document.getElementById('workbenchStatusBadge');
+      const workbenchExpiresAt = document.getElementById('workbenchExpiresAt');
+      const workbenchLicenseId = document.getElementById('workbenchLicenseId');
+      const workbenchCustomerName = document.getElementById('workbenchCustomerName');
+      const workbenchMaxNodes = document.getElementById('workbenchMaxNodes');
+      const workbenchProfileBadge = document.getElementById('workbenchProfileBadge');
+      const workbenchTokenDisplay = document.getElementById('workbenchTokenDisplay');
+
+      const snippetTabBtns = document.querySelectorAll('.snippet-tab-btn');
+      const workbenchSnippetCode = document.getElementById('workbenchSnippetCode');
+      const btnCopyWorkbenchToken = document.getElementById('btnCopyWorkbenchToken');
+      const btnCopyWorkbenchSnippet = document.getElementById('btnCopyWorkbenchSnippet');
+      const btnDownloadWorkbenchJson = document.getElementById('btnDownloadWorkbenchLicenseJson');
+      const btnVerifyWorkbenchDecoder = document.getElementById('btnVerifyWorkbenchInDecoder');
+
+      let currentWorkbenchTarget = 'mcp';
+      let currentWorkbenchSnippets = null;
+      let currentWorkbenchData = null;
+
+      const PROFILE_LABELS = {
+        universal: 'Universal PII (Baseline)',
+        fintech: 'Fintech (PCI-DSS v4 & IBAN)',
+        healthcare: 'Healthcare (HIPAA PHI)',
+        legal: 'Legal (FRE 502 Privilege)',
+        all: 'Wildcard [*] All 30 Profiles'
+      };
+
+      // Target Pills Switcher
+      targetPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          targetPills.forEach(p => {
+            p.className = 'trial-target-pill px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-400 hover:text-slate-200 text-xs font-mono font-medium transition-all cursor-pointer';
+          });
+          pill.className = 'trial-target-pill px-3 py-1.5 rounded-lg border border-emerald-500 bg-emerald-500/20 text-emerald-300 text-xs font-mono font-bold transition-all cursor-pointer';
+          currentWorkbenchTarget = pill.getAttribute('data-target') || 'mcp';
+          updateWorkbenchSnippetTab(currentWorkbenchTarget);
+        });
+      });
+
+      function updateWorkbenchSnippetTab(targetKey) {
+        currentWorkbenchTarget = targetKey;
+        snippetTabBtns.forEach(btn => {
+          if (btn.getAttribute('data-target') === targetKey) {
+            btn.className = 'snippet-tab-btn active px-2.5 py-1 rounded text-[11px] bg-slate-800 text-emerald-400 font-bold transition-colors cursor-pointer';
+          } else {
+            btn.className = 'snippet-tab-btn px-2.5 py-1 rounded text-[11px] text-slate-400 hover:text-slate-200 transition-colors cursor-pointer';
+          }
+        });
+
+        if (!currentWorkbenchSnippets) return;
+
+        let codeText = '';
+        if (targetKey === 'mcp') {
+          codeText = typeof currentWorkbenchSnippets.mcp === 'object'
+            ? JSON.stringify(currentWorkbenchSnippets.mcp, null, 2)
+            : (currentWorkbenchSnippets.mcp || '');
+        } else if (targetKey === 'node') {
+          codeText = currentWorkbenchSnippets.node || '';
+        } else if (targetKey === 'python') {
+          codeText = currentWorkbenchSnippets.python || '';
+        } else if (targetKey === 'docker') {
+          codeText = currentWorkbenchSnippets.docker || '';
+        }
+
+        if (workbenchSnippetCode) {
+          workbenchSnippetCode.textContent = codeText;
+        }
+      }
+
+      snippetTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const t = btn.getAttribute('data-target');
+          if (t) {
+            // Also sync target pills if present
+            targetPills.forEach(p => {
+              if (p.getAttribute('data-target') === t) {
+                p.className = 'trial-target-pill px-3 py-1.5 rounded-lg border border-emerald-500 bg-emerald-500/20 text-emerald-300 text-xs font-mono font-bold transition-all cursor-pointer';
+              } else {
+                p.className = 'trial-target-pill px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-400 hover:text-slate-200 text-xs font-mono font-medium transition-all cursor-pointer';
+              }
+            });
+            updateWorkbenchSnippetTab(t);
+          }
+        });
+      });
+
+      // Mint 14-Day Evaluation Key (Workbench)
+      if (btnMintWorkbench) {
+        btnMintWorkbench.addEventListener('click', async () => {
+          const company = (trialCompanyInput?.value || '').trim();
+          const email = (trialEmailInput?.value || '').trim();
+          const profile = trialProfileSelect?.value || 'universal';
+
+          if (!company || company.length < 2) {
+            if (trialMintStatus) {
+              trialMintStatus.classList.remove('hidden');
+              trialMintStatus.textContent = 'Please enter your company or developer name (at least 2 characters).';
+            }
+            trialCompanyInput?.focus();
+            return;
+          }
+
+          if (trialMintStatus) trialMintStatus.classList.add('hidden');
+          const originalBtnHtml = btnMintWorkbench.innerHTML;
+          btnMintWorkbench.disabled = true;
+          if (btnMintWorkbenchText) btnMintWorkbenchText.textContent = 'Minting Ed25519 Token in Local RAM...';
+
+          try {
+            const res = await fetch('/api/mint-license/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                customerName: company,
+                email: email,
+                tier: 'developer_pro',
+                days: 14,
+                profile: profile
+              })
+            });
+
+            const data = await res.json();
+            if (res.ok && data.token) {
+              currentWorkbenchData = data;
+              currentWorkbenchSnippets = data.quickstart;
+
+              if (trialWorkbenchResults) trialWorkbenchResults.classList.remove('hidden');
+              if (workbenchLicenseId) workbenchLicenseId.textContent = data.licenseId;
+              if (workbenchCustomerName) workbenchCustomerName.textContent = data.customerName;
+              if (workbenchExpiresAt) workbenchExpiresAt.textContent = 'Valid through ' + (data.expiresAt ? data.expiresAt.split('T')[0] : '14 days');
+              if (workbenchMaxNodes) workbenchMaxNodes.textContent = `${data.maxNodes || 2} Microservice Nodes`;
+              if (workbenchProfileBadge) workbenchProfileBadge.textContent = PROFILE_LABELS[data.profile] || data.profile;
+              if (workbenchTokenDisplay) workbenchTokenDisplay.textContent = data.token;
+
+              updateWorkbenchSnippetTab(currentWorkbenchTarget);
+
+              // Smoothly scroll to results
+              trialWorkbenchResults.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+              if (trialMintStatus) {
+                trialMintStatus.classList.remove('hidden');
+                trialMintStatus.textContent = 'License generation error: ' + (data.details || data.error || 'Server error');
+              }
+            }
+          } catch (err) {
+            if (trialMintStatus) {
+              trialMintStatus.classList.remove('hidden');
+              trialMintStatus.textContent = 'Network error during license minting: ' + err.message;
+            }
+          } finally {
+            btnMintWorkbench.disabled = false;
+            btnMintWorkbench.innerHTML = originalBtnHtml;
+          }
+        });
+      }
+
+      // Copy Token
+      if (btnCopyWorkbenchToken) {
+        btnCopyWorkbenchToken.addEventListener('click', () => {
+          if (!currentWorkbenchData || !currentWorkbenchData.token) return;
+          const original = btnCopyWorkbenchToken.innerHTML;
+          window.ztdsCopy(currentWorkbenchData.token, () => {
+            btnCopyWorkbenchToken.textContent = 'Copied!';
+            setTimeout(() => { btnCopyWorkbenchToken.innerHTML = original; }, 2000);
+          });
+        });
+      }
+
+      // Copy Snippet
+      if (btnCopyWorkbenchSnippet) {
+        btnCopyWorkbenchSnippet.addEventListener('click', () => {
+          const code = workbenchSnippetCode?.innerText || '';
+          if (!code) return;
+          const original = btnCopyWorkbenchSnippet.innerHTML;
+          window.ztdsCopy(code, () => {
+            btnCopyWorkbenchSnippet.textContent = 'Copied!';
+            setTimeout(() => { btnCopyWorkbenchSnippet.innerHTML = original; }, 2000);
+          });
+        });
+      }
+
+      // Download JSON
+      if (btnDownloadWorkbenchJson) {
+        btnDownloadWorkbenchJson.addEventListener('click', () => {
+          if (!currentWorkbenchData) return;
+          const licenseBlob = new Blob([JSON.stringify(currentWorkbenchData, null, 2)], { type: 'application/json' });
+          const blobUrl = URL.createObjectURL(licenseBlob);
+          const a = document.createElement('a');
+          a.href = blobUrl;
+          a.download = `ztds-license-${currentWorkbenchData.licenseId}.json`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(blobUrl);
+        });
+      }
+
+      // Verify in Local RAM Decoder
+      if (btnVerifyWorkbenchDecoder) {
+        btnVerifyWorkbenchDecoder.addEventListener('click', () => {
+          if (!currentWorkbenchData || !currentWorkbenchData.token) return;
+          const inputDecoder = document.getElementById('licenseTokenInput');
+          const btnDecode = document.getElementById('btnDecodeLicense');
+          const decoderSection = document.getElementById('offlineLicenseTester');
+          if (inputDecoder) {
+            inputDecoder.value = currentWorkbenchData.token;
+          }
+          if (btnDecode) {
+            btnDecode.click();
+          }
+          if (decoderSection) {
+            decoderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      }
+
+      // Deep-link preset parameter handling
+      const presetParam = urlParams.get('preset');
+      if (presetParam) {
+        const lowerPreset = presetParam.toLowerCase();
+        if (['universal', 'fintech', 'healthcare', 'legal', 'all'].includes(lowerPreset)) {
+          if (trialProfileSelect) trialProfileSelect.value = lowerPreset;
+        } else if (['mcp', 'node', 'python', 'docker'].includes(lowerPreset)) {
+          targetPills.forEach(p => {
+            if (p.getAttribute('data-target') === lowerPreset) p.click();
+          });
+        }
+      }
 
       // Mint 14-Day Evaluation Key via Serverless API
       const btnMintTrial = document.getElementById('btnMintTrialLicense');
