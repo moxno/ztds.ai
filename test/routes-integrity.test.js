@@ -48,6 +48,7 @@ const prodPages = [
   'companies/talenthub-hr/index.html',
   'case-studies/index.html',
   'evidentiary-sovereignty/index.html',
+  'mcp/index.html',
   '404.html'
 ];
 
