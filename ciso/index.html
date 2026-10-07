@@ -294,37 +294,58 @@
       </p>
 
       <div class="mt-6 flex flex-wrap items-center gap-3">
-        <a href="/public/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" download="ZTDS_CISO_DPA_Exemption_Memo.pdf" class="btn-trust text-xs py-2.5 px-4 shadow-sm flex items-center gap-2 font-semibold">
-          <svg class="w-4 h-4 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <button type="button" id="btnPreviewProcurement" class="btn-trust text-xs py-2.5 px-4 shadow-sm flex items-center gap-2 font-semibold cursor-pointer">
+          <svg class="w-4 h-4 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+          </svg>
+          <span>Preview Exemption Pack</span>
+        </button>
+        <a href="/public/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" download="ZTDS_CISO_DPA_Exemption_Memo.pdf" class="btn-outline text-xs py-2.5 px-4 shadow-sm flex items-center gap-2 font-semibold text-slate-700 bg-white hover:bg-slate-50">
+          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           <span>Download CISO Memo (PDF)</span>
         </a>
         <a href="/public/docs/ZTDS_Enterprise_Security_Pack.zip" download="ZTDS_Enterprise_Security_Pack.zip" class="btn-navy text-xs py-2.5 px-4 shadow-sm flex items-center gap-2 font-semibold">
           <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
           <span>Download Security Pack (ZIP)</span>
         </a>
-        <a href="/public/docs/ZTDS_Enterprise_CISO_Pitch_Deck.pdf" download="ZTDS_Enterprise_CISO_Pitch_Deck.pdf" class="btn-outline text-xs py-2.5 px-4 shadow-sm flex items-center gap-2 font-semibold text-slate-700">
+        <a href="/public/docs/ZTDS_Enterprise_CISO_Pitch_Deck.pdf" download="ZTDS_Enterprise_CISO_Pitch_Deck.pdf" class="btn-outline text-xs py-2.5 px-4 shadow-sm flex items-center gap-2 font-semibold text-slate-700 bg-white hover:bg-slate-50">
           <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           <span>Pitch Deck (PDF)</span>
-        </a>
-        <a href="/agency/" class="px-3.5 py-2.5 rounded-lg border border-emerald-500/40 bg-emerald-950/40 text-emerald-300 hover:bg-emerald-900/60 text-xs font-semibold shadow-sm flex items-center gap-1.5 transition-colors">
-          <span>Accredited Partner Audit</span> &rarr;
         </a>
         <a href="/roi/" class="px-3.5 py-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 shadow-sm flex items-center gap-1.5 transition-colors">
           <span>ROI Calculator &rarr;</span>
         </a>
-        <button id="copyMemoBtn" class="px-3.5 py-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 shadow-sm flex items-center gap-1.5 transition-colors">
+        <a href="/agency/" class="px-3.5 py-2.5 rounded-lg border border-emerald-500/40 bg-emerald-950/40 text-emerald-300 hover:bg-emerald-900/60 text-xs font-semibold shadow-sm flex items-center gap-1.5 transition-colors">
+          <span>Accredited Partner Audit</span> &rarr;
+        </a>
+        <button type="button" id="copyMemoBtn" class="px-3.5 py-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 shadow-sm flex items-center gap-1.5 transition-colors cursor-pointer">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
           <span>Copy Memo</span>
         </button>
-        <button id="downloadMdBtn" class="px-3.5 py-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-500 hover:text-slate-800 shadow-sm flex items-center gap-1.5 transition-colors">
+        <button type="button" id="downloadMdBtn" class="px-3.5 py-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-500 hover:text-slate-800 shadow-sm flex items-center gap-1.5 transition-colors cursor-pointer">
           <span>Markdown (.md)</span>
         </button>
         <span id="copyToast" class="hidden text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-2 rounded-lg">Copied to clipboard!</span>
       </div>
     </div>
 
+    <!-- Sticky Section Navigation Bar -->
+    <nav class="sticky top-16 z-30 bg-slate-900 text-white rounded-xl p-2 mb-8 shadow-md border border-slate-800 flex items-center gap-1.5 overflow-x-auto text-xs no-print" aria-label="Page Sections">
+      <a href="#memo" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white font-medium whitespace-nowrap transition-colors">1. Memorandum</a>
+      <a href="#statutory" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white font-medium whitespace-nowrap transition-colors">2. Statutory Grounds</a>
+      <a href="#questionnaire" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white font-medium whitespace-nowrap transition-colors">3. SIG Lite Answers</a>
+      <a href="#estimator" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 text-emerald-400 font-semibold whitespace-nowrap transition-colors flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>4. Quick Risk Estimator</span>
+      </a>
+      <a href="#matrix" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white font-medium whitespace-nowrap transition-colors">5. Decision Matrix</a>
+      <a href="#battlecards" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white font-medium whitespace-nowrap transition-colors">6. DLP Battlecards</a>
+      <a href="#downloads" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white font-medium whitespace-nowrap transition-colors">7. Procurement Downloads</a>
+    </nav>
+
     <!-- The 1-Page Official Memorandum (Styled Executive Paper) -->
-    <div class="ztds-card p-8 sm:p-12 bg-white border border-slate-200 rounded-2xl shadow-sm mb-12">
+    <div id="memo" class="ztds-card p-8 sm:p-12 bg-white border border-slate-200 rounded-2xl shadow-sm mb-12 scroll-mt-24">
       
       <!-- Memorandum Letterhead -->
       <div class="border-b-2 border-slate-900 pb-6 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -399,7 +420,7 @@
         </div>
 
         <!-- Section 2: Statutory Grounds -->
-        <div>
+        <div id="statutory" class="scroll-mt-24">
           <h2 class="text-lg font-bold text-slate-900 mb-3">2. Statutory Grounds for Exemption &amp; Regulatory Safe Harbors</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             
@@ -641,7 +662,7 @@
         </div>
 
         <!-- Section 6: Standard Security Questionnaire Answers -->
-        <div>
+        <div id="questionnaire" class="scroll-mt-24">
           <h2 class="text-lg font-bold text-slate-900 mb-3">6. Enterprise Security Questionnaire Responses (SIG Lite / CAIQ v4 / VSAQ)</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
             <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg">
@@ -905,6 +926,404 @@
       </div>
 
     </div>
+
+    <!-- SECTION: CISO QUICK SCENARIO ESTIMATOR -->
+    <section id="estimator" class="ztds-card p-6 sm:p-10 bg-white border border-slate-200 rounded-2xl shadow-sm mb-14 scroll-mt-24">
+      
+      <!-- Section Header -->
+      <div class="mb-8 border-b border-slate-200 pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-2 font-mono uppercase tracking-wider">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Actuarial Scenario Modeling &middot; RFC v1.0 Model
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            CISO Quick Scenario &amp; Risk Exposure Estimator
+          </h2>
+          <p class="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
+            Model your enterprise AI pipeline parameters in real time to calculate direct vendor review elimination, actuarial breach risk avoidance, and projected ROI.
+          </p>
+        </div>
+        <div class="flex items-center gap-2 no-print shrink-0">
+          <a href="/roi/" class="btn-outline text-xs py-2 px-3.5 shadow-sm flex items-center gap-1.5 font-semibold text-slate-700 bg-white hover:bg-slate-50">
+            <span>Open Full Actuarial Engine &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Presets Selector -->
+      <div class="mb-6 p-4 rounded-xl bg-slate-50 border border-slate-200">
+        <div class="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider mb-2.5">
+          Select Standard Enterprise Architecture Preset:
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" class="ciso-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors bg-white text-slate-700 border-slate-300 hover:bg-slate-100 cursor-pointer" data-calls="500000" data-vendors="3" data-regime="global">
+            Mid-Market SaaS (500k Calls &middot; 3 Vendors)
+          </button>
+          <button type="button" class="ciso-preset-btn active px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors bg-slate-900 text-white border-slate-900 cursor-pointer shadow-sm" data-calls="2000000" data-vendors="8" data-regime="eu">
+            Regulated Enterprise (2M Calls &middot; 8 Vendors &middot; EU)
+          </button>
+          <button type="button" class="ciso-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors bg-white text-slate-700 border-slate-300 hover:bg-slate-100 cursor-pointer" data-calls="1500000" data-vendors="6" data-regime="us_hipaa">
+            US Healthcare (1.5M Calls &middot; 6 Vendors &middot; HIPAA)
+          </button>
+          <button type="button" class="ciso-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors bg-white text-slate-700 border-slate-300 hover:bg-slate-100 cursor-pointer" data-calls="10000000" data-vendors="15" data-regime="us_fintech">
+            Global Financial (10M Calls &middot; 15 Vendors &middot; FinTech)
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Calculation Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Controls Column (6 cols) -->
+        <div class="lg:col-span-6 space-y-6 bg-slate-50/70 p-6 rounded-xl border border-slate-200">
+          
+          <!-- Slider 1: Monthly Calls -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <label for="cisoCallsSlider" class="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider">
+                Monthly LLM Prompts / API Calls
+              </label>
+              <span id="cisoCallsVal" class="text-sm font-bold text-slate-900 font-mono">2,000,000 / mo</span>
+            </div>
+            <input type="range" id="cisoCallsSlider" min="50000" max="20000000" step="50000" value="2000000" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600">
+            <div class="flex items-center justify-between text-[11px] text-slate-400 font-mono">
+              <span>50k</span>
+              <div class="flex items-center gap-1.5">
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoCallsSlider" data-val="500000">500k</button>
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoCallsSlider" data-val="2000000">2M</button>
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoCallsSlider" data-val="5000000">5M</button>
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoCallsSlider" data-val="10000000">10M</button>
+              </div>
+              <span>20M</span>
+            </div>
+          </div>
+
+          <!-- Slider 2: Vendors Reviewed -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <label for="cisoVendorsSlider" class="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider">
+                Third-Party AI / SaaS Vendors Reviewed
+              </label>
+              <span id="cisoVendorsVal" class="text-sm font-bold text-slate-900 font-mono">8 vendors</span>
+            </div>
+            <input type="range" id="cisoVendorsSlider" min="1" max="30" step="1" value="8" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600">
+            <div class="flex items-center justify-between text-[11px] text-slate-400 font-mono">
+              <span>1</span>
+              <div class="flex items-center gap-1.5">
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoVendorsSlider" data-val="3">3</button>
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoVendorsSlider" data-val="8">8</button>
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoVendorsSlider" data-val="15">15</button>
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoVendorsSlider" data-val="25">25</button>
+              </div>
+              <span>30</span>
+            </div>
+          </div>
+
+          <!-- Select 3: Regulatory Regime -->
+          <div class="space-y-2">
+            <label for="cisoRegimeSelect" class="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider block">
+              Primary Regulatory Regime
+            </label>
+            <select id="cisoRegimeSelect" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="global">Global Enterprise (GDPR Art. 83 &middot; SEC Item 106 &middot; ISO 42001)</option>
+              <option value="eu" selected>European Union (GDPR Art. 83 &middot; EU AI Act Phase 2)</option>
+              <option value="us_hipaa">US Healthcare (HIPAA &middot; HITECH Act Statutory Caps)</option>
+              <option value="us_fintech">US Financial / FinTech (GLBA &middot; SEC Item 106 &middot; NYDFS)</option>
+              <option value="us_legal">US Legal &amp; Corporate Discovery (FRE 502 &middot; ABA Model Rule 1.6)</option>
+            </select>
+            <div class="text-[11px] text-slate-500 leading-tight">
+              Adjusts statutory penalty caps, regulatory disclosure buffers, and legal discovery rules.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Output Cards Column (6 cols) -->
+        <div class="lg:col-span-6 space-y-4">
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <!-- Output 1: DPA Savings -->
+            <div class="p-5 rounded-xl bg-slate-900 text-white border border-slate-800 space-y-1">
+              <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400">DPA &amp; TPRM Overhead Savings</div>
+              <div id="cisoDpaSavings" class="text-2xl font-black text-emerald-400 font-mono">$200,000 / yr</div>
+              <div class="text-[11px] text-slate-400 leading-tight pt-1">
+                $25,000 / vendor eliminated across Legal ($8k), TPRM ($9k), and SOC 2 subprocessor audits ($8k).
+              </div>
+            </div>
+
+            <!-- Output 2: Actuarial Breach Avoidance -->
+            <div class="p-5 rounded-xl bg-slate-900 text-white border border-slate-800 space-y-1">
+              <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400">Actuarial Breach Avoidance</div>
+              <div id="cisoBreachSavings" class="text-2xl font-black text-sky-400 font-mono">$1,158,300 / yr</div>
+              <div class="text-[11px] text-slate-400 leading-tight pt-1">
+                Ponemon benchmark ($165/record &middot; 0.5% breach prob &middot; 7.8% AI share) mitigated by Invariant 1.
+              </div>
+            </div>
+
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <!-- Output 3: Total Risk Exposure -->
+            <div class="p-5 rounded-xl bg-emerald-950/60 text-white border border-emerald-800/80 space-y-1">
+              <div class="text-[11px] font-mono uppercase tracking-wider text-emerald-300">Total Risk Exposure Avoided</div>
+              <div id="cisoTotalExposure" class="text-2xl font-black text-white font-mono">$1,408,300 / yr</div>
+              <div class="text-[11px] text-emerald-200/80 leading-tight pt-1">
+                Sum of DPA elimination + expected breach avoidance + regulatory mitigation buffer.
+              </div>
+            </div>
+
+            <!-- Output 4: Projected ROI Multiple -->
+            <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 space-y-1">
+              <div class="text-[11px] font-mono uppercase tracking-wider text-slate-500">Projected Enterprise ROI</div>
+              <div id="cisoRoiMultiple" class="text-2xl font-black text-slate-900 font-mono">117x Multiple</div>
+              <div class="text-[11px] text-slate-500 leading-tight pt-1">
+                Payback period &lt;3 weeks against standard $12k enterprise infrastructure deployment.
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Deep Dive & Sharing CTA -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 pt-4">
+            <div class="text-xs text-slate-600 leading-tight">
+              Ready to generate a board-level actuarial memo with full sensitivity sliders?
+            </div>
+            <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+              <button type="button" id="btnExportCisoJson" class="btn-outline text-xs py-2 px-3 shadow-sm font-semibold text-slate-700 bg-white hover:bg-slate-100 flex items-center gap-1 cursor-pointer">
+                <span>Export JSON</span>
+              </button>
+              <a id="btnDeepDiveRoi" href="/roi/?calls=2000000&vendors=8&regime=eu&ratio=25&records=3" class="btn-trust text-xs py-2 px-3.5 shadow-sm font-semibold flex items-center gap-1.5 whitespace-nowrap">
+                <span>Launch Full Model (/roi/) &rarr;</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- SECTION: SIDE-BY-SIDE ARCHITECTURAL DECISION MATRIX -->
+    <section id="matrix" class="ztds-card p-6 sm:p-10 bg-white border border-slate-200 rounded-2xl shadow-sm mb-14 scroll-mt-24">
+      
+      <!-- Section Header -->
+      <div class="mb-8 border-b border-slate-200 pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-2 font-mono uppercase tracking-wider">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Vendor-Neutral Technical Benchmark
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Side-by-Side Architectural Decision Matrix
+          </h2>
+          <p class="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
+            Direct comparison of data perimeters, tokenization latency, subprocessor legal chains, and cryptographic receipts across leading enterprise DLP, vaulting, and privacy approaches.
+          </p>
+        </div>
+        <div class="flex items-center gap-2 no-print shrink-0">
+          <a href="#battlecards" class="btn-outline text-xs py-2 px-3.5 shadow-sm flex items-center gap-1 font-semibold text-slate-700 bg-white hover:bg-slate-50">
+            <span>View DLP Battlecards &darr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Responsive Comparison Table -->
+      <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+        <table class="w-full text-left text-xs border-collapse min-w-[760px]">
+          <thead>
+            <tr class="bg-slate-900 text-white font-mono text-[11px] uppercase tracking-wider">
+              <th class="p-3.5 border-b border-slate-800 w-1/5">Architectural Criteria</th>
+              <th class="p-3.5 border-b border-slate-800 bg-emerald-950/80 text-emerald-300 font-bold border-l border-r border-emerald-800 w-1/5">
+                ZTDS RFC v1.0 (In-Memory Engine)
+              </th>
+              <th class="p-3.5 border-b border-slate-800 w-1/6">Microsoft Purview</th>
+              <th class="p-3.5 border-b border-slate-800 w-1/6">Nightfall AI / BigID</th>
+              <th class="p-3.5 border-b border-slate-800 w-1/6">Skyflow Cloud Vaults</th>
+              <th class="p-3.5 border-b border-slate-800 w-1/6">Ad-Hoc MCP Scripts</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 leading-relaxed">
+            
+            <!-- Row 1: Execution Perimeter & Latency -->
+            <tr class="hover:bg-slate-50/80 transition-colors">
+              <td class="p-3.5 font-bold text-slate-900 bg-slate-50/60 font-sans">
+                1. Execution Perimeter &amp; Latency
+              </td>
+              <td class="p-3.5 bg-emerald-50/50 border-l border-r border-emerald-200 font-medium text-emerald-950">
+                <strong class="text-emerald-900 block font-semibold">100% Client Volatile RAM</strong>
+                Execution strictly in-process (&lt;1.2ms latency). Zero external network egress prior to tokenization.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Network Gateway / File System packet inspection (150ms&ndash;600ms latency overhead).
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Cloud SaaS Proxy API. Cleartext prompts sent over WAN (250ms&ndash;800ms latency).
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Centralized Cloud Privacy Vault. Multi-hop HTTP roundtrips (300ms&ndash;800ms latency).
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Local Python/Node script. Unoptimized regex parsing (15ms&ndash;80ms latency).
+              </td>
+            </tr>
+
+            <!-- Row 2: GDPR Article 28 Subprocessor Chain -->
+            <tr class="hover:bg-slate-50/80 transition-colors">
+              <td class="p-3.5 font-bold text-slate-900 bg-slate-50/60 font-sans">
+                2. GDPR Art. 28 Subprocessor Status
+              </td>
+              <td class="p-3.5 bg-emerald-50/50 border-l border-r border-emerald-200 font-medium text-emerald-950">
+                <strong class="text-emerald-900 block font-semibold">EXEMPT (Zero Data Custody)</strong>
+                Never receives personal data. EDPB 07/2020 disengages DPA requirements.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Subprocessor. Requires Microsoft Enterprise DPA &amp; SCC contract execution.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Subprocessor. Requires third-party vendor DPA, TPRM audit, and SOC 2 verification.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Subprocessor. Multi-tenant cloud vault requires DPA and BAA risk assessments.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Unclear. Open-source scripts provide no compliance representations or indemnities.
+              </td>
+            </tr>
+
+            <!-- Row 3: Tokenization & Model Reasoning -->
+            <tr class="hover:bg-slate-50/80 transition-colors">
+              <td class="p-3.5 font-bold text-slate-900 bg-slate-50/60 font-sans">
+                3. Tokenization &amp; Model Reasoning
+              </td>
+              <td class="p-3.5 bg-emerald-50/50 border-l border-r border-emerald-200 font-medium text-emerald-950">
+                <strong class="text-emerald-900 block font-semibold">Deterministic Reversible Tokens</strong>
+                Preserves syntactic structure and LLM attention heads; lossless client-side detokenization.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Binary Block or Generic Masking (e.g. [REDACTED]), destroying LLM reasoning context.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Cloud-side masking or synthetic data generation; de-tokenization requires remote API calls.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Remote token vaulting; de-tokenization requires secondary outbound WAN API authorization.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Crude regex text substitution; non-deterministic, fails OCR noise and international formats.
+              </td>
+            </tr>
+
+            <!-- Row 4: Host Memory & Storage Lifecycle -->
+            <tr class="hover:bg-slate-50/80 transition-colors">
+              <td class="p-3.5 font-bold text-slate-900 bg-slate-50/60 font-sans">
+                4. Memory &amp; Disk Lifecycle
+              </td>
+              <td class="p-3.5 bg-emerald-50/50 border-l border-r border-emerald-200 font-medium text-emerald-950">
+                <strong class="text-emerald-900 block font-semibold">Invariant 3: Zero Disk Persistence</strong>
+                Volatile host process memory only. Ephemeral keys purged on process termination.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Persisted to Windows Event Logs, Microsoft 365 Audit Logs, and Cloud Compliance DBs.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Persistent database indexing, cloud caches, and multi-tenant analytical logging.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Permanent centralized storage inside multi-tenant database clusters.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Unauthenticated process-level global variables leaking across concurrent agent threads.
+              </td>
+            </tr>
+
+            <!-- Row 5: Verifiable Cryptographic Receipts -->
+            <tr class="hover:bg-slate-50/80 transition-colors">
+              <td class="p-3.5 font-bold text-slate-900 bg-slate-50/60 font-sans">
+                5. Verifiable Cryptographic Receipts
+              </td>
+              <td class="p-3.5 bg-emerald-50/50 border-l border-r border-emerald-200 font-medium text-emerald-950">
+                <strong class="text-emerald-900 block font-semibold">SHA-256 Receipts &amp; Ed25519 Tokens</strong>
+                Machine-auditable CTS vectors via CLI (<code>npx ztds-audit</code>) and offline cryptographic tokens.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Proprietary cloud compliance dashboard; non-verifiable outside Microsoft ecosystem.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Vendor-managed web console reports; no verifiable offline cryptographic signatures.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Cloud audit API logs; dependent on cloud server availability and vendor integrity.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Zero audit receipts, test suites, or cryptographic evidence generation.
+              </td>
+            </tr>
+
+            <!-- Row 6: Disconnected Air-Gapped / SCIF Support -->
+            <tr class="hover:bg-slate-50/80 transition-colors">
+              <td class="p-3.5 font-bold text-slate-900 bg-slate-50/60 font-sans">
+                6. Disconnected Air-Gapped / SCIF
+              </td>
+              <td class="p-3.5 bg-emerald-50/50 border-l border-r border-emerald-200 font-medium text-emerald-950">
+                <strong class="text-emerald-900 block font-semibold">100% Air-Gapped Capable</strong>
+                Zero telemetry, zero licensing heartbeats, complete execution in private VPCs and SCIFs.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Requires active WAN connection to Microsoft 365 cloud endpoints and Azure Active Directory.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Impossible. Hard dependency on Nightfall multi-tenant SaaS cloud endpoints.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Impossible or prohibitive. Requires dedicated managed container infrastructure.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Local execution possible, but lacks security hardening, isolated sandboxing, or governance.
+              </td>
+            </tr>
+
+            <!-- Row 7: Regulatory Compliance Mapping -->
+            <tr class="hover:bg-slate-50/80 transition-colors">
+              <td class="p-3.5 font-bold text-slate-900 bg-slate-50/60 font-sans">
+                7. Regulatory Compliance Mapping
+              </td>
+              <td class="p-3.5 bg-emerald-50/50 border-l border-r border-emerald-200 font-medium text-emerald-950">
+                <strong class="text-emerald-900 block font-semibold">Comprehensive Framework Coverage</strong>
+                EU AI Act Phase 2, NIST AI RMF 600-1 Risk 12, ISO/IEC 42001, HIPAA Safe Harbor, FRE 502(b).
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Broad generic compliance; lacks specialized AI agent pre-egress context preservation.
+              </td>
+              <td class="p-3.5 text-slate-600">
+                SOC 2 Type II, HIPAA (as Business Associate requiring executed BAA).
+              </td>
+              <td class="p-3.5 text-slate-600">
+                PCI-DSS Level 1, HIPAA BAA (subprocessor custody required).
+              </td>
+              <td class="p-3.5 text-slate-600">
+                Zero formal mappings; creates unmitigated shadow AI compliance liability.
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Matrix Footnote & Action -->
+      <div class="mt-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500">
+        <div>
+          Evaluation basis: RFC v1.0 specifications, published vendor architecture whitepapers, and public benchmarks as of Q3 2026.
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="/whitepaper/" class="text-emerald-700 font-semibold hover:text-emerald-800">Read Research Whitepaper &rarr;</a>
+          <a href="/roi/" class="text-slate-700 font-semibold hover:text-slate-900">Calculate TCO &rarr;</a>
+        </div>
+      </div>
+
+    </section>
+
     <!-- SECTION: ENTERPRISE BATTLE CARDS VS CLOUD DLP -->
     <section id="battlecards" class="scroll-mt-24 mb-14">
       
@@ -930,27 +1349,41 @@
         </div>
       </div>
 
+      <!-- Search & Competitor Filter Bar -->
+      <div class="mb-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 no-print">
+        <div class="relative flex-1">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+          <input type="text" id="bcSearchInput" placeholder="Filter competitor battlecards by keyword (e.g. Purview, latency, GDPR, HIPAA, regex)..." class="w-full pl-9 pr-8 py-2 rounded-lg border border-slate-300 bg-white text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+          <button type="button" id="bcSearchClear" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 font-mono text-xs cursor-pointer">&times;</button>
+        </div>
+        <div id="bcSearchCount" class="text-[11px] font-mono text-slate-400 self-center whitespace-nowrap">
+          Showing 7 comparison architectures
+        </div>
+      </div>
+
       <!-- Competitor Tab Controls -->
       <div class="flex items-center gap-2 mb-6 overflow-x-auto pb-2 sm:pb-0 sm:flex-wrap no-print max-w-full" role="tablist">
-        <button type="button" id="tabBtnPurview" class="bc-tab-btn active px-4 py-2 rounded-lg text-xs font-bold border transition-colors bg-slate-900 text-white border-slate-900 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="panePurview">
+        <button type="button" id="tabBtnPurview" class="bc-tab-btn active px-4 py-2 rounded-lg text-xs font-bold border transition-colors bg-slate-900 text-white border-slate-900 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="panePurview" data-slug="purview">
           Microsoft Purview (Egress Policy)
         </button>
-        <button type="button" id="tabBtnNightfall" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneNightfall">
+        <button type="button" id="tabBtnNightfall" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneNightfall" data-slug="nightfall">
           Nightfall AI (Cloud SaaS)
         </button>
-        <button type="button" id="tabBtnBigid" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneBigid">
+        <button type="button" id="tabBtnBigid" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneBigid" data-slug="bigid">
           BigID &amp; DSPM (Discovery)
         </button>
-        <button type="button" id="tabBtnCloudApis" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneCloudApis">
+        <button type="button" id="tabBtnCloudApis" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneCloudApis" data-slug="cloudapis">
           AWS Macie &amp; Google Cloud DLP
         </button>
-        <button type="button" id="tabBtnCyberhaven" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneCyberhaven">
+        <button type="button" id="tabBtnCyberhaven" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneCyberhaven" data-slug="cyberhaven">
           Cyberhaven (Endpoint Lineage)
         </button>
-        <button type="button" id="tabBtnSkyflow" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneSkyflow">
+        <button type="button" id="tabBtnSkyflow" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneSkyflow" data-slug="skyflow">
           Skyflow (Cloud Vaults)
         </button>
-        <button type="button" id="tabBtnMcp" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneMcp">
+        <button type="button" id="tabBtnMcp" class="bc-tab-btn px-4 py-2 rounded-lg text-xs font-medium border transition-colors bg-white text-slate-700 border-slate-200 hover:bg-slate-50 shadow-sm whitespace-nowrap shrink-0 cursor-pointer" data-target="paneMcp" data-slug="mcp">
           Ad-Hoc MCP Tools (CloakLLM, Conceal)
         </button>
       </div>
@@ -1423,6 +1856,157 @@
 
     </section>
 
+    <!-- SECTION: PROCUREMENT DOWNLOADS HUB -->
+    <section id="downloads" class="ztds-card p-6 sm:p-10 bg-white border border-slate-200 rounded-2xl shadow-sm mb-14 scroll-mt-24">
+      
+      <!-- Section Header -->
+      <div class="mb-8 border-b border-slate-200 pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-2 font-mono uppercase tracking-wider">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Official Procurement Artifacts
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Zero-DPA Enterprise Procurement Hub
+          </h2>
+          <p class="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
+            Download ready-to-file legal memorandums, completed SIG Lite questionnaires, pitch decks, and cryptographic evidence binders for your Security and Compliance committee.
+          </p>
+        </div>
+        <div class="flex items-center gap-2 no-print shrink-0">
+          <button type="button" id="btnDownloadsPreview" class="btn-trust text-xs py-2 px-3.5 shadow-sm flex items-center gap-1.5 font-semibold cursor-pointer">
+            <svg class="w-4 h-4 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            <span>Live Pack Preview</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Downloads Grid (6 Cards) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Card 1: CISO Legal Memo (PDF) -->
+        <div class="p-6 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-rose-100 text-rose-800">PDF Document</span>
+              <span class="text-[10px] font-mono text-slate-400">1-Page Executive</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">CISO Legal DPA Exemption Memo</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Ratified memorandum establishing GDPR Article 28 non-processor status, EDPB Guidelines 07/2020 doctrine, and zero-egress cryptographic isolation.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-200 flex items-center justify-between gap-2">
+            <a href="/public/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" download="ZTDS_CISO_DPA_Exemption_Memo.pdf" class="btn-navy text-xs py-2 px-3 shadow-sm font-semibold flex items-center gap-1.5 flex-1 justify-center">
+              <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span>Download PDF</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 2: Security Pack (ZIP) -->
+        <div class="p-6 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-sky-100 text-sky-800">ZIP Archive</span>
+              <span class="text-[10px] font-mono text-slate-400">4.8 MB Pack</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Complete Enterprise Security Pack</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Full procurement package containing the technical whitepaper, completed SIG Lite questionnaires, HIPAA safe harbor memo, and SCIF source license.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-200 flex items-center justify-between gap-2">
+            <a href="/public/docs/ZTDS_Enterprise_Security_Pack.zip" download="ZTDS_Enterprise_Security_Pack.zip" class="btn-trust text-xs py-2 px-3 shadow-sm font-semibold flex items-center gap-1.5 flex-1 justify-center">
+              <svg class="w-3.5 h-3.5 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+              <span>Download ZIP</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 3: CISO Pitch Deck (PDF) -->
+        <div class="p-6 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-purple-100 text-purple-800">PDF Slide Deck</span>
+              <span class="text-[10px] font-mono text-slate-400">12 Slides</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Board &amp; CISO Risk Committee Pitch Deck</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Visual executive presentation for CIO, CISO, and Board meetings addressing legacy DLP latency traps, subprocessor liabilities, and TCO payback.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-200 flex items-center justify-between gap-2">
+            <a href="/public/docs/ZTDS_Enterprise_CISO_Pitch_Deck.pdf" download="ZTDS_Enterprise_CISO_Pitch_Deck.pdf" class="btn-outline text-xs py-2 px-3 shadow-sm font-semibold flex items-center gap-1.5 flex-1 justify-center text-slate-700 bg-white hover:bg-slate-100">
+              <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span>Download Deck</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 4: Evidence Binder (JSON) -->
+        <div class="p-6 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">JSON Schema</span>
+              <span class="text-[10px] font-mono text-slate-400">CTS Test Vectors</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Cryptographic Evidence Binder</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Machine-readable JSON schema containing SHA-256 CTS test vector receipts, Ed25519 token signatures, and mathematical invariant execution proofs.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-200 flex items-center justify-between gap-2">
+            <a href="/public/docs/ztds-evidence-binder.json" download="ztds-evidence-binder.json" class="btn-outline text-xs py-2 px-3 shadow-sm font-semibold flex items-center gap-1.5 flex-1 justify-center text-slate-700 bg-white hover:bg-slate-100">
+              <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+              <span>Download JSON</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 5: Markdown Dossier (.md) -->
+        <div class="p-6 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-100 text-amber-800">Markdown (.md)</span>
+              <span class="text-[10px] font-mono text-slate-400">Confluence / Notion</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Markdown Procurement Dossier</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Single plain-text Markdown file containing the entire memorandum, questionnaire answers, and license terms ready for immediate internal wikis.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-200 flex items-center justify-between gap-2">
+            <button type="button" id="btnDownloadHubMd" class="btn-outline text-xs py-2 px-3 shadow-sm font-semibold flex items-center gap-1.5 flex-1 justify-center text-slate-700 bg-white hover:bg-slate-100 cursor-pointer">
+              <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              <span>Download (.md)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 6: GitHub Action CI/CD Template (.yml) -->
+        <div class="p-6 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-200 text-slate-800">CI/CD Gate</span>
+              <span class="text-[10px] font-mono text-slate-400">GitHub Actions</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Pre-Commit ZTDS Audit Workflow</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Automated GitHub Action workflow (<code>.github/workflows/ztds-audit.yml</code>) that tests every pull request for RFC v1.0 zero network egress compliance.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-200 flex items-center justify-between gap-2">
+            <a href="https://github.com/moxno/ztds.ai/blob/main/.github/workflows/ztds-audit.yml" target="_blank" rel="noopener" class="btn-outline text-xs py-2 px-3 shadow-sm font-semibold flex items-center gap-1.5 flex-1 justify-center text-slate-700 bg-white hover:bg-slate-100">
+              <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              <span>View on GitHub &rarr;</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
     <!-- Accredited Implementation Partner Turn-Key Audit Banner -->
     <section class="mt-12 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-slate-700 text-white shadow-lg no-print">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -1556,6 +2140,167 @@
     </div>
   </footer>
 
+  <!-- Live Procurement Preview Modal -->
+  <div id="procurementModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm p-4 sm:p-6 md:p-10 flex items-center justify-center no-print" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="max-w-4xl w-full bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span class="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">Document ID: ZTDS-CISO-2026-V1</span>
+          </div>
+          <h2 id="modalTitle" class="text-lg font-bold text-slate-900 mt-0.5">
+            CISO Procurement &amp; DPA Exemption Pack
+          </h2>
+        </div>
+        <button type="button" id="btnCloseProcurementModal" class="w-8 h-8 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-800 transition-colors cursor-pointer" aria-label="Close modal">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Modal Tabs Navigation -->
+      <div class="px-6 py-2.5 bg-slate-100 border-b border-slate-200 flex items-center gap-2 overflow-x-auto text-xs font-mono" role="tablist">
+        <button type="button" id="modalTabMemo" class="modal-tab-btn active px-3 py-1.5 rounded-md font-bold bg-white text-slate-900 shadow-sm border border-slate-200 cursor-pointer" data-target="modalViewMemo">
+          1. Executive Legal Memo
+        </button>
+        <button type="button" id="modalTabSig" class="modal-tab-btn px-3 py-1.5 rounded-md font-medium text-slate-600 hover:text-slate-900 cursor-pointer" data-target="modalViewSig">
+          2. SIG Lite / CAIQ Q&amp;A
+        </button>
+        <button type="button" id="modalTabHipaa" class="modal-tab-btn px-3 py-1.5 rounded-md font-medium text-slate-600 hover:text-slate-900 cursor-pointer" data-target="modalViewHipaa">
+          3. HIPAA &amp; Safe Harbors
+        </button>
+        <button type="button" id="modalTabLicense" class="modal-tab-btn px-3 py-1.5 rounded-md font-medium text-slate-600 hover:text-slate-900 cursor-pointer" data-target="modalViewLicense">
+          4. Air-Gapped Source License
+        </button>
+      </div>
+
+      <!-- Modal Scrollable Content -->
+      <div id="modalContentArea" class="p-6 overflow-y-auto space-y-6 text-xs text-slate-700 leading-relaxed font-sans flex-1">
+        
+        <!-- Tab 1: Memo View -->
+        <div id="modalViewMemo" class="modal-view space-y-4">
+          <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl space-y-1">
+            <div class="font-bold text-emerald-900 text-sm">Statutory Summary of Exemption</div>
+            <p class="text-emerald-800 text-xs">
+              Under GDPR Article 28 and EDPB Guidelines 07/2020, software executing de-identification strictly within client volatile RAM prior to outbound socket transmission never acts as a Data Processor. Zero data processing = Zero DPA obligation.
+            </p>
+          </div>
+          
+          <div class="space-y-2 border-b border-slate-100 pb-4">
+            <h4 class="font-bold text-slate-900 uppercase font-mono text-[11px]">The 4 Fundamental Invariants (RFC v1.0)</h4>
+            <ul class="list-disc list-inside space-y-1 text-slate-600">
+              <li><strong>Invariant 1 (Zero External Egress):</strong> Delta Egress(S) is strictly 0.00 bytes across public sockets prior to sanitization.</li>
+              <li><strong>Invariant 2 (Deterministic Reversible Tokens):</strong> Bijective in-memory transformation preserves LLM context while mapping tables remain strictly in client volatile RAM.</li>
+              <li><strong>Invariant 3 (Verifiable Memory Isolation):</strong> Host process volatile RAM only. Zero persistent disk, database, or cloud cache storage.</li>
+              <li><strong>Invariant 4 (Subprocessor Exclusion):</strong> GDPR Article 28 disengaged; subprocessor liability chain = 0.</li>
+            </ul>
+          </div>
+
+          <div class="space-y-2">
+            <h4 class="font-bold text-slate-900 uppercase font-mono text-[11px]">Subprocessor Chain Overhead Elimination</h4>
+            <p class="text-slate-600">
+              By deploying ZTDS in-RAM sanitization, enterprises eliminate an estimated <strong>$25,000 per third-party vendor annually</strong> in procurement friction:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 font-mono text-[11px]">
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded">
+                <span class="text-slate-400 block">DPA Negotiation</span>
+                <strong class="text-slate-900">$8,000 / vendor / yr</strong>
+              </div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded">
+                <span class="text-slate-400 block">TPRM &amp; SIG Lite</span>
+                <strong class="text-slate-900">$9,000 / vendor / yr</strong>
+              </div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded">
+                <span class="text-slate-400 block">SOC 2 Chain Auditing</span>
+                <strong class="text-slate-900">$8,000 / vendor / yr</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: SIG Lite / CAIQ Q&A View -->
+        <div id="modalViewSig" class="modal-view hidden space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg space-y-1">
+              <span class="font-mono text-[10px] text-slate-400 uppercase font-bold">Control DSP-01 (Data Storage)</span>
+              <p class="text-slate-900 font-semibold">Q: Where is customer prompt data hosted or stored?</p>
+              <p class="text-slate-600">A: Nowhere. Cleartext data and token maps reside strictly in volatile RAM. No data is ever written to disk, databases, cookies, or cloud storage.</p>
+            </div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg space-y-1">
+              <span class="font-mono text-[10px] text-slate-400 uppercase font-bold">Control NET-02 (External Egress)</span>
+              <p class="text-slate-900 font-semibold">Q: Does the engine transmit telemetry or analytics to vendor servers?</p>
+              <p class="text-slate-600">A: Exactly 0.00 bytes. Conforming builds operate air-gapped with zero phone-home calls, analytics pings, or license heartbeats.</p>
+            </div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg space-y-1">
+              <span class="font-mono text-[10px] text-slate-400 uppercase font-bold">Control CRY-03 (Key Custody)</span>
+              <p class="text-slate-900 font-semibold">Q: Who holds custody of reversible tokenization keys?</p>
+              <p class="text-slate-600">A: The customer process exclusively. Keys are generated in client RAM via CSPRNG and destroyed immediately upon process exit.</p>
+            </div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg space-y-1">
+              <span class="font-mono text-[10px] text-slate-400 uppercase font-bold">Control TPR-05 (Subprocessors)</span>
+              <p class="text-slate-900 font-semibold">Q: Which third-party subprocessors process customer data?</p>
+              <p class="text-slate-600">A: None. Zero third-party subprocessors exist in the data path. Conforming software operates as a local computational binary.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: HIPAA & Safe Harbors View -->
+        <div id="modalViewHipaa" class="modal-view hidden space-y-4">
+          <div class="p-4 bg-sky-50 border border-sky-200 rounded-xl space-y-2">
+            <h4 class="font-bold text-sky-950 text-sm">HIPAA Safe Harbor De-Identification (45 CFR &sect; 164.514(b)(2))</h4>
+            <p class="text-xs text-sky-900 leading-relaxed">
+              When all 18 categories of protected health information (PHI) are removed prior to outbound transmission, health data ceases to be Individually Identifiable Health Information under HIPAA. Downstream cloud LLMs (OpenAI, Anthropic, Google) receive only de-identified tokens, eliminating BAA requirements.
+            </p>
+          </div>
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <h4 class="font-bold text-slate-900 text-sm">Federal Rule of Evidence 502(b) Non-Waiver Shield</h4>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              Under FRE 502(b), disclosure of privileged corporate legal material to an AI prompt does not operate as a subject-matter waiver if the disclosure was inadvertent, reasonable steps were taken to prevent disclosure (such as deploying ZTDS in-RAM tokenization), and prompt steps were taken to rectify the error.
+            </p>
+          </div>
+        </div>
+
+        <!-- Tab 4: Air-Gapped License View -->
+        <div id="modalViewLicense" class="modal-view hidden space-y-4 font-mono text-xs">
+          <div class="p-4 bg-slate-900 text-slate-200 rounded-xl space-y-3">
+            <div class="text-[11px] uppercase tracking-wider text-sky-400 font-bold">On-Premise Air-Gapped Source Code License Key Points</div>
+            <p class="text-slate-300 leading-relaxed">
+              1. <strong>Perpetual Execution:</strong> Non-exclusive license to compile and execute ZTDS source code within internal networks, microservices, and private VPCs.<br>
+              2. <strong>100% Disconnected SCIF:</strong> Authorized for air-gapped, SCIF, or classified environments with zero telemetry or phone-home heartbeats.<br>
+              3. <strong>Offline Ed25519 Tokens:</strong> Cryptographic token validation with built-in 60-day operational grace periods and sub-millisecond in-memory verification.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-3.5 border-t border-slate-200 bg-slate-50 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <button type="button" id="btnCopyModalTab" class="btn-outline text-xs py-2 px-3 shadow-sm font-semibold text-slate-700 bg-white hover:bg-slate-100 flex items-center gap-1.5 cursor-pointer">
+            <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span>Copy Current Tab</span>
+          </button>
+          <button type="button" id="btnDownloadModalMd" class="btn-outline text-xs py-2 px-3 shadow-sm font-semibold text-slate-700 bg-white hover:bg-slate-100 flex items-center gap-1.5 cursor-pointer">
+            <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            <span>Download (.md)</span>
+          </button>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="/public/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" download="ZTDS_CISO_DPA_Exemption_Memo.pdf" class="btn-trust text-xs py-2 px-3.5 shadow-sm font-semibold flex items-center gap-1.5">
+            <span>Download Official PDF &rarr;</span>
+          </a>
+          <button type="button" id="btnCloseProcurementModalBtn" class="px-3.5 py-2 rounded-lg border border-slate-200 bg-white text-xs font-semibold text-slate-600 hover:bg-slate-100 cursor-pointer">
+            Close
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <script src="/nav.js"></script>
   <script>
     const memoContent = `# CISO Procurement & DPA Exemption Pack: Zero-Trust Data Sanitization (ZTDS RFC v1.0)
@@ -1614,40 +2359,213 @@ Consequently, ZTDS-conforming architectures are legally exempt from third-party 
 - 100% disconnected SCIF deployment with zero telemetry or phone-home heartbeats.
 - Offline cryptographic Ed25519 token verification with built-in 60-day grace period.`;
 
-    document.getElementById('copyMemoBtn').addEventListener('click', () => {
-      window.ztdsCopy(memoContent, () => {
-        const toast = document.getElementById('copyToast');
-        toast.classList.remove('hidden');
-        setTimeout(() => toast.classList.add('hidden'), 3000);
+    const sigLiteContent = `# ZTDS RFC v1.0 — Enterprise Security Questionnaire Answers (SIG Lite / CAIQ v4 / VSAQ)
+DOCUMENT ID: ZTDS-SIG-2026-V1
+SPECIFICATION: RFC v1.0 Canonical Standard
+STATUS: RATIFIED & AUDIT-READY
+
+## Control DSP-01 (Data Storage & Retention)
+Q: Where is customer prompt data hosted or stored?
+A: Nowhere. Cleartext sensitive data and token maps reside strictly in volatile RAM. No data is ever written to disk, databases, cookies, or cloud storage. Memory is purged immediately on process termination.
+
+## Control NET-02 (External Egress & Telemetry)
+Q: Does conforming software transmit telemetry, analytical data, or socket traffic to vendor servers?
+A: Exactly 0.00 bytes. Conforming builds operate air-gapped with zero phone-home calls, analytics pings, or license heartbeats. All network interfaces are verifiable via "npx ztds-audit --network".
+
+## Control CRY-03 (Reversible Key Custody)
+Q: Who holds custody of reversible tokenization keys?
+A: The customer process exclusively. Ephemeral keys are generated in volatile client RAM via CSPRNG and destroyed immediately upon process exit. Zero vendor key escrow or third-party custody exists.
+
+## Control CRY-04 (Team Handoff Encryption)
+Q: How are collaborative mappings secured between authorized team members?
+A: Ephemeral keys are exchanged peer-to-peer via Argon2id key derivation and XChaCha20-Poly1305 authenticated symmetric encryption without crossing vendor servers.
+
+## Control TPR-05 (Third-Party Subprocessors)
+Q: Which third-party subprocessors process customer sensitive data?
+A: None. Zero third-party subprocessors exist in the data path. Conforming software operates as a local computational binary, disengaging GDPR Article 28 DPA requirements.
+
+## Control AUD-06 (Continuous Compliance Verification)
+Q: How can enterprise compliance teams audit zero-egress invariants?
+A: Compliance teams can execute the 5-Step Airplane Mode protocol and run "npx ztds-audit --dir ./src" in CI/CD pipelines to verify SHA-256 conformance test receipts.`;
+
+    const hipaaContent = `# ZTDS RFC v1.0 — Healthcare & Statutory Safe Harbor Legal Memorandum
+DOCUMENT ID: ZTDS-HIPAA-2026-V1
+STATUTORY AUTHORITIES: 45 CFR § 164.514(b)(2), FRE 502(b), ABA Model Rule 1.6(c)
+
+## 1. HIPAA Safe Harbor De-Identification Doctrine (45 CFR § 164.514(b)(2))
+Under 45 CFR § 164.514(b)(2), health information is not Individually Identifiable Health Information if all 18 enumerated categories of identifiers are removed.
+ZTDS deterministic client-side tokenization removes all 18 PHI identifiers (names, geographic subdivisions, dates, phone numbers, email addresses, SSNs, MRNs, health plan numbers, account numbers, certificate/license numbers, vehicle IDs, device serials, URLs, IP addresses, biometric identifiers, photos, and any unique characteristic) strictly within volatile client RAM before outbound network transmission.
+Consequently, downstream cloud LLM providers (OpenAI, Anthropic, Google) receive only de-identified surrogate tokens, eliminating Business Associate Agreement (BAA) requirements.
+
+## 2. Federal Rule of Evidence 502(b) Non-Waiver Privilege Defense
+Inadvertent disclosure of attorney-client privileged material or corporate work product to an external LLM prompt does not constitute a waiver under FRE 502(b) if:
+1. The disclosure is inadvertent;
+2. The holder of the privilege took reasonable steps to prevent disclosure; and
+3. The holder promptly took reasonable steps to rectify the error.
+Deploying an automated client-side ZTDS tokenization filter establishes statutory evidence of "reasonable steps" under FRE 502(b)(2).
+
+## 3. Financial Services & GLBA Non-Public Personal Information (NPI)
+Under the Gramm-Leach-Bliley Act (15 U.S.C. § 6801) and SEC Regulation S-P, financial institutions must protect consumer NPI. ZTDS tokenizes PAN, account numbers, and SWIFT/IBAN data in volatile memory, preventing cleartext disclosure and avoiding statutory damages of up to $7,500 per record.`;
+
+    const licenseContent = `# ZTDS RFC v1.0 — Enterprise Air-Gapped Source Code License Terms
+DOCUMENT ID: ZTDS-LIC-2026-V1
+LICENSOR: Ilya Sibiryakov (BrandMeWeb)
+GOVERNING LAW: State of Israel & Paris Convention IP Framework
+
+## 1. Perpetual Internal Execution Right
+The Licensee receives a perpetual, non-exclusive, non-transferable license to inspect, compile, and execute the ZTDS core engine source code strictly within internal corporate networks, private cloud VPCs, and microservice architectures.
+
+## 2. 100% Disconnected SCIF & Air-Gapped Authorization
+Licensee is expressly authorized to deploy the engine in 100% disconnected, Sensitive Compartmented Information Facility (SCIF), or air-gapped environments with zero outbound network connectivity. The software contains zero phone-home mechanisms, analytics collectors, or mandatory network licensing heartbeats.
+
+## 3. Offline Cryptographic Verification & Grace Period
+Software validation operates via offline Ed25519 asymmetric cryptographic tokens. Conforming engines verify digital signatures locally in volatile memory (<0.2ms) without external socket calls, including a built-in 60-day operational grace period.
+
+## 4. Proprietary IP Reservation
+All rights in Israel Patent Application IL 331905, WIPO DAS Access Code B17B, and Trademark #182655957 remain the sole intellectual property of Ilya Sibiryakov / BrandMeWeb. Conforming implementations are authorized under enterprise license schedules.`;
+
+    // Copy & Markdown download triggers for Hero Header
+    const copyMemoBtn = document.getElementById('copyMemoBtn');
+    if (copyMemoBtn) {
+      copyMemoBtn.addEventListener('click', () => {
+        window.ztdsCopy(memoContent, () => {
+          const toast = document.getElementById('copyToast');
+          if (toast) {
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3000);
+          }
+        });
       });
-    });
+    }
 
-    document.getElementById('downloadMdBtn').addEventListener('click', () => {
-      const blob = new Blob([memoContent], { type: 'text/markdown;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'ZTDS-CISO-Procurement-Memo-2026.md';
-      a.click();
-      URL.revokeObjectURL(url);
-    });
-  </script>
+    const downloadMdBtn = document.getElementById('downloadMdBtn');
+    if (downloadMdBtn) {
+      downloadMdBtn.addEventListener('click', () => {
+        const blob = new Blob([memoContent], { type: 'text/markdown;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ZTDS-CISO-Procurement-Memo-2026.md';
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    }
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    // Downloads Hub Full Markdown Download
+    const btnDownloadHubMd = document.getElementById('btnDownloadHubMd');
+    if (btnDownloadHubMd) {
+      btnDownloadHubMd.addEventListener('click', () => {
+        const fullDossier = `# ZTDS RFC v1.0 — Enterprise CISO & Zero-DPA Procurement Dossier
+RATIFIED: September 2026
+CHIEF ARCHITECT: Ilya Sibiryakov (BrandMeWeb)
+
+${memoContent}
+
+---
+
+${sigLiteContent}
+
+---
+
+${hipaaContent}
+
+---
+
+${licenseContent}`;
+
+        const blob = new Blob([fullDossier], { type: 'text/markdown;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ZTDS-CISO-Complete-Procurement-Dossier-2026.md';
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    }
+
+    // CISO Quick Scenario Estimator Logic
+    function calculateCisoEstimator() {
+      const callsSlider = document.getElementById('cisoCallsSlider');
+      const vendorsSlider = document.getElementById('cisoVendorsSlider');
+      const regimeSelect = document.getElementById('cisoRegimeSelect');
+
+      if (!callsSlider || !vendorsSlider || !regimeSelect) return;
+
+      const calls = parseInt(callsSlider.value, 10);
+      const vendors = parseInt(vendorsSlider.value, 10);
+      const regime = regimeSelect.value;
+
+      // Direct DPA savings: $25k / vendor ($8k legal + $9k TPRM + $8k SOC2)
+      const dpaSavings = vendors * 25000;
+
+      // Actuarial breach avoidance: Ponemon $165/record * 0.5% breach prob * 7.8% AI share * records
+      // annualRecords = calls * 0.25 (sensitive ratio) * 3 (avg sensitive records per prompt) * 12 (months)
+      const annualRecords = calls * 0.25 * 3 * 12;
+      const expectedBreachCost = annualRecords * 165 * 0.078 * 0.005;
+      const normalizedBreachCost = Math.max(expectedBreachCost, 45000);
+
+      // Regulatory fine mitigation buffer
+      const regimeFineMap = {
+        global: 75000,
+        eu: 50000,
+        us_hipaa: 125000,
+        us_fintech: 52000,
+        us_legal: 55000
+      };
+      const regimeFine = regimeFineMap[regime] || 50000;
+
+      const totalExposure = dpaSavings + normalizedBreachCost + regimeFine;
+      const roiMultiple = Math.max(1, Math.round(totalExposure / 12000));
+
+      // Update readouts
+      const callsValEl = document.getElementById('cisoCallsVal');
+      const vendorsValEl = document.getElementById('cisoVendorsVal');
+      if (callsValEl) callsValEl.textContent = calls.toLocaleString('en-US') + ' / mo';
+      if (vendorsValEl) vendorsValEl.textContent = vendors + (vendors === 1 ? ' vendor' : ' vendors');
+
+      const dpaSavingsEl = document.getElementById('cisoDpaSavings');
+      const breachSavingsEl = document.getElementById('cisoBreachSavings');
+      const totalExposureEl = document.getElementById('cisoTotalExposure');
+      const roiMultipleEl = document.getElementById('cisoRoiMultiple');
+
+      if (dpaSavingsEl) dpaSavingsEl.textContent = '$' + Math.round(dpaSavings).toLocaleString('en-US') + ' / yr';
+      if (breachSavingsEl) breachSavingsEl.textContent = '$' + Math.round(normalizedBreachCost).toLocaleString('en-US') + ' / yr';
+      if (totalExposureEl) totalExposureEl.textContent = '$' + Math.round(totalExposure).toLocaleString('en-US') + ' / yr';
+      if (roiMultipleEl) roiMultipleEl.textContent = roiMultiple + 'x Multiple';
+
+      // Update deep-dive ROI link
+      const deepDiveBtn = document.getElementById('btnDeepDiveRoi');
+      if (deepDiveBtn) {
+        deepDiveBtn.href = `/roi/?calls=${calls}&vendors=${vendors}&regime=${encodeURIComponent(regime)}&ratio=25&records=3`;
+      }
+    }
+
+    // Battlecard Tabs, URL Hash & Search Filter Logic
+    function initBattlecards() {
       const tabBtns = document.querySelectorAll('.bc-tab-btn');
       const panes = document.querySelectorAll('.bc-pane');
+      const searchInput = document.getElementById('bcSearchInput');
+      const clearBtn = document.getElementById('bcSearchClear');
+      const countEl = document.getElementById('bcSearchCount');
 
-      tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
+      function activateTab(slug) {
+        let matchedBtn = null;
+        tabBtns.forEach(btn => {
+          const btnSlug = btn.getAttribute('data-slug');
+          if (btnSlug === slug || btn.getAttribute('data-target') === 'pane' + slug.charAt(0).toUpperCase() + slug.slice(1)) {
+            matchedBtn = btn;
+          }
+        });
+
+        if (matchedBtn) {
           tabBtns.forEach(b => {
             b.classList.remove('active', 'bg-slate-900', 'text-white', 'border-slate-900');
             b.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
           });
-          btn.classList.add('active', 'bg-slate-900', 'text-white', 'border-slate-900');
-          btn.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
+          matchedBtn.classList.add('active', 'bg-slate-900', 'text-white', 'border-slate-900');
+          matchedBtn.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
 
-          const targetId = btn.getAttribute('data-target');
+          const targetId = matchedBtn.getAttribute('data-target');
           panes.forEach(pane => {
             if (pane.id === targetId) {
               pane.classList.remove('hidden');
@@ -1655,8 +2573,85 @@ Consequently, ZTDS-conforming architectures are legally exempt from third-party 
               pane.classList.add('hidden');
             }
           });
+        }
+      }
+
+      // Click on tabs
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const slug = btn.getAttribute('data-slug') || '';
+          if (slug) {
+            history.replaceState(null, '', '#' + slug);
+          }
+          activateTab(slug);
         });
       });
+
+      // Check URL hash on load
+      const currentHash = window.location.hash.replace('#', '').toLowerCase();
+      if (currentHash) {
+        const validSlugs = ['purview', 'nightfall', 'bigid', 'cloudapis', 'cyberhaven', 'skyflow', 'mcp'];
+        if (validSlugs.includes(currentHash)) {
+          activateTab(currentHash);
+        }
+      }
+
+      // Hashchange listener
+      window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.replace('#', '').toLowerCase();
+        const validSlugs = ['purview', 'nightfall', 'bigid', 'cloudapis', 'cyberhaven', 'skyflow', 'mcp'];
+        if (validSlugs.includes(hash)) {
+          activateTab(hash);
+        }
+      });
+
+      // Search filter
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          const query = searchInput.value.trim().toLowerCase();
+          if (clearBtn) clearBtn.classList.toggle('hidden', query.length === 0);
+
+          let visibleCount = 0;
+          tabBtns.forEach(btn => {
+            const targetId = btn.getAttribute('data-target');
+            const pane = document.getElementById(targetId);
+            const textToSearch = ((btn.textContent || '') + ' ' + (pane ? pane.textContent : '')).toLowerCase();
+            const matches = query.length === 0 || textToSearch.includes(query);
+
+            if (matches) {
+              btn.classList.remove('hidden');
+              visibleCount++;
+            } else {
+              btn.classList.add('hidden');
+            }
+          });
+
+          if (countEl) {
+            if (query.length === 0) {
+              countEl.textContent = 'Showing 7 comparison architectures';
+            } else {
+              countEl.textContent = `Found ${visibleCount} matching architecture${visibleCount === 1 ? '' : 's'}`;
+            }
+          }
+
+          // If active tab is hidden, switch to first visible tab
+          const activeBtn = document.querySelector('.bc-tab-btn.active');
+          if (activeBtn && activeBtn.classList.contains('hidden')) {
+            const firstVisible = document.querySelector('.bc-tab-btn:not(.hidden)');
+            if (firstVisible) {
+              firstVisible.click();
+            }
+          }
+        });
+
+        if (clearBtn) {
+          clearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            searchInput.dispatchEvent(new Event('input'));
+            searchInput.focus();
+          });
+        }
+      }
 
       const printBtn = document.getElementById('btnPrintBattleCard');
       if (printBtn) {
@@ -1686,6 +2681,231 @@ Consequently, ZTDS-conforming architectures are legally exempt from third-party 
           }
         });
       });
+    }
+
+    // Live Procurement Preview Modal Controller
+    function initProcurementModal() {
+      const modal = document.getElementById('procurementModal');
+      const btnOpenHero = document.getElementById('btnPreviewProcurement');
+      const btnOpenHub = document.getElementById('btnDownloadsPreview');
+      const btnClose = document.getElementById('btnCloseProcurementModal');
+      const btnCloseFooter = document.getElementById('btnCloseProcurementModalBtn');
+      const tabBtns = document.querySelectorAll('.modal-tab-btn');
+      const views = document.querySelectorAll('.modal-view');
+      const btnCopyTab = document.getElementById('btnCopyModalTab');
+      const btnDownloadTab = document.getElementById('btnDownloadModalMd');
+
+      let activeTabKey = 'memo';
+
+      function openModal() {
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        if (window.ztdsModal && typeof window.ztdsModal.open === 'function') {
+          window.ztdsModal.open(modal, '#btnCloseProcurementModal');
+        }
+      }
+
+      function closeModal() {
+        if (!modal) return;
+        if (window.ztdsModal && typeof window.ztdsModal.close === 'function') {
+          window.ztdsModal.close(modal);
+        } else {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+          document.body.style.overflow = '';
+        }
+      }
+
+      if (btnOpenHero) btnOpenHero.addEventListener('click', openModal);
+      if (btnOpenHub) btnOpenHub.addEventListener('click', openModal);
+      if (btnClose) btnClose.addEventListener('click', closeModal);
+      if (btnCloseFooter) btnCloseFooter.addEventListener('click', closeModal);
+
+      // Close on clicking backdrop outside modal dialog content
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            closeModal();
+          }
+        });
+      }
+
+      // Switch tabs inside modal
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabBtns.forEach(b => {
+            b.classList.remove('active', 'bg-white', 'text-slate-900', 'shadow-sm', 'border', 'border-slate-200', 'font-bold');
+            b.classList.add('text-slate-600', 'font-medium');
+          });
+          btn.classList.add('active', 'bg-white', 'text-slate-900', 'shadow-sm', 'border', 'border-slate-200', 'font-bold');
+          btn.classList.remove('text-slate-600', 'font-medium');
+
+          const targetId = btn.getAttribute('data-target');
+          views.forEach(v => {
+            if (v.id === targetId) {
+              v.classList.remove('hidden');
+            } else {
+              v.classList.add('hidden');
+            }
+          });
+
+          if (targetId === 'modalViewMemo') activeTabKey = 'memo';
+          else if (targetId === 'modalViewSig') activeTabKey = 'sig';
+          else if (targetId === 'modalViewHipaa') activeTabKey = 'hipaa';
+          else if (targetId === 'modalViewLicense') activeTabKey = 'license';
+        });
+      });
+
+      const tabContentMap = {
+        memo: memoContent,
+        sig: sigLiteContent,
+        hipaa: hipaaContent,
+        license: licenseContent
+      };
+
+      const tabFilenameMap = {
+        memo: 'ZTDS-CISO-Procurement-Memo-2026.md',
+        sig: 'ZTDS-Enterprise-SIG-Lite-QA-2026.md',
+        hipaa: 'ZTDS-HIPAA-Safe-Harbor-Legal-Memo-2026.md',
+        license: 'ZTDS-Air-Gapped-Source-License-Terms-2026.md'
+      };
+
+      if (btnCopyTab) {
+        btnCopyTab.addEventListener('click', () => {
+          const content = tabContentMap[activeTabKey] || memoContent;
+          window.ztdsCopy(content, () => {
+            const prev = btnCopyTab.innerText;
+            btnCopyTab.innerText = 'Copied!';
+            setTimeout(() => { btnCopyTab.innerText = prev; }, 2000);
+          });
+        });
+      }
+
+      if (btnDownloadTab) {
+        btnDownloadTab.addEventListener('click', () => {
+          const content = tabContentMap[activeTabKey] || memoContent;
+          const filename = tabFilenameMap[activeTabKey] || 'ZTDS-Document-2026.md';
+          const blob = new Blob([content], { type: 'text/markdown;charset=utf-8;' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          a.click();
+          URL.revokeObjectURL(url);
+        });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Battlecards
+      initBattlecards();
+
+      // Initialize Procurement Modal
+      initProcurementModal();
+
+      // Initialize CISO Quick Scenario Estimator
+      const callsSlider = document.getElementById('cisoCallsSlider');
+      const vendorsSlider = document.getElementById('cisoVendorsSlider');
+      const regimeSelect = document.getElementById('cisoRegimeSelect');
+
+      if (callsSlider && vendorsSlider && regimeSelect) {
+        callsSlider.addEventListener('input', calculateCisoEstimator);
+        vendorsSlider.addEventListener('input', calculateCisoEstimator);
+        regimeSelect.addEventListener('change', calculateCisoEstimator);
+
+        // Stepper Buttons
+        document.querySelectorAll('.ciso-step-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-target');
+            const targetEl = document.getElementById(targetId);
+            const val = btn.getAttribute('data-val');
+            if (targetEl && val) {
+              targetEl.value = val;
+              calculateCisoEstimator();
+            }
+          });
+        });
+
+        // Preset Buttons
+        document.querySelectorAll('.ciso-preset-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.ciso-preset-btn').forEach(b => {
+              b.classList.remove('active', 'bg-slate-900', 'text-white', 'border-slate-900', 'shadow-sm', 'font-bold');
+              b.classList.add('bg-white', 'text-slate-700', 'border-slate-300', 'font-semibold');
+            });
+            btn.classList.add('active', 'bg-slate-900', 'text-white', 'border-slate-900', 'shadow-sm', 'font-bold');
+            btn.classList.remove('bg-white', 'text-slate-700', 'border-slate-300', 'font-semibold');
+
+            const calls = btn.getAttribute('data-calls');
+            const vendors = btn.getAttribute('data-vendors');
+            const regime = btn.getAttribute('data-regime');
+
+            if (calls) callsSlider.value = calls;
+            if (vendors) vendorsSlider.value = vendors;
+            if (regime) regimeSelect.value = regime;
+
+            calculateCisoEstimator();
+          });
+        });
+
+        // Export Scenario JSON
+        const btnExportCisoJson = document.getElementById('btnExportCisoJson');
+        if (btnExportCisoJson) {
+          btnExportCisoJson.addEventListener('click', () => {
+            const calls = parseInt(callsSlider.value, 10);
+            const vendors = parseInt(vendorsSlider.value, 10);
+            const regime = regimeSelect.value;
+            const dpaSavings = vendors * 25000;
+            const annualRecords = calls * 0.25 * 3 * 12;
+            const expectedBreachCost = annualRecords * 165 * 0.078 * 0.005;
+            const normalizedBreachCost = Math.max(expectedBreachCost, 45000);
+            const fineMap = { global: 75000, eu: 50000, us_hipaa: 125000, us_fintech: 52000, us_legal: 55000 };
+            const regimeFine = fineMap[regime] || 50000;
+            const totalExposure = dpaSavings + normalizedBreachCost + regimeFine;
+            const roiMultiple = Math.max(1, Math.round(totalExposure / 12000));
+
+            const exportData = {
+              spec: "ZTDS RFC v1.0",
+              documentId: "ZTDS-CISO-SCENARIO-2026",
+              generatedAt: new Date().toISOString(),
+              chiefArchitect: "Ilya Sibiryakov",
+              authorAffiliation: "BrandMeWeb",
+              parameters: {
+                monthlyCalls: calls,
+                vendorsReviewed: vendors,
+                regulatoryRegime: regime
+              },
+              actuarialModel: {
+                dpaReviewOverheadAvoidanceUsd: dpaSavings,
+                actuarialBreachRiskAvoidanceUsd: Math.round(normalizedBreachCost),
+                regulatoryMitigationBufferUsd: regimeFine,
+                totalAnnualExposureAvoidanceUsd: Math.round(totalExposure),
+                projectedRoiMultiple: roiMultiple + 'x',
+                assumedEnterpriseTcoUsd: 12000
+              },
+              statutoryExemptionGrounds: [
+                "EU GDPR Article 28: Zero external data custody; DPA disengaged",
+                "EDPB Guidelines 07/2020: Pure client-side computational utility",
+                "HIPAA Safe Harbor 45 CFR § 164.514: 18 PHI identifiers removed prior to egress",
+                "FRE 502(b): Reasonable steps taken against privilege waiver"
+              ],
+              deepDiveUrl: `https://ztds.ai/roi/?calls=${calls}&vendors=${vendors}&regime=${encodeURIComponent(regime)}&ratio=25&records=3`
+            };
+
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ZTDS-CISO-Scenario-${calls}-${vendors}vendors.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+          });
+        }
+
+        // Run initial calculation
+        calculateCisoEstimator();
+      }
     });
   </script>
 </body>
