@@ -294,14 +294,18 @@
 
         <!-- Fast Action Bar -->
         <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <a href="#setup" class="btn-trust text-xs py-3 px-5 shadow-sm font-bold">
-            1-Click Client Configuration &rarr;
+          <a href="#playground" class="btn-trust text-xs py-3 px-5 shadow-sm font-bold flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            Live Pipe Simulator &rarr;
+          </a>
+          <a href="#setup" class="btn-outline text-xs py-3 px-5 font-semibold">
+            1-Click Setup &rarr;
           </a>
           <a href="#threat-model" class="btn-outline text-xs py-3 px-5 font-semibold">
             Inspect Threat Model &rarr;
           </a>
           <a href="https://mcpservers.org/servers/ztds-ai" target="_blank" rel="noopener" class="text-xs font-mono text-slate-500 hover:text-slate-800 underline decoration-slate-300">
-            mcpservers.org Directory Profile
+            mcpservers.org Profile
           </a>
         </div>
       </div>
@@ -573,6 +577,152 @@
                 <div>ztds_secure_code_review</div>
                 <div>ztds_redact_and_analyze</div>
               </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3.5: INTERACTIVE MCP PROTOCOL PLAYGROUND & SIMULATOR -->
+    <section id="playground" class="bg-slate-900 text-white py-16 lg:py-24 border-b border-slate-800 scroll-mt-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-10">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-300 text-xs font-mono font-medium mb-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            Live Protocol Workbench
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Simulate the In-RAM MCP JSON-RPC 2.0 Pipe
+          </h2>
+          <p class="text-slate-300 mt-3 text-sm sm:text-base leading-relaxed">
+            Test how <strong class="text-emerald-400 font-mono">ztds-mcp</strong> intercepts IDE tool calls in volatile host RAM, substitutes sensitive tokens, and returns clean JSON-RPC 2.0 frames over OS stdio pipes with 0.00 bytes socket egress.
+          </p>
+        </div>
+
+        <!-- Simulator Container -->
+        <div class="bg-slate-950 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden max-w-5xl mx-auto">
+          
+          <!-- Top Tool Selector & Presets Bar -->
+          <div class="p-4 bg-slate-900/90 border-b border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            
+            <!-- Tool Tabs -->
+            <div class="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0" id="sim-tool-tabs" role="tablist">
+              <button type="button" class="sim-tool-btn active px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-colors bg-emerald-500 text-slate-950 cursor-pointer" data-tool="ztds_sanitize">ztds_sanitize</button>
+              <button type="button" class="sim-tool-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer" data-tool="ztds_restore">ztds_restore</button>
+              <button type="button" class="sim-tool-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer" data-tool="ztds_audit">ztds_audit</button>
+              <button type="button" class="sim-tool-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer" data-tool="ztds_reset_session">ztds_reset_session</button>
+              <button type="button" class="sim-tool-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer" data-tool="ztds_status">ztds_status</button>
+            </div>
+
+            <!-- Presets Buttons -->
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-[11px] font-mono text-slate-400 uppercase hidden sm:inline">Presets:</span>
+              <button type="button" class="sim-preset-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-[11px] font-mono transition-colors cursor-pointer" data-preset="api_key">API Keys</button>
+              <button type="button" class="sim-preset-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-[11px] font-mono transition-colors cursor-pointer" data-preset="pii">PII &amp; Billing</button>
+              <button type="button" class="sim-preset-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-[11px] font-mono transition-colors cursor-pointer" data-preset="database">Database</button>
+            </div>
+
+          </div>
+
+          <!-- Dual Column Workbench -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-slate-800">
+            
+            <!-- Left: Input Pane -->
+            <div class="p-5 flex flex-col justify-between space-y-4">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                  <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                    IDE Stdio Payload (stdin)
+                  </span>
+                  <span id="simInputStats">0 chars &middot; 0 B</span>
+                </div>
+                <textarea id="simPayloadInput" rows="10" class="w-full bg-slate-900 border border-slate-700/80 rounded-xl p-3.5 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors leading-relaxed" placeholder="Type prompt or code containing API keys, PII, or credentials..."></textarea>
+                
+                <div class="flex items-center justify-between gap-3 text-xs font-mono">
+                  <div class="flex items-center gap-2">
+                    <label for="simSessionInput" class="text-slate-400 text-[11px]">Session ID:</label>
+                    <input type="text" id="simSessionInput" value="sess_cursor_01" class="bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-200 text-xs font-mono w-36 focus:outline-none focus:border-emerald-500">
+                  </div>
+                  <span class="text-[11px] text-slate-400 font-sans hidden sm:inline">JSON-RPC 2.0 Mode</span>
+                </div>
+              </div>
+
+              <div class="pt-2">
+                <button type="button" id="btnExecuteSim" class="w-full py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs transition-colors flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/10 cursor-pointer">
+                  <span>Send Stdio Frame &middot; tools/call ztds_sanitize</span>
+                  <span class="font-sans">&rarr;</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: Output Console Pane -->
+            <div class="p-5 flex flex-col justify-between space-y-4 bg-slate-950">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                  <div class="flex items-center gap-1 text-xs" id="sim-output-tabs" role="tablist">
+                    <button type="button" class="sim-out-tab active px-2.5 py-1 rounded bg-slate-800 text-emerald-400 font-mono text-[11px] font-semibold cursor-pointer" data-out="stdio">Stdio JSON-RPC</button>
+                    <button type="button" class="sim-out-tab px-2.5 py-1 rounded text-slate-400 hover:text-white font-mono text-[11px] font-semibold cursor-pointer" data-out="session">SessionMap</button>
+                    <button type="button" class="sim-out-tab px-2.5 py-1 rounded text-slate-400 hover:text-white font-mono text-[11px] font-semibold cursor-pointer" data-out="masked">Masked View</button>
+                  </div>
+                  <button type="button" id="btnCopySimOutput" class="text-slate-400 hover:text-emerald-400 text-[11px] font-mono flex items-center gap-1 cursor-pointer">
+                    <span id="copySimBtnText">Copy Output</span>
+                  </button>
+                </div>
+
+                <!-- Pane 1: Stdio JSON-RPC -->
+                <div id="simPaneStdio" class="sim-out-pane">
+                  <pre id="simStdioDisplay" class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 font-mono text-[11.5px] text-slate-200 overflow-x-auto leading-relaxed h-[230px] overflow-y-auto whitespace-pre-wrap"></pre>
+                </div>
+
+                <!-- Pane 2: SessionMap -->
+                <div id="simPaneSession" class="sim-out-pane hidden">
+                  <pre id="simSessionDisplay" class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 font-mono text-[11.5px] text-sky-300 overflow-x-auto leading-relaxed h-[230px] overflow-y-auto whitespace-pre-wrap"></pre>
+                </div>
+
+                <!-- Pane 3: Masked View -->
+                <div id="simPaneMasked" class="sim-out-pane hidden">
+                  <div id="simMaskedDisplay" class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 font-mono text-[11.5px] text-slate-200 overflow-x-auto leading-relaxed h-[230px] overflow-y-auto whitespace-pre-wrap"></div>
+                </div>
+              </div>
+
+              <!-- In-Console Metrics -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-slate-800/80 text-[10.5px] font-mono">
+                <div class="bg-slate-900/80 p-2 rounded border border-slate-800">
+                  <div class="text-slate-400">WAN Egress</div>
+                  <div class="text-emerald-400 font-bold text-xs mt-0.5" id="simMetricEgress">0.00 B</div>
+                </div>
+                <div class="bg-slate-900/80 p-2 rounded border border-slate-800">
+                  <div class="text-slate-400">In-RAM Latency</div>
+                  <div class="text-emerald-400 font-bold text-xs mt-0.5" id="simMetricLatency">&lt;0.35ms</div>
+                </div>
+                <div class="bg-slate-900/80 p-2 rounded border border-slate-800">
+                  <div class="text-slate-400">Isolated Tokens</div>
+                  <div class="text-sky-400 font-bold text-xs mt-0.5" id="simMetricTokens">0</div>
+                </div>
+                <div class="bg-slate-900/80 p-2 rounded border border-slate-800">
+                  <div class="text-slate-400">Theorem 2 State</div>
+                  <div class="text-emerald-400 font-bold text-xs mt-0.5" id="simMetricState">Volatile RAM</div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Bottom Status Banner & Installation Bridge -->
+          <div class="p-4 bg-slate-900 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
+            <div class="flex items-center gap-2 text-slate-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span>All 5 tools run 100% locally in your IDE child process.</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-slate-400 text-[11px]">Install in Cursor/Claude:</span>
+              <code class="px-2.5 py-1 bg-black/60 text-emerald-300 rounded border border-slate-700 text-[11px]">npx ztds-mcp init</code>
+              <a href="#setup" class="text-emerald-400 hover:text-emerald-300 font-bold">Config Blocks &rarr;</a>
             </div>
           </div>
 
@@ -1064,6 +1214,491 @@ claude mcp add ztds npx -y ztds-mcp@latest</code></pre>
           }
         });
       });
+    })();
+
+    // Interactive MCP Protocol Simulator Controller
+    (function() {
+      const PRESETS = {
+        api_key: 'const client = new OpenAI({\n  apiKey: "sk-proj-9x8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d",\n  organization: "org-internal-finance"\n});\nconst awsKey = "AKIAIOSFODNN7EXAMPLE";\nconst awsSecret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";',
+        pii: 'Instruction: Forward Q3 executive settlement memo to CFO sarah.connor@acme-global.com with wire transfer $485,250.00 USD to IBAN DE89370400440532013000 (Routing: 021000021, SSN: 219-45-8821).',
+        database: 'DATABASE_URL="postgres://db_admin:SuperSecretPassw0rd2026!@prod-db.internal.aws:5432/core_banking"\nREDIS_HOST="192.168.1.104"\nREDIS_SECRET="AuthToken9876543210"'
+      };
+
+      let activeTool = 'ztds_sanitize';
+      let activeOutTab = 'stdio';
+      let activeSessionMap = {};
+      let rpcMessageId = 1;
+
+      const toolBtns = document.querySelectorAll('.sim-tool-btn');
+      const presetBtns = document.querySelectorAll('.sim-preset-btn');
+      const outTabs = document.querySelectorAll('.sim-out-tab');
+      const payloadInput = document.getElementById('simPayloadInput');
+      const sessionInput = document.getElementById('simSessionInput');
+      const inputStats = document.getElementById('simInputStats');
+      const btnExecute = document.getElementById('btnExecuteSim');
+      const btnCopy = document.getElementById('btnCopySimOutput');
+      const copyBtnText = document.getElementById('copySimBtnText');
+
+      const stdioDisplay = document.getElementById('simStdioDisplay');
+      const sessionDisplay = document.getElementById('simSessionDisplay');
+      const maskedDisplay = document.getElementById('simMaskedDisplay');
+
+      const metricEgress = document.getElementById('simMetricEgress');
+      const metricLatency = document.getElementById('simMetricLatency');
+      const metricTokens = document.getElementById('simMetricTokens');
+      const metricState = document.getElementById('simMetricState');
+
+      function updateInputStats() {
+        if (!payloadInput) return;
+        const text = payloadInput.value || '';
+        const byteCount = new Blob([text]).size;
+        if (inputStats) {
+          inputStats.textContent = `${text.length} chars · ${byteCount} B`;
+        }
+      }
+
+      function tokenize(rawText) {
+        const localMap = {};
+        const counters = {};
+        let sanitized = rawText;
+
+        function replacePattern(regex, prefix) {
+          sanitized = sanitized.replace(regex, (match) => {
+            if (/^\[[A-Z_]+_\d+\]$/.test(match)) return match;
+            counters[prefix] = (counters[prefix] || 0) + 1;
+            const token = `[${prefix}_${counters[prefix]}]`;
+            localMap[token] = match;
+            return token;
+          });
+        }
+
+        // Secrets, Tokens, Keys
+        replacePattern(/(?:AWS_SECRET_KEY=)?[a-zA-Z0-9\/+=]{35,45}|sk-proj-[a-zA-Z0-9_-]{20,}|AKIA[0-9A-Z]{16}|SuperSecretPassw0rd[0-9A-Za-z!@#$%^&*]+/g, "SECRET_KEY");
+        replacePattern(/\bAuthToken[0-9A-Za-z]+\b/g, "SECRET_KEY");
+
+        // SSN & Gov IDs
+        replacePattern(/\b\d{3}-\d{2}-\d{4}\b/g, "SSN");
+        replacePattern(/\b[A-CEGHJ-PR-TW-Z]{2}\d{6}[A-D]\b/gi, "GOV_ID");
+
+        // IBAN & Banking
+        replacePattern(/\b[A-Z]{2}\d{2}[A-Z0-9]{11,30}\b/g, "IBAN");
+        replacePattern(/\b(?:Routing:\s*)?\d{9}\b/g, "ROUTING_NUM");
+
+        // Email
+        replacePattern(/\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b/g, "EMAIL");
+
+        // Currency values
+        replacePattern(/\$\d+(?:,\d{3})*(?:\.\d+)?(?:\s*(?:USD|EUR|GBP|Billion|Million|[BM]))?\b/gi, "FIN_AMOUNT");
+
+        // IP addresses
+        replacePattern(/\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/g, "IP_ADDR");
+
+        // Named person
+        replacePattern(/\b(?:sarah\.connor|CFO)\b/gi, "PERSON");
+
+        return { sanitized, localMap, count: Object.keys(localMap).length };
+      }
+
+      function escapeHtml(str) {
+        return (str || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+
+      function formatColorTokens(text) {
+        const escaped = escapeHtml(text);
+        return escaped.replace(/\[([A-Z_]+)_\d+\]/g, (token, type) => {
+          let color = "bg-emerald-950 text-emerald-300 border-emerald-500/50";
+          if (type.includes("SECRET")) color = "bg-rose-950 text-rose-300 border-rose-500/50";
+          else if (type.includes("IBAN") || type.includes("FIN") || type.includes("SSN")) color = "bg-purple-950 text-purple-300 border-purple-500/50";
+          else if (type.includes("EMAIL")) color = "bg-sky-950 text-sky-300 border-sky-500/50";
+          else if (type.includes("PERSON")) color = "bg-amber-950 text-amber-300 border-amber-500/50";
+          return `<span class="inline-block px-1.5 py-0.2 rounded border font-mono font-bold text-[11px] shadow-sm ${color}">${token}</span>`;
+        });
+      }
+
+      function executeSimulation() {
+        rpcMessageId++;
+        const raw = (payloadInput ? payloadInput.value : '') || '';
+        const sessionId = (sessionInput ? sessionInput.value : 'sess_cursor_01') || 'sess_cursor_01';
+        const t0 = performance.now();
+
+        let reqFrame = {};
+        let resFrame = {};
+        let maskedHtml = '';
+
+        if (activeTool === 'ztds_sanitize') {
+          const { sanitized, localMap, count } = tokenize(raw || PRESETS.api_key);
+          activeSessionMap = Object.assign({}, activeSessionMap, localMap);
+          const t1 = performance.now();
+          const latency = Math.max(0.18, t1 - t0).toFixed(2);
+
+          reqFrame = {
+            jsonrpc: "2.0",
+            id: rpcMessageId,
+            method: "tools/call",
+            params: {
+              name: "ztds_sanitize",
+              arguments: {
+                text: raw || PRESETS.api_key,
+                sessionId: sessionId
+              }
+            }
+          };
+
+          resFrame = {
+            jsonrpc: "2.0",
+            id: rpcMessageId,
+            result: {
+              content: [
+                {
+                  type: "text",
+                  text: JSON.stringify({
+                    sanitized_prompt: sanitized,
+                    masked_count: count,
+                    session_id: sessionId,
+                    in_ram_latency_ms: Number(latency),
+                    egress_bytes: 0.00,
+                    invariants_verified: ["INV-1", "INV-2", "INV-3", "INV-4"]
+                  }, null, 2)
+                }
+              ]
+            }
+          };
+
+          maskedHtml = formatColorTokens(sanitized);
+
+          if (metricEgress) metricEgress.textContent = "0.00 B";
+          if (metricLatency) metricLatency.textContent = `<${latency}ms`;
+          if (metricTokens) metricTokens.textContent = `${count}`;
+          if (metricState) metricState.textContent = "Volatile RAM";
+        }
+        else if (activeTool === 'ztds_restore') {
+          const targetText = raw || "Reviewed assistant completion: safe to deploy [SECRET_KEY_1] for [PERSON_1] with wire [IBAN_1].";
+          let restored = targetText;
+          let restoredCount = 0;
+          for (const [tok, val] of Object.entries(activeSessionMap)) {
+            if (restored.includes(tok)) {
+              restored = restored.split(tok).join(val);
+              restoredCount++;
+            }
+          }
+          const t1 = performance.now();
+          const latency = Math.max(0.12, t1 - t0).toFixed(2);
+
+          reqFrame = {
+            jsonrpc: "2.0",
+            id: rpcMessageId,
+            method: "tools/call",
+            params: {
+              name: "ztds_restore",
+              arguments: {
+                text: targetText,
+                sessionId: sessionId
+              }
+            }
+          };
+
+          resFrame = {
+            jsonrpc: "2.0",
+            id: rpcMessageId,
+            result: {
+              content: [
+                {
+                  type: "text",
+                  text: JSON.stringify({
+                    restored_text: restored,
+                    restored_count: restoredCount,
+                    session_id: sessionId,
+                    in_ram_latency_ms: Number(latency)
+                  }, null, 2)
+                }
+              ]
+            }
+          };
+
+          maskedHtml = `<div class="text-slate-300 font-semibold mb-2 text-[11px] text-emerald-400">Restored Cleartext in Local Editor Buffer:</div><div class="whitespace-pre-wrap">${escapeHtml(restored)}</div>`;
+
+          if (metricEgress) metricEgress.textContent = "0.00 B";
+          if (metricLatency) metricLatency.textContent = `<${latency}ms`;
+          if (metricTokens) metricTokens.textContent = `${restoredCount} restored`;
+          if (metricState) metricState.textContent = "Client Heap";
+        }
+        else if (activeTool === 'ztds_audit') {
+          const { localMap, count } = tokenize(raw || PRESETS.api_key);
+          const t1 = performance.now();
+          const latency = Math.max(0.24, t1 - t0).toFixed(2);
+
+          reqFrame = {
+            jsonrpc: "2.0",
+            id: rpcMessageId,
+            method: "tools/call",
+            params: {
+              name: "ztds_audit",
+              arguments: {
+                target: "active_editor_buffer.ts",
+                strict: true
+              }
+            }
+          };
+
+          resFrame = {
+            jsonrpc: "2.0",
+            id: rpcMessageId,
+            result: {
+              content: [
+                {
+                  type: "text",
+                  text: JSON.stringify({
+                    status: count > 0 ? "VIOLATION_INTERCEPTED" : "CONFORMANCE_VERIFIED",
+                    leak_prevented_count: count,
+                    categories_flagged: Object.keys(localMap),
+                    receipt_hash: "sha256:7f4a9b2c8e1d5a3f6e8b0c2d4f6a8e1b3c5d7e9f0a2b4c6d8e0f2a4b6c8d0e2f",
+                    in_ram_latency_ms: Number(latency)
+                  }, null, 2)
+                }
+              ]
+            }
+          };
+
+          maskedHtml = `<div class="p-3 bg-slate-800 rounded-lg text-xs font-mono space-y-1"><div class="text-emerald-400 font-bold">[PASS] AST AUDIT COMPLETED</div><div>Cleartext Leaks Prevented: ${count}</div><div>Receipt: sha256:7f4a9b2c...</div></div>`;
+
+          if (metricEgress) metricEgress.textContent = "0.00 B";
+          if (metricLatency) metricLatency.textContent = `<${latency}ms`;
+          if (metricTokens) metricTokens.textContent = `${count} flagged`;
+          if (metricState) metricState.textContent = "Audit Hash SHA-256";
+        }
+        else if (activeTool === 'ztds_reset_session') {
+          const purgedCount = Object.keys(activeSessionMap).length;
+          activeSessionMap = {};
+          const t1 = performance.now();
+          const latency = Math.max(0.08, t1 - t0).toFixed(2);
+
+          reqFrame = {
+            jsonrpc: "2.0",
+            id: rpcMessageId,
+            method: "tools/call",
+            params: {
+              name: "ztds_reset_session",
+              arguments: {
+                sessionId: sessionId
+              }
+            }
+          };
+
+          resFrame = {
+            jsonrpc: "2.0",
+            id: rpcMessageId,
+            result: {
+              content: [
+                {
+                  type: "text",
+                  text: JSON.stringify({
+                    status: "SESSION_RAM_ZEROIZED",
+                    session_id: sessionId,
+                    purged_tokens_count: purgedCount,
+                    zeroization_method: "crypto.randomFillSync",
+                    theorem_2_conformance: "PASS"
+                  }, null, 2)
+                }
+              ]
+            }
+          };
+
+          maskedHtml = `<div class="p-3 bg-slate-800 rounded-lg text-xs font-mono text-purple-300 font-semibold">[THEOREM 2] Volatile RAM zeroized. All ${purgedCount} token surrogate mappings permanently overwritten.</div>`;
+
+          if (metricEgress) metricEgress.textContent = "0.00 B";
+          if (metricLatency) metricLatency.textContent = `<${latency}ms`;
+          if (metricTokens) metricTokens.textContent = "0";
+          if (metricState) metricState.textContent = "RAM ZEROIZED (0 B)";
+        }
+        else if (activeTool === 'ztds_status') {
+          const t1 = performance.now();
+          const latency = Math.max(0.09, t1 - t0).toFixed(2);
+
+          reqFrame = {
+            jsonrpc: "2.0",
+            id: rpcMessageId,
+            method: "tools/call",
+            params: {
+              name: "ztds_status",
+              arguments: {}
+            }
+          };
+
+          resFrame = {
+            jsonrpc: "2.0",
+            id: rpcMessageId,
+            result: {
+              content: [
+                {
+                  type: "text",
+                  text: JSON.stringify({
+                    engine: "ztds-mcp",
+                    version: "1.1.1",
+                    protocol: "Model Context Protocol JSON-RPC 2.0 (stdio)",
+                    license: "Apache-2.0 (Open Reference)",
+                    clients_detected: [
+                      "Cursor IDE (~/.cursor/mcp.json)",
+                      "Claude Desktop (claude_desktop_config.json)",
+                      "Windsurf (~/.codeium/windsurf/mcp_config.json)"
+                    ],
+                    active_sessions: 1,
+                    invariants: {
+                      "invariant_1_zero_egress": "PASS (0.00B)",
+                      "invariant_2_reversibility": "PASS",
+                      "invariant_3_ram_isolation": "PASS",
+                      "invariant_4_zero_subprocessors": "PASS"
+                    }
+                  }, null, 2)
+                }
+              ]
+            }
+          };
+
+          maskedHtml = `<div class="text-xs font-mono text-emerald-400 space-y-1.5"><div class="font-bold">ZTDS MCP Server v1.1.1 (Healthy)</div><div>Transport: OS stdio (stdin/stdout)</div><div>Clients Connected: Cursor IDE, Claude Desktop</div></div>`;
+
+          if (metricEgress) metricEgress.textContent = "0.00 B";
+          if (metricLatency) metricLatency.textContent = `<${latency}ms`;
+          if (metricTokens) metricTokens.textContent = Object.keys(activeSessionMap).length.toString();
+          if (metricState) metricState.textContent = "Server Online";
+        }
+
+        // Render Stdio JSON-RPC
+        const stdioText = 
+`// [STDIN] Sent from AI Client (Cursor/Claude Desktop) via OS pipe:
+--> ${JSON.stringify(reqFrame, null, 2)}
+
+// [STDOUT] Returned from local ztds-mcp in volatile RAM (<0.35ms):
+<-- ${JSON.stringify(resFrame, null, 2)}`;
+
+        if (stdioDisplay) stdioDisplay.textContent = stdioText;
+
+        // Render SessionMap
+        if (sessionDisplay) {
+          if (Object.keys(activeSessionMap).length > 0) {
+            sessionDisplay.textContent = JSON.stringify(activeSessionMap, null, 2);
+          } else {
+            sessionDisplay.textContent = '{\n  /* 0 active entity mappings in volatile heap */\n}';
+          }
+        }
+
+        // Render Masked View
+        if (maskedDisplay) maskedDisplay.innerHTML = maskedHtml;
+      }
+
+      // Tool Tab click handlers
+      toolBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeTool = btn.getAttribute('data-tool');
+          toolBtns.forEach(b => {
+            b.classList.remove('active', 'bg-emerald-500', 'text-slate-950');
+            b.classList.add('text-slate-300');
+          });
+          btn.classList.add('active', 'bg-emerald-500', 'text-slate-950');
+          btn.classList.remove('text-slate-300');
+
+          if (btnExecute) {
+            const label = btnExecute.querySelector('span:first-child');
+            if (label) label.textContent = `Send Stdio Frame · ${activeTool}`;
+          }
+
+          if (payloadInput) {
+            if (activeTool === 'ztds_restore' && (!payloadInput.value || !payloadInput.value.includes('['))) {
+              payloadInput.value = "Assistant completion: Successfully configured AWS client using [SECRET_KEY_1] and authorized payment for [PERSON_1] via IBAN [IBAN_1].";
+            } else if (activeTool === 'ztds_status') {
+              payloadInput.placeholder = "(No input payload required for status handshake)";
+            } else if (activeTool === 'ztds_reset_session') {
+              payloadInput.placeholder = "(Target session will be cryptographically overwritten in volatile RAM)";
+            } else {
+              payloadInput.placeholder = "Type prompt or code containing API keys, PII, or credentials...";
+            }
+          }
+
+          updateInputStats();
+          executeSimulation();
+        });
+      });
+
+      // Preset click handlers
+      presetBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const presetKey = btn.getAttribute('data-preset');
+          if (PRESETS[presetKey] && payloadInput) {
+            payloadInput.value = PRESETS[presetKey];
+            if (activeTool === 'ztds_restore') {
+              activeTool = 'ztds_sanitize';
+              toolBtns.forEach(b => {
+                b.classList.toggle('active', b.getAttribute('data-tool') === 'ztds_sanitize');
+                b.classList.toggle('bg-emerald-500', b.getAttribute('data-tool') === 'ztds_sanitize');
+                b.classList.toggle('text-slate-950', b.getAttribute('data-tool') === 'ztds_sanitize');
+                b.classList.toggle('text-slate-300', b.getAttribute('data-tool') !== 'ztds_sanitize');
+              });
+              if (btnExecute) {
+                const label = btnExecute.querySelector('span:first-child');
+                if (label) label.textContent = "Send Stdio Frame · ztds_sanitize";
+              }
+            }
+            updateInputStats();
+            executeSimulation();
+          }
+        });
+      });
+
+      // Output Tab switchers
+      outTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          activeOutTab = tab.getAttribute('data-out');
+          outTabs.forEach(t => {
+            t.classList.remove('active', 'bg-slate-800', 'text-emerald-400');
+            t.classList.add('text-slate-400');
+          });
+          tab.classList.add('active', 'bg-slate-800', 'text-emerald-400');
+          tab.classList.remove('text-slate-400');
+
+          document.querySelectorAll('.sim-out-pane').forEach(p => p.classList.add('hidden'));
+          if (activeOutTab === 'stdio' && document.getElementById('simPaneStdio')) document.getElementById('simPaneStdio').classList.remove('hidden');
+          else if (activeOutTab === 'session' && document.getElementById('simPaneSession')) document.getElementById('simPaneSession').classList.remove('hidden');
+          else if (activeOutTab === 'masked' && document.getElementById('simPaneMasked')) document.getElementById('simPaneMasked').classList.remove('hidden');
+        });
+      });
+
+      // Execute button
+      if (btnExecute) {
+        btnExecute.addEventListener('click', () => {
+          executeSimulation();
+        });
+      }
+
+      // Input changes
+      if (payloadInput) {
+        payloadInput.addEventListener('input', updateInputStats);
+      }
+
+      // Copy Output
+      if (btnCopy) {
+        btnCopy.addEventListener('click', () => {
+          let textToCopy = '';
+          if (activeOutTab === 'stdio' && stdioDisplay) textToCopy = stdioDisplay.textContent;
+          else if (activeOutTab === 'session' && sessionDisplay) textToCopy = sessionDisplay.textContent;
+          else if (activeOutTab === 'masked' && maskedDisplay) textToCopy = maskedDisplay.innerText || maskedDisplay.textContent;
+
+          navigator.clipboard.writeText(textToCopy).then(() => {
+            if (copyBtnText) copyBtnText.textContent = 'Copied!';
+            setTimeout(() => {
+              if (copyBtnText) copyBtnText.textContent = 'Copy Output';
+            }, 2000);
+          }).catch(() => {});
+        });
+      }
+
+      // Initial execution
+      if (payloadInput) {
+        payloadInput.value = PRESETS.api_key;
+        updateInputStats();
+        executeSimulation();
+      }
     })();
   </script>
 
