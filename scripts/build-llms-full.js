@@ -70,6 +70,12 @@ const docs = [
     title: 'Third-Party Independent In-Memory Cryptographic & AST Audit Report',
     relPath: 'docs/security/ZTDS_Independent_Security_Audit_Report.md',
     url: 'https://ztds.ai/security/'
+  },
+  {
+    part: 'PART 12: IETF INTERNET-DRAFT SPECIFICATION (DRAFT-SIBIRYAKOV-ZTDS-PROTOCOL-02)',
+    title: 'The Zero-Trust Data Sanitization (ZTDS) Protocol for Frontier Artificial Intelligence Ingestion',
+    relPath: 'docs/ietf/draft-sibiryakov-ztds-protocol-02.txt',
+    url: 'https://ztds.ai/ietf/draft-sibiryakov-ztds-protocol-02/'
   }
 ];
 

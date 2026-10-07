@@ -163,4 +163,37 @@ console.log('--> Test 6: RFC 7942 Implementation Status & Production Parity');
   console.log('    [PASS] RFC 7942 Implementation Status and v2.3.3 production parity validated.');
 }
 
-console.log('\n[SUMMARY] ALL 6 IETF INTERNET-DRAFT TESTS PASSED WITH 100% SUCCESS.\n');
+// Test 7: IETF Standards Track Web Hub & Draft-02 HTML Reader
+console.log('--> Test 7: IETF Standards Track Web Hub & Draft-02 Web Reader');
+{
+  const ietfHubPath = path.join(ROOT, 'ietf/index.html');
+  const draft02WebDir = path.join(ROOT, 'ietf/draft-sibiryakov-ztds-protocol-02/index.html');
+  const draft02WebHtml = path.join(ROOT, 'ietf/draft-sibiryakov-ztds-protocol-02.html');
+  const draft02WebTxt = path.join(ROOT, 'ietf/draft-sibiryakov-ztds-protocol-02.txt');
+  const draft02WebXml = path.join(ROOT, 'ietf/draft-sibiryakov-ztds-protocol-02.xml');
+
+  assert(fs.existsSync(ietfHubPath), 'ietf/index.html must exist');
+  assert(fs.existsSync(draft02WebDir), 'ietf/draft-sibiryakov-ztds-protocol-02/index.html must exist');
+  assert(fs.existsSync(draft02WebHtml), 'ietf/draft-sibiryakov-ztds-protocol-02.html must exist');
+  assert(fs.existsSync(draft02WebTxt), 'ietf/draft-sibiryakov-ztds-protocol-02.txt must exist');
+  assert(fs.existsSync(draft02WebXml), 'ietf/draft-sibiryakov-ztds-protocol-02.xml must exist');
+
+  const hubContent = fs.readFileSync(ietfHubPath, 'utf8');
+  assert(hubContent.includes('draft-sibiryakov-ztds-protocol-02'), 'ietf/index.html must reference draft-02');
+  assert(hubContent.includes('Model Context Protocol') || hubContent.includes('MCP'), 'ietf/index.html must cover Surface 3 MCP');
+  assert(hubContent.includes('RFC 8179'), 'ietf/index.html must include RFC 8179 IPR disclosure');
+  assert(hubContent.includes('/ietf/draft-sibiryakov-ztds-protocol-02/'), 'ietf/index.html must link to draft-02 reader');
+
+  const readerContent = fs.readFileSync(draft02WebDir, 'utf8');
+  assert(readerContent.includes('class="xml2rfc"'), 'Web reader must be styled with xml2rfc');
+  assert(readerContent.includes('/ietf/'), 'Web reader must contain link back to /ietf/');
+  assert(readerContent.includes('draft-sibiryakov-ztds-protocol-02'), 'Web reader must contain draft-02 docName');
+
+  const sitemapContent = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
+  assert(sitemapContent.includes('https://ztds.ai/ietf/'), 'sitemap.xml must include https://ztds.ai/ietf/');
+  assert(sitemapContent.includes('https://ztds.ai/ietf/draft-sibiryakov-ztds-protocol-02/'), 'sitemap.xml must include draft-02 reader');
+
+  console.log('    [PASS] IETF web hub and draft-02 web reader verified with navigation and sitemap integration.');
+}
+
+console.log('\n[SUMMARY] ALL 7 IETF INTERNET-DRAFT TESTS PASSED WITH 100% SUCCESS.\n');

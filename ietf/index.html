@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IETF Standards Track: ZTDS Protocol Specification | ZTDS.ai</title>
+  <meta name="description" content="Canonical IETF Internet-Draft repository and specification hub for draft-sibiryakov-ztds-protocol across SECDISPATCH, RFC v1.0, and MCP profiles.">
+  <meta name="keywords" content="IETF Internet-Draft, draft-sibiryakov-ztds-protocol, ZTDS protocol, SECDISPATCH, Zero-Trust Data Sanitization, Model Context Protocol security, RFC v1.0, Ilya Sibiryakov, in-memory de-identification, IETF Datatracker, RFC 8179 IPR">
+  <link rel="canonical" href="https://ztds.ai/ietf/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Open Graph & Social Cards -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ztds.ai/ietf/">
+  <meta property="og:title" content="IETF Standards Track: ZTDS Protocol Specification | ZTDS.ai">
+  <meta property="og:description" content="Canonical IETF Internet-Draft repository and specification hub for draft-sibiryakov-ztds-protocol across SECDISPATCH, RFC v1.0, and MCP profiles.">
+  <meta property="og:image" content="https://ztds.ai/badge/seal-verified.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="IETF Standards Track: ZTDS Protocol Specification | ZTDS.ai">
+  <meta name="twitter:description" content="Canonical IETF Internet-Draft repository and specification hub for draft-sibiryakov-ztds-protocol across SECDISPATCH, RFC v1.0, and MCP profiles.">
+  <meta name="twitter:image" content="https://ztds.ai/badge/seal-verified.svg">
+
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://ztds.ai/ietf/#article",
+        "headline": "IETF Internet-Draft: The Zero-Trust Data Sanitization (ZTDS) Protocol",
+        "description": "Formal IETF protocol specification repository for client-side, in-memory de-identification in Generative AI, RAG pipelines, and Model Context Protocol workflows.",
+        "url": "https://ztds.ai/ietf/",
+        "datePublished": "2026-09-16",
+        "dateModified": "2026-10-07",
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://ztds.ai/#website" },
+        "author": {
+          "@type": "Person",
+          "name": "Ilya Sibiryakov",
+          "url": "https://orcid.org/0009-0002-0642-5985",
+          "sameAs": [
+            "https://www.wikidata.org/wiki/Q141546647",
+            "https://orcid.org/0009-0002-0642-5985",
+            "https://www.linkedin.com/in/ilya-sibiryakov/",
+            "https://github.com/moxno"
+          ]
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "ZTDS AI Consortium",
+          "url": "https://ztds.ai"
+        },
+        "citation": [
+          "https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/",
+          "https://doi.org/10.5281/zenodo.22058770",
+          "https://doi.org/10.17605/OSF.IO/5BYJF"
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ztds.ai/ietf/#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ztds.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "IETF Standards Track",
+            "item": "https://ztds.ai/ietf/"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">
+  <!-- Skip to main content -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Institutional Top Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Status -->
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-3 touch-target">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm shrink-0 aspect-square p-0.5 overflow-hidden">
+            <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none" aria-hidden="true">
+              <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+              <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
+            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+          </div>
+        </a>
+
+        <!-- Status Pill -->
+        <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
+          <span class="pulse-dot"></span>
+          <span class="font-mono text-[11px] font-semibold">IETF STANDARDS TRACK &middot; draft-02</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links (Canonical 7 Links) -->
+      <nav class="hidden lg:flex items-center gap-3.5 xl:gap-5 text-sm font-medium text-slate-600" id="desktop-nav">
+        <a href="/standard/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Standard</a>
+        <a href="/registry/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Registry</a>
+        <a href="/fellows/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Fellows</a>
+        <a href="/companies/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Adopters</a>
+        <a href="/scanner/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Scanner</a>
+        <a href="/sdk/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">SDK &amp; Connectors</a>
+        <a href="/ciso/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">CISO &amp; Trust</a>
+      </nav>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-3">
+        <a href="/ietf/draft-sibiryakov-ztds-protocol-02/" class="btn-trust text-xs py-2 px-4 shadow-sm font-semibold whitespace-nowrap">
+          Read draft-02 &rarr;
+        </a>
+        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Slide-Over Drawer -->
+  <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"></div>
+  <aside id="mobile-drawer" class="mobile-nav-drawer drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+    <div class="flex items-center justify-between pb-5 border-b border-slate-200">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center p-0.5">
+          <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none" aria-hidden="true">
+            <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6"/>
+            <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6"/>
+            <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+          </svg>
+        </div>
+        <span class="font-bold text-base text-slate-900">ZTDS.ai</span>
+      </div>
+      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 rounded-lg text-slate-500 hover:text-slate-800">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <nav class="py-4 space-y-1">
+      <a href="/standard/" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Standard</a>
+      <a href="/registry/" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Registry</a>
+      <a href="/fellows/" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Fellows</a>
+      <a href="/companies/" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Adopters</a>
+      <a href="/scanner/" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">Scanner</a>
+      <a href="/sdk/" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">SDK &amp; Connectors</a>
+      <a href="/ciso/" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">CISO &amp; Trust</a>
+      <div class="pt-3 border-t border-slate-100">
+        <a href="/mcp/" class="block px-3 py-2.5 rounded-lg text-sm font-semibold text-emerald-700 hover:bg-emerald-50">Model Context Protocol (MCP)</a>
+        <a href="/ietf/" class="block px-3 py-2.5 rounded-lg text-sm font-semibold text-emerald-700 hover:bg-emerald-50">IETF Standards Track</a>
+        <a href="/agency/" class="block px-3 py-2.5 rounded-lg text-sm font-semibold text-emerald-700 hover:bg-emerald-50">BrandMeWeb Advisory</a>
+        <a href="/evidentiary-sovereignty/" class="block px-3 py-2.5 rounded-lg text-sm font-semibold text-emerald-700 hover:bg-emerald-50">Evidentiary Sovereignty</a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content" class="flex-grow">
+
+    <!-- HERO SECTION: IETF Internet-Draft Overview -->
+    <section class="relative overflow-hidden bg-white border-b border-slate-200 py-16 lg:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="max-w-3xl mx-auto text-center space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-mono font-semibold text-slate-700">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            IETF Internet-Draft &middot; Independent Submission
+          </div>
+          
+          <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            The ZTDS Protocol for Frontier AI Ingestion
+          </h1>
+          
+          <div class="font-mono text-sm sm:text-base text-emerald-700 font-bold">
+            draft-sibiryakov-ztds-protocol-02
+          </div>
+          
+          <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto">
+            A normative architectural specification establishing client-side, in-memory de-identification protocols across Generative AI, RAG pipelines, and Model Context Protocol (MCP) tool execution surfaces.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="pt-4 flex flex-wrap items-center justify-center gap-3">
+            <a href="/ietf/draft-sibiryakov-ztds-protocol-02/" class="btn-trust text-xs py-3 px-5 shadow-sm font-bold flex items-center gap-2">
+              <span>Read draft-02 (Web Edition)</span>
+              <span>&rarr;</span>
+            </a>
+            <a href="/docs/ietf/draft-sibiryakov-ztds-protocol-02.txt" target="_blank" rel="noopener" class="btn-outline text-xs py-3 px-4 font-mono font-semibold">
+              Plaintext (.txt)
+            </a>
+            <a href="/docs/ietf/draft-sibiryakov-ztds-protocol-02.xml" target="_blank" rel="noopener" class="btn-outline text-xs py-3 px-4 font-mono font-semibold">
+              RFC XML (v3)
+            </a>
+            <a href="https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/" target="_blank" rel="noopener" class="text-xs font-mono text-slate-500 hover:text-slate-800 underline decoration-slate-300 py-3 px-2">
+              IETF Datatracker &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Meta Dossier Box -->
+        <div class="mt-12 max-w-4xl mx-auto bg-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl border border-slate-800">
+          <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+              <span class="font-mono text-xs uppercase tracking-wider text-slate-300 font-bold">Document Metadata &middot; BCP 78 / BCP 79</span>
+            </div>
+            <span class="text-xs font-mono text-emerald-400 bg-emerald-950/80 px-2.5 py-1 rounded border border-emerald-500/30">Active &middot; Expires 31 March 2027</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-xs font-mono">
+            <div class="space-y-1">
+              <div class="text-slate-400 uppercase text-[10px]">Document Series</div>
+              <div class="text-white font-bold text-sm">Internet-Draft</div>
+              <div class="text-slate-400 text-[11px]">draft-sibiryakov-ztds-protocol-02</div>
+            </div>
+
+            <div class="space-y-1">
+              <div class="text-slate-400 uppercase text-[10px]">Lead Author &amp; Architect</div>
+              <div class="text-white font-bold text-sm">Ilya Sibiryakov</div>
+              <div class="text-slate-400 text-[11px]">ZTDS AI Consortium / BrandMeWeb</div>
+            </div>
+
+            <div class="space-y-1">
+              <div class="text-slate-400 uppercase text-[10px]">Area / Routing</div>
+              <div class="text-white font-bold text-sm">Security Area</div>
+              <div class="text-slate-400 text-[11px]">SECDISPATCH Review Track</div>
+            </div>
+
+            <div class="space-y-1">
+              <div class="text-slate-400 uppercase text-[10px]">Intended Status</div>
+              <div class="text-white font-bold">Informational</div>
+              <div class="text-slate-400 text-[11px]">Standards Track Evolution</div>
+            </div>
+
+            <div class="space-y-1">
+              <div class="text-slate-400 uppercase text-[10px]">IPR Policy</div>
+              <div class="text-white font-bold">Trust200902</div>
+              <div class="text-slate-400 text-[11px]">RFC 8179 RAND-Z Covenant</div>
+            </div>
+
+            <div class="space-y-1">
+              <div class="text-slate-400 uppercase text-[10px]">Statutory IP Priority</div>
+              <div class="text-white font-bold">Patent App IL 331905</div>
+              <div class="text-slate-400 text-[11px]">WIPO DAS Code: B17B</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 1: REVISION HISTORY & TECHNICAL CHANGELOG -->
+    <section id="revisions" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 font-mono">Specification Timeline</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2 tracking-tight">
+          Internet-Draft Revision History
+        </h2>
+        <p class="text-slate-600 mt-3 text-base leading-relaxed">
+          The ZTDS protocol evolves through iterative public working revisions, incorporating community feedback, academic peer review, and frontier AI execution surfaces.
+        </p>
+      </div>
+
+      <div class="space-y-6 max-w-4xl mx-auto">
+        
+        <!-- CARD: draft-02 (Current) -->
+        <div class="p-6 sm:p-8 bg-white border-2 border-emerald-500 rounded-2xl shadow-md relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-emerald-500 text-slate-950 font-mono text-[10px] font-bold px-3 py-1 uppercase rounded-bl-lg">
+            Current Active Revision
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
+            <div>
+              <span class="font-mono text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">Revision 02</span>
+              <h3 class="text-xl font-bold text-slate-900 mt-1">draft-sibiryakov-ztds-protocol-02</h3>
+            </div>
+            <div class="text-xs font-mono text-slate-500">
+              Published: 27 September 2026
+            </div>
+          </div>
+
+          <div class="mt-4 space-y-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <p class="font-semibold text-slate-900">
+              Major Advancements in Revision 02:
+            </p>
+            <ul class="space-y-2 list-disc list-inside text-slate-600">
+              <li><strong class="text-slate-800">Model Context Protocol (MCP) Surface 3 Integration:</strong> Formally specifies the process-isolated MCP stdio daemon executing over OS pipes (`stdin`/`stdout`) in Cursor IDE, Claude Desktop, Windsurf, Zed, and Claude Code CLI.</li>
+              <li><strong class="text-slate-800">5 Standard MCP JSON-RPC 2.0 Tools:</strong> Added normative tool schemas for <code>ztds_sanitize</code>, <code>ztds_restore</code>, <code>ztds_audit</code>, <code>ztds_reset_session</code>, and <code>ztds_status</code>.</li>
+              <li><strong class="text-slate-800">Statutory GDPR Article 28 Exemption:</strong> Formally grounded zero-subprocessor exclusion under GDPR Recital 26 and EDPB guidelines, confirming that zero network egress renders DPAs legally moot.</li>
+              <li><strong class="text-slate-800">Normative Cryptographic References:</strong> Integrated RFC 8032 (Ed25519 offline token verification) and RFC 9116 (security.txt).</li>
+            </ul>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-3">
+              <a href="/ietf/draft-sibiryakov-ztds-protocol-02/" class="font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1">
+                Read Web Edition &rarr;
+              </a>
+              <span class="text-slate-300">&middot;</span>
+              <a href="/docs/ietf/draft-sibiryakov-ztds-protocol-02.txt" target="_blank" rel="noopener" class="font-mono text-slate-600 hover:text-slate-900">
+                draft-02.txt
+              </a>
+              <span class="text-slate-300">&middot;</span>
+              <a href="/docs/ietf/draft-sibiryakov-ztds-protocol-02.xml" target="_blank" rel="noopener" class="font-mono text-slate-600 hover:text-slate-900">
+                draft-02.xml
+              </a>
+            </div>
+            <span class="text-slate-400 font-mono text-[11px]">Size: 24.3 KB &middot; 661 lines</span>
+          </div>
+        </div>
+
+        <!-- CARD: draft-01 -->
+        <div class="p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
+            <div>
+              <span class="font-mono text-xs font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded">Revision 01</span>
+              <h3 class="text-xl font-bold text-slate-900 mt-1">draft-sibiryakov-ztds-protocol-01</h3>
+            </div>
+            <div class="text-xs font-mono text-slate-500">
+              Published: 23 September 2026
+            </div>
+          </div>
+
+          <div class="mt-4 space-y-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <p>
+              Incorporated formal mathematical proofs of <strong>Theorem 1 (Entropy Conservation)</strong> and <strong>Theorem 2 (Deterministic Zeroization)</strong>. Added clinical entity definitions under HIPAA Safe Harbor 45 CFR &sect; 164.514(b) and biometrics taxonomy.
+            </p>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-3">
+              <a href="/ietf/draft-sibiryakov-ztds-protocol-01/" class="font-bold text-slate-700 hover:text-slate-900 flex items-center gap-1">
+                Read Archive &rarr;
+              </a>
+              <span class="text-slate-300">&middot;</span>
+              <a href="/ietf/draft-sibiryakov-ztds-protocol-01.txt" target="_blank" rel="noopener" class="font-mono text-slate-600 hover:text-slate-900">
+                draft-01.txt
+              </a>
+            </div>
+            <span class="text-slate-400 font-mono text-[11px]">Archived</span>
+          </div>
+        </div>
+
+        <!-- CARD: draft-00 -->
+        <div class="p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
+            <div>
+              <span class="font-mono text-xs font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded">Revision 00</span>
+              <h3 class="text-xl font-bold text-slate-900 mt-1">draft-sibiryakov-ztds-protocol-00</h3>
+            </div>
+            <div class="text-xs font-mono text-slate-500">
+              Published: 16 September 2026
+            </div>
+          </div>
+
+          <div class="mt-4 space-y-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <p>
+              Foundational Internet-Draft submission establishing the 4 Core Invariants: Zero External Egress, Deterministic Reversible Tokenization, In-Memory Isolation, and Continuous Compliance with zero SaaS subprocessors.
+            </p>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-3">
+              <a href="/docs/ietf/draft-sibiryakov-ztds-protocol-00.txt" target="_blank" rel="noopener" class="font-mono text-slate-600 hover:text-slate-900">
+                draft-00.txt
+              </a>
+              <span class="text-slate-300">&middot;</span>
+              <a href="/docs/ietf/draft-sibiryakov-ztds-protocol-00.xml" target="_blank" rel="noopener" class="font-mono text-slate-600 hover:text-slate-900">
+                draft-00.xml
+              </a>
+            </div>
+            <span class="text-slate-400 font-mono text-[11px]">Initial Baseline</span>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- SECTION 2: THE 5 NORMATIVE EXECUTION SURFACES -->
+    <section id="surfaces" class="bg-white border-y border-slate-200 py-16 lg:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-14">
+          <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 font-mono">Normative Topology</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2 tracking-tight">
+            The 5 Execution Surfaces of ZTDS
+          </h2>
+          <p class="text-slate-600 mt-3 text-base leading-relaxed">
+            Section 4 of draft-02 defines 5 physical boundaries where data sanitization executes in volatile host RAM prior to network socket serialization.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <!-- Surface 1 -->
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs font-bold text-slate-900 bg-white px-2.5 py-1 rounded border border-slate-200">Surface 1</span>
+              <span class="text-[10px] font-mono text-emerald-700 font-semibold">&lt; 0.20 ms</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Client-Side Web Application</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Executes in volatile browser heap via V8 / WebWorker / WASM with 0.00 bytes server transmission before network serialization.
+            </p>
+            <div class="text-[11px] font-mono text-slate-500 pt-2 border-t border-slate-200/60">
+              Reference: <a href="https://privacyscrubber.com" target="_blank" rel="noopener" class="text-emerald-700 hover:underline">PrivacyScrubber Web</a>
+            </div>
+          </div>
+
+          <!-- Surface 2 -->
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs font-bold text-slate-900 bg-white px-2.5 py-1 rounded border border-slate-200">Surface 2</span>
+              <span class="text-[10px] font-mono text-emerald-700 font-semibold">&lt; 0.25 ms</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Browser DOM Interceptor Extension</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Manifest V3 background worker and isolated content scripts intercepting user text areas in ChatGPT, Claude, and Gemini in-place.
+            </p>
+            <div class="text-[11px] font-mono text-slate-500 pt-2 border-t border-slate-200/60">
+              Reference: PrivacyScrubber MV3 Extension
+            </div>
+          </div>
+
+          <!-- Surface 3 -->
+          <div class="p-6 bg-emerald-50/50 border border-emerald-300 rounded-xl space-y-3 relative">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs font-bold text-emerald-900 bg-emerald-100 px-2.5 py-1 rounded border border-emerald-200">Surface 3 (New in draft-02)</span>
+              <span class="text-[10px] font-mono text-emerald-700 font-semibold">&lt; 0.35 ms</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Process-Isolated MCP Stdio Server</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Model Context Protocol stdio daemon for AI IDEs (Cursor, Windsurf, Claude Desktop, Zed) communicating over local OS JSON-RPC pipes.
+            </p>
+            <div class="text-[11px] font-mono text-slate-700 pt-2 border-t border-emerald-200/60">
+              Reference: <a href="/mcp/" class="text-emerald-700 font-bold hover:underline">ztds-mcp &amp; MCP Hub &rarr;</a>
+            </div>
+          </div>
+
+          <!-- Surface 4 -->
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs font-bold text-slate-900 bg-white px-2.5 py-1 rounded border border-slate-200">Surface 4</span>
+              <span class="text-[10px] font-mono text-emerald-700 font-semibold">&lt; 0.80 ms</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Headless Runtime SDK &amp; CLI</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Embedded middleware for backend microservices, LangChain/LlamaIndex RAG pipelines, and pre-merge CI/CD invariant gates.
+            </p>
+            <div class="text-[11px] font-mono text-slate-500 pt-2 border-t border-slate-200/60">
+              Reference: <a href="/sdk/" class="text-emerald-700 hover:underline">@privacyscrubber/sdk &middot; npx ztds-audit</a>
+            </div>
+          </div>
+
+          <!-- Surface 5 -->
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs font-bold text-slate-900 bg-white px-2.5 py-1 rounded border border-slate-200">Surface 5</span>
+              <span class="text-[10px] font-mono text-emerald-700 font-semibold">&lt; 0.05 ms</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Air-Gapped Enclaves &amp; Service Mesh</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Hardware-attested execution inside AWS Nitro Enclaves, SCIF defense facilities, and Proxy-WASM filters (Envoy/Istio).
+            </p>
+            <div class="text-[11px] font-mono text-slate-500 pt-2 border-t border-slate-200/60">
+              Reference: <a href="/whitepaper/" class="text-emerald-700 hover:underline">Canonical Whitepaper &rarr;</a>
+            </div>
+          </div>
+
+          <!-- Verification Gate -->
+          <div class="p-6 bg-slate-900 text-white border border-slate-800 rounded-xl space-y-3 flex flex-col justify-between">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-bold text-emerald-400">CI/CD Gate</span>
+                <span class="text-[10px] font-mono text-slate-400">Section 7.3</span>
+              </div>
+              <h3 class="text-base font-bold text-white">Automated AST Verification</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Every surface implements deterministic self-testing confirming Invariant 1 (Zero-Egress) and Invariant 3 (RAM isolation).
+              </p>
+            </div>
+            <code class="block text-[11px] text-emerald-300 font-mono bg-black/50 p-2 rounded border border-slate-800">
+              npx ztds-audit --strict
+            </code>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: IPR DISCLOSURE & PATENT POLICY (RFC 8179) -->
+    <section id="ipr" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+      <div class="max-w-4xl mx-auto bg-white border border-slate-200 rounded-2xl p-6 sm:p-10 shadow-sm space-y-6">
+        
+        <div class="space-y-2">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-mono font-medium">
+            RFC 8179 &middot; Intellectual Property Rights
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            IETF IPR Disclosure &amp; Licensing Covenant
+          </h2>
+        </div>
+
+        <p class="text-sm text-slate-600 leading-relaxed">
+          In full accordance with IETF BCP 78 and BCP 79 (RFC 8179), the contributor submits this specification with a formal RAND-Z (Royalty-Free / Zero-Royalty) non-assertion covenant for standard-conforming baseline implementations.
+        </p>
+
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2 text-xs text-slate-700">
+          <div class="font-bold text-slate-900 font-mono text-xs uppercase tracking-wide">Statutory Intellectual Property Anchors:</div>
+          <ul class="space-y-1.5 list-disc list-inside">
+            <li><strong>Patent Application:</strong> Israel Patent Office Application IL 331905 (filed 14/09/2026, WIPO DAS Access Code: <code>B17B</code>, international priority through 14/09/2027 under Paris Convention).</li>
+            <li><strong>Registered Trademark:</strong> ZTDS™ registered under ILPO Order #182655957 (Classes 9 &amp; 42).</li>
+            <li><strong>Licensing Terms:</strong> RFC specification published under Apache 2.0 and Creative Commons Attribution 4.0 International (CC BY 4.0).</li>
+          </ul>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3 pt-2">
+          <a href="/terms/" class="btn-outline text-xs py-2 px-4 font-semibold">
+            View Complete Terms &amp; Patent Policy &rarr;
+          </a>
+          <a href="https://datatracker.ietf.org/ipr/" target="_blank" rel="noopener" class="text-xs font-mono text-slate-500 hover:text-slate-800 underline">
+            IETF IPR Database Search &rarr;
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Institutional Footer -->
+  <footer class="bg-white border-t border-slate-200 pt-16 pb-12 text-slate-600">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+        
+        <!-- Col 1: Brand & Consortium -->
+        <div class="col-span-2">
+          <div class="flex items-center gap-2.5 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center p-0.5">
+              <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none" aria-hidden="true">
+                <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6"/>
+                <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6"/>
+                <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+              </svg>
+            </div>
+            <span class="font-bold text-lg text-slate-900 font-sans tracking-tight">ZTDS<span class="text-emerald-600">.ai</span></span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed max-w-sm mb-4">
+            Zero-Trust Data Sanitization (ZTDS) is the vendor-neutral open standard for in-memory, client-side data de-identification in Generative AI and agentic workflows.
+          </p>
+          <div class="text-xs font-mono text-slate-400">
+            Author: Ilya Sibiryakov &middot; BrandMeWeb
+          </div>
+        </div>
+
+        <!-- Col 2: Specifications -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Standards &amp; RFC</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/ietf/" class="text-emerald-700 font-bold hover:text-emerald-800 transition-colors">IETF Standards Track &rarr;</a></li>
+            <li><a href="/ietf/draft-sibiryakov-ztds-protocol-02/" class="hover:text-slate-900 transition-colors">draft-02 Web Reader</a></li>
+            <li><a href="/standard/" class="hover:text-slate-900 transition-colors">RFC v1.0 Web Spec</a></li>
+            <li><a href="/whitepaper/" class="hover:text-slate-900 transition-colors">Institutional Whitepaper</a></li>
+            <li><a href="/mcp/" class="hover:text-slate-900 transition-colors">Model Context Protocol (MCP)</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Developer & Tools -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer Tools</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/mcp/#playground" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Interactive MCP Simulator</a></li>
+            <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+            <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Scanner</a></li>
+            <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Registry</a></li>
+            <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge Generator</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Trust & Institutional -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Trust &amp; Legal</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO Memo &amp; DPA Exemption</a></li>
+            <li><a href="/soc2/" class="hover:text-slate-900 transition-colors">SOC 2 Type II Center</a></li>
+            <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Consortium Governance</a></li>
+            <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
+            <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Terms &amp; Patent Policy</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Legal Conformance Notice Card -->
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
+          <span class="text-slate-400 font-mono text-[10px]">Patent IL 331905 &middot; WIPO DAS: B17B &middot; Trademark #397119</span>
+        </div>
+        <p>
+          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under Israel Patent Office Application <strong>IL 331905</strong> (filed 14/09/2026, WIPO DAS Access Code: <strong>B17B</strong>, Paris Convention international priority locked through 14/09/2027). The word mark <strong>ZTDS™</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42).
+        </p>
+      </div>
+
+      <!-- Bottom Meta Bar -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 border-t border-slate-100 pt-6">
+        <div class="flex items-center gap-3">
+          <span>&copy; 2026 ZTDS AI Consortium.</span>
+          <span>&middot;</span>
+          <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
+        </div>
+        <div class="flex items-center gap-4 text-[11px] font-mono">
+          <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            ALL SYSTEMS VERIFIED
+          </span>
+          <span>&middot;</span>
+          <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x4E9A2B1C</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+</body>
+</html>
