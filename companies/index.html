@@ -1489,47 +1489,131 @@
       const searchInput = document.getElementById('companySearch');
       const filterBtns = document.querySelectorAll('#companyFilterTabs .filter-btn');
       const cards = document.querySelectorAll('#companiesGrid > article[data-industry]');
-      const countAll = document.getElementById('countAll');
+      const resultsCountEl = document.getElementById('companyResultsCount');
+      const btnClearFilters = document.getElementById('btnClearCompanyFilters');
+      const companyEmptyState = document.getElementById('companyEmptyState');
+      const btnEmptyReset = document.getElementById('btnEmptyCompanyReset');
+      const totalCompaniesCount = 9;
 
-      if (countAll) {
-        countAll.textContent = cards.length;
+      function setActiveCompanyTab(category) {
+        filterBtns.forEach(btn => {
+          const isMatch = btn.getAttribute('data-filter') === category;
+          if (isMatch) {
+            btn.className = 'filter-btn active px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all';
+            btn.setAttribute('aria-selected', 'true');
+          } else {
+            btn.className = 'filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all';
+            btn.setAttribute('aria-selected', 'false');
+          }
+        });
       }
 
       function filterCompanies() {
-        const query = (searchInput.value || '').trim().toLowerCase();
-        const activeBtn = document.querySelector('#companyFilterTabs .filter-btn.bg-slate-900');
+        const query = (searchInput ? searchInput.value : '').trim().toLowerCase();
+        const activeBtn = document.querySelector('#companyFilterTabs .filter-btn.active') || document.querySelector('#companyFilterTabs .filter-btn[data-filter="all"]');
         const activeFilter = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+
+        let visibleCount = 0;
 
         cards.forEach(card => {
           const isSeat = card.id === 'open-company-card';
           const industry = card.getAttribute('data-industry') || '';
           const text = (card.innerText || '').toLowerCase();
-          const matchesFilter = activeFilter === 'all' || industry === activeFilter || isSeat;
-          const matchesQuery = !query || text.includes(query) || isSeat;
+          
+          let matchesFilter = false;
+          if (isSeat) {
+            matchesFilter = activeFilter === 'all';
+          } else {
+            matchesFilter = activeFilter === 'all' || industry === activeFilter;
+          }
+
+          const matchesQuery = !query || text.includes(query);
 
           if (matchesFilter && matchesQuery) {
             card.style.display = 'flex';
+            if (!isSeat) visibleCount++;
           } else {
             card.style.display = 'none';
           }
         });
+
+        // Update counter
+        if (resultsCountEl) {
+          if (visibleCount === 0) {
+            resultsCountEl.textContent = '0 enterprise case studies found';
+          } else if (visibleCount === totalCompaniesCount && !query && activeFilter === 'all') {
+            resultsCountEl.textContent = `Showing all ${totalCompaniesCount} enterprise case studies`;
+          } else {
+            resultsCountEl.textContent = `Showing ${visibleCount} of ${totalCompaniesCount} enterprise case studies`;
+          }
+        }
+
+        // Toggle clear filters button
+        const hasActiveFilters = query.length > 0 || activeFilter !== 'all';
+        if (btnClearFilters) {
+          if (hasActiveFilters) {
+            btnClearFilters.classList.remove('hidden');
+          } else {
+            btnClearFilters.classList.add('hidden');
+          }
+        }
+
+        // Toggle empty state
+        if (companyEmptyState) {
+          if (visibleCount === 0) {
+            companyEmptyState.classList.remove('hidden');
+          } else {
+            companyEmptyState.classList.add('hidden');
+          }
+        }
+      }
+
+      function resetAllCompanyFilters() {
+        if (searchInput) searchInput.value = '';
+        setActiveCompanyTab('all');
+        filterCompanies();
+        if (window.location.hash && ['#all', '#healthcare', '#fintech', '#legal', '#saas', '#defense', '#cyber', '#hr', '#agency', '#privacy'].includes(window.location.hash.toLowerCase())) {
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
       }
 
       filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-          filterBtns.forEach(b => {
-            b.className = 'filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50';
-            b.setAttribute('aria-selected', 'false');
-          });
-          btn.className = 'filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm';
-          btn.setAttribute('aria-selected', 'true');
+          const filter = btn.getAttribute('data-filter') || 'all';
+          setActiveCompanyTab(filter);
+          if (filter !== 'all') {
+            history.replaceState(null, '', '#' + filter);
+          } else if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+          }
           filterCompanies();
         });
       });
 
       if (searchInput) {
         searchInput.addEventListener('input', filterCompanies);
+        searchInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            searchInput.value = '';
+            filterCompanies();
+          }
+        });
       }
+
+      if (btnClearFilters) {
+        btnClearFilters.addEventListener('click', resetAllCompanyFilters);
+      }
+      if (btnEmptyReset) {
+        btnEmptyReset.addEventListener('click', resetAllCompanyFilters);
+      }
+
+      // Initialize from URL hash if matching an industry
+      const initialCompanyHash = window.location.hash.toLowerCase().replace('#', '');
+      const validCompanyIndustries = ['all', 'healthcare', 'fintech', 'legal', 'saas', 'defense', 'cyber', 'hr', 'agency', 'privacy'];
+      if (validCompanyIndustries.includes(initialCompanyHash)) {
+        setActiveCompanyTab(initialCompanyHash);
+      }
+      filterCompanies();
 
       function generateBadgeSvg(label) {
         const cleanLabel = String(label || 'ADOPTER').trim().toUpperCase();
