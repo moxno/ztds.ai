@@ -57,8 +57,7 @@ for file in $STAGED_FILES; do
 done
 
 # --- 2. Content patterns (secrets, keys, tokens) ---
-# Files that reference patterns by name (the guards themselves) are whitelisted
-SELF_WHITELIST="scripts/pre-commit|.github/workflows/ip-guard.yml|.gitignore|.agents/rules/ip-leak-prevention.md|benchmarks/"
+SELF_WHITELIST="scripts/pre-commit|.github/workflows/ip-guard.yml|.gitignore|.agents/rules/ip-leak-prevention.md|benchmarks/|conformance/"
 
 SECRET_PATTERNS=(
   '-----BEGIN.*PRIVATE KEY-----'

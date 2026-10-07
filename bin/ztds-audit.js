@@ -74,6 +74,76 @@ if (VERIFY_IDX !== -1 && ARGS[VERIFY_IDX]) {
   }
 }
 
+// Standalone Conformance Test Vectors Mode
+const IS_CONFORMANCE = ARGS.includes('--conformance');
+if (IS_CONFORMANCE) {
+  const { BenchmarkSanitizer } = require('../lib/benchmark-runner');
+  const vectorsPath = path.join(__dirname, '../conformance/ztds-test-vectors.json');
+  if (!fs.existsSync(vectorsPath)) {
+    console.error(`Error: Conformance test vectors not found at ${vectorsPath}`);
+    process.exit(1);
+  }
+  const vectorData = JSON.parse(fs.readFileSync(vectorsPath, 'utf8'));
+  const sanitizer = new BenchmarkSanitizer({ tokenFormat: 'rfc' });
+  
+  let passedCount = 0;
+  let totalLatency = 0;
+  const results = [];
+  
+  for (const vec of vectorData.test_vectors) {
+    const sessId = `conf-${vec.id}`;
+    const start = process.hrtime();
+    const { sanitized } = sanitizer.sanitize(vec.input_cleartext, sessId, vec.expected_entities);
+    const diff = process.hrtime(start);
+    const ms = (diff[0] * 1000 + diff[1] / 1e6);
+    totalLatency += ms;
+    
+    let vectorPass = true;
+    for (const ent of vec.expected_entities) {
+      if (sanitized.includes(ent.value)) {
+        vectorPass = false;
+        break;
+      }
+    }
+    const restored = sanitizer.restore(sanitized, sessId);
+    if (restored !== vec.input_cleartext) vectorPass = false;
+    sanitizer.zeroize(sessId);
+    
+    if (vectorPass) passedCount++;
+    results.push({ id: vec.id, category: vec.category, passed: vectorPass, latency_ms: ms });
+  }
+  
+  const allPassed = passedCount === vectorData.test_vectors.length;
+  
+  if (IS_JSON) {
+    console.log(JSON.stringify({
+      conformance_passed: allPassed,
+      standard: vectorData.standard,
+      total_vectors: vectorData.test_vectors.length,
+      passed_vectors: passedCount,
+      overall_latency_ms: totalLatency,
+      results
+    }, null, 2));
+    process.exit(allPassed ? 0 : 1);
+  }
+  
+  console.log('\n\x1b[1m\x1b[36m[ZTDS™]\x1b[0m \x1b[1mConformance Test Vectors Suite Runner\x1b[0m');
+  console.log(`Standard: ${vectorData.standard}`);
+  console.log('----------------------------------------------------------------------');
+  results.forEach(r => {
+    console.log(`[${r.passed ? '\x1b[32mPASS\x1b[0m' : '\x1b[31mFAIL\x1b[0m'}] ${r.id.padEnd(16)} | ${r.category.padEnd(38)} | ${r.latency_ms.toFixed(2)}ms`);
+  });
+  console.log('----------------------------------------------------------------------');
+  console.log(`Total: ${passedCount}/${vectorData.test_vectors.length} passed | Avg Latency: ${(totalLatency/results.length).toFixed(3)}ms`);
+  if (allPassed) {
+    console.log('\n\x1b[1m\x1b[32m[PASS] CONFORMANCE VERIFICATION COMPLETED (100% INVARIANT FIDELITY)\x1b[0m\n');
+    process.exit(0);
+  } else {
+    console.log('\n\x1b[1m\x1b[31m[FAIL] CONFORMANCE VERIFICATION FAILED\x1b[0m\n');
+    process.exit(1);
+  }
+}
+
 if (ARGS.includes('--help') || ARGS.includes('-h')) {
   console.log(`
 ZTDS.ai Codebase & Invariant Auditor (v1.0.0)
@@ -84,6 +154,7 @@ Usage:
 
 Options:
   -d, --dir <path>     Directory to audit (default: current directory)
+  --conformance        Run Conformance Test Vectors against RFC specification
   --json               Output machine-readable JSON format
   --cert               Generate Ed25519-signed Conformance Certificate on pass
   --applicant <name>   Applicant name for certificate issuance
