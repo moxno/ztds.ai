@@ -248,21 +248,21 @@
       </p>
 
       <!-- One-Click Industry Presets -->
-      <div class="mt-6 flex flex-wrap items-center gap-2 no-print">
+      <div class="mt-6 flex flex-wrap items-center gap-2 no-print" id="presetContainer">
         <span class="text-xs text-slate-500 font-medium mr-1">Industry Presets:</span>
-        <button type="button" id="presetSaas" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">
+        <button type="button" id="presetSaas" data-preset="saas" class="preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer">
           EU Enterprise SaaS (GDPR 4%)
         </button>
-        <button type="button" id="presetFintech" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">
+        <button type="button" id="presetFintech" data-preset="fintech" class="preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer">
           Regulated FinTech (PCI-DSS &middot; GLBA)
         </button>
-        <button type="button" id="presetHealth" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">
+        <button type="button" id="presetHealth" data-preset="health" class="preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer">
           Healthcare EHR (HIPAA Safe Harbor)
         </button>
-        <button type="button" id="presetLegal" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">
+        <button type="button" id="presetLegal" data-preset="legal" class="preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer">
           Corporate Legal &amp; M&amp;A (FRE 502)
         </button>
-        <button type="button" id="presetEnterprise" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-colors">
+        <button type="button" id="presetEnterprise" data-preset="enterprise" class="preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer">
           Global Multi-Cloud Enterprise (EU + US)
         </button>
       </div>
@@ -292,6 +292,14 @@
               <span>1M / mo</span>
               <span>5M / mo</span>
             </div>
+            <div class="flex flex-wrap items-center gap-1.5 mt-2">
+              <span class="text-[10px] text-slate-400 font-mono">Quick Set:</span>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputCalls" data-val="100000">100K</button>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputCalls" data-val="500000">500K</button>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputCalls" data-val="1000000">1M</button>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputCalls" data-val="2500000">2.5M</button>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputCalls" data-val="5000000">5M</button>
+            </div>
           </div>
 
           <!-- Input 2: Sensitive Payload Ratio -->
@@ -305,6 +313,13 @@
               <span>5% (Low)</span>
               <span>25% (Average)</span>
               <span>80% (High Density)</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-1.5 mt-2">
+              <span class="text-[10px] text-slate-400 font-mono">Quick Set:</span>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRatio" data-val="10">10%</button>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRatio" data-val="25">25%</button>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRatio" data-val="50">50%</button>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRatio" data-val="75">75%</button>
             </div>
           </div>
 
@@ -320,6 +335,13 @@
               <span>3 (Typical context)</span>
               <span>20 (Batch RAG table)</span>
             </div>
+            <div class="flex flex-wrap items-center gap-1.5 mt-2">
+              <span class="text-[10px] text-slate-400 font-mono">Quick Set:</span>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRecords" data-val="1">1 record</button>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRecords" data-val="3">3 typical</button>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRecords" data-val="5">5 batch</button>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRecords" data-val="10">10 table</button>
+            </div>
           </div>
 
           <!-- Input 4: Connected Vendors / Subprocessors -->
@@ -332,6 +354,14 @@
             <p class="text-[11px] text-slate-400 mt-1 leading-tight">
               OpenAI, Anthropic, Google Vertex, Pinecone, Mistral (each adds ~$25,000/yr in legal DPA, TPRM audit, and SOC 2 subprocessor chain maintenance).
             </p>
+            <div class="flex flex-wrap items-center gap-1.5 mt-2">
+              <span class="text-[10px] text-slate-400 font-mono">Quick Set:</span>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputVendors" data-val="1">1 provider</button>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputVendors" data-val="2">2 dual</button>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputVendors" data-val="3">3 typical</button>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputVendors" data-val="5">5 multi</button>
+              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputVendors" data-val="8">8 global</button>
+            </div>
           </div>
         </div>
 
@@ -675,19 +705,52 @@
 
         <!-- Action Controls Suite -->
         <div class="space-y-3 no-print pt-2">
+          <!-- Primary Executive Action Bar -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <button type="button" id="btnCopyMemo" class="btn-outline py-3 px-4 text-xs font-semibold text-center justify-center flex items-center gap-1.5 shadow-sm">
-              <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+            <button type="button" id="btnPreviewMemo" class="btn-trust py-3 px-4 text-xs font-semibold text-center justify-center flex items-center gap-2 shadow-sm cursor-pointer">
+              <svg class="w-4 h-4 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
               </svg>
-              <span id="copyMemoText">Copy Board Memo (.md)</span>
+              <span>Preview Board Memorandum</span>
             </button>
 
-            <button type="button" id="btnDownloadMemo" class="btn-outline py-3 px-4 text-xs font-semibold text-center justify-center flex items-center gap-1.5 shadow-sm">
-              <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button type="button" id="btnPrintMemo" class="btn-outline py-3 px-4 text-xs font-semibold text-center justify-center flex items-center gap-2 shadow-sm bg-white hover:bg-slate-50 cursor-pointer">
+              <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+              </svg>
+              <span>Print / Save PDF</span>
+            </button>
+          </div>
+
+          <!-- Secondary Export & Collaboration Bar -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            <button type="button" id="btnDownloadJson" class="btn-outline py-2.5 px-3 text-xs font-medium text-center justify-center flex items-center gap-1.5 bg-white hover:bg-slate-50 border-slate-200 cursor-pointer">
+              <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
-              <span>Download Memo (.md)</span>
+              <span>Data (.json)</span>
+            </button>
+
+            <button type="button" id="btnDownloadMemo" class="btn-outline py-2.5 px-3 text-xs font-medium text-center justify-center flex items-center gap-1.5 bg-white hover:bg-slate-50 border-slate-200 cursor-pointer">
+              <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              <span>Memo (.md)</span>
+            </button>
+
+            <button type="button" id="btnCopyMemo" class="btn-outline py-2.5 px-3 text-xs font-medium text-center justify-center flex items-center gap-1.5 bg-white hover:bg-slate-50 border-slate-200 cursor-pointer">
+              <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+              </svg>
+              <span id="copyMemoText">Copy (.md)</span>
+            </button>
+
+            <button type="button" id="btnShareScenario" class="btn-outline py-2.5 px-3 text-xs font-medium text-center justify-center flex items-center gap-1.5 bg-white hover:bg-slate-50 border-slate-200 cursor-pointer">
+              <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+              </svg>
+              <span id="shareScenarioText">Share Link</span>
             </button>
           </div>
 
@@ -707,20 +770,14 @@
             </a>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <button type="button" id="btnPrintMemo" class="btn-outline py-3 px-3 text-xs font-semibold text-center justify-center flex items-center gap-1.5">
-              <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
-              </svg>
-              <span>Print Memo (PDF)</span>
-            </button>
-            
-            <a href="/sdk/" class="btn-trust py-3 px-3 text-xs font-semibold text-center justify-center shadow-sm flex items-center gap-1">
-              <span>Deploy SDK</span> &rarr;
+          <!-- Reference & Navigation Links -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <a href="/sdk/" class="btn-outline py-2.5 px-3 text-xs font-semibold text-center justify-center shadow-sm flex items-center gap-1.5 bg-white hover:bg-slate-50 border-slate-200 text-slate-700">
+              <span>Developer SDK Documentation</span> &rarr;
             </a>
             
-            <a href="/ciso/" class="py-3 px-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 text-center transition-colors">
-              CISO Legal Pack
+            <a href="/ciso/" class="py-2.5 px-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 text-center transition-colors flex items-center justify-center gap-1.5">
+              <span>CISO Procurement &amp; Legal Pack</span> &rarr;
             </a>
           </div>
         </div>
@@ -842,6 +899,72 @@
     </div>
   </footer>
 
+  <!-- CISO Executive Memorandum Live Preview Modal -->
+  <div id="memoPreviewModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/75 backdrop-blur-sm overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="memoModalTitle">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-4xl w-full p-6 sm:p-8 space-y-5 my-auto text-left relative max-h-[92vh] flex flex-col">
+      <!-- Header -->
+      <div class="flex items-start justify-between gap-4 pb-3 border-b border-slate-200 shrink-0">
+        <div class="space-y-1">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-900 text-emerald-400">ZTDS RFC v1.0</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono text-slate-600 bg-slate-100 border border-slate-200">Privileged Work Product</span>
+            <span id="memoModalRegimeBadge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">GLOBAL MULTI-REGIME</span>
+          </div>
+          <h3 id="memoModalTitle" class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
+            Executive CISO Audit Memorandum &amp; Risk Assessment
+          </h3>
+          <p class="text-xs text-slate-500">
+            Board-ready privileged briefing document with mathematical proofs and statutory safe harbor defenses.
+          </p>
+        </div>
+        <button type="button" id="memoModalCloseBtn" aria-label="Close memorandum preview" class="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg touch-target cursor-pointer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Toolbar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-lg bg-slate-100 border border-slate-200 shrink-0 text-xs font-mono">
+        <span class="text-slate-600 font-medium">Export Formats:</span>
+        <div class="flex flex-wrap items-center gap-2">
+          <button type="button" id="modalPrintMemo" class="px-3 py-1.5 rounded bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-semibold shadow-xs cursor-pointer">
+            Print PDF
+          </button>
+          <button type="button" id="modalDownloadJson" class="px-3 py-1.5 rounded bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-semibold shadow-xs cursor-pointer">
+            Save JSON
+          </button>
+          <button type="button" id="modalDownloadMemo" class="px-3 py-1.5 rounded bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-semibold shadow-xs cursor-pointer">
+            Save Markdown (.md)
+          </button>
+          <button type="button" id="modalCopyMemo" class="px-3 py-1.5 rounded bg-slate-900 hover:bg-slate-800 text-white font-semibold shadow-xs cursor-pointer">
+            <span id="modalCopyText">Copy Text</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Scrollable Memorandum Content -->
+      <div class="overflow-y-auto rounded-xl border border-slate-200 bg-slate-50 p-5 font-mono text-xs text-slate-800 leading-relaxed max-h-[50vh] select-all whitespace-pre-wrap" id="memoPreviewText">
+        Loading executive memorandum...
+      </div>
+
+      <!-- Footer -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-200 shrink-0 text-xs">
+        <span class="text-slate-500 font-mono text-[11px]">
+          Standard: ZTDS RFC v1.0 &middot; Zenodo DOI: 10.5281/zenodo.22058770
+        </span>
+        <div class="flex items-center gap-3">
+          <button type="button" id="memoModalCloseBtnBottom" class="px-4 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-medium cursor-pointer">
+            Close Preview
+          </button>
+          <a href="/agency/" class="btn-trust py-2 px-4 text-xs font-semibold">
+            Book Turn-Key Audit ($2,500) &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Nav Scripts & Calculator Logic -->
   <script src="/nav.js"></script>
   <script>
@@ -890,10 +1013,28 @@
       const barLabelUnmitigated = document.getElementById('barLabelUnmitigated');
       const barLabelZtds = document.getElementById('barLabelZtds');
       const barZtds = document.getElementById('barZtds');
+      // Action Elements
+      const btnPreviewMemo = document.getElementById('btnPreviewMemo');
       const btnPrintMemo = document.getElementById('btnPrintMemo');
+      const btnDownloadJson = document.getElementById('btnDownloadJson');
+      const btnDownloadMemo = document.getElementById('btnDownloadMemo');
       const btnCopyMemo = document.getElementById('btnCopyMemo');
       const copyMemoText = document.getElementById('copyMemoText');
-      const btnDownloadMemo = document.getElementById('btnDownloadMemo');
+      const btnShareScenario = document.getElementById('btnShareScenario');
+      const shareScenarioText = document.getElementById('shareScenarioText');
+
+      // Modal Elements
+      const memoPreviewModal = document.getElementById('memoPreviewModal');
+      const memoPreviewText = document.getElementById('memoPreviewText');
+      const memoModalCloseBtn = document.getElementById('memoModalCloseBtn');
+      const memoModalCloseBtnBottom = document.getElementById('memoModalCloseBtnBottom');
+      const modalPrintMemo = document.getElementById('modalPrintMemo');
+      const modalDownloadJson = document.getElementById('modalDownloadJson');
+      const modalDownloadMemo = document.getElementById('modalDownloadMemo');
+      const modalCopyMemo = document.getElementById('modalCopyMemo');
+      const modalCopyText = document.getElementById('modalCopyText');
+      const memoModalRegimeBadge = document.getElementById('memoModalRegimeBadge');
+
       const toggleMethodologyBtn = document.getElementById('toggleMethodologyBtn');
       const methodologyContent = document.getElementById('methodologyContent');
       const toggleMethodologyIcon = document.getElementById('toggleMethodologyIcon');
@@ -1059,6 +1200,15 @@
         if (roiAgencyBridgeBtn) roiAgencyBridgeBtn.href = agencyTargetUrl;
         const heroRoiAgencyLink = document.getElementById('heroRoiAgencyLink');
         if (heroRoiAgencyLink) heroRoiAgencyLink.href = agencyTargetUrl;
+
+        updateQuickStepHighlights();
+      }
+
+      function parseCurrency(str) {
+        if (typeof str === 'number') return str;
+        if (!str) return 0;
+        const cleaned = String(str).replace(/[^0-9.-]+/g, '');
+        return parseFloat(cleaned) || 0;
       }
 
       function generateMemoMarkdown() {
@@ -1078,16 +1228,19 @@
         const fineStr = dispRegulatoryFine.textContent;
         const ceilingStr = dispStatutoryCeiling.textContent;
         const ceilingNoteStr = dispStatutoryCeilingNote.textContent;
-        const activeRegimeStr = dispActiveRegimeCode.textContent;
+        const activeRegimeStr = dispActiveRegimeCode ? dispActiveRegimeCode.textContent : 'GLOBAL MULTI-REGIME';
+        const memoRefId = `ZTDS-MEMO-${Date.now().toString(36).toUpperCase()}`;
 
         return `# EXECUTIVE CISO AUDIT MEMORANDUM & ACTUARIAL RISK ASSESSMENT
 
+**DOCUMENT ID:** ${memoRefId}
 **TO:** Chief Information Security Officer (CISO), Chief Legal Officer (CLO), Board Risk Committee
 **FROM:** Enterprise Information Security & AI Governance
 **DATE:** September 2026
 **SUBJECT:** Enterprise Generative AI Actuarial Risk, Statutory Regulatory Caps & Zero-Trust Sanitization ROI
 **SPECIFICATION:** ZTDS RFC v1.0 (Zenodo DOI: 10.5281/zenodo.22058770)
 **BENCHMARKS:** IBM Cost of a Data Breach 2025 | GDPR Art. 83 | EU AI Act Art. 99 | HIPAA Safe Harbor | FRE 502
+**CLASSIFICATION:** PRIVILEGED WORK PRODUCT // RESTRICTED
 
 ---
 
@@ -1135,75 +1288,401 @@
 ## 5. Architectural Recommendation
 Deploy Zero-Trust Data Sanitization (ZTDS RFC v1.0) client-side in volatile WebAssembly / AWS Nitro Enclaves to enforce Invariant 1 (Zero Egress), Invariant 2 (Deterministic Tokenization), Invariant 3 (RAM Isolation), and Invariant 4 (Subprocessor Chain Exclusion).
 
+Commercial turn-key deployment and audit verification available via BrandMeWeb: https://ztds.ai/agency/
 Generated via ZTDS CISO Actuarial Engine: https://ztds.ai/roi/
 `;
       }
 
-      // Event listeners
+      function generateReportJson() {
+        const calls = parseFloat(inputCalls.value) || 0;
+        const ratio = parseFloat(inputRatio.value) || 0;
+        const recordsPerPrompt = parseFloat(inputRecords.value) || 1;
+        const vendors = parseFloat(inputVendors.value) || 1;
+        const regime = selectRegime.value;
+        const selectedOpt = selectIndustry.options[selectIndustry.selectedIndex];
+        const industry = selectIndustry.value;
+        const industryName = selectedOpt ? (selectedOpt.getAttribute('data-name') || selectIndustry.value) : selectIndustry.value;
+        const costPerRecord = selectedOpt ? (parseFloat(selectedOpt.getAttribute('data-cost')) || 165) : 165;
+        const revenue = parseFloat(selectRevenue.value) || 50000000;
+        const tco = parseFloat(selectTier.value) || 12000;
+        const annualRecords = calls * (ratio / 100) * recordsPerPrompt * 12;
+
+        const netSavings = parseCurrency(dispNetSavings.textContent);
+        const roiMultiple = parseFloat(dispRoiMultiple.textContent) || 0;
+        const totalExposure = parseCurrency(dispTotalExposure.textContent);
+        const breachCost = parseCurrency(dispBreachCost.textContent);
+        const dpaSavings = parseCurrency(dispDpaSavings.textContent);
+        const regulatoryFine = parseCurrency(dispRegulatoryFine.textContent);
+        const statutoryCeiling = parseCurrency(dispStatutoryCeiling.textContent);
+        const activeRegimeStr = dispActiveRegimeCode ? dispActiveRegimeCode.textContent : regime;
+
+        return {
+          $schema: "https://ztds.ai/schemas/ciso-risk-assessment-v1.json",
+          standard: "ZTDS RFC v1.0",
+          specification_doi: "10.5281/zenodo.22058770",
+          generated_at: new Date().toISOString(),
+          memo_reference_id: `ZTDS-MEMO-${Date.now().toString(36).toUpperCase()}`,
+          document_title: "EXECUTIVE CISO AUDIT MEMORANDUM & ACTUARIAL RISK ASSESSMENT",
+          classification: "PRIVILEGED WORK PRODUCT // RESTRICTED",
+          parameters: {
+            monthly_prompts: calls,
+            sensitive_payload_ratio_pct: ratio,
+            records_per_prompt: recordsPerPrompt,
+            annual_sensitive_records: Math.round(annualRecords),
+            connected_llm_providers: vendors,
+            enforcement_regime: regime,
+            regime_label: activeRegimeStr,
+            industry_sector: industry,
+            industry_name: industryName,
+            cost_per_record_usd: costPerRecord,
+            worldwide_annual_turnover_usd: revenue,
+            ztds_tier_annual_cost_usd: tco
+          },
+          actuarial_decomposition: {
+            net_annual_enterprise_savings_usd: netSavings,
+            roi_multiple: roiMultiple,
+            unmitigated_risk_exposure_usd: totalExposure,
+            annual_breach_liability_usd: breachCost,
+            subprocessor_chain_dpa_savings_usd: dpaSavings,
+            statutory_regulatory_fine_risk_usd: regulatoryFine,
+            maximum_statutory_legal_ceiling_usd: statutoryCeiling,
+            statutory_ceiling_note: dispStatutoryCeilingNote ? dispStatutoryCeilingNote.textContent : '',
+            ztds_in_memory_tco_usd: tco
+          },
+          subprocessor_overhead_breakdown: {
+            connected_providers: vendors,
+            legal_dpa_contract_review_usd: vendors * 8000,
+            tprm_sig_lite_audits_usd: vendors * 9000,
+            soc2_continuous_monitoring_usd: vendors * 8000,
+            total_annual_dpa_overhead_usd: dpaSavings
+          },
+          statutory_defenses: {
+            gdpr: "Recital 26 and Article 28 Exemption: anonymous data is excluded from subprocessor chains",
+            eu_ai_act: "Article 10 and 50 data governance and zero-entropy compliance",
+            us_hipaa: "45 CFR 164.514(b) Safe Harbor de-identification without third-party BAAs",
+            us_fre: "Federal Rule of Evidence 502(b) attorney-client privilege non-waiver defense"
+          },
+          architectural_invariants: [
+            "Invariant 1: Zero External Egress Prior to Sanitization",
+            "Invariant 2: Deterministic Reversible Tokenization",
+            "Invariant 3: Verifiable Cryptographic RAM Isolation",
+            "Invariant 4: Exclusion from Subprocessor Chain"
+          ],
+          auditor: {
+            authority: "ZTDS.ai Zero-Trust Data Sanitization Consortium",
+            cli_engine: "npx ztds-audit",
+            ciso_tool: "https://ztds.ai/roi/",
+            advisory_partner: "BrandMeWeb"
+          }
+        };
+      }
+
+      // Presets Configuration Map
+      const presetConfigs = {
+        saas: {
+          calls: 400000,
+          ratio: 20,
+          records: 3,
+          vendors: 3,
+          regime: 'eu',
+          industry: 'saas',
+          revenue: '50000000',
+          tier: '12000'
+        },
+        fintech: {
+          calls: 750000,
+          ratio: 40,
+          records: 5,
+          vendors: 4,
+          regime: 'us_fintech',
+          industry: 'fintech',
+          revenue: '250000000',
+          tier: '12000'
+        },
+        health: {
+          calls: 300000,
+          ratio: 65,
+          records: 6,
+          vendors: 2,
+          regime: 'us_hipaa',
+          industry: 'healthcare',
+          revenue: '100000000',
+          tier: '12000'
+        },
+        legal: {
+          calls: 200000,
+          ratio: 50,
+          records: 4,
+          vendors: 2,
+          regime: 'us_legal',
+          industry: 'legal',
+          revenue: '50000000',
+          tier: '12000'
+        },
+        enterprise: {
+          calls: 2500000,
+          ratio: 35,
+          records: 8,
+          vendors: 6,
+          regime: 'global',
+          industry: 'saas',
+          revenue: '1000000000',
+          tier: '35000'
+        }
+      };
+
+      let currentActivePreset = null;
+
+      function setActivePresetButton(activeKey) {
+        currentActivePreset = activeKey;
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+          const key = btn.getAttribute('data-preset');
+          if (key === activeKey) {
+            btn.className = 'preset-btn px-3 py-1.5 rounded-lg bg-slate-900 text-white border border-slate-900 text-xs font-semibold shadow-sm transition-all cursor-pointer';
+          } else {
+            btn.className = 'preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer';
+          }
+        });
+      }
+
+      function applyPreset(key) {
+        const cfg = presetConfigs[key];
+        if (!cfg) return;
+        inputCalls.value = cfg.calls;
+        inputRatio.value = cfg.ratio;
+        inputRecords.value = cfg.records;
+        inputVendors.value = cfg.vendors;
+        selectRegime.value = cfg.regime;
+        selectIndustry.value = cfg.industry;
+        selectRevenue.value = cfg.revenue;
+        selectTier.value = cfg.tier;
+        setActivePresetButton(key);
+        calculate();
+      }
+
+      function updateQuickStepHighlights() {
+        document.querySelectorAll('.quick-step-btn').forEach(btn => {
+          const targetId = btn.getAttribute('data-target');
+          const val = btn.getAttribute('data-val');
+          const targetEl = document.getElementById(targetId);
+          if (targetEl && String(targetEl.value) === String(val)) {
+            btn.className = 'quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-100 border border-emerald-300 text-emerald-900 font-bold transition-colors cursor-pointer';
+          } else {
+            btn.className = 'quick-step-btn px-2 py-0.5 rounded text-[10px] font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer';
+          }
+        });
+      }
+
+      // Live Preview Modal
+      function openMemoPreview() {
+        if (!memoPreviewModal || !memoPreviewText) return;
+        const memo = generateMemoMarkdown();
+        memoPreviewText.textContent = memo;
+        if (memoModalRegimeBadge) {
+          memoModalRegimeBadge.textContent = dispActiveRegimeCode ? dispActiveRegimeCode.textContent : 'GLOBAL MULTI-REGIME';
+        }
+        memoPreviewModal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      }
+
+      function closeMemoPreview() {
+        if (!memoPreviewModal) return;
+        memoPreviewModal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+
+      if (btnPreviewMemo) btnPreviewMemo.addEventListener('click', openMemoPreview);
+      if (memoModalCloseBtn) memoModalCloseBtn.addEventListener('click', closeMemoPreview);
+      if (memoModalCloseBtnBottom) memoModalCloseBtnBottom.addEventListener('click', closeMemoPreview);
+
+      if (memoPreviewModal) {
+        memoPreviewModal.addEventListener('click', (e) => {
+          if (e.target === memoPreviewModal) closeMemoPreview();
+        });
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && memoPreviewModal && !memoPreviewModal.classList.contains('hidden')) {
+          closeMemoPreview();
+        }
+      });
+
+      // Share Scenario Link
+      function buildScenarioUrl() {
+        const url = new URL(window.location.origin + window.location.pathname);
+        url.searchParams.set('calls', inputCalls.value);
+        url.searchParams.set('ratio', inputRatio.value);
+        url.searchParams.set('records', inputRecords.value);
+        url.searchParams.set('vendors', inputVendors.value);
+        url.searchParams.set('regime', selectRegime.value);
+        url.searchParams.set('industry', selectIndustry.value);
+        url.searchParams.set('revenue', selectRevenue.value);
+        url.searchParams.set('tier', selectTier.value);
+        if (currentActivePreset) {
+          url.searchParams.set('preset', currentActivePreset);
+        }
+        return url.toString();
+      }
+
+      function shareScenario() {
+        const url = buildScenarioUrl();
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, '', url);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(() => {
+            if (shareScenarioText) {
+              const orig = shareScenarioText.textContent;
+              shareScenarioText.textContent = 'Link Copied!';
+              setTimeout(() => { shareScenarioText.textContent = orig; }, 2500);
+            }
+          }).catch(() => {
+            prompt('Copy scenario URL:', url);
+          });
+        } else {
+          prompt('Copy scenario URL:', url);
+        }
+      }
+
+      if (btnShareScenario) btnShareScenario.addEventListener('click', shareScenario);
+
+      // JSON Download
+      function downloadJsonReport() {
+        const report = generateReportJson();
+        const jsonStr = JSON.stringify(report, null, 2);
+        const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const dateStr = new Date().toISOString().slice(0, 10);
+        a.download = `ZTDS-CISO-Actuarial-Risk-Report-${dateStr}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      if (btnDownloadJson) btnDownloadJson.addEventListener('click', downloadJsonReport);
+      if (modalDownloadJson) modalDownloadJson.addEventListener('click', downloadJsonReport);
+
+      // Markdown Download
+      function downloadMarkdownReport() {
+        const md = generateMemoMarkdown();
+        const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const dateStr = new Date().toISOString().slice(0, 10);
+        a.download = `ZTDS-CISO-Board-Memo-${dateStr}.md`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      if (btnDownloadMemo) btnDownloadMemo.addEventListener('click', downloadMarkdownReport);
+      if (modalDownloadMemo) modalDownloadMemo.addEventListener('click', downloadMarkdownReport);
+
+      // Copy Memo Markdown
+      function copyMarkdownToClipboard(targetSpan, defaultLabel) {
+        const md = generateMemoMarkdown();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(md).then(() => {
+            if (targetSpan) {
+              targetSpan.textContent = 'Copied to Clipboard!';
+              setTimeout(() => { targetSpan.textContent = defaultLabel; }, 2500);
+            }
+          }).catch(() => {
+            if (targetSpan) {
+              targetSpan.textContent = 'Copy Failed';
+              setTimeout(() => { targetSpan.textContent = defaultLabel; }, 2500);
+            }
+          });
+        }
+      }
+
+      if (btnCopyMemo && copyMemoText) {
+        btnCopyMemo.addEventListener('click', () => copyMarkdownToClipboard(copyMemoText, 'Copy (.md)'));
+      }
+      if (modalCopyMemo && modalCopyText) {
+        modalCopyMemo.addEventListener('click', () => copyMarkdownToClipboard(modalCopyText, 'Copy Text'));
+      }
+
+      // Print / PDF
+      if (btnPrintMemo) {
+        btnPrintMemo.addEventListener('click', () => window.print());
+      }
+      if (modalPrintMemo) {
+        modalPrintMemo.addEventListener('click', () => window.print());
+      }
+
+      // Load scenario from URL query params
+      function loadScenarioFromUrl() {
+        try {
+          const params = new URLSearchParams(window.location.search);
+          if (!params || ![...params.keys()].length) return false;
+
+          const presetParam = params.get('preset');
+          if (presetParam && presetConfigs[presetParam]) {
+            applyPreset(presetParam);
+            return true;
+          }
+
+          let hasCustom = false;
+          if (params.has('calls')) { inputCalls.value = params.get('calls'); hasCustom = true; }
+          if (params.has('ratio')) { inputRatio.value = params.get('ratio'); hasCustom = true; }
+          if (params.has('records')) { inputRecords.value = params.get('records'); hasCustom = true; }
+          if (params.has('vendors')) { inputVendors.value = params.get('vendors'); hasCustom = true; }
+          if (params.has('regime')) { selectRegime.value = params.get('regime'); hasCustom = true; }
+          if (params.has('industry')) { selectIndustry.value = params.get('industry'); hasCustom = true; }
+          if (params.has('revenue')) { selectRevenue.value = params.get('revenue'); hasCustom = true; }
+          if (params.has('tier')) { selectTier.value = params.get('tier'); hasCustom = true; }
+
+          if (hasCustom) {
+            setActivePresetButton(null);
+            calculate();
+            return true;
+          }
+        } catch (e) {
+          // ignore invalid search string
+        }
+        return false;
+      }
+
+      // Preset Button Handlers
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const presetKey = btn.getAttribute('data-preset');
+          if (presetKey && presetConfigs[presetKey]) {
+            applyPreset(presetKey);
+          }
+        });
+      });
+
+      // Quick Step Buttons
+      document.querySelectorAll('.quick-step-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-target');
+          const val = btn.getAttribute('data-val');
+          const targetEl = document.getElementById(targetId);
+          if (targetEl) {
+            targetEl.value = val;
+            setActivePresetButton(null);
+            calculate();
+          }
+        });
+      });
+
+      // Input change listeners
       [inputCalls, inputRatio, inputRecords, inputVendors, selectRegime, selectIndustry, selectRevenue, selectTier].forEach(el => {
-        el.addEventListener('input', calculate);
-        el.addEventListener('change', calculate);
-      });
-
-      // Industry Presets
-      document.getElementById('presetSaas').addEventListener('click', () => {
-        inputCalls.value = 400000;
-        inputRatio.value = 20;
-        inputRecords.value = 3;
-        inputVendors.value = 3;
-        selectRegime.value = 'eu';
-        selectIndustry.value = 'saas';
-        selectRevenue.value = '50000000';
-        selectTier.value = '12000';
-        calculate();
-      });
-
-      document.getElementById('presetFintech').addEventListener('click', () => {
-        inputCalls.value = 750000;
-        inputRatio.value = 40;
-        inputRecords.value = 5;
-        inputVendors.value = 4;
-        selectRegime.value = 'us_fintech';
-        selectIndustry.value = 'fintech';
-        selectRevenue.value = '250000000';
-        selectTier.value = '12000';
-        calculate();
-      });
-
-      document.getElementById('presetHealth').addEventListener('click', () => {
-        inputCalls.value = 300000;
-        inputRatio.value = 65;
-        inputRecords.value = 6;
-        inputVendors.value = 2;
-        selectRegime.value = 'us_hipaa';
-        selectIndustry.value = 'healthcare';
-        selectRevenue.value = '100000000';
-        selectTier.value = '12000';
-        calculate();
-      });
-
-      document.getElementById('presetLegal').addEventListener('click', () => {
-        inputCalls.value = 200000;
-        inputRatio.value = 50;
-        inputRecords.value = 4;
-        inputVendors.value = 2;
-        selectRegime.value = 'us_legal';
-        selectIndustry.value = 'legal';
-        selectRevenue.value = '50000000';
-        selectTier.value = '12000';
-        calculate();
-      });
-
-      document.getElementById('presetEnterprise').addEventListener('click', () => {
-        inputCalls.value = 2500000;
-        inputRatio.value = 35;
-        inputRecords.value = 8;
-        inputVendors.value = 6;
-        selectRegime.value = 'global';
-        selectIndustry.value = 'saas';
-        selectRevenue.value = '1000000000';
-        selectTier.value = '35000';
-        calculate();
+        el.addEventListener('input', () => {
+          setActivePresetButton(null);
+          calculate();
+        });
+        el.addEventListener('change', () => {
+          setActivePresetButton(null);
+          calculate();
+        });
       });
 
       // Toggle Methodology Accordion
@@ -1220,51 +1699,12 @@ Generated via ZTDS CISO Actuarial Engine: https://ztds.ai/roi/
         });
       }
 
-      // Copy Memo to Clipboard
-      if (btnCopyMemo && copyMemoText) {
-        btnCopyMemo.addEventListener('click', () => {
-          const md = generateMemoMarkdown();
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(md).then(() => {
-              copyMemoText.textContent = 'Memo Copied to Clipboard!';
-              setTimeout(() => {
-                copyMemoText.textContent = 'Copy Board Memo (.md)';
-              }, 2500);
-            }).catch(() => {
-              copyMemoText.textContent = 'Copy Failed (Check Clipboard Permission)';
-              setTimeout(() => {
-                copyMemoText.textContent = 'Copy Board Memo (.md)';
-              }, 2500);
-            });
-          }
-        });
+      // Initial execution
+      const loadedFromUrl = loadScenarioFromUrl();
+      if (!loadedFromUrl) {
+        setActivePresetButton('saas');
+        calculate();
       }
-
-      // Download Memo as Markdown File
-      if (btnDownloadMemo) {
-        btnDownloadMemo.addEventListener('click', () => {
-          const md = generateMemoMarkdown();
-          const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'ZTDS-CISO-Board-Memo-2026.md';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        });
-      }
-
-      // Print Memo (PDF)
-      if (btnPrintMemo) {
-        btnPrintMemo.addEventListener('click', () => {
-          window.print();
-        });
-      }
-
-      // Initial calculation
-      calculate();
     });
   </script>
 </body>
