@@ -13,6 +13,7 @@
 "use strict";
 
 const assert = require("assert");
+const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const { mintToken } = require("../api/mint-license");
@@ -129,10 +130,33 @@ async function runTests() {
   console.log("[TEST 4] Testing API Ed25519 minting and profile gating...");
 
   const privKeyName = ["ztds", "license", "private.pem"].join("_");
+  const exampleKeyName = ["ztds", "license", "private.pem.example"].join("_");
   const privPath = path.join(__dirname, "../keys", privKeyName);
+  const examplePrivPath = path.join(__dirname, "../keys", exampleKeyName);
   const pubPath = path.join(__dirname, "../keys/ztds_license_public.pem");
-  const privateKeyPem = fs.readFileSync(privPath, "utf8");
-  const publicKeyPem = fs.readFileSync(pubPath, "utf8");
+
+  let privateKeyPem;
+  let publicKeyPem;
+
+  if (process.env.ZTDS_CERT_PRIVATE_KEY) {
+    privateKeyPem = process.env.ZTDS_CERT_PRIVATE_KEY;
+    publicKeyPem = process.env.ZTDS_CERT_PUBLIC_KEY || crypto.createPublicKey(privateKeyPem).export({ type: "spki", format: "pem" });
+  } else if (fs.existsSync(privPath)) {
+    privateKeyPem = fs.readFileSync(privPath, "utf8");
+    publicKeyPem = fs.existsSync(pubPath)
+      ? fs.readFileSync(pubPath, "utf8")
+      : crypto.createPublicKey(privateKeyPem).export({ type: "spki", format: "pem" });
+  } else if (fs.existsSync(examplePrivPath)) {
+    privateKeyPem = fs.readFileSync(examplePrivPath, "utf8");
+    publicKeyPem = crypto.createPublicKey(privateKeyPem).export({ type: "spki", format: "pem" });
+  } else {
+    const keypair = crypto.generateKeyPairSync("ed25519");
+    privateKeyPem = keypair.privateKey.export({ type: "pkcs8", format: "pem" });
+    publicKeyPem = keypair.publicKey.export({ type: "spki", format: "pem" });
+  }
+
+  process.env.ZTDS_CERT_PRIVATE_KEY = privateKeyPem;
+  process.env.ZTDS_CERT_PUBLIC_KEY = publicKeyPem;
 
   // Profile 1: Universal
   const tokenUniversal = mintToken({

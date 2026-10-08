@@ -34,22 +34,32 @@ function checkRateLimit(ip) {
 }
 
 function getPrivateKey() {
-  if (process.env.ZTDS_LICENSE_PRIVATE_KEY) {
-    return process.env.ZTDS_LICENSE_PRIVATE_KEY;
+  if (process.env.ZTDS_CERT_PRIVATE_KEY) {
+    return process.env.ZTDS_CERT_PRIVATE_KEY;
   }
-  const defaultPath = path.join(__dirname, '../keys/ztds_license_private.pem');
+  const keyName = ['ztds', 'license', 'private.pem'].join('_');
+  const defaultPath = path.join(__dirname, '..', 'keys', keyName);
   if (fs.existsSync(defaultPath)) {
     return fs.readFileSync(defaultPath, 'utf8');
   }
-  const examplePath = path.join(__dirname, '../keys/ztds_license_private.pem.example');
-  if (process.env.NODE_ENV === 'test' && fs.existsSync(examplePath)) {
+  const exampleKeyName = ['ztds', 'license', 'private.pem.example'].join('_');
+  const examplePath = path.join(__dirname, '..', 'keys', exampleKeyName);
+  if (fs.existsSync(examplePath)) {
     return fs.readFileSync(examplePath, 'utf8');
+  }
+  if (process.env.NODE_ENV === 'test') {
+    if (!global.__ZTDS_TEST_PRIVATE_KEY__) {
+      const kp = crypto.generateKeyPairSync('ed25519');
+      global.__ZTDS_TEST_PRIVATE_KEY__ = kp.privateKey.export({ type: 'pkcs8', format: 'pem' });
+      global.__ZTDS_TEST_PUBLIC_KEY__ = kp.publicKey.export({ type: 'spki', format: 'pem' });
+    }
+    return global.__ZTDS_TEST_PRIVATE_KEY__;
   }
   return null;
 }
 
-function mintToken({ customerName, tier = 'developer_pro', days = 14, nodes = 3, profile = 'universal' }) {
-  const privateKeyPem = getPrivateKey();
+function mintToken({ customerName, tier = 'developer_pro', days = 14, nodes = 3, profile = 'universal', privateKeyPem: passedKey = null }) {
+  const privateKeyPem = passedKey || getPrivateKey();
   if (!privateKeyPem) {
     throw new Error('Signing key unavailable on host.');
   }

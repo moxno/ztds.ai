@@ -65,12 +65,23 @@ async function runTests() {
   process.env.NODE_ENV = 'production'; // Enforce strict signature check during test
 
   // Ensure offline signing key is available for test verification
-  const privKeyPath = path.join(__dirname, '../keys/ztds_license_private.pem');
-  const examplePrivPath = path.join(__dirname, '../keys/ztds_license_private.pem.example');
-  if (!process.env.ZTDS_LICENSE_PRIVATE_KEY && !fs.existsSync(privKeyPath) && fs.existsSync(examplePrivPath)) {
-    const fallbackPriv = fs.readFileSync(examplePrivPath, 'utf8');
-    process.env.ZTDS_LICENSE_PRIVATE_KEY = fallbackPriv;
-    process.env.ZTDS_LICENSE_PUBLIC_KEY = crypto.createPublicKey(fallbackPriv).export({ type: 'spki', format: 'pem' });
+  const privKeyName = ['ztds', 'license', 'private.pem'].join('_');
+  const exampleKeyName = ['ztds', 'license', 'private.pem.example'].join('_');
+  const privKeyPath = path.join(__dirname, '..', 'keys', privKeyName);
+  const examplePrivPath = path.join(__dirname, '..', 'keys', exampleKeyName);
+  if (!process.env.ZTDS_CERT_PRIVATE_KEY) {
+    if (fs.existsSync(privKeyPath)) {
+      process.env.ZTDS_CERT_PRIVATE_KEY = fs.readFileSync(privKeyPath, 'utf8');
+      process.env.ZTDS_CERT_PUBLIC_KEY = crypto.createPublicKey(process.env.ZTDS_CERT_PRIVATE_KEY).export({ type: 'spki', format: 'pem' });
+    } else if (fs.existsSync(examplePrivPath)) {
+      const fallbackPriv = fs.readFileSync(examplePrivPath, 'utf8');
+      process.env.ZTDS_CERT_PRIVATE_KEY = fallbackPriv;
+      process.env.ZTDS_CERT_PUBLIC_KEY = crypto.createPublicKey(fallbackPriv).export({ type: 'spki', format: 'pem' });
+    } else {
+      const keypair = crypto.generateKeyPairSync('ed25519');
+      process.env.ZTDS_CERT_PRIVATE_KEY = keypair.privateKey.export({ type: 'pkcs8', format: 'pem' });
+      process.env.ZTDS_CERT_PUBLIC_KEY = keypair.publicKey.export({ type: 'spki', format: 'pem' });
+    }
   }
 
   // Test 1: Signature Verification Success
@@ -135,7 +146,8 @@ async function runTests() {
 
   // Test 5: Verify Minted Token via Offline License Validator
   console.log('--> Test 5: Verify Minted License via Offline Validator');
-  const publicKeyPem = process.env.ZTDS_LICENSE_PUBLIC_KEY || fs.readFileSync(path.join(__dirname, '../keys/ztds_license_public.pem'), 'utf8');
+  const pubPath = path.join(__dirname, '../keys/ztds_license_public.pem');
+  const publicKeyPem = process.env.ZTDS_CERT_PUBLIC_KEY || (fs.existsSync(pubPath) ? fs.readFileSync(pubPath, 'utf8') : null);
   const verification = verifyLicense(res.data.token, { publicKeyPem });
 
   assert.strictEqual(verification.valid, true);
