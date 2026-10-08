@@ -1,0 +1,18 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      debug:
+        type: boolean
+        description: "Enable verbose debug logging for stdio frames"
+        default: false
+  commandFunction: |-
+    (config) => ({
+      command: 'npx',
+      args: ['-y', 'ztds-mcp@1.2.1'],
+      env: config && config.debug ? { DEBUG: 'true' } : {}
+    })
+
+exampleConfig:
+  debug: false
