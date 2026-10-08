@@ -801,7 +801,7 @@
         </div>
         <pre class="p-4 font-mono text-sm text-slate-100 overflow-x-auto"><code id="cmd-init">npx ztds-mcp init</code></pre>
         <div class="mt-2 text-xs font-mono text-slate-400">
-          Scans filesystem for Cursor, Claude Desktop, and Windsurf config files, creates backups, and merges the zero-trust stdio definition.
+          Scans filesystem for Cursor, Claude Desktop, Windsurf, and Google Antigravity config files, creates backups, and merges the zero-trust stdio definition.
         </div>
       </div>
 
@@ -869,6 +869,7 @@
               <button type="button" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer" data-client="cli">Claude Code CLI</button>
               <button type="button" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer" data-client="windsurf">Windsurf</button>
               <button type="button" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer" data-client="zed">Zed Editor</button>
+              <button type="button" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer" data-client="antigravity">Antigravity</button>
             </div>
           </div>
 
@@ -1031,7 +1032,7 @@
                 </span>
                 <span class="text-xs font-mono text-slate-400">Apache-2.0 &middot; CC BY 4.0</span>
               </div>
-              <h3 class="text-xl font-bold text-slate-900 mb-2">ztds-mcp (v1.1.1)</h3>
+              <h3 class="text-xl font-bold text-slate-900 mb-2">ztds-mcp (v1.2.1)</h3>
               <p class="text-xs text-slate-600 leading-relaxed mb-4">
                 The open-source baseline reference implementation developed by the ZTDS Consortium. Zero external dependencies, pure standard library execution in volatile RAM.
               </p>
@@ -1387,6 +1388,16 @@
             windows: 'notepad %APPDATA%\\Zed\\settings.json',
             linux: 'nano ~/.config/zed/settings.json'
           }
+        },
+        antigravity: {
+          macos: '~/.gemini/config/plugins/ztds-guard',
+          windows: '%USERPROFILE%\\.gemini\\config\\plugins\\ztds-guard',
+          linux: '~/.gemini/config/plugins/ztds-guard',
+          openCmd: {
+            macos: 'agy plugin install https://github.com/moxno/ztds.ai',
+            windows: 'agy plugin install https://github.com/moxno/ztds.ai',
+            linux: 'agy plugin install https://github.com/moxno/ztds.ai'
+          }
         }
       };
 
@@ -1420,6 +1431,8 @@
             }
           }
           codeOutput = cmd;
+        } else if (currentClient === 'antigravity') {
+          codeOutput = `# Install directly in Google Antigravity:\nagy plugin install https://github.com/moxno/ztds.ai\n\n# Or auto-configure locally in 1 click:\nnpx ztds-mcp init --antigravity`;
         } else if (currentClient === 'zed') {
           const zedObj = {
             context_servers: {
@@ -1455,6 +1468,8 @@
         if (terminalHint) {
           if (currentClient === 'cli') {
             terminalHint.textContent = 'Run directly in terminal where claude CLI is authenticated';
+          } else if (currentClient === 'antigravity') {
+            terminalHint.textContent = 'Run in terminal to install plugin or run "npx ztds-mcp init --antigravity"';
           } else {
             terminalHint.textContent = `Terminal Open: ${currentOpen}`;
           }
