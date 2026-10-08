@@ -64,6 +64,12 @@ function mintToken({ customerName, tier = 'developer_pro', days = 14, nodes = 3,
     throw new Error('Signing key unavailable on host.');
   }
 
+  if (process.env.NODE_ENV === 'test' && !process.env.ZTDS_CERT_PUBLIC_KEY) {
+    try {
+      process.env.ZTDS_CERT_PUBLIC_KEY = crypto.createPublicKey(privateKeyPem).export({ type: 'spki', format: 'pem' });
+    } catch (_) {}
+  }
+
   const now = new Date();
   const expiresDate = new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
   const tierPrefix = tier.includes('eval') ? 'EVAL' : (tier === 'teams' ? 'TEAMS' : 'DEV');
