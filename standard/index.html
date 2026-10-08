@@ -95,7 +95,7 @@
             "name": "What is the Zero-Trust Data Sanitization (ZTDS) RFC v1.0 standard?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "ZTDS RFC v1.0 is an open technical standard defining mathematical proofs, cryptographic isolation invariants, and in-memory de-identification rules for zero-trust data protection in enterprise LLM and agentic workflows."
+              "text": "ZTDS RFC v1.0 is an open technical standard defining architectural execution boundaries, cryptographic isolation invariants, and in-memory de-identification rules for zero-trust data protection in enterprise LLM and agentic workflows."
             }
           },
           {
@@ -259,7 +259,7 @@
           <ul class="space-y-2 text-xs">
             <li><a href="#metadata" class="text-slate-600 hover:text-slate-900 transition-colors block">00. Document Metadata</a></li>
             <li><a href="#scope" class="text-slate-600 hover:text-slate-900 transition-colors block">01. Scope &amp; Threat Model</a></li>
-            <li><a href="#math" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors block flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> 02. Mathematical Foundation</a></li>
+            <li><a href="#math" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors block flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> 02. System &amp; Memory Foundation</a></li>
             <li><a href="#invariants" class="text-slate-600 hover:text-slate-900 transition-colors block">03. The 4 Non-Negotiable Invariants</a></li>
             <li><a href="#taxonomy" class="text-slate-600 hover:text-slate-900 transition-colors block">04. Surrogate Token Taxonomy</a></li>
             <li><a href="#context" class="text-slate-600 hover:text-slate-900 transition-colors block">05. Context Preservation &amp; Recovery</a></li>
@@ -332,7 +332,7 @@
             </div>
             <div>
               <span class="text-slate-400 block text-[11px] font-medium uppercase font-mono">Patent &amp; TM</span>
-              <a href="/terms/" class="text-slate-900 font-semibold hover:text-emerald-700 transition-colors">Patents Pending &middot; #182655957</a>
+              <a href="/terms/" class="text-slate-900 font-semibold hover:text-emerald-700 transition-colors" title="U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS™ #182655957">Patents Pending &middot; TM Reg.</a>
             </div>
             <div>
               <span class="text-slate-400 block text-[11px] font-medium uppercase font-mono">Zenodo DOI</span>
@@ -386,47 +386,47 @@
             </div>
           </section>
 
-          <!-- Section 02: Formal Mathematical Foundation -->
+          <!-- Section 02: System Execution & Memory Boundary Foundation -->
           <section id="math">
             <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans">
-              <span class="text-emerald-600 font-mono">02.</span> Formal Mathematical Foundation
+              <span class="text-emerald-600 font-mono">02.</span> System Execution &amp; Memory Boundary Foundation
             </h2>
             <p class="mb-4">
-              Let an input payload or prompt <span class="font-mono font-semibold">P</span> represent a sequence of tokens composed of non-sensitive tokens <span class="font-mono font-semibold">U</span> and sensitive entities <span class="font-mono font-semibold">S</span>:
+              ZTDS defines strict physical execution and memory boundary constraints on the local computing host. Let an input stream <span class="font-mono font-semibold">P</span> represent a token sequence composed of non-sensitive tokens <span class="font-mono font-semibold">U</span> and sensitive entities <span class="font-mono font-semibold">S</span>:
             </p>
             
             <div class="p-5 rounded-xl bg-slate-900 text-emerald-400 font-mono text-xs space-y-3 leading-relaxed border border-slate-800">
               <div>P = U &cup; S, &nbsp;where U &cap; S = &empty;</div>
-              <div class="text-slate-400 text-[11px]">// S is the set of discrete entity instances: S = {s_1, s_2, ..., s_k}</div>
+              <div class="text-slate-400 text-[11px]">// S is the set of discrete entity instances: S = {s_1, s_2, ..., s_k} detected in local process memory</div>
               <div class="pt-2 border-t border-slate-800">
-                1. Local In-Memory Transformation T: S &rarr; M<br>
-                &nbsp;&nbsp;&nbsp;M = {m_1, m_2, ..., m_k}, &nbsp;where each m_i = "[TYPE_N]"
+                1. Local Host RAM Transformation T: S &rarr; M<br>
+                &nbsp;&nbsp;&nbsp;M = {m_1, m_2, ..., m_k}, &nbsp;where each surrogate token m_i = "[TYPE_N]"
               </div>
               <div>
-                2. Physical WAN Socket Transmission:<br>
-                &nbsp;&nbsp;&nbsp;Payload_wan = U &cup; M<br>
+                2. Physical Network Socket Boundary Lock:<br>
+                &nbsp;&nbsp;&nbsp;Payload_socket = U &cup; M<br>
                 &nbsp;&nbsp;&nbsp;&Delta;Egress(S) &equiv; 0.00 bytes &forall; t &isin; [0, &infin;)
               </div>
               <div>
-                3. Information-Theoretic Entropy Bound (Shannon):<br>
-                &nbsp;&nbsp;&nbsp;I(S; Payload_wan) &equiv; 0 bits &nbsp;&rArr;&nbsp; H(S | M) = H(S)<br>
-                &nbsp;&nbsp;&nbsp;Zero mutual information leakage across network perimeter.
+                3. Physical Host Memory Demarcation Bound:<br>
+                &nbsp;&nbsp;&nbsp;Information-Theoretic Security: I(S; Payload_socket) &equiv; 0 bits<br>
+                &nbsp;&nbsp;&nbsp;Zero cleartext entity state crosses the OS network interface controller (NIC).
               </div>
               <div>
-                4. Mapping Dictionary R = {(m_i, s_i)} Scoped Strictly in Volatile RAM:<br>
-                &nbsp;&nbsp;&nbsp;R &sube; M_volatile, &nbsp;DiskWrite(R) &equiv; 0, &nbsp;H(S | M, R) = 0
+                4. Volatile Heap Mapping Table R = {(m_i, s_i)} Isolated in RAM:<br>
+                &nbsp;&nbsp;&nbsp;R &sube; Host_Volatile_RAM, &nbsp;DiskWrite(R) &equiv; 0, &nbsp;NonVolatileStorage &equiv; &empty;
               </div>
               <div>
-                5. Deterministic Bijective Inversion on Local Client Layer:<br>
-                &nbsp;&nbsp;&nbsp;P_final = T^(-1)(P_out, R)
+                5. Deterministic Client Rehydration:<br>
+                &nbsp;&nbsp;&nbsp;P_final = T^(-1)(Response_payload, R) &mdash; Reconstructed solely on the client endpoint.
               </div>
               <div class="text-slate-400 text-[11px] pt-1 border-t border-slate-800">
-                6. Memory Lifecycle Elimination: lim_{t &rarr; session_end} R = &empty;
+                6. Cryptographic Memory Zeroization: lim_{t &rarr; session_end} R = &empty; (explicit memory wipe on termination)
               </div>
             </div>
 
             <p class="mt-4 text-xs text-slate-600 leading-relaxed">
-              Because mapping dictionary <span class="font-mono font-semibold">R</span> exists solely within volatile memory <span class="font-mono font-semibold">M_volatile</span> of the client node and is never transmitted over external sockets, no third-party infrastructure ever achieves custody of cleartext entities. Subprocessor liability is mathematically nullified.
+              Because mapping table <span class="font-mono font-semibold">R</span> exists solely within volatile heap memory of the client host process and is strictly blocked from secondary non-volatile media and outbound network interfaces, no third-party infrastructure or external subprocessor ever gains custody of cleartext data. Subprocessor classification under GDPR Article 28 is completely eliminated.
             </p>
           </section>
 
@@ -446,9 +446,9 @@
                   <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono"><dfn class="not-italic">Invariant 1 &middot; Zero External Egress Prior to Sanitization</dfn></span>
                   <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">MANDATORY</span>
                 </div>
-                <h3 class="text-base font-bold text-slate-900 mb-2">Mathematical Socket Egress Elimination</h3>
+                <h3 class="text-base font-bold text-slate-900 mb-2">Physical Socket Egress Elimination</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                  The mandatory security rule that raw personally identifiable information (PII), protected health information (PHI), financial accounts, or corporate secrets must never cross the local hardware or process perimeter unmasked. Sanitization occurs strictly prior to socket write, mathematically guaranteeing zero external data egress: <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">Egress(S) == 0.00 bytes</code>.
+                  The mandatory architectural rule that raw personally identifiable information (PII), protected health information (PHI), financial accounts, or corporate secrets must never cross the local hardware or process perimeter unmasked. Sanitization occurs strictly prior to socket write, physically guaranteeing zero external data egress: <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">Egress(S) == 0.00 bytes</code>.
                 </p>
               </div>
 
@@ -583,7 +583,7 @@
                   <span class="px-2 py-0.5 rounded bg-emerald-700 text-white font-mono text-[10px] font-bold uppercase">Layer 2: 30 Specialized Industry Profiles</span>
                   <span class="text-xs text-slate-500 font-mono">Enterprise Engine &middot; Cryptographic Validation</span>
                 </div>
-                <a href="/docs/ZTDS_Entity_Taxonomy_and_25_Profiles_SSOT.md" class="text-emerald-700 hover:underline font-mono text-xs hidden sm:inline">SSOT Taxonomy Specification &rarr;</a>
+                <span class="text-slate-500 font-mono text-xs hidden sm:inline">Universal Open Taxonomy &middot; RFC v1.0 Normative</span>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs">
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">

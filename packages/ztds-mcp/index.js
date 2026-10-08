@@ -22,7 +22,7 @@ import path from 'path';
 import os from 'os';
 
 const SERVER_NAME = 'ztds-mcp';
-const SERVER_VERSION = '1.1.1';
+const SERVER_VERSION = '1.2.1';
 const PROTOCOL_VERSION = '2024-11-05';
 
 // Security & Resource Constraints (DoS Prevention)
