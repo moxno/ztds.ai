@@ -6,6 +6,7 @@
 [![OSF DOI](https://img.shields.io/badge/OSF-10.17605%2FOSF.IO%2F5BYJF-blue.svg)](https://doi.org/10.17605/OSF.IO/5BYJF)
 [![Patent Pending](https://img.shields.io/badge/Patent_Pending-IL_331905-purple.svg)](https://ztds.ai/certification/)
 [![WAN Egress](https://img.shields.io/badge/Sensitive_WAN_Egress-0.00_Bytes-emerald.svg)](https://ztds.ai/scanner/)
+[![Smithery Badge](https://smithery.ai/badge/ilsimox/ztds-mcp)](https://smithery.ai/servers/ilsimox/ztds-mcp)
 
 The official developer CLI and automated CI/CD auditor for the **Zero-Trust Data Sanitization (ZTDS™ RFC v1.0)** architecture. Maintained by the **ZTDS AI Consortium**.
 
