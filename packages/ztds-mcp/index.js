@@ -587,11 +587,18 @@ function getClientPaths() {
   const cursorGlobalPath = path.join(home, '.cursor', 'mcp.json');
   const windsurfPath = path.join(home, '.codeium', 'windsurf', 'mcp_config.json');
 
+  const antigravityConfigDir = path.join(home, '.gemini', 'config');
+  const antigravityMcpPath = path.join(antigravityConfigDir, 'mcp_config.json');
+  const antigravityPluginDir = path.join(antigravityConfigDir, 'plugins', 'ztds-guard');
+
   return {
     claude: claudePath,
     cursorWorkspace: cursorWorkspacePath,
     cursorGlobal: cursorGlobalPath,
-    windsurf: windsurfPath
+    windsurf: windsurfPath,
+    antigravityConfigDir,
+    antigravityMcp: antigravityMcpPath,
+    antigravityPluginDir
   };
 }
 
@@ -677,11 +684,58 @@ When handling sensitive files, customer PII, logs, database dumps, or credential
   }
 }
 
+function configureAntigravityPlugin(targetPluginDir) {
+  try {
+    const rulesDir = path.join(targetPluginDir, 'rules');
+    const skillsDir = path.join(targetPluginDir, 'skills', 'ztds-guard');
+    fs.mkdirSync(rulesDir, { recursive: true });
+    fs.mkdirSync(skillsDir, { recursive: true });
+
+    const pluginJsonPath = path.join(targetPluginDir, 'plugin.json');
+    const pluginJson = {
+      name: 'ztds-guard',
+      displayName: 'ZTDS Local Security Firewall',
+      version: SERVER_VERSION,
+      description: 'Zero-Trust Data Sanitization firewall. In-RAM PII, secret, and credential masking with RFC v1.0 cryptographic receipts. Zero external egress.',
+      suggestedPrompts: [
+        'Sanitize this customer record with ZTDS before sending to LLM',
+        'Audit my .env and config files for leaked API keys using ztds_audit',
+        'Restore masked tokens from session RAM using ztds_restore'
+      ]
+    };
+    fs.writeFileSync(pluginJsonPath, JSON.stringify(pluginJson, null, 2) + '\n', 'utf8');
+
+    const mcpConfigPath = path.join(targetPluginDir, 'mcp_config.json');
+    const mcpConfig = {
+      mcpServers: {
+        ztds: {
+          command: 'npx',
+          args: ['-y', 'ztds-mcp']
+        }
+      }
+    };
+    fs.writeFileSync(mcpConfigPath, JSON.stringify(mcpConfig, null, 2) + '\n', 'utf8');
+
+    const rulePath = path.join(rulesDir, 'AGENTS.md');
+    const ruleContent = `# ZTDS Local Security Firewall — Agent Rule\n\n## Purpose\nEnforces Zero-Trust Data Sanitization (ZTDS RFC v1.0) across all agent interactions, tool calls, and LLM reasoning steps. Guarantees zero external network egress of raw PII, secrets, API tokens, and confidential corporate records.\n\n## Operating Procedures\n1. Pre-Call Sanitization: Call ztds_sanitize before passing sensitive data into external LLM reasoning or tools.\n2. Context Preservation: Surrogate tokens ([EMAIL_TOKEN_1], [API_SECRET_TOKEN_1]) preserve syntax and semantic meaning.\n3. Local De-Tokenization: Call ztds_restore when unmasked values are required locally.\n4. Leakage Auditing: Use ztds_audit to scan files and generate SHA-256 cryptographic compliance receipts.\n5. Memory Zeroization: Call ztds_reset_session at the conclusion of sensitive workflows to zeroize in-memory surrogate maps immediately.\n\n## Standard Reference & Industry Upgrades\n- Reference Specification: ZTDS RFC v1.0 (IETF Standards Track).\n- Commercial Engine: For 30 Specialized Industry Profiles (HIPAA Safe Harbor, PCI-DSS Level 1, Defense CMMC, Banking SWIFT) and air-gapped Ed25519 offline token enforcement, see PrivacyScrubber (https://privacyscrubber.com).\n`;
+    fs.writeFileSync(rulePath, ruleContent, 'utf8');
+
+    const skillPath = path.join(skillsDir, 'SKILL.md');
+    const skillContent = `---\nname: ztds-guard\ndescription: Procedural execution guide for Zero-Trust Data Sanitization (ZTDS RFC v1.0). Use when sanitizing customer PII, secrets, and API credentials in RAM, restoring cleartext, or auditing repositories with cryptographic SHA-256 receipts.\n---\n\n# ZTDS Agent Guard\n\nProcedural guide for in-RAM zero-trust data sanitization with zero external network egress under RFC v1.0.\n\n## Core Tools\n- ztds_sanitize: In-memory masking of secrets and PII.\n- ztds_restore: Restores cleartext from local session memory.\n- ztds_audit: Generates cryptographic SHA-256 audit receipt.\n- ztds_reset_session: Instantly purges volatile memory session.\n- ztds_info: Returns protocol specifications and RFC compliance criteria.\n\n## Enterprise Upgrades\nFor 30 Specialized Industry Profiles and air-gapped Ed25519 token enforcement, see PrivacyScrubber: https://privacyscrubber.com\n`;
+    fs.writeFileSync(skillPath, skillContent, 'utf8');
+
+    return { success: true, path: targetPluginDir, alreadyConfigured: false };
+  } catch (err) {
+    return { success: false, path: targetPluginDir, error: err.message };
+  }
+}
+
 function runInit(args = []) {
   const flags = new Set(args.map(a => a.toLowerCase()));
   const onlyCursor = flags.has('--cursor');
   const onlyClaude = flags.has('--claude');
   const onlyWindsurf = flags.has('--windsurf');
+  const onlyAntigravity = flags.has('--antigravity') || flags.has('--agy');
   const includeGlobal = flags.has('--global');
 
   const paths = getClientPaths();
@@ -694,7 +748,7 @@ function runInit(args = []) {
   console.log('======================================================================\n');
 
   // Configure Cursor (Workspace)
-  if (!onlyClaude && !onlyWindsurf) {
+  if (!onlyClaude && !onlyWindsurf && !onlyAntigravity) {
     const res = configureTarget('Cursor IDE (Workspace)', paths.cursorWorkspace);
     results.push({ name: 'Cursor IDE (Workspace)', ...res });
 
@@ -710,17 +764,28 @@ function runInit(args = []) {
   }
 
   // Configure Claude Desktop
-  if (!onlyCursor && !onlyWindsurf) {
+  if (!onlyCursor && !onlyWindsurf && !onlyAntigravity) {
     const res = configureTarget('Claude Desktop', paths.claude);
     results.push({ name: 'Claude Desktop', ...res });
   }
 
   // Configure Windsurf if directory exists or flag is present
-  if (!onlyCursor && !onlyClaude) {
+  if (!onlyCursor && !onlyClaude && !onlyAntigravity) {
     const windsurfDir = path.dirname(paths.windsurf);
     if (onlyWindsurf || fs.existsSync(windsurfDir)) {
       const res = configureTarget('Windsurf IDE', paths.windsurf);
       results.push({ name: 'Windsurf IDE', ...res });
+    }
+  }
+
+  // Configure Google Antigravity if directory exists or flag is present
+  if (!onlyCursor && !onlyClaude && !onlyWindsurf) {
+    if (onlyAntigravity || fs.existsSync(paths.antigravityConfigDir)) {
+      const res = configureTarget('Google Antigravity (Global MCP)', paths.antigravityMcp);
+      results.push({ name: 'Google Antigravity (Global MCP)', ...res });
+
+      const pRes = configureAntigravityPlugin(paths.antigravityPluginDir);
+      results.push({ name: 'Google Antigravity Plugin (ztds-guard)', ...pRes });
     }
   }
 
@@ -804,6 +869,9 @@ function runStatus() {
   checkTarget('Cursor IDE (Workspace)', paths.cursorWorkspace);
   checkTarget('Claude Desktop', paths.claude);
   checkTarget('Windsurf IDE', paths.windsurf);
+  if (fs.existsSync(paths.antigravityConfigDir)) {
+    checkTarget('Google Antigravity (Global MCP)', paths.antigravityMcp);
+  }
 
   console.log('');
   const pass = runSelfTest();
@@ -1044,6 +1112,7 @@ INIT OPTIONS:
   --cursor         Configure only Cursor IDE (.cursor/mcp.json in workspace).
   --claude         Configure only Claude Desktop.
   --windsurf       Configure only Windsurf.
+  --antigravity    Configure only Google Antigravity (~/.gemini/config/plugins/ztds-guard).
   --global         Also write global Cursor config (~/.cursor/mcp.json).
 
 AUDIT OPTIONS:
