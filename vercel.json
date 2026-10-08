@@ -54,6 +54,10 @@
       "destination": "/public/.well-known/security.txt"
     },
     {
+      "source": "/.well-known/mcp/server-card.json",
+      "destination": "/public/.well-known/mcp/server-card.json"
+    },
+    {
       "source": "/docs/:path*",
       "destination": "/public/docs/:path*"
     },
@@ -160,6 +164,14 @@
         { "key": "Access-Control-Allow-Origin", "value": "*" },
         { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    {
+      "source": "/.well-known/mcp/server-card.json",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Content-Type", "value": "application/json; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
       ]
     },
     {
