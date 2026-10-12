@@ -97,7 +97,7 @@ damages resulting from third-party implementations, software errors, or data bre
 
 ## 6. Multi-Vertical Statutory Risk Analysis & Defensive Doctrines
 
-To eliminate downstream civil, criminal, and regulatory liability across specialized commercial sectors, the ZTDS standard establishes normative statutory non-reliance schedules defined in [`docs/legal/ZTDS_Multi_Vertical_Statutory_Insulation_Specification.md`](file:///Users/ilya/Desktop/ZTDS%20AI/docs/legal/ZTDS_Multi_Vertical_Statutory_Insulation_Specification.md):
+To eliminate downstream civil, criminal, and regulatory liability across specialized commercial sectors, the ZTDS standard establishes normative statutory non-reliance schedules defined in [`docs/legal/ZTDS_Multi_Vertical_Statutory_Insulation_Specification.md`](docs/legal/ZTDS_Multi_Vertical_Statutory_Insulation_Specification.md):
 
 1. **Healthcare & Life Sciences (HIPAA / HITECH / FDA)**: Software executes strictly in client volatile memory with zero server-side storage; maintainers are excluded from Business Associate status under 45 CFR § 160.103. Software assists with 45 CFR § 164.514(b)(2) Safe Harbor 18 identifiers; covered entities maintain the affirmative non-delegable duty of pre-dispatch clinical audit.
 2. **Legal Practice & Litigation (FRE 502 / ABA Model Rule 1.6)**: Software performs mathematical tokenization; it does not render legal advice or evaluate privilege doctrine. Counsel retains the ethical obligation to ensure external AI terms do not waive work-product or attorney-client privilege.

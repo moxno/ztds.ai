@@ -5,7 +5,7 @@
  * dispatch request to secdispatch@ietf.org and Security Area Directors via Resend API.
  * 
  * Sender: Ilya Sibiryakov <ilya@brandmeweb.com>
- * SSOT Content: /Users/ilya/Desktop/ZTDS AI/docs/ietf/SECDISPATCH_SUBMISSION_REQUEST.md
+ * SSOT Content: docs/ietf/SECDISPATCH_SUBMISSION_REQUEST.md
  */
 
 const fs = require('fs');

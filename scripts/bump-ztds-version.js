@@ -6,7 +6,7 @@
  * Atomically enforces universal version parity across:
  * 1. Root & Core Package Manifests (package.json, packages/ztds-core/package.json)
  * 2. Python Reference Package (packages/ztds/pyproject.toml & src/ztds/__init__.py)
- * 3. Standalone Mirrors (/Users/ilya/Desktop/ZTDS_Ecosystem/ztds-python)
+ * 3. Standalone Mirrors (../ZTDS_Ecosystem/ztds-python)
  * 4. RFC v1.0 Conformance Test Vectors (conformance/ztds-test-vectors.json)
  * 5. Ecosystem Schema Manifests (data/registry.json, data/companies.json, data/fellows.json)
  * 6. Public Registry Hub Cards (registry/index.html)
@@ -29,7 +29,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
-const STANDALONE_PYTHON_DIR = '/Users/ilya/Desktop/ZTDS_Ecosystem/ztds-python';
+const STANDALONE_PYTHON_DIR = process.env.STANDALONE_PYTHON_DIR || path.resolve(ROOT, '../ZTDS_Ecosystem/ztds-python');
 
 function readFile(relPath) {
   try {
