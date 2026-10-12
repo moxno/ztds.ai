@@ -790,17 +790,25 @@
       let currentZoom = 1;
       let currentSvgXml = '';
 
-      // Attempt to load dynamic registry
-      fetch('/data/registry.json')
-        .then(r => r.json())
-        .then(data => {
-          if (data && Array.isArray(data.entities)) {
-            data.entities.forEach(e => {
+      // Attempt to load dynamic registry and corporate adopters
+      Promise.all([
+        fetch('/data/registry.json').then(r => r.json()).catch(() => ({ entities: [] })),
+        fetch('/data/companies.json').then(r => r.json()).catch(() => ({ companies: [] }))
+      ])
+        .then(([regData, compData]) => {
+          if (regData && Array.isArray(regData.entities)) {
+            regData.entities.forEach(e => {
               if (e.slug) registeredSlugs.add(e.slug.toLowerCase());
               if (e.id) registeredSlugs.add(e.id.toLowerCase());
             });
-            updateBadge();
           }
+          if (compData && Array.isArray(compData.companies)) {
+            compData.companies.forEach(c => {
+              if (c.slug) registeredSlugs.add(c.slug.toLowerCase());
+              if (c.id) registeredSlugs.add(c.id.toLowerCase());
+            });
+          }
+          updateBadge();
         })
         .catch(() => {});
 
@@ -937,11 +945,12 @@
           remoteUrl += `?${queryParams.join('&')}`;
         }
 
-        codeMd.textContent = `[![ZTDS ${effectiveLabel}](${remoteUrl})](https://ztds.ai/registry/)`;
-        codeHtml.textContent = `<a href="https://ztds.ai/registry/"><img src="${remoteUrl}" alt="ZTDS ${effectiveLabel}"></a>`;
+        const verifyUrl = `https://ztds.ai/verify/?target=${encodeURIComponent(activeSlug)}`;
+        codeMd.textContent = `[![ZTDS ${effectiveLabel}](${remoteUrl})](${verifyUrl})`;
+        codeHtml.textContent = `<a href="${verifyUrl}"><img src="${remoteUrl}" alt="ZTDS ${effectiveLabel}"></a>`;
         codeSvg.textContent = currentSvgXml;
         if (codeReact) {
-          codeReact.textContent = `<a href="https://ztds.ai/registry/" target="_blank" rel="noopener noreferrer">\n  <img src="${remoteUrl}" alt="ZTDS ${effectiveLabel}" width={168} height={22} />\n</a>`;
+          codeReact.textContent = `<a href="${verifyUrl}" target="_blank" rel="noopener noreferrer">\n  <img src="${remoteUrl}" alt="ZTDS ${effectiveLabel}" width={168} height={22} />\n</a>`;
         }
       }
 

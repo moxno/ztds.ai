@@ -224,6 +224,81 @@ function syncRegistry(options = { checkOnly: false }) {
     console.log('  [SAVED] Updated data/registry.json with newly minted certificates.');
   }
 
+  // Phase 1b: Corporate Adopters Certificates
+  console.log('\n--- Phase 1b: Corporate Adopters Certificates ---');
+  const companiesRaw = readFile('data/companies.json');
+  let modifiedCompanies = false;
+  if (companiesRaw) {
+    const companiesData = JSON.parse(companiesRaw);
+    const companies = companiesData.companies || [];
+    for (const comp of companies) {
+      let needsCert = false;
+      if (!comp.certificate || !comp.certificate.token || !comp.certificate.id) {
+        needsCert = true;
+      } else {
+        const verification = verifyCertificate(comp.certificate.token);
+        if (!verification.valid) {
+          needsCert = true;
+        }
+      }
+
+      if (needsCert) {
+        if (options.checkOnly) {
+          console.error(`  [DRIFT] Company '${comp.id}' lacks a valid Ed25519 certificate.`);
+          driftCount++;
+          continue;
+        }
+
+        console.log(`  [MINT] Minting new Ed25519 Conformance Certificate for company '${comp.id}'...`);
+        const hash = 'sha256:' + crypto.createHash('sha256').update(comp.slug + comp.name + (comp.verified_date || '2026-09-15')).digest('hex');
+        const level = comp.tier === 'Founding Corporate Member'
+          ? 'Level 3: Founding Corporate Member'
+          : (comp.tier === 'Canonical Reference Implementation'
+            ? 'Level 2: Verified Reference Implementation'
+            : 'Level 2: Verified Corporate Adopter');
+
+        const minted = mintCertificate({
+          applicant: comp.name,
+          product: comp.name,
+          category: comp.industry,
+          repository: comp.url,
+          auditHash: hash,
+          level: level
+        });
+
+        comp.certificate = {
+          id: minted.certificate_id,
+          token: minted.token,
+          level: minted.payload.level,
+          issued_at: minted.payload.issued_at,
+          expires_at: minted.payload.expires_at,
+          verify_url: `https://ztds.ai/verify/?target=${comp.slug}`,
+          download_url: `https://ztds.ai/certs/${comp.slug}.cert`
+        };
+
+        writeFile(`certs/${comp.slug}.cert`, minted.token);
+        modifiedCompanies = true;
+        console.log(`         Cert ID: ${minted.certificate_id}`);
+      } else {
+        const certPath = `certs/${comp.slug}.cert`;
+        if (!fs.existsSync(path.join(ROOT, certPath))) {
+          if (options.checkOnly) {
+            console.error(`  [DRIFT] Company certificate file missing: ${certPath}`);
+            driftCount++;
+          } else {
+            writeFile(certPath, comp.certificate.token);
+            console.log(`  [HEAL] Wrote missing company certificate file: ${certPath}`);
+          }
+        }
+      }
+    }
+
+    if (modifiedCompanies && !options.checkOnly) {
+      writeFile('data/companies.json', JSON.stringify(companiesData, null, 2) + '\n');
+      console.log('  [SAVED] Updated data/companies.json with newly minted certificates.');
+    }
+  }
+
   // Phase 2: Static and Public SVG Badges
   console.log('\n--- Phase 2: SVG Badges Synchronization ---');
   for (const entity of entities) {

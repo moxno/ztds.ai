@@ -121,10 +121,20 @@ console.log('\n--> Test 3: Essential DOM IDs & Interactive Workbench Controls');
     'verifiedBadgeMount',
     'btnDownloadBadgeSvg',
     'btnDownloadCertJson',
+    'btnDownloadCertPdf',
     'badgeMarkdownInput',
     'badgeHtmlInput',
     'btnCopyBadgeMd',
-    'btnCopyBadgeHtml'
+    'btnCopyBadgeHtml',
+    'targetEntityBanner',
+    'modalCertificatePrint',
+    'btnPrintCertAction',
+    'btnCloseCertModal',
+    'certificatePrintArea',
+    'certModalEntityName',
+    'certModalProductLine',
+    'certModalId',
+    'certModalAuditHash'
   ];
 
   for (const id of requiredIds) {

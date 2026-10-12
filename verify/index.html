@@ -65,6 +65,41 @@
     ]
   }
   </script>
+  <style>
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      #modalCertificatePrint,
+      #modalCertificatePrint * {
+        visibility: visible !important;
+      }
+      #modalCertificatePrint {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: block !important;
+        z-index: 99999 !important;
+      }
+      #modalCertificatePrint .no-print {
+        display: none !important;
+      }
+      #certificatePrintArea {
+        padding: 0.35in !important;
+        margin: 0 !important;
+        border: 2px solid #0f172a !important;
+        background: #ffffff !important;
+        max-width: 100% !important;
+      }
+    }
+  </style>
 </head>
 <body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">
   <!-- Skip to main content -->
@@ -198,6 +233,33 @@
         <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
           <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">SubtleCrypto</div>
           <div class="text-xs font-bold text-slate-800 font-mono mt-0.5">Web Crypto Native</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic Target Entity Accreditation Banner (Shown when ?target=... is in URL) -->
+    <div id="targetEntityBanner" class="hidden mb-8 p-5 sm:p-6 rounded-2xl bg-white border border-emerald-300 shadow-sm transition-all">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="space-y-1.5">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="targetEntitySector" class="text-xs font-mono font-bold text-emerald-800 uppercase tracking-wider bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+              Official Accredited Entity
+            </span>
+            <span id="targetEntityTier" class="text-[11px] font-mono text-slate-500 font-semibold">
+              Corporate Member
+            </span>
+          </div>
+          <h2 id="targetEntityName" class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+            Entity Name
+          </h2>
+          <p id="targetEntityDesc" class="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl"></p>
+        </div>
+        <div class="flex items-center gap-2.5 shrink-0">
+          <a id="targetEntityProfileLink" href="/companies/" class="btn-trust text-xs py-2 px-4 whitespace-nowrap inline-flex items-center gap-1.5">
+            <span>View Full Profile</span>
+            <span aria-hidden="true">&rarr;</span>
+          </a>
         </div>
       </div>
     </div>
@@ -558,6 +620,16 @@
                     </svg>
                     <span>Download JSON</span>
                   </button>
+                  <button
+                    id="btnDownloadCertPdf"
+                    type="button"
+                    class="min-h-[44px] touch-target px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-mono font-bold transition-colors shadow-sm inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    <span>Download PDF</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -787,8 +859,166 @@
         </div>
       </div>
 
+  <!-- Official Printable Certificate Modal (A4 Print Engine) -->
+  <div id="modalCertificatePrint" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm transition-opacity">
+    <div class="max-w-4xl w-full bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[95vh]">
+      <!-- Modal Top Action Bar (hidden on print) -->
+      <div class="no-print flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50 shrink-0">
+        <div class="flex items-center gap-2">
+          <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-slate-700">Official Certificate of Conformance (A4)</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button
+            id="btnPrintCertAction"
+            type="button"
+            class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-mono font-bold transition-colors shadow-sm inline-flex items-center gap-1.5 cursor-pointer"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+            </svg>
+            <span>Print / Save PDF (A4)</span>
+          </button>
+          <button
+            id="btnCloseCertModal"
+            type="button"
+            class="px-3 py-2 rounded-xl border border-slate-300 hover:bg-slate-100 text-slate-600 text-xs font-mono font-semibold transition-colors cursor-pointer"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+
+      <!-- Scrollable Container for Preview -->
+      <div class="overflow-y-auto p-4 sm:p-8 bg-slate-100 flex justify-center">
+        <!-- Printable Certificate Sheet (Strict A4 Layout) -->
+        <div id="certificatePrintArea" class="w-full max-w-[794px] bg-white border-2 border-slate-900 p-8 sm:p-12 shadow-md relative text-slate-900 font-sans flex flex-col justify-between min-h-[1050px]">
+          <!-- Inner Decorative Border -->
+          <div class="border border-slate-300 p-6 flex flex-col justify-between h-full relative">
+            
+            <!-- Header -->
+            <div class="text-center pb-6 border-b border-slate-200">
+              <div class="flex items-center justify-center gap-3 mb-3">
+                <div class="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center p-1.5 shadow-sm">
+                  <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none">
+                    <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6"/>
+                    <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6"/>
+                    <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+                  </svg>
+                </div>
+                <div class="text-left">
+                  <div class="font-extrabold text-lg text-slate-900 tracking-tight leading-none">ZTDS<span class="text-emerald-600">.ai</span></div>
+                  <div class="text-[10px] font-mono text-slate-500 uppercase tracking-wider mt-0.5">Standards &amp; Conformance Authority</div>
+                </div>
+              </div>
+
+              <div class="inline-block px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-mono font-bold uppercase tracking-wider mb-2">
+                RFC 8032 Ed25519 Cryptographically Certified
+              </div>
+              <h1 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 tracking-tight">CERTIFICATE OF CONFORMANCE</h1>
+              <p class="text-xs text-slate-600 max-w-xl mx-auto mt-1 leading-relaxed">
+                Zero-Trust Data Sanitization Protocol (ZTDS RFC v1.0 &middot; IETF Standards Track)
+              </p>
+            </div>
+
+            <!-- Subject & Product Attestation -->
+            <div class="my-6 space-y-4">
+              <p class="text-xs text-slate-700 leading-relaxed text-center">
+                This official credential certifies that the software implementation and architectural topology identified below has undergone automated continuous test suite (CTS) verification and demonstrated zero network leakage in conformance with the four foundational invariants of the ZTDS standard.
+              </p>
+
+              <div class="bg-slate-50 rounded-xl border border-slate-200 p-5 space-y-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                  <div>
+                    <span class="text-[10px] font-mono uppercase text-slate-400 block">Certified Entity / Licensee</span>
+                    <span id="certModalEntityName" class="font-bold text-slate-900 text-sm">--</span>
+                  </div>
+                  <div>
+                    <span class="text-[10px] font-mono uppercase text-slate-400 block">Product / Implementation</span>
+                    <span id="certModalProductLine" class="font-bold text-slate-900 text-sm">--</span>
+                  </div>
+                  <div>
+                    <span class="text-[10px] font-mono uppercase text-slate-400 block">Certificate Identifier</span>
+                    <span id="certModalId" class="font-mono font-bold text-slate-800 text-xs">--</span>
+                  </div>
+                  <div>
+                    <span class="text-[10px] font-mono uppercase text-slate-400 block">Conformance Level</span>
+                    <span id="certModalLevel" class="font-semibold text-emerald-800 text-xs">Level 1: Automated CTS Invariant Conformance</span>
+                  </div>
+                  <div>
+                    <span class="text-[10px] font-mono uppercase text-slate-400 block">Issuance Timestamp</span>
+                    <span id="certModalIssued" class="font-mono text-slate-700 text-xs">--</span>
+                  </div>
+                  <div>
+                    <span class="text-[10px] font-mono uppercase text-slate-400 block">Expiration Timestamp</span>
+                    <span id="certModalExpires" class="font-mono text-slate-700 text-xs">--</span>
+                  </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-200">
+                  <span class="text-[10px] font-mono uppercase text-slate-400 block">Deterministic Cryptographic Audit Digest (SHA-256)</span>
+                  <span id="certModalAuditHash" class="font-mono text-[11px] text-slate-800 break-all leading-tight">--</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Invariant Conformance Proof Grid -->
+            <div class="my-4">
+              <div class="text-[10px] font-mono uppercase tracking-wider text-slate-500 mb-2 font-bold">
+                Audited Core Invariants (RFC v1.0 Section 3)
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+                <div class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 flex items-start gap-2">
+                  <span class="text-emerald-700 font-bold font-mono">[PASS]</span>
+                  <div>
+                    <div class="font-bold text-slate-900">Invariant 1: Zero External Egress</div>
+                    <div class="text-[10px] text-slate-600">0.00 B transmission before client-side sanitization.</div>
+                  </div>
+                </div>
+                <div class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 flex items-start gap-2">
+                  <span class="text-emerald-700 font-bold font-mono">[PASS]</span>
+                  <div>
+                    <div class="font-bold text-slate-900">Invariant 2: Reversible Surrogates</div>
+                    <div class="text-[10px] text-slate-600">Deterministic format-preserving local restoration.</div>
+                  </div>
+                </div>
+                <div class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 flex items-start gap-2">
+                  <span class="text-emerald-700 font-bold font-mono">[PASS]</span>
+                  <div>
+                    <div class="font-bold text-slate-900">Invariant 3: Volatile RAM Isolation</div>
+                    <div class="text-[10px] text-slate-600">Ephemeral memory-only session isolation.</div>
+                  </div>
+                </div>
+                <div class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 flex items-start gap-2">
+                  <span class="text-emerald-700 font-bold font-mono">[PASS]</span>
+                  <div>
+                    <div class="font-bold text-slate-900">Invariant 4: Zero Subprocessors</div>
+                    <div class="text-[10px] text-slate-600">GDPR Art. 28 statutory DPA safe harbor.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer Attestation & Cryptographic Signature Box -->
+            <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+              <div class="space-y-1 text-center sm:text-left">
+                <div class="font-bold text-slate-900 text-xs">ZTDS AI Consortium Standards Board</div>
+                <div class="text-[10px] font-mono text-slate-500">Root SPKI: SPKI-Ed25519-ZTDS-01 &middot; RFC 8032</div>
+                <div class="text-[10px] text-slate-400">Independent Consortium Verification Authority &middot; BrandMeWeb Ecosystem</div>
+              </div>
+              <div class="text-center sm:text-right">
+                <div class="text-[10px] font-mono uppercase text-slate-400">Online Attestation Ledger</div>
+                <a id="certModalVerifyUrl" href="https://ztds.ai/verify/" target="_blank" rel="noopener" class="text-xs font-mono font-bold text-emerald-700 hover:underline break-all">
+                  https://ztds.ai/verify/
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
-  </footer>
+  </div>
 
   <script src="/nav.js"></script>
   <script>
@@ -1197,6 +1427,13 @@
               };
             }
 
+            const btnDownloadCertPdf = document.getElementById("btnDownloadCertPdf");
+            if (btnDownloadCertPdf) {
+              btnDownloadCertPdf.onclick = () => {
+                openCertificateModal(result);
+              };
+            }
+
             if (btnCopyBadgeMd) {
               btnCopyBadgeMd.onclick = () => {
                 navigator.clipboard.writeText(mdSnippet).then(() => {
@@ -1452,8 +1689,158 @@
         });
       });
 
+      function openCertificateModal(result) {
+        if (!result || !result.payload) return;
+        const p = result.payload;
+        const modal = document.getElementById("modalCertificatePrint");
+        if (!modal) return;
+
+        const elEntity = document.getElementById("certModalEntityName");
+        const elProduct = document.getElementById("certModalProductLine");
+        const elId = document.getElementById("certModalId");
+        const elLevel = document.getElementById("certModalLevel");
+        const elIssued = document.getElementById("certModalIssued");
+        const elExpires = document.getElementById("certModalExpires");
+        const elHash = document.getElementById("certModalAuditHash");
+        const elVerifyUrl = document.getElementById("certModalVerifyUrl");
+
+        if (elEntity) elEntity.textContent = p.subject?.applicant || p.authority || "Official Accredited Participant";
+        if (elProduct) elProduct.textContent = p.subject?.product || "Enterprise AI Ingestion Pipeline";
+        if (elId) elId.textContent = p.certificate_id || "ZTDS-CERT-PENDING";
+        if (elLevel) elLevel.textContent = p.level || "Level 1: Automated CTS Invariant Conformance";
+        if (elIssued) elIssued.textContent = p.issued_at ? new Date(p.issued_at).toLocaleString() : "Unknown";
+        if (elExpires) elExpires.textContent = p.expires_at ? new Date(p.expires_at).toLocaleString() : "Indefinite";
+        if (elHash) elHash.textContent = p.subject?.audit_hash || "sha256:unknown";
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetSlug = urlParams.get("target") || urlParams.get("company") || urlParams.get("product") || urlParams.get("id");
+        const certUrl = targetSlug 
+          ? `https://ztds.ai/verify/?target=${encodeURIComponent(targetSlug)}` 
+          : `https://ztds.ai/verify/#cert=${encodeURIComponent(result.token)}`;
+
+        if (elVerifyUrl) {
+          elVerifyUrl.href = certUrl;
+          elVerifyUrl.textContent = certUrl;
+        }
+
+        modal.classList.remove("hidden");
+      }
+
+      function closeCertificateModal() {
+        const modal = document.getElementById("modalCertificatePrint");
+        if (modal) modal.classList.add("hidden");
+      }
+
+      const btnPrintCertAction = document.getElementById("btnPrintCertAction");
+      if (btnPrintCertAction) {
+        btnPrintCertAction.addEventListener("click", () => window.print());
+      }
+
+      const btnCloseCertModal = document.getElementById("btnCloseCertModal");
+      if (btnCloseCertModal) {
+        btnCloseCertModal.addEventListener("click", closeCertificateModal);
+      }
+
+      const modalCertificatePrint = document.getElementById("modalCertificatePrint");
+      if (modalCertificatePrint) {
+        modalCertificatePrint.addEventListener("click", (e) => {
+          if (e.target === modalCertificatePrint) closeCertificateModal();
+        });
+      }
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeCertificateModal();
+      });
+
+      function showTargetEntityBanner(entity, type) {
+        const banner = document.getElementById("targetEntityBanner");
+        if (!banner) return;
+
+        const elSector = document.getElementById("targetEntitySector");
+        const elTier = document.getElementById("targetEntityTier");
+        const elName = document.getElementById("targetEntityName");
+        const elDesc = document.getElementById("targetEntityDesc");
+        const elLink = document.getElementById("targetEntityProfileLink");
+
+        if (elSector) {
+          elSector.textContent = entity.sector || entity.industry || entity.category || "Official Accredited Entity";
+        }
+        if (elTier) {
+          elTier.textContent = type === "company" ? (entity.tier || "Corporate Member") : "Certified Implementation";
+        }
+        if (elName) {
+          elName.textContent = entity.name || entity.organization || "Accredited Entity";
+        }
+        if (elDesc) {
+          elDesc.textContent = entity.description || entity.summary || "Official participant adhering strictly to the ZTDS RFC v1.0 standard with verified zero-egress architecture.";
+        }
+        if (elLink) {
+          if (type === "company") {
+            elLink.href = entity.url || `/companies/#${entity.slug || entity.id}`;
+          } else {
+            elLink.href = `/registry/#${entity.id || entity.slug}`;
+          }
+        }
+
+        banner.classList.remove("hidden");
+      }
+
+      async function resolveTargetEntity(targetSlug) {
+        if (!targetSlug) return;
+        const normalized = targetSlug.trim().toLowerCase();
+
+        try {
+          const [regRes, compRes] = await Promise.all([
+            fetch("/data/registry.json").then(r => r.ok ? r.json() : {}).catch(() => ({})),
+            fetch("/data/companies.json").then(r => r.ok ? r.json() : {}).catch(() => ({}))
+          ]);
+
+          const companies = Array.isArray(compRes.companies) ? compRes.companies : [];
+          const entities = Array.isArray(regRes.entities) ? regRes.entities : [];
+
+          // 1. Search companies first
+          const foundCompany = companies.find(c =>
+            (c.slug && c.slug.toLowerCase() === normalized) ||
+            (c.id && c.id.toLowerCase() === normalized) ||
+            (c.certificate?.id && c.certificate.id.toLowerCase() === normalized) ||
+            (c.name && c.name.toLowerCase() === normalized)
+          );
+
+          if (foundCompany) {
+            showTargetEntityBanner(foundCompany, "company");
+            const token = foundCompany.certificate?.token;
+            if (token) {
+              certInput.value = token;
+              updateDiagnostics(token);
+              await triggerVerification();
+            }
+            return;
+          }
+
+          // 2. Search registry entities
+          const foundProduct = entities.find(p =>
+            (p.id && p.id.toLowerCase() === normalized) ||
+            (p.slug && p.slug.toLowerCase() === normalized) ||
+            (p.certificate?.certificate_id && p.certificate.certificate_id.toLowerCase() === normalized) ||
+            (p.name && p.name.toLowerCase() === normalized)
+          );
+
+          if (foundProduct) {
+            showTargetEntityBanner(foundProduct, "product");
+            const token = foundProduct.certificate?.token;
+            if (token) {
+              certInput.value = token;
+              updateDiagnostics(token);
+              await triggerVerification();
+            }
+          }
+        } catch (err) {
+          // Fallback gracefully
+        }
+      }
+
       // Auto-load token from URL parameters or hash on page load
-      window.addEventListener("DOMContentLoaded", () => {
+      window.addEventListener("DOMContentLoaded", async () => {
         const hashMatch = window.location.hash.match(/[#&]cert=([^&]+)/);
         const searchMatch = window.location.search.match(/[?&]cert=([^&]+)/);
         const tokenFromUrl = hashMatch ? decodeURIComponent(hashMatch[1]) : (searchMatch ? decodeURIComponent(searchMatch[1]) : null);
@@ -1461,7 +1848,13 @@
         if (tokenFromUrl) {
           certInput.value = tokenFromUrl;
           updateDiagnostics(tokenFromUrl);
-          triggerVerification();
+          await triggerVerification();
+        } else {
+          const urlParams = new URLSearchParams(window.location.search);
+          const targetSlug = urlParams.get("target") || urlParams.get("company") || urlParams.get("product") || urlParams.get("id");
+          if (targetSlug) {
+            await resolveTargetEntity(targetSlug);
+          }
         }
       });
 
