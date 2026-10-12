@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ZTDS.ai — Zero-Trust Data Sanitization Architecture</title>
   <meta name="description" content="Open standard for in-memory zero-trust data sanitization in AI &amp; RAG workflows. Eliminate credential leaks with sub-millisecond local tokenization.">
-  <meta name="keywords" content="Zero Trust Data Sanitization, ZTDS, Model Context Protocol, MCP privacy, Cursor IDE data leak, Claude Desktop MCP, in-memory PII de-identification, GDPR Article 28 DPA exemption, GDPR Article 17 vector database, LangChain privacy, ztds-mcp, ztds-audit">
+  <meta name="keywords" content="Zero Trust Data Sanitization, ZTDS, Model Context Protocol, MCP privacy, Cursor IDE data leak, Claude Desktop MCP, in-memory PII de-identification, GDPR Article 28 processor path elimination, GDPR Article 17 vector database, LangChain privacy, ztds-mcp, ztds-audit">
   <link rel="canonical" href="https://ztds.ai/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   
@@ -151,10 +151,10 @@
           },
           {
             "@type": "Question",
-            "name": "Does using ZTDS eliminate GDPR Article 28 DPA requirements for AI models?",
+            "name": "How does ZTDS address GDPR Article 28 data processor obligations for AI architectures?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. Under ZTDS Invariant 4, sanitization occurs 100% inside client volatile memory prior to WAN serialization; exactly 0.00 bytes of personal data leave the machine, rendering GDPR Article 28 and HIPAA BAA processor obligations legally moot."
+              "text": "Under ZTDS Invariant 4, data sanitization executes 100% inside client volatile memory prior to WAN serialization; exactly 0.00 bytes of raw personal data leave the local application runtime. Because the sanitization engine never receives, stores, or transmits personal data, it eliminates intermediary vendors from the data processor supply chain under GDPR Article 28 and functions as a proactive technical safe harbor under GDPR Article 32."
             }
           }
         ]
@@ -1858,18 +1858,18 @@ response = llm.invoke(<span class="text-emerald-300">"Customer Jane Doe wire IBA
             </div>
           </details>
 
-          <!-- Q3: GDPR Art 28 DPA Exemption -->
+          <!-- Q3: Zero Data Processor Path (GDPR Art. 28 & Safe Harbor) -->
           <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300">
             <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-base select-none">
-              <span>Does using ZTDS eliminate GDPR Article 28 DPA requirements for AI models?</span>
+              <span>How does ZTDS eliminate data processor liability under GDPR Article 28?</span>
               <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
             </summary>
             <div class="mt-4 text-xs sm:text-sm text-slate-600 leading-relaxed space-y-2 border-t border-slate-100 pt-3">
               <p>
-                Yes. Under GDPR Article 28 and EDPB guidelines, a Data Processing Agreement (DPA) is mandatory only when personal data is processed by a third party. Because the ZTDS Method executes 100% inside client volatile host RAM with 0.00 bytes of personal data transmitted across the network, the vendor never qualifies as a "data processor".
+                Under GDPR Article 28, a Data Processing Agreement (DPA) is required when external third parties process personal data on your behalf. Because the ZTDS protocol executes 100% inside client volatile host RAM with 0.00 bytes of raw personal data transmitted over the network, ZTDS software never receives personal data and is physically eliminated from the data processor supply chain.
               </p>
               <p>
-                The software acts as a local computational utility under GDPR Recital 26 and HIPAA Safe Harbor 45 CFR § 164.514(b), eliminating the need for complex subprocessor agreements and lengthy compliance audits.
+                By neutralizing direct PII in local RAM and reducing entropy across vertical profiles, ZTDS establishes a proactive technical safe harbor under GDPR Article 32 (Technical &amp; Organizational Measures) and Israel Protection of Privacy Law Amendment 13 Section 17, drastically mitigating statutory liability and eliminating subprocessor risk assessments.
               </p>
             </div>
           </details>
@@ -1946,7 +1946,7 @@ response = llm.invoke(<span class="text-emerald-300">"Customer Jane Doe wire IBA
           <ul class="space-y-2.5 text-xs">
             <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
             <li><a href="/whitepaper/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Research Whitepaper &rarr;</a></li>
-            <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO &amp; DPA Exemption Memo</a></li>
+            <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO Procurement &amp; Safe Harbor Pack</a></li>
             <li><a href="/roi/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">CISO Risk &amp; ROI Calculator &rarr;</a></li>
             <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
             <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">OSF Latency Benchmarks</a></li>
