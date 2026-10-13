@@ -2,6 +2,7 @@
 
 [![IETF Draft](https://img.shields.io/badge/IETF_Draft-draft--sibiryakov--ztds--protocol--02-blue.svg)](https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/)
 [![PyPI version](https://img.shields.io/pypi/v/ztds.svg)](https://pypi.org/project/ztds/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/ztds.svg)](https://pypi.org/project/ztds/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![ZTDS Verified](https://ztds.ai/badge/ztds-core.svg)](https://ztds.ai/registry/)
 
@@ -156,6 +157,23 @@ All 8 canonical RFC v1.0 test vectors pass with 100% Invariant fidelity:
 | `VEC-UNICODE-001` | Unicode Normalization & Homoglyphs | PASS | 0.03ms |
 
 Average latency per prompt: **~0.031 ms** (31 microseconds).
+
+---
+
+---
+
+## 🏢 Certified Commercial Implementation (Enterprise & High ACV)
+
+The open reference implementation (`ztds`) provides the universal baseline engine under the MIT License. For production corporate pipelines, regulatory safe harbors, and air-gapped enterprise workloads, refer to the Pioneer Certified Commercial Implementation:
+
+- **[PrivacyScrubber Commercial SDK](https://privacyscrubber.com/sdk/?utm_source=pypi_ztds&utm_medium=readme&utm_campaign=commercial_sdk)**: Zero-egress in-memory Node.js & WASM engine engineered for ETL data lakes, RAG vector pipelines, and microservices (<0.05ms latency). Unlocks all 30 specialized industry profiles:
+  - **Healthcare & PHI**: HIPAA Safe Harbor (18 PHI identifiers, clinical MRNs, ICD-10)
+  - **Financial & Banking**: GLBA, ISO 20022 XML, SEPA pacs.008, SWIFT BIC, credit cards
+  - **Legal & Dispute Resolution**: FRE 502 (Attorney-Client privilege, work product doctrine, case dockets)
+  - **Tax & Accounting**: IRC § 7216 (W-2/1040 workpapers, EIN, PTIN, payroll ledgers)
+  - **Defense & Aerospace**: CMMC & ITAR (CUI tags, defense contract numbers, NATO codification)
+- **[TEAMS & Enterprise Governance](https://privacyscrubber.com/pricing?tier=teams&utm_source=pypi_ztds&utm_medium=readme&utm_campaign=teams_upgrade)**: Zero-knowledge cross-team session handoffs (Argon2id + XChaCha20-Poly1305), rootless air-gapped Docker sidecars, centralized regex governance, and DPO/CISO SHA-256 cryptographic compliance receipts.
+- **[Zero-Trust MCP Server](https://privacyscrubber.com/pii-mcp/?utm_source=pypi_ztds&utm_medium=readme&utm_campaign=mcp_docs)**: Zero-Trust Data Sanitization stdio server for Claude Desktop, Cursor, and Windsurf (`uvx privacyscrubber-mcp` or `npx @privacyscrubber/mcp-server`).
 
 ---
 
