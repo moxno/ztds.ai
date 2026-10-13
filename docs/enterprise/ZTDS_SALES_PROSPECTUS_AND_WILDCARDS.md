@@ -203,6 +203,6 @@ Founder & Chief Architect, BrandMeWeb & ZTDS.ai
 
 * **RFC v1.0 Authority:** Backed by peer-reviewed academic DOIs (Zenodo, OSF, SSRN) and open consortium governance (`ztds.ai`).
 * **Technical Parity:** 1.8ms in-RAM sanitization vs. 450ms cloud DLP proxies.
-* **Legal Immunity:** 100% exemption from GDPR Article 28 DPA requirements under EDPB client-side doctrine.
+* **Statutory Risk Shield:** Complete elimination of GDPR Article 28 subprocessor exposure and automated compliance safe harbor under Article 32.
 * **Cryptographic Rigor:** Ed25519 offline token verification in 111.8 microseconds with built-in 60-day grace period.
 * **Monetization Engine:** Direct path to $12,000/yr Enterprise Air-Gapped and $50,000/yr Global Site Licenses supporting the $11,000/mo MRR ecosystem target.

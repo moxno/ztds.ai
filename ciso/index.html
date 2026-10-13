@@ -2191,9 +2191,9 @@
         <!-- Tab 1: Memo View -->
         <div id="modalViewMemo" class="modal-view space-y-4">
           <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl space-y-1">
-            <div class="font-bold text-emerald-900 text-sm">Statutory Summary of Exemption</div>
+            <div class="font-bold text-emerald-900 text-sm">Statutory Summary: Safe Harbor &amp; Processor Elimination</div>
             <p class="text-emerald-800 text-xs">
-              Under GDPR Article 28 and EDPB Guidelines 07/2020, software executing de-identification strictly within client volatile RAM prior to outbound socket transmission never acts as a Data Processor. Zero data processing = Zero DPA obligation.
+              Under GDPR Article 28 and EDPB Guidelines 07/2020, software executing de-identification strictly within client volatile RAM prior to outbound socket transmission never acts as a Data Processor (0.00 bytes cloud egress = zero DPA required). For upstream LLM transmissions, client-side surrogate tokenization establishes an objective Technical Safe Harbor under GDPR Article 32 and Israel PPL Amendment 13 Section 17.
             </p>
           </div>
           
@@ -2314,18 +2314,18 @@
   <script>
     const memoContent = `# CISO Procurement & Safe Harbor Pack: Zero-Trust Data Sanitization (ZTDS RFC v1.0)
 DOCUMENT ID: ZTDS-CISO-2026-V1
-STATUS: LEGALLY SOUND & AUDIT-READY
+STATUS: TECHNICAL SAFE HARBOR & PROCESSOR ELIMINATION
 RATIFIED: September 2026
 DOI: 10.5281/zenodo.22058770
 
 TO: Chief Information Security Officer (CISO), Data Protection Officer (DPO), Enterprise Procurement
 FROM: Ilya Sibiryakov, Specification Author & Chief Architect (ZTDS.ai / BrandMeWeb)
-SUBJECT: Architectural & Statutory Grounds for Exemption from Third-Party Data Processing Agreements (DPA)
+SUBJECT: Architectural & Statutory Grounds for Technical Safe Harbor and Elimination of Third-Party Data Processing Agreements (DPA) under GDPR Articles 28 & 32 and Israel PPL Amendment 13
 
 ## 1. Executive Summary & Core Principle
 Software conforming to the Zero-Trust Data Sanitization (ZTDS RFC v1.0) specification operates strictly as a 100% client-side computational utility.
 Because conforming software executes de-identification strictly within volatile client RAM before outbound network transmission, exactly zero (0.00) bytes of cleartext sensitive data are transmitted to or processed by external vendor servers.
-Consequently, ZTDS-conforming architectures are legally exempt from third-party Data Processing Agreement (DPA) requirements under GDPR Article 28, Business Associate Agreement (BAA) burdens under HIPAA, and SaaS subprocessor risk exposure.
+Consequently, ZTDS-conforming architectures eliminate the third-party Data Processor relationship under GDPR Article 28 and BAA burdens under HIPAA for the utility itself. Furthermore, by stripping direct identifiers and reducing contextual entropy in client RAM, conforming deployments establish an objective technical safe harbor under GDPR Article 32 and Israel PPL Amendment 13 Section 17, mitigating regulatory penalty ceilings.
 
 ## 2. The 4 Non-Negotiable Invariants (RFC v1.0)
 - Invariant 1 (Zero External Egress): ΔEgress(S) ≡ 0.00 bytes across public sockets S_WAN.

@@ -108,7 +108,7 @@ Multiplication      Irreversible Latent Space         Mandatory Audit      Attor
 |  Execution in AWS Nitro Enclaves, SCIF VPCs, or sandboxed WebAssembly             |
 +-----------------------------------------------------------------------------------+
 |  INVARIANT 4: Continuous Compliance & Zero Subprocessor Chain                     |
-|  Statutory exemption from GDPR Article 28 / HIPAA BAA requirements                |
+|  Subprocessor elimination under GDPR Article 28 / HIPAA BAA avoidance          |
 +-----------------------------------------------------------------------------------+
 ```
 
@@ -120,7 +120,7 @@ Multiplication      Irreversible Latent Space         Mandatory Audit      Attor
 ### Verbatim Speaker Notes
 > "ZTDS is not a proprietary black box. It is an open, peer-reviewed engineering standard codified in RFC v1.0 with formal academic DOIs on Zenodo and OSF. 
 > 
-> The standard rests on four mathematical invariants. Invariant 1 guarantees zero cleartext egress. Invariant 2 enforces deterministic, reversible tokenization: we replace sensitive entities with synthetic surrogate tokens that preserve semantic and syntactic context for the LLM, while the decryption map stays exclusively in your host's volatile memory. Invariant 3 ensures cryptographic isolation inside your VPC or enclave. And Invariant 4 provides complete legal immunity from the SaaS subprocessor chain."
+> The standard rests on four mathematical invariants. Invariant 1 guarantees zero cleartext egress. Invariant 2 enforces deterministic, reversible tokenization: we replace sensitive entities with synthetic surrogate tokens that preserve semantic and syntactic context for the LLM, while the decryption map stays exclusively in your host's volatile memory. Invariant 3 ensures cryptographic isolation inside your VPC or enclave. And Invariant 4 eliminates vendor exposure from the SaaS subprocessor chain under GDPR Article 28."
 
 ---
 

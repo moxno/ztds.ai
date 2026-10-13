@@ -110,7 +110,7 @@ The Badge Foundry standardizes five distinct compliance tiers to accurately comm
    - Scope: On-premise, air-gapped, or cryptographic hardware enclave execution (AWS Nitro Enclaves).
    - Typical Subtitle: Isolated Enclave Execution.
 3. DPA EXEMPT (Accent: Amber #F59E0B)
-   - Scope: Zero personal data egress; statutory exemption from GDPR Article 28 and HIPAA BAA processor requirements.
+   - Scope: Zero personal data egress; elimination of GDPR Article 28 processor obligations and HIPAA BAA requirements via client-side RAM architecture.
    - Typical Subtitle: Zero WAN Egress / GDPR Recital 26.
 4. AIR-GAPPED (Accent: Purple #8B5CF6 / #A78BFA)
    - Scope: Strictly offline execution verified in SCIF or network-disconnected environments with 0 network sockets.
