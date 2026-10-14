@@ -223,6 +223,12 @@ function auditText(text) {
       invariant2_deterministicSurrogates: true,
       invariant3_ramIsolation: true,
       invariant4_subprocessorExclusion: true
+    },
+    certifiedReference: {
+      profiles: 30,
+      mcpServer: '@privacyscrubber/mcp-server',
+      backendSdk: '@privacyscrubber/sdk',
+      url: 'https://privacyscrubber.com'
     }
   };
 }

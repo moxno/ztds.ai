@@ -306,7 +306,7 @@
             <textarea
               id="certInput"
               rows="6"
-              class="w-full bg-transparent p-1 text-xs font-mono text-slate-800 border-0 focus:ring-0 focus:outline-none resize-none leading-relaxed placeholder:text-slate-400"
+              class="w-full bg-transparent p-1 text-base sm:text-xs font-mono text-slate-800 border-0 focus:ring-0 focus:outline-none resize-none leading-relaxed placeholder:text-slate-400"
               placeholder="Paste 3-part ZTDS certificate token here:&#10;ZTDS-CERT-v1.{payload_b64url}.{sig_b64url}&#10;&#10;Or drop a .cert/.json file, or click Browse File below."
               spellcheck="false"
             ></textarea>
@@ -653,7 +653,7 @@
                     id="badgeMarkdownInput"
                     type="text"
                     readonly
-                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-[11px] font-mono text-slate-300 select-all focus:outline-none focus:border-emerald-500"
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-base sm:text-[11px] font-mono text-slate-300 select-all focus:outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
@@ -671,7 +671,7 @@
                     id="badgeHtmlInput"
                     type="text"
                     readonly
-                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-[11px] font-mono text-slate-300 select-all focus:outline-none focus:border-emerald-500"
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-base sm:text-[11px] font-mono text-slate-300 select-all focus:outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
@@ -1846,6 +1846,33 @@
               updateDiagnostics(token);
               await triggerVerification();
             }
+            return;
+          }
+
+          // 3. Defensive Fallback: Unknown target slug
+          const banner = document.getElementById("targetEntityBanner");
+          if (banner) {
+            banner.className = "mb-8 p-5 sm:p-6 rounded-2xl bg-amber-50/70 border border-amber-300 shadow-sm transition-all";
+            const elSector = document.getElementById("targetEntitySector");
+            const elTier = document.getElementById("targetEntityTier");
+            const elName = document.getElementById("targetEntityName");
+            const elDesc = document.getElementById("targetEntityDesc");
+            const elLink = document.getElementById("targetEntityProfileLink");
+            const btnPdf = document.getElementById("bannerDownloadCertPdf");
+
+            if (elSector) {
+              elSector.className = "text-xs font-mono font-bold text-amber-800 uppercase tracking-wider bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full";
+              elSector.textContent = "Unregistered Identifier";
+            }
+            if (elTier) elTier.textContent = "Registry Lookup";
+            if (elName) elName.textContent = `Entity "${targetSlug}" Not Found in Verified Ledger`;
+            if (elDesc) elDesc.textContent = "No active cryptographic conformance record matches this identifier. Browse the official Verified Registry or paste a 3-part ZTDS-CERT-v1 token below to verify offline.";
+            if (btnPdf) btnPdf.classList.add("hidden");
+            if (elLink) {
+              elLink.href = "/registry/";
+              elLink.innerHTML = '<span>Browse Verified Registry</span><span aria-hidden="true">&rarr;</span>';
+            }
+            banner.classList.remove("hidden");
           }
         } catch (err) {
           // Fallback gracefully
