@@ -487,7 +487,7 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
           <div>
             <div class="font-mono text-[10px] text-emerald-800 font-bold uppercase">Step 02 &middot; Local Tokenizer</div>
             <div class="font-bold text-emerald-950 text-sm mt-1">In-Memory Sanitization</div>
-            <p class="text-emerald-900 text-xs mt-1.5 leading-relaxed">Generates deterministic surrogates ([NAME_1], [IBAN_1]) in &lt;0.8ms. Maps cleartext keys in volatile sessionMap.</p>
+            <p class="text-emerald-900 text-xs mt-1.5 leading-relaxed">Generates deterministic surrogates ([NAME_1], [IBAN_1]) in &lt;0.8ms. Maps cleartext keys in volatile client RAM.</p>
           </div>
           <div class="font-mono text-[10px] px-2 py-1 rounded bg-emerald-200 text-emerald-900 font-bold w-fit">&lt; 0.8ms &middot; Invariant 2</div>
         </div>
@@ -1829,9 +1829,9 @@ const sanitized = await engine.sanitize(patientPrompt);</code></pre>
             </div>
 
             <div class="p-3.5 rounded-lg bg-slate-50 border border-slate-200">
-              <div class="font-bold text-slate-900 mb-1">Anti-Cannibalization Profile Gating</div>
+              <div class="font-bold text-slate-900 mb-1">Cryptographic Vertical Profile Gating</div>
               <p class="text-slate-600 leading-relaxed">
-                Baseline consumer PII (<code class="font-mono text-[10px]">REGEX_RULES</code>) runs on the open tier. Specialized enterprise profiles (<code class="font-mono text-[10px]">PROFILE_RULES</code>: HIPAA Clinical PHI, Financial IBAN, Legal Privilege) are unlocked cryptographically via the Enterprise Air-Gapped license.
+                Baseline consumer PII runs on the open tier. Specialized enterprise profiles (HIPAA Clinical PHI, Financial IBAN, Legal Privilege) are unlocked cryptographically via the Enterprise Air-Gapped license.
               </p>
             </div>
 

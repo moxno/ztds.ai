@@ -39,7 +39,7 @@ Under the ZTDS specification:
    m_i = "[TYPE_N]"
 2. The payload transmitted over the WAN contains strictly U ∪ M:
    Egress(S) === 0 bytes
-3. The mapping dictionary R = {(m_i, s_i)} is held exclusively in volatile RAM (sessionMap) scoped strictly to the ephemeral process or tab instance.
+3. The mapping dictionary R = {(m_i, s_i)} is held exclusively in volatile RAM scoped strictly to the ephemeral process or tab instance.
 4. The latency cost is bounded by a strict performance ceiling:
    Latency(T) < 2 ms
 5. Upon receipt of the AI response P_out containing surrogate tokens M, the inverse transformation T^(-1): M -> S is executed locally, restoring original cleartext entities strictly on the user screen or local application layer:

@@ -69,7 +69,7 @@ The primary objective was to empirically verify the four non-negotiable invarian
   1. **Ed25519 Digital Signatures (RFC 8032):** Tested against standard RFC test vectors, corrupted signature buffers, and bit-flipped payloads. Verification reliably rejected all tampered inputs with `ERR_CERT_TAMPERED`.
   2. **Canonical JSON Serialization:** Evaluated key-sorting determinism (`canonicalizeJson`) across multi-level nested dictionaries. Confirmed identical, reproducible hashes across platforms.
   3. **Transport Vault Security:** Verified that inter-node collaborative unmasking derives keys using Argon2id (RFC 9106, 19 MiB memory, 2 iterations) and encrypts via XChaCha20-Poly1305 with 24-byte CSPRNG nonces (`randombytes_buf`).
-- **Result:** **No cryptographic flaws identified.** All cryptographic operations rely on standard, peer-reviewed primitives implemented in native Node.js / libsodium crypto runtimes.
+- **Result:** **No cryptographic flaws identified.** All cryptographic operations rely on standard, peer-reviewed primitives implemented in standard native cryptographic runtimes.
 
 ### 3.5. Module E: Subprocessor & Telemetry Elimination (Invariant 4)
 - **Attack Scenario:** Covert telemetry or usage analytics leaking client prompts, token distributions, or operational metadata to vendor servers.

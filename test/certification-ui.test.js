@@ -85,7 +85,7 @@ console.log('\n--> Test 3: Institutional Authority Anchors & Key Content');
 
   // WIPO Patent Anchor
   assert(html.includes('Patents Pending'), 'Must reference Patents Pending status');
-  assert(html.includes('14/09/2026') || html.includes('September 14, 2026'), 'Must reference patent filing date');
+  assert(html.includes('Paris Convention'), 'Must reference Paris Convention priority');
   assert(html.includes('14/09/2027'), 'Must reference patent international priority deadline');
   assert(html.includes('Counsel NDA') || html.includes('NDA'), 'Must link claims request to Counsel NDA');
 

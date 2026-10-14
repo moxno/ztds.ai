@@ -4,31 +4,31 @@
 
 The Zero-Trust Data Sanitization (ZTDS) standard establishes a strict, mathematically verifiable entity classification hierarchy. To prevent data leakage while preserving AI model cognitive context and reasoning capability, entity detection is decoupled into two distinct operational layers:
 
-1. **Universal Consumer PII (`REGEX_RULES`)**: The foundational baseline covering ubiquitous human identifiers (names, emails, phone numbers, standard national IDs, IPv4/IPv6, file paths, physical addresses). This engine runs with a 15,000-character single-scrub quota on the Free Tier across all client platforms.
-2. **30 Specialized Industry Profiles (`PROFILE_RULES`)**: Highly specialized vertical vocabularies, regulatory codes, enterprise credentials, and domain-specific schemas covering 30 business sectors. These profiles run in a 5,000-character trial quota on the Free Tier and require a commercial tier (PRO at $15/mo, TEAMS at $99/mo flat, or DEVELOPER SDK at $199/mo) for unlimited throughput.
+1. **Universal Consumer PII (Baseline Layer)**: The foundational baseline covering ubiquitous human identifiers (names, emails, phone numbers, standard national IDs, IPv4/IPv6, file paths, physical addresses).
+2. **30 Specialized Industry Profiles (Vertical Layer)**: Specialized vertical vocabularies, regulatory codes, enterprise credentials, and domain-specific schemas covering 30 regulated business sectors.
 
 ---
 
-## 2. The Anti-Cannibalization Mandate (SSOT)
+## 2. Two-Tier Classification Governance (SSOT)
 
-The separation between `REGEX_RULES` and `PROFILE_RULES` is an immutable economic and architectural invariant:
+The structural separation between the Universal Consumer PII Layer and the 30 Specialized Industry Profiles ensures high-precision contextual tokenization without cross-domain false positives:
 
-* **Rule**: Universal consumer PII MUST live exclusively in `REGEX_RULES`. Domain-specific identifiers, regulatory reference numbers, proprietary ticket formats, enterprise cloud secrets, and vertical financial terms MUST live exclusively in `PROFILE_RULES[sector]`.
-* **Prohibition**: Never migrate specialized, vertical, or regulatory entities into `REGEX_RULES` to pass a generic QA test or convenience check.
-* **Commercial Rationale**: Specialized vertical tokens (e.g., `[PHI_1]`, `[LEGAL_1]`, `[SECRET_1]`, `[FINANCIAL_1]`) represent the primary commercial value driver compelling enterprise personas (DPOs, CISOs, Legal Counsel, Chief Compliance Officers) to upgrade from the 5,000-character trial tier to PRO, TEAMS, and SDK licenses. Diluting the baseline cannibalizes enterprise conversion.
+* **Baseline Scope**: Universal consumer identifiers are evaluated across all workloads as the foundational privacy perimeter.
+* **Vertical Isolation**: Domain-specific identifiers, regulatory reference numbers, ticket formats, cloud infrastructure secrets, and vertical financial terms are scoped to their respective industry profiles (`[PHI_1]`, `[LEGAL_1]`, `[SECRET_1]`, `[FINANCIAL_1]`).
+* **Semantic Preservation**: Scoping vertical patterns to dedicated sector profiles prevents over-redaction of domain terminology while guaranteeing deterministic protection for regulated workflows.
 
 ---
 
-## 3. Universal Consumer PII Taxonomy (`REGEX_RULES`)
+## 3. Universal Consumer PII Taxonomy (Baseline Layer)
 
-`REGEX_RULES` is active across all 30 profiles as the baseline filter. It extracts:
+The Universal Consumer PII layer is active across all 30 profiles as the baseline filter. It extracts:
 
 | Entity Type | Scope & Patterns | Token Format | Edge Handling |
 | :--- | :--- | :--- | :--- |
 | **`EMAIL`** | Standard RFC 5322 email patterns (`user@domain.tld`) | `[EMAIL_N]` | Preserves domain context when isolated |
-| **`PHONE`** | International E.164, US formatted (`(555) 000-0000`), UK mobile (`07xxx`), extensions | `[PHONE_N]` | Punctuation agnostic, lookbehind guarded |
+| **`PHONE`** | International E.164, US formatted (`(555) 000-0000`), UK mobile (`07xxx`), extensions | `[PHONE_N]` | Punctuation agnostic, context-guarded |
 | **`ID`** | US SSN (`XXX-XX-XXXX`), EIN (`XX-XXXXXXX`), Passport, Driver License, National IDs | `[ID_N]` | Handles masked variants (`***-**-1234`, `XXX-XX-1234`) |
-| **`NAME`** | First + Last, honorifics (Dr., Mr., Mrs., Ms., Prof.), corporate entities, payroll inverted | `[NAME_N]` | Unicode-safe (`\p{Lu}\p{Ll}`), aggressive multi-token guard |
+| **`NAME`** | First + Last, honorifics (Dr., Mr., Mrs., Ms., Prof.), corporate entities, payroll inverted | `[NAME_N]` | Unicode-safe, multi-token boundary guard |
 | **`ADDRESS`**| Street addresses, P.O. Boxes, City/State/ZIP combos, Box f W-2 employee addresses | `[ADDRESS_N]`| Multi-line boundary preservation |
 | **`IP`** | IPv4 (`192.168.1.1`), IPv6 (`2001:db8::1`) | `[IP_N]` | Localhost port separation |
 | **`LOCATION`**| Geographic coordinates (Lat/Long decimal & DMS), City/State pairs | `[LOCATION_N]`| Preserves country when general context |
@@ -37,7 +37,7 @@ The separation between `REGEX_RULES` and `PROFILE_RULES` is an immutable economi
 
 ---
 
-## 4. The 30 Specialized Industry Profiles (`PROFILE_RULES`)
+## 4. The 30 Specialized Industry Profiles (Vertical Layer)
 
 ### 4.1. Legal (`legal`)
 * **Target Personas**: Law firm partners, general counsel, litigation support, paralegals.
@@ -48,7 +48,7 @@ The separation between `REGEX_RULES` and `PROFILE_RULES` is an immutable economi
   * Production & Bates Stamps: `BATES-XXXX`, `PROD-XXXX`, `PLTF-XXXX`, `EXHIBIT-XXXX`.
   * Legal Credentials: State Bar Registration numbers, Attorney SBN, CRD/Broker IDs, CIK.
   * Trust & Escrow: Escrow/Trust/Disputed Account numbers, Fedwire/ABA routing numbers.
-  * Monetary Damages: Lookbehind capture of `Settlement Amount`, `Retainer Fee`, `Hourly Rate`, `Damages Claimed`, `Sanctions`, `Judgment`, `Restitution`.
+  * Monetary Damages: Context-preserved capture of `Settlement Amount`, `Retainer Fee`, `Hourly Rate`, `Damages Claimed`, `Sanctions`, `Judgment`, `Restitution`.
 
 ### 4.2. Human Resources & Recruiting (`hr`)
 * **Target Personas**: VP of People, HR Directors, Talent Acquisition, Recruiters.
@@ -67,7 +67,7 @@ The separation between `REGEX_RULES` and `PROFILE_RULES` is an immutable economi
   * Securities & Assets: CUSIP (9-digit), ISIN (12-digit), SEDOL (7-digit), Bloomberg Tickers (`BBGXXXXXXXXX`).
   * Institutional Identifiers: Legal Entity Identifier (`LEI` 20-char alpha), SEC Central Index Key (`CIK` 10-digit), CRD IDs.
   * Account Taxonomy: Brokerage, 401(k), IRA, Roth, Trust, Portfolio account numbers.
-  * Transactional Amounts: Lookbehind extraction of `Wire Transfer`, `Balance`, `Deposit`, `Withdrawal`, `Remittance`, `Payout`, `Principal`, `Interest`.
+  * Transactional Amounts: Context-preserved extraction of `Wire Transfer`, `Balance`, `Deposit`, `Withdrawal`, `Remittance`, `Payout`, `Principal`, `Interest`.
 
 ### 4.4. Medical & Healthcare (`medical`)
 * **Target Personas**: Chief Medical Information Officers (CMIO), Clinical Researchers, EHR Admins.
@@ -275,7 +275,7 @@ The separation between `REGEX_RULES` and `PROFILE_RULES` is an immutable economi
 
 ### 4.30. General / Universal Baseline (`general`)
 * **Target Personas**: Consumer users, generic AI prompt sanitization.
-* **Target Entities**: Relies purely on the zero-trust universal `REGEX_RULES` baseline (15,000 character allowance).
+* **Target Entities**: Relies purely on the zero-trust universal consumer PII baseline (15,000 character allowance).
 
 ### 4.31. Crypto Forensics, Web3 AML & Evidentiary Investigations (`crypto_forensics`)
 * **Target Personas**: Crypto AML Officers, Blockchain Forensic Analysts, Financial Intelligence Units (FIU), Risk Managers, Fraud Investigators, Sanctions Compliance Officers.
@@ -302,33 +302,26 @@ The separation between `REGEX_RULES` and `PROFILE_RULES` is an immutable economi
 
 ---
 
-## 5. Adversarial Red-Team Gym Rules (Spark Invariants)
+## 5. Boundary Calibration & Context Preservation Invariants
 
-Through continuous automated adversarial red-teaming (the Gemini Spark Gym loop), the following regex calibration patterns are mandatory across all 5 product planes:
+Conforming ZTDS implementations must satisfy the following syntactic boundary and context-preservation invariants across all 30 specialized industry profiles:
 
-### 5.1. Trailing Currency Boundary Trap
-Word boundaries (`\b`) match between word characters (`\w`) and non-word characters (`\W`). Because currency glyphs (`$`, `€`, `£`, `¥`, `₪`, `₽`, `₹`) are non-word characters, appending a `\b` directly after a currency glyph fails when followed by whitespace or numbers.
-* **Flawed**: `/(?:[$€£¥₪₽₹]\b)\d+/` (Engine backtracks and leaks currency symbol in cleartext).
-* **Calibrated Standard**: `/(?:(?:\b(?:USD|EUR|GBP|CHF|ILS|RUB)\s*|[$€£¥₪₽₹]\s*)[0-9,.'’]*\d[KMB]?\b|\b\d[0-9,.'’]*\d?[KMB]?\s*(?:\b(?:USD|EUR|GBP|CHF|ILS|RUB)\b|[$€£¥₪₽₹]))/gi`
+### 5.1. Currency & Numeric Boundary Integrity
+Currency symbols (`$`, `€`, `£`, `¥`, `₪`, `₽`, `₹`) and ISO currency codes (`USD`, `EUR`, `GBP`, `CHF`, `ILS`) must be captured atomically alongside adjacent numeric figures and magnitude suffixes (`K`, `M`, `B`) so that neither the currency symbol nor the numeric figure leaks in cleartext.
 
-### 5.2. Role Prefix Protection & Name Truncation
-When extracting party or professional names, regexes must not swallow the preceding role title or drop the first name:
-* **Invariant**: Legal and clinical role titles (`Claimant`, `Respondent`, `Patient`, `Counsel`, `Physician`) MUST be explicitly defined in lookbehind or non-capturing prefix groups.
-* **Jargon Allowlisting**: All vertical role nouns must be mirrored in `PROFILE_JARGON[sector]` to prevent downstream token collision.
+### 5.2. Role Prefix Protection & Domain Terminology Preservation
+When extracting party or professional names, detection engines must preserve the preceding role title in cleartext while tokenizing only the identifying name:
+* **Invariant**: Legal and clinical role titles (`Claimant`, `Respondent`, `Patient`, `Counsel`, `Physician`) remain in cleartext so the downstream model retains structural role relationships.
+* **Domain Allowlisting**: Vertical domain nouns and statutory terminology are protected against false-positive over-redaction.
 
-### 5.3. Case Prefix Explicit Delimiters
-In legal, compliance, and support ticketing, case and docket regexes must require explicit prefix triggers (`No.`, `Number`, `#`, `:`):
-* **Flawed**: `/\b(?:Case|Matter)\s+([A-Za-z0-9_-]+)\b/` (Swallows legitimate English words like "Case Studies").
-* **Calibrated Standard**: `/\b(?:Case|Matter|Arbitration|Docket|Proceeding)\s*(?:(?:No\.?|Number|#)[:\s#]*|[:#]\s*)([A-Za-z0-9_-]{4,25})\b/gi`
+### 5.3. Case & Docket Prefix Delimiters
+In legal, compliance, and support ticketing workflows, case and docket identifiers require explicit structural triggers (`No.`, `Number`, `#`, `:`) so that ordinary prose phrases (such as "Case Studies") are never falsely tokenized.
 
 ### 5.4. OCR Homoglyph Normalization
-When parsing scanned documents (PDFs/images via Tesseract.js OCR), letters and numbers frequently interchange (e.g. `O` vs `0`, `I` or `l` vs `1`):
-* **Calibrated Standard**: Regulatory ID patterns (such as State Bar numbers or NPIs) must evaluate OCR-ambiguous character sets: `[0-9OIloA-Za-z]{4,10}`.
+When parsing scanned documents (PDFs and images via local offline OCR), visually ambiguous characters (such as `O` vs `0`, or `I`/`l` vs `1`) are normalized during regulatory identifier evaluation to prevent OCR-induced false negatives.
 
-### 5.5. Lookbehind Context Label Preservation
-In financial and accounting documents, the contextual label (e.g., `Settlement Amount:`, `Rent:`, `Total Paid:`) must remain in cleartext to provide the LLM with semantic comprehension of what the masked token represents:
-* **Calibrated Standard**:
-  `/(?<=\b(?:Settlement(?:\s+Amount)?|Retainer(?:\s+Fee)?|Hourly\s+Rate|Damages(?:\s+Claimed)?|Legal\s+Fees?)[:\s]+)(?:...amount regex...)/gi`
+### 5.5. Contextual Label Preservation
+In financial, accounting, and legal documents, structural labels (`Settlement Amount:`, `Retainer Fee:`, `Total Paid:`) remain in cleartext while the adjacent sensitive monetary value is replaced with a typed surrogate token, preserving full semantic comprehension for AI reasoning.
 
 ### 5.6. Blockchain Graph Correlation & Temporal Clamping (Anti-Reidentification Invariants)
 In crypto-forensics and AML graph investigations, masking only public keys/addresses (`0x...` -> `[TARGET_WALLET_1]`) is structurally insufficient. An adversary or untrusted model provider can correlate high-precision transaction amounts and exact block timestamps against public on-chain ledgers (Etherscan, Mempool) to de-anonymize the target graph:
@@ -353,20 +346,18 @@ $$\text{Leakage}(T_{\text{sanitized}}) = 0 \quad \land \quad \text{Distortion}(T
    * All extracted tokens must conform to `[TYPE_N]` formatting.
 2. **Context & Semantic Integrity (Side B)**:
    * Jargon, clinical diagnoses, statutory legal citations, and role frameworks must NOT be redacted.
-   * On reverse reveal ($T_{\text{revealed}}$), replacing `[TYPE_N]` tokens with values from the volatile RAM `sessionMap` must yield the exact original text with zero whitespace or grammatical drift.
+   * On reverse reveal ($T_{\text{revealed}}$), replacing `[TYPE_N]` tokens with values from the volatile in-memory token map must yield the exact original text with zero whitespace or grammatical drift.
 
 ---
 
-## 7. Commercial Packaging & Intellectual Property Protection
+## 7. Conformance Packaging & Offline Cryptographic Licensing
 
-To protect the 25 High-ACV Industry Profiles from unauthorized extraction or competitive reverse engineering:
+Conforming commercial distributions of the 30 Specialized Industry Profiles enforce strict offline verification:
 
-1. **Layer 1: Open Core (`REGEX_RULES`)**:
-   - Universal consumer PII (email, phone, standard national IDs, credit cards, IP addresses) is distributed openly under the MIT License in `@privacyscrubber/sdk` on npm.
-   - Designed for zero-barrier developer adoption, public GitHub auditing, and indexing by autonomous LLM crawlers.
+1. **Layer 1: Baseline Consumer PII Engine**:
+   - Universal consumer PII detection (email, phone, standard national IDs, credit cards, IP addresses) operates locally in host process memory with zero external dependencies.
 
-2. **Layer 2: Commercial Vertical Engine (`PROFILE_RULES`)**:
-   - The 25 Industry Profiles are packaged as a compiled WebAssembly binary (`ps-engine-core.wasm`) compiled from Rust state machines (Aho-Corasick & deterministic finite automata).
-   - Plain-text regular expressions are NOT exposed in client-side JavaScript bundles.
-   - Commercial activation is authenticated via asymmetric Ed25519 cryptographic license tokens (`ZTDS-LIC-v1`).
-   - The engine validates licenses 100% offline in client volatile RAM without network callbacks, preserving the 0.00 B Egress Invariant.
+2. **Layer 2: 30 Specialized Vertical Profiles**:
+   - The 30 Specialized Industry Profiles execute deterministically in isolated local memory across browser, IDE (MCP stdio), and backend microservice runtimes.
+   - Commercial tier entitlements are authenticated via asymmetric Ed25519 cryptographic license tokens (`ZTDS-LIC-v1`).
+   - License verification executes 100% offline in volatile RAM without network callbacks, preserving the 0.00 B Egress Invariant.

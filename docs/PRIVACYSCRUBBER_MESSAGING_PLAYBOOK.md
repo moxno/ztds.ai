@@ -84,11 +84,11 @@ Every commercial touchpoint on privacyscrubber.com must feature these three veri
 
 | Tier | Price | Primary Audience | Key Differentiators |
 | :--- | :---: | :--- | :--- |
-| **Free Tier** | zsh | Casual users & testers | 15,000 char quota, Universal Consumer PII (REGEX_RULES). |
-| **PRO Tier** | /mo /  Lifetime | Developers, consultants, solo pros | Unlimited characters, multi-tab persistent RAM maps, priority updates. |
-| **TEAMS Tier** | /mo flat | Law firms, medical clinics, SMBs | Up to 10 users, client-side Argon2id encrypted team token sharing. |
-| **DEVELOPER SDK** | /mo / ,990/yr | SaaS founders & AI engineers | @privacyscrubber/sdk headless engine, LangChain/MCP connectors, 5 nodes. |
-| **ENTERPRISE** | ,000/yr | Enterprise CISOs & healthcare | 100% air-gapped Nitro Enclaves, all 25 Specialized Profiles, SOC 2 Evidence Pack. |
+| **Free Tier** | $0 | Casual users & testers | 15,000 char quota (General), 5,000 char trial (30 Industry Profiles). |
+| **PRO Tier** | $15/mo / $110 Lifetime | Developers, consultants, solo pros | All 30 industry profiles with unlimited characters, offline OCR/PDF. |
+| **TEAMS Tier** | $99/mo flat | Law firms, medical clinics, SMBs | Unlimited seats, client-side Argon2id encrypted team session handoff. |
+| **DEVELOPER SDK** | $199/mo / $1,990/yr | SaaS founders & AI engineers | @privacyscrubber/sdk headless engine, LangChain/MCP connectors. |
+| **ENTERPRISE** | Custom | Enterprise CISOs & healthcare | 100% air-gapped deployment, all 30 Specialized Profiles, SOC 2 Evidence Pack. |
 
 ---
 

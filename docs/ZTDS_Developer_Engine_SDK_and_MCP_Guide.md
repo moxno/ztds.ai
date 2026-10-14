@@ -15,7 +15,7 @@ Unlike cloud DLP solutions that act as external HTTP network proxies, the ZTDS e
 - **Zero Third-Party Dependency Tree:** Standalone compiled engine with zero dynamic remote code loading (Manifest V3 and strict air-gapped certified).
 - **Two-Sided Lossless Tokenization:**
   - Forward Sanitization: Cleartext PII -> Non-informative contextual tokens ([NAME_1], [SSN_1]).
-  - Reverse Sanitization: Model completion with surrogate tokens -> Restored cleartext PII using in-memory sessionMap.
+  - Reverse Sanitization: Model completion with surrogate tokens -> Restored cleartext PII using in-memory token map.
 
 ---
 

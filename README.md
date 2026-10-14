@@ -4,7 +4,7 @@
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Zenodo DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22058770-blue.svg)](https://doi.org/10.5281/zenodo.22058770)
 [![OSF DOI](https://img.shields.io/badge/OSF-10.17605%2FOSF.IO%2F5BYJF-blue.svg)](https://doi.org/10.17605/OSF.IO/5BYJF)
-[![Patent Pending](https://img.shields.io/badge/Patent_Pending-IL_331905-purple.svg)](https://ztds.ai/certification/)
+[![Patent Pending](https://img.shields.io/badge/Patents_Pending-Paris_Priority-purple.svg)](https://ztds.ai/certification/)
 [![WAN Egress](https://img.shields.io/badge/Sensitive_WAN_Egress-0.00_Bytes-emerald.svg)](https://ztds.ai/scanner/)
 [![Smithery Badge](https://smithery.ai/badge/ilsimox/ztds-mcp)](https://smithery.ai/servers/ilsimox/ztds-mcp)
 
