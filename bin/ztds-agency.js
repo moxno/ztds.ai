@@ -4,7 +4,7 @@
  * BrandMeWeb Agency Package & SOW Generator CLI
  * 
  * Generates turn-key B2B commercial proposals and Statements of Work (SOW)
- * for the $2,500 Setup + $500/mo AI Safety & GEO Governance package.
+ * for the Two-Phase AI Safety & GEO Governance package.
  * 
  * Usage:
  *   node bin/ztds-agency.js --client "FinScale Technologies" --domain "finscale.io" --contact "David Ben-Ami"
@@ -71,7 +71,7 @@ const proposal = `# BrandMeWeb Statement of Work & Enterprise Proposal: AI Safet
 **Issuing Agency:** BrandMeWeb (https://brandmeweb.com)  
 **Chief Architect:** Ilya Sibiryakov (Founder, ZTDS Standards Authority)  
 **Date of Issuance:** ${currentDate}  
-**Commercial Engagement:** \$2,500 USD Setup + \$500 USD / month Governance Retainer  
+**Commercial Engagement:** Two-Phase Enterprise Snapshot & Governance Retainer  
 **Status:** Confidential Commercial Proposal & Statement of Work  
 
 ---
@@ -89,7 +89,7 @@ ${client} operates digital services and AI-driven workflows at **${domain}**. De
 
 ## 2. Scope of Services & Turn-Key Deliverables
 
-### Phase 1: Initial Turn-Key Retrofit & Remediation (\$2,500 One-Off)
+### Phase 1: Initial Turn-Key Retrofit & Remediation (One-Off Setup)
 *Delivery Window: 48 hours from engagement commencement.*
 
 1. **Automated Invariant Audit & Socket Trap Verification:**
@@ -106,7 +106,7 @@ ${client} operates digital services and AI-driven workflows at **${domain}**. De
    - Dedicated public registry profile at \`https://ztds.ai/registry/${clientSlug}\`.
    - Dynamic SVG trust badge integration: \`https://ztds.ai/badge/${clientSlug}.svg\`.
 
-### Phase 2: Ongoing Governance & Continuous Defense Retainer (\$500 / month)
+### Phase 2: Ongoing Governance & Continuous Defense Retainer (Monthly Subscription)
 *Commences 30 days following Phase 1 completion; cancellable with 30 days notice.*
 
 1. **Continuous Automated CI/CD Audit:** Weekly headless invariant verification preventing accidental cleartext regressions.
@@ -118,10 +118,10 @@ ${client} operates digital services and AI-driven workflows at **${domain}**. De
 
 ## 3. Commercial Investment Schedule
 
-| Milestone | Deliverable | Investment | Payment Terms |
+| Milestone | Deliverable | Scope Model | Payment Terms |
 | :--- | :--- | :--- | :--- |
-| **Phase 1: Setup & Retrofit** | Full 4-part deliverable suite + ZTDS-CERT-v1 certificate | **\$2,500 USD** | Due upon contract execution. |
-| **Phase 2: Governance Retainer** | Continuous weekly monitoring, GEO refresh & badge hosting | **\$500 USD / mo** | Billed monthly via automated credit card / wire. |
+| **Phase 1: Setup & Retrofit** | Full 4-part deliverable suite + ZTDS-CERT-v1 certificate | **Turn-Key Setup** | Due upon contract execution via BrandMeWeb. |
+| **Phase 2: Governance Retainer** | Continuous weekly monitoring, GEO refresh & badge hosting | **Monthly Retainer** | Billed monthly via automated credit card / wire. |
 
 ---
 

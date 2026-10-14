@@ -90,11 +90,11 @@ const ztds = new ZTDSEngine({
 });
 
 // Clinician discharge summary masked before API dispatch
-const { sanitizedPrompt, sessionMap } = ztds.sanitize(rawClinicalNotes);
+const { sanitizedPrompt, tokenMap } = ztds.sanitize(rawClinicalNotes);
 const aiSummary = await llm.complete({ prompt: sanitizedPrompt });
 
 // Rehydrate in clinician browser view only
-const clinicianReport = ztds.rehydrate(aiSummary, sessionMap);`,
+const clinicianReport = ztds.rehydrate(aiSummary, tokenMap);`,
 
   'lex-veritas-legal': `from privacyscrubber_sdk import ZTDSSanitizer
 from fastapi import FastAPI, Request

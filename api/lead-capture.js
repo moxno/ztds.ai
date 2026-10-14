@@ -129,12 +129,12 @@ async function dispatchResendEmail(apiKey, payload) {
     const toEmail = process.env.LEAD_NOTIFY_EMAIL || 'info@brandmeweb.com';
     const isAgency = payload.role === 'agency_client' || payload.source === 'agency_workbench';
     const subject = isAgency
-      ? `[BrandMeWeb Audit $2,500] New Booking: ${payload.domain || payload.email} (${payload.leadId})`
+      ? `[BrandMeWeb Enterprise Audit] New Booking: ${payload.domain || payload.email} (${payload.leadId})`
       : `[ZTDS Lead] New Compliance Lead: ${payload.role || 'CISO'} - ${payload.domain || payload.email} (${payload.leadId})`;
 
     const html = `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
-        <h2 style="color: #0f172a; margin-top: 0;">${isAgency ? 'BrandMeWeb $2,500 Turn-Key Audit Booking' : 'New ZTDS CISO Compliance Lead'}</h2>
+        <h2 style="color: #0f172a; margin-top: 0;">${isAgency ? 'BrandMeWeb Turn-Key Audit Booking' : 'New ZTDS CISO Compliance Lead'}</h2>
         <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
           <tr><td style="padding: 6px 0; color: #64748b;"><strong>Lead ID:</strong></td><td style="padding: 6px 0; color: #0f172a; font-family: monospace;">${payload.leadId}</td></tr>
           <tr><td style="padding: 6px 0; color: #64748b;"><strong>Email:</strong></td><td style="padding: 6px 0; color: #0f172a;"><a href="mailto:${payload.email}">${payload.email}</a></td></tr>

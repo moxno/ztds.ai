@@ -213,7 +213,7 @@ const INDUSTRY_PROFILES = {
     ],
     dpaStatus: 'BAA-EXEMPT / DPA-EXEMPT (HIPAA Safe Harbor § 164.514)',
     cisoCitation: 'Complies with HIPAA Privacy Rule § 164.514(b) by irreversibly de-identifying all 18 statutory PHI elements inside volatile RAM prior to external model egress, legally eliminating Business Associate Agreement (BAA) requirements for third-party LLM providers.',
-    tierGuidance: 'Active in Free Quota (5,000 chars); Unlimited on TEAMS ($99/mo) & Developer SDK ($199/mo)'
+    tierGuidance: 'Baseline Open Standard (Apache 2.0); 30 Specialized Industry Profiles via Certified Implementations (PrivacyScrubber.com)'
   },
   finance: {
     id: 'finance',
@@ -231,7 +231,7 @@ const INDUSTRY_PROFILES = {
     ],
     dpaStatus: 'PCI SCOPE REDUCTION / DPA-EXEMPT (PCI-DSS v4.0 Req 3)',
     cisoCitation: 'Adheres to PCI-DSS v4.0 Requirement 3 and GLBA Standards for Safeguarding Customer Information by isolating cardholder data and financial account identifiers within local RAM, preventing SaaS LLM exposure.',
-    tierGuidance: 'Active in Free Quota (5,000 chars); Unlimited on TEAMS ($99/mo) & Developer SDK ($199/mo)'
+    tierGuidance: 'Baseline Open Standard (Apache 2.0); 30 Specialized Industry Profiles via Certified Implementations (PrivacyScrubber.com)'
   },
   legal: {
     id: 'legal',
@@ -249,7 +249,7 @@ const INDUSTRY_PROFILES = {
     ],
     dpaStatus: 'PRIVILEGE NON-WAIVER / DPA-EXEMPT (FRE 502)',
     cisoCitation: 'Protects against inadvertent waiver of Attorney-Client Privilege and Work-Product protections under Federal Rule of Evidence 502 (FRE 502) by executing bijective de-identification before prompts enter external LLM infrastructure.',
-    tierGuidance: 'Active in Free Quota (5,000 chars); Unlimited on TEAMS ($99/mo) & Developer SDK ($199/mo)'
+    tierGuidance: 'Baseline Open Standard (Apache 2.0); 30 Specialized Industry Profiles via Certified Implementations (PrivacyScrubber.com)'
   },
   hr: {
     id: 'hr',
@@ -267,7 +267,7 @@ const INDUSTRY_PROFILES = {
     ],
     dpaStatus: 'SPECIAL CATEGORY SHIELD / DPA-EXEMPT (GDPR Art. 9)',
     cisoCitation: 'Prevents GDPR Article 9 special category personal data and confidential personnel records from being processed by external model training pipelines, fulfilling European Works Council and EEOC requirements.',
-    tierGuidance: 'Active in Free Quota (5,000 chars); Unlimited on TEAMS ($99/mo) & Developer SDK ($199/mo)'
+    tierGuidance: 'Baseline Open Standard (Apache 2.0); 30 Specialized Industry Profiles via Certified Implementations (PrivacyScrubber.com)'
   },
   security: {
     id: 'security',
@@ -285,7 +285,7 @@ const INDUSTRY_PROFILES = {
     ],
     dpaStatus: 'SUBPROCESSOR DISAPPLICATION / DPA-EXEMPT (SOC 2 / GDPR Art. 28)',
     cisoCitation: 'Satisfies SOC 2 Type II confidentiality criteria and ISO 27001 Control A.8.24 by ensuring architectural air-gapping: raw secrets, tokens, and corporate network topology never reach cloud AI vendors.',
-    tierGuidance: 'Active in Free Quota (5,000 chars); Unlimited on TEAMS ($99/mo) & Developer SDK ($199/mo)'
+    tierGuidance: 'Baseline Open Standard (Apache 2.0); 30 Specialized Industry Profiles via Certified Implementations (PrivacyScrubber.com)'
   },
   general: {
     id: 'general',

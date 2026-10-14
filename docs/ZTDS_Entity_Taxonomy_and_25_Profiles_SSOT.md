@@ -135,7 +135,7 @@ The Universal Consumer PII layer is active across all 30 profiles as the baselin
   * Property Identification: Multiple Listing Service (`MLS`) numbers, Assessor Parcel Numbers (`APN`), Parcel IDs.
   * Closing & Title: Escrow file numbers, Title insurance commitment IDs, FHA case numbers (`XXX-XXXXXXX`).
   * Tenant & Leases: Tenant profile IDs, Lease agreement IDs, Gate/Lobby access PIN codes.
-  * Real Estate Values: Lookbehind extraction of `Purchase Price`, `Listing Price`, `Down Payment`, `Closing Costs`, `Rent`.
+  * Real Estate Values: Contextual extraction of `Purchase Price`, `Listing Price`, `Down Payment`, `Closing Costs`, `Rent`.
 
 ### 4.12. Regulatory Compliance & GRC (`compliance`)
 * **Target Personas**: Chief Compliance Officers, DPOs, Audit Managers, Risk Officers.
@@ -204,14 +204,14 @@ The Universal Consumer PII layer is active across all 30 profiles as the baselin
   * Trust Architecture: Living, Revocable, and Irrevocable Trust legal entities (`THE JOHN DOE IRREVOCABLE TRUST`).
   * Advisory Governance: SEC Form ADV registration files (`801-XXXXX`), FINRA Series 7/65/66 license numbers.
   * Retirement Accounts: Custodial accounts, SEP-IRA, 401(k) plan numbers, Required Minimum Distribution (`RMD`) amounts.
-  * Portfolio Assets: Total Net Worth, Assets Under Management (`AUM`), Market Value lookbehind amounts.
+  * Portfolio Assets: Total Net Worth, Assets Under Management (`AUM`), Market Value contextual amounts.
 
 ### 4.21. Insurance & Risk Management (`insurance`)
 * **Target Personas**: Underwriters, Claims Adjusters, Actuaries.
 * **Target Entities**:
   * Claims & Policies: Insurance Claim numbers (`CLM-XXXXX`), Policy numbers (`POL-XXXXX`), Insurance Binder IDs.
   * Regulatory Codes: National Association of Insurance Commissioners (`NAIC`) company codes (5-digit), Lloyd's Syndicate numbers, UK FCA FRN.
-  * Financial Reserves: Lookbehind extraction of `Claim Settlement`, `Loss Reserve`, `Indemnity`, `Deductible`, `Premium`.
+  * Financial Reserves: Contextual extraction of `Claim Settlement`, `Loss Reserve`, `Indemnity`, `Deductible`, `Premium`.
   * Physical Assets: Vehicle Identification Numbers (`VIN` 17-char ISO 3779), Certificate of Insurance (`COI`) numbers.
 
 ### 4.22. Accounting & Tax Preparation (`accounting`)

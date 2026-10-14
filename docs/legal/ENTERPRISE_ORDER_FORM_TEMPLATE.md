@@ -26,7 +26,7 @@
 *Select applicable tier(s) by checking [X]:*
 
 ### [ ] Option A: Developer Pro Annual SDK License
-* **Unit Price:** $1,990 USD / Year (Billed Annually)
+* **Unit Price:** Per Certified Provider Schedule (PrivacyScrubber.com)
 * **Scope of Deployment:**
   - Up to 5 Developer Seats & Production Backend Microservice nodes.
   - Includes `@privacyscrubber/sdk` (Node.js/TypeScript/WASM) and `@privacyscrubber/mcp-server` (stdio).
@@ -35,7 +35,7 @@
   - Standard email engineering support (48-hour SLA).
 
 ### [ ] Option B: Enterprise Air-Gapped Cluster License (Recommended)
-* **Unit Price:** $12,000 USD / Year (Billed Annually)
+* **Unit Price:** Custom Enterprise Quote (Billed Annually)
 * **Scope of Deployment:**
   - Up to 5 Production Nodes, Hardware Enclaves (AWS Nitro), or Isolated SCIF VPC instances.
   - 100% disconnected, zero-telemetry offline execution guarantee.
@@ -45,10 +45,10 @@
   - Priority engineering support (4-hour SLA during business hours).
 
 ### [ ] Option C: Global Enterprise Site License
-* **Unit Price:** $50,000 USD / Year (Billed Annually)
+* **Unit Price:** Custom Global Site Quote (Billed Annually)
 * **Scope of Deployment:**
   - Unlimited internal nodes, enclaves, developer seats, and microservices worldwide.
-  - Dedicated custom regex entity profile development (proprietary ERP/CRM formats).
+  - Dedicated custom proprietary entity profile development (proprietary ERP/CRM formats).
   - 24/7/365 Critical incident response SLA (1-hour response).
   - Direct architectural advisory with Ilya Sibiryakov (Chief Architect).
   - Full source code audit rights under air-gapped escrow terms.

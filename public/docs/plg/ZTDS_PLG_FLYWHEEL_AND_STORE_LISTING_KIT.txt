@@ -28,7 +28,7 @@ The Product-Led Growth (PLG) flywheel creates a deterministic transition from in
 | 3. Commercial Tiers (Paddle Merchant of Record):                        |
 |    - PRO ($15/mo / $110 Lifetime): Custom regex, batch doc scrubbing    |
 |    - TEAMS ($99/mo flat): 10 seats, shared policies, workspace audit    |
-|    - Developer SDK ($199/mo or $1,990/yr): @privacyscrubber/sdk + MCP   |
+|    - Developer SDK ($299/mo or $2,990/yr): @privacyscrubber/sdk + MCP   |
 |                                                                         |
 | 4. Enterprise Retainer Handoff:                                         |
 |    - BrandMeWeb Turn-Key Architecture ($2,500 setup + $500/mo retainer) |
@@ -132,7 +132,7 @@ Certified products embed the ZTDS Verified Badge with direct cryptographic resol
 | :--- | :--- | :--- | :--- |
 | User scrubs > 5 documents in 1 hour | Heavy professional workflow | "Need automatic batch document de-identification and custom compliance taxonomies?" | PRO Upgrade ($15/mo / $110 Lifetime) |
 | User scrubs corporate email domain (`@acme.corp`) | Enterprise employee | "Enforce unified zero-trust masking policies across your team without managing servers." | TEAMS ($99/mo flat, 10 seats) |
-| User scrubs code with API keys / SQL schemas | Developer / AI Engineer | "Automate zero-trust PII sanitization in your Python/Node.js pipelines with 0 network latency." | Developer SDK ($199/mo or $1,990/yr) |
+| User scrubs code with API keys / SQL schemas | Developer / AI Engineer | "Automate zero-trust PII sanitization in your Python/Node.js pipelines with 0 network latency." | Developer SDK ($299/mo or $2,990/yr) |
 | User clicks "Compliance / DPA FAQ" | CISO / Compliance Officer | "Eliminate subprocessor vendor risk assessments with statutory DPA exemption." | BrandMeWeb Turn-Key ($2,500 + $500/mo) |
 
 ### 4.2 Commercial Pricing Matrix (Paddle Checkout Integration)
@@ -146,11 +146,11 @@ const ZTDS_COMMERCIAL_TIERS = {
   },
   teams: {
     monthly: { price: 99, currency: "USD", interval: "month", paddle_price_id: "pri_teams_monthly" },
-    scope: "10 developer/seat licenses, unified team policies, central Ed25519 license minting"
+    scope: "Unlimited developer/seat licenses, unified team policies, central Ed25519 license minting"
   },
   sdk: {
-    monthly: { price: 199, currency: "USD", interval: "month", paddle_price_id: "pri_sdk_monthly" },
-    annual: { price: 1990, currency: "USD", interval: "year", paddle_price_id: "pri_sdk_annual" },
+    monthly: { price: 299, currency: "USD", interval: "month", paddle_price_id: "pri_sdk_monthly" },
+    annual: { price: 2990, currency: "USD", interval: "year", paddle_price_id: "pri_sdk_annual" },
     scope: "Headless @privacyscrubber/sdk, MCP server stdio, CI/CD audit gate, WASM binary"
   },
   enterprise_agency: {
@@ -173,9 +173,9 @@ Target Milestone Date: 14/05/2027
 | :--- | :--- | :--- | :--- | :--- |
 | BrandMeWeb Agency Retainers | $500/mo | 12 clients | $6,000 | ~21,600 ILS |
 | TEAMS Subscriptions | $99/mo | 30 teams | $2,970 | ~10,692 ILS |
-| Developer SDK Subscriptions | $199/mo | 8 companies | $1,592 | ~5,731 ILS |
+| Developer SDK Subscriptions | $299/mo | 6 companies | $1,794 | ~6,458 ILS |
 | PRO Self-Serve Subscriptions | $15/mo | 30 users | $450 | ~1,620 ILS |
-| **Combined Ecosystem Total** | — | — | **$11,012/mo** | **~39,643 ILS/mo** |
+| **Combined Ecosystem Total** | — | — | **$11,214/mo** | **~40,370 ILS/mo** |
 
 ---
 

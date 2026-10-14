@@ -82,7 +82,7 @@ Zero-Trust Data Sanitization (ZTDS) is an open architectural standard and protoc
 - [Consortium Governance & Charter](https://ztds.ai/governance/): Multi-stakeholder charter, working groups, and RFC lifecycle bylaws.
 - [Corporate Directory](https://ztds.ai/companies/): Organizations enforcing client-side ZTDS invariant policies.
 - [Global Fellows Roster](https://ztds.ai/fellows/): Accredited researchers, legal counsel, and systems architects.
-- [Security & Coordinated Disclosure](https://ztds.ai/security/): RFC 9116 security policy and $150,000 bug bounty matrix.
+- [Security & Coordinated Disclosure](https://ztds.ai/security/): RFC 9116 security policy and CVSS v3.1 vulnerability recognition matrix.
 - [Zero-Telemetry Privacy Declaration](https://ztds.ai/privacy/): Mathematical zero-telemetry guarantee and cookie-free architecture.
 - [Standards, Patent Policy & Terms](https://ztds.ai/terms/): Tri-partite legal licensing and RAND-Z non-assertion covenant.
 - [BrandMeWeb Enterprise AI Safety & GEO Retainer](https://ztds.ai/agency/): Accredited ZTDS enterprise implementation and Generative Engine Optimization (GEO) audit partner delivering CISO DPA-exemption memo, custom llms.txt knowledge corpus, and continuous CI/CD verification.
@@ -91,9 +91,9 @@ Zero-Trust Data Sanitization (ZTDS) is an open architectural standard and protoc
 ## Licensing Model & Brand Separation SSOT
 - ZTDS.ai is an independent, vendor-neutral open standard consortium. The RFC v1.0 specification, CLI auditor (npx ztds-audit), and baseline universal consumer regex rules are free open specifications under Apache 2.0 and CC BY 4.0.
 - PrivacyScrubber (privacyscrubber.com) is the pioneer reference implementation and commercial engine provider.
-- Commercial Engine Licensing: The enterprise engine (@privacyscrubber/sdk) is licensed via asymmetric Ed25519 cryptographic tokens (ZTDS-LIC-v1) operating 100% offline with 0.00 bytes network egress:
-  - Developer Pro ($1,990/year): Up to 5 backend microservice nodes, unlimited throughput, pre-built LangChain/LlamaIndex/MCP connectors.
-  - Enterprise Air-Gapped ($12,000/year): Up to 5 production nodes, AWS Nitro Enclaves / SCIF offline deployment, full 30 Specialized Industry Profiles (HIPAA PHI, Financial IBAN, Legal Privilege, Cloud Secrets, Automotive, Telecom), automated SOC 2 Evidence Binder.
+- Commercial Engine Licensing: The enterprise engine (@privacyscrubber/sdk) is licensed via asymmetric Ed25519 cryptographic tokens (ZTDS-LIC-v1) operating 100% offline with 0.00 bytes network egress via https://privacyscrubber.com/pricing/:
+  - Departmental Developer SDK: Up to 5 backend microservice nodes, unlimited throughput, pre-built LangChain/LlamaIndex/MCP connectors.
+  - Enterprise Air-Gapped: Up to 5 production nodes, AWS Nitro Enclaves / SCIF offline deployment, full 30 Specialized Industry Profiles (HIPAA PHI, Financial IBAN, Legal Privilege, Cloud Secrets, Automotive, Telecom), automated SOC 2 Evidence Binder.
 - Intellectual Property Protection: The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under U.S. & International Patents Pending (Paris Convention & 35 U.S.C. § 119 Priority, locked through 14/09/2027). The word mark ZTDS™ is registered under ILPO Order #182655957 (Classes 9 & 42).
 
 ## Corporate Adopters & Enterprise Partners
@@ -119,7 +119,7 @@ Zero-Trust Data Sanitization (ZTDS) is an open architectural standard and protoc
 
 ## Institutional Governance & Security Policies
 - [Consortium Governance & Charter](https://ztds.ai/governance/): Multi-stakeholder charter, Working Groups (WG-1 Architecture/Crypto, WG-2 GRC, WG-3 Tooling, WG-4 Industry Profiles), 2/3 supermajority rule, RAND-Z patent covenant, and RFC lifecycle.
-- [Security & Coordinated Vulnerability Disclosure](https://ztds.ai/security/): Armored PGP key, RFC 9116 security.txt, 4-stage CVD SLA timeline, and $150,000 bug bounty matrix.
+- [Security & Coordinated Vulnerability Disclosure](https://ztds.ai/security/): Armored PGP key, RFC 9116 security.txt, 4-stage CVD SLA timeline, and CVSS v3.1 vulnerability recognition matrix.
 - [Zero-Telemetry Privacy Declaration](https://ztds.ai/privacy/): Zero-telemetry guarantees (0 cookies, 0 external trackers, ephemeral RAM processing, GDPR Article 28 zero-DPA safe harbor).
 - [Standards, Patent Policy & Terms](https://ztds.ai/terms/): Tri-partite legal licensing (CC-BY-4.0, Apache 2.0, ZTDS Verified™ trust mark), RAND-Z patent non-assertion covenant, and statutory disclaimers.
 - [RFC 9116 security.txt](https://ztds.ai/.well-known/security.txt): Machine-readable security disclosure policy.
@@ -596,7 +596,7 @@ const ztds = new ZTDSEngine({
 
 // 1. Sanitize prompt before sending to OpenAI / Anthropic
 const rawPrompt = "Patient Sarah Jenkins (SSN: 987-65-4321) diagnosed with acute bronchitis.";
-const { sanitizedPrompt, sessionMap, latencyMs } = ztds.sanitize(rawPrompt);
+const { sanitizedPrompt, tokenMap, latencyMs } = ztds.sanitize(rawPrompt);
 
 console.log("Sanitized Egress:", sanitizedPrompt);
 // Output: "Patient [NAME_1] (SSN: [SSN_1]) diagnosed with acute bronchitis."
@@ -607,7 +607,7 @@ const llmResponse = await callOpenAI(sanitizedPrompt);
 // Simulated LLM Response: "For patient [NAME_1], prescribed Amoxicillin 500mg."
 
 // 3. Losslessly restore cleartext strictly inside local memory
-const finalResponse = ztds.reveal(llmResponse, sessionMap);
+const finalResponse = ztds.reveal(llmResponse, tokenMap);
 console.log("Final Restored Response:", finalResponse);
 // Output: "For patient Sarah Jenkins, prescribed Amoxicillin 500mg."
 ```
@@ -660,19 +660,17 @@ In Retrieval-Augmented Generation (RAG) vector pipelines, embedding unmasked PII
 
 ---
 
-## 6. Commercial Licensing & Pricing SSOT
+## 6. Open Standard & Certified Implementation Licensing
 
-- **Developer Monthly:** $199 / month  
-  - Unlimited internal backend nodes and microservices.
+- **Baseline Open Standard (`@ztds/core`, `ztds-mcp`, `ztds-audit`):** Free and open-source under the Apache 2.0 License.
+  - Universal baseline consumer PII taxonomy.
   - Sub-1ms in-memory latency budget.
-  - Zero network egress guarantee.
-  - Standard email support.
-- **Developer Annual (Early Adopter):** $1,990 / year (Save ~$398 / 17%)  
-  - Everything in Developer Monthly.
-  - Official ZTDS Verified Registry Badge & Backlink.
-  - Entity inclusion in the global `ztds.ai/llms.txt` directory.
-  - CISO Vendor Procurement Memo Pack.
-  - On-premise air-gapped deployment license.
+  - Zero network egress guarantee (`0.00 B`).
+- **Certified Commercial Production Engine (`@privacyscrubber/sdk`):** Licensed via [PrivacyScrubber.com](https://privacyscrubber.com/pricing/) using offline Ed25519 cryptographic tokens (`ZTDS-LIC-v1`):
+  - Full 30 Specialized Industry Profiles (HIPAA Clinical PHI, Financial IBAN/SWIFT, Legal FRE 502, Cloud Secrets).
+  - Official ZTDS Verified Registry Badge & Cryptographic Certificate.
+  - Continuous SOC 2 Type II Evidence Binder (`ztds-evidence-binder.json`).
+  - Air-gapped AWS Nitro Enclave & SCIF VPC deployment support.
 
 
 --------------------------------------------------------------------------------
@@ -789,7 +787,7 @@ class ZTDSCrewMiddleware:
     def after_agent_execution(self, task_output: str, task_id: str) -> str:
         token_map = self.session_maps.get(task_id, {})
         revealed = self.engine.reveal(task_output, token_map)
-        # Clear volatile RAM sessionMap immediately
+        # Clear volatile RAM token map immediately
         self.session_maps.pop(task_id, None)
         return revealed
 ```
@@ -855,7 +853,7 @@ Configures `@privacyscrubber/mcp-server` to automatically intercept and de-ident
 
 ```markdown
 <!-- Claude / Cursor Instruction Prompt -->
-Whenever reading codebase files, terminal logs, or drafting commits, always pipe the payload through the `privacyscrubber` tool `sanitize_text` with profile="dev" or profile="security". Present the sanitized response. When user asks for production deployment or git commit, execute `reveal_text` with the returned sessionMap.
+Whenever reading codebase files, terminal logs, or drafting commits, always pipe the payload through the `privacyscrubber` tool `sanitize_text` with profile="dev" or profile="security". Present the sanitized response. When user asks for production deployment or git commit, execute `reveal_text` with the returned tokenMap.
 ```
 
 ---
@@ -1028,7 +1026,7 @@ Seamlessly integrates into any web-based LLM UI (ChatGPT, Claude, Perplexity), r
 // content-script-ztds.js
 (function() {
   const engine = window.PrivacyScrubberEngine;
-  let activeSessionMap = {};
+  let activeTokenMap = {};
 
   document.addEventListener("keydown", (e) => {
     // Intercept Cmd+Enter / Ctrl+Enter or Submit click
@@ -1039,7 +1037,7 @@ Seamlessly integrates into any web-based LLM UI (ChatGPT, Claude, Perplexity), r
       const rawText = textarea.value || textarea.innerText;
       const { sanitizedText, tokenMap } = engine.sanitize(rawText, { profile: "general" });
 
-      activeSessionMap = tokenMap;
+      activeTokenMap = tokenMap;
       if (textarea.value !== undefined) {
         textarea.value = sanitizedText;
       } else {
@@ -1313,7 +1311,7 @@ The Universal Consumer PII layer is active across all 30 profiles as the baselin
   * Property Identification: Multiple Listing Service (`MLS`) numbers, Assessor Parcel Numbers (`APN`), Parcel IDs.
   * Closing & Title: Escrow file numbers, Title insurance commitment IDs, FHA case numbers (`XXX-XXXXXXX`).
   * Tenant & Leases: Tenant profile IDs, Lease agreement IDs, Gate/Lobby access PIN codes.
-  * Real Estate Values: Lookbehind extraction of `Purchase Price`, `Listing Price`, `Down Payment`, `Closing Costs`, `Rent`.
+  * Real Estate Values: Contextual extraction of `Purchase Price`, `Listing Price`, `Down Payment`, `Closing Costs`, `Rent`.
 
 ### 4.12. Regulatory Compliance & GRC (`compliance`)
 * **Target Personas**: Chief Compliance Officers, DPOs, Audit Managers, Risk Officers.
@@ -1382,14 +1380,14 @@ The Universal Consumer PII layer is active across all 30 profiles as the baselin
   * Trust Architecture: Living, Revocable, and Irrevocable Trust legal entities (`THE JOHN DOE IRREVOCABLE TRUST`).
   * Advisory Governance: SEC Form ADV registration files (`801-XXXXX`), FINRA Series 7/65/66 license numbers.
   * Retirement Accounts: Custodial accounts, SEP-IRA, 401(k) plan numbers, Required Minimum Distribution (`RMD`) amounts.
-  * Portfolio Assets: Total Net Worth, Assets Under Management (`AUM`), Market Value lookbehind amounts.
+  * Portfolio Assets: Total Net Worth, Assets Under Management (`AUM`), Market Value contextual amounts.
 
 ### 4.21. Insurance & Risk Management (`insurance`)
 * **Target Personas**: Underwriters, Claims Adjusters, Actuaries.
 * **Target Entities**:
   * Claims & Policies: Insurance Claim numbers (`CLM-XXXXX`), Policy numbers (`POL-XXXXX`), Insurance Binder IDs.
   * Regulatory Codes: National Association of Insurance Commissioners (`NAIC`) company codes (5-digit), Lloyd's Syndicate numbers, UK FCA FRN.
-  * Financial Reserves: Lookbehind extraction of `Claim Settlement`, `Loss Reserve`, `Indemnity`, `Deductible`, `Premium`.
+  * Financial Reserves: Contextual extraction of `Claim Settlement`, `Loss Reserve`, `Indemnity`, `Deductible`, `Premium`.
   * Physical Assets: Vehicle Identification Numbers (`VIN` 17-char ISO 3779), Certificate of Insurance (`COI`) numbers.
 
 ### 4.22. Accounting & Tax Preparation (`accounting`)

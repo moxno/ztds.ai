@@ -395,14 +395,14 @@
         <div>
           <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
-            Volatile In-Memory SessionMap (Ephemeral RAM Dump)
+            Volatile In-Memory Token Map (Ephemeral RAM Dump)
           </h3>
           <p class="text-xs text-slate-500 mt-0.5">Isolated strictly to volatile execution memory. Conforming to Theorem 2: &empty; non-volatile disk persistence.</p>
         </div>
         <div class="flex items-center gap-3 text-xs font-mono">
           <button id="btnCopyMap" class="btn-outline text-xs py-1.5 px-3 flex items-center gap-1">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
-            <span id="copyMapText">Copy SessionMap</span>
+            <span id="copyMapText">Copy Token Map</span>
           </button>
         </div>
       </div>
@@ -911,14 +911,14 @@
         inputByteCount.textContent = `${new Blob([raw]).size} B`;
       });
 
-      // Copy SessionMap JSON
+      // Copy Token Map JSON
       document.getElementById('btnCopyMap').addEventListener('click', function() {
         const jsonText = JSON.stringify(sessionMap, null, 2);
         if (window.ztdsCopy) {
           window.ztdsCopy(jsonText, () => {
             const label = document.getElementById('copyMapText');
             label.innerText = 'Map Copied!';
-            setTimeout(() => { label.innerText = 'Copy SessionMap'; }, 2000);
+            setTimeout(() => { label.innerText = 'Copy Token Map'; }, 2000);
           });
         }
       });

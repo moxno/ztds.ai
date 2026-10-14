@@ -106,7 +106,7 @@ class ZTDSCrewMiddleware:
     def after_agent_execution(self, task_output: str, task_id: str) -> str:
         token_map = self.session_maps.get(task_id, {})
         revealed = self.engine.reveal(task_output, token_map)
-        # Clear volatile RAM sessionMap immediately
+        # Clear volatile RAM token map immediately
         self.session_maps.pop(task_id, None)
         return revealed
 ```
@@ -172,7 +172,7 @@ Configures `@privacyscrubber/mcp-server` to automatically intercept and de-ident
 
 ```markdown
 <!-- Claude / Cursor Instruction Prompt -->
-Whenever reading codebase files, terminal logs, or drafting commits, always pipe the payload through the `privacyscrubber` tool `sanitize_text` with profile="dev" or profile="security". Present the sanitized response. When user asks for production deployment or git commit, execute `reveal_text` with the returned sessionMap.
+Whenever reading codebase files, terminal logs, or drafting commits, always pipe the payload through the `privacyscrubber` tool `sanitize_text` with profile="dev" or profile="security". Present the sanitized response. When user asks for production deployment or git commit, execute `reveal_text` with the returned tokenMap.
 ```
 
 ---
@@ -345,7 +345,7 @@ Seamlessly integrates into any web-based LLM UI (ChatGPT, Claude, Perplexity), r
 // content-script-ztds.js
 (function() {
   const engine = window.PrivacyScrubberEngine;
-  let activeSessionMap = {};
+  let activeTokenMap = {};
 
   document.addEventListener("keydown", (e) => {
     // Intercept Cmd+Enter / Ctrl+Enter or Submit click
@@ -356,7 +356,7 @@ Seamlessly integrates into any web-based LLM UI (ChatGPT, Claude, Perplexity), r
       const rawText = textarea.value || textarea.innerText;
       const { sanitizedText, tokenMap } = engine.sanitize(rawText, { profile: "general" });
 
-      activeSessionMap = tokenMap;
+      activeTokenMap = tokenMap;
       if (textarea.value !== undefined) {
         textarea.value = sanitizedText;
       } else {

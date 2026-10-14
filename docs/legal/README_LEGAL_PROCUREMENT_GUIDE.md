@@ -48,7 +48,7 @@ This suite provides the four foundational contracts to close enterprise sales ef
 * **Customer Legal Argument:** "We cannot rely on an external vendor for critical AI security without business continuity source escrow."
 * **The Trap:** Leaking the core proprietary regex heuristics, 25 specialized profiles, or token mapping algorithms destroys the commercial moat.
 * **Our Response:**
-  > "Source code inspection is available exclusively under our Tier C Global Enterprise Site License ($50,000/yr) under strict air-gapped non-compete terms. For standard deployments, the compiled WebAssembly and Docker containers operate 100% offline with no external dependencies, ensuring complete business continuity even if vendor communication is interrupted."
+  > "Source code inspection is available exclusively under our Tier C Global Enterprise Site License under strict air-gapped non-compete terms. For standard deployments, the compiled WebAssembly and Docker containers operate 100% offline with no external dependencies, ensuring complete business continuity even if vendor communication is interrupted."
 
 ---
 
@@ -125,7 +125,7 @@ This suite provides the four foundational contracts to close enterprise sales ef
                  |
                  v
    [3. Send Order Form + MSA]  <--- docs/legal/ENTERPRISE_ORDER_FORM_TEMPLATE.md
-   - Pre-select Tier ($12K Air-Gapped) <--- docs/legal/ENTERPRISE_MASTER_SERVICES_AGREEMENT_MSA.md
+   - Pre-select Tier (Enterprise Air-Gapped) <--- docs/legal/ENTERPRISE_MASTER_SERVICES_AGREEMENT_MSA.md
    - Include Air-Gapped EULA     <--- docs/legal/AIR_GAPPED_ENTERPRISE_EULA.md
                  |
                  v

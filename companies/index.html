@@ -398,7 +398,7 @@
           </a>
           <div class="flex items-center gap-2">
             <a href="/agency/" class="px-2.5 py-1 rounded bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-[11px] font-mono font-bold transition-colors touch-target">
-              Agency Retainer ($2.5k) &rarr;
+              Agency Governance Retainer &rarr;
             </a>
             <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono transition-colors touch-target" data-slug="brandmeweb" data-name="BrandMeWeb">
               Embed Seal &rarr;
@@ -1766,11 +1766,11 @@ const ztds = new ZTDSEngine({
 });
 
 // Clinician discharge summary masked before API dispatch
-const { sanitizedPrompt, sessionMap } = ztds.sanitize(rawClinicalNotes);
+const { sanitizedPrompt, tokenMap } = ztds.sanitize(rawClinicalNotes);
 const aiSummary = await llm.complete({ prompt: sanitizedPrompt });
 
 // Rehydrate in clinician browser view only
-const clinicianReport = ztds.rehydrate(aiSummary, sessionMap);`,
+const clinicianReport = ztds.rehydrate(aiSummary, tokenMap);`,
           outcome: 'Zero PHI entities cross the network boundary. Eliminated cloud proxy subscription fees and achieved immediate HIPAA Safe Harbor compliance without vendor BAA friction.',
           statutory: 'HIPAA Privacy Rule 45 CFR § 164.514(b) (Safe Harbor De-Identification)'
         },

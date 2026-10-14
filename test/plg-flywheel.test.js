@@ -59,7 +59,7 @@ console.log('\n--> Test 3: Commercial Pricing SSOT Alignment');
   // TEAMS tier
   assert(content.includes('$99/mo flat'), 'Must detail TEAMS tier pricing ($99/mo flat)');
   // SDK tier
-  assert(content.includes('$199/mo or $1,990/yr'), 'Must detail Developer SDK tier ($199/mo or $1,990/yr)');
+  assert(content.includes('$299/mo or $2,990/yr'), 'Must detail Developer SDK tier ($299/mo or $2,990/yr)');
   // Agency setup & retainer
   assert(content.includes('$2,500 setup + $500/mo retainer'), 'Must detail Agency setup and retainer');
   // Target MRR

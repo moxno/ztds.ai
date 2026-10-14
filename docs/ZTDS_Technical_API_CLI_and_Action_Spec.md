@@ -4,7 +4,7 @@
 
 Package Name: `@privacyscrubber/sdk`  
 Runtimes: Node.js (>=18), Next.js, Cloudflare Workers (Node compat), Bun, Deno, WebAssembly.  
-License: Commercial B2B Developer License ($199/mo or $1,990/yr).  
+License: Commercial B2B Developer License via PrivacyScrubber.com.  
 
 ### 1.1 Type Definitions
 ```typescript
@@ -29,13 +29,13 @@ export interface ZTDSConfig {
   preserveContextLabels?: boolean; // Default: true
 }
 
-export interface SessionMap {
+export interface TokenMap {
   [surrogateToken: string]: string; // e.g. { "[NAME_1]": "John Doe" }
 }
 
 export interface SanitizeResult {
   sanitizedPrompt: string;
-  sessionMap: SessionMap;
+  tokenMap: TokenMap;
   tokenCount: number;
   entityBreakdown: Record<string, number>;
   latencyMs: number;
@@ -62,13 +62,13 @@ export class ZTDSEngine {
   public sanitize(rawText: string): SanitizeResult;
 
   // 2. Reverse Lossless De-tokenization (Restores cleartext in local RAM)
-  public reveal(sanitizedText: string, sessionMap: SessionMap): string;
+  public reveal(sanitizedText: string, tokenMap: TokenMap): string;
 
   // 3. Cryptographic Team Transport Export (Argon2id + XChaCha20-Poly1305)
-  public exportEncryptedSession(sessionMap: SessionMap, passphrase: string): Promise<string>;
+  public exportEncryptedSession(tokenMap: TokenMap, passphrase: string): Promise<string>;
 
   // 4. Cryptographic Team Transport Import
-  public importEncryptedSession(encryptedPayload: string, passphrase: string): Promise<SessionMap>;
+  public importEncryptedSession(encryptedPayload: string, passphrase: string): Promise<TokenMap>;
 
   // 5. Generate CISO Audit Receipt
   public generateAuditReceipt(result: SanitizeResult): AuditReceipt;

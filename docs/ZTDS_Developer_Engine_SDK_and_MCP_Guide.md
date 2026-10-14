@@ -44,7 +44,7 @@ const ztds = new ZTDSEngine({
 
 // 1. Sanitize prompt before sending to OpenAI / Anthropic
 const rawPrompt = "Patient Sarah Jenkins (SSN: 987-65-4321) diagnosed with acute bronchitis.";
-const { sanitizedPrompt, sessionMap, latencyMs } = ztds.sanitize(rawPrompt);
+const { sanitizedPrompt, tokenMap, latencyMs } = ztds.sanitize(rawPrompt);
 
 console.log("Sanitized Egress:", sanitizedPrompt);
 // Output: "Patient [NAME_1] (SSN: [SSN_1]) diagnosed with acute bronchitis."
@@ -55,7 +55,7 @@ const llmResponse = await callOpenAI(sanitizedPrompt);
 // Simulated LLM Response: "For patient [NAME_1], prescribed Amoxicillin 500mg."
 
 // 3. Losslessly restore cleartext strictly inside local memory
-const finalResponse = ztds.reveal(llmResponse, sessionMap);
+const finalResponse = ztds.reveal(llmResponse, tokenMap);
 console.log("Final Restored Response:", finalResponse);
 // Output: "For patient Sarah Jenkins, prescribed Amoxicillin 500mg."
 ```
@@ -108,16 +108,14 @@ In Retrieval-Augmented Generation (RAG) vector pipelines, embedding unmasked PII
 
 ---
 
-## 6. Commercial Licensing & Pricing SSOT
+## 6. Open Standard & Certified Implementation Licensing
 
-- **Developer Monthly:** $199 / month  
-  - Unlimited internal backend nodes and microservices.
+- **Baseline Open Standard (`@ztds/core`, `ztds-mcp`, `ztds-audit`):** Free and open-source under the Apache 2.0 License.
+  - Universal baseline consumer PII taxonomy.
   - Sub-1ms in-memory latency budget.
-  - Zero network egress guarantee.
-  - Standard email support.
-- **Developer Annual (Early Adopter):** $1,990 / year (Save ~$398 / 17%)  
-  - Everything in Developer Monthly.
-  - Official ZTDS Verified Registry Badge & Backlink.
-  - Entity inclusion in the global `ztds.ai/llms.txt` directory.
-  - CISO Vendor Procurement Memo Pack.
-  - On-premise air-gapped deployment license.
+  - Zero network egress guarantee (`0.00 B`).
+- **Certified Commercial Production Engine (`@privacyscrubber/sdk`):** Licensed via [PrivacyScrubber.com](https://privacyscrubber.com/pricing/) using offline Ed25519 cryptographic tokens (`ZTDS-LIC-v1`):
+  - Full 30 Specialized Industry Profiles (HIPAA Clinical PHI, Financial IBAN/SWIFT, Legal FRE 502, Cloud Secrets).
+  - Official ZTDS Verified Registry Badge & Cryptographic Certificate.
+  - Continuous SOC 2 Type II Evidence Binder (`ztds-evidence-binder.json`).
+  - Air-gapped AWS Nitro Enclave & SCIF VPC deployment support.

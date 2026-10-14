@@ -18,10 +18,9 @@ This suite provides the four foundational contracts to close enterprise sales ef
 | **`ENTERPRISE_MASTER_SERVICES_AGREEMENT_MSA.md`** | Master terms, IP defense, liability cap | Attached to Order Form (Schedule A). |
 | **`AIR_GAPPED_ENTERPRISE_EULA.md`** | License for SCIF, Nitro Enclave, VPC nodes | Attached when customer deploys on-premise or offline. |
 | **`ZTDS_Conformity_Assessment_Policy.md`** | Formal certification & revocation governance | Attached to enterprise InfoSec audit & RFP submissions. |
-| **`../security/ZTDS_Independent_Security_Audit_Report.md`** | Independent white-box audit & clean bill of health | Attached to CISO InfoSec review & VSAQ/CAIQ response. |
-| **`WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.md`** | PCT international patent specification & 20 claims | Attached for IP due diligence & M&A / licensing reviews. |
-| **`WIPO_MADRID_TRADEMARK_FILING_DOSSIER.md`** | Madrid System international trademark dossier | Form MM2 particulars for international trademark registration. |
-| **`WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.md`** | Master IP portfolio & statutory prosecution calendar | Single source of truth for priority deadlines & national phase. |
+| **`internal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.md`** | PCT international patent specification & 20 claims | Attached under Counsel NDA for IP due diligence & M&A / licensing reviews. |
+| **`internal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.md`** | Madrid System international trademark dossier | Form MM2 particulars for international trademark registration (Confidential). |
+| **`internal/WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.md`** | Master IP portfolio & statutory prosecution calendar | Single source of truth for priority deadlines & national phase (Confidential). |
 
 ---
 
@@ -49,7 +48,7 @@ This suite provides the four foundational contracts to close enterprise sales ef
 * **Customer Legal Argument:** "We cannot rely on an external vendor for critical AI security without business continuity source escrow."
 * **The Trap:** Leaking the core proprietary regex heuristics, 25 specialized profiles, or token mapping algorithms destroys the commercial moat.
 * **Our Response:**
-  > "Source code inspection is available exclusively under our Tier C Global Enterprise Site License ($50,000/yr) under strict air-gapped non-compete terms. For standard deployments, the compiled WebAssembly and Docker containers operate 100% offline with no external dependencies, ensuring complete business continuity even if vendor communication is interrupted."
+  > "Source code inspection is available exclusively under our Tier C Global Enterprise Site License under strict air-gapped non-compete terms. For standard deployments, the compiled WebAssembly and Docker containers operate 100% offline with no external dependencies, ensuring complete business continuity even if vendor communication is interrupted."
 
 ---
 
@@ -126,7 +125,7 @@ This suite provides the four foundational contracts to close enterprise sales ef
                  |
                  v
    [3. Send Order Form + MSA]  <--- docs/legal/ENTERPRISE_ORDER_FORM_TEMPLATE.md
-   - Pre-select Tier ($12K Air-Gapped) <--- docs/legal/ENTERPRISE_MASTER_SERVICES_AGREEMENT_MSA.md
+   - Pre-select Tier (Enterprise Air-Gapped) <--- docs/legal/ENTERPRISE_MASTER_SERVICES_AGREEMENT_MSA.md
    - Include Air-Gapped EULA     <--- docs/legal/AIR_GAPPED_ENTERPRISE_EULA.md
                  |
                  v
@@ -151,16 +150,16 @@ When engaging Fortune 500 CISOs, enterprise legal counsel, and venture/M&A partn
 
 ### 4.1 Patent Anchor (U.S. & International Patents Pending & PCT Strategy)
 - **Priority Anchor:** **U.S. & International Patents Pending** (Paris Convention Priority Window locked through 14/09/2027; priority docket and WIPO DAS code provided under Counsel NDA).
-- **International PCT Phase:** Governed by `docs/legal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.md`. International PCT application must be filed via ePCT prior to **14/09/2027** (12-month statutory bar).
+- **International PCT Phase:** Governed by `docs/legal/internal/WIPO_PCT_PATENT_SPECIFICATION_AND_CLAIMS.md`. International PCT application must be filed via ePCT prior to **14/09/2027** (12-month statutory bar).
 - **National Phase Targets (Month 30: 14/03/2029):** United States (USPTO), European Patent Office (EPO), Israel (ILPO), United Kingdom (UKIPO), and Japan (JPO).
 - **Enterprise Defense Utility:** Prevents hyperscalers (AWS, Microsoft, Google) or third-party DLP vendors from patenting in-RAM deterministic surrogate tokenization and claiming infringement against our customers or ecosystem.
 
 ### 4.2 Trademark & Certification Mark Anchor (ILPO Order #182655957 & Madrid Protocol)
 - **Priority Anchor:** ILPO Order **#182655957**, filed **20/09/2026** for Nice Classes 9 and 42.
-- **Madrid System International Dossier:** Governed by `docs/legal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.md`. International application (Form MM2) must be filed prior to **20/03/2027** (6-month Paris Convention priority bar).
+- **Madrid System International Dossier:** Governed by `docs/legal/internal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.md`. International application (Form MM2) must be filed prior to **20/03/2027** (6-month Paris Convention priority bar).
 - **Designated Markets:** US, EU, UK, JP, CA, CH, AU, SG.
 - **Certification Mark Governance:** Protects the **"ZTDS™"** and **"ZTDS VERIFIED™"** seals against counterfeit or unverified security claims, giving enterprise customers verifiable legal trust.
 
 ### 4.3 Prosecution Timeline & Governance SSOT
-- Complete chronological prosecution calendar, statutory deadlines, budget allocations, and e-filing step-by-step procedures are maintained in **`docs/legal/WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.md`**.
+- Complete chronological prosecution calendar, statutory deadlines, budget allocations, and e-filing step-by-step procedures are maintained in **`docs/legal/internal/WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.md`**.
 

@@ -354,14 +354,14 @@
 <span class="text-blue-400">const</span> engine = <span class="text-blue-400">new</span> <span class="text-yellow-300">ZTDSEngine</span>({ profile: <span class="text-emerald-300">"dev"</span> });
 
 <span class="text-slate-500">// 1. In-RAM sanitization before socket dispatch (&lt;0.8ms, 0.00B egress)</span>
-<span class="text-blue-400">const</span> { sanitizedPrompt, sessionMap } = engine.<span class="text-yellow-300">sanitize</span>(<span class="text-emerald-300">"User ceo@acme.com budget $50,000"</span>);
+<span class="text-blue-400">const</span> { sanitizedPrompt, tokenMap } = engine.<span class="text-yellow-300">sanitize</span>(<span class="text-emerald-300">"User ceo@acme.com budget $50,000"</span>);
 <span class="text-slate-500">// sanitizedPrompt =&gt; "User [EMAIL_TOKEN_1] budget [FIN_TOKEN_1]"</span>
 
 <span class="text-slate-500">// 2. Forward sanitizedPrompt safely to OpenAI, Claude, or local Ollama...</span>
 <span class="text-blue-400">const</span> llmResponse = <span class="text-blue-400">await</span> <span class="text-yellow-300">callLLM</span>(sanitizedPrompt);
 
 <span class="text-slate-500">// 3. Losslessly restore surrogate tokens strictly inside local client RAM</span>
-<span class="text-blue-400">const</span> clearOutput = engine.<span class="text-yellow-300">reveal</span>(llmResponse, sessionMap);</code></pre>
+<span class="text-blue-400">const</span> clearOutput = engine.<span class="text-yellow-300">reveal</span>(llmResponse, tokenMap);</code></pre>
             <pre id="quickstartPyBlock" class="hidden overflow-x-auto"><code><span class="text-blue-400">from</span> privacyscrubber <span class="text-blue-400">import</span> ZTDSEngine
 
 engine = <span class="text-yellow-300">ZTDSEngine</span>(profile=<span class="text-emerald-300">"dev"</span>)
@@ -817,7 +817,7 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
       <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
         <div class="text-slate-300">
           <strong class="text-white">Need an Air-Gapped Enterprise Deployment License?</strong>
-          <span class="text-slate-400 block sm:inline sm:ml-1">Developer Pro ($1,990/yr) and TEAMS ($99/mo) licenses include offline Ed25519 tokens with instant fulfillment.</span>
+          <span class="text-slate-400 block sm:inline sm:ml-1">Certified Developer SDK and TEAMS implementations (via PrivacyScrubber.com) include offline Ed25519 tokens with instant fulfillment.</span>
         </div>
         <div class="flex items-center gap-3 shrink-0">
           <a href="#licensing" onclick="const el=document.getElementById('licensing'); if(el) el.scrollIntoView({behavior:'smooth'});" class="btn-trust text-xs py-2 px-4 shadow-sm font-semibold">
@@ -891,7 +891,7 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
 <span class="text-blue-400">export class</span> <span class="text-yellow-300">ZTDSCallbackHandler</span> <span class="text-blue-400">extends</span> <span class="text-yellow-300">BaseCallbackHandler</span> {
   name = <span class="text-emerald-300">"ZTDSCallbackHandler"</span>;
   <span class="text-blue-400">private</span> engine: ZTDSEngine;
-  <span class="text-blue-400">private</span> sessionMaps: Map&lt;<span class="text-blue-400">string</span>, Record&lt;<span class="text-blue-400">string</span>, <span class="text-blue-400">string</span>&gt;&gt; = <span class="text-blue-400">new</span> Map();
+  <span class="text-blue-400">private</span> tokenMaps: Map&lt;<span class="text-blue-400">string</span>, Record&lt;<span class="text-blue-400">string</span>, <span class="text-blue-400">string</span>&gt;&gt; = <span class="text-blue-400">new</span> Map();
 
   <span class="text-blue-400">constructor</span>(profile: <span class="text-emerald-300">"general"</span> | <span class="text-emerald-300">"healthcare"</span> | <span class="text-emerald-300">"fintech"</span> | <span class="text-emerald-300">"legal"</span> = <span class="text-emerald-300">"general"</span>) {
     <span class="text-blue-400">super</span>();
@@ -901,23 +901,23 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
   <span class="text-slate-500">// 1. Intercept and sanitize prompts in volatile RAM before socket creation</span>
   <span class="text-blue-400">async</span> <span class="text-yellow-300">handleLLMStart</span>(llm: { name: <span class="text-blue-400">string</span> }, prompts: <span class="text-blue-400">string</span>[], runId: <span class="text-blue-400">string</span>) {
     <span class="text-blue-400">for</span> (<span class="text-blue-400">let</span> i = <span class="text-purple-400">0</span>; i &lt; prompts.length; i++) {
-      <span class="text-blue-400">const</span> { sanitizedPrompt, sessionMap } = <span class="text-blue-400">this</span>.engine.<span class="text-yellow-300">sanitize</span>(prompts[i]);
+      <span class="text-blue-400">const</span> { sanitizedPrompt, tokenMap } = <span class="text-blue-400">this</span>.engine.<span class="text-yellow-300">sanitize</span>(prompts[i]);
       prompts[i] = sanitizedPrompt; <span class="text-slate-500">// In-place payload replacement</span>
-      <span class="text-blue-400">this</span>.sessionMaps.<span class="text-yellow-300">set</span>(runId, sessionMap);
+      <span class="text-blue-400">this</span>.tokenMaps.<span class="text-yellow-300">set</span>(runId, tokenMap);
     }
   }
 
   <span class="text-slate-500">// 2. Losslessly restore cleartext strictly inside local client RAM</span>
   <span class="text-blue-400">async</span> <span class="text-yellow-300">handleLLMEnd</span>(output: LLMResult, runId: <span class="text-blue-400">string</span>) {
-    <span class="text-blue-400">const</span> sessionMap = <span class="text-blue-400">this</span>.sessionMaps.<span class="text-yellow-300">get</span>(runId);
-    <span class="text-blue-400">if</span> (!sessionMap) <span class="text-blue-400">return</span>;
+    <span class="text-blue-400">const</span> tokenMap = <span class="text-blue-400">this</span>.tokenMaps.<span class="text-yellow-300">get</span>(runId);
+    <span class="text-blue-400">if</span> (!tokenMap) <span class="text-blue-400">return</span>;
 
     <span class="text-blue-400">for</span> (<span class="text-blue-400">const</span> generations <span class="text-blue-400">of</span> output.generations) {
       <span class="text-blue-400">for</span> (<span class="text-blue-400">const</span> gen <span class="text-blue-400">of</span> generations) {
-        gen.text = <span class="text-blue-400">this</span>.engine.<span class="text-yellow-300">reveal</span>(gen.text, sessionMap);
+        gen.text = <span class="text-blue-400">this</span>.engine.<span class="text-yellow-300">reveal</span>(gen.text, tokenMap);
       }
     }
-    <span class="text-blue-400">this</span>.sessionMaps.<span class="text-yellow-300">delete</span>(runId); <span class="text-slate-500">// Wipe volatile RAM sessionMap immediately</span>
+    <span class="text-blue-400">this</span>.tokenMaps.<span class="text-yellow-300">delete</span>(runId); <span class="text-slate-500">// Wipe volatile RAM token map immediately</span>
   }
 }
 
@@ -1227,7 +1227,7 @@ static_resources:
           <pre class="text-slate-100 overflow-x-auto"><code><span class="text-slate-500">// content-script-ztds.js</span>
 (<span class="text-blue-400">function</span>() {
   <span class="text-blue-400">const</span> engine = window.PrivacyScrubberEngine;
-  <span class="text-blue-400">let</span> activeSessionMap = {};
+  <span class="text-blue-400">let</span> activeTokenMap = {};
 
   document.<span class="text-yellow-300">addEventListener</span>(<span class="text-emerald-300">"keydown"</span>, (e) =&gt; {
     <span class="text-blue-400">if</span> (e.key === <span class="text-emerald-300">"Enter"</span> && !e.shiftKey) {
@@ -1235,7 +1235,7 @@ static_resources:
       <span class="text-blue-400">if</span> (target && (target.tagName === <span class="text-emerald-300">"TEXTAREA"</span> || target.isContentEditable)) {
         <span class="text-blue-400">const</span> rawText = target.value || target.innerText;
         <span class="text-blue-400">const</span> { sanitizedText, tokenMap } = engine.<span class="text-yellow-300">sanitize</span>(rawText);
-        activeSessionMap = tokenMap;
+        activeTokenMap = tokenMap;
         <span class="text-blue-400">if</span> (target.value) target.value = sanitizedText;
         <span class="text-blue-400">else</span> target.innerText = sanitizedText;
       }
@@ -1628,13 +1628,13 @@ static_resources:
               <div>
                 <div class="flex items-center justify-between">
                   <span class="text-[10px] font-mono font-bold text-slate-400 uppercase">ZTDS TEAMS</span>
-                  <span class="text-emerald-400 font-mono font-bold text-xs">$99 / mo</span>
+                  <span class="text-emerald-400 font-mono font-bold text-xs">Certified Tier</span>
                 </div>
-                <div class="text-xs font-semibold text-white mt-1">5 Seats &middot; 10 Nodes</div>
+                <div class="text-xs font-semibold text-white mt-1">Multi-Seat &middot; 10 Nodes</div>
                 <p class="text-[11px] text-slate-400 mt-1 leading-normal">Ideal for engineering squads standardizing Cursor &amp; Claude MCP de-identification.</p>
               </div>
               <a href="https://privacyscrubber.com/pricing/?tier=TEAMS&utm_source=ztds.ai&utm_medium=trial_workbench" target="_blank" rel="noopener" class="btn-outline text-[11px] py-1.5 px-2.5 text-center text-emerald-400 border-emerald-500/40 hover:bg-emerald-950/40 font-semibold rounded">
-                Buy on PrivacyScrubber &rarr;
+                View on PrivacyScrubber &rarr;
               </a>
             </div>
 
@@ -1643,13 +1643,13 @@ static_resources:
               <div>
                 <div class="flex items-center justify-between">
                   <span class="text-[10px] font-mono font-bold text-emerald-300 uppercase">Developer Pro SDK</span>
-                  <span class="text-emerald-400 font-mono font-bold text-xs">$299 / mo</span>
+                  <span class="text-emerald-400 font-mono font-bold text-xs">Certified SDK</span>
                 </div>
                 <div class="text-xs font-semibold text-white mt-1">Unlimited Pipeline Nodes</div>
                 <p class="text-[11px] text-slate-400 mt-1 leading-normal">Full headless SDK for Node.js, Python, and RAG pipelines with offline validation.</p>
               </div>
               <a href="https://privacyscrubber.com/pricing/?tier=SDK&utm_source=ztds.ai&utm_medium=trial_workbench" target="_blank" rel="noopener" class="btn-trust text-[11px] py-1.5 px-2.5 text-center font-bold rounded">
-                Buy on PrivacyScrubber &rarr;
+                View on PrivacyScrubber &rarr;
               </a>
             </div>
 
@@ -1658,13 +1658,13 @@ static_resources:
               <div>
                 <div class="flex items-center justify-between">
                   <span class="text-[10px] font-mono font-bold text-sky-400 uppercase">Enterprise</span>
-                  <span class="text-sky-300 font-mono font-bold text-xs">$12k / yr</span>
+                  <span class="text-sky-300 font-mono font-bold text-xs">Air-Gapped</span>
                 </div>
                 <div class="text-xs font-semibold text-white mt-1">Air-Gapped &middot; Custom MSA</div>
-                <p class="text-[11px] text-slate-400 mt-1 leading-normal">All 30 regulatory profiles, dedicated SLA, custom legal rider, and wire transfer invoicing.</p>
+                <p class="text-[11px] text-slate-400 mt-1 leading-normal">All 30 regulatory profiles, dedicated SLA, custom legal rider, and corporate procurement.</p>
               </div>
               <a href="/ciso/#procurement" class="btn-outline text-[11px] py-1.5 px-2.5 text-center text-sky-300 border-sky-500/40 hover:bg-sky-950/40 font-semibold rounded">
-                Enterprise Quote &rarr;
+                Enterprise Scope &rarr;
               </a>
             </div>
 
@@ -1673,7 +1673,7 @@ static_resources:
               <div>
                 <div class="flex items-center justify-between">
                   <span class="text-[10px] font-mono font-bold text-purple-400 uppercase">Advisory SOW</span>
-                  <span class="text-purple-300 font-mono font-bold text-xs">$2,500 + $500/mo</span>
+                  <span class="text-purple-300 font-mono font-bold text-xs">Turn-Key SOW</span>
                 </div>
                 <div class="text-xs font-semibold text-white mt-1">BrandMeWeb Advisory</div>
                 <p class="text-[11px] text-slate-400 mt-1 leading-normal">Turn-key implementation, pipeline audit, CISO exemption packet, and ongoing GEO optimization.</p>
@@ -1694,8 +1694,8 @@ static_resources:
       <span id="commercial-checkout" class="scroll-mt-24 pointer-events-none -mt-24 block"></span>
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
         <div>
-          <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Predictable Pricing SSOT</div>
-          <h2 class="text-xl font-bold text-slate-900">Licensing &amp; Commercial Distribution</h2>
+          <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Open Standard vs. Certified Implementations</div>
+          <h2 class="text-xl font-bold text-slate-900">Conformance Levels &amp; Certified Distribution</h2>
         </div>
         <a href="/roi/" class="text-xs font-mono text-emerald-700 font-semibold hover:underline">Calculate Enterprise ROI &rarr;</a>
       </div>
@@ -1707,7 +1707,7 @@ static_resources:
           <div>
             <div class="text-[11px] font-mono font-bold text-slate-500 uppercase">Open Specification</div>
             <h3 class="text-base font-bold text-slate-900 mt-1">Open Source Core</h3>
-            <div class="text-xl font-bold text-slate-900 font-mono mt-1">$0 <span class="text-xs font-normal text-slate-500 font-sans">/ Free Forever</span></div>
+            <div class="text-xl font-bold text-slate-900 font-mono mt-1">Apache 2.0 <span class="text-xs font-normal text-slate-500 font-sans">/ Open Standard</span></div>
             <p class="text-xs text-slate-600 mt-2 leading-relaxed">Permissive Apache 2.0 reference implementation, universal regex detectors, and CLI audit tooling.</p>
             <ul class="mt-3.5 space-y-1.5 text-xs text-slate-600">
               <li class="flex items-center gap-1.5">&check; Full ZTDS RFC v1.0 Spec</li>
@@ -1726,30 +1726,30 @@ static_resources:
           <div>
             <div class="text-[11px] font-mono font-bold text-sky-700 uppercase">Team Collaboration</div>
             <h3 class="text-base font-bold text-slate-900 mt-1">ZTDS TEAMS</h3>
-            <div class="text-xl font-bold text-slate-900 font-mono mt-1">$99 <span class="text-xs font-normal text-slate-500 font-sans">/ month ($990/yr)</span></div>
+            <div class="text-xl font-bold text-slate-900 font-mono mt-1">Certified Tier <span class="text-xs font-normal text-slate-500 font-sans">/ via PrivacyScrubber</span></div>
             <p class="text-xs text-slate-600 mt-2 leading-relaxed">Shared team policies, synchronized rulesets, and multi-node microservice deployment for growing engineering teams.</p>
             <ul class="mt-3.5 space-y-1.5 text-xs text-slate-700">
               <li class="flex items-center gap-1.5">&check; 10 Microservice Nodes</li>
-              <li class="flex items-center gap-1.5">&check; 5 Developer Seats &amp; Team Sync</li>
+              <li class="flex items-center gap-1.5">&check; Multi-Seat &amp; Team Sync</li>
               <li class="flex items-center gap-1.5">&check; Headless @privacyscrubber/sdk</li>
               <li class="flex items-center gap-1.5">&check; Offline Ed25519 Token Minting</li>
               <li class="flex items-center gap-1.5">&check; Universal PII &amp; Secrets Rules</li>
             </ul>
           </div>
           <button type="button" id="btnOpenCheckoutTeams" class="btn-outline w-full text-center text-xs py-2 font-bold hover:bg-slate-900 hover:text-white transition-colors cursor-pointer">
-            <span>Get TEAMS License &rarr;</span>
+            <span>Request TEAMS License &rarr;</span>
           </button>
         </div>
 
         <!-- Tier 3: Developer Annual -->
         <div class="p-5 rounded-xl border-2 border-emerald-500 bg-emerald-50/40 flex flex-col justify-between space-y-4 shadow-sm relative">
           <div class="absolute -top-3 right-3 px-2 py-0.5 rounded-full bg-emerald-600 text-white font-mono text-[9.5px] font-bold tracking-wider uppercase">
-            Most Popular
+            Reference Engine
           </div>
           <div>
             <div class="text-[11px] font-mono font-bold text-emerald-800 uppercase">Developer Pro</div>
-            <h3 class="text-base font-bold text-slate-900 mt-1">Developer Annual SDK</h3>
-            <div class="text-xl font-bold text-slate-900 font-mono mt-1">$1,990 <span class="text-xs font-normal text-slate-500 font-sans">/ year ($199/mo)</span></div>
+            <h3 class="text-base font-bold text-slate-900 mt-1">Developer Pro SDK</h3>
+            <div class="text-xl font-bold text-slate-900 font-mono mt-1">Certified SDK <span class="text-xs font-normal text-slate-500 font-sans">/ via PrivacyScrubber</span></div>
             <p class="text-xs text-slate-600 mt-2 leading-relaxed">Commercial license for production microservices, pre-built AI framework connectors, and verified registry listing.</p>
             <ul class="mt-3.5 space-y-1.5 text-xs text-slate-700">
               <li class="flex items-center gap-1.5">&check; Unlimited microservice nodes</li>
@@ -1760,7 +1760,7 @@ static_resources:
             </ul>
           </div>
           <button type="button" id="btnOpenCheckoutModal" class="btn-trust w-full text-center text-xs py-2 font-bold shadow-sm flex items-center justify-center gap-1 cursor-pointer">
-            <span>Get Developer Pro &rarr;</span>
+            <span>Request Developer SDK &rarr;</span>
           </button>
         </div>
 
@@ -1769,11 +1769,11 @@ static_resources:
           <div>
             <div class="text-[11px] font-mono font-bold text-slate-500 uppercase">Enterprise GRC</div>
             <h3 class="text-base font-bold text-slate-900 mt-1">Air-Gapped &amp; Enclaves</h3>
-            <div class="text-xl font-bold text-slate-900 font-mono mt-1">$12,000 <span class="text-xs font-normal text-slate-500 font-sans">/ year</span></div>
+            <div class="text-xl font-bold text-slate-900 font-mono mt-1">Enterprise <span class="text-xs font-normal text-slate-500 font-sans">/ Custom MSA</span></div>
             <p class="text-xs text-slate-600 mt-2 leading-relaxed">Sovereign confidential computing deployment, custom NER entity profiles, and turnkey CISO Safe Harbor &amp; processor elimination documentation.</p>
             <ul class="mt-3.5 space-y-1.5 text-xs text-slate-600">
               <li class="flex items-center gap-1.5">&check; AWS Nitro Enclaves Attestation</li>
-              <li class="flex items-center gap-1.5">&check; 30 High-ACV Industry Profiles</li>
+              <li class="flex items-center gap-1.5">&check; 30 Specialized Industry Profiles</li>
               <li class="flex items-center gap-1.5">&check; Turnkey Safe Harbor Compliance Pack</li>
               <li class="flex items-center gap-1.5">&check; SIG Lite / CAIQ / VSAQ Responses</li>
               <li class="flex items-center gap-1.5">&check; Dedicated SLA &amp; Security Retainer</li>
@@ -1793,7 +1793,7 @@ static_resources:
             <span class="text-[11px] font-mono font-bold text-emerald-700 uppercase tracking-wider">Asymmetric Cryptography &middot; Ed25519 (RFC 8032)</span>
             <h3 class="text-xl font-bold text-slate-900 mt-0.5">Zero-Telemetry Offline License Activation</h3>
             <p class="text-xs text-slate-600 mt-1">
-              How commercial licenses ($1,990/yr and $12,000/yr) unlock enterprise nodes and 30 industry profiles strictly in local memory without external network calls.
+              How certified commercial implementations unlock enterprise nodes and 30 industry profiles strictly in local memory without external network calls.
             </p>
           </div>
           <div class="flex items-center gap-2">
@@ -2735,33 +2735,20 @@ jobs:
 
       function updatePricingLabels() {
         const isAnnual = currentInterval === 'annual';
-        const devPrice = isAnnual
-          ? `$${activeEnvConfig.developer_pro.amountAnnual} / year`
-          : `$${activeEnvConfig.developer_pro.amountMonthly} / month`;
-        const teamsPrice = isAnnual
-          ? `$${activeEnvConfig.teams.amountAnnual} / year`
-          : `$${activeEnvConfig.teams.amountMonthly} / month`;
-
         const labelPriceDev = document.getElementById('labelPriceDeveloper');
         const labelPriceTeams = document.getElementById('labelPriceTeams');
-        if (labelPriceDev) labelPriceDev.textContent = devPrice;
-        if (labelPriceTeams) labelPriceTeams.textContent = teamsPrice;
+        if (labelPriceDev) labelPriceDev.textContent = 'Certified via PrivacyScrubber';
+        if (labelPriceTeams) labelPriceTeams.textContent = 'Certified via PrivacyScrubber';
 
         const labelIntervalAnn = document.getElementById('labelIntervalAnnual');
         const labelIntervalMon = document.getElementById('labelIntervalMonthly');
-        if (currentTier === 'developer_pro') {
-          if (labelIntervalAnn) labelIntervalAnn.textContent = `Annual: $${activeEnvConfig.developer_pro.amountAnnual} / year`;
-          if (labelIntervalMon) labelIntervalMon.textContent = `Monthly: $${activeEnvConfig.developer_pro.amountMonthly} / month`;
-        } else {
-          if (labelIntervalAnn) labelIntervalAnn.textContent = `Annual: $${activeEnvConfig.teams.amountAnnual} / year`;
-          if (labelIntervalMon) labelIntervalMon.textContent = `Monthly: $${activeEnvConfig.teams.amountMonthly} / month`;
-        }
+        if (labelIntervalAnn) labelIntervalAnn.textContent = 'Annual Licensing';
+        if (labelIntervalMon) labelIntervalMon.textContent = 'Monthly Licensing';
 
         if (btnLaunchPaddleText) {
-          const selectedAmount = currentTier === 'developer_pro'
-            ? (isAnnual ? `$${activeEnvConfig.developer_pro.amountAnnual} / year` : `$${activeEnvConfig.developer_pro.amountMonthly} / month`)
-            : (isAnnual ? `$${activeEnvConfig.teams.amountAnnual} / year` : `$${activeEnvConfig.teams.amountMonthly} / month`);
-          btnLaunchPaddleText.textContent = `Proceed to Secure Checkout (${selectedAmount}) →`;
+          const tierLabel = currentTier === 'developer_pro' ? 'Developer Pro SDK' : 'ZTDS TEAMS';
+          const cycleLabel = isAnnual ? 'Annual' : 'Monthly';
+          btnLaunchPaddleText.textContent = `Continue to PrivacyScrubber.com (${tierLabel} · ${cycleLabel}) →`;
         }
       }
 
@@ -3348,7 +3335,7 @@ jobs:
           Instant 14-Day Evaluation Key
         </button>
         <button type="button" id="tabCheckoutInvoice" class="checkout-tab-btn pb-3 px-3 text-xs font-semibold text-slate-500 border-b-2 border-transparent hover:text-slate-800 transition-colors">
-          Enterprise Wire / PO ($12k/yr)
+          Enterprise Wire / PO
         </button>
       </div>
 
@@ -3365,7 +3352,7 @@ jobs:
                 <span id="dotTierDeveloper" class="w-2 h-2 rounded-full bg-emerald-500"></span>
               </div>
               <div class="text-[11px] text-slate-600">5 Nodes &middot; Headless &middot; MCP</div>
-              <div class="text-xs font-bold font-mono text-emerald-800 mt-1" id="labelPriceDeveloper">$1,990 / year</div>
+              <div class="text-xs font-bold font-mono text-emerald-800 mt-1" id="labelPriceDeveloper">Certified via PrivacyScrubber</div>
             </button>
 
             <button type="button" id="btnTierTeams" class="p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white text-left transition-all cursor-pointer">
@@ -3374,18 +3361,18 @@ jobs:
                 <span id="dotTierTeams" class="w-2 h-2 rounded-full bg-slate-300"></span>
               </div>
               <div class="text-[11px] text-slate-600">10 Nodes &middot; 5 Seats &middot; Team Sync</div>
-              <div class="text-xs font-bold font-mono text-slate-700 mt-1" id="labelPriceTeams">$990 / year</div>
+              <div class="text-xs font-bold font-mono text-slate-700 mt-1" id="labelPriceTeams">Certified via PrivacyScrubber</div>
             </button>
           </div>
 
           <!-- Interval Toggle -->
           <div class="p-1.5 bg-slate-100 rounded-xl flex items-center gap-1 text-xs">
             <button type="button" id="btnIntervalAnnual" class="flex-1 py-2 rounded-lg bg-white text-slate-900 font-bold shadow-xs transition-all flex items-center justify-center gap-1.5">
-              <span id="labelIntervalAnnual">Annual: $1,990 / year</span>
+              <span id="labelIntervalAnnual">Annual Licensing</span>
               <span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-mono font-bold">Save 17%</span>
             </button>
             <button type="button" id="btnIntervalMonthly" class="flex-1 py-2 rounded-lg text-slate-600 hover:text-slate-900 font-medium transition-all">
-              <span id="labelIntervalMonthly">Monthly: $199 / month</span>
+              <span id="labelIntervalMonthly">Monthly Licensing</span>
             </button>
           </div>
 
@@ -3420,7 +3407,7 @@ jobs:
           <!-- Submit CTA -->
           <button type="button" id="btnLaunchPaddleCheckout" class="btn-trust w-full py-3 text-sm font-bold shadow-md flex items-center justify-center gap-2 cursor-pointer">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-            <span id="btnLaunchPaddleText">Proceed to Secure Checkout ($1,990 / year) &rarr;</span>
+            <span id="btnLaunchPaddleText">Continue to PrivacyScrubber.com &rarr;</span>
           </button>
 
           <div class="pt-2 text-center">
@@ -3523,7 +3510,7 @@ jobs:
         <!-- PANE 3: Enterprise Wire / PO -->
         <div id="paneCheckoutInvoice" class="space-y-4 hidden">
           <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <h3 class="text-sm font-bold text-slate-900">Enterprise Air-Gapped License ($12,000 / year)</h3>
+            <h3 class="text-sm font-bold text-slate-900">Enterprise Air-Gapped License</h3>
             <p class="text-xs text-slate-600 leading-relaxed">
               Designed for regulated enterprises requiring multi-node deployment, 30 certified sector profiles, custom MSA terms, and payment via ACH, SEPA, or Wire transfer.
             </p>
@@ -3543,7 +3530,7 @@ jobs:
               <strong class="block text-emerald-900 font-bold">Direct Corporate Procurement:</strong>
               <span>Contact Chief Architect Ilya Sibiryakov for turn-key custom order processing.</span>
             </div>
-            <a href="mailto:security@ztds.ai?subject=Enterprise%20Order%20Inquiry%20($12,000/yr)" class="btn-trust text-xs py-2 px-3 shrink-0">
+            <a href="mailto:security@ztds.ai?subject=Enterprise%20Order%20Inquiry" class="btn-trust text-xs py-2 px-3 shrink-0">
               Email Procurement &rarr;
             </a>
           </div>

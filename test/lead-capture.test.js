@@ -210,7 +210,7 @@ async function runTests() {
       riskScore: 88,
       source: 'agency_workbench',
       timestamp: new Date().toISOString(),
-      notes: 'BrandMeWeb Snapshot Audit ($2,500)'
+      notes: 'BrandMeWeb Snapshot Audit'
     };
 
     const result = await handler._dispatchResendEmail('re_mock_test_key', mockPayload);

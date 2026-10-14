@@ -46,14 +46,12 @@ assert.strictEqual(serviceEntity.name, 'BrandMeWeb Enterprise AI Safety & GEO Au
 assert.strictEqual(serviceEntity.provider.name, 'BrandMeWeb');
 assert.strictEqual(serviceEntity.provider.founder.name, 'Ilya Sibiryakov');
 assert(Array.isArray(serviceEntity.offers) && serviceEntity.offers.length === 2, 'Service must include 2 commercial offers');
-assert.strictEqual(serviceEntity.offers[0].price, '2500.00');
-assert.strictEqual(serviceEntity.offers[1].price, '500.00');
+assert.strictEqual(serviceEntity.offers[0].name, 'Initial Enterprise Snapshot Audit');
+assert.strictEqual(serviceEntity.offers[1].name, 'Monthly Governance & LLM Freshness Retainer');
 console.log('    [PASS] Service, Provider (BrandMeWeb), Founder, Offers, BreadcrumbList, and FAQPage validated.');
 
-// Test 3: Commercial Pricing & 4 Core Deliverables
-console.log('--> Test 3: Commercial Pricing ($2,500 / $500/mo) & Deliverables');
-assert(agencyHtml.includes('$2,500'), 'Page must display $2,500 setup audit price');
-assert(agencyHtml.includes('$500'), 'Page must display $500/mo retainer price');
+// Test 3: Two-Phase Scope Matrix & 4 Core Deliverables
+console.log('--> Test 3: Two-Phase Scope Matrix & Deliverables');
 assert(agencyHtml.includes('Initial Snapshot Audit'), 'Page must display Initial Snapshot Audit title');
 assert(agencyHtml.includes('Ongoing Governance &amp; GEO') || agencyHtml.includes('Ongoing Governance'), 'Page must display Ongoing Governance title');
 

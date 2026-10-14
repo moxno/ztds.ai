@@ -145,7 +145,7 @@ ${company}'s security team does not need to trust vendor claims. Every compliant
 * **Turnkey Enterprise Order Form & Schedule A:** https://ztds.ai/docs/legal/order-form.html
 * **Master Standardization Hub:** https://ztds.ai/certification/
 
-**Recommended Commercial Tier:** Developer SDK ($1,990/year) or Air-Gapped Enterprise ($12,000/year flat, unlimited local nodes).
+**Recommended Commercial Tier:** Departmental Developer SDK or Air-Gapped Enterprise License via Certified Implementation (https://privacyscrubber.com/pricing/).
 
 ---
 *Authorized for distribution to ${company} InfoSec Evaluation Committee.*

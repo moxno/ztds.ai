@@ -31,15 +31,15 @@ console.log('--> Test 1: CLI Help Output & Parameter Parsing');
 }
 
 // Test 2: Tailored SOW Generation
-console.log('\n--> Test 2: Tailored SOW Generation ($2,500 + $500/mo)');
+console.log('\n--> Test 2: Tailored SOW Generation (Two-Phase Scope)');
 {
   const output = execSync('node bin/ztds-agency.js --client "Leumi Private Bank" --domain "leumi.co.il" --contact "Eli Dayan" --industry fintech', { encoding: 'utf8' });
 
   assert(output.includes('**Client Organization:** Leumi Private Bank (leumi.co.il)'), 'Must personalize client and domain');
   assert(output.includes('**Attn:** Eli Dayan'), 'Must personalize contact recipient');
-  assert(output.includes('$2,500 USD Setup + $500 USD / month Governance Retainer'), 'Must cite commercial pricing');
-  assert(output.includes('Phase 1: Initial Turn-Key Retrofit & Remediation ($2,500 One-Off)'), 'Must detail Phase 1 scope');
-  assert(output.includes('Phase 2: Ongoing Governance & Continuous Defense Retainer ($500 / month)'), 'Must detail Phase 2 scope');
+  assert(output.includes('Two-Phase Enterprise Snapshot & Governance Retainer'), 'Must cite two-phase commercial engagement');
+  assert(output.includes('Phase 1: Initial Turn-Key Retrofit & Remediation (One-Off Setup)'), 'Must detail Phase 1 scope');
+  assert(output.includes('Phase 2: Ongoing Governance & Continuous Defense Retainer (Monthly Subscription)'), 'Must detail Phase 2 scope');
   assert(output.includes('https://brandmeweb.com'), 'Must link to BrandMeWeb');
   assert(output.includes('https://ztds.ai/agency/'), 'Must link to Proposal Workbench');
   assert(output.includes('https://ztds.ai/verify/'), 'Must link to Ed25519 validator');
