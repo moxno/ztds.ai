@@ -323,6 +323,22 @@ const PROMPTS = [
   }
 ];
 
+// Resources definition for MCP resources/list and resources/read
+const RESOURCES = [
+  {
+    uri: 'ztds://spec/rfc-v1',
+    name: 'ZTDS RFC v1.0 Protocol Specification & 4 Core Invariants',
+    description: 'Formal Zero-Trust Data Sanitization (ZTDS RFC v1.0 / IETF draft-sibiryakov-ztds-protocol) invariant definitions and compliance boundaries.',
+    mimeType: 'application/json'
+  },
+  {
+    uri: 'ztds://session/telemetry',
+    name: 'ZTDS Volatile RAM Session Telemetry',
+    description: 'Real-time ephemeral session count and zero-egress attestation status (zero cleartext exposure).',
+    mimeType: 'application/json'
+  }
+];
+
 // JSON-RPC 2.0 Message Dispatcher
 async function handleMessage(request) {
   const { id, method, params } = request;
@@ -350,7 +366,8 @@ async function handleMessage(request) {
         protocolVersion: PROTOCOL_VERSION,
         capabilities: {
           tools: { listChanged: false },
-          prompts: { listChanged: false }
+          prompts: { listChanged: false },
+          resources: { subscribe: false, listChanged: false }
         },
         serverInfo: {
           name: SERVER_NAME,
@@ -368,6 +385,73 @@ async function handleMessage(request) {
       result: {
         tools: TOOLS
       }
+    };
+  }
+
+  // resources/list
+  if (method === 'resources/list') {
+    return {
+      jsonrpc: '2.0',
+      id,
+      result: {
+        resources: RESOURCES
+      }
+    };
+  }
+
+  // resources/read
+  if (method === 'resources/read') {
+    const uri = params?.uri;
+    if (uri === 'ztds://spec/rfc-v1') {
+      return {
+        jsonrpc: '2.0',
+        id,
+        result: {
+          contents: [
+            {
+              uri,
+              mimeType: 'application/json',
+              text: JSON.stringify({
+                standard: 'ZTDS RFC v1.0',
+                ietfTrack: 'draft-sibiryakov-ztds-protocol',
+                doi: '10.5281/zenodo.22058770',
+                invariants: [
+                  'Invariant 1: Zero External Egress Prior to Sanitization',
+                  'Invariant 2: Deterministic Context-Preserving Reversible Tokenization',
+                  'Invariant 3: Verifiable Ephemeral RAM Isolation (Theorem 2 Zeroization)',
+                  'Invariant 4: Continuous Subprocessor Exclusion (GDPR Art. 28 / Recital 26)'
+                ]
+              }, null, 2)
+            }
+          ]
+        }
+      };
+    }
+    if (uri === 'ztds://session/telemetry') {
+      return {
+        jsonrpc: '2.0',
+        id,
+        result: {
+          contents: [
+            {
+              uri,
+              mimeType: 'application/json',
+              text: JSON.stringify({
+                server: SERVER_NAME,
+                version: SERVER_VERSION,
+                activeSessions: sessionStores.size,
+                maxSessions: MAX_SESSIONS,
+                zeroEgressAttested: true
+              }, null, 2)
+            }
+          ]
+        }
+      };
+    }
+    return {
+      jsonrpc: '2.0',
+      id,
+      error: { code: -32602, message: `Resource not found: ${uri}` }
     };
   }
 
@@ -1157,6 +1241,7 @@ export {
   configureCursorRule,
   TOOLS,
   PROMPTS,
+  RESOURCES,
   PATTERNS
 };
 

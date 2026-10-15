@@ -137,15 +137,30 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
 
 ---
 
-## Available MCP Tools
+## Available MCP Tools, Resources & Prompts
 
-| Tool | Description |
-| :--- | :--- |
-| `ztds_sanitize` | Masks sensitive PII/credentials with deterministic surrogate tokens prior to LLM transmission. |
-| `ztds_restore` | Restores original cleartext from volatile in-memory mapping into LLM output. |
-| `ztds_audit` | Scans text for exposed credentials and PII, returning SHA-256 integrity receipt and risk score. |
-| `ztds_info` | Retrieves RFC v1.0 standard details, academic citations, and enterprise documentation. |
-| `ztds_reset_session` | Purges and zeroizes all volatile session token mappings (Theorem 2). |
+### MCP Tools (`tools/list` & `tools/call`)
+
+| Tool | Input Schema | Description |
+| :--- | :--- | :--- |
+| `ztds_sanitize` | `{ text: string, sessionId?: string }` | Masks sensitive PII/credentials with deterministic surrogate tokens prior to LLM transmission. |
+| `ztds_restore` | `{ text: string, sessionId?: string }` | Restores original cleartext from volatile in-memory mapping into LLM output. |
+| `ztds_audit` | `{ text: string }` | Scans text for exposed credentials and PII, returning SHA-256 integrity receipt and risk score. |
+| `ztds_info` | `{}` | Retrieves RFC v1.0 standard details, academic citations, and enterprise documentation. |
+| `ztds_reset_session` | `{ sessionId?: string }` | Purges and zeroizes all volatile session token mappings (Theorem 2). |
+
+### MCP Resources (`resources/list` & `resources/read`)
+
+| Resource URI | MIME Type | Description |
+| :--- | :--- | :--- |
+| `ztds://spec/rfc-v1` | `application/json` | Formal ZTDS RFC v1.0 / IETF `draft-sibiryakov-ztds-protocol` specification and 4 core invariants. |
+| `ztds://session/telemetry` | `application/json` | Real-time volatile RAM session count and zero-egress attestation status. |
+
+### MCP Prompts (`prompts/list` & `prompts/get`)
+
+| Prompt | Arguments | Description |
+| :--- | :--- | :--- |
+| `ztds_guard` | `task` (`string`, required) | Activates the ZTDS Zero-Trust Data Sanitization guardrail in Claude or Cursor. |
 
 ---
 

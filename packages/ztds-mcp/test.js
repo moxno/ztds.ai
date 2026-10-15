@@ -61,6 +61,24 @@ async function runTests() {
   assert(toolNames.includes('ztds_reset_session'));
   console.log('    [PASS] All 5 tools listed with valid schemas.');
 
+  // 2b. resources/list & resources/read verification
+  console.log('--> Test 2b: JSON-RPC "resources/list" & "resources/read"');
+  const resourcesRes = await handleMessage({
+    jsonrpc: '2.0',
+    id: 201,
+    method: 'resources/list',
+    params: {}
+  });
+  assert.strictEqual(resourcesRes.result.resources.length, 2);
+  const specReadRes = await handleMessage({
+    jsonrpc: '2.0',
+    id: 202,
+    method: 'resources/read',
+    params: { uri: 'ztds://spec/rfc-v1' }
+  });
+  assert(specReadRes.result.contents[0].text.includes('ZTDS RFC v1.0'));
+  console.log('    [PASS] MCP resources listed and read successfully.');
+
   // 3. Invariant 1: ztds_sanitize masks cleartext
   console.log('--> Test 3: Invariant 1 - ztds_sanitize zero cleartext');
   const mockSecret = ['sk', 'ant', '12345678901234567890'].join('-');
