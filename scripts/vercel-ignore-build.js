@@ -22,7 +22,6 @@ const EXCLUDED_PATTERNS = [
   ':!.ruff_cache/*',
   ':!docs/*',
   ':!test/*',
-  ':!benchmarks/*',
   ':!scratch/*',
   ':!.github/*',
   ':!.gitignore',
