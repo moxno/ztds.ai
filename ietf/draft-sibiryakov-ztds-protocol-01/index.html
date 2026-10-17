@@ -1643,7 +1643,7 @@ ZTDS Zero-Trust Endpoint Architecture:
 <a href="#section-2.2.3" class="section-number selfRef">2.2.3. </a><a href="#name-invariant-3-zero-outgoing-n" class="section-name selfRef">Invariant 3: Zero Outgoing Network Transmission (Airplane Mode Standard)</a>
           </h4>
 <p id="section-2.2.3-1">
-            The sanitization engine MUST be completely self-contained. All pattern compilation, regular expression matching, checksum verification (e.g., Luhn algorithm for payment cards), and surrogate substitution MUST operate with zero external network connectivity.<a href="#section-2.2.3-1" class="pilcrow">¶</a></p>
+            The sanitization engine MUST be completely self-contained. All pattern compilation, regular expression matching, deterministic checksum verification for payment cards, and surrogate substitution MUST operate with zero external network connectivity.<a href="#section-2.2.3-1" class="pilcrow">¶</a></p>
 <p id="section-2.2.3-2">
             Conformance is verified using the Airplane Mode Audit: the host device MUST successfully perform complete entity detection, substitution, and inverse reconstruction while all network interfaces (Ethernet, Wi-Fi, cellular, and loopback sockets to remote hosts) are disabled.<a href="#section-2.2.3-2" class="pilcrow">¶</a></p>
 </section>
@@ -1785,7 +1785,7 @@ Reconstructed: "Confirmation: scheduled transfer for Alice Smith."
             <td class="text-left" rowspan="1" colspan="1">"123-45-6789" -&gt; "<code>[SSN_1]</code>"</td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">Payment Card (Luhn Validated)</td>
+            <td class="text-left" rowspan="1" colspan="1">Payment Card (Checksum Validated)</td>
             <td class="text-left" rowspan="1" colspan="1">
               <code>[CARD_N]</code>
 </td>

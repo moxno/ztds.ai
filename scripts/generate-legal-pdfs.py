@@ -240,6 +240,46 @@ def main():
     ], check=True)
     print(f'Generated {pct_pdf_path}')
 
+    # 3. PCT Bibliographic Data Sheet
+    sheet_md_path = os.path.join(root, 'docs/legal/internal/05_PCT_Bibliographic_Data_Sheet_IL331905.md')
+    sheet_html_path = os.path.join(root, 'docs/legal/internal/05_PCT_Bibliographic_Data_Sheet_IL331905.html')
+    sheet_pdf_path = os.path.join(root, 'docs/legal/internal/05_PCT_Bibliographic_Data_Sheet_IL331905.pdf')
+    
+    with open(sheet_md_path, 'r', encoding='utf-8') as f:
+        sheet_md = f.read()
+        
+    sheet_html = md_to_html(sheet_md, 'PCT Bibliographic Data Sheet — IL 331905', rtl=False)
+    with open(sheet_html_path, 'w', encoding='utf-8') as f:
+        f.write(sheet_html)
+    print(f'Wrote {sheet_html_path}')
+    
+    subprocess.run([
+        chrome_bin,
+        '--headless',
+        '--disable-gpu',
+        '--no-pdf-header-footer',
+        f'--print-to-pdf={sheet_pdf_path}',
+        sheet_html_path
+    ], check=True)
+    print(f'Generated {sheet_pdf_path}')
+
+    # 4. IETF ZTDS Protocol Specification Draft-02
+    ietf_html_path = os.path.join(root, 'ietf/draft-sibiryakov-ztds-protocol-02.html')
+    ietf_pdf_path = os.path.join(root, 'docs/legal/internal/06_IETF_ZTDS_Protocol_Specification_Draft_02.pdf')
+    ietf_dest_pdf = os.path.join(root, 'ietf/draft-sibiryakov-ztds-protocol-02.pdf')
+    
+    subprocess.run([
+        chrome_bin,
+        '--headless',
+        '--disable-gpu',
+        '--no-pdf-header-footer',
+        f'--print-to-pdf={ietf_pdf_path}',
+        ietf_html_path
+    ], check=True)
+    import shutil
+    shutil.copy2(ietf_pdf_path, ietf_dest_pdf)
+    print(f'Generated {ietf_pdf_path}')
+
     # Copy to canonical numbered names
     import shutil, zipfile
     internal_dir = os.path.join(root, 'docs/legal/internal')
@@ -262,7 +302,10 @@ def main():
         ('03_ZTDS_PCT_ENGINEERING_EXAMINATION_GUIDE.md', guide_md_path),
         ('04_Clean_Patent_Drawings_ZTDS_IL331905_Presentation.pptx', os.path.join(internal_dir, '03_Clean_Patent_Drawings_ZTDS_IL331905.pptx')),
         ('04_Clean_Patent_Drawings_ZTDS_IL331905_Presentation.pdf', os.path.join(internal_dir, '03_Clean_Patent_Drawings_ZTDS_IL331905_Slides_Clean.pdf')),
-        ('05_ZTDS_Trademark_Filing_Confirmation_ILPO_182655957.pdf', os.path.join(internal_dir, 'ilpo-filing-package/ZTDS_Trademark_Filing_Confirmation_Israel_Patent_Office_182655957.pdf'))
+        ('05_PCT_Bibliographic_Data_Sheet_IL331905.pdf', sheet_pdf_path),
+        ('05_PCT_Bibliographic_Data_Sheet_IL331905.md', sheet_md_path),
+        ('06_IETF_ZTDS_Protocol_Specification_Draft_02.pdf', ietf_pdf_path),
+        ('07_ZTDS_Trademark_Filing_Confirmation_ILPO_182655957.pdf', os.path.join(internal_dir, 'ilpo-filing-package/ZTDS_Trademark_Filing_Confirmation_Israel_Patent_Office_182655957.pdf'))
     ]
     with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zf:
         for arcname, srcpath in zip_files:
@@ -273,3 +316,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

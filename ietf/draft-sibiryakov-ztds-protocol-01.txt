@@ -328,7 +328,7 @@ Internet-Draft                ZTDS Protocol               September 2026
 
    The sanitization engine MUST be completely self-contained.  All
    pattern compilation, regular expression matching, checksum
-   verification (e.g., Luhn algorithm for payment cards), and surrogate
+   verification (deterministic checksum for payment cards), and surrogate
    substitution MUST operate with zero external network connectivity.
 
 
@@ -465,7 +465,7 @@ Internet-Draft                ZTDS Protocol               September 2026
    | Government /          | [NAT_ID_N] /   | "123-45-6789" ->         |
    | National ID / SSN     | [SSN_N]        | "[SSN_1]"                |
    +-----------------------+----------------+--------------------------+
-   | Payment Card (Luhn    | [CARD_N]       | "4532...8812" ->         |
+   | Payment Card (Check   | [CARD_N]       | "4532...8812" ->         |
    | Validated)            |                | "[CARD_1]"               |
    +-----------------------+----------------+--------------------------+
    | International Bank    | [IBAN_N]       | "GB29XAAA10203012345678" |

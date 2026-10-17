@@ -235,7 +235,7 @@ Multiplication      Irreversible Latent Space         Mandatory Audit      Attor
 |                   25 SPECIALIZED ENTERPRISE PROFILES (TIER 2 & 3)                  |
 +------------------------------------+-----------------------------------------------+
 | HEALTHCARE & PHARMA (HIPAA/HITECH) | FINANCIAL SERVICES & BANKING (PCI DSS / SEC)  |
-| - 18 HIPAA Safe Harbor Identifiers | - PCI-DSS Level 1 Credit Cards (Luhn validated)|
+| - 18 HIPAA Safe Harbor Identifiers | - PCI-DSS Level 1 Credit Cards (Checksum validated)|
 | - ICD-10 / ICD-11 Diagnostic Codes | - SWIFT / BIC Corporate Transfer Codes        |
 | - Physician National Provider IDs  | - IBAN International Bank Account Numbers     |
 | - Clinical Trial Cohort Hashes     | - CUSIP / ISIN / Bloomberg Financial Tickers  |
@@ -256,7 +256,7 @@ Multiplication      Irreversible Latent Space         Mandatory Audit      Attor
 * **Continuous Regulatory Updates:** Quarterly regulatory taxonomy updates keep your microservices compliant with evolving state and federal standards.
 
 ### Verbatim Speaker Notes
-> "Generic open-source regex engines miss specialized corporate data and produce catastrophic false positives. A valid credit card must pass the Luhn algorithm; an international bank account number must satisfy the ISO 7064 Mod 97-10 checksum; a physician provider ID must conform to the CMS NPI registry structure.
+> "Generic open-source regex engines miss specialized corporate data and produce catastrophic false positives. A valid credit card must pass deterministic PAN checksum verification; an international bank account number must satisfy international IBAN check-digit verification; a physician provider ID must conform to the CMS NPI registry structure.
 > 
 > Our Enterprise tier unlocks twenty-five specialized industry profiles covering healthcare, banking, M&A due diligence, and cloud DevOps infrastructure. When an engineer accidentally pastes an AWS secret key or a confidential corporate merger target into a prompt, ZTDS identifies and tokenizes the entity before it ever leaves the developer workstation."
 

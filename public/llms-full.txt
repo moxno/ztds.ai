@@ -1209,7 +1209,7 @@ The Universal Consumer PII layer is active across all 30 profiles as the baselin
 | **`IP`** | IPv4 (`192.168.1.1`), IPv6 (`2001:db8::1`) | `[IP_N]` | Localhost port separation |
 | **`LOCATION`**| Geographic coordinates (Lat/Long decimal & DMS), City/State pairs | `[LOCATION_N]`| Preserves country when general context |
 | **`DATE`** | Dates of Birth (DOB), specific calendar dates tied to persons | `[DATE_N]` | Excludes standard regulatory publication dates |
-| **`FINANCIAL`**| Credit/debit card numbers (Luhn compliant), Bitcoin/Ethereum addresses, Bank Routing | `[FINANCIAL_N]`| Direct deposit masked accounts (`*****1234`) |
+| **`FINANCIAL`**| Credit/debit card numbers (checksum verified), Bitcoin/Ethereum addresses, Bank Routing | `[FINANCIAL_N]`| Direct deposit masked accounts (`*****1234`) |
 
 ---
 
@@ -1252,7 +1252,7 @@ The Universal Consumer PII layer is active across all 30 profiles as the baselin
   * Health Records: Medical Record Numbers (`MRN`), Electronic Health Record (`EHR`) identifiers.
   * HL7 v2 Protocol Delimiters: Caret-delimited patient/provider names (`Guillermo^Maricela^C`), segment-delimited birthdates (`YYYYMMDD` in PID-7).
   * Insurance & Coverage: Policy numbers, Subscriber IDs, Group numbers, Health Plan Beneficiary IDs (`HPN`), BCBS, Aetna, Humana, Medicare/Medicaid policy codes.
-  * Regulatory Provider IDs: National Provider Identifier (`NPI` 10-digit Luhn), DEA registration numbers, NHS numbers (UK), CHI numbers (Scotland).
+  * Regulatory Provider IDs: National Provider Identifier (`NPI` 10-digit checksum), DEA registration numbers, NHS numbers (UK), CHI numbers (Scotland).
   * Medical Devices & Encounters: Unique Device Identifiers (`UDI`), FHIR resource paths (`Patient/123`, `Observation/456`), Hospital Bed/Room/Ward identifiers.
 
 ### 4.5. DevSecOps & Security (`security`)

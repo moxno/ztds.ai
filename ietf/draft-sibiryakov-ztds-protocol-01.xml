@@ -199,7 +199,7 @@ ZTDS Zero-Trust Endpoint Architecture:
         <section anchor="invariant-3">
           <name>Invariant 3: Zero Outgoing Network Transmission (Airplane Mode Standard)</name>
           <t>
-            The sanitization engine MUST be completely self-contained. All pattern compilation, regular expression matching, checksum verification (e.g., Luhn algorithm for payment cards), and surrogate substitution MUST operate with zero external network connectivity.
+            The sanitization engine MUST be completely self-contained. All pattern compilation, regular expression matching, deterministic checksum verification for payment cards, and surrogate substitution MUST operate with zero external network connectivity.
           </t>
           <t>
             Conformance is verified using the Airplane Mode Audit: the host device MUST successfully perform complete entity detection, substitution, and inverse reconstruction while all network interfaces (Ethernet, Wi-Fi, cellular, and loopback sockets to remote hosts) are disabled.
@@ -314,7 +314,7 @@ Reconstructed: "Confirmation: scheduled transfer for Alice Smith."
             <td>"123-45-6789" -&gt; "<tt>[SSN_1]</tt>"</td>
           </tr>
           <tr>
-            <td>Payment Card (Luhn Validated)</td>
+            <td>Payment Card (Checksum Validated)</td>
             <td><tt>[CARD_N]</tt></td>
             <td>"4532...8812" -&gt; "<tt>[CARD_1]</tt>"</td>
           </tr>
