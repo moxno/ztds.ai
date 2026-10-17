@@ -49,6 +49,13 @@ const prodPages = [
   'case-studies/index.html',
   'evidentiary-sovereignty/index.html',
   'mcp/index.html',
+  'benchmarks/index.html',
+  'blueprints/index.html',
+  'compliance/index.html',
+  'ciso/memo/index.html',
+  'ietf/index.html',
+  'ietf/draft-sibiryakov-ztds-protocol-01/index.html',
+  'ietf/draft-sibiryakov-ztds-protocol-02/index.html',
   '404.html'
 ];
 

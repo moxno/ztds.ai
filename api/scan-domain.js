@@ -207,7 +207,7 @@ const INDUSTRY_PROFILES = {
       '18 HIPAA Safe Harbor Identifiers',
       'Medical Record Numbers (MRN)',
       'Electronic Health Records (EHR)',
-      'National Provider Identifiers (NPI Luhn-10)',
+      'National Provider Identifiers (NPI 10-Digit Format)',
       'HL7 / FHIR Resource Paths',
       'Prescription & DEA Numbers'
     ],
@@ -700,27 +700,31 @@ const ztds = new ZTDSClient({
 });
 
 export default {
-  async fetch(request, env) {
+  fetch: async (request, env) => {
     if (request.method === 'POST' && request.url.includes('/v1/chat')) {
-      const payload = await request.json();
-      
-      // Invariant 1: In-RAM bijective sanitization (${profileConfig.targetEntities[0]})
-      const { safePrompt, tokenMap } = ztds.sanitize(payload.messages.at(-1).content);
-      payload.messages.at(-1).content = safePrompt;
-      
-      // Zero-egress outbound call to external LLM
-      const llmResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: request.headers,
-        body: JSON.stringify(payload)
-      });
-      
-      // Local In-RAM detokenization
-      const replyJson = await llmResponse.json();
-      const restored = ztds.restore(replyJson.choices[0].message.content, tokenMap);
-      replyJson.choices[0].message.content = restored;
-      
-      return new Response(JSON.stringify(replyJson), { headers: { 'Content-Type': 'application/json' } });
+      try {
+        const payload = await request.json();
+        
+        // Invariant 1: In-RAM bijective sanitization (${profileConfig.targetEntities[0]})
+        const { safePrompt, tokenMap } = ztds.sanitize(payload.messages.at(-1).content);
+        payload.messages.at(-1).content = safePrompt;
+        
+        // Zero-egress outbound call to external LLM
+        const llmResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: request.headers,
+          body: JSON.stringify(payload)
+        });
+        
+        // Local In-RAM detokenization
+        const replyJson = await llmResponse.json();
+        const restored = ztds.restore(replyJson.choices[0].message.content, tokenMap);
+        replyJson.choices[0].message.content = restored;
+        
+        return new Response(JSON.stringify(replyJson), { headers: { 'Content-Type': 'application/json' } });
+      } catch (err) {
+        return new Response(JSON.stringify({ error: 'Sanitization proxy failure' }), { status: 502 });
+      }
     }
     return fetch(request);
   }
@@ -937,6 +941,12 @@ module.exports = async (req, res) => {
       domainParam = req.body.domain;
       requestedProfile = requestedProfile || req.body.profile;
     }
+  }
+
+  // H2 API Poison-Pill Guard: return synthetic 200 OK if bot/escalation trap fields are populated
+  const rawBodyObj = (req.body && typeof req.body === 'object') ? req.body : {};
+  if (rawBodyObj.website_url_confirm || rawBodyObj.org_fax_ext || rawBodyObj.botcheck || rawBodyObj.admin_override) {
+    return res.status(200).json({ status: 'success', domain: 'example.com', scanDurationMs: 12, findings: {}, evaluation: {} });
   }
 
   if (!domainParam) {

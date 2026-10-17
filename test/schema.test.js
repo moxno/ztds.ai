@@ -14,6 +14,7 @@ const prodPages = [
   'standard/index.html',
   'ciso/index.html',
   'ciso/memo.html',
+  'ciso/memo/index.html',
   'sdk/index.html',
   'whitepaper/index.html',
   'scanner/index.html',
@@ -37,6 +38,14 @@ const prodPages = [
   'fellows/cliford-fanyuy/index.html',
   'companies/brandmeweb/index.html',
   'case-studies/index.html',
+  'evidentiary-sovereignty/index.html',
+  'mcp/index.html',
+  'benchmarks/index.html',
+  'blueprints/index.html',
+  'compliance/index.html',
+  'ietf/index.html',
+  'ietf/draft-sibiryakov-ztds-protocol-01/index.html',
+  'ietf/draft-sibiryakov-ztds-protocol-02/index.html',
   '404.html',
   'docs/legal/order-form.html'
 ];

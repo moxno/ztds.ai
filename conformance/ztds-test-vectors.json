@@ -159,29 +159,28 @@
     {
       "id": "VEC-MULTI-001",
       "category": "Multi-Lingual Global Entities",
-      "description": "Bilingual Hebrew and English prompt containing Israeli contact details and identification numbers",
-      "input_cleartext": "שלום, שמי איליה סיביריאקוב ומספר תעודת הזהות הוא 039281745. נא לשלוח מייל לכתובת ilya@ztds.ai או להתקשר למספר 054-2041978.",
+      "description": "Multilingual European Unicode prompt containing international contact details and national identification numbers",
+      "input_cleartext": "Bonjour, je m'appelle Jean-Luc Moreau (ID: FR-88492014). Veuillez envoyer un courriel à j.moreau@enterprise-eu.org ou appeler le +33-142685500.",
       "expected_entities": [
         {
-          "value": "איליה סיביריאקוב",
+          "value": "Jean-Luc Moreau",
           "type": "NAME",
           "surrogate": "[NAME_1]"
         },
         {
-          "value": "ilya@ztds.ai",
+          "value": "j.moreau@enterprise-eu.org",
           "type": "EMAIL",
           "surrogate": "[EMAIL_1]"
         },
         {
-          "value": "054-2041978",
+          "value": "+33-142685500",
           "type": "PHONE",
           "surrogate": "[PHONE_1]"
         }
       ],
       "preservation_tokens": [
-        "שלום",
-        "ומספר",
-        "נא לשלוח מייל לכתובת"
+        "Bonjour",
+        "Veuillez envoyer un courriel"
       ],
       "must_zero_leakage": true
     },

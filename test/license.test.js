@@ -5,7 +5,7 @@
  * 1. Cryptographic Ed25519 signature validation
  * 2. Tampering detection on payload and signature
  * 3. Expiration and 60-day operational grace period mechanics
- * 4. Anti-Cannibalization Mandate (30 Industry Profiles gating)
+ * 4. Domain Isolation Mandate (30 Industry Profiles gating)
  * 5. Latency benchmark & zero-network execution
  */
 
@@ -91,8 +91,8 @@ async function runTests() {
   assert.strictEqual(entResult.maxNodes, 5);
   console.log("    [PASS] Enterprise license signature and schema validated.");
 
-  // Test 2: Profile Gating & Anti-Cannibalization Mandate
-  console.log("--> Test 2: Anti-Cannibalization Profile Gating");
+  // Test 2: Profile Gating & Domain Isolation Mandate
+  console.log("--> Test 2: Domain Isolation Profile Gating");
   // Universal PII always passes
   assert.doesNotThrow(() => assertProfileAllowed(entResult, "universal"));
   // Wildcard allows healthcare & financial
@@ -125,7 +125,7 @@ async function runTests() {
     FeatureUnauthorizedError,
     "Developer Pro tier must be blocked from specialized profiles."
   );
-  console.log("    [PASS] Anti-cannibalization gate successfully blocked unauthorized profile on Developer tier.");
+  console.log("    [PASS] domain isolation gate successfully blocked unauthorized profile on Developer tier.");
 
   // Test 3: Tamper Detection (Payload Modification)
   console.log("--> Test 3: Tamper Detection (Modified Node Count)");

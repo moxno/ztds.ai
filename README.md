@@ -288,7 +288,7 @@ Full report: [ZTDS AI Safety Benchmark Report (2026)](docs/security/ZTDS_AI_SAFE
 | :--- | :--- | :--- | :--- |
 | **Open Reference Core** | `@ztds/core` ([`packages/ztds-core`](packages/ztds-core)) | Apache-2.0 | Vendor-neutral in-memory TypeScript/JS baseline. Universal regex rules (Email, Phone, PAN, SSN, API Keys). [Docs](https://ztds.ai/sdk/) |
 | **Open Reference MCP** | `ztds-mcp` ([`packages/ztds-mcp`](packages/ztds-mcp)) | Apache-2.0 | Official zero-dependency reference MCP server (`io.github.moxno/ztds` on Anthropic Registry) for Cursor, Claude Desktop, and Zed. [MCP Guide](https://ztds.ai/sdk/) |
-| **Certified Pioneer SDK** | `@privacyscrubber/sdk` | Commercial / Air-Gapped | High-throughput WASM engine with 30 high-ACV industry profiles (HIPAA, PCI-DSS, Legal FRE-502), multi-threaded pipeline bindings, offline Ed25519 node licensing. [Get SDK](https://privacyscrubber.com/sdk/?utm_source=ztds.ai&utm_medium=readme&utm_campaign=certified_pioneer) |
+| **Certified Pioneer SDK** | `@privacyscrubber/sdk` | Commercial / Air-Gapped | High-throughput WASM engine with 30 Specialized Industry Profiles (HIPAA, PCI-DSS, Legal FRE-502), multi-threaded pipeline bindings, offline Ed25519 node licensing. [Get SDK](https://privacyscrubber.com/sdk/?utm_source=ztds.ai&utm_medium=readme&utm_campaign=certified_pioneer) |
 | **Air-Gapped IDE MCP** | `@privacyscrubber/mcp-server` | Commercial / Stdio | Stdio MCP proxy (`io.github.moxno/privacyscrubber-mcp`) for Cursor, Windsurf, Claude Code, and autonomous developer agents with 30 enterprise profiles. [MCP Guide](https://ztds.ai/sdk/) |
 
 ---
@@ -302,7 +302,7 @@ Full report: [ZTDS AI Safety Benchmark Report (2026)](docs/security/ZTDS_AI_SAFE
 
 ## 8. Intellectual Property & Statutory Governance
 
-- **Patent Application**: **U.S. & International Patents Pending** (*System and Method for Client-Side Zero-Trust Data Sanitization and Cryptographic Multi-Party Pipeline Handoff*). Paris Convention & 35 U.S.C. § 119 Priority (locked through 14/09/2027).
+- **Patent Application**: **U.S. & International Patents Pending** (*System and Method for Client-Side Zero-Trust Data Sanitization and Cryptographic Multi-Party Pipeline Handoff*). Paris Convention & 35 U.S.C. § 119 Priority ().
 - **Registered Trademark**: **ZTDS™** (ILPO Order #182655957, Classes 9 & 42).
 - **Academic DOIs**:
   - Zenodo: [10.5281/zenodo.22058770](https://doi.org/10.5281/zenodo.22058770)

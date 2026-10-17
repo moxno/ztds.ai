@@ -19,7 +19,7 @@ const STANDARD_STATUS = 'PROPOSED_STANDARD';
 const DEMARCATION = {
   specification: 'ZTDS RFC v1.0 (Apache-2.0 / CC BY 4.0)',
   referenceEngine: '@ztds/core (Apache-2.0 · Open Source)',
-  commercialProductionEngine: '@privacyscrubber/sdk (Commercial · 30 High-ACV Profiles & Offline Node Licensing)',
+  commercialProductionEngine: '@privacyscrubber/sdk (Commercial · 30 enterprise-grade Profiles & Offline Node Licensing)',
   license: 'Apache-2.0',
   governance: 'ZTDS AI Consortium Working Groups WG-1 through WG-4'
 };

@@ -26,42 +26,82 @@
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "CollectionPage",
-        "@id": "https://ztds.ai/registry/#collection",
-        "name": "ZTDS Verified™ Public Registry — Accredited AI Tools & Solutions",
-        "description": "Official public directory of AI tools, agents, and platforms verified compliant with the Zero-Trust Data Sanitization (ZTDS v1.0) specification.",
-        "url": "https://ztds.ai/registry/",
-        "isPartOf": { "@id": "https://ztds.ai/#website" },
-        "publisher": {
-          "@type": "Organization",
-          "name": "ZTDS AI Consortium",
-          "url": "https://ztds.ai"
-        }
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://ztds.ai/registry/#collection",
+      "name": "ZTDS Verified™ Public Registry — Accredited AI Tools & Solutions",
+      "description": "Official public directory of AI tools, agents, and platforms verified compliant with the Zero-Trust Data Sanitization (ZTDS v1.0) specification.",
+      "url": "https://ztds.ai/registry/",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
       },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://ztds.ai/registry/#breadcrumbs",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://ztds.ai/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Verified Registry",
-            "item": "https://ztds.ai/registry/"
-          }
-        ]
+      "publisher": {
+        "@type": "Organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai"
       }
-    ]
-  }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ztds.ai/registry/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ztds.ai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Verified Registry",
+          "item": "https://ztds.ai/registry/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ztds.ai/registry/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does a ZTDS Verified listing in the public registry signify?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A listing in the ZTDS Verified Public Registry confirms that an AI application, SDK, or Model Context Protocol (MCP) server has passed automated conformance testing against the four ZTDS RFC v1.0 invariants, proving 0.00 bytes of cleartext PII egress and deterministic in-RAM surrogate tokenization."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How are Ed25519 conformance certificates tied to registry entries?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every accredited implementation in data/registry.json is issued a cryptographically signed ZTDS-CERT-v1 token canonicalized under RFC 8785 (JCS) and signed with the consortium Ed25519 root key (RFC 8032), allowing enterprise buyers to verify build integrity offline at ztds.ai/verify/."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between open reference implementations and certified commercial engines in the registry?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Open reference packages (@ztds/core, ztds-mcp, ztds-python) provide Apache 2.0 baseline entity sanitization for standard developer workflows. Certified commercial engines such as PrivacyScrubber (engineered by BrandMeWeb) provide 30 specialized industry profiles, multimodal document redaction, and air-gapped enterprise licensing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can a software vendor submit an AI product to the ZTDS Verified Registry?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vendors run npx ztds-audit --strict locally to generate a cryptographic SHA-256 compliance receipt and submit a self-serve GitOps pull request via ztds.ai/apply/ for automated CI invariant verification and registry indexing."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
 </head>
 <body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">
@@ -145,24 +185,35 @@
     </div>
 
     <div class="py-4 space-y-1 text-sm font-medium">
-      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Standard</div>
-      <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
-      <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
+      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
       <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
-      <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper</a>
+      <a href="/ietf/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">IETF Standards Track (draft-02)</a>
+      <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
+      <a href="/blueprints/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">10 AI &amp; RAG Blueprints</a>
+      <a href="/compliance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Global Regulatory Compliance Matrix</a>
+      <a href="/benchmarks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">AI Safety &amp; Latency Benchmarks</a>
+      <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper (DOIs)</a>
+      <a href="/evidentiary-sovereignty/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Evidentiary Sovereignty</a>
       <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
+      <a href="/ciso/memo/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">1-Page CISO Safe Harbor Memo</a>
       <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
       <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 &amp; Trust Center</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
+      <a href="/certification/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Certification Authority</a>
+      <a href="/verify/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Ed25519 Certificate Validator</a>
+      <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
+      <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
+      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Member Pool</a>
+      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows Council</a>
+      <a href="/case-studies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Enterprise Case Studies</a>
+      <a href="/agency/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">BrandMeWeb Enterprise Retainer</a>
 
       <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
       <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
       <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
-      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive Inspector</a>
+      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive DAG Inspector</a>
       <a href="/badge/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Badge Generator</a>
-
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Consortium</div>
-      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Members</a>
-      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows</a>
       <a href="/governance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Governance &amp; Charter</a>
       <a href="/security/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Security &amp; CVD</a>
     </div>
@@ -195,7 +246,7 @@
         <svg class="w-5 h-5 text-slate-400 ml-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
         </svg>
-        <input type="text" id="registrySearch" placeholder="Filter by product name, category, or keyword..." class="w-full bg-transparent border-none text-sm text-slate-800 placeholder-slate-400 focus:outline-none px-2 py-1.5">
+        <input type="text" id="registrySearch" aria-label="Filter certified solutions by product name, category, or keyword" placeholder="Filter by product name, category, or keyword..." class="w-full bg-transparent border-none text-base sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none px-2 py-1.5">
       </div>
 
       <!-- Ecosystem Directory Switcher -->
@@ -215,7 +266,7 @@
       </nav>
     </div>
 
-    <!-- Builder & Founder Neuromarketing Banner -->
+    <!-- Builder & Founder Institutional Trust Banner -->
     <div class="mb-10 p-6 sm:p-7 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 rounded-2xl text-white shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
       <div class="max-w-2xl">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">
@@ -241,12 +292,12 @@
 
     <!-- Category Filter Tabs -->
     <div class="flex flex-wrap items-center justify-center gap-2 mb-6" id="filterTabs" role="tablist" aria-label="Registry Categories">
-      <button type="button" class="filter-btn active px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all" data-filter="all">All Solutions (13)</button>
-      <button type="button" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="mcp">MCP Servers (3)</button>
-      <button type="button" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="rag">RAG &amp; Agent SDKs (3)</button>
-      <button type="button" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="sdk">Core Engines &amp; SDK (3)</button>
-      <button type="button" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="app">Apps &amp; Extensions (2)</button>
-      <button type="button" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="proxy">Proxies &amp; Local LLM (2)</button>
+      <button type="button" role="tab" aria-selected="true" class="filter-btn active px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all" data-filter="all">All Solutions (13)</button>
+      <button type="button" role="tab" aria-selected="false" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="mcp">MCP Servers (3)</button>
+      <button type="button" role="tab" aria-selected="false" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="rag">RAG &amp; Agent SDKs (3)</button>
+      <button type="button" role="tab" aria-selected="false" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="sdk">Core Engines &amp; SDK (3)</button>
+      <button type="button" role="tab" aria-selected="false" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="app">Apps &amp; Extensions (2)</button>
+      <button type="button" role="tab" aria-selected="false" class="filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="proxy">Proxies &amp; Local LLM (2)</button>
     </div>
 
     <!-- Live Results Counter & Active Filter Indicators -->
@@ -266,7 +317,7 @@
       <!-- Card 0: ZTDS Core Reference Engine (@ztds/core) -->
       <div class="ztds-card p-7 bg-white border-2 border-emerald-500/80 rounded-xl shadow-sm flex flex-col justify-between" data-category="sdk">
         <div>
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <span class="pill-trust">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
               OPEN REFERENCE SPECIFICATION
@@ -292,7 +343,7 @@
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+        <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
           <a href="/sdk/" class="text-emerald-700 font-semibold hover:underline flex items-center gap-1">
             Documentation &amp; Quickstart &rarr;
           </a>
@@ -318,7 +369,7 @@
       <!-- Card 0b: ZTDS Python Reference Engine (ztds) -->
       <div class="ztds-card p-7 bg-white border-2 border-sky-500/80 rounded-xl shadow-sm flex flex-col justify-between" data-category="sdk">
         <div>
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <span class="pill-trust">
               <span class="w-1.5 h-1.5 rounded-full bg-sky-600"></span>
               PYTHON REFERENCE IMPLEMENTATION
@@ -344,7 +395,7 @@
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+        <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
           <a href="https://pypi.org/project/ztds/" target="_blank" rel="noopener" class="text-sky-700 font-semibold hover:underline flex items-center gap-1">
             PyPI Package &rarr;
           </a>
@@ -370,7 +421,7 @@
       <!-- Card 1: PrivacyScrubber Web -->
       <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between scroll-mt-24" id="privacyscrubber" data-category="app">
         <div>
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <span class="pill-trust">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
               ZTDS VERIFIED &middot; PIONEER
@@ -395,7 +446,7 @@
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+        <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
           <a href="https://privacyscrubber.com?utm_source=ztds.ai&utm_medium=ecosystem_registry&utm_campaign=canonical_pioneer&utm_content=verified_card" target="_blank" rel="noopener" class="text-emerald-700 font-semibold hover:underline flex items-center gap-1">
             privacyscrubber.com &rarr;
           </a>
@@ -421,7 +472,7 @@
       <!-- Card 2: PrivacyScrubber Extension -->
       <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="app">
         <div>
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <span class="pill-trust">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
               ZTDS VERIFIED &middot; BROWSER
@@ -446,7 +497,7 @@
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+        <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
           <a href="https://chromewebstore.google.com/detail/privacyscrubber-%E2%80%94-zero-tr/pimoejgefeilajmmbpghifdmhdlkgjol" target="_blank" rel="noopener" class="text-emerald-700 font-semibold hover:underline flex items-center gap-1">
             Chrome Web Store &rarr;
           </a>
@@ -472,7 +523,7 @@
       <!-- Card 3: ZTDS Headless Engine SDK -->
       <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="sdk">
         <div>
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <span class="pill-dev">
               <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
               REFERENCE SDK
@@ -497,7 +548,7 @@
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+        <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
           <a href="/sdk/" class="text-blue-700 font-semibold hover:underline flex items-center gap-1">
             View SDK Documentation &rarr;
           </a>
@@ -523,7 +574,7 @@
       <!-- Card 4a: ZTDS Open Reference MCP Server -->
       <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="mcp" id="ztds-mcp">
         <div>
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <span class="pill-trust">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
               ZTDS VERIFIED &middot; OPEN REFERENCE
@@ -550,7 +601,7 @@
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+        <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
           <div class="flex items-center gap-3">
             <a href="/mcp/" class="text-emerald-700 font-semibold hover:underline flex items-center gap-1">
               Setup ztds-mcp &rarr;
@@ -582,7 +633,7 @@
       <!-- Card 5: LangChain ZTDS Privacy Callback -->
       <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="rag">
         <div>
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <span class="pill-trust">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
               ZTDS VERIFIED &middot; BLUEPRINT
@@ -608,7 +659,7 @@
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+        <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
           <a href="/sdk/#blueprint-langchain" class="text-emerald-700 font-semibold hover:underline flex items-center gap-1">
             View Blueprint &rarr;
           </a>
@@ -634,7 +685,7 @@
       <!-- Card 6: LlamaIndex Air-Gap Sanitizer -->
       <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="rag">
         <div>
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <span class="pill-trust">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
               ZTDS VERIFIED &middot; BLUEPRINT
@@ -660,7 +711,7 @@
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+        <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
           <a href="/sdk/#blueprint-llamaindex" class="text-emerald-700 font-semibold hover:underline flex items-center gap-1">
             View Blueprint &rarr;
           </a>
@@ -686,7 +737,7 @@
       <!-- Card 7: Ollama Local Privacy Filter -->
       <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="proxy">
         <div>
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <span class="pill-trust">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
               ZTDS VERIFIED &middot; BLUEPRINT
@@ -712,7 +763,7 @@
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+        <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
           <a href="/sdk/#blueprint-ollama" class="text-emerald-700 font-semibold hover:underline flex items-center gap-1">
             View Blueprint &rarr;
           </a>
@@ -738,7 +789,7 @@
       <!-- Card 8: Envoy Proxy ZTDS WASM Filter -->
       <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="proxy">
         <div>
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <span class="pill-trust">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
               ZTDS VERIFIED &middot; ENTERPRISE
@@ -764,7 +815,7 @@
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+        <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
           <a href="/sdk/#blueprint-envoy" class="text-emerald-700 font-semibold hover:underline flex items-center gap-1">
             View Blueprint &rarr;
           </a>
@@ -790,7 +841,7 @@
       <!-- Card 9: FastMCP Stdio Gateway -->
       <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="mcp">
         <div>
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <span class="pill-trust">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
               ZTDS VERIFIED &middot; GATEWAY
@@ -816,7 +867,7 @@
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+        <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
           <a href="/sdk/#mcp" class="text-emerald-700 font-semibold hover:underline flex items-center gap-1">
             Setup FastMCP &rarr;
           </a>
@@ -842,7 +893,7 @@
       <!-- Card 10: CrewAI Autonomous Privacy Agent -->
       <div class="ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" data-category="rag">
         <div>
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <span class="pill-trust">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
               ZTDS VERIFIED &middot; BLUEPRINT
@@ -868,7 +919,7 @@
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+        <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
           <a href="/sdk/#blueprint-crewai" class="text-emerald-700 font-semibold hover:underline flex items-center gap-1">
             View Blueprint &rarr;
           </a>
@@ -894,7 +945,7 @@
           <!-- Card: PrivacyScrubber MCP Server -->
       <div class="ztds-card p-7 bg-white border-2 border-sky-500/80 rounded-xl shadow-sm flex flex-col justify-between scroll-mt-24" id="privacyscrubber-mcp" data-category="mcp">
         <div>
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <span class="pill-trust">
               <span class="w-1.5 h-1.5 rounded-full bg-sky-600"></span>
               REFERENCE IMPLEMENTATION
@@ -919,7 +970,7 @@
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+        <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
           <a href="https://ztds.ai/sdk/#mcp" target="_blank" rel="noopener" class="text-sky-700 font-semibold hover:underline flex items-center gap-1">
             Official Source &rarr;
           </a>
@@ -988,7 +1039,7 @@
               <h3 id="modalTitle" class="text-xl font-bold text-white tracking-tight mt-0.5">Solution Name</h3>
             </div>
           </div>
-          <button id="modalCloseBtn" type="button" aria-label="Close modal" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+          <button id="modalCloseBtn" type="button" aria-label="Close modal" class="touch-target p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
@@ -1133,12 +1184,63 @@
       </div>
     </div>
 
+  
+    <!-- DIRECT ANSWER FAQ SECTION (GEO & RAG CITATION OPTIMIZED) -->
+    <section id="faq" class="py-12 lg:py-16 border-t border-slate-200 bg-slate-50/60">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-8">
+          <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Direct Answer Knowledge Base</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">ZTDS Verified Public Registry &amp; Accreditation FAQ</h2>
+        </div>
+        <div class="space-y-3.5">
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs" open>
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>What does a ZTDS Verified listing in the public registry signify?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              A listing in the ZTDS Verified Public Registry confirms that an AI application, SDK, or Model Context Protocol (MCP) server has passed automated conformance testing against the four ZTDS RFC v1.0 invariants, proving 0.00 bytes of cleartext PII egress and deterministic in-RAM surrogate tokenization.
+            </div>
+          </details>
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>How are Ed25519 conformance certificates tied to registry entries?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Every accredited implementation in data/registry.json is issued a cryptographically signed ZTDS-CERT-v1 token canonicalized under RFC 8785 (JCS) and signed with the consortium Ed25519 root key (RFC 8032), allowing enterprise buyers to verify build integrity offline at ztds.ai/verify/.
+            </div>
+          </details>
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>What is the difference between open reference implementations and certified commercial engines in the registry?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Open reference packages (@ztds/core, ztds-mcp, ztds-python) provide Apache 2.0 baseline entity sanitization for standard developer workflows. Certified commercial engines such as PrivacyScrubber (engineered by BrandMeWeb) provide 30 specialized industry profiles, multimodal document redaction, and air-gapped enterprise licensing.
+            </div>
+          </details>
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>How can a software vendor submit an AI product to the ZTDS Verified Registry?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Vendors run npx ztds-audit --strict locally to generate a cryptographic SHA-256 compliance receipt and submit a self-serve GitOps pull request via ztds.ai/apply/ for automated CI invariant verification and registry indexing.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- 5-Column Institutional Light Footer -->
   <footer class="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-12 text-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10 pb-12 border-b border-slate-100">
         <!-- Col 1: Brand & Consortium -->
         <div class="space-y-4 sm:col-span-2 md:col-span-1">
@@ -1167,11 +1269,13 @@
           <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
-            <li><a href="/whitepaper/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Research Whitepaper &rarr;</a></li>
+            <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track (draft-02)</a></li>
+            <li><a href="/benchmarks/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">AI Safety &amp; Latency Benchmarks &rarr;</a></li>
+            <li><a href="/whitepaper/" class="hover:text-slate-900 transition-colors">Research Whitepaper (DOIs)</a></li>
+            <li><a href="/evidentiary-sovereignty/" class="hover:text-slate-900 transition-colors">Evidentiary Sovereignty</a></li>
             <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO Procurement &amp; Safe Harbor Pack</a></li>
+            <li><a href="/ciso/memo/" class="hover:text-slate-900 transition-colors">1-Page CISO Executive Memo</a></li>
             <li><a href="/roi/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">CISO Risk &amp; ROI Calculator &rarr;</a></li>
-            <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
-            <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">OSF Latency Benchmarks</a></li>
             <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
           </ul>
         </div>
@@ -1181,8 +1285,10 @@
           <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+            <li><a href="/mcp/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Model Context Protocol (MCP) &rarr;</a></li>
             <li><a href="/inspector/" class="hover:text-slate-900 transition-colors">Interactive Pipeline Simulator</a></li>
             <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
+            <li><a href="/verify/" class="hover:text-slate-900 transition-colors">Ed25519 Certificate Validator</a></li>
             <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge &amp; Seal Foundry</a></li>
             <li><a href="/registry/#privacyscrubber" class="hover:text-slate-900 transition-colors">Reference Implementations &rarr;</a></li>
           </ul>
@@ -1192,6 +1298,7 @@
         <div>
           <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
           <ul class="space-y-2.5 text-xs">
+            <li><a href="/certification/" class="hover:text-slate-900 transition-colors">Certification Authority</a></li>
             <li><a href="/soc2/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">SOC 2 &amp; Trust Center &rarr;</a></li>
             <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Governance &amp; Charter</a></li>
             <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
@@ -1208,6 +1315,7 @@
             <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
             <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
             <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+            <li><a href="/case-studies/" class="hover:text-slate-900 transition-colors">Enterprise Case Studies</a></li>
             <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
             <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
             <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
@@ -1219,10 +1327,10 @@
       <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
           <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
-          <span class="text-slate-400 font-mono text-[10px]">U.S. & Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS™ #182655957</span>
+          <span class="text-slate-400 font-mono text-[10px]">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
         </div>
         <p>
-          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. § 119 Priority, locked through 14/09/2027). The word mark <strong>ZTDS™</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
+          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. &sect; 119 Priority). The word mark <strong>ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
         </p>
       </div>
 
@@ -1242,7 +1350,6 @@
           <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x4E9A2B1C</a>
         </div>
       </div>
-
     </div>
   </footer>
 

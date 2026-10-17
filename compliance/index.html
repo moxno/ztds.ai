@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Regulatory Compliance &amp; Statutory Safe Harbor Matrix — ZTDS™ RFC v1.0 | Zero-DPA, GDPR Art. 28 &amp; 32, HIPAA Safe Harbor, EU AI Act</title>
+  <meta name="description" content="Global regulatory compliance matrix and statutory safe harbor architecture for Zero-Trust Data Sanitization (ZTDS RFC v1.0). Technical safe harbor under GDPR Art. 28 &amp; Art. 32, HIPAA 45 CFR § 164.514(b), EU AI Act Art. 10, FRE Rule 502(b), and SOC 2 Type II.">
+  <meta name="keywords" content="Zero-DPA AI Architecture, GDPR Article 28 Subprocessor Elimination, GDPR Article 32 Technical Safe Harbor, GDPR Recital 26 Pseudonymization LLM, HIPAA Safe Harbor 45 CFR 164.514(b) AI, EU AI Act Article 10 Data Governance, FRE Rule 502(b) AI Privilege Waiver, SIG Lite CAIQ VSAQ AI Sanitization, ZTDS Compliance">
+  <meta name="author" content="Ilya Sibiryakov">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://ztds.ai/compliance/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="ZTDS LLM Knowledge Base">
+
+  <!-- Open Graph & Social Cards -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ztds.ai/compliance/">
+  <meta property="og:title" content="Global Regulatory Compliance &amp; Statutory Safe Harbor Matrix — ZTDS™ RFC v1.0">
+  <meta property="og:description" content="Defense-in-Depth statutory risk minimization across GDPR Art. 28 &amp; 32, HIPAA Safe Harbor, EU AI Act Art. 10, FRE Rule 502(b), and SOC 2 Type II. Includes interactive SIG Lite, CAIQ, and VSAQ vendor security responses.">
+  <meta property="og:site_name" content="ZTDS.ai">
+  <meta property="og:image" content="https://ztds.ai/badge/seal-verified.svg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Global Regulatory Compliance &amp; Statutory Safe Harbor Matrix — ZTDS™ RFC v1.0">
+  <meta name="twitter:description" content="Technical Safe Harbor &amp; Subprocessor Elimination for Enterprise AI and RAG Pipelines under ZTDS RFC v1.0.">
+  <meta name="twitter:image" content="https://ztds.ai/badge/seal-verified.svg">
+
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+
+  <!-- JSON-LD Knowledge Graph: Organization + TechArticle + ItemList + BreadcrumbList + FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://ztds.ai/#organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai/",
+        "logo": "https://ztds.ai/favicon.svg",
+        "founder": {
+          "@type": "Person",
+          "@id": "https://ztds.ai/#ilya-sibiryakov",
+          "name": "Ilya Sibiryakov",
+          "jobTitle": "Chief Architect & Lead Author",
+          "url": "https://www.linkedin.com/in/ilya-sibiryakov/"
+        }
+      },
+      {
+        "@type": "TechArticle",
+        "@id": "https://ztds.ai/compliance/#article",
+        "headline": "Global Regulatory Compliance & Statutory Safe Harbor Matrix for Zero-Trust Data Sanitization (ZTDS RFC v1.0)",
+        "description": "Normative legal and technical demarcation matrix mapping ZTDS RFC v1.0 4 Invariants to GDPR Articles 28 and 32, Recital 26, HIPAA Safe Harbor 45 CFR § 164.514(b), EU AI Act Article 10, US Federal Rules of Evidence Rule 502(b), SOC 2 Type II, and CCPA/CPRA.",
+        "url": "https://ztds.ai/compliance/",
+        "datePublished": "2026-09-14",
+        "dateModified": "2026-10-18",
+        "inLanguage": "en-US",
+        "proficiencyLevel": "Expert",
+        "author": {
+          "@id": "https://ztds.ai/#ilya-sibiryakov"
+        },
+        "publisher": {
+          "@id": "https://ztds.ai/#organization"
+        },
+        "isPartOf": {
+          "@id": "https://ztds.ai/standard/#specification"
+        }
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://ztds.ai/compliance/#frameworks",
+        "name": "Global Regulatory & Statutory Safe Harbor Frameworks Mapped to ZTDS RFC v1.0",
+        "numberOfItems": 8,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "GDPR Article 28 — Subprocessor Scope Reduction & Zero-DPA Architecture",
+            "url": "https://ztds.ai/compliance/#reg-gdpr-art28"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "GDPR Article 32 — Security of Processing & Technical Safe Harbor (Defense-in-Depth)",
+            "url": "https://ztds.ai/compliance/#reg-gdpr-art32"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "GDPR Recital 26 — Client-Bounded Pseudonymization & Anonymization Boundaries",
+            "url": "https://ztds.ai/compliance/#reg-gdpr-recital26"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "HIPAA Safe Harbor — 45 CFR § 164.514(b)(2) 18-Identifier De-Identification",
+            "url": "https://ztds.ai/compliance/#reg-hipaa"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "EU AI Act Article 10 — Data Governance & Training/Inference Hygiene",
+            "url": "https://ztds.ai/compliance/#reg-eu-ai-act"
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "name": "US Federal Rules of Evidence Rule 502(b) — Attorney-Client Privilege Preservation",
+            "url": "https://ztds.ai/compliance/#reg-fre-502b"
+          },
+          {
+            "@type": "ListItem",
+            "position": 7,
+            "name": "SOC 2 Type II (CC6.1 / CC6.6) & ISO/IEC 27701 — Boundary Access Controls",
+            "url": "https://ztds.ai/compliance/#reg-soc2-iso27701"
+          },
+          {
+            "@type": "ListItem",
+            "position": 8,
+            "name": "CCPA / CPRA (Cal. Civ. Code § 1798.140(v)) — De-Identified Consumer Information",
+            "url": "https://ztds.ai/compliance/#reg-ccpa-cpra"
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ztds.ai/compliance/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ztds.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Regulatory Compliance & Safe Harbor Matrix",
+            "item": "https://ztds.ai/compliance/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://ztds.ai/compliance/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does a ZTDS-compliant client-side sanitization appliance require a Data Processing Addendum (DPA) under GDPR Article 28?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No Data Processing Addendum (DPA) is required with the sanitization vendor when running a certified ZTDS Level 1–3 client-side or air-gapped appliance. Because tokenization executes 100% within the data controller's volatile memory (RAM) with zero external network egress and zero third-party subprocessors (Invariant 4), the software vendor never receives, stores, or processes personal data under GDPR Article 4(2) and Article 28."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does ZTDS provide Technical Safe Harbor under GDPR Article 32 without claiming absolute exemption for free-text prompts?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ZTDS operates under a strict Statutory Risk Minimization and Defense-in-Depth model. While free-text narrative prompts can theoretically contain contextual quasi-identifiers, ZTDS establishes GDPR Article 32 Technical Safe Harbor through three verifiable layers: (1) 100% Direct PII Zero-Egress via client RAM tokenization before any network socket call, (2) Contextual Entropy Reduction using specialized industry profiles, and (3) Cryptographic SHA-256 Compliance Receipts that provide Data Protection Officers (DPOs) and CISOs with auditable proof of state-of-the-art technical due diligence."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does ZTDS satisfy HIPAA Safe Harbor De-Identification under 45 CFR § 164.514(b)(2) for clinical AI workflows?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Under HIPAA 45 CFR § 164.514(b)(2), health information is de-identified when all 18 specified direct and temporal identifiers are removed prior to external transmission, and the covered entity has no actual knowledge that the residual information can identify an individual. ZTDS clinical profiles intercept and replace all 18 identifier categories with deterministic syntactic tokens inside the covered entity's clinical perimeter before invoking external LLMs, keeping the private re-identification key strictly on-premise under 45 CFR § 164.514(c)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does pre-egress tokenization prevent inadvertent waiver of attorney-client privilege under US Federal Rules of Evidence Rule 502(b)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Under US Federal Rules of Evidence Rule 502(b), a disclosure does not operate as a privilege waiver if the holder took reasonable steps to prevent disclosure of privileged identifiers. Deploying deterministic client-side tokenization to strip client names, matter numbers, opposing counsel identities, and financial figures prior to external LLM analysis constitutes demonstrable, state-of-the-art technical precautions that preserve work-product confidentiality."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How should security teams answer SIG Lite, CSA CAIQ, and VSAQ vendor risk questionnaires for a ZTDS appliance?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For ZTDS-certified local appliances, subprocessor, cloud data residency, and data-at-rest encryption questions are answered as 'Not Applicable — Zero Data Egress Architecture (Client-Side Volatile RAM Only).' Cryptographic verification is evidenced via offline Ed25519 signature validation and local SHA-256 compliance receipts generated by npx ztds-audit."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans antialiased">
+  <!-- Skip to main content -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Top Institutional Status Bar -->
+  <div class="bg-slate-900 text-slate-300 border-b border-slate-800 text-xs py-2 px-4">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span class="font-mono font-semibold text-white">ZTDS STATUTORY MATRIX v1.0</span>
+        <span class="hidden sm:inline text-slate-400">&middot; Defense-in-Depth &amp; Technical Safe Harbor (GDPR Art. 28/32 &middot; HIPAA &middot; EU AI Act &middot; FRE 502)</span>
+      </div>
+      <div class="flex items-center gap-4 font-mono text-[11px]">
+        <a href="/docs/legal/ZTDS_Zero_DPA_Compliance_Memo.txt" class="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">Zero-DPA Legal Memo (.txt)</a>
+        <a href="/blueprints/" class="text-slate-300 hover:text-white">10 AI &amp; RAG Blueprints &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Institutional Top Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-3 touch-target">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm shrink-0 aspect-square p-0.5 overflow-hidden">
+            <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none" aria-hidden="true">
+              <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+              <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
+            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+          </div>
+        </a>
+
+        <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
+          <span class="pulse-dot"></span>
+          <span class="font-mono text-[11px] font-semibold">WG-2 GRC &amp; SAFE HARBOR</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links (Canonical 7 Links) -->
+      <nav class="hidden lg:flex items-center gap-3.5 xl:gap-5 text-sm font-medium text-slate-600" id="desktop-nav">
+        <a href="/standard/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Standard</a>
+        <a href="/registry/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Registry</a>
+        <a href="/fellows/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Fellows</a>
+        <a href="/companies/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Adopters</a>
+        <a href="/scanner/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Scanner</a>
+        <a href="/sdk/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">SDK &amp; Connectors</a>
+        <a href="/ciso/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">CISO &amp; Trust</a>
+      </nav>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-3">
+        <a href="/apply/" class="btn-trust text-xs py-2 px-4 shadow-sm font-semibold whitespace-nowrap">
+          Get Certified &rarr;
+        </a>
+        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Slide-Over Drawer -->
+  <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"></div>
+  <aside id="mobile-drawer" class="mobile-nav-drawer drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+    <div class="flex items-center justify-between pb-5 border-b border-slate-200">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 aspect-square p-0.5 overflow-hidden">
+          <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none" aria-hidden="true">
+            <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+            <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+          </svg>
+        </div>
+        <span class="font-bold text-slate-900 text-base">ZTDS<span class="text-emerald-600">.ai</span></span>
+      </div>
+      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 text-slate-400 hover:text-slate-700">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="py-4 space-y-1 text-sm font-medium">
+      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
+      <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
+      <a href="/ietf/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">IETF Standards Track (draft-02)</a>
+      <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
+      <a href="/blueprints/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">10 AI &amp; RAG Blueprints</a>
+      <a href="/compliance/" class="block px-3 py-2 rounded-lg text-emerald-700 font-semibold bg-emerald-50/70">Global Regulatory Compliance Matrix</a>
+      <a href="/benchmarks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">AI Safety &amp; Latency Benchmarks</a>
+      <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper (DOIs)</a>
+      <a href="/evidentiary-sovereignty/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Evidentiary Sovereignty</a>
+      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
+      <a href="/ciso/memo/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">1-Page CISO Safe Harbor Memo</a>
+      <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
+      <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 &amp; Trust Center</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
+      <a href="/certification/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Certification Authority</a>
+      <a href="/verify/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Ed25519 Certificate Validator</a>
+      <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
+      <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
+      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Member Pool</a>
+      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows Council</a>
+      <a href="/case-studies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Enterprise Case Studies</a>
+      <a href="/agency/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">BrandMeWeb Enterprise Retainer</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
+      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
+      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive DAG Inspector</a>
+      <a href="/badge/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Badge Generator</a>
+      <a href="/governance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Governance &amp; Charter</a>
+      <a href="/security/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Security &amp; CVD</a>
+    </div>
+
+    <div class="mt-auto pt-4 border-t border-slate-200">
+      <a href="/apply/" class="btn-trust w-full text-center text-xs py-2.5">
+        Apply for ZTDS Verified&trade; Seal &rarr;
+      </a>
+    </div>
+  </aside>
+
+  <main id="main-content" class="flex-grow">
+    <!-- Hero Section -->
+    <section class="relative bg-slate-900 text-white py-14 lg:py-20 border-b border-slate-800 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <nav aria-label="Breadcrumb" class="mb-6">
+          <ol class="flex flex-wrap items-center gap-2 text-xs font-mono text-slate-300">
+            <li><a href="/" class="hover:text-white transition-colors">ZTDS.ai</a></li>
+            <li aria-hidden="true">/</li>
+            <li class="text-emerald-400 font-semibold" aria-current="page">Regulatory Compliance &amp; Safe Harbor Matrix</li>
+          </ol>
+        </nav>
+
+        <div class="max-w-4xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/90 border border-emerald-700/70 text-emerald-300 text-xs font-mono mb-4">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            CISO, DPO &amp; GENERAL COUNSEL DOSSIER &middot; STATUTORY SAFE HARBOR
+          </div>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight mb-5">
+            Global Regulatory &amp; <span class="text-emerald-400">Statutory Safe Harbor Matrix</span>
+          </h1>
+          <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-8">
+            When enterprise teams transmit unmasked prompts, documents, or RAG context to cloud LLM providers, every downstream API becomes a statutory subprocessor. By enforcing <strong class="text-white">Zero-Trust Data Sanitization (ZTDS RFC v1.0)</strong> inside client volatile RAM prior to network egress, organizations establish demonstrable <strong class="text-white">Technical Safe Harbor</strong> and <strong class="text-white">Defense-in-Depth Risk Minimization</strong> across 8 major international regulatory frameworks.
+          </p>
+
+          <!-- 3 Pillars of Statutory Risk Minimization (The Safe Harbor Invariant) -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
+              <div class="text-xs font-mono uppercase tracking-wider text-emerald-400 mb-1">Layer 1 &middot; Direct PII Zero-Egress</div>
+              <div class="font-bold text-white text-sm mb-1">100% Client RAM Tokenization</div>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Structured identifiers, tax numbers, IBANs, clinical records, and API keys are replaced with deterministic surrogates before any socket call leaves the host boundary.
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
+              <div class="text-xs font-mono uppercase tracking-wider text-sky-400 mb-1">Layer 2 &middot; Contextual Entropy Reduction</div>
+              <div class="font-bold text-white text-sm mb-1">30 Specialized Vertical Profiles</div>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Because free-text narratives can contain contextual quasi-identifiers, specialized domain profiles suppress indirect correlation risks across clinical, legal, and financial workflows.
+              </p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
+              <div class="text-xs font-mono uppercase tracking-wider text-amber-400 mb-1">Layer 3 &middot; Officer &amp; DPO Legal Shield</div>
+              <div class="font-bold text-white text-sm mb-1">Cryptographic Due Diligence</div>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Local SHA-256 compliance receipts provide Data Protection Officers and CISOs with immutable mathematical evidence of proactive technical safeguards.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <a href="#statutory-matrix" class="btn-trust text-xs sm:text-sm py-2.5 px-5 font-semibold">
+              Explore 8-Framework Matrix &darr;
+            </a>
+            <a href="#questionnaire-responder" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 text-xs sm:text-sm font-mono font-semibold transition-colors">
+              SIG Lite / CAIQ / VSAQ Responder
+            </a>
+            <a href="/docs/legal/ZTDS_Zero_DPA_Compliance_Memo.txt" class="px-4 py-2.5 rounded-xl bg-slate-800/60 hover:bg-slate-800 text-emerald-300 border border-emerald-800/60 text-xs sm:text-sm font-mono font-semibold transition-colors">
+              Download Zero-DPA Legal Memo (.txt)
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architectural Demarcation: Cloud DLP vs. ZTDS Client-Side Appliance -->
+    <section class="py-12 border-b border-slate-200 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-8">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2">
+            Statutory Boundary Demarcation: Proxy DLP vs. ZTDS In-Memory Sanitization
+          </h2>
+          <p class="text-sm text-slate-600">
+            Why server-side redaction APIs trigger mandatory subprocessor agreements, cross-border transfer impact assessments (TIAs), and breach notification liability—while ZTDS eliminates them at the architectural root.
+          </p>
+        </div>
+
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-xs">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="border-b border-slate-200 bg-slate-50 font-mono text-xs uppercase text-slate-600">
+                <th class="py-3.5 px-4">Statutory Dimension</th>
+                <th class="py-3.5 px-4 text-rose-700">Cloud DLP / Server-Side Redaction API</th>
+                <th class="py-3.5 px-4 text-emerald-700">ZTDS RFC v1.0 In-Memory Appliance</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 text-slate-700">
+              <tr>
+                <td class="py-3.5 px-4 font-semibold text-slate-900">Point of Sanitization</td>
+                <td class="py-3.5 px-4 text-slate-600">After TLS network egress to external vendor cloud</td>
+                <td class="py-3.5 px-4 text-emerald-800 font-semibold">100% Inside Host Volatile RAM Prior to Socket Egress (Invariant 1)</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-semibold text-slate-900">GDPR Art. 28 Subprocessor Status</td>
+                <td class="py-3.5 px-4 text-slate-600">Vendor is a Data Processor; requires signed DPA &amp; SCCs</td>
+                <td class="py-3.5 px-4 text-emerald-800 font-semibold">Zero Subprocessors; No DPA Required with Sanitization Vendor (Invariant 4)</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-semibold text-slate-900">Re-Identification Mapping Table</td>
+                <td class="py-3.5 px-4 text-slate-600">Stored in vendor cloud database or Redis cluster</td>
+                <td class="py-3.5 px-4 text-emerald-800 font-semibold">Isolated in Ephemeral Client RAM; Cryptographically Zeroized on Close</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-semibold text-slate-900">Cross-Border Transfer (Schrems II)</td>
+                <td class="py-3.5 px-4 text-slate-600">Raw PII crosses jurisdictional borders to inspection server</td>
+                <td class="py-3.5 px-4 text-emerald-800 font-semibold">Only Deterministic Surrogate Tokens Cross the Perimeter</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-semibold text-slate-900">Auditability &amp; Due Diligence Proof</td>
+                <td class="py-3.5 px-4 text-slate-600">Vendor self-attestation logs</td>
+                <td class="py-3.5 px-4 text-emerald-800 font-semibold">Local SHA-256 Cryptographic Receipts + Airplane Mode Network Verification</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8-Framework Regulatory Matrix -->
+    <section id="statutory-matrix" class="py-14 border-b border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-widest text-emerald-700 font-bold">Normative Statutory Mapping</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">
+              8 Global Regulatory Frameworks &amp; Safe Harbor Mechanics
+            </h2>
+          </div>
+          <!-- Filter Pills -->
+          <div class="flex flex-wrap gap-2" role="tablist" aria-label="Filter regulatory frameworks by region">
+            <button type="button" data-reg-filter="all" class="reg-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900 text-white font-semibold cursor-pointer transition-all">
+              All Frameworks (8)
+            </button>
+            <button type="button" data-reg-filter="eu" class="reg-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-all">
+              EU / GDPR / AI Act (4)
+            </button>
+            <button type="button" data-reg-filter="us" class="reg-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-all">
+              US Federal &amp; State (3)
+            </button>
+            <button type="button" data-reg-filter="global" class="reg-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-all">
+              Audit &amp; ISO (1)
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="regulatory-grid">
+          <!-- 1. GDPR Article 28 -->
+          <article id="reg-gdpr-art28" data-region="eu" class="reg-card rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between shadow-xs hover:border-emerald-500/50 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-semibold">
+                  EU Regulation 2016/679 &middot; Art. 28
+                </span>
+                <span class="font-mono text-xs text-slate-500">Invariant 1 &amp; Invariant 4</span>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-2">
+                1. GDPR Article 28 — Subprocessor Scope Reduction &amp; Zero-DPA Architecture
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                Article 28 mandates binding Data Processing Addenda (DPAs) whenever a third party processes personal data on behalf of a Controller. Because a ZTDS-compliant appliance executes 100% locally within the Controller's execution perimeter with zero telemetry and zero network egress, the sanitization software vendor never touches personal data under Article 4(2)—eliminating vendor subprocessor onboarding friction.
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-600">Procurement Impact: <strong class="text-emerald-700">Zero Vendor DPA Required</strong></span>
+              <button type="button" data-copy-clause="Under GDPR Article 28, no Data Processing Addendum (DPA) is required with the sanitization appliance provider because tokenization executes 100% locally within Controller volatile memory (ZTDS Invariant 1 & 4) with zero external network egress." class="copy-clause-btn text-emerald-700 font-semibold hover:text-emerald-800 underline cursor-pointer">
+                Copy DPO Clause
+              </button>
+            </div>
+          </article>
+
+          <!-- 2. GDPR Article 32 -->
+          <article id="reg-gdpr-art32" data-region="eu" class="reg-card rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between shadow-xs hover:border-emerald-500/50 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-semibold">
+                  EU Regulation 2016/679 &middot; Art. 32(1)(a)
+                </span>
+                <span class="font-mono text-xs text-slate-500">Invariant 2 &amp; Invariant 3</span>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-2">
+                2. GDPR Article 32 — Security of Processing &amp; Technical Safe Harbor
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                Article 32(1)(a) explicitly designates pseudonymization as a primary technical measure to ensure a level of security appropriate to the risk. Rather than claiming an unenforceable blanket exemption for arbitrary free-text prompts, ZTDS establishes <strong>Defense-in-Depth Technical Safe Harbor</strong>: 100% direct PII blocking in RAM, contextual entropy reduction via domain profiles, and cryptographic SHA-256 audit receipts proving executive due diligence.
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-600">Liability Posture: <strong class="text-emerald-700">Statutory Risk Minimization</strong></span>
+              <button type="button" data-copy-clause="Organization enforces GDPR Article 32(1)(a) state-of-the-art technical safeguards via pre-egress ZTDS RFC v1.0 deterministic tokenization in volatile RAM, accompanied by local SHA-256 cryptographic compliance receipts." class="copy-clause-btn text-emerald-700 font-semibold hover:text-emerald-800 underline cursor-pointer">
+                Copy DPO Clause
+              </button>
+            </div>
+          </article>
+
+          <!-- 3. GDPR Recital 26 -->
+          <article id="reg-gdpr-recital26" data-region="eu" class="reg-card rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between shadow-xs hover:border-emerald-500/50 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-semibold">
+                  EU Regulation 2016/679 &middot; Recital 26 &amp; Art. 4(5)
+                </span>
+                <span class="font-mono text-xs text-slate-500">Invariant 2</span>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-2">
+                3. GDPR Recital 26 — Client-Bounded Pseudonymization vs. Downstream AI Providers
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                Under Recital 26 and European Court of Justice jurisprudence (<em>SRB v. EDPS</em>, Case T-557/20), whether tokenized payload constitutes personal data in the hands of a recipient depends on whether the recipient possesses legal and practical means likely reasonably to be used to re-identify the subject. Because the ZTDS mapping table never leaves client volatile RAM, the downstream LLM provider receives only unkeyed syntactic surrogates (`[PERSON_TOKEN_1]`).
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-600">Jurisprudence Alignment: <strong class="text-emerald-700">CJEU T-557/20 Aligned</strong></span>
+              <button type="button" data-copy-clause="In accordance with GDPR Recital 26 and CJEU Case T-557/20, re-identification mapping tables remain strictly isolated inside Controller volatile memory; downstream LLM inference endpoints receive only non-reversible syntactic surrogate tokens." class="copy-clause-btn text-emerald-700 font-semibold hover:text-emerald-800 underline cursor-pointer">
+                Copy DPO Clause
+              </button>
+            </div>
+          </article>
+
+          <!-- 4. HIPAA Safe Harbor -->
+          <article id="reg-hipaa" data-region="us" class="reg-card rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between shadow-xs hover:border-emerald-500/50 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-0.5 rounded bg-sky-50 border border-sky-200 text-sky-800 font-mono text-xs font-semibold">
+                  US HHS &middot; 45 CFR &sect; 164.514(b)(2) &amp; (c)
+                </span>
+                <span class="font-mono text-xs text-slate-500">Invariant 1 &amp; Invariant 2</span>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-2">
+                4. HIPAA Safe Harbor — 18-Identifier De-Identification &amp; Re-Identification Code Isolation
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                Under 45 CFR &sect; 164.514(b)(2), Protected Health Information (PHI) is de-identified when all 18 specified identifier classes (names, MRNs, SSNs, dates, contact details, device serials) are stripped prior to leaving the Covered Entity's boundary. Under &sect; 164.514(c), a Covered Entity may assign a non-derived re-identification code (`[PATIENT_TOKEN_1]`) provided the translation key is never disclosed outside the Covered Entity.
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-600">Clinical Boundary: <strong class="text-sky-700">45 CFR &sect; 164.514(b)-(c)</strong></span>
+              <button type="button" data-copy-clause="Clinical AI workflows enforce pre-egress de-identification of the 18 HIPAA Safe Harbor identifiers under 45 CFR § 164.514(b)(2), retaining the local re-identification token map strictly within the Covered Entity boundary pursuant to 45 CFR § 164.514(c)." class="copy-clause-btn text-emerald-700 font-semibold hover:text-emerald-800 underline cursor-pointer">
+                Copy DPO Clause
+              </button>
+            </div>
+          </article>
+
+          <!-- 5. EU AI Act Article 10 -->
+          <article id="reg-eu-ai-act" data-region="eu" class="reg-card rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between shadow-xs hover:border-emerald-500/50 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-semibold">
+                  EU Regulation 2024/1689 &middot; Art. 10 &amp; Art. 15
+                </span>
+                <span class="font-mono text-xs text-slate-500">Invariant 1 &amp; Invariant 3</span>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-2">
+                5. EU AI Act Articles 10 &amp; 15 — Data Governance, RAG Hygiene &amp; Cybersecurity Resilience
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                The EU AI Act requires deployers and providers of high-risk and general-purpose AI integrations to enforce strict data governance (Article 10) and robustness against data poisoning or prompt-extraction attacks (Article 15). By sanitizing documents prior to vector embedding (`Pinecone`/`Qdrant`) and tool invocation (`MCP`), ZTDS physically prevents cross-tenant PII regurgitation and vector-store inversion leaks.
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-600">AI Governance Scope: <strong class="text-emerald-700">Pre-Embedding &amp; Pre-Prompt</strong></span>
+              <button type="button" data-copy-clause="Pursuant to EU AI Act Articles 10 and 15, all RAG ingestion pipelines and agentic MCP tool outputs undergo deterministic pre-egress ZTDS tokenization to prevent vector inversion and cross-tenant PII memorization." class="copy-clause-btn text-emerald-700 font-semibold hover:text-emerald-800 underline cursor-pointer">
+                Copy DPO Clause
+              </button>
+            </div>
+          </article>
+
+          <!-- 6. US FRE Rule 502(b) -->
+          <article id="reg-fre-502b" data-region="us" class="reg-card rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between shadow-xs hover:border-emerald-500/50 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-0.5 rounded bg-sky-50 border border-sky-200 text-sky-800 font-mono text-xs font-semibold">
+                  US Federal Rules of Evidence &middot; Rule 502(b) &amp; ABA Rule 1.6(c)
+                </span>
+                <span class="font-mono text-xs text-slate-500">Invariant 1 &amp; Invariant 2</span>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-2">
+                6. US FRE Rule 502(b) &amp; ABA Model Rule 1.6(c) — Attorney-Client Privilege Preservation
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                Submitting unredacted M&amp;A agreements, litigation briefs, or board minutes to external commercial AI models risks third-party privilege waiver under FRE Rule 502(b) and breaches of reasonable confidentiality efforts under ABA Formal Opinion 512. ZTDS strips party identities, docket references, and deal valuation figures in local memory before external LLM reasoning, preserving privilege over the underlying legal analysis.
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-600">Evidentiary Shield: <strong class="text-sky-700">Reasonable Technical Steps</strong></span>
+              <button type="button" data-copy-clause="In compliance with FRE Rule 502(b) and ABA Model Rule 1.6(c), privileged client identities, matter numbers, and transaction figures are tokenized in local volatile memory prior to external AI legal research or drafting." class="copy-clause-btn text-emerald-700 font-semibold hover:text-emerald-800 underline cursor-pointer">
+                Copy DPO Clause
+              </button>
+            </div>
+          </article>
+
+          <!-- 7. SOC 2 Type II & ISO 27701 -->
+          <article id="reg-soc2-iso27701" data-region="global" class="reg-card rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between shadow-xs hover:border-emerald-500/50 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-800 font-mono text-xs font-semibold">
+                  AICPA TSC CC6.1 / CC6.6 &middot; ISO/IEC 27701:2019
+                </span>
+                <span class="font-mono text-xs text-slate-500">Invariant 3 &amp; Invariant 4</span>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-2">
+                7. SOC 2 Type II (CC6.1 / CC6.6) &amp; ISO/IEC 27701 — Boundary Transmission Controls
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                SOC 2 Common Criteria CC6.6 requires logical boundary protection against unauthorized transmission of confidential data outside the system boundary, while ISO/IEC 27701 Clause 7.4 governs privacy by design and data minimization. Integrating `npx ztds-audit` into CI/CD pipelines (`ztds-audit.yml`) produces deterministic SHA-256 artifacts for external auditors verifying continuous boundary enforcement.
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-600">Audit Artifact: <strong class="text-amber-700">SHA-256 CI/CD Receipt</strong></span>
+              <button type="button" data-copy-clause="SOC 2 Type II CC6.6 and ISO/IEC 27701 boundary controls are enforced via deterministic pre-egress ZTDS sanitization and verified continuously in CI/CD via npx ztds-audit cryptographic receipts." class="copy-clause-btn text-emerald-700 font-semibold hover:text-emerald-800 underline cursor-pointer">
+                Copy DPO Clause
+              </button>
+            </div>
+          </article>
+
+          <!-- 8. CCPA / CPRA -->
+          <article id="reg-ccpa-cpra" data-region="us" class="reg-card rounded-2xl bg-white border border-slate-200 p-6 flex flex-col justify-between shadow-xs hover:border-emerald-500/50 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span class="px-2.5 py-0.5 rounded bg-sky-50 border border-sky-200 text-sky-800 font-mono text-xs font-semibold">
+                  Cal. Civ. Code &sect; 1798.140(m) &amp; &sect; 1798.140(v)
+                </span>
+                <span class="font-mono text-xs text-slate-500">Invariant 1 &amp; Invariant 4</span>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-2">
+                8. CCPA / CPRA — De-Identified Information Exclusion &amp; Third-Party Sharing Prevention
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                Under California Civil Code &sect; 1798.140(v)(2), "Personal Information" explicitly excludes de-identified consumer information where the business implements technical safeguards that prohibit re-identification by downstream recipients. Pre-egress ZTDS tokenization ensures that external AI API calls do not constitute unauthorized third-party sharing or disclosure of California consumer records.
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-600">Statutory Exclusion: <strong class="text-sky-700">Cal. Civ. Code &sect; 1798.140(m)</strong></span>
+              <button type="button" data-copy-clause="Pursuant to Cal. Civ. Code § 1798.140(m) and (v)(2), consumer identifiers are tokenized inside local volatile memory prior to external AI inference, with technical safeguards preventing downstream re-identification." class="copy-clause-btn text-emerald-700 font-semibold hover:text-emerald-800 underline cursor-pointer">
+                Copy DPO Clause
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Vendor Risk Questionnaire Responder (SIG Lite / CAIQ / VSAQ) -->
+    <section id="questionnaire-responder" class="py-14 border-b border-slate-200 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div class="max-w-3xl">
+            <span class="text-xs font-mono uppercase tracking-widest text-emerald-700 font-bold">Self-Serve Procurement Accelerator</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">
+              Interactive Vendor Risk Matrix (SIG Lite &middot; CSA CAIQ &middot; VSAQ)
+            </h2>
+            <p class="text-sm text-slate-600 mt-2">
+              Copy standardized, pre-verified architectural responses for enterprise security questionnaires. Designed to close infosec procurement reviews asynchronously without manual review delays.
+            </p>
+          </div>
+          <div>
+            <button
+              type="button"
+              id="copy-all-vsaq-btn"
+              class="btn-trust text-xs font-mono py-2.5 px-4 cursor-pointer"
+            >
+              Copy Full Questionnaire Matrix
+            </button>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <!-- Q1 -->
+          <div class="rounded-xl bg-slate-50 border border-slate-200 p-5">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <span class="font-mono text-xs text-emerald-800 font-semibold">SIG Lite: D.1.2 &middot; CSA CAIQ: DSP-01 &middot; VSAQ: Data Flow &amp; Egress</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono text-[11px] font-bold">STATUS: COMPLIANT (ZERO EGRESS)</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-base mb-2">
+              Does the vendor transmit, store, log, or process Customer PII/PHI/Secrets on vendor-controlled servers or cloud infrastructure?
+            </h3>
+            <p class="text-sm text-slate-200 font-mono bg-slate-900 p-3.5 rounded-lg border border-slate-800">
+              NO. The ZTDS-certified appliance operates as a 100% client-side or air-gapped in-memory runtime. Zero customer payloads, prompts, documents, or mapping tables ever egress to vendor servers. Outbound network calls from the sanitization engine are architecturally absent and verifiable via Airplane Mode inspection (`npx ztds-audit`).
+            </p>
+          </div>
+
+          <!-- Q2 -->
+          <div class="rounded-xl bg-slate-50 border border-slate-200 p-5">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <span class="font-mono text-xs text-emerald-800 font-semibold">SIG Lite: P.2.4 &middot; CSA CAIQ: STA-09 &middot; VSAQ: Subprocessors &amp; Fourth Parties</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono text-[11px] font-bold">STATUS: NOT APPLICABLE (0 SUBPROCESSORS)</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-base mb-2">
+              Provide a complete list of third-party subprocessors, cloud hosting providers, and external analytics services that access Customer Data.
+            </h3>
+            <p class="text-sm text-slate-200 font-mono bg-slate-900 p-3.5 rounded-lg border border-slate-800">
+              NONE (Zero Subprocessor Chain — ZTDS Invariant 4). Because the sanitization engine runs strictly within the Customer's own execution perimeter (browser WebAssembly sandbox, Node.js/Python container, or local MCP stdio process), there are zero third-party subprocessors, zero cloud storage buckets, and zero external telemetry trackers in the data path.
+            </p>
+          </div>
+
+          <!-- Q3 -->
+          <div class="rounded-xl bg-slate-50 border border-slate-200 p-5">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <span class="font-mono text-xs text-emerald-800 font-semibold">SIG Lite: K.3.1 &middot; CSA CAIQ: CEK-03 &middot; VSAQ: Key Management &amp; Zeroization</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-mono text-[11px] font-bold">STATUS: COMPLIANT (VOLATILE RAM ONLY)</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-base mb-2">
+              How are cryptographic keys and re-identification token mapping tables stored, isolated, and destroyed?
+            </h3>
+            <p class="text-sm text-slate-200 font-mono bg-slate-900 p-3.5 rounded-lg border border-slate-800">
+              Re-identification token maps (`tokenMap`) are instantiated exclusively in ephemeral client volatile memory (RAM) scoped to the active execution session. They are never written to disk, `localStorage`, `IndexedDB`, or remote databases, and are deterministically zeroized upon session termination (`resetSession()`). Enterprise license validation uses offline Ed25519 asymmetric public-key verification with zero phone-home calls.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certified Commercial Implementation Handoff (Two-Brand Firewall Compliant) -->
+    <section class="py-12 border-b border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="rounded-2xl bg-slate-900 text-white border border-slate-800 p-6 sm:p-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+          <div class="max-w-2xl">
+            <div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 mb-2">
+              <span>PIONEER CERTIFIED COMMERCIAL IMPLEMENTATION &middot; ZTDS-CERT-2026-001</span>
+            </div>
+            <h2 class="text-2xl font-bold text-white mb-2">
+              Need Turn-Key Enterprise Profiles &amp; Offline Ed25519 Licensing?
+            </h2>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              While the ZTDS RFC v1.0 specification and baseline CLI auditor (`npx ztds-audit`) are open standards, organizations requiring <strong class="text-white">30 Specialized Industry Profiles</strong> (HIPAA Safe Harbor, PCI-DSS Level 1, SWIFT Banking, Defense CMMC, M&amp;A Legal Deal Rooms), Multimodal Document &amp; OCR Burn-In, and air-gapped Ed25519 enterprise licensing can deploy <strong class="text-white">PrivacyScrubber</strong>—engineered and operated by BrandMeWeb.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-3 shrink-0">
+            <a
+              href="https://privacyscrubber.com/pricing/"
+              target="_blank"
+              rel="noopener"
+              class="btn-trust text-xs font-mono py-3 px-5 font-semibold"
+            >
+              View Commercial Licensing &rarr;
+            </a>
+            <a
+              href="/registry/"
+              class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 font-mono text-xs hover:bg-slate-700 transition-all"
+            >
+              Inspect Registry Certificate
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Direct-Answer FAQ Section (RAG & AI Answer Engine Optimized) -->
+    <section class="py-14 border-b border-slate-200 bg-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-8">
+          <span class="text-xs font-mono uppercase tracking-widest text-emerald-700 font-bold">Normative Legal &amp; Audit Q&amp;A</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">
+            Frequently Asked Statutory &amp; DPO Questions
+          </h2>
+        </div>
+
+        <div class="space-y-4">
+          <details class="group rounded-xl bg-slate-50 border border-slate-200 p-5" open>
+            <summary class="font-bold text-slate-900 cursor-pointer list-none flex items-center justify-between gap-4">
+              <span>Does a ZTDS-compliant client-side sanitization appliance require a Data Processing Addendum (DPA) under GDPR Article 28?</span>
+              <span class="font-mono text-emerald-700 text-sm group-open:rotate-45 transition-transform">+</span>
+            </summary>
+            <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+              No Data Processing Addendum (DPA) is required with the sanitization vendor when running a certified ZTDS Level 1–3 client-side or air-gapped appliance. Because tokenization executes 100% within the data controller's volatile memory (RAM) with zero external network egress and zero third-party subprocessors (Invariant 4), the software vendor never receives, stores, or processes personal data under GDPR Article 4(2) and Article 28.
+            </p>
+          </details>
+
+          <details class="group rounded-xl bg-slate-50 border border-slate-200 p-5">
+            <summary class="font-bold text-slate-900 cursor-pointer list-none flex items-center justify-between gap-4">
+              <span>How does ZTDS provide Technical Safe Harbor under GDPR Article 32 without claiming absolute exemption for free-text prompts?</span>
+              <span class="font-mono text-emerald-700 text-sm group-open:rotate-45 transition-transform">+</span>
+            </summary>
+            <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+              ZTDS operates under a strict Statutory Risk Minimization and Defense-in-Depth model. While free-text narrative prompts can theoretically contain contextual quasi-identifiers, ZTDS establishes GDPR Article 32 Technical Safe Harbor through three verifiable layers: (1) 100% Direct PII Zero-Egress via client RAM tokenization before any network socket call, (2) Contextual Entropy Reduction using specialized industry profiles, and (3) Cryptographic SHA-256 Compliance Receipts that provide Data Protection Officers (DPOs) and CISOs with auditable proof of state-of-the-art technical due diligence.
+            </p>
+          </details>
+
+          <details class="group rounded-xl bg-slate-50 border border-slate-200 p-5">
+            <summary class="font-bold text-slate-900 cursor-pointer list-none flex items-center justify-between gap-4">
+              <span>How does ZTDS satisfy HIPAA Safe Harbor De-Identification under 45 CFR &sect; 164.514(b)(2) for clinical AI workflows?</span>
+              <span class="font-mono text-emerald-700 text-sm group-open:rotate-45 transition-transform">+</span>
+            </summary>
+            <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+              Under HIPAA 45 CFR &sect; 164.514(b)(2), health information is de-identified when all 18 specified direct and temporal identifiers are removed prior to external transmission, and the covered entity has no actual knowledge that the residual information can identify an individual. ZTDS clinical profiles intercept and replace all 18 identifier categories with deterministic syntactic tokens inside the covered entity's clinical perimeter before invoking external LLMs, keeping the private re-identification key strictly on-premise under 45 CFR &sect; 164.514(c).
+            </p>
+          </details>
+
+          <details class="group rounded-xl bg-slate-50 border border-slate-200 p-5">
+            <summary class="font-bold text-slate-900 cursor-pointer list-none flex items-center justify-between gap-4">
+              <span>How does pre-egress tokenization prevent inadvertent waiver of attorney-client privilege under US Federal Rules of Evidence Rule 502(b)?</span>
+              <span class="font-mono text-emerald-700 text-sm group-open:rotate-45 transition-transform">+</span>
+            </summary>
+            <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+              Under US Federal Rules of Evidence Rule 502(b), a disclosure does not operate as a privilege waiver if the holder took reasonable steps to prevent disclosure of privileged identifiers. Deploying deterministic client-side tokenization to strip client names, matter numbers, opposing counsel identities, and financial figures prior to external LLM analysis constitutes demonstrable, state-of-the-art technical precautions that preserve work-product confidentiality.
+            </p>
+          </details>
+
+          <details class="group rounded-xl bg-slate-50 border border-slate-200 p-5">
+            <summary class="font-bold text-slate-900 cursor-pointer list-none flex items-center justify-between gap-4">
+              <span>How should security teams answer SIG Lite, CSA CAIQ, and VSAQ vendor risk questionnaires for a ZTDS appliance?</span>
+              <span class="font-mono text-emerald-700 text-sm group-open:rotate-45 transition-transform">+</span>
+            </summary>
+            <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+              For ZTDS-certified local appliances, subprocessor, cloud data residency, and data-at-rest encryption questions are answered as "Not Applicable — Zero Data Egress Architecture (Client-Side Volatile RAM Only)." Cryptographic verification is evidenced via offline Ed25519 signature validation and local SHA-256 compliance receipts generated by <code>npx ztds-audit</code>.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 5-Column Institutional Light Footer -->
+  <footer class="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-12 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10 pb-12 border-b border-slate-100">
+        <!-- Col 1: Brand & Consortium -->
+        <div class="space-y-4 sm:col-span-2 md:col-span-1">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 aspect-square p-0.5 overflow-hidden">
+              <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none" aria-hidden="true">
+                <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+                <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+              </svg>
+            </div>
+            <span class="font-bold text-slate-900 text-lg font-sans">ZTDS<span class="text-emerald-600">.ai</span></span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            The open industry standard and conformance authority for zero-trust data sanitization in enterprise AI pipelines.
+          </p>
+          <div class="text-xs text-slate-500 leading-relaxed border-t border-slate-100 pt-3">
+            Originated by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">Ilya Sibiryakov</a>.<br>
+            Stewarded by the <span class="font-semibold text-slate-700">ZTDS AI Consortium</span> as an open specification. Engineering sponsored by <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">BrandMeWeb</a>.
+          </div>
+        </div>
+
+        <!-- Col 2: Specification & RFC -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
+            <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track (draft-02)</a></li>
+            <li><a href="/compliance/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Global Regulatory Compliance Matrix &rarr;</a></li>
+            <li><a href="/benchmarks/" class="hover:text-slate-900 transition-colors">AI Safety &amp; Latency Benchmarks</a></li>
+            <li><a href="/whitepaper/" class="hover:text-slate-900 transition-colors">Research Whitepaper (DOIs)</a></li>
+            <li><a href="/evidentiary-sovereignty/" class="hover:text-slate-900 transition-colors">Evidentiary Sovereignty</a></li>
+            <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO Procurement &amp; Safe Harbor Pack</a></li>
+            <li><a href="/ciso/memo/" class="hover:text-slate-900 transition-colors">1-Page CISO Executive Memo</a></li>
+            <li><a href="/roi/" class="hover:text-slate-900 transition-colors">CISO Risk &amp; ROI Calculator</a></li>
+            <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Architecture & Tools -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+            <li><a href="/blueprints/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">10 AI &amp; RAG Blueprints &rarr;</a></li>
+            <li><a href="/mcp/" class="hover:text-slate-900 transition-colors">Model Context Protocol (MCP)</a></li>
+            <li><a href="/inspector/" class="hover:text-slate-900 transition-colors">Interactive Pipeline Simulator</a></li>
+            <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
+            <li><a href="/verify/" class="hover:text-slate-900 transition-colors">Ed25519 Certificate Validator</a></li>
+            <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge &amp; Seal Foundry</a></li>
+            <li><a href="/registry/#privacyscrubber" class="hover:text-slate-900 transition-colors">Reference Implementations &rarr;</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Consortium & Governance -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/certification/" class="hover:text-slate-900 transition-colors">Certification Authority</a></li>
+            <li><a href="/soc2/" class="hover:text-slate-900 transition-colors">SOC 2 &amp; Trust Center</a></li>
+            <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Governance &amp; Charter</a></li>
+            <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
+            <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
+            <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 5: Community & Verified -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
+            <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
+            <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+            <li><a href="/case-studies/" class="hover:text-slate-900 transition-colors">Enterprise Case Studies</a></li>
+            <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
+            <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
+            <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Legal Conformance Notice Card -->
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
+          <span class="text-slate-400 font-mono text-[10px]">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
+        </div>
+        <p>
+          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. &sect; 119 Priority). The word mark <strong>ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
+        </p>
+      </div>
+
+      <!-- Bottom Meta Bar -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 border-t border-slate-100 pt-6">
+        <div class="flex items-center gap-3">
+          <span>&copy; 2026 ZTDS AI Consortium.</span>
+          <span>&middot;</span>
+          <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
+        </div>
+        <div class="flex items-center gap-4 text-[11px] font-mono">
+          <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            ALL SYSTEMS VERIFIED
+          </span>
+          <span>&middot;</span>
+          <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x4E9A2B1C</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+  <script>
+    (function () {
+      var filterBtns = document.querySelectorAll('.reg-filter-btn');
+      var cards = document.querySelectorAll('.reg-card');
+      filterBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var region = btn.getAttribute('data-reg-filter');
+          filterBtns.forEach(function (b) {
+            b.className =
+              'reg-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-all';
+          });
+          btn.className =
+            'reg-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900 text-white font-semibold cursor-pointer transition-all';
+          cards.forEach(function (card) {
+            if (region === 'all' || card.getAttribute('data-region') === region) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      var copyBtns = document.querySelectorAll('.copy-clause-btn');
+      copyBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var clause = btn.getAttribute('data-copy-clause');
+          if (!clause || !navigator.clipboard) return;
+          navigator.clipboard.writeText(clause).then(function () {
+            var orig = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(function () {
+              btn.textContent = orig;
+            }, 1800);
+          });
+        });
+      });
+
+      var copyAllBtn = document.getElementById('copy-all-vsaq-btn');
+      if (copyAllBtn) {
+        copyAllBtn.addEventListener('click', function () {
+          var matrixText = [
+            'ZTDS RFC v1.0 — VENDOR RISK QUESTIONNAIRE RESPONSES (SIG Lite / CSA CAIQ / VSAQ)',
+            '1. Data Egress & Storage (SIG Lite D.1.2 / CAIQ DSP-01): NO. 100% client-side volatile RAM execution. Zero payloads or mapping tables egress to vendor servers.',
+            '2. Subprocessors (SIG Lite P.2.4 / CAIQ STA-09): NONE (0 Subprocessors — ZTDS Invariant 4). No third-party cloud or analytics in the data path.',
+            '3. Key & Token Map Isolation (SIG Lite K.3.1 / CAIQ CEK-03): Ephemeral client volatile RAM only; zeroized on session close via resetSession(). Offline Ed25519 license verification.'
+          ].join('\n\n');
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(matrixText).then(function () {
+              var orig = copyAllBtn.textContent;
+              copyAllBtn.textContent = 'Copied Full Matrix!';
+              setTimeout(function () {
+                copyAllBtn.textContent = orig;
+              }, 1800);
+            });
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

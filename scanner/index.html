@@ -22,52 +22,97 @@
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "TechArticle",
-        "@id": "https://ztds.ai/scanner/#article",
-        "headline": "ZTDS Perimeter Scanner & Network Socket Interceptor",
-        "description": "Real-time zero-trust socket interceptor, Airplane Mode audit protocol, and in-browser code linter for Invariant 1 (Zero-Egress) verification.",
-        "url": "https://ztds.ai/scanner/",
-        "datePublished": "2026-09-15",
-        "dateModified": "2026-09-21",
-        "inLanguage": "en-US",
-        "isPartOf": { "@id": "https://ztds.ai/#website" },
-        "author": {
-          "@type": "Person",
-          "name": "Ilya Sibiryakov",
-          "url": "https://orcid.org/0009-0002-0642-5985",
-          "sameAs": "https://www.linkedin.com/in/ilya-sibiryakov/"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "ZTDS AI Consortium",
-          "url": "https://ztds.ai"
-        },
-        "about": ["Zero-Trust Architecture", "Network Egress Inspection", "Airplane Mode Audit", "In-RAM Data Sanitization"]
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://ztds.ai/scanner/#article",
+      "headline": "ZTDS Perimeter Scanner & Network Socket Interceptor",
+      "description": "Real-time zero-trust socket interceptor, Airplane Mode audit protocol, and in-browser code linter for Invariant 1 (Zero-Egress) verification.",
+      "url": "https://ztds.ai/scanner/",
+      "datePublished": "2026-09-15",
+      "dateModified": "2026-09-21",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
       },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://ztds.ai/scanner/#breadcrumbs",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://ztds.ai/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Perimeter Scanner",
-            "item": "https://ztds.ai/scanner/"
+      "author": {
+        "@type": "Person",
+        "name": "Ilya Sibiryakov",
+        "url": "https://orcid.org/0009-0002-0642-5985",
+        "sameAs": "https://www.linkedin.com/in/ilya-sibiryakov/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai"
+      },
+      "about": [
+        "Zero-Trust Architecture",
+        "Network Egress Inspection",
+        "Airplane Mode Audit",
+        "In-RAM Data Sanitization"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ztds.ai/scanner/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ztds.ai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Perimeter Scanner",
+          "item": "https://ztds.ai/scanner/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ztds.ai/scanner/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does the ZTDS Perimeter Scanner audit web domains and AI endpoints without storing sensitive data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The ZTDS Perimeter Scanner evaluates DNS records, Content Security Policy (CSP) headers, third-party analytics sinkholes, and client-side AI intake forms strictly inside volatile memory. No customer prompts or payload bodies are persisted to disk, and local codebase linting executes 100% offline via npx ztds-audit --strict."
           }
-        ]
-      }
-    ]
-  }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Airplane Mode Audit Protocol in ZTDS RFC v1.0?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Airplane Mode Audit Protocol is an empirical verification procedure where an engineer loads a ZTDS-compliant sanitizer, disconnects the physical network interface (or enables Airplane Mode), and executes PII tokenization and bijective restoration. Full functionality with zero network errors proves 0.00 bytes of external cloud dependence."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the 4 network leak emulation presets in the ZTDS Scanner?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The scanner includes four deterministic socket inspection presets: (1) Frontier AI API Call (detecting unmasked PII sent to LLM endpoints), (2) Analytics Tracker Beacon, (3) Unprotected HTTP Egress, and (4) Zero-Trust Sanitized Stream (verifying that only bracketed surrogate tokens cross the network socket)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can the ZTDS Scanner generate an audit report for CISO and DPO procurement reviews?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Every domain or payload scan can export a print-ready A4 CISO Compliance Audit Report and Markdown dossier documenting GDPR Article 28 subprocessor path elimination, GDPR Article 32 technical safe harbor controls, and SHA-256 verification receipts."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
   <style>
     @media print {
@@ -205,24 +250,35 @@
     </div>
 
     <div class="py-4 space-y-1 text-sm font-medium">
-      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Standard</div>
-      <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
-      <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
+      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
       <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
-      <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper</a>
+      <a href="/ietf/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">IETF Standards Track (draft-02)</a>
+      <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
+      <a href="/blueprints/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">10 AI &amp; RAG Blueprints</a>
+      <a href="/compliance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Global Regulatory Compliance Matrix</a>
+      <a href="/benchmarks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">AI Safety &amp; Latency Benchmarks</a>
+      <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper (DOIs)</a>
+      <a href="/evidentiary-sovereignty/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Evidentiary Sovereignty</a>
       <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
+      <a href="/ciso/memo/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">1-Page CISO Safe Harbor Memo</a>
       <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
       <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 &amp; Trust Center</a>
 
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
+      <a href="/certification/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Certification Authority</a>
+      <a href="/verify/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Ed25519 Certificate Validator</a>
+      <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
+      <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
+      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Member Pool</a>
+      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows Council</a>
+      <a href="/case-studies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Enterprise Case Studies</a>
+      <a href="/agency/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">BrandMeWeb Enterprise Retainer</a>
+
       <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
       <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
-      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-emerald-700 bg-emerald-50 font-semibold">Perimeter Scanner</a>
-      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive Inspector</a>
+      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
+      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive DAG Inspector</a>
       <a href="/badge/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Badge Generator</a>
-
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Consortium</div>
-      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Members</a>
-      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows</a>
       <a href="/governance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Governance &amp; Charter</a>
       <a href="/security/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Security &amp; CVD</a>
     </div>
@@ -277,28 +333,28 @@
 
     <!-- AUDITOR MODE NAVIGATION TABS (PROGRESSIVE DISCLOSURE) -->
     <div class="mb-10 max-w-4xl mx-auto sticky top-16 z-30 py-2 bg-slate-50/95 backdrop-blur-md" id="auditorModeTabsContainer">
-      <div class="bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap sm:flex-nowrap items-center justify-between gap-1">
-        <button type="button" class="auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-semibold transition-all text-center flex items-center justify-center gap-1.5 bg-slate-900 text-white shadow-xs border border-slate-900" data-mode="mode0-domain-scanner">
+      <div class="bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap lg:flex-nowrap items-center justify-between gap-1" role="tablist" aria-label="Scanner Modes">
+        <button type="button" role="tab" aria-selected="true" class="auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-semibold transition-all text-center flex items-center justify-center gap-1.5 bg-slate-900 text-white shadow-xs border border-slate-900" data-mode="mode0-domain-scanner">
           <span class="auditor-mode-dot w-2 h-2 rounded-full bg-emerald-400"></span>
           <span>Domain Perimeter</span>
         </button>
-        <button type="button" class="auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900" data-mode="mode1-socket-interceptor">
+        <button type="button" role="tab" aria-selected="false" class="auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900" data-mode="mode1-socket-interceptor">
           <span class="auditor-mode-dot w-2 h-2 rounded-full bg-slate-300"></span>
           <span>Socket Interceptor</span>
         </button>
-        <button type="button" class="auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900" data-mode="mode2-static-linter">
+        <button type="button" role="tab" aria-selected="false" class="auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900" data-mode="mode2-static-linter">
           <span class="auditor-mode-dot w-2 h-2 rounded-full bg-slate-300"></span>
           <span>AST Code Linter</span>
         </button>
-        <button type="button" class="auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900" data-mode="mode3-airplane-protocol">
+        <button type="button" role="tab" aria-selected="false" class="auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900" data-mode="mode3-airplane-protocol">
           <span class="auditor-mode-dot w-2 h-2 rounded-full bg-slate-300"></span>
           <span>Airplane Protocol</span>
         </button>
-        <button type="button" class="auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900" data-mode="mode4-cicd-workbench">
+        <button type="button" role="tab" aria-selected="false" class="auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900" data-mode="mode4-cicd-workbench">
           <span class="auditor-mode-dot w-2 h-2 rounded-full bg-slate-300"></span>
           <span>CLI &amp; CI/CD</span>
         </button>
-        <button type="button" class="auditor-mode-tab py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-900 shrink-0" data-mode="all" title="View all scanner modes simultaneously">
+        <button type="button" role="tab" aria-selected="false" class="auditor-mode-tab py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-900 shrink-0" data-mode="all" title="View all scanner modes simultaneously">
           <span>Unified View</span>
         </button>
       </div>
@@ -333,10 +389,10 @@
         <!-- Input Bar -->
         <form id="mode0ScanForm" class="scanner-hero-bar p-1.5 flex flex-col sm:flex-row items-center gap-2 mb-4">
           <div class="flex items-center gap-2.5 px-3 py-2 w-full">
-            <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
             </svg>
-            <input id="mode0DomainInput" type="text" placeholder="Enter domain to scan (e.g. app.yourcompany.com)..." class="w-full text-sm font-medium text-slate-900 placeholder:text-slate-400 bg-transparent focus:outline-none font-sans" required autocomplete="off" spellcheck="false" />
+            <input id="mode0DomainInput" type="text" aria-label="Enter domain to scan" placeholder="Enter domain to scan (e.g. app.yourcompany.com)..." class="w-full text-base sm:text-sm font-medium text-slate-900 placeholder:text-slate-400 bg-transparent focus:outline-none font-sans" required autocomplete="off" spellcheck="false" />
           </div>
           <button id="mode0ScanSubmitBtn" type="submit" class="btn-trust w-full sm:w-auto text-xs py-3 px-6 whitespace-nowrap shadow-sm flex items-center justify-center gap-2 shrink-0 font-semibold">
             <span id="mode0BtnText">Execute Perimeter Audit &rarr;</span>
@@ -389,11 +445,11 @@
           <!-- Controls: Airplane Switch & Presets -->
           <div class="flex flex-wrap items-center gap-3">
             <!-- Tactile Airplane Simulator Toggle -->
-            <div class="flex items-center gap-2 bg-slate-950/80 border border-slate-700 px-3 py-2 rounded-xl">
+            <div class="flex items-center gap-2 bg-slate-950/80 border border-slate-700 px-3 py-2 min-h-[44px] rounded-xl">
               <span class="text-xs font-mono font-semibold text-slate-300 select-none">
                 Airplane Mode Sim:
               </span>
-              <button id="btnToggleAirplane" type="button" role="switch" aria-checked="false" aria-label="Toggle Airplane Mode Simulator" class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-slate-700">
+              <button id="btnToggleAirplane" type="button" role="switch" aria-checked="false" aria-label="Toggle Airplane Mode Simulator" class="relative inline-flex h-[20px] w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-slate-700">
                 <span id="toggleAirplaneDot" class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0"></span>
               </button>
               <span id="airplaneStatusLabel" class="text-[11px] font-mono text-slate-400 font-bold">ONLINE</span>
@@ -438,7 +494,7 @@
                   <button id="btnResetScanner" type="button" class="text-[11px] font-mono text-slate-400 hover:text-slate-200 underline cursor-pointer">Clear</button>
                 </div>
               </div>
-              <textarea id="scannerInputText" rows="6" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-500 resize-none leading-relaxed transition-colors" placeholder="Paste prompt with sensitive PII, PHI, or secrets..."></textarea>
+              <textarea id="scannerInputText" rows="6" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-base sm:text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-500 resize-none leading-relaxed transition-colors" placeholder="Paste prompt with sensitive PII, PHI, or secrets..."></textarea>
 
               <!-- Live Entity Detection Pill Strip -->
               <div class="mt-3 flex flex-wrap items-center gap-1.5" id="scannerEntityPills">
@@ -515,7 +571,7 @@
                 <div class="flex items-center gap-2">
                   <button id="tabBtnSurrogates" type="button" class="text-xs font-mono font-bold px-2.5 py-1 rounded bg-slate-800 text-emerald-400 border border-slate-700">Surrogate Stream</button>
                   <button id="tabBtnRoundtrip" type="button" class="text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors">LLM Response &amp; Restore</button>
-                  <button id="tabBtnSessionMap" type="button" class="text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors">Volatile Token Map</button>
+                  <button id="tabBtnTokenMap" type="button" class="text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors">Volatile Token Map</button>
                 </div>
                 <span id="scannerLatencyMeter" class="text-[11px] font-mono text-emerald-400 font-bold">&lt; 0.18 ms (RAM)</span>
               </div>
@@ -549,7 +605,7 @@
               </div>
 
               <!-- Tab Panel 3: Ephemeral Token Map -->
-              <div id="tabPanelSessionMap" class="hidden">
+              <div id="tabPanelTokenMap" class="hidden">
                 <div class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-xs font-mono text-slate-200 h-[155px] overflow-y-auto leading-relaxed">
                   <div class="text-[10px] text-slate-400 mb-2">In-RAM Bijective Hash Table (Discarded on Page Close, 0 Disk Writes):</div>
                   <pre id="tokenMapDisplay" class="text-[11px] text-sky-300 font-mono whitespace-pre-wrap overflow-x-auto">{}</pre>
@@ -690,7 +746,7 @@
                 </button>
               </div>
             </div>
-            <textarea id="linterCodeInput" rows="13" class="w-full bg-slate-900 text-slate-200 font-mono text-xs p-4 rounded-xl border border-slate-800 focus:outline-none focus:border-emerald-500 leading-relaxed resize-none"></textarea>
+            <textarea id="linterCodeInput" rows="13" class="w-full bg-slate-900 text-slate-200 font-mono text-base sm:text-xs p-4 rounded-xl border border-slate-800 focus:outline-none focus:border-emerald-500 leading-relaxed resize-none"></textarea>
             
             <div class="flex items-center justify-between pt-2">
               <button id="btnRunCodeLinter" type="button" class="btn-trust text-xs py-2 px-4 shadow-sm font-semibold">
@@ -906,12 +962,63 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
       </div>
     </section>
 
+  
+    <!-- DIRECT ANSWER FAQ SECTION (GEO & RAG CITATION OPTIMIZED) -->
+    <section id="faq" class="py-12 lg:py-16 border-t border-slate-200 bg-slate-50/60">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-8">
+          <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Direct Answer Knowledge Base</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">Perimeter Scanner &amp; Zero-Egress Verification FAQ</h2>
+        </div>
+        <div class="space-y-3.5">
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs" open>
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>How does the ZTDS Perimeter Scanner audit web domains and AI endpoints without storing sensitive data?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              The ZTDS Perimeter Scanner evaluates DNS records, Content Security Policy (CSP) headers, third-party analytics sinkholes, and client-side AI intake forms strictly inside volatile memory. No customer prompts or payload bodies are persisted to disk, and local codebase linting executes 100% offline via npx ztds-audit --strict.
+            </div>
+          </details>
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>What is the Airplane Mode Audit Protocol in ZTDS RFC v1.0?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              The Airplane Mode Audit Protocol is an empirical verification procedure where an engineer loads a ZTDS-compliant sanitizer, disconnects the physical network interface (or enables Airplane Mode), and executes PII tokenization and bijective restoration. Full functionality with zero network errors proves 0.00 bytes of external cloud dependence.
+            </div>
+          </details>
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>What are the 4 network leak emulation presets in the ZTDS Scanner?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              The scanner includes four deterministic socket inspection presets: (1) Frontier AI API Call (detecting unmasked PII sent to LLM endpoints), (2) Analytics Tracker Beacon, (3) Unprotected HTTP Egress, and (4) Zero-Trust Sanitized Stream (verifying that only bracketed surrogate tokens cross the network socket).
+            </div>
+          </details>
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>Can the ZTDS Scanner generate an audit report for CISO and DPO procurement reviews?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Yes. Every domain or payload scan can export a print-ready A4 CISO Compliance Audit Report and Markdown dossier documenting GDPR Article 28 subprocessor path elimination, GDPR Article 32 technical safe harbor controls, and SHA-256 verification receipts.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- 5-Column Institutional Light Footer -->
   <footer class="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-12 text-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10 pb-12 border-b border-slate-100">
         <!-- Col 1: Brand & Consortium -->
         <div class="space-y-4 sm:col-span-2 md:col-span-1">
@@ -940,11 +1047,13 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
           <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
-            <li><a href="/whitepaper/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Research Whitepaper &rarr;</a></li>
+            <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track (draft-02)</a></li>
+            <li><a href="/benchmarks/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">AI Safety &amp; Latency Benchmarks &rarr;</a></li>
+            <li><a href="/whitepaper/" class="hover:text-slate-900 transition-colors">Research Whitepaper (DOIs)</a></li>
+            <li><a href="/evidentiary-sovereignty/" class="hover:text-slate-900 transition-colors">Evidentiary Sovereignty</a></li>
             <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO Procurement &amp; Safe Harbor Pack</a></li>
+            <li><a href="/ciso/memo/" class="hover:text-slate-900 transition-colors">1-Page CISO Executive Memo</a></li>
             <li><a href="/roi/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">CISO Risk &amp; ROI Calculator &rarr;</a></li>
-            <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
-            <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">OSF Latency Benchmarks</a></li>
             <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
           </ul>
         </div>
@@ -954,8 +1063,10 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
           <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+            <li><a href="/mcp/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Model Context Protocol (MCP) &rarr;</a></li>
             <li><a href="/inspector/" class="hover:text-slate-900 transition-colors">Interactive Pipeline Simulator</a></li>
             <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
+            <li><a href="/verify/" class="hover:text-slate-900 transition-colors">Ed25519 Certificate Validator</a></li>
             <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge &amp; Seal Foundry</a></li>
             <li><a href="/registry/#privacyscrubber" class="hover:text-slate-900 transition-colors">Reference Implementations &rarr;</a></li>
           </ul>
@@ -965,6 +1076,7 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
         <div>
           <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
           <ul class="space-y-2.5 text-xs">
+            <li><a href="/certification/" class="hover:text-slate-900 transition-colors">Certification Authority</a></li>
             <li><a href="/soc2/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">SOC 2 &amp; Trust Center &rarr;</a></li>
             <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Governance &amp; Charter</a></li>
             <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
@@ -981,6 +1093,7 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
             <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
             <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
             <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+            <li><a href="/case-studies/" class="hover:text-slate-900 transition-colors">Enterprise Case Studies</a></li>
             <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
             <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
             <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
@@ -992,10 +1105,10 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
       <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
           <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
-          <span class="text-slate-400 font-mono text-[10px]">U.S. & Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS™ #182655957</span>
+          <span class="text-slate-400 font-mono text-[10px]">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
         </div>
         <p>
-          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. § 119 Priority, locked through 14/09/2027). The word mark <strong>ZTDS™</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
+          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. &sect; 119 Priority). The word mark <strong>ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
         </p>
       </div>
 
@@ -1015,7 +1128,6 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
           <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x4E9A2B1C</a>
         </div>
       </div>
-
     </div>
   </footer>
 
@@ -1030,7 +1142,7 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
     let isAirplaneActive = false;
     let packetLogCount = 0;
     let latestReceiptJson = null;
-    let currentSessionMap = {};
+    let currentTokenMap = {};
     let lastSanitizedText = "";
     let lastSimulatedResponse = "";
     let packetHistoryLog = [];
@@ -1249,10 +1361,10 @@ async function ingestDocument(patientDoc: string) {
     // Tab buttons & panels
     const tabBtnSurrogates = document.getElementById('tabBtnSurrogates');
     const tabBtnRoundtrip = document.getElementById('tabBtnRoundtrip');
-    const tabBtnSessionMap = document.getElementById('tabBtnSessionMap');
+    const tabBtnTokenMap = document.getElementById('tabBtnTokenMap');
     const tabPanelSurrogates = document.getElementById('tabPanelSurrogates');
     const tabPanelRoundtrip = document.getElementById('tabPanelRoundtrip');
-    const tabPanelSessionMap = document.getElementById('tabPanelSessionMap');
+    const tabPanelTokenMap = document.getElementById('tabPanelTokenMap');
     const simulatedLlmResponseText = document.getElementById('simulatedLlmResponseText');
     const restoredCleartextDisplay = document.getElementById('restoredCleartextDisplay');
     const tokenMapDisplay = document.getElementById('tokenMapDisplay');
@@ -1327,7 +1439,7 @@ async function ingestDocument(patientDoc: string) {
       const startTime = performance.now();
       
       let sanitized = text;
-      const sessionMap = {}; // token -> cleartext
+      const tokenMap = {}; // token -> cleartext
       const clearToToken = {}; // cleartext -> token
       const categoryCounters = {};
       const entityCategoryCounts = {};
@@ -1339,7 +1451,7 @@ async function ingestDocument(patientDoc: string) {
         categoryCounters[prefix] = (categoryCounters[prefix] || 0) + 1;
         const token = `[${prefix}_${categoryCounters[prefix]}]`;
         clearToToken[cleartext] = token;
-        sessionMap[token] = cleartext;
+        tokenMap[token] = cleartext;
         entityCategoryCounts[prefix] = (entityCategoryCounts[prefix] || 0) + 1;
         return token;
       }
@@ -1456,9 +1568,9 @@ async function ingestDocument(patientDoc: string) {
       });
 
       const duration = (performance.now() - startTime).toFixed(2);
-      const totalEntities = Object.keys(sessionMap).length;
+      const totalEntities = Object.keys(tokenMap).length;
 
-      return { sanitized, sessionMap, duration, totalEntities, entityCategoryCounts };
+      return { sanitized, tokenMap, duration, totalEntities, entityCategoryCounts };
     }
 
     // Format HTML Tokens for visualization
@@ -1519,7 +1631,7 @@ async function ingestDocument(patientDoc: string) {
 
       const result = await sanitizeInRAM(raw);
       lastSanitizedText = result.sanitized;
-      currentSessionMap = result.sessionMap;
+      currentTokenMap = result.tokenMap;
 
       if (outputTokens) outputTokens.innerHTML = renderHighlightedTokens(result.sanitized);
       if (latencyMeter) latencyMeter.innerText = `${result.duration} ms (RAM)`;
@@ -1551,22 +1663,22 @@ async function ingestDocument(patientDoc: string) {
       }
 
       // Simulate remote LLM answering with surrogate tokens
-      const activeSurrogateKeys = Object.keys(currentSessionMap);
+      const activeSurrogateKeys = Object.keys(currentTokenMap);
       lastSimulatedResponse = `Analysis confirmed. Processed records for ${activeSurrogateKeys.slice(0, 2).join(' and ') || '[ENTITY_1]'}. All authorization parameters verified successfully.`;
       if (simulatedLlmResponseText) simulatedLlmResponseText.innerText = lastSimulatedResponse;
 
       // In-RAM De-anonymization (Invariant 2)
-      const reversal = restoreCleartextInRAM(lastSimulatedResponse, currentSessionMap);
+      const reversal = restoreCleartextInRAM(lastSimulatedResponse, currentTokenMap);
       if (restoredCleartextDisplay) restoredCleartextDisplay.innerText = reversal.restored;
       if (reversalLatencyMeter) reversalLatencyMeter.innerText = `${reversal.duration} ms (RAM)`;
 
       // Session map viewer
-      if (tokenMapDisplay) tokenMapDisplay.innerText = JSON.stringify(currentSessionMap, null, 2);
+      if (tokenMapDisplay) tokenMapDisplay.innerText = JSON.stringify(currentTokenMap, null, 2);
 
       // Generate Cryptographic SHA-256 Digest & Audit Receipt
       const inputDigest = await computeSha256(raw);
       const sanitizedDigest = await computeSha256(result.sanitized);
-      const tokenMapDigest = await computeSha256(JSON.stringify(currentSessionMap));
+      const tokenMapDigest = await computeSha256(JSON.stringify(currentTokenMap));
       const auditDigest = await computeSha256(`${inputDigest}:${sanitizedDigest}:${tokenMapDigest}`);
 
       if (auditDigestEl) auditDigestEl.innerText = `sha256:${auditDigest.slice(0, 16)}...`;
@@ -1703,7 +1815,7 @@ async function ingestDocument(patientDoc: string) {
           sanitized_chars: lastSanitizedText ? lastSanitizedText.length : 0,
           sanitized_bytes: lastSanitizedText ? new TextEncoder().encode(lastSanitizedText).length : 0,
           sanitization_latency_ms: 0.16,
-          entities_masked_count: currentSessionMap ? Object.keys(currentSessionMap).length : 0,
+          entities_masked_count: currentTokenMap ? Object.keys(currentTokenMap).length : 0,
           entities_breakdown: {}
         }
       };
@@ -2188,8 +2300,8 @@ fi`
       // Copy Token Map Button
       if (btnCopyTokenMap) {
         btnCopyTokenMap.addEventListener('click', () => {
-          if (!currentSessionMap) return;
-          const mapJson = JSON.stringify(currentSessionMap, null, 2);
+          if (!currentTokenMap) return;
+          const mapJson = JSON.stringify(currentTokenMap, null, 2);
           if (typeof window.ztdsCopy === 'function') {
             window.ztdsCopy(mapJson, () => {
               const origText = btnCopyTokenMap.innerText;
@@ -2209,7 +2321,7 @@ fi`
         inputText.value = '';
         inputLength.innerText = '0 chars (0 B)';
         lastSanitizedText = '';
-        currentSessionMap = {};
+        currentTokenMap = {};
         outputTokens.innerHTML = '<span class="text-slate-500 italic">Surrogate tokens will appear here after in-RAM sanitization...</span>';
         tokenMapDisplay.innerText = '{}';
         simulatedLlmResponseText.innerText = 'Buffer cleared.';
@@ -2266,26 +2378,26 @@ fi`
       tabBtnSurrogates.addEventListener('click', () => {
         tabBtnSurrogates.className = "text-xs font-mono font-bold px-2.5 py-1 rounded bg-slate-800 text-emerald-400 border border-slate-700";
         tabBtnRoundtrip.className = "text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors";
-        tabBtnSessionMap.className = "text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors";
+        tabBtnTokenMap.className = "text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors";
         tabPanelSurrogates.classList.remove('hidden');
         tabPanelRoundtrip.classList.add('hidden');
-        tabPanelSessionMap.classList.add('hidden');
+        tabPanelTokenMap.classList.add('hidden');
       });
 
       tabBtnRoundtrip.addEventListener('click', () => {
         tabBtnRoundtrip.className = "text-xs font-mono font-bold px-2.5 py-1 rounded bg-slate-800 text-emerald-400 border border-slate-700";
         tabBtnSurrogates.className = "text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors";
-        tabBtnSessionMap.className = "text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors";
+        tabBtnTokenMap.className = "text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors";
         tabPanelRoundtrip.classList.remove('hidden');
         tabPanelSurrogates.classList.add('hidden');
-        tabPanelSessionMap.classList.add('hidden');
+        tabPanelTokenMap.classList.add('hidden');
       });
 
-      tabBtnSessionMap.addEventListener('click', () => {
-        tabBtnSessionMap.className = "text-xs font-mono font-bold px-2.5 py-1 rounded bg-slate-800 text-emerald-400 border border-slate-700";
+      tabBtnTokenMap.addEventListener('click', () => {
+        tabBtnTokenMap.className = "text-xs font-mono font-bold px-2.5 py-1 rounded bg-slate-800 text-emerald-400 border border-slate-700";
         tabBtnSurrogates.className = "text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors";
         tabBtnRoundtrip.className = "text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors";
-        tabPanelSessionMap.classList.remove('hidden');
+        tabPanelTokenMap.classList.remove('hidden');
         tabPanelSurrogates.classList.add('hidden');
         tabPanelRoundtrip.classList.add('hidden');
       });
@@ -2670,7 +2782,7 @@ Public Verification: https://ztds.ai/verify/`;
           <div class="p-3.5 sm:p-4 rounded-xl bg-slate-900 text-white border border-slate-800 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
             <div class="flex items-center gap-2 flex-wrap">
               <label for="m0IndustrySelect" class="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold">Target Industry:</label>
-              <select id="m0IndustrySelect" class="bg-slate-950 text-white border border-slate-700 text-xs font-mono rounded-lg px-2.5 py-1.5 focus:border-emerald-500 focus:outline-none">
+              <select id="m0IndustrySelect" class="bg-slate-950 text-white border border-slate-700 text-base sm:text-xs font-mono rounded-lg px-2.5 py-1.5 focus:border-emerald-500 focus:outline-none">
                 <option value="medical" ${activeProfileKey === 'medical' ? 'selected' : ''}>Healthcare &amp; HIPAA (Safe Harbor § 164.514)</option>
                 <option value="finance" ${activeProfileKey === 'finance' ? 'selected' : ''}>FinTech &amp; Banking (PCI-DSS &amp; GLBA)</option>
                 <option value="legal" ${activeProfileKey === 'legal' ? 'selected' : ''}>Legal &amp; Privilege (FRE 502 &amp; Model Rule 1.6)</option>
@@ -3322,7 +3434,7 @@ Public Verification: https://ztds.ai/verify/`;
             <label for="cisoWorkEmail" class="block text-xs font-bold text-slate-700 uppercase tracking-wider font-mono mb-1.5">
               Work / Corporate Email <span class="text-rose-500">*</span>
             </label>
-            <input type="email" id="cisoWorkEmail" required placeholder="ciso@yourcompany.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 font-sans shadow-xs transition-colors" autocomplete="email" />
+            <input type="email" id="cisoWorkEmail" required placeholder="ciso@yourcompany.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-base sm:text-sm focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 font-sans shadow-xs transition-colors" autocomplete="email" />
             <span class="text-[10px] text-slate-400 font-mono mt-1 block">Zero marketing spam. Used exclusively for cryptographic verification receipt generation.</span>
           </div>
 
@@ -3331,7 +3443,7 @@ Public Verification: https://ztds.ai/verify/`;
               <label for="cisoRoleSelect" class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider font-mono mb-1.5">
                 Organizational Role
               </label>
-              <select id="cisoRoleSelect" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-slate-900 text-xs focus:outline-none focus:border-emerald-600 font-mono shadow-xs">
+              <select id="cisoRoleSelect" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-slate-900 text-base sm:text-xs focus:outline-none focus:border-emerald-600 font-mono shadow-xs">
                 <option value="CISO / Security Director">CISO / Security Director</option>
                 <option value="VP Engineering / Architect">VP Engineering / Architect</option>
                 <option value="Founder / CEO">Founder / CEO</option>
@@ -3344,7 +3456,7 @@ Public Verification: https://ztds.ai/verify/`;
               <label for="cisoProfileDisplay" class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider font-mono mb-1.5">
                 Target Profile
               </label>
-              <input type="text" id="cisoProfileDisplay" readonly class="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-100 text-slate-700 text-xs font-mono shadow-xs" value="General Enterprise" />
+              <input type="text" id="cisoProfileDisplay" readonly class="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-100 text-slate-700 text-base sm:text-xs font-mono shadow-xs" value="General Enterprise" />
             </div>
           </div>
 

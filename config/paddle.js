@@ -18,16 +18,12 @@ const PADDLE_CONFIG = {
       clientToken: process.env.PADDLE_CLIENT_TOKEN || 'test_c0384ff8a02a7ea414436eb81b5',
       prices: {
         developer_pro: {
-          annual: process.env.PADDLE_PRICE_DEV_ANNUAL || 'pri_01hrztds_dev_annual_1990',
-          monthly: process.env.PADDLE_PRICE_DEV_MONTHLY || 'pri_01hrztds_dev_monthly_199',
-          amountAnnualUsd: 1990,
-          amountMonthlyUsd: 199
+          annual: process.env.PADDLE_PRICE_DEV_ANNUAL || 'pri_01hrztds_dev_annual_std',
+          monthly: process.env.PADDLE_PRICE_DEV_MONTHLY || 'pri_01hrztds_dev_monthly_std',
         },
         teams: {
-          annual: process.env.PADDLE_PRICE_TEAMS_ANNUAL || 'pri_01hrztds_teams_annual_990',
+          annual: process.env.PADDLE_PRICE_TEAMS_ANNUAL || 'pri_01hrztds_teams_annual_std',
           monthly: process.env.PADDLE_PRICE_TEAMS_MONTHLY || 'pri_01hrztds_teams_monthly_99',
-          amountAnnualUsd: 990,
-          amountMonthlyUsd: 99
         }
       }
     },
@@ -40,14 +36,10 @@ const PADDLE_CONFIG = {
         developer_pro: {
           annual: process.env.PADDLE_PRICE_DEV_ANNUAL_PROD || 'pri_01m17c4006vvjjrnxsz3a81hy1',
           monthly: process.env.PADDLE_PRICE_DEV_MONTHLY_PROD || 'pri_01m17c3ar9545er7twcx8fj5mr',
-          amountAnnualUsd: 1990,
-          amountMonthlyUsd: 199
         },
         teams: {
           annual: process.env.PADDLE_PRICE_TEAMS_ANNUAL_PROD || 'pri_01ks303fretapszffcaqn86xdt',
           monthly: process.env.PADDLE_PRICE_TEAMS_MONTHLY_PROD || 'pri_01ks303fretapszffcaqn86xdt',
-          amountAnnualUsd: 990,
-          amountMonthlyUsd: 99
         }
       }
     }

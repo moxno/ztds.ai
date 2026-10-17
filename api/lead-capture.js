@@ -209,6 +209,11 @@ module.exports = async (req, res) => {
     }
   }
 
+  // H2 API Poison-Pill Guard: return synthetic 200 OK to protect Resend/Webhook quotas from bots
+  if (body.website_url_confirm || body.org_fax_ext || body.botcheck || body.admin_override) {
+    return res.status(200).json({ status: 'success', leadId: 'LEAD-2026-SYNTH00', message: 'Memorandum dispatched.' });
+  }
+
   const rawEmail = (body.email || '').trim().toLowerCase();
   if (!rawEmail || !EMAIL_REGEX.test(rawEmail) || rawEmail.length > 254) {
     return res.status(400).json({

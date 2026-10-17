@@ -217,9 +217,9 @@
   <div class="deck-viewport">
     
     <!-- Presentation Top Bar -->
-    <header class="h-14 px-6 flex items-center justify-between border-b border-white/10 bg-[#090f1d]/80 backdrop-blur-md no-print shrink-0">
-      <div class="flex items-center gap-4">
-        <a href="/" class="flex items-center gap-2.5 group">
+    <header class="h-14 px-3 sm:px-6 flex items-center justify-between border-b border-white/10 bg-[#090f1d]/80 backdrop-blur-md no-print shrink-0">
+      <div class="flex items-center gap-2 sm:gap-4">
+        <a href="/" class="flex items-center gap-2 sm:gap-2.5 group touch-target">
           <div class="w-8 h-8 rounded-lg bg-slate-900 border border-emerald-500/40 flex items-center justify-center p-1">
             <svg class="w-full h-full" viewBox="0 0 32 32" fill="none">
               <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
@@ -233,26 +233,26 @@
         <span class="text-xs font-mono uppercase tracking-widest text-slate-400 hidden sm:inline-block">CISO Executive Briefing</span>
       </div>
 
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-1.5 sm:gap-3">
         <!-- Slide Progress Pill -->
-        <div class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-slate-300">
-          Slide <span id="current-slide-num" class="text-emerald-400 font-bold">01</span> / <span id="total-slides-num">10</span>
+        <div class="px-2 sm:px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] sm:text-xs font-mono text-slate-300 whitespace-nowrap">
+          <span class="hidden sm:inline">Slide </span><span id="current-slide-num" class="text-emerald-400 font-bold">01</span>/<span id="total-slides-num">10</span>
         </div>
 
         <!-- Speaker Notes Button -->
-        <button id="toggle-notes-btn" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-300 hover:text-white transition flex items-center gap-1.5" title="Toggle Presenter Notes (N)">
-          <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-          <span>Notes <kbd class="text-[10px] text-slate-500 bg-white/5 px-1 py-0.5 rounded">N</kbd></span>
+        <button id="toggle-notes-btn" type="button" aria-label="Toggle Presenter Notes (N)" class="touch-target px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-300 hover:text-white transition flex items-center gap-1.5" title="Toggle Presenter Notes (N)">
+          <svg class="w-3.5 h-3.5 text-sky-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span class="hidden sm:inline">Notes <kbd class="text-[10px] text-slate-400 bg-white/5 px-1 py-0.5 rounded">N</kbd></span>
         </button>
 
         <!-- PDF Export Button -->
-        <button onclick="window.print()" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-300 hover:text-white transition flex items-center gap-1.5" title="Print / Save as PDF">
-          <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+        <button type="button" onclick="window.print()" aria-label="Print or Save as PDF" class="touch-target px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-300 hover:text-white transition flex items-center gap-1.5" title="Print / Save as PDF">
+          <svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
           <span class="hidden md:inline">Export PDF</span>
         </button>
 
         <!-- Fullscreen Button -->
-        <button id="fullscreen-btn" class="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition" title="Toggle Fullscreen (F)">
+        <button id="fullscreen-btn" type="button" aria-label="Toggle Fullscreen (F)" class="touch-target p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition hidden sm:flex items-center justify-center" title="Toggle Fullscreen (F)">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
         </button>
       </div>
@@ -265,7 +265,7 @@
       <!-- SLIDE 1: Executive Title & Paradigm Shift -->
       <!-- ==================================================================== -->
       <article class="slide active" data-slide="1" data-title="Executive Briefing: Zero-Trust Data Sanitization">
-        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
           <div class="flex items-center gap-3">
             <span class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider">Confidential Briefing</span>
             <span class="text-xs font-mono text-slate-400">Open Technical Standard &middot; RFC v1.0</span>
@@ -564,7 +564,7 @@
           </p>
 
           <div class="p-4 rounded-xl bg-black/60 border border-white/10 font-mono text-xs mb-4 overflow-x-auto">
-            <div class="flex items-center justify-between gap-3 text-center min-w-[750px]">
+            <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 text-center md:min-w-[750px]">
               <div class="flex-1 p-3 rounded-lg bg-slate-900 border border-slate-700">
                 <div class="text-[10px] uppercase text-slate-400">1. Client Ingest</div>
                 <div class="text-white font-bold mt-1">Raw User Prompt / RAG Document</div>
@@ -741,9 +741,9 @@
       </article>
 
       <!-- ==================================================================== -->
-      <!-- SLIDE 8: 30 High-ACV Specialized Industry Profiles -->
+      <!-- SLIDE 8: 30 enterprise-grade Specialized Industry Profiles -->
       <!-- ==================================================================== -->
-      <article class="slide" data-slide="8" data-title="30 High-ACV Specialized Industry Profiles">
+      <article class="slide" data-slide="8" data-title="30 enterprise-grade Specialized Industry Profiles">
         <div class="flex items-center justify-between border-b border-white/10 pb-4">
           <div class="flex items-center gap-3">
             <span class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider">Enterprise Entities</span>
@@ -754,7 +754,7 @@
 
         <div class="my-auto py-3">
           <h2 class="text-2xl font-extrabold text-white mb-2">
-            The 30 High-ACV Specialized Industry Profiles
+            The 30 enterprise-grade Specialized Industry Profiles
           </h2>
           <p class="text-slate-400 text-xs mb-4">
             Generic regex produces unacceptable false positives. ZTDS combines context heuristics with algorithmic checksum validation (deterministic financial & national ID checksum verification):
@@ -807,7 +807,7 @@
           </div>
 
           <div class="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 text-xs text-slate-300 flex items-center justify-between">
-            <span><strong>Anti-Cannibalization Model:</strong> Free standard handles basic consumer PII. The 30 high-ACV profiles require signed Enterprise tokens.</span>
+            <span><strong>Two-Tier Domain Isolation Model:</strong> Free standard handles basic consumer PII. The 30 specialized enterprise profiles require signed Enterprise tokens.</span>
             <span class="text-emerald-400 font-mono text-[11px]">Quarterly Regulatory Taxonomy Updates</span>
           </div>
         </div>
@@ -990,10 +990,10 @@
 
       <!-- Navigation Arrows -->
       <div class="flex items-center gap-2">
-        <button id="prev-btn" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-200 transition flex items-center gap-1">
+        <button id="prev-btn" type="button" class="touch-target px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-200 transition flex items-center gap-1">
           &larr; Prev
         </button>
-        <button id="next-btn" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-xs font-mono text-emerald-300 font-bold transition flex items-center gap-1">
+        <button id="next-btn" type="button" class="touch-target px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-xs font-mono text-emerald-300 font-bold transition flex items-center gap-1">
           Next &rarr;
         </button>
       </div>
@@ -1007,7 +1007,7 @@
             <span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-400 font-mono text-xs font-bold uppercase">Presenter Notes</span>
             <span id="notes-slide-title" class="text-xs font-mono text-slate-400 font-semibold"></span>
           </div>
-          <button id="close-notes-btn" class="text-slate-400 hover:text-white text-xs font-mono">Close &times;</button>
+          <button id="close-notes-btn" type="button" class="touch-target text-slate-400 hover:text-white text-xs font-mono px-2">Close &times;</button>
         </div>
         <div id="notes-content" class="text-xs leading-relaxed text-slate-300 font-sans space-y-2"></div>
       </div>

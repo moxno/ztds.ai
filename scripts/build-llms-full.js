@@ -43,7 +43,7 @@ const docs = [
   },
   {
     part: 'PART 7: ENTITY TAXONOMY & 30 COMMERCIAL SECTOR PROFILES',
-    title: 'Single Source of Truth Entity Taxonomy & 30 High-ACV Industry Profiles',
+    title: 'Single Source of Truth Entity Taxonomy & 30 Specialized Industry Profiles',
     relPath: 'docs/ZTDS_Entity_Taxonomy_and_25_Profiles_SSOT.md',
     url: 'https://ztds.ai/registry/'
   },

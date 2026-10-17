@@ -3,7 +3,7 @@
  * 
  * Verifies:
  * 1. CLI help output and parameter parsing
- * 2. Generation of tailored Statements of Work ($2,500 Setup + $500/mo Retainer)
+ * 2. Generation of tailored Statements of Work (Two-Phase Scope)
  * 3. File output writing and temp file cleanup
  * 4. Presence of institutional authority anchors and BrandMeWeb links
  * 5. Strict Zero-Emoji compliance and BrandMeWeb spelling SSOT

@@ -134,7 +134,7 @@ if (IS_CONFORMANCE) {
     console.log(`[${r.passed ? '\x1b[32mPASS\x1b[0m' : '\x1b[31mFAIL\x1b[0m'}] ${r.id.padEnd(16)} | ${r.category.padEnd(38)} | ${r.latency_ms.toFixed(2)}ms`);
   });
   console.log('----------------------------------------------------------------------');
-  console.log(`Total: ${passedCount}/${vectorData.test_vectors.length} passed | Avg Latency: ${(totalLatency/results.length).toFixed(3)}ms`);
+  console.log(`Total: ${passedCount}/${vectorData.test_vectors.length} passed | Avg Latency: ${(totalLatency / Math.max(1, results.length)).toFixed(3)}ms`);
   if (allPassed) {
     console.log('\n\x1b[1m\x1b[32m[PASS] CONFORMANCE VERIFICATION COMPLETED (100% INVARIANT FIDELITY)\x1b[0m\n');
     process.exit(0);

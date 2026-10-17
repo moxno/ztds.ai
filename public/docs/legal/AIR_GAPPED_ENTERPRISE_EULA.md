@@ -32,7 +32,7 @@ THIS AIR-GAPPED ENTERPRISE END USER LICENSE AGREEMENT ("EULA") IS A LEGAL AGREEM
 
 ---
 
-## 3. Strict Intellectual Property & Anti-Cannibalization Covenants
+## 3. Strict Intellectual Property & Domain Isolation Covenants
 
 3.1. **Prohibition of Competitive Commercialization:** Licensee agrees that the Software contains trade secrets and proprietary algorithmic heuristics of substantial economic value. Licensee shall not:
 (a) Package, white-label, or offer the Software as a standalone commercial PII/PHI de-identification service, managed API, or SaaS product competing with Licensor;

@@ -169,6 +169,11 @@ module.exports = async (req, res) => {
   }
   body = body || {};
 
+  // H2 API Poison-Pill Guard: return synthetic 200 OK if bot/escalation trap fields are populated
+  if (body.website_url_confirm || body.org_fax_ext || body.botcheck || body.admin_override) {
+    return res.status(200).json({ status: 'minted', licenseId: 'ZTDS-EVAL-SYNTH', token: 'ZTDS-LIC-v1.SYNTH.0000' });
+  }
+
   const customerName = (body.customerName || body.company || '').trim();
   const email = (body.email || '').trim();
 

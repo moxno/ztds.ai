@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI &amp; RAG Integration Blueprints: LangChain, LlamaIndex, MCP &amp; Vector DBs | ZTDS.ai</title>
+  <meta name="description" content="10 canonical Zero-Trust Data Sanitization (ZTDS RFC v1.0) architectural blueprints for LangChain, LlamaIndex, CrewAI, Pinecone, Qdrant, Ollama, Envoy WASM, and Model Context Protocol (MCP) pipelines." />
+  <link rel="canonical" href="https://ztds.ai/blueprints/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="AI &amp; RAG Integration Blueprints: LangChain, LlamaIndex, MCP &amp; Vector DBs | ZTDS.ai" />
+  <meta property="og:description" content="Deploy sub-millisecond in-RAM PII/PHI/Secret sanitization across LangChain, LlamaIndex, CrewAI, Pinecone, Ollama, and MCP stdio pipelines with 0.00 bytes cleartext egress." />
+  <meta property="og:url" content="https://ztds.ai/blueprints/" />
+  <meta property="og:site_name" content="ZTDS.ai — Zero-Trust Data Sanitization Standard" />
+  <meta property="og:image" content="https://ztds.ai/og-image.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AI &amp; RAG Integration Blueprints (LangChain, LlamaIndex, MCP, Pinecone) | ZTDS.ai" />
+  <meta name="twitter:description" content="10 reference architectures for deterministic in-RAM surrogate tokenization and local response restoration across enterprise RAG and agent workflows." />
+  <meta name="twitter:image" content="https://ztds.ai/og-image.png" />
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- Schema.org JSON-LD (@graph: Organization, TechArticle, ItemList, BreadcrumbList, FAQPage) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://ztds.ai/#organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai/",
+        "logo": "https://ztds.ai/favicon.svg",
+        "founder": {
+          "@type": "Person",
+          "name": "Ilya Sibiryakov",
+          "url": "https://ztds.ai/fellows/ilya-sibiryakov/"
+        }
+      },
+      {
+        "@type": "TechArticle",
+        "@id": "https://ztds.ai/blueprints/#article",
+        "headline": "Canonical Zero-Trust Data Sanitization (ZTDS RFC v1.0) Integration Blueprints for Enterprise AI & RAG",
+        "description": "Reference architectural patterns for integrating sub-millisecond in-RAM surrogate tokenization and bijective local restoration across LangChain, LlamaIndex, CrewAI, Pinecone, Qdrant, Ollama, Envoy, and MCP.",
+        "url": "https://ztds.ai/blueprints/",
+        "datePublished": "2026-10-01",
+        "dateModified": "2026-10-18",
+        "author": {
+          "@type": "Person",
+          "name": "Ilya Sibiryakov",
+          "url": "https://ztds.ai/fellows/ilya-sibiryakov/"
+        },
+        "publisher": {
+          "@id": "https://ztds.ai/#organization"
+        },
+        "proficiencyLevel": "Expert"
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://ztds.ai/blueprints/#list",
+        "name": "10 Canonical ZTDS AI & RAG Architecture Blueprints",
+        "numberOfItems": 10,
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Blueprint 01: LangChain LCEL Bijective Sanitization Middleware", "url": "https://ztds.ai/blueprints/#bp-langchain" },
+          { "@type": "ListItem", "position": 2, "name": "Blueprint 02: LlamaIndex Zero-Trust RAG Ingestion & Node Postprocessor", "url": "https://ztds.ai/blueprints/#bp-llamaindex" },
+          { "@type": "ListItem", "position": 3, "name": "Blueprint 03: Model Context Protocol (MCP) Stdio Local Security Firewall", "url": "https://ztds.ai/blueprints/#bp-mcp" },
+          { "@type": "ListItem", "position": 4, "name": "Blueprint 04: Pinecone & Qdrant Vector Embedding Pre-Tokenization Gate", "url": "https://ztds.ai/blueprints/#bp-vectordb" },
+          { "@type": "ListItem", "position": 5, "name": "Blueprint 05: CrewAI & AutoGen Multi-Agent Shared Memory Isolation", "url": "https://ztds.ai/blueprints/#bp-crewai" },
+          { "@type": "ListItem", "position": 6, "name": "Blueprint 06: Ollama & vLLM Air-Gapped Local Inference Perimeter", "url": "https://ztds.ai/blueprints/#bp-ollama" },
+          { "@type": "ListItem", "position": 7, "name": "Blueprint 07: Envoy & Kong API Gateway In-Memory Egress Filter", "url": "https://ztds.ai/blueprints/#bp-envoy" },
+          { "@type": "ListItem", "position": 8, "name": "Blueprint 08: FastAPI & Express.js Streaming SSE Detokenization Proxy", "url": "https://ztds.ai/blueprints/#bp-streaming" },
+          { "@type": "ListItem", "position": 9, "name": "Blueprint 09: Multimodal Vision & OCR Local Canvas Pixel Burn-In", "url": "https://ztds.ai/blueprints/#bp-multimodal" },
+          { "@type": "ListItem", "position": 10, "name": "Blueprint 10: Browser Extension Manifest V3 DOM Input Interceptor", "url": "https://ztds.ai/blueprints/#bp-browser" }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ztds.ai/blueprints/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "ZTDS.ai",
+            "item": "https://ztds.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "AI & RAG Integration Blueprints",
+            "item": "https://ztds.ai/blueprints/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://ztds.ai/blueprints/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do you prevent PII leakage in LangChain and LlamaIndex RAG pipelines without breaking LLM context?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "By inserting an in-RAM ZTDS sanitization middleware step before prompt serialization or vector chunking, raw identifiers are replaced with deterministic typed surrogates ([NAME_1], [IBAN_1]) inside host process memory. The upstream LLM reasons over intact grammatical structures, and the local postprocessor restores original cleartext values from the ephemeral tokenMap before returning the response."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Should vector embeddings in Pinecone, Qdrant, or Weaviate be generated before or after ZTDS sanitization?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "To satisfy ZTDS Invariant 1 and GDPR Article 28 subprocessor exclusion, document chunks must be sanitized in local volatile memory prior to calling external embedding APIs (such as text-embedding-3-large) or indexing into managed vector databases. Embedding sanitized text prevents vector inversion attacks and eliminates PII storage inside third-party vector clusters."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does ZTDS handle streaming Server-Sent Events (SSE) when restoring surrogate tokens in real time?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "When an LLM streams token chunks via Server-Sent Events (SSE), a bracket-aware sliding window buffer holds characters locally only when an opening bracket ([) is detected until the closing bracket (]) arrives. Complete surrogate tokens ([EMAIL_1]) are resolved against the local volatile tokenMap in sub-millisecond time without delaying normal prose streaming."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does the Model Context Protocol (MCP) stdio firewall protect Cursor, Claude Desktop, and IDE agents?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The ZTDS MCP server executes locally over standard input/output (stdio) on the developer workstation. Before an IDE agent forwards database rows, log files, or code snippets to a cloud model, it invokes ztds_sanitize in RAM, transmits only surrogate tokens over HTTPS, and invokes ztds_restore locally when unmasked values are required."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between the open-source @ztds/core reference baseline and the commercial @privacyscrubber/sdk engine?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The open-source @ztds/core and ztds Python packages provide the Apache 2.0 reference implementation for universal consumer PII and RFC v1.0 invariant verification. Enterprise production workloads requiring 30 specialized industry profiles (HIPAA Safe Harbor, SWIFT/IBAN FinTech, FRE 502 Legal, Multimodal Burn-In) and air-gapped Ed25519 node licensing deploy @privacyscrubber/sdk."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-emerald-500/20 selection:text-emerald-900">
+
+  <!-- Skip to Main Content -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:bg-slate-900 focus:text-white focus:rounded-lg focus:text-xs focus:font-mono">
+    Skip to main content
+  </a>
+
+  <!-- Top Institutional Banner -->
+  <div class="bg-slate-900 text-slate-300 text-xs border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-emerald-950 text-emerald-300 border border-emerald-700/60">
+          RFC v1.0 BLUEPRINTS
+        </span>
+        <span class="font-mono text-[11px] text-slate-300">
+          10 Canonical Reference Architectures &middot; Node.js, Python, MCP Stdio &amp; Edge Gateways
+        </span>
+      </div>
+      <div class="flex items-center gap-4 text-[11px] font-mono">
+        <a href="/sdk/" class="text-emerald-300 hover:text-emerald-200 underline underline-offset-2">SDK Docs &rarr;</a>
+        <a href="/benchmarks/" class="text-slate-300 hover:text-white transition-colors">Latency Benchmarks &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Institutional Top Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-3 touch-target">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm shrink-0 aspect-square p-0.5 overflow-hidden">
+            <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none" aria-hidden="true">
+              <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+              <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
+            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+          </div>
+        </a>
+
+        <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
+          <span class="pulse-dot"></span>
+          <span class="font-mono text-[11px] font-semibold">10 CANONICAL BLUEPRINTS</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links (Canonical 7 Links) -->
+      <nav class="hidden lg:flex items-center gap-3.5 xl:gap-5 text-sm font-medium text-slate-600" id="desktop-nav">
+        <a href="/standard/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Standard</a>
+        <a href="/registry/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Registry</a>
+        <a href="/fellows/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Fellows</a>
+        <a href="/companies/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Adopters</a>
+        <a href="/scanner/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Scanner</a>
+        <a href="/sdk/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">SDK &amp; Connectors</a>
+        <a href="/ciso/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">CISO &amp; Trust</a>
+      </nav>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-3">
+        <a href="/apply/" class="btn-trust text-xs py-2 px-4 shadow-sm font-semibold whitespace-nowrap">
+          Get Certified &rarr;
+        </a>
+        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Slide-Over Drawer -->
+  <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"></div>
+  <aside id="mobile-drawer" class="mobile-nav-drawer drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+    <div class="flex items-center justify-between pb-5 border-b border-slate-200">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 aspect-square p-0.5 overflow-hidden">
+          <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none" aria-hidden="true">
+            <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+            <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+          </svg>
+        </div>
+        <span class="font-bold text-slate-900 text-base">ZTDS<span class="text-emerald-600">.ai</span></span>
+      </div>
+      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 text-slate-400 hover:text-slate-700">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="py-4 space-y-1 text-sm font-medium">
+      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
+      <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
+      <a href="/ietf/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">IETF Standards Track (draft-02)</a>
+      <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
+      <a href="/blueprints/" class="block px-3 py-2 rounded-lg text-emerald-700 font-semibold bg-emerald-50/70">10 AI &amp; RAG Blueprints</a>
+      <a href="/compliance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Global Regulatory Compliance Matrix</a>
+      <a href="/benchmarks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">AI Safety &amp; Latency Benchmarks</a>
+      <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper (DOIs)</a>
+      <a href="/evidentiary-sovereignty/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Evidentiary Sovereignty</a>
+      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
+      <a href="/ciso/memo/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">1-Page CISO Safe Harbor Memo</a>
+      <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
+      <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 &amp; Trust Center</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
+      <a href="/certification/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Certification Authority</a>
+      <a href="/verify/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Ed25519 Certificate Validator</a>
+      <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
+      <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
+      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Member Pool</a>
+      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows Council</a>
+      <a href="/case-studies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Enterprise Case Studies</a>
+      <a href="/agency/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">BrandMeWeb Enterprise Retainer</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
+      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
+      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive DAG Inspector</a>
+      <a href="/badge/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Badge Generator</a>
+      <a href="/governance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Governance &amp; Charter</a>
+      <a href="/security/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Security &amp; CVD</a>
+    </div>
+
+    <div class="mt-auto pt-4 border-t border-slate-200">
+      <a href="/apply/" class="btn-trust w-full text-center text-xs py-2.5">
+        Apply for ZTDS Verified&trade; Seal &rarr;
+      </a>
+    </div>
+  </aside>
+
+  <main id="main-content">
+    <!-- HERO SECTION -->
+    <section class="relative bg-slate-900 text-white py-14 lg:py-20 border-b border-slate-800 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Breadcrumb -->
+        <nav aria-label="Breadcrumb" class="mb-6">
+          <ol class="flex flex-wrap items-center gap-2 text-xs font-mono text-slate-300">
+            <li><a href="/" class="hover:text-white transition-colors">ZTDS.ai</a></li>
+            <li aria-hidden="true">/</li>
+            <li class="text-emerald-400 font-semibold" aria-current="page">AI &amp; RAG Integration Blueprints</li>
+          </ol>
+        </nav>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/90 border border-emerald-700/70 text-emerald-300 text-xs font-mono mb-4">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              10 CANONICAL PRODUCTION RECIPES &middot; ZTDS RFC v1.0
+            </div>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+              AI, Agent &amp; RAG Zero-Trust Integration Blueprints
+            </h1>
+            <p class="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-3xl">
+              Drop-in architectural patterns for enforcing <strong class="text-white">Invariant 1 (0.00 B Cleartext Egress)</strong> and <strong class="text-white">Invariant 2 (Bijective Local Restoration)</strong> across LangChain, LlamaIndex, CrewAI, Pinecone, Qdrant, Ollama, Envoy, and Model Context Protocol (MCP) pipelines in under 50 microseconds.
+            </p>
+
+            <div class="mt-6 flex flex-wrap items-center gap-3">
+              <a href="#blueprints-catalog" class="btn-trust text-xs sm:text-sm py-2.5 px-5 font-semibold">
+                Browse All 10 Blueprints &darr;
+              </a>
+              <a href="/sdk/" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 text-xs sm:text-sm font-mono font-semibold transition-colors">
+                Interactive SDK Workbench &rarr;
+              </a>
+              <a href="/mcp/" class="px-4 py-2.5 rounded-xl bg-slate-800/60 hover:bg-slate-800 text-emerald-300 border border-emerald-800/60 text-xs sm:text-sm font-mono font-semibold transition-colors">
+                MCP Stdio Server Spec &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- Canonical Data-Flow Topology Card -->
+          <div class="lg:col-span-4 bg-slate-950/90 border border-slate-800 rounded-2xl p-5 font-mono text-xs space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+              <span class="text-emerald-400 font-bold uppercase tracking-wider text-[11px]">Bidirectional RAM Loop</span>
+              <span class="text-slate-400 text-[10px]">Theorem 1 &amp; 2</span>
+            </div>
+            <div class="space-y-2 text-[11px]">
+              <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
+                <div class="text-slate-400">1. Local Pre-Flight Interception</div>
+                <div class="text-emerald-300 font-bold mt-0.5">engine.sanitize(input, { profile })</div>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
+                <div class="text-slate-400">2. Outbound WAN / Vector Dispatch</div>
+                <div class="text-sky-300 font-bold mt-0.5">[NAME_1], [IBAN_1] &middot; 0.00 B Raw PII</div>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
+                <div class="text-slate-400">3. Local Bijective Rehydration</div>
+                <div class="text-emerald-300 font-bold mt-0.5">engine.restore(output, tokenMap)</div>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
+                <div class="text-slate-400">4. Ephemeral Zeroization</div>
+                <div class="text-amber-300 font-bold mt-0.5">engine.destroy() // CSPRNG wipe</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: INTERACTIVE BLUEPRINTS CATALOG -->
+    <section id="blueprints-catalog" class="py-12 lg:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Reference Architectures</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
+            10 Canonical AI, RAG &amp; Gateway Integration Blueprints
+          </h2>
+          <p class="text-sm text-slate-600 mt-1">
+            Filter by architectural layer or copy production-ready Node.js, TypeScript, and Python middleware patterns.
+          </p>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="flex flex-wrap items-center gap-2" id="bpFilterBar" role="tablist" aria-label="Filter blueprints by stack">
+          <button type="button" data-cat="ALL" role="tab" aria-selected="true" class="bp-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors">All (10)</button>
+          <button type="button" data-cat="agents" role="tab" aria-selected="false" class="bp-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Agent Frameworks</button>
+          <button type="button" data-cat="rag" role="tab" aria-selected="false" class="bp-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Vector &amp; RAG</button>
+          <button type="button" data-cat="gateway" role="tab" aria-selected="false" class="bp-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Gateways &amp; Streaming</button>
+          <button type="button" data-cat="endpoint" role="tab" aria-selected="false" class="bp-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">IDE, Multimodal &amp; DOM</button>
+        </div>
+      </div>
+
+      <!-- Blueprints Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="bpCardsGrid">
+
+        <!-- Blueprint 01: LangChain LCEL -->
+        <article id="bp-langchain" data-cat="agents" class="bp-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[11px] font-bold">BLUEPRINT 01 &middot; LANGCHAIN LCEL</span>
+              <span class="text-xs font-mono text-slate-500">TypeScript / Python</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">LangChain RunnableSequence Bijective Sanitization Middleware</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Wraps any LangChain Expression Language (LCEL) chain in a stateful volatile closure. Raw user variables are sanitized in local process RAM prior to <code class="font-mono bg-slate-100 px-1 rounded">ChatOpenAI</code> or <code class="font-mono bg-slate-100 px-1 rounded">ChatAnthropic</code> invocation and restored locally before returning to the caller.
+            </p>
+            <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
+              <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] cursor-pointer">Copy</button>
+              <pre><code>import { PrivacyScrubberEngine } from "@privacyscrubber/sdk";
+import { RunnableLambda } from "@langchain/core/runnables";
+
+const engine = new PrivacyScrubberEngine({ profile: "finance" });
+
+export async function invokeZeroTrustChain(chain, rawPrompt) {
+  const { sanitizedText, tokenMap } = engine.sanitize(rawPrompt);
+  try {
+    const llmResponse = await chain.invoke({ input: sanitizedText });
+    return engine.restore(llmResponse.content, tokenMap);
+  } finally {
+    engine.destroy(tokenMap); // Invariant 3 CSPRNG zeroization
+  }
+}</code></pre>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+            <span>Latency Overhead: 42.8 µs (p50)</span>
+            <span class="text-emerald-700 font-bold">Invariant 1, 2 &amp; 3 Verified</span>
+          </div>
+        </article>
+
+        <!-- Blueprint 02: LlamaIndex RAG -->
+        <article id="bp-llamaindex" data-cat="rag" class="bp-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[11px] font-bold">BLUEPRINT 02 &middot; LLAMAINDEX RAG</span>
+              <span class="text-xs font-mono text-slate-500">Python / Node.js</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">LlamaIndex Ingestion Transform &amp; Query Postprocessor</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Intercepts retrieved document nodes and query strings in local volatile RAM before LLM synthesis. Prevents sensitive clinical or legal records stored in internal knowledge bases from crossing the external API boundary.
+            </p>
+            <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
+              <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] cursor-pointer">Copy</button>
+              <pre><code>from ztds import ZtdsSession
+
+def zero_trust_rag_query(query_engine, raw_query: str, nodes: list) -> str:
+    with ZtdsSession(profile="medical") as session:
+        clean_query = session.sanitize(raw_query)
+        for node in nodes:
+            node.text = session.sanitize(node.text)
+        response = query_engine.synthesize(clean_query, nodes=nodes)
+        return session.restore(str(response))
+    # Ephemeral tokenMap is automatically zeroized on context exit</code></pre>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+            <span>Statute: HIPAA Safe Harbor 45 CFR § 164.514(b)</span>
+            <span class="text-emerald-700 font-bold">Zero BAA Exposure</span>
+          </div>
+        </article>
+
+        <!-- Blueprint 03: MCP Stdio Firewall -->
+        <article id="bp-mcp" data-cat="endpoint" class="bp-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[11px] font-bold">BLUEPRINT 03 &middot; MCP STDIO FIREWALL</span>
+              <span class="text-xs font-mono text-slate-500">Cursor / Claude Desktop</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Model Context Protocol (MCP) Local Stdio Security Gateway</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Executes as an air-gapped local child process over <code class="font-mono bg-slate-100 px-1 rounded">stdin/stdout</code>. Exposes <code class="font-mono bg-slate-100 px-1 rounded">ztds_sanitize</code>, <code class="font-mono bg-slate-100 px-1 rounded">ztds_restore</code>, and <code class="font-mono bg-slate-100 px-1 rounded">ztds_audit</code> to IDE agents so production secrets and database dumps never leak into cloud LLM context windows.
+            </p>
+            <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
+              <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] cursor-pointer">Copy</button>
+              <pre><code>{
+  "mcpServers": {
+    "privacyscrubber-ztds": {
+      "command": "npx",
+      "args": ["-y", "@privacyscrubber/mcp-server"],
+      "env": {
+        "ZTDS_STRICT_MODE": "1",
+        "ZTDS_DEFAULT_PROFILE": "devsecops"
+      }
+    }
+  }
+}</code></pre>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+            <span>Transport: JSON-RPC 2.0 over Local Stdio</span>
+            <a href="/mcp/" class="text-emerald-700 font-bold hover:underline">Full MCP Spec &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Blueprint 04: Pinecone & Qdrant Vector DB -->
+        <article id="bp-vectordb" data-cat="rag" class="bp-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[11px] font-bold">BLUEPRINT 04 &middot; VECTOR DB INGESTION</span>
+              <span class="text-xs font-mono text-slate-500">Pinecone / Qdrant / Weaviate</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Pre-Embedding Sanitization Gate for Managed Vector Stores</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Raw PII embedded into high-dimensional vectors is vulnerable to embedding inversion attacks and turns your vector DB vendor into a GDPR Article 28 subprocessor. Sanitize chunks in RAM before calling <code class="font-mono bg-slate-100 px-1 rounded">embeddings.create()</code>.
+            </p>
+            <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
+              <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] cursor-pointer">Copy</button>
+              <pre><code>const { sanitizedText, receipt } = engine.sanitize(rawDocumentChunk, {
+  profile: "legal"
+});
+
+// 1. Generate embedding strictly over sanitized surrogate text
+const vector = await openai.embeddings.create({
+  model: "text-embedding-3-large",
+  input: sanitizedText
+});
+
+// 2. Upsert to Pinecone with SHA-256 compliance receipt
+await pineconeIndex.upsert([{
+  id: chunkId,
+  values: vector.data[0].embedding,
+  metadata: { text: sanitizedText, ztds_sha256: receipt.sha256 }
+}]);</code></pre>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+            <span>Defense: Embedding Inversion Immunity</span>
+            <span class="text-emerald-700 font-bold">GDPR Art. 28 Exempt</span>
+          </div>
+        </article>
+
+        <!-- Blueprint 05: CrewAI & Multi-Agent -->
+        <article id="bp-crewai" data-cat="agents" class="bp-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[11px] font-bold">BLUEPRINT 05 &middot; MULTI-AGENT CREWS</span>
+              <span class="text-xs font-mono text-slate-500">CrewAI / AutoGen / LangGraph</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Deterministic Coreference Across Multi-Agent Delegation</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Maintains a single session-scoped <code class="font-mono bg-slate-100 px-1 rounded">tokenMap</code> across an entire multi-agent task graph so Agent A (<code class="font-mono bg-slate-100 px-1 rounded">Researcher</code>) and Agent B (<code class="font-mono bg-slate-100 px-1 rounded">Legal Reviewer</code>) reference identical surrogates (<code class="font-mono bg-slate-100 px-1 rounded">[PARTY_1]</code>) without ever accessing cleartext.
+            </p>
+            <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
+              <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] cursor-pointer">Copy</button>
+              <pre><code>from ztds import ZtdsSession
+
+with ZtdsSession(profile="legal") as crew_session:
+    sanitized_brief = crew_session.sanitize(client_dossier)
+    # All agents in the crew operate exclusively on surrogate tokens
+    crew_result = legal_crew.kickoff(inputs={"brief": sanitized_brief})
+    final_memo = crew_session.restore(crew_result.raw)
+# Volatile dictionary wiped from RAM upon completion</code></pre>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+            <span>Coreference Consistency: 100.00%</span>
+            <span class="text-emerald-700 font-bold">FRE Rule 502(b) Safe</span>
+          </div>
+        </article>
+
+        <!-- Blueprint 06: Ollama & vLLM Local Inference -->
+        <article id="bp-ollama" data-cat="gateway" class="bp-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[11px] font-bold">BLUEPRINT 06 &middot; OLLAMA &amp; VLLM</span>
+              <span class="text-xs font-mono text-slate-500">Self-Hosted / VPC GPU</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Zero-Trust Sanitization Before Shared VPC GPU Clusters</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Even when running self-hosted open-weights models (Llama 3, Qwen, DeepSeek) via Ollama or vLLM, internal inference logs and shared GPU KV-caches create insider threat exposure. Sanitize at the application caller boundary.
+            </p>
+            <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
+              <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] cursor-pointer">Copy</button>
+              <pre><code>const { sanitizedText, tokenMap } = engine.sanitize(rawLogPayload, {
+  profile: "security"
+});
+
+const res = await fetch("http://localhost:11434/api/generate", {
+  method: "POST",
+  body: JSON.stringify({ model: "llama3.3:70b", prompt: sanitizedText, stream: false })
+});
+const { response } = await res.json();
+const restoredAnalysis = engine.restore(response, tokenMap);
+engine.destroy(tokenMap);</code></pre>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+            <span>Protection: GPU KV-Cache Isolation</span>
+            <span class="text-emerald-700 font-bold">Air-Gapped Compatible</span>
+          </div>
+        </article>
+
+        <!-- Blueprint 07: Envoy & Kong API Gateway -->
+        <article id="bp-envoy" data-cat="gateway" class="bp-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[11px] font-bold">BLUEPRINT 07 &middot; ENVOY / KONG GATEWAY</span>
+              <span class="text-xs font-mono text-slate-500">VPC Egress Perimeter</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">VPC Egress Gateway In-Memory Sanitization Filter</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Enforces organization-wide ZTDS Invariant 1 at the Kubernetes ingress/egress controller layer without requiring third-party SaaS cloud DLP relays. Attaches cryptographic compliance headers (<code class="font-mono bg-slate-100 px-1 rounded">X-ZTDS-Receipt-SHA256</code>) to every outbound LLM call.
+            </p>
+            <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
+              <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] cursor-pointer">Copy</button>
+              <pre><code>// Outbound VPC Egress Interceptor
+app.use("/v1/chat/completions", (req, res, next) => {
+  const { sanitizedPayload, tokenMap, receipt } = engine.sanitizeChatMessages(
+    req.body.messages,
+    { profile: req.headers["x-ztds-profile"] || "general" }
+  );
+  req.body.messages = sanitizedPayload;
+  req.ztdsTokenMap = tokenMap;
+  res.setHeader("X-ZTDS-Receipt-SHA256", receipt.sha256);
+  next();
+});</code></pre>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+            <span>Header: X-ZTDS-Receipt-SHA256</span>
+            <span class="text-emerald-700 font-bold">Zero SaaS Relay</span>
+          </div>
+        </article>
+
+        <!-- Blueprint 08: Streaming SSE Detokenization -->
+        <article id="bp-streaming" data-cat="gateway" class="bp-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[11px] font-bold">BLUEPRINT 08 &middot; STREAMING SSE</span>
+              <span class="text-xs font-mono text-slate-500">Node.js TransformStream</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Real-Time Server-Sent Events (SSE) Token Stream Rehydration</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Rehydrates surrogate tokens across chunked BPE token streams in real time using a lightweight Web Streams <code class="font-mono bg-slate-100 px-1 rounded">TransformStream</code> buffer, maintaining zero perceived time-to-first-token (TTFT) penalty.
+            </p>
+            <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
+              <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] cursor-pointer">Copy</button>
+              <pre><code>const ztdsStream = engine.createRestoreStream(tokenMap, {
+  zeroizeOnClose: true
+});
+
+const upstreamResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+  method: "POST",
+  headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+  body: JSON.stringify({ model: "gpt-4o", messages: sanitizedMessages, stream: true })
+});
+
+return new Response(upstreamResponse.body.pipeThrough(ztdsStream), {
+  headers: { "Content-Type": "text/event-stream" }
+});</code></pre>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+            <span>TTFT Overhead: &lt; 0.1 ms</span>
+            <span class="text-emerald-700 font-bold">Auto-Zeroize on Stream End</span>
+          </div>
+        </article>
+
+        <!-- Blueprint 09: Multimodal Vision Burn-In -->
+        <article id="bp-multimodal" data-cat="endpoint" class="bp-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[11px] font-bold">BLUEPRINT 09 &middot; MULTIMODAL VISION</span>
+              <span class="text-xs font-mono text-slate-500">HTML5 Canvas / OffscreenCanvas</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Multimodal OCR &amp; 6px Safety-Padded Pixel Burn-In</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Gaussian blur and pixelation filters are mathematically reversible by modern vision models. ZTDS mandates solid-fill (<code class="font-mono bg-slate-100 px-1 rounded">#000000</code>) bounding-box pixel destruction with a 6px anti-bleed margin in local canvas memory prior to Vision LLM upload.
+            </p>
+            <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
+              <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] cursor-pointer">Copy</button>
+              <pre><code>const { sanitizedBlob, frameReceipt } = await engine.sanitizeImageInRAM(fileBlob, {
+  profile: "medical",
+  paddingPx: 6,
+  fillColor: "#000000",
+  stripExifMetadata: true
+});
+// frameReceipt.sha256 attests irreversible pixel burn-in before Vision API call</code></pre>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+            <span>Benchmark: BENCH-MM-01..05 (100% LPR)</span>
+            <a href="/benchmarks/#scenario-explorer" class="text-emerald-700 font-bold hover:underline">View Vision Benchmarks &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Blueprint 10: Browser Extension Manifest V3 -->
+        <article id="bp-browser" data-cat="endpoint" class="bp-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[11px] font-bold">BLUEPRINT 10 &middot; CHROME MANIFEST V3</span>
+              <span class="text-xs font-mono text-slate-500">Browser V8 Content Script</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Zero-Server Browser DOM Input Interceptor for Web AI Chats</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Intercepts prompt submission events directly inside the browser tab on ChatGPT, Claude, and Gemini. Scrubs sensitive entities in local V8 memory and dispatches native <code class="font-mono bg-slate-100 px-1 rounded">InputEvent</code> updates before the web app initiates its <code class="font-mono bg-slate-100 px-1 rounded">fetch()</code> call.
+            </p>
+            <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
+              <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] cursor-pointer">Copy</button>
+              <pre><code>document.addEventListener("keydown", (event) => {
+  if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+    const promptEl = document.querySelector("textarea, [contenteditable='true']");
+    if (!promptEl) return;
+    const { sanitizedText, tokenMap } = engine.sanitize(promptEl.value || promptEl.innerText);
+    window.__ztdsActiveTokenMap = tokenMap;
+    if (promptEl.value !== undefined) promptEl.value = sanitizedText;
+    else promptEl.innerText = sanitizedText;
+    promptEl.dispatchEvent(new Event("input", { bubbles: true }));
+  }
+}, true);</code></pre>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+            <span>Reference App: PrivacyScrubber Extension</span>
+            <a href="/registry/#privacyscrubber" class="text-emerald-700 font-bold hover:underline">View in Registry &rarr;</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: COMMERCIAL PRODUCTION ENGINE HANDOFF -->
+    <section class="py-12 lg:py-16 bg-slate-900 text-white border-y border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-8">
+            <span class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold">Enterprise Production Deployment</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1 tracking-tight">
+              Deploy Ready-to-Run Certified Engines with 30 Industry Profiles
+            </h2>
+            <p class="text-sm sm:text-base text-slate-300 mt-3 leading-relaxed max-w-3xl">
+              While the open-source <code class="font-mono text-emerald-300">@ztds/core</code> and Python <code class="font-mono text-emerald-300">ztds</code> packages provide the Apache 2.0 reference baseline for universal consumer PII, enterprise engineering teams deploy <strong>PrivacyScrubber</strong> (<code class="font-mono text-emerald-300">@privacyscrubber/sdk</code> &amp; <code class="font-mono text-emerald-300">@privacyscrubber/mcp-server</code>) for 30 specialized vertical profiles and offline Ed25519 node licensing.
+            </p>
+          </div>
+          <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
+            <a href="https://privacyscrubber.com/pricing/" target="_blank" rel="noopener" class="btn-trust justify-center text-xs sm:text-sm py-3 px-5 font-semibold">
+              Explore PrivacyScrubber SDK &amp; TEAMS &rarr;
+            </a>
+            <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-center px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-mono font-semibold transition-colors">
+              BrandMeWeb Turn-Key RAG Architecture &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: DIRECT ANSWER FAQ (RAG & AI CITATION OPTIMIZED) -->
+    <section id="faq" class="py-12 lg:py-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Architecture Q&amp;A</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
+          Frequently Asked Questions on AI &amp; RAG Sanitization Blueprints
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs" open>
+          <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+            <span>How do you prevent PII leakage in LangChain and LlamaIndex RAG pipelines without breaking LLM context?</span>
+            <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+          </summary>
+          <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            By inserting an in-RAM ZTDS sanitization middleware step before prompt serialization or vector chunking, raw identifiers are replaced with deterministic typed surrogates (<code class="font-mono bg-slate-100 px-1 rounded">[NAME_1]</code>, <code class="font-mono bg-slate-100 px-1 rounded">[IBAN_1]</code>) inside host process memory. The upstream LLM reasons over intact grammatical structures, and the local postprocessor restores original cleartext values from the ephemeral <code class="font-mono bg-slate-100 px-1 rounded">tokenMap</code> before returning the response.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+            <span>Should vector embeddings in Pinecone, Qdrant, or Weaviate be generated before or after ZTDS sanitization?</span>
+            <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+          </summary>
+          <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            To satisfy ZTDS Invariant 1 and GDPR Article 28 subprocessor exclusion, document chunks must be sanitized in local volatile memory prior to calling external embedding APIs (such as <code class="font-mono bg-slate-100 px-1 rounded">text-embedding-3-large</code>) or indexing into managed vector databases. Embedding sanitized text prevents vector inversion attacks and eliminates PII storage inside third-party vector clusters.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+            <span>How does ZTDS handle streaming Server-Sent Events (SSE) when restoring surrogate tokens in real time?</span>
+            <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+          </summary>
+          <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            When an LLM streams token chunks via Server-Sent Events (SSE), a bracket-aware sliding buffer holds characters locally only when an opening bracket (<code class="font-mono bg-slate-100 px-1 rounded">[</code>) is detected until the closing bracket (<code class="font-mono bg-slate-100 px-1 rounded">]</code>) arrives. Complete surrogate tokens (<code class="font-mono bg-slate-100 px-1 rounded">[EMAIL_1]</code>) are resolved against the local volatile <code class="font-mono bg-slate-100 px-1 rounded">tokenMap</code> in sub-millisecond time without delaying normal prose streaming.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+            <span>How does the Model Context Protocol (MCP) stdio firewall protect Cursor, Claude Desktop, and IDE agents?</span>
+            <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+          </summary>
+          <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            The ZTDS MCP server executes locally over standard input/output (<code class="font-mono bg-slate-100 px-1 rounded">stdio</code>) on the developer workstation. Before an IDE agent forwards database rows, log files, or code snippets to a cloud model, it invokes <code class="font-mono bg-slate-100 px-1 rounded">ztds_sanitize</code> in RAM, transmits only surrogate tokens over HTTPS, and invokes <code class="font-mono bg-slate-100 px-1 rounded">ztds_restore</code> locally when unmasked values are required.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+            <span>What is the difference between the open-source @ztds/core reference baseline and the commercial @privacyscrubber/sdk engine?</span>
+            <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+          </summary>
+          <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            The open-source <code class="font-mono bg-slate-100 px-1 rounded">@ztds/core</code> and <code class="font-mono bg-slate-100 px-1 rounded">ztds</code> Python packages provide the Apache 2.0 reference implementation for universal consumer PII and RFC v1.0 invariant verification. Enterprise production workloads requiring 30 specialized industry profiles (HIPAA Safe Harbor, SWIFT/IBAN FinTech, FRE 502 Legal, Multimodal Burn-In) and air-gapped Ed25519 node licensing deploy <code class="font-mono bg-slate-100 px-1 rounded">@privacyscrubber/sdk</code>.
+          </div>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <!-- 5-Column Institutional Light Footer -->
+  <footer class="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-12 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10 pb-12 border-b border-slate-100">
+        <!-- Col 1: Brand & Consortium -->
+        <div class="space-y-4 sm:col-span-2 md:col-span-1">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 aspect-square p-0.5 overflow-hidden">
+              <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none" aria-hidden="true">
+                <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+                <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+              </svg>
+            </div>
+            <span class="font-bold text-slate-900 text-lg font-sans">ZTDS<span class="text-emerald-600">.ai</span></span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            The open industry standard and conformance authority for zero-trust data sanitization in enterprise AI pipelines.
+          </p>
+          <div class="text-xs text-slate-500 leading-relaxed border-t border-slate-100 pt-3">
+            Originated by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">Ilya Sibiryakov</a>.<br>
+            Stewarded by the <span class="font-semibold text-slate-700">ZTDS AI Consortium</span> as an open specification. Engineering sponsored by <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">BrandMeWeb</a>.
+          </div>
+        </div>
+
+        <!-- Col 2: Specification & RFC -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
+            <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track (draft-02)</a></li>
+            <li><a href="/benchmarks/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">AI Safety &amp; Latency Benchmarks &rarr;</a></li>
+            <li><a href="/compliance/" class="hover:text-slate-900 transition-colors">Global Regulatory Compliance Matrix</a></li>
+            <li><a href="/whitepaper/" class="hover:text-slate-900 transition-colors">Research Whitepaper (DOIs)</a></li>
+            <li><a href="/evidentiary-sovereignty/" class="hover:text-slate-900 transition-colors">Evidentiary Sovereignty</a></li>
+            <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO Procurement &amp; Safe Harbor Pack</a></li>
+            <li><a href="/ciso/memo/" class="hover:text-slate-900 transition-colors">1-Page CISO Executive Memo</a></li>
+            <li><a href="/roi/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">CISO Risk &amp; ROI Calculator &rarr;</a></li>
+            <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Architecture & Tools -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+            <li><a href="/blueprints/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">AI &amp; RAG Integration Blueprints &rarr;</a></li>
+            <li><a href="/mcp/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Model Context Protocol (MCP) &rarr;</a></li>
+            <li><a href="/inspector/" class="hover:text-slate-900 transition-colors">Interactive Pipeline Simulator</a></li>
+            <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
+            <li><a href="/verify/" class="hover:text-slate-900 transition-colors">Ed25519 Certificate Validator</a></li>
+            <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge &amp; Seal Foundry</a></li>
+            <li><a href="/registry/#privacyscrubber" class="hover:text-slate-900 transition-colors">Reference Implementations &rarr;</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Consortium & Governance -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/certification/" class="hover:text-slate-900 transition-colors">Certification Authority</a></li>
+            <li><a href="/soc2/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">SOC 2 &amp; Trust Center &rarr;</a></li>
+            <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Governance &amp; Charter</a></li>
+            <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
+            <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
+            <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 5: Community & Verified -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
+            <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
+            <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+            <li><a href="/case-studies/" class="hover:text-slate-900 transition-colors">Enterprise Case Studies</a></li>
+            <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
+            <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
+            <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Legal Conformance Notice Card -->
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
+          <span class="text-slate-400 font-mono text-[10px]">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
+        </div>
+        <p>
+          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. &sect; 119 Priority). The word mark <strong>ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
+        </p>
+      </div>
+
+      <!-- Bottom Meta Bar -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 border-t border-slate-100 pt-6">
+        <div class="flex items-center gap-3">
+          <span>&copy; 2026 ZTDS AI Consortium.</span>
+          <span>&middot;</span>
+          <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
+        </div>
+        <div class="flex items-center gap-4 text-[11px] font-mono">
+          <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            ALL SYSTEMS VERIFIED
+          </span>
+          <span>&middot;</span>
+          <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x4E9A2B1C</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+  <script>
+    (function() {
+      const filterBtns = document.querySelectorAll('.bp-filter-btn');
+      const cards = document.querySelectorAll('.bp-card');
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const cat = btn.getAttribute('data-cat') || 'ALL';
+          filterBtns.forEach((b) => {
+            const active = b === btn;
+            b.setAttribute('aria-selected', active ? 'true' : 'false');
+            b.className = active
+              ? 'bp-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors'
+              : 'bp-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors';
+          });
+          cards.forEach((card) => {
+            if (cat === 'ALL' || card.getAttribute('data-cat') === cat) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      document.querySelectorAll('.bp-copy-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const pre = btn.parentElement.querySelector('pre');
+          if (!pre) return;
+          navigator.clipboard.writeText(pre.textContent || '').then(() => {
+            const orig = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(() => { btn.textContent = orig; }, 1600);
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

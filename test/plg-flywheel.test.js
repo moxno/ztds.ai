@@ -5,9 +5,8 @@
  * 1. File existence of PLG flywheel documentation in markdown and plaintext mirrors
  * 2. Strict Zero-Emoji compliance across all PLG files
  * 3. Brand naming compliance ("BrandMeWeb" single word rule)
- * 4. Commercial pricing tier alignment with SSOT ($15/$110 PRO, $99 TEAMS, $199/$1,990 SDK, $2,500 + $500/mo Agency)
+ * 4. Two-Brand Firewall commercial handoff routing (https://privacyscrubber.com/pricing/)
  * 5. Certificate and Ed25519 badge token integration alignment with data/registry.json
- * 6. Target MRR math alignment (40,000 ILS / ~$11,000 USD by 14/05/2027)
  */
 
 'use strict';
@@ -49,23 +48,16 @@ console.log('\n--> Test 2: Zero-Emoji & BrandMeWeb Single-Word Compliance');
   console.log('    [PASS] Zero-emoji and BrandMeWeb spelling invariants strictly maintained.');
 }
 
-// Test 3: Commercial Pricing SSOT Alignment
-console.log('\n--> Test 3: Commercial Pricing SSOT Alignment');
+// Test 3: Two-Brand Firewall & Commercial Handoff Routing
+console.log('\n--> Test 3: Two-Brand Firewall & Commercial Handoff Routing');
 {
   const content = fs.readFileSync(DOC_MD, 'utf8');
 
-  // PRO tier
-  assert(content.includes('$15/mo / $110 Lifetime'), 'Must detail PRO tier pricing ($15/mo / $110)');
-  // TEAMS tier
-  assert(content.includes('$99/mo flat'), 'Must detail TEAMS tier pricing ($99/mo flat)');
-  // SDK tier
-  assert(content.includes('$299/mo or $2,990/yr'), 'Must detail Developer SDK tier ($299/mo or $2,990/yr)');
-  // Agency setup & retainer
-  assert(content.includes('$2,500 setup + $500/mo retainer'), 'Must detail Agency setup and retainer');
-  // Target MRR
-  assert(content.includes('40,000 ILS (~$11,000 USD) MRR'), 'Must specify target 40,000 ILS MRR');
+  assert(content.includes('https://privacyscrubber.com/pricing/'), 'Must route commercial licensing to https://privacyscrubber.com/pricing/');
+  assert(content.includes('https://brandmeweb.com'), 'Must route enterprise architecture to https://brandmeweb.com');
+  assert(!content.includes(['40,000', 'ILS'].join(' ')), 'Must not expose internal MRR targets on public consortium repo');
 
-  console.log('    [PASS] Commercial pricing tiers and target MRR verified.');
+  console.log('    [PASS] Two-Brand Firewall and commercial handoff routing verified.');
 }
 
 // Test 4: Registry Token and Badge Alignment

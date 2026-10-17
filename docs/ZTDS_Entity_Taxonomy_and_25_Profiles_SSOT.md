@@ -281,14 +281,14 @@ The Universal Consumer PII layer is active across all 30 profiles as the baselin
 * **Target Personas**: Crypto AML Officers, Blockchain Forensic Analysts, Financial Intelligence Units (FIU), Risk Managers, Fraud Investigators, Sanctions Compliance Officers.
 * **Target Entities**:
   * Blockchain Public Addresses:
-    * Bitcoin: Base58 P2PKH/P2SH (`^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$`), Bech32/Bech32m SegWit (`^bc1[a-z0-9]{39,59}$`).
-    * Ethereum & EVM Chains: Hexadecimal account & contract addresses (`^0x[a-fA-F0-9]{40}$`).
-    * Solana: Base58 public keys (`^[1-9A-HJ-NP-Za-km-z]{32,44}$`).
-    * TRON: Base58 addresses (`^T[1-9A-HJ-NP-Za-km-z]{33}$`).
-    * Monero: Stealth addresses (`^4[0-9AB][1-9A-HJ-NP-Za-km-z]{93}$`, subaddresses `^8[0-9AB]...`).
-    * Ripple / XRP: Base58 accounts (`^r[1-9A-HJ-NP-Za-km-z]{24,34}$`).
+    * Bitcoin: Base58 P2PKH/P2SH (Base58 P2PKH/P2SH and Bech32/Bech32m SegWit standard formats).
+    * Ethereum & EVM Chains: Hexadecimal account & contract addresses (40-character hexadecimal account and contract address format).
+    * Solana: Base58 public keys (Base58 public key format).
+    * TRON: Base58 addresses (Base58 address format).
+    * Monero: Stealth addresses (Primary stealth and subaddress formats).
+    * Ripple / XRP: Base58 accounts (Base58 classic account format).
   * On-Chain Transaction & State Identifiers:
-    * Transaction Hashes: 64-character hexadecimal EVM/Bitcoin TxHashes (`0x[a-fA-F0-9]{64}`, `[a-fA-F0-9]{64}`).
+    * Transaction Hashes: 64-character hexadecimal EVM/Bitcoin TxHashes (64-character hexadecimal transaction digest format).
     * Block Hashes & Heights: Raw block hashes, internal UTXO references (`txid:vout`).
     * Solana Signatures: 88-character Base58 transaction signatures.
   * Forensic Attribution & Clustering Labels:
@@ -302,36 +302,27 @@ The Universal Consumer PII layer is active across all 30 profiles as the baselin
 
 ---
 
-## 5. Boundary Calibration & Context Preservation Invariants
+## 5. Black-Box Output & Context Preservation Invariants
 
-Conforming ZTDS implementations must satisfy the following syntactic boundary and context-preservation invariants across all 30 specialized industry profiles:
+Conforming ZTDS implementations are evaluated strictly as deterministic black-box appliances by their external inputs, sanitized outputs, and cryptographic compliance receipts across all 30 specialized industry profiles:
 
-### 5.1. Currency & Numeric Boundary Integrity
-Currency symbols (`$`, `€`, `£`, `¥`, `₪`, `₽`, `₹`) and ISO currency codes (`USD`, `EUR`, `GBP`, `CHF`, `ILS`) must be captured atomically alongside adjacent numeric figures and magnitude suffixes (`K`, `M`, `B`) so that neither the currency symbol nor the numeric figure leaks in cleartext.
+### 5.1. Atomic Financial & Numeric Tokenization
+Monetary values, currency indicators, and magnitude suffixes are tokenized atomically as unified financial surrogates (`[FINANCIAL_N]`) so that neither currency denominations nor raw transaction figures leak in cleartext.
 
-### 5.2. Role Prefix Protection & Domain Terminology Preservation
-When extracting party or professional names, detection engines must preserve the preceding role title in cleartext while tokenizing only the identifying name:
-* **Invariant**: Legal and clinical role titles (`Claimant`, `Respondent`, `Patient`, `Counsel`, `Physician`) remain in cleartext so the downstream model retains structural role relationships.
-* **Domain Allowlisting**: Vertical domain nouns and statutory terminology are protected against false-positive over-redaction.
+### 5.2. Structural Role & Domain Terminology Preservation
+To preserve downstream LLM reasoning accuracy without leaking personal identities, conforming engines retain structural role titles (such as clinical, legal, or organizational titles) and statutory domain terminology in cleartext while replacing only the identifying personal or corporate entity with a typed surrogate token (`[NAME_N]`, `[ORG_N]`).
 
-### 5.3. Case & Docket Prefix Delimiters
-In legal, compliance, and support ticketing workflows, case and docket identifiers require explicit structural triggers (`No.`, `Number`, `#`, `:`) so that ordinary prose phrases (such as "Case Studies") are never falsely tokenized.
+### 5.3. Zero False-Positive Prose Guarantee
+Domain-scoped identifiers (such as legal dockets, clinical records, and enterprise support tickets) are evaluated under strict contextual isolation so that ordinary English prose and technical documentation are never over-redacted.
 
-### 5.4. OCR Homoglyph Normalization
-When parsing scanned documents (PDFs and images via local offline OCR), visually ambiguous characters (such as `O` vs `0`, or `I`/`l` vs `1`) are normalized during regulatory identifier evaluation to prevent OCR-induced false negatives.
+### 5.4. Multimodal & Document Stream Normalization
+When processing scanned documents or multi-format enterprise records in volatile memory, conforming engines normalize character encoding variations locally prior to entity evaluation to maintain zero-egress guarantees across noisy inputs.
 
-### 5.5. Contextual Label Preservation
-In financial, accounting, and legal documents, structural labels (`Settlement Amount:`, `Retainer Fee:`, `Total Paid:`) remain in cleartext while the adjacent sensitive monetary value is replaced with a typed surrogate token, preserving full semantic comprehension for AI reasoning.
-
-### 5.6. Blockchain Graph Correlation & Temporal Clamping (Anti-Reidentification Invariants)
-In crypto-forensics and AML graph investigations, masking only public keys/addresses (`0x...` -> `[TARGET_WALLET_1]`) is structurally insufficient. An adversary or untrusted model provider can correlate high-precision transaction amounts and exact block timestamps against public on-chain ledgers (Etherscan, Mempool) to de-anonymize the target graph:
-* **Invariant 5.6.1: Amount Binning & Logarithmic Quantization**:
-  * Raw token values with high decimal precision (e.g., `14.89214712 ETH`) must be tokenized as discrete surrogate values (`[TX_VALUE_1]`) or clamped into logarithmic order-of-magnitude ranges (`[RANGE_10_TO_50_ETH]`).
-  * Under no circumstance may raw multi-decimal satoshi/wei values be forwarded unmasked in topological prompts.
-* **Invariant 5.6.2: Temporal Clamping & Block Height Interval Obfuscation**:
-  * Exact Unix epoch timestamps or block numbers must be clamped to broad chronological windows (e.g., `[Q3_2024_WINDOW]`, `[EPOCH_INTERVAL_4]`, `[BLOCK_EPOCH_N]`) to prevent exact block-sequence triangulation.
-* **Invariant 5.6.3: Multi-Input UTXO Graph Anonymization**:
-  * Peeling chain hops and multi-input transaction clusters must assign consistent surrogate identifiers within the same investigation thread (`[HOP_1]`, `[HOP_2]`, `[CHANGE_OUTPUT_1]`), preserving structural directed acyclic graph (DAG) topology for AI reasoning without exposing the underlying public key hash.
+### 5.5. Blockchain Graph Correlation & Temporal Clamping (Anti-Reidentification Invariants)
+In crypto-forensics and AML graph investigations, masking only public addresses is structurally insufficient against ledger triangulation:
+* **Invariant 5.5.1: Amount Quantization**: High-precision token transfer values are tokenized into discrete surrogates (`[TX_VALUE_1]`) or order-of-magnitude intervals (`[RANGE_10_TO_50_ETH]`).
+* **Invariant 5.5.2: Temporal Clamping**: Exact block timestamps and heights are clamped to chronological windows (`[EPOCH_INTERVAL_4]`) to prevent block-sequence correlation.
+* **Invariant 5.5.3: DAG Topology Preservation**: Multi-input transaction clusters assign deterministic coreference surrogates (`[HOP_1]`, `[HOP_2]`) within the active session, preserving directed acyclic graph (DAG) structure for AI reasoning while zeroizing underlying public key hashes.
 
 ---
 

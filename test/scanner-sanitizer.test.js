@@ -42,7 +42,7 @@ console.log('--> Test 1: Mode 1 Workbench DOM Elements & Interactive Controls');
   
   assert(html.includes('id="tabBtnSurrogates"'), 'Must have #tabBtnSurrogates button');
   assert(html.includes('id="tabBtnRoundtrip"'), 'Must have #tabBtnRoundtrip button');
-  assert(html.includes('id="tabBtnSessionMap"'), 'Must have #tabBtnSessionMap button');
+  assert(html.includes('id="tabBtnTokenMap"'), 'Must have #tabBtnTokenMap button');
   assert(html.includes('id="btnCopySanitized"'), 'Must have #btnCopySanitized button');
   assert(html.includes('id="surrogateMetricsLabel"'), 'Must have #surrogateMetricsLabel element');
   assert(html.includes('id="btnCopyTokenMap"'), 'Must have #btnCopyTokenMap button');
@@ -149,7 +149,7 @@ console.log('--> Test 4: RFC v1.0 Invariant 2: Bijective Lossless Round-Trip');
     (async () => {
       const original = "Dr. Sarah Vance prescribed Nitroglycerin to Alexander Wright (DOB: 1984-05-12, SSN: 123-45-6789). Contact svance@mercyhealth.org or call (555) 349-8821.";
       const result = await sanitizeInRAM(original);
-      const reversed = restoreCleartextInRAM(result.sanitized, result.sessionMap);
+      const reversed = restoreCleartextInRAM(result.sanitized, result.tokenMap);
       return { original, reversed: reversed.restored };
     })()
   `;

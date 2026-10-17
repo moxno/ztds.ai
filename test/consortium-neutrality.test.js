@@ -209,4 +209,55 @@ console.log('\n--> Test 4: Institutional Handoff Routing & Permanent Rule Integr
   console.log('    [PASS] Institutional handoff routing and recognition matrices verified.');
 }
 
-console.log('\n[PASS] All 4 ZTDS Consortium Neutrality, Two-Brand Firewall & Black-Box Guard Tests Passed!\n');
+// Test 5: Repository-Wide 7-Vector & Zero-Hebrew Ratchet (git ls-files)
+console.log('\n--> Test 5: Repository-Wide 7-Vector & Zero-Hebrew Ratchet (All Tracked Files)');
+{
+  const { execSync } = require('child_process');
+  const trackedFiles = execSync('git ls-files', { cwd: ROOT, encoding: 'utf8' })
+    .trim()
+    .split('\n')
+    .filter(Boolean);
+
+  const hebrewRegex = /[\u0590-\u05FF]/;
+  const patAppNum = ['331', '905'].join('');
+  const patFilingDate = ['14', '09', '2026'].join('/');
+  const patDeadlineDate = ['14', '09', '2027'].join('/');
+  const tmFilingDate = ['20', '09', '2026'].join('/');
+  const tmDeadlineDate = ['20', '03', '2027'].join('/');
+  const wipoDasCode = ['B1', '7B'].join('');
+  const attorneyDomain = ['levy', 'patent'].join('');
+  const privRepo = ['github.com/moxno/', 'PrivacyScrubber'].join('');
+  const mrrTarget = ['40,000', ' ILS'].join('');
+
+  let checkedCount = 0;
+  for (const relPath of trackedFiles) {
+    // Skip rule/skill definitions that document the forbidden patterns
+    if (relPath.startsWith('.agents/') || relPath.startsWith('.agent/') || relPath.startsWith('test/')) {
+      continue;
+    }
+    const fullPath = path.join(ROOT, relPath);
+    if (!fs.existsSync(fullPath) || fs.statSync(fullPath).isDirectory()) continue;
+    if (/\.(png|jpg|jpeg|webp|ico|woff2?|ttf|eot|pdf|zip)$/i.test(relPath)) continue;
+
+    const content = fs.readFileSync(fullPath, 'utf8');
+    checkedCount++;
+
+    assert(!hebrewRegex.test(content), `[Zero-Hebrew Violation] Hebrew character found in tracked file: ${relPath}`);
+    assert(!content.includes(patAppNum), `[V6 Patent Number Leak] Found in tracked file: ${relPath}`);
+    assert(!content.includes(patFilingDate), `[V6 Patent Filing Date Leak] Found in tracked file: ${relPath}`);
+    assert(!content.includes(patDeadlineDate), `[V6 Patent Priority Deadline Leak] Found in tracked file: ${relPath}`);
+    assert(!content.includes(tmFilingDate), `[V6 Trademark Filing Date Leak] Found in tracked file: ${relPath}`);
+    assert(!content.includes(tmDeadlineDate), `[V6 Trademark Deadline Leak] Found in tracked file: ${relPath}`);
+    assert(!new RegExp(`\\b${wipoDasCode}\\b`).test(content), `[V6 WIPO DAS Code Leak] Found in tracked file: ${relPath}`);
+    assert(!new RegExp(attorneyDomain, 'i').test(content), `[V6 Attorney Email Leak] Found in tracked file: ${relPath}`);
+    assert(!new RegExp(privRepo, 'i').test(content), `[V6 Private Repo URL Leak] Found in tracked file: ${relPath}`);
+    assert(!content.includes(mrrTarget), `[V5 Internal MRR Target Leak] Found in tracked file: ${relPath}`);
+    assert(!/\bsessionMap\b/i.test(content), `[V2 Internal Key Leak: sessionMap] Found in tracked file: ${relPath}`);
+    assert(!/\bFUZZY_RECOVERY_REGEX\b/.test(content), `[V2 Internal Key Leak: FUZZY_RECOVERY_REGEX] Found in tracked file: ${relPath}`);
+    assert(!/\banti-cannibalization\b/i.test(content), `[V5 Internal GTM Jargon: anti-cannibalization] Found in tracked file: ${relPath}`);
+  }
+
+  console.log(`    [PASS] Scanned ${checkedCount} tracked files across git index: 0 Hebrew characters, 0 IP/Date leaks, 0 internal keys.`);
+}
+
+console.log('\n[PASS] All 5 ZTDS Consortium Neutrality, Two-Brand Firewall & Black-Box Guard Tests Passed!\n');

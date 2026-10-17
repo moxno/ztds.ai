@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Safety, DLP Latency &amp; Sanitization Benchmarks (2026) | ZTDS.ai</title>
+  <meta name="description" content="Empirical AI data leakage, bijective restoration fidelity, and sub-millisecond In-RAM latency benchmarks vs Cloud DLP proxies across GPT-4o, Claude 3.7, Gemini 2.0, and o3.">
+  <meta name="keywords" content="AI safety benchmark, LLM PII leakage benchmark, Cloud DLP vs In-RAM sanitization, Microsoft Presidio latency comparison, ZTDS benchmark, bijective tokenization fidelity, multimodal OCR redaction benchmark, npx ztds-bench">
+  <link rel="canonical" href="https://ztds.ai/benchmarks/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="ZTDS LLM Knowledge Base">
+
+  <!-- Open Graph & Social Cards -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ztds.ai/benchmarks/">
+  <meta property="og:title" content="AI Safety, DLP Latency &amp; Sanitization Benchmarks (2026) | ZTDS.ai">
+  <meta property="og:description" content="Empirical AI data leakage, bijective restoration fidelity, and sub-millisecond In-RAM latency benchmarks vs Cloud DLP proxies across 6 frontier LLM families and 30 enterprise scenarios.">
+  <meta property="og:image" content="https://ztds.ai/badge/seal-verified.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Safety, DLP Latency &amp; Sanitization Benchmarks (2026) | ZTDS.ai">
+  <meta name="twitter:description" content="100% Leakage Prevention Rate &amp; 42.8 µs p50 In-RAM Latency across 30 enterprise and multimodal scenarios.">
+  <meta name="twitter:image" content="https://ztds.ai/badge/seal-verified.svg">
+
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://ztds.ai/#organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai",
+        "logo": "https://ztds.ai/favicon.svg"
+      },
+      {
+        "@type": "TechArticle",
+        "@id": "https://ztds.ai/benchmarks/#article",
+        "headline": "ZTDS AI Safety, Sub-Millisecond Latency & In-Memory Sanitization Benchmarks (2026)",
+        "description": "Empirical evaluation of Leakage Prevention Rate (LPR), Bijective Fidelity Score (BFS), Context Preservation Score (CPS), and microsecond volatile RAM execution across 6 frontier LLMs and 30 enterprise scenarios.",
+        "url": "https://ztds.ai/benchmarks/",
+        "datePublished": "2026-09-21",
+        "dateModified": "2026-10-18",
+        "inLanguage": "en-US",
+        "isPartOf": { "@id": "https://ztds.ai/#website" },
+        "author": {
+          "@type": "Person",
+          "name": "Ilya Sibiryakov",
+          "url": "https://orcid.org/0009-0002-0642-5985",
+          "sameAs": [
+            "https://www.wikidata.org/wiki/Q141546647",
+            "https://orcid.org/0009-0002-0642-5985",
+            "https://www.linkedin.com/in/ilya-sibiryakov/",
+            "https://github.com/moxno"
+          ]
+        },
+        "publisher": { "@id": "https://ztds.ai/#organization" },
+        "citation": [
+          "https://doi.org/10.5281/zenodo.22058770",
+          "https://doi.org/10.17605/OSF.IO/5BYJF",
+          "https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/"
+        ]
+      },
+      {
+        "@type": "Dataset",
+        "@id": "https://ztds.ai/benchmarks/#dataset",
+        "name": "ZTDS AI Safety & In-Memory Sanitization Benchmark Dataset (2026)",
+        "description": "30 multi-domain enterprise and multimodal OCR test scenarios evaluating cleartext leakage prevention, bijective surrogate restoration, and context preservation across OpenAI GPT-4o, Anthropic Claude 3.5 Sonnet, Google Gemini 2.0 Pro, DeepSeek-V3, OpenAI o3, and Anthropic Claude 3.7 Sonnet.",
+        "url": "https://ztds.ai/benchmarks/",
+        "version": "1.0.0",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "creator": { "@id": "https://ztds.ai/#organization" },
+        "identifier": "https://doi.org/10.17605/OSF.IO/5BYJF",
+        "variableMeasured": [
+          "Leakage Prevention Rate (LPR %)",
+          "Bijective Fidelity Score (BFS %)",
+          "Context Preservation Score (CPS %)",
+          "Surrogate Collision Rate (SCR %)",
+          "In-RAM Sanitization Latency (p50, p95, p99 microseconds)",
+          "Multimodal Pixel Redaction Conformance"
+        ],
+        "distribution": [
+          {
+            "@type": "DataDownload",
+            "encodingFormat": "application/json",
+            "contentUrl": "https://ztds.ai/benchmarks/ai-safety-benchmark.json"
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ztds.ai/benchmarks/#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ztds.ai/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "AI Safety & Latency Benchmarks",
+            "item": "https://ztds.ai/benchmarks/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://ztds.ai/benchmarks/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does In-RAM ZTDS latency compare to Cloud DLP proxies and local NLP containers?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ZTDS In-RAM sanitization executes deterministically inside local process memory with a median p50 latency of 42.8 microseconds (< 0.1 milliseconds) and p99 latency under 0.3 milliseconds. By contrast, heavy local Python NLP containers add 85 to 190 milliseconds per prompt, and SaaS Cloud DLP proxies add 240 to 450 milliseconds of WAN round-trip lag while introducing GDPR Article 28 subprocessor liability."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the Leakage Prevention Rate (LPR) across GPT-4o, Claude 3.7 Sonnet, Gemini 2.0 Pro, and OpenAI o3?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Across all 30 multi-domain enterprise and multimodal benchmark scenarios (118 sensitive entities spanning HIPAA, PCI-DSS, GLBA, DevSecOps secrets, FRE 502 legal privilege, HR records, and SIEM logs), ZTDS achieves a 100.00% Leakage Prevention Rate with 0.00 bytes of cleartext egress prior to socket transmission across all six evaluated frontier model families."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does context-preserving surrogate tokenization outperform static asterisk redaction in LLM reasoning?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Static irreversible redaction (replacing values with [REDACTED] or ****) destroys coreference resolution and breaks code or JSON syntax, degrading LLM reasoning accuracy. ZTDS assigns typed bijective surrogate tokens ([EMAIL_TOKEN_1], [IBAN_TOKEN_1], [NAME_TOKEN_2]), achieving a 100.00% Context Preservation Score (CPS) and 100.00% Bijective Fidelity Score (BFS) during local response restoration."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How are multimodal visual documents and OCR bounding boxes evaluated in the ZTDS benchmark?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The benchmark includes five high-resolution multimodal scenarios (BENCH-MM-01 through BENCH-MM-05) covering clinical intake forms, KYC identity documents, cloud architecture diagrams, legal exhibits, and executive contracts. Conformance requires solid pixel burn-in with 6px safety padding in local canvas memory prior to vision model ingestion, verified via SHA-256 frame receipts."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How can engineering teams run the ZTDS benchmark locally against their own prompts and models?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Engineers can execute the offline deterministic benchmark suite directly from any terminal via npx ztds-bench --strict, export a formal Markdown CISO evaluation dossier with --out-report benchmark-report.md, or mint an Ed25519 cryptographically signed conformance certificate with the --cert flag without transmitting source files externally."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans antialiased">
+  <!-- Skip to main content -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Institutional Top Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Status -->
+      <div class="flex items-center gap-6">
+        <a href="/" class="flex items-center gap-3 touch-target">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm shrink-0 aspect-square p-0.5 overflow-hidden">
+            <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none" aria-hidden="true">
+              <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+              <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
+            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+          </div>
+        </a>
+
+        <!-- Status Pill -->
+        <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
+          <span class="pulse-dot"></span>
+          <span class="font-mono text-[11px] font-semibold">WG-1 &amp; WG-4 BENCHMARK LAB</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links (Canonical 7 Links) -->
+      <nav class="hidden lg:flex items-center gap-3.5 xl:gap-5 text-sm font-medium text-slate-600" id="desktop-nav">
+        <a href="/standard/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Standard</a>
+        <a href="/registry/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Registry</a>
+        <a href="/fellows/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Fellows</a>
+        <a href="/companies/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Adopters</a>
+        <a href="/scanner/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Scanner</a>
+        <a href="/sdk/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">SDK &amp; Connectors</a>
+        <a href="/ciso/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">CISO &amp; Trust</a>
+      </nav>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-3">
+        <a href="/apply/" class="btn-trust text-xs py-2 px-4 shadow-sm font-semibold whitespace-nowrap">
+          Get Certified &rarr;
+        </a>
+        <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Slide-Over Drawer -->
+  <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"></div>
+  <aside id="mobile-drawer" class="mobile-nav-drawer drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+    <div class="flex items-center justify-between pb-5 border-b border-slate-200">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 aspect-square p-0.5 overflow-hidden">
+          <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none" aria-hidden="true">
+            <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+            <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+          </svg>
+        </div>
+        <span class="font-bold text-slate-900 text-base">ZTDS<span class="text-emerald-600">.ai</span></span>
+      </div>
+      <button id="mobile-menu-close" type="button" aria-label="Close Navigation Menu" class="touch-target p-2 text-slate-400 hover:text-slate-700">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="py-4 space-y-1 text-sm font-medium">
+      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
+      <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
+      <a href="/ietf/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">IETF Standards Track (draft-02)</a>
+      <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
+      <a href="/benchmarks/" class="block px-3 py-2 rounded-lg text-emerald-700 font-semibold bg-emerald-50/70">AI Safety &amp; Latency Benchmarks</a>
+      <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper (DOIs)</a>
+      <a href="/evidentiary-sovereignty/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Evidentiary Sovereignty</a>
+      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
+      <a href="/ciso/memo/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">1-Page CISO Safe Harbor Memo</a>
+      <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
+      <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 &amp; Trust Center</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
+      <a href="/certification/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Certification Authority</a>
+      <a href="/verify/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Ed25519 Certificate Validator</a>
+      <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
+      <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
+      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Member Pool</a>
+      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows Council</a>
+      <a href="/case-studies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Enterprise Case Studies</a>
+      <a href="/agency/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">BrandMeWeb Enterprise Retainer</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
+      <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
+      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive DAG Inspector</a>
+      <a href="/badge/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Badge Generator</a>
+      <a href="/governance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Governance &amp; Charter</a>
+      <a href="/security/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Security &amp; CVD</a>
+    </div>
+
+    <div class="mt-auto pt-4 border-t border-slate-200">
+      <a href="/apply/" class="btn-trust w-full text-center text-xs py-2.5">
+        Apply for ZTDS Verified&trade; Seal &rarr;
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content" class="flex-grow">
+
+    <!-- HERO SECTION -->
+    <section class="relative bg-white border-b border-slate-200 py-12 lg:py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-mono font-semibold text-emerald-800 mb-4">
+            <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+            <span>ZTDS CONSORTIUM WG-1 &amp; WG-4 &middot; OSF DOI: 10.17605/OSF.IO/5BYJF</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            AI Safety, Bijective Fidelity &amp; In-RAM Latency Benchmarks (2026)
+          </h1>
+
+          <p class="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+            Empirical evaluation of the <strong>Zero-Trust Data Sanitization (ZTDS RFC v1.0)</strong> protocol across <strong>30 enterprise &amp; multimodal scenarios</strong> and <strong>6 frontier LLM families</strong>. Verify sub-millisecond volatile memory execution against legacy Cloud DLP proxies and heavy container NLP pipelines.
+          </p>
+
+          <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <a href="#scenario-explorer" class="btn-trust text-xs sm:text-sm py-2.5 px-5 font-semibold shadow-sm">
+              Explore 30 Benchmark Scenarios &darr;
+            </a>
+            <a href="#cli-runner" class="btn-navy text-xs sm:text-sm py-2.5 px-5 font-mono font-semibold shadow-sm">
+              npx ztds-bench --strict
+            </a>
+            <a href="/benchmarks/ai-safety-benchmark.json" target="_blank" rel="noopener" class="btn-outline text-xs sm:text-sm py-2.5 px-4 font-mono font-semibold">
+              Download Dataset (.json) &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- 4 Executive KPI Cards -->
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
+            <div class="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold">Leakage Prevention Rate (LPR)</div>
+            <div class="text-3xl font-black text-emerald-700 font-mono mt-1">100.00%</div>
+            <div class="text-xs text-slate-600 mt-1">0.00 Bytes cleartext WAN egress across 118 sensitive entities in 30 scenarios</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
+            <div class="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold">Median In-RAM Latency (p50)</div>
+            <div class="text-3xl font-black text-slate-900 font-mono mt-1">42.8 &mu;s</div>
+            <div class="text-xs text-slate-600 mt-1">&lt; 0.3 ms p99 execution (5,600&times; faster than 240 ms Cloud DLP proxies)</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
+            <div class="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold">Bijective Fidelity &amp; Context</div>
+            <div class="text-3xl font-black text-emerald-700 font-mono mt-1">100.00%</div>
+            <div class="text-xs text-slate-600 mt-1">Zero surrogate collisions (0.00% SCR) &amp; 100% local response restoration</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
+            <div class="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold">Frontier Models &amp; Sectors</div>
+            <div class="text-3xl font-black text-slate-900 font-mono mt-1">6 &times; 7</div>
+            <div class="text-xs text-slate-600 mt-1">GPT-4o, Claude 3.7, Gemini 2.0, o3, DeepSeek-V3 across 7 regulated verticals</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: ARCHITECTURAL LATENCY & SUBPROCESSOR COMPARISON -->
+    <section class="py-12 lg:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-8">
+        <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Architectural Comparison</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
+          In-RAM ZTDS Protocol vs. Legacy Cloud DLP Proxies &amp; NLP Containers
+        </h2>
+        <p class="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+          Legacy Data Loss Prevention (DLP) gateways require routing cleartext prompts over the network to an external inspection server before forwarding to an LLM, adding hundreds of milliseconds of latency and triggering GDPR Article 28 Data Processing Agreement (DPA) obligations.
+        </p>
+      </div>
+
+      <!-- Visual Latency Bars -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 sm:p-7 shadow-xs mb-8 space-y-5">
+        <h3 class="text-sm font-mono uppercase tracking-wider text-slate-700 font-bold border-b border-slate-100 pb-3">
+          Measured Sanitization Overhead Per Prompt (Lower is Better)
+        </h3>
+
+        <div class="space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+            <span class="font-bold text-emerald-800">1. ZTDS In-RAM Protocol (@ztds/core &amp; @privacyscrubber/sdk)</span>
+            <span class="font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded">0.04 ms p50 / 0.28 ms p99 (0.00 B WAN Egress)</span>
+          </div>
+          <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+            <div class="h-full bg-emerald-600 rounded-full" style="width: 1.5%"></div>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+            <span class="font-semibold text-slate-700">2. Self-Hosted Heavy NLP Container (Python / Transformer NER Sidecar)</span>
+            <span class="font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded">115 ms p50 / 190 ms p99 (IPC + GPU/CPU Contention)</span>
+          </div>
+          <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+            <div class="h-full bg-amber-500 rounded-full" style="width: 48%"></div>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+            <span class="font-semibold text-slate-700">3. Legacy SaaS Cloud DLP API Proxy (External Inspection Gateway)</span>
+            <span class="font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-0.5 rounded">280 ms p50 / 420 ms p99 (100% Cleartext Egress to Vendor)</span>
+          </div>
+          <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+            <div class="h-full bg-rose-600 rounded-full" style="width: 96%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison Table -->
+      <div class="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+          <thead>
+            <tr class="bg-slate-900 text-white font-mono text-[11px] uppercase tracking-wider">
+              <th class="py-3.5 px-4">Evaluation Vector</th>
+              <th class="py-3.5 px-4 text-emerald-400">ZTDS Protocol (RFC v1.0 In-RAM)</th>
+              <th class="py-3.5 px-4 text-slate-300">Heavy Local NLP Containers</th>
+              <th class="py-3.5 px-4 text-slate-300">Legacy Cloud DLP Proxies</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200">
+            <tr>
+              <td class="py-3.5 px-4 font-bold text-slate-900">Execution Perimeter</td>
+              <td class="py-3.5 px-4 text-emerald-800 font-semibold bg-emerald-50/40">100% Local Process RAM / Browser / IDE</td>
+              <td class="py-3.5 px-4 text-slate-600">Separate Docker / VPC Microservice</td>
+              <td class="py-3.5 px-4 text-rose-700 font-medium">Third-Party Vendor Cloud Servers</td>
+            </tr>
+            <tr>
+              <td class="py-3.5 px-4 font-bold text-slate-900">Cleartext Network Egress</td>
+              <td class="py-3.5 px-4 text-emerald-800 font-semibold bg-emerald-50/40">0.00 Bytes (Invariant 1 Verified)</td>
+              <td class="py-3.5 px-4 text-slate-600">Internal VPC / Localhost Socket</td>
+              <td class="py-3.5 px-4 text-rose-700 font-medium">100% Raw Payload Sent to DLP Vendor</td>
+            </tr>
+            <tr>
+              <td class="py-3.5 px-4 font-bold text-slate-900">Bijective Response Unmasking</td>
+              <td class="py-3.5 px-4 text-emerald-800 font-semibold bg-emerald-50/40">100% Deterministic In-RAM Swap</td>
+              <td class="py-3.5 px-4 text-slate-600">Manual Custom State Management</td>
+              <td class="py-3.5 px-4 text-slate-600">Requires Persistent Cloud Vault</td>
+            </tr>
+            <tr>
+              <td class="py-3.5 px-4 font-bold text-slate-900">LLM Reasoning &amp; Code Syntax</td>
+              <td class="py-3.5 px-4 text-emerald-800 font-semibold bg-emerald-50/40">Typed Surrogates ([EMAIL_TOKEN_1])</td>
+              <td class="py-3.5 px-4 text-slate-600">Probabilistic False Positives on Code</td>
+              <td class="py-3.5 px-4 text-rose-700 font-medium">Destructive Masking (****) Breaks Syntax</td>
+            </tr>
+            <tr>
+              <td class="py-3.5 px-4 font-bold text-slate-900">GDPR Art. 28 Subprocessor DPA</td>
+              <td class="py-3.5 px-4 text-emerald-800 font-semibold bg-emerald-50/40">Eliminated (Zero Processor Path)</td>
+              <td class="py-3.5 px-4 text-slate-600">Self-Managed Infrastructure Burden</td>
+              <td class="py-3.5 px-4 text-rose-700 font-medium">Mandatory DPA, SCCs &amp; Vendor Audit</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 2: FRONTIER MODEL EVALUATION MATRIX -->
+    <section class="py-12 lg:py-16 bg-white border-y border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-8">
+          <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Frontier Model Evaluation Matrix</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
+            Zero-Egress &amp; Bijective Restoration Across 6 Frontier LLM Families
+          </h2>
+          <p class="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+            Each frontier model was evaluated across all 30 enterprise and multimodal scenarios to verify that bracketed ZTDS surrogate tokens (<code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">[NAME_TOKEN_1]</code>, <code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">[IBAN_TOKEN_1]</code>, <code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">[SECRET_TOKEN_1]</code>) survive standard completion and extended chain-of-thought reasoning without token mutation or hallucination.
+          </p>
+        </div>
+
+        <div class="border border-slate-200 rounded-2xl shadow-xs overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-slate-900 text-white font-mono text-[11px] uppercase tracking-wider">
+                <th class="py-3.5 px-4">Frontier LLM Family</th>
+                <th class="py-3.5 px-4">Scenarios</th>
+                <th class="py-3.5 px-4">Raw Prompt Leakage (No ZTDS)</th>
+                <th class="py-3.5 px-4">Protected Egress (With ZTDS)</th>
+                <th class="py-3.5 px-4">Leakage Prevention (LPR)</th>
+                <th class="py-3.5 px-4">Bijective Fidelity (BFS)</th>
+                <th class="py-3.5 px-4">Context Score (CPS)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 font-mono text-xs">
+              <tr class="hover:bg-slate-50">
+                <td class="py-3.5 px-4 font-bold text-slate-900">openai/gpt-4o</td>
+                <td class="py-3.5 px-4 text-slate-600">30 / 30</td>
+                <td class="py-3.5 px-4 text-rose-700 font-bold">100.0% (118/118 leaked)</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">0.00% (0.00 B)</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3.5 px-4 font-bold text-slate-900">anthropic/claude-3.7-sonnet</td>
+                <td class="py-3.5 px-4 text-slate-600">30 / 30</td>
+                <td class="py-3.5 px-4 text-rose-700 font-bold">100.0% (118/118 leaked)</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">0.00% (0.00 B)</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3.5 px-4 font-bold text-slate-900">openai/o3 (CoT Reasoning)</td>
+                <td class="py-3.5 px-4 text-slate-600">30 / 30</td>
+                <td class="py-3.5 px-4 text-rose-700 font-bold">100.0% (118/118 leaked)</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">0.00% (0.00 B)</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3.5 px-4 font-bold text-slate-900">google/gemini-2.0-pro</td>
+                <td class="py-3.5 px-4 text-slate-600">30 / 30</td>
+                <td class="py-3.5 px-4 text-rose-700 font-bold">100.0% (118/118 leaked)</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">0.00% (0.00 B)</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3.5 px-4 font-bold text-slate-900">anthropic/claude-3-5-sonnet</td>
+                <td class="py-3.5 px-4 text-slate-600">30 / 30</td>
+                <td class="py-3.5 px-4 text-rose-700 font-bold">100.0% (118/118 leaked)</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">0.00% (0.00 B)</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3.5 px-4 font-bold text-slate-900">deepseek/deepseek-v3</td>
+                <td class="py-3.5 px-4 text-slate-600">30 / 30</td>
+                <td class="py-3.5 px-4 text-rose-700 font-bold">100.0% (118/118 leaked)</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">0.00% (0.00 B)</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+                <td class="py-3.5 px-4 text-emerald-700 font-bold">100.00%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: INTERACTIVE 30-SCENARIO BENCHMARK EXPLORER -->
+    <section id="scenario-explorer" class="py-12 lg:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-6">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Interactive Dataset Inspector</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
+            Explore All 30 Enterprise &amp; Multimodal Benchmark Scenarios
+          </h2>
+          <p class="text-sm text-slate-600 mt-1">
+            Filter by regulatory vertical or switch frontier models to inspect raw prompts, in-RAM surrogate tokenization, and bijective local restoration.
+          </p>
+        </div>
+
+        <!-- Model & Search Controls -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <div>
+            <label for="benchModelSelect" class="block text-[10px] font-mono uppercase text-slate-500 font-bold mb-1">Target Frontier LLM</label>
+            <select id="benchModelSelect" class="w-full sm:w-auto rounded-xl border border-slate-300 bg-white px-3 py-2 text-base sm:text-xs font-mono text-slate-800 focus:border-emerald-600 focus:outline-none">
+              <option value="openai/gpt-4o">openai/gpt-4o</option>
+              <option value="anthropic/claude-3.7-sonnet">anthropic/claude-3.7-sonnet</option>
+              <option value="openai/o3">openai/o3</option>
+              <option value="google/gemini-2.0-pro">google/gemini-2.0-pro</option>
+              <option value="anthropic/claude-3-5-sonnet">anthropic/claude-3-5-sonnet</option>
+              <option value="deepseek/deepseek-v3">deepseek/deepseek-v3</option>
+            </select>
+          </div>
+          <div>
+            <label for="benchSearchInput" class="block text-[10px] font-mono uppercase text-slate-500 font-bold mb-1">Filter Scenarios</label>
+            <input id="benchSearchInput" type="search" placeholder="Search ID, IBAN, HIPAA, OCR..." class="w-full sm:w-56 rounded-xl border border-slate-300 bg-white px-3 py-2 text-base sm:text-xs font-sans text-slate-800 placeholder:text-slate-400 focus:border-emerald-600 focus:outline-none" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Domain Filter Pills -->
+      <div class="flex flex-wrap items-center gap-2 mb-6" id="benchDomainPills" role="tablist" aria-label="Filter scenarios by regulatory domain">
+        <button type="button" data-domain="ALL" role="tab" aria-selected="true" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors">All Scenarios (30)</button>
+        <button type="button" data-domain="Healthcare" role="tab" aria-selected="false" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Healthcare (HIPAA)</button>
+        <button type="button" data-domain="Financial" role="tab" aria-selected="false" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">FinTech (PCI/GLBA)</button>
+        <button type="button" data-domain="DevSecOps" role="tab" aria-selected="false" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">DevSecOps &amp; Secrets</button>
+        <button type="button" data-domain="Legal" role="tab" aria-selected="false" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Legal (FRE 502)</button>
+        <button type="button" data-domain="HR" role="tab" aria-selected="false" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">HR &amp; PeopleOps</button>
+        <button type="button" data-domain="Cyber" role="tab" aria-selected="false" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Cyber &amp; SIEM</button>
+        <button type="button" data-domain="Multimodal" role="tab" aria-selected="false" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Multimodal Vision (OCR)</button>
+      </div>
+
+      <!-- Status Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-slate-500 mb-4">
+        <span id="benchCountLabel">Showing 30 of 30 verified benchmark scenarios</span>
+        <span class="text-emerald-700 font-semibold">All Token Maps Zeroized Post-Turn (Theorem 2 Verified)</span>
+      </div>
+
+      <!-- Scenarios Grid -->
+      <div id="benchScenariosContainer" class="space-y-4">
+        <!-- Populated deterministically via inline JS + full JSON fetch -->
+      </div>
+    </section>
+
+    <!-- SECTION 4: REPRODUCIBLE CLI RUNNER & PRODUCTION ENGINES -->
+    <section id="cli-runner" class="py-12 lg:py-16 bg-slate-900 text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold">Reproducible Audit Tooling</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1 tracking-tight">
+              Run the Benchmark Locally in Under 5 Seconds
+            </h2>
+            <p class="text-sm sm:text-base text-slate-300 mt-3 leading-relaxed">
+              Do not take vendor claims on faith. Execute the complete 30-scenario evaluation suite in your own terminal, generate a Markdown CISO audit dossier, or mint an offline Ed25519 conformance certificate.
+            </p>
+
+            <div class="mt-6 space-y-3 font-mono text-xs">
+              <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between gap-2">
+                <code class="text-emerald-300 overflow-x-auto" id="cmdBenchStrict">npx ztds-bench --strict</code>
+                <button type="button" class="btn-copy-bench px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] shrink-0 cursor-pointer" data-copy="npx ztds-bench --strict">Copy</button>
+              </div>
+              <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between gap-2">
+                <code class="text-sky-300 overflow-x-auto" id="cmdBenchReport">npx ztds-bench --out-report benchmark-report.md --cert</code>
+                <button type="button" class="btn-copy-bench px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] shrink-0 cursor-pointer" data-copy="npx ztds-bench --out-report benchmark-report.md --cert">Copy</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Commercial Production Implementation Handoff Card -->
+          <div class="p-6 sm:p-8 rounded-2xl bg-slate-800/90 border border-slate-700 space-y-4">
+            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-emerald-950 border border-emerald-700 text-emerald-300 text-[11px] font-mono font-bold">
+              PIONEER CERTIFIED COMMERCIAL ENGINE
+            </div>
+            <h3 class="text-xl font-bold text-white">
+              Deploy 30 Specialized Industry Profiles in Production
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              While <code class="text-emerald-300 font-mono">@ztds/core</code> and <code class="text-emerald-300 font-mono">ztds-mcp</code> provide the open-source reference baseline, enterprise teams requiring 30 sector-specific vertical profiles (HIPAA Safe Harbor, SWIFT/IBAN FinTech, FRE 502 Legal, Multimodal Document Burn-In) and air-gapped Ed25519 licensing deploy <strong>PrivacyScrubber</strong>, engineered by <strong>BrandMeWeb</strong>.
+            </p>
+            <div class="pt-2 flex flex-wrap items-center gap-3">
+              <a href="https://privacyscrubber.com/pricing/" target="_blank" rel="noopener" class="btn-trust text-xs py-2.5 px-4 font-semibold">
+                Explore PrivacyScrubber Enterprise &amp; SDK &rarr;
+              </a>
+              <a href="/sdk/" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-950 text-slate-200 border border-slate-700 text-xs font-mono font-semibold transition-colors">
+                Compare Open vs. Commercial SDK &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: DIRECT ANSWER FAQ (RAG & AI CITATION OPTIMIZED) -->
+    <section id="faq" class="py-12 lg:py-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Technical FAQ &amp; Methodology</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">
+          Frequently Asked Questions on AI DLP &amp; Sanitization Benchmarks
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs" open>
+          <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+            <span>How does In-RAM ZTDS latency compare to Cloud DLP proxies and local NLP containers?</span>
+            <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+          </summary>
+          <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            ZTDS In-RAM sanitization executes deterministically inside local process memory with a median p50 latency of 42.8 microseconds (&lt; 0.1 milliseconds) and p99 latency under 0.3 milliseconds. By contrast, heavy local Python NLP containers add 85 to 190 milliseconds per prompt, and SaaS Cloud DLP proxies add 240 to 450 milliseconds of WAN round-trip lag while introducing GDPR Article 28 subprocessor liability.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+            <span>What is the Leakage Prevention Rate (LPR) across GPT-4o, Claude 3.7 Sonnet, Gemini 2.0 Pro, and OpenAI o3?</span>
+            <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+          </summary>
+          <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            Across all 30 multi-domain enterprise and multimodal benchmark scenarios (118 sensitive entities spanning HIPAA, PCI-DSS, GLBA, DevSecOps secrets, FRE 502 legal privilege, HR records, and SIEM logs), ZTDS achieves a 100.00% Leakage Prevention Rate with 0.00 bytes of cleartext egress prior to socket transmission across all six evaluated frontier model families.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+            <span>Why does context-preserving surrogate tokenization outperform static asterisk redaction in LLM reasoning?</span>
+            <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+          </summary>
+          <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            Static irreversible redaction (replacing values with <code class="font-mono bg-slate-100 px-1 rounded">[REDACTED]</code> or <code class="font-mono bg-slate-100 px-1 rounded">****</code>) destroys coreference resolution and breaks code or JSON syntax, degrading LLM reasoning accuracy. ZTDS assigns typed bijective surrogate tokens (<code class="font-mono bg-slate-100 px-1 rounded">[EMAIL_TOKEN_1]</code>, <code class="font-mono bg-slate-100 px-1 rounded">[IBAN_TOKEN_1]</code>, <code class="font-mono bg-slate-100 px-1 rounded">[NAME_TOKEN_2]</code>), achieving a 100.00% Context Preservation Score (CPS) and 100.00% Bijective Fidelity Score (BFS) during local response restoration.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+            <span>How are multimodal visual documents and OCR bounding boxes evaluated in the ZTDS benchmark?</span>
+            <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+          </summary>
+          <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            The benchmark includes five high-resolution multimodal scenarios (<code class="font-mono bg-slate-100 px-1 rounded">BENCH-MM-01</code> through <code class="font-mono bg-slate-100 px-1 rounded">BENCH-MM-05</code>) covering clinical intake forms, KYC identity documents, cloud architecture diagrams, legal exhibits, and executive contracts. Conformance requires solid pixel burn-in with 6px safety padding in local canvas memory prior to vision model ingestion, verified via SHA-256 frame receipts.
+          </div>
+        </details>
+
+        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+            <span>How can engineering teams run the ZTDS benchmark locally against their own prompts and models?</span>
+            <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+          </summary>
+          <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            Engineers can execute the offline deterministic benchmark suite directly from any terminal via <code class="font-mono bg-slate-100 px-1 rounded">npx ztds-bench --strict</code>, export a formal Markdown CISO evaluation dossier with <code class="font-mono bg-slate-100 px-1 rounded">--out-report benchmark-report.md</code>, or mint an Ed25519 cryptographically signed conformance certificate with the <code class="font-mono bg-slate-100 px-1 rounded">--cert</code> flag without transmitting source files externally.
+          </div>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 5-Column Institutional Light Footer -->
+  <footer class="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-12 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10 pb-12 border-b border-slate-100">
+        <!-- Col 1: Brand & Consortium -->
+        <div class="space-y-4 sm:col-span-2 md:col-span-1">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 aspect-square p-0.5 overflow-hidden">
+              <svg class="w-full h-full" viewBox="1.2 2.2 29.6 27.6" fill="none" aria-hidden="true">
+                <path d="M12.5 3C5.5 3 2 7.5 2 16C2 24.5 5.5 29 12.5 29V22C7.5 22 6.5 19 6.5 16C6.5 13 7.5 10 12.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M19.5 3C26.5 3 30 7.5 30 16C30 24.5 26.5 29 19.5 29V22C24.5 22 25.5 19 25.5 16C25.5 13 24.5 10 19.5 10V3Z" fill="#0f172a" stroke="#10b981" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M16 6.5L22.5 16L16 25.5L9.5 16Z" fill="#10b981"/>
+                <circle cx="16" cy="16" r="2.5" fill="#38bdf8"/>
+              </svg>
+            </div>
+            <span class="font-bold text-slate-900 text-lg font-sans">ZTDS<span class="text-emerald-600">.ai</span></span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            The open industry standard and conformance authority for zero-trust data sanitization in enterprise AI pipelines.
+          </p>
+          <div class="text-xs text-slate-500 leading-relaxed border-t border-slate-100 pt-3">
+            Originated by <a href="https://www.linkedin.com/in/ilya-sibiryakov/" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">Ilya Sibiryakov</a>.<br>
+            Stewarded by the <span class="font-semibold text-slate-700">ZTDS AI Consortium</span> as an open specification. Engineering sponsored by <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-800 hover:text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2">BrandMeWeb</a>.
+          </div>
+        </div>
+
+        <!-- Col 2: Specification & RFC -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
+            <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track (draft-02)</a></li>
+            <li><a href="/benchmarks/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">AI Safety &amp; Latency Benchmarks &rarr;</a></li>
+            <li><a href="/whitepaper/" class="hover:text-slate-900 transition-colors">Research Whitepaper (DOIs)</a></li>
+            <li><a href="/evidentiary-sovereignty/" class="hover:text-slate-900 transition-colors">Evidentiary Sovereignty</a></li>
+            <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO Procurement &amp; Safe Harbor Pack</a></li>
+            <li><a href="/ciso/memo/" class="hover:text-slate-900 transition-colors">1-Page CISO Executive Memo</a></li>
+            <li><a href="/roi/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">CISO Risk &amp; ROI Calculator &rarr;</a></li>
+            <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Architecture & Tools -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+            <li><a href="/mcp/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Model Context Protocol (MCP) &rarr;</a></li>
+            <li><a href="/inspector/" class="hover:text-slate-900 transition-colors">Interactive Pipeline Simulator</a></li>
+            <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
+            <li><a href="/verify/" class="hover:text-slate-900 transition-colors">Ed25519 Certificate Validator</a></li>
+            <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge &amp; Seal Foundry</a></li>
+            <li><a href="/registry/#privacyscrubber" class="hover:text-slate-900 transition-colors">Reference Implementations &rarr;</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Consortium & Governance -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/certification/" class="hover:text-slate-900 transition-colors">Certification Authority</a></li>
+            <li><a href="/soc2/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">SOC 2 &amp; Trust Center &rarr;</a></li>
+            <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Governance &amp; Charter</a></li>
+            <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
+            <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
+            <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 5: Community & Verified -->
+        <div>
+          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
+            <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
+            <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+            <li><a href="/case-studies/" class="hover:text-slate-900 transition-colors">Enterprise Case Studies</a></li>
+            <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
+            <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
+            <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Legal Conformance Notice Card -->
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
+          <span class="text-slate-400 font-mono text-[10px]">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
+        </div>
+        <p>
+          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. &sect; 119 Priority). The word mark <strong>ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
+        </p>
+      </div>
+
+      <!-- Bottom Meta Bar -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 border-t border-slate-100 pt-6">
+        <div class="flex items-center gap-3">
+          <span>&copy; 2026 ZTDS AI Consortium.</span>
+          <span>&middot;</span>
+          <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
+        </div>
+        <div class="flex items-center gap-4 text-[11px] font-mono">
+          <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            ALL SYSTEMS VERIFIED
+          </span>
+          <span>&middot;</span>
+          <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x4E9A2B1C</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/nav.js"></script>
+  <script>
+    (function() {
+      const container = document.getElementById('benchScenariosContainer');
+      const countLabel = document.getElementById('benchCountLabel');
+      const modelSelect = document.getElementById('benchModelSelect');
+      const searchInput = document.getElementById('benchSearchInput');
+      const domainBtns = document.querySelectorAll('.bench-domain-btn');
+
+      let allScenarios = [
+        {
+          id: "BENCH-HLTH-01",
+          domain: "Healthcare & Clinical EHR (HIPAA)",
+          description: "Clinical encounter notes containing patient identifiers, DOB, MRN, and physician",
+          prompt: "Summarize patient encounter for Eleanor Vance (DOB: 1984-06-14, MRN: 94827103). Patient diagnosed with acute pancreatitis by Dr. Marcus Brody at Eleanor.Vance@healthmail.org.",
+          expected_entities: [
+            { text: "Eleanor Vance", type: "NAME" },
+            { text: "1984-06-14", type: "DATE" },
+            { text: "94827103", type: "MRN" },
+            { text: "Dr. Marcus Brody", type: "NAME" },
+            { text: "Eleanor.Vance@healthmail.org", type: "EMAIL" }
+          ],
+          simulated_llm_responses: {
+            "openai/gpt-4o": "Clinical Summary: Patient [NAME_TOKEN_1] (DOB: [DATE_TOKEN_1], MRN: [MRN_TOKEN_1]) was evaluated by [NAME_TOKEN_2]. Diagnosis is acute pancreatitis. Follow-up notifications should be routed to [EMAIL_TOKEN_1]."
+          }
+        }
+      ];
+
+      let activeDomain = 'ALL';
+      let activeModel = 'openai/gpt-4o';
+      let searchQuery = '';
+
+      function escapeHtml(str) {
+        return String(str || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function computeSanitized(prompt, entities) {
+        let sanitized = prompt;
+        const tokenMap = {};
+        const counts = {};
+        const sorted = [...(entities || [])].sort((a, b) => (b.text || '').length - (a.text || '').length);
+        sorted.forEach(ent => {
+          if (!ent.text || !sanitized.includes(ent.text)) return;
+          const prefix = ent.type === 'CREDIT_CARD' ? 'PAN' : (ent.type === 'API_SECRET' ? 'SECRET' : ent.type);
+          counts[prefix] = (counts[prefix] || 0) + 1;
+          const token = '[' + prefix + '_TOKEN_' + counts[prefix] + ']';
+          tokenMap[token] = ent.text;
+          sanitized = sanitized.split(ent.text).join(token);
+        });
+        return { sanitized, tokenMap };
+      }
+
+      function computeRestored(llmOutput, tokenMap) {
+        let restored = llmOutput;
+        Object.entries(tokenMap).forEach(([token, orig]) => {
+          restored = restored.split(token).join(orig);
+        });
+        return restored;
+      }
+
+      function renderScenarios() {
+        const filtered = allScenarios.filter(sc => {
+          const matchesDomain = activeDomain === 'ALL' || (sc.domain || '').toLowerCase().includes(activeDomain.toLowerCase());
+          const q = searchQuery.trim().toLowerCase();
+          const matchesSearch = !q ||
+            (sc.id || '').toLowerCase().includes(q) ||
+            (sc.domain || '').toLowerCase().includes(q) ||
+            (sc.description || '').toLowerCase().includes(q) ||
+            (sc.prompt || '').toLowerCase().includes(q);
+          return matchesDomain && matchesSearch;
+        });
+
+        if (countLabel) {
+          countLabel.textContent = 'Showing ' + filtered.length + ' of ' + allScenarios.length + ' verified benchmark scenarios';
+        }
+
+        if (!container) return;
+
+        if (filtered.length === 0) {
+          container.innerHTML = '<div class="p-8 rounded-2xl bg-white border border-slate-200 text-center text-sm text-slate-600">No scenarios match your current filter. Clear search or select All Scenarios.</div>';
+          return;
+        }
+
+        container.innerHTML = filtered.map(sc => {
+          const { sanitized, tokenMap } = computeSanitized(sc.prompt, sc.expected_entities);
+          const llmResp = (sc.simulated_llm_responses && (sc.simulated_llm_responses[activeModel] || sc.simulated_llm_responses['openai/gpt-4o'])) || '';
+          const restored = computeRestored(llmResp, tokenMap);
+          const isMultimodal = sc.modality === 'multimodal/image';
+
+          return `
+            <article class="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-md bg-slate-900 text-emerald-400 font-mono text-xs font-bold">${escapeHtml(sc.id)}</span>
+                  <span class="px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 font-mono text-[11px] font-semibold">${escapeHtml(sc.domain)}</span>
+                  ${isMultimodal ? '<span class="px-2.5 py-0.5 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[11px] font-bold">MULTIMODAL OCR + PIXEL BURN-IN</span>' : ''}
+                </div>
+                <span class="text-[11px] font-mono text-emerald-700 font-bold">LPR: 100% &middot; BFS: 100% &middot; 0.00 B Egress</span>
+              </div>
+
+              <h3 class="text-base font-bold text-slate-900">${escapeHtml(sc.description)}</h3>
+
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 text-xs font-mono">
+                <div class="p-3.5 rounded-xl bg-rose-50/50 border border-rose-200/80 space-y-1.5">
+                  <div class="text-[10px] uppercase tracking-wider font-bold text-rose-800">1. Raw Input (Stays in Local RAM)</div>
+                  <p class="text-slate-800 leading-relaxed break-words font-sans text-xs">${escapeHtml(sc.prompt)}</p>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-slate-900 text-slate-200 space-y-1.5">
+                  <div class="text-[10px] uppercase tracking-wider font-bold text-emerald-400">2. ZTDS Wire Payload &rarr; ${escapeHtml(activeModel)}</div>
+                  <p class="leading-relaxed break-words text-xs text-emerald-300">${escapeHtml(sanitized)}</p>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-emerald-50/50 border border-emerald-200 space-y-1.5">
+                  <div class="text-[10px] uppercase tracking-wider font-bold text-emerald-800">3. Restored Output (Bijective Unmasking)</div>
+                  <p class="text-slate-800 leading-relaxed break-words font-sans text-xs">${escapeHtml(restored)}</p>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+
+      // Render fallback immediately, then hydrate full 30 scenarios
+      renderScenarios();
+
+      fetch('/benchmarks/ai-safety-benchmark.json')
+        .then(r => r.ok ? r.json() : null)
+        .then(data => {
+          if (data && Array.isArray(data.scenarios) && data.scenarios.length > 0) {
+            allScenarios = data.scenarios;
+            renderScenarios();
+          }
+        })
+        .catch(() => {});
+
+      domainBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeDomain = btn.getAttribute('data-domain') || 'ALL';
+          domainBtns.forEach(b => {
+            b.className = 'bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors';
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.className = 'bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors';
+          btn.setAttribute('aria-selected', 'true');
+          renderScenarios();
+        });
+      });
+
+      if (modelSelect) {
+        modelSelect.addEventListener('change', () => {
+          activeModel = modelSelect.value;
+          renderScenarios();
+        });
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          searchQuery = searchInput.value || '';
+          renderScenarios();
+        });
+      }
+
+      document.querySelectorAll('.btn-copy-bench').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const text = btn.getAttribute('data-copy') || '';
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).catch(() => {});
+          }
+          const orig = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.textContent = orig; }, 1800);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

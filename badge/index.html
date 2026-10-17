@@ -26,44 +26,84 @@
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebApplication",
-        "@id": "https://ztds.ai/badge/#app",
-        "name": "ZTDS Trust Badge Generator",
-        "url": "https://ztds.ai/badge/",
-        "description": "Dynamic SVG trust badge generator and embedder for ZTDS Verified implementations.",
-        "applicationCategory": "SecurityApplication",
-        "operatingSystem": "All",
-        "isPartOf": { "@id": "https://ztds.ai/#website" },
-        "publisher": {
-          "@type": "Organization",
-          "name": "ZTDS AI Consortium",
-          "url": "https://ztds.ai"
-        }
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://ztds.ai/badge/#app",
+      "name": "ZTDS Trust Badge Generator",
+      "url": "https://ztds.ai/badge/",
+      "description": "Dynamic SVG trust badge generator and embedder for ZTDS Verified implementations.",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "All",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
       },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://ztds.ai/badge/#breadcrumbs",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://ztds.ai/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Trust Badge Generator",
-            "item": "https://ztds.ai/badge/"
-          }
-        ]
+      "publisher": {
+        "@type": "Organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai"
       }
-    ]
-  }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ztds.ai/badge/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ztds.ai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Trust Badge Generator",
+          "item": "https://ztds.ai/badge/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ztds.ai/badge/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do ZTDS Verified SVG trust badges work in GitHub READMEs and enterprise footers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Badge Foundry generates crisp, zero-JavaScript vector SVG seals (/badge/<slug>.svg and /api/badge/) that link directly to the entity cryptographic verification record in the ZTDS Registry, allowing prospective customers and auditors to inspect conformance in one click."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What badge tiers and themes are supported by the dynamic /api/badge/ endpoint?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The dynamic badge endpoint supports five accreditation tiers (VERIFIED, SOVEREIGN, DPA EXEMPT, AIR-GAPPED, and SELF-ATTESTED), dual color themes (theme=dark and theme=light), and custom architectural labels such as WASM-ONLY and SOC-2-READY."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does embedding a ZTDS trust badge introduce third-party tracking cookies or client scripts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. All static and dynamic ZTDS badges are served as pure, stateless image/svg+xml assets with strict cache headers and zero cookies, scripts, or tracking beacons, preserving strict zero-telemetry compliance on host sites."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who is authorized to display the official ZTDS Verified and Sovereign seals?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Software builders, corporate adopters, and research fellows listed in data/registry.json, data/companies.json, or data/fellows.json with a valid Ed25519 conformance certificate are authorized to embed official ZTDS seals across their documentation and web properties."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
 </head>
 <body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">
@@ -147,24 +187,35 @@
     </div>
 
     <div class="py-4 space-y-1 text-sm font-medium">
-      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Standard</div>
+      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
+      <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
+      <a href="/ietf/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">IETF Standards Track (draft-02)</a>
+      <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
+      <a href="/blueprints/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">10 AI &amp; RAG Blueprints</a>
+      <a href="/compliance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Global Regulatory Compliance Matrix</a>
+      <a href="/benchmarks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">AI Safety &amp; Latency Benchmarks</a>
+      <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper (DOIs)</a>
+      <a href="/evidentiary-sovereignty/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Evidentiary Sovereignty</a>
+      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
+      <a href="/ciso/memo/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">1-Page CISO Safe Harbor Memo</a>
+      <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
+      <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 &amp; Trust Center</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
+      <a href="/certification/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Certification Authority</a>
+      <a href="/verify/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Ed25519 Certificate Validator</a>
       <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
       <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
-      <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
-      <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper</a>
-      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
-      <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
-      <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 Trust Center</a>
+      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Member Pool</a>
+      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows Council</a>
+      <a href="/case-studies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Enterprise Case Studies</a>
+      <a href="/agency/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">BrandMeWeb Enterprise Retainer</a>
 
       <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
       <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
       <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
-      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive Inspector</a>
+      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive DAG Inspector</a>
       <a href="/badge/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Badge Generator</a>
-
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Consortium</div>
-      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Members</a>
-      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows</a>
       <a href="/governance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Governance &amp; Charter</a>
       <a href="/security/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Security &amp; CVD</a>
     </div>
@@ -192,7 +243,7 @@
       </p>
     </div>
 
-    <!-- Neuromarketing Trust Rationale: Why Embed the Badge -->
+    <!-- Institutional Trust Rationale: Why Embed the Badge -->
     <div class="mb-10 p-6 sm:p-8 bg-slate-900 text-white rounded-2xl border border-slate-800 shadow-sm">
       <div class="max-w-2xl mb-6">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">
@@ -411,12 +462,12 @@
         <!-- Live Vector Preview & Interactive Canvas Controls -->
         <div class="pt-6 border-t border-slate-100">
           <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
-            <div class="flex items-center gap-2">
+            <div class="flex flex-wrap items-center gap-2">
               <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Canvas Background:</span>
               <div class="inline-flex rounded-lg border border-slate-200 p-0.5 bg-slate-100" id="canvasBgSwitcher" role="group" aria-label="Canvas Background">
-                <button type="button" class="canvas-bg-btn px-3 py-1.5 text-xs font-semibold rounded-md transition-all active bg-white text-slate-900 shadow-sm touch-target min-h-[36px]" data-bg="light">Light BG</button>
-                <button type="button" class="canvas-bg-btn px-3 py-1.5 text-xs font-semibold rounded-md transition-all text-slate-600 hover:text-slate-900 touch-target min-h-[36px]" data-bg="dark">Dark BG</button>
-                <button type="button" class="canvas-bg-btn px-3 py-1.5 text-xs font-semibold rounded-md transition-all text-slate-600 hover:text-slate-900 touch-target min-h-[36px]" data-bg="grid">Grid Pattern</button>
+                <button type="button" class="canvas-bg-btn px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-md transition-all active bg-white text-slate-900 shadow-sm touch-target min-h-[36px]" data-bg="light">Light BG</button>
+                <button type="button" class="canvas-bg-btn px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-md transition-all text-slate-600 hover:text-slate-900 touch-target min-h-[36px]" data-bg="dark">Dark BG</button>
+                <button type="button" class="canvas-bg-btn px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-md transition-all text-slate-600 hover:text-slate-900 touch-target min-h-[36px]" data-bg="grid">Grid Pattern</button>
               </div>
             </div>
             <div class="flex items-center gap-2">
@@ -629,12 +680,63 @@
       </div>
     </div>
 
+  
+    <!-- DIRECT ANSWER FAQ SECTION (GEO & RAG CITATION OPTIMIZED) -->
+    <section id="faq" class="py-12 lg:py-16 border-t border-slate-200 bg-slate-50/60">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-8">
+          <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Direct Answer Knowledge Base</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">Trust Badge Generator &amp; Dynamic Seal Foundry FAQ</h2>
+        </div>
+        <div class="space-y-3.5">
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs" open>
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>How do ZTDS Verified SVG trust badges work in GitHub READMEs and enterprise footers?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              The Badge Foundry generates crisp, zero-JavaScript vector SVG seals (/badge/<slug>.svg and /api/badge/) that link directly to the entity cryptographic verification record in the ZTDS Registry, allowing prospective customers and auditors to inspect conformance in one click.
+            </div>
+          </details>
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>What badge tiers and themes are supported by the dynamic /api/badge/ endpoint?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              The dynamic badge endpoint supports five accreditation tiers (VERIFIED, SOVEREIGN, DPA EXEMPT, AIR-GAPPED, and SELF-ATTESTED), dual color themes (theme=dark and theme=light), and custom architectural labels such as WASM-ONLY and SOC-2-READY.
+            </div>
+          </details>
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>Does embedding a ZTDS trust badge introduce third-party tracking cookies or client scripts?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              No. All static and dynamic ZTDS badges are served as pure, stateless image/svg+xml assets with strict cache headers and zero cookies, scripts, or tracking beacons, preserving strict zero-telemetry compliance on host sites.
+            </div>
+          </details>
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>Who is authorized to display the official ZTDS Verified and Sovereign seals?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Software builders, corporate adopters, and research fellows listed in data/registry.json, data/companies.json, or data/fellows.json with a valid Ed25519 conformance certificate are authorized to embed official ZTDS seals across their documentation and web properties.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- 5-Column Institutional Light Footer -->
   <footer class="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-12 text-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10 pb-12 border-b border-slate-100">
         <!-- Col 1: Brand & Consortium -->
         <div class="space-y-4 sm:col-span-2 md:col-span-1">
@@ -663,11 +765,13 @@
           <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
-            <li><a href="/whitepaper/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Research Whitepaper &rarr;</a></li>
+            <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track (draft-02)</a></li>
+            <li><a href="/benchmarks/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">AI Safety &amp; Latency Benchmarks &rarr;</a></li>
+            <li><a href="/whitepaper/" class="hover:text-slate-900 transition-colors">Research Whitepaper (DOIs)</a></li>
+            <li><a href="/evidentiary-sovereignty/" class="hover:text-slate-900 transition-colors">Evidentiary Sovereignty</a></li>
             <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO Procurement &amp; Safe Harbor Pack</a></li>
+            <li><a href="/ciso/memo/" class="hover:text-slate-900 transition-colors">1-Page CISO Executive Memo</a></li>
             <li><a href="/roi/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">CISO Risk &amp; ROI Calculator &rarr;</a></li>
-            <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
-            <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">OSF Latency Benchmarks</a></li>
             <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
           </ul>
         </div>
@@ -677,8 +781,10 @@
           <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+            <li><a href="/mcp/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Model Context Protocol (MCP) &rarr;</a></li>
             <li><a href="/inspector/" class="hover:text-slate-900 transition-colors">Interactive Pipeline Simulator</a></li>
             <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
+            <li><a href="/verify/" class="hover:text-slate-900 transition-colors">Ed25519 Certificate Validator</a></li>
             <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge &amp; Seal Foundry</a></li>
             <li><a href="/registry/#privacyscrubber" class="hover:text-slate-900 transition-colors">Reference Implementations &rarr;</a></li>
           </ul>
@@ -688,6 +794,7 @@
         <div>
           <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
           <ul class="space-y-2.5 text-xs">
+            <li><a href="/certification/" class="hover:text-slate-900 transition-colors">Certification Authority</a></li>
             <li><a href="/soc2/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">SOC 2 &amp; Trust Center &rarr;</a></li>
             <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Governance &amp; Charter</a></li>
             <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
@@ -704,6 +811,7 @@
             <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
             <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
             <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+            <li><a href="/case-studies/" class="hover:text-slate-900 transition-colors">Enterprise Case Studies</a></li>
             <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
             <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
             <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
@@ -715,10 +823,10 @@
       <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
           <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
-          <span class="text-slate-400 font-mono text-[10px]">U.S. & Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS™ #182655957</span>
+          <span class="text-slate-400 font-mono text-[10px]">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
         </div>
         <p>
-          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. § 119 Priority, locked through 14/09/2027). The word mark <strong>ZTDS™</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
+          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. &sect; 119 Priority). The word mark <strong>ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
         </p>
       </div>
 
@@ -738,7 +846,6 @@
           <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x4E9A2B1C</a>
         </div>
       </div>
-
     </div>
   </footer>
 

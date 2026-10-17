@@ -5,7 +5,7 @@
  * 1. CLI help output and argument parsing
  * 2. Generation of tailored industry dossiers (healthcare, fintech, legal, enterprise)
  * 3. File output writing and clean directory cleanup
- * 4. Presence of institutional authority anchors (IETF, WIPO IL 331905, #182655957, Clean Bill of Health)
+ * 4. Presence of institutional authority anchors (IETF, WIPO Patents Pending, #182655957, Clean Bill of Health)
  * 5. Strict Zero-Emoji compliance and BrandMeWeb spelling SSOT
  */
 

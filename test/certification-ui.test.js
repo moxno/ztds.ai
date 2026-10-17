@@ -86,13 +86,12 @@ console.log('\n--> Test 3: Institutional Authority Anchors & Key Content');
   // WIPO Patent Anchor
   assert(html.includes('Patents Pending'), 'Must reference Patents Pending status');
   assert(html.includes('Paris Convention'), 'Must reference Paris Convention priority');
-  assert(html.includes('14/09/2027'), 'Must reference patent international priority deadline');
+  assert(html.includes('PCT'), 'Must reference WIPO PCT international protection');
   assert(html.includes('Counsel NDA') || html.includes('NDA'), 'Must link claims request to Counsel NDA');
 
   // WIPO Trademark & Certification Mark Anchor
   assert(html.includes('182655957'), 'Must reference ILPO Trademark Order #182655957');
-  assert(html.includes('20/09/2026'), 'Must reference trademark filing date');
-  assert(html.includes('20/03/2027'), 'Must reference trademark Paris priority deadline');
+  assert(html.includes('Madrid'), 'Must reference WIPO Madrid System scope');
   assert(html.includes('Classes 9 &amp; 42') || html.includes('Classes 9 & 42'), 'Must reference Nice Classes 9 & 42');
 
   // Conformity Assessment Body (CAB) Governance

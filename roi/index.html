@@ -19,44 +19,84 @@
 
   <!-- Structured Data: WebApplication -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebApplication",
-        "@id": "https://ztds.ai/roi/#app",
-        "name": "ZTDS CISO ROI & Risk Exposure Calculator",
-        "url": "https://ztds.ai/roi/",
-        "applicationCategory": "SecurityApplication",
-        "operatingSystem": "All",
-        "description": "Interactive risk and ROI calculator for enterprise CISOs to quantify data breach liability reduction and subprocessor elimination in AI workloads.",
-        "isPartOf": { "@id": "https://ztds.ai/#website" },
-        "publisher": {
-          "@type": "Organization",
-          "name": "ZTDS AI Consortium",
-          "url": "https://ztds.ai"
-        }
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://ztds.ai/roi/#app",
+      "name": "ZTDS CISO ROI & Risk Exposure Calculator",
+      "url": "https://ztds.ai/roi/",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "All",
+      "description": "Interactive risk and ROI calculator for enterprise CISOs to quantify data breach liability reduction and subprocessor elimination in AI workloads.",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
       },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://ztds.ai/roi/#breadcrumbs",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://ztds.ai/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "CISO ROI Calculator",
-            "item": "https://ztds.ai/roi/"
-          }
-        ]
+      "publisher": {
+        "@type": "Organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai"
       }
-    ]
-  }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ztds.ai/roi/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ztds.ai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "CISO ROI Calculator",
+          "item": "https://ztds.ai/roi/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ztds.ai/roi/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does the ZTDS CISO ROI Calculator model enterprise AI data breach liability?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The calculator combines empirical per-record breach cost benchmarks (derived from Ponemon/IBM actuarial studies across healthcare, finance, technology, and legal sectors) with daily employee AI prompt volume to quantify annual cleartext exposure and statutory liability reduction."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does ZTDS eliminate GDPR Article 28 Data Processing Agreement (DPA) legal overhead?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because ZTDS sanitization executes 100% locally inside client or host volatile RAM with 0.00 bytes of raw PII egress to external sanitization vendors, no third-party subprocessor is introduced into the data supply chain, eliminating external DPA negotiations and annual vendor re-audits."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does in-RAM tokenization reduce vector database re-indexing costs under GDPR Article 17?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When raw PII is embedded into vector databases (Pinecone, Milvus, pgvector), a single GDPR Article 17 Right-to-Erasure request requires purging and re-computing embeddings across the index. Tokenizing PII in RAM prior to embedding keeps vector stores permanently free of personal data."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can the calculated ROI and risk reduction model be exported for board and procurement presentations?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. CISOs and DPOs can export a customized Executive Risk & ROI Dossier directly from the calculator or pair it with the 1-Page CISO Safe Harbor Memorandum (/ciso/memo/) for board and general counsel sign-off."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col antialiased">
@@ -139,24 +179,35 @@
     </div>
 
     <div class="py-4 space-y-1 text-sm font-medium">
-      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Standard</div>
+      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
+      <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
+      <a href="/ietf/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">IETF Standards Track (draft-02)</a>
+      <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
+      <a href="/blueprints/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">10 AI &amp; RAG Blueprints</a>
+      <a href="/compliance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Global Regulatory Compliance Matrix</a>
+      <a href="/benchmarks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">AI Safety &amp; Latency Benchmarks</a>
+      <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper (DOIs)</a>
+      <a href="/evidentiary-sovereignty/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Evidentiary Sovereignty</a>
+      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
+      <a href="/ciso/memo/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">1-Page CISO Safe Harbor Memo</a>
+      <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
+      <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 &amp; Trust Center</a>
+
+      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
+      <a href="/certification/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Certification Authority</a>
+      <a href="/verify/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Ed25519 Certificate Validator</a>
       <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
       <a href="/registry/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Verified Products Directory</a>
-      <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
-      <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper</a>
-      <a href="/ciso/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Procurement &amp; Legal Pack</a>
-      <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
-      <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 Trust Center</a>
+      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Member Pool</a>
+      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows Council</a>
+      <a href="/case-studies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Enterprise Case Studies</a>
+      <a href="/agency/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">BrandMeWeb Enterprise Retainer</a>
 
       <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
       <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
       <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
-      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive Inspector</a>
+      <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive DAG Inspector</a>
       <a href="/badge/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Badge Generator</a>
-
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Consortium</div>
-      <a href="/companies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Corporate Members</a>
-      <a href="/fellows/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Research Fellows</a>
       <a href="/governance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Governance &amp; Charter</a>
       <a href="/security/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Security &amp; CVD</a>
     </div>
@@ -374,7 +425,7 @@
           <!-- Regulatory Jurisdiction Selector -->
           <div>
             <label for="selectRegime" class="block text-xs font-semibold text-slate-700 mb-1.5">Primary Enforcement Jurisdiction &amp; Statutes</label>
-            <select id="selectRegime" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <select id="selectRegime" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-base sm:text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
               <option value="global" selected>Global Multi-Regime (GDPR Art. 83 4% &middot; EU AI Act &middot; US State Laws)</option>
               <option value="eu">European Union (GDPR Art. 83 &middot; EU AI Act Art. 99 Transparency/Data)</option>
               <option value="us_hipaa">United States Healthcare (HIPAA 45 CFR &middot; HITECH Tier 4 $2.06M Cap)</option>
@@ -389,7 +440,7 @@
           <!-- Industry Risk Matrix -->
           <div>
             <label for="selectIndustry" class="block text-xs font-semibold text-slate-700 mb-1.5">Industry Risk &amp; Sector Benchmark</label>
-            <select id="selectIndustry" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <select id="selectIndustry" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-base sm:text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
               <option value="saas" data-cost="165" data-name="Enterprise SaaS / Tech (GDPR &middot; CCPA)">Enterprise SaaS / Tech ($165 / record &middot; GDPR &middot; CCPA)</option>
               <option value="fintech" data-cost="188" data-name="Banking &amp; FinTech (PCI-DSS &middot; GLBA &middot; SOX)">Banking &amp; FinTech ($188 / record &middot; PCI-DSS &middot; GLBA)</option>
               <option value="healthcare" data-cost="215" data-name="Healthcare &amp; Life Sciences (HIPAA Safe Harbor)">Healthcare &amp; Life Sciences ($215 / record &middot; HIPAA)</option>
@@ -400,7 +451,7 @@
           <!-- Corporate Revenue -->
           <div>
             <label for="selectRevenue" class="block text-xs font-semibold text-slate-700 mb-1.5">Annual Corporate Worldwide Turnover</label>
-            <select id="selectRevenue" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <select id="selectRevenue" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-base sm:text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
               <option value="10000000">$10,000,000 (Growth Stage)</option>
               <option value="50000000" selected>$50,000,000 (Mid-Market Enterprise)</option>
               <option value="250000000">$250,000,000 (Upper Enterprise)</option>
@@ -414,7 +465,7 @@
           <!-- ZTDS Implementation Tier -->
           <div>
             <label for="selectTier" class="block text-xs font-semibold text-slate-700 mb-1.5">ZTDS Architecture Protection Model</label>
-            <select id="selectTier" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <select id="selectTier" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-base sm:text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
               <option value="1990">Departmental / Single-Cluster Footprint (Baseline TCO)</option>
               <option value="12000" selected>Enterprise Air-Gapped / Nitro Enclave (Standard TCO)</option>
               <option value="35000">Global Cluster / Multi-Cloud Enterprise (Global TCO)</option>
@@ -786,12 +837,63 @@
 
     </div>
 
+  
+    <!-- DIRECT ANSWER FAQ SECTION (GEO & RAG CITATION OPTIMIZED) -->
+    <section id="faq" class="py-12 lg:py-16 border-t border-slate-200 bg-slate-50/60">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-8">
+          <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Direct Answer Knowledge Base</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">CISO Risk Exposure &amp; ROI Calculator FAQ</h2>
+        </div>
+        <div class="space-y-3.5">
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs" open>
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>How does the ZTDS CISO ROI Calculator model enterprise AI data breach liability?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              The calculator combines empirical per-record breach cost benchmarks (derived from Ponemon/IBM actuarial studies across healthcare, finance, technology, and legal sectors) with daily employee AI prompt volume to quantify annual cleartext exposure and statutory liability reduction.
+            </div>
+          </details>
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>How does ZTDS eliminate GDPR Article 28 Data Processing Agreement (DPA) legal overhead?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Because ZTDS sanitization executes 100% locally inside client or host volatile RAM with 0.00 bytes of raw PII egress to external sanitization vendors, no third-party subprocessor is introduced into the data supply chain, eliminating external DPA negotiations and annual vendor re-audits.
+            </div>
+          </details>
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>Why does in-RAM tokenization reduce vector database re-indexing costs under GDPR Article 17?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              When raw PII is embedded into vector databases (Pinecone, Milvus, pgvector), a single GDPR Article 17 Right-to-Erasure request requires purging and re-computing embeddings across the index. Tokenizing PII in RAM prior to embedding keeps vector stores permanently free of personal data.
+            </div>
+          </details>
+
+          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>Can the calculated ROI and risk reduction model be exported for board and procurement presentations?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Yes. CISOs and DPOs can export a customized Executive Risk &amp; ROI Dossier directly from the calculator or pair it with the 1-Page CISO Safe Harbor Memorandum (/ciso/memo/) for board and general counsel sign-off.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- 5-Column Institutional Light Footer -->
   <footer class="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-12 text-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10 pb-12 border-b border-slate-100">
         <!-- Col 1: Brand & Consortium -->
         <div class="space-y-4 sm:col-span-2 md:col-span-1">
@@ -820,11 +922,13 @@
           <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
-            <li><a href="/whitepaper/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Research Whitepaper &rarr;</a></li>
+            <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track (draft-02)</a></li>
+            <li><a href="/benchmarks/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">AI Safety &amp; Latency Benchmarks &rarr;</a></li>
+            <li><a href="/whitepaper/" class="hover:text-slate-900 transition-colors">Research Whitepaper (DOIs)</a></li>
+            <li><a href="/evidentiary-sovereignty/" class="hover:text-slate-900 transition-colors">Evidentiary Sovereignty</a></li>
             <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO Procurement &amp; Safe Harbor Pack</a></li>
+            <li><a href="/ciso/memo/" class="hover:text-slate-900 transition-colors">1-Page CISO Executive Memo</a></li>
             <li><a href="/roi/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">CISO Risk &amp; ROI Calculator &rarr;</a></li>
-            <li><a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">Zenodo Paper (DOI: 10.5281)</a></li>
-            <li><a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="hover:text-slate-900 transition-colors">OSF Latency Benchmarks</a></li>
             <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
           </ul>
         </div>
@@ -834,8 +938,10 @@
           <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
+            <li><a href="/mcp/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Model Context Protocol (MCP) &rarr;</a></li>
             <li><a href="/inspector/" class="hover:text-slate-900 transition-colors">Interactive Pipeline Simulator</a></li>
             <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
+            <li><a href="/verify/" class="hover:text-slate-900 transition-colors">Ed25519 Certificate Validator</a></li>
             <li><a href="/badge/" class="hover:text-slate-900 transition-colors">Trust Badge &amp; Seal Foundry</a></li>
             <li><a href="/registry/#privacyscrubber" class="hover:text-slate-900 transition-colors">Reference Implementations &rarr;</a></li>
           </ul>
@@ -845,6 +951,7 @@
         <div>
           <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
           <ul class="space-y-2.5 text-xs">
+            <li><a href="/certification/" class="hover:text-slate-900 transition-colors">Certification Authority</a></li>
             <li><a href="/soc2/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">SOC 2 &amp; Trust Center &rarr;</a></li>
             <li><a href="/governance/" class="hover:text-slate-900 transition-colors">Governance &amp; Charter</a></li>
             <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
@@ -861,6 +968,7 @@
             <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
             <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
             <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+            <li><a href="/case-studies/" class="hover:text-slate-900 transition-colors">Enterprise Case Studies</a></li>
             <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
             <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
             <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
@@ -872,10 +980,10 @@
       <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
           <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
-          <span class="text-slate-400 font-mono text-[10px]">U.S. & Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS™ #182655957</span>
+          <span class="text-slate-400 font-mono text-[10px]">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
         </div>
         <p>
-          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. § 119 Priority, locked through 14/09/2027). The word mark <strong>ZTDS™</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
+          ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. &sect; 119 Priority). The word mark <strong>ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
         </p>
       </div>
 
@@ -895,7 +1003,6 @@
           <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x4E9A2B1C</a>
         </div>
       </div>
-
     </div>
   </footer>
 

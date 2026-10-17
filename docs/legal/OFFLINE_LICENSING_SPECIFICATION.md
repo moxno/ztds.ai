@@ -11,7 +11,7 @@ Commercial deployments of the ZTDS engine (`@privacyscrubber/sdk` and enterprise
 
 1. **Zero-Telemetry Invariant:** The licensing engine shall execute 100% offline. It shall make zero HTTP/HTTPS requests, zero DNS lookups, zero socket connections, and zero inter-process network pings to external validation endpoints.
 2. **Asymmetric Cryptographic Security:** The engine uses the **Ed25519** digital signature algorithm (Edwards-curve Digital Signature Algorithm, RFC 8032). The Licensor signs licenses using an offline private key; the client SDK verifies signatures using an embedded public key.
-3. **Anti-Cannibalization Gate:** The engine strictly enforces the entity separation defined in `ZTDS_Entity_Taxonomy_and_25_Profiles_SSOT.md`. Specialized industry profiles (HIPAA Clinical PHI, Financial IBAN/PAN, Legal Privilege, Cloud Secrets) require a signed commercial tier (`enterprise_airgapped` or `global_site`).
+3. **Domain Isolation Gate:** The engine strictly enforces the entity separation defined in `ZTDS_Entity_Taxonomy_and_25_Profiles_SSOT.md`. Specialized industry profiles (HIPAA Clinical PHI, Financial IBAN/PAN, Legal Privilege, Cloud Secrets) require a signed commercial tier (`enterprise_airgapped` or `global_site`).
 4. **Sub-Millisecond Evaluation:** License verification must occur in memory in under 0.5 milliseconds during process initialization without recurring CPU overhead.
 
 ---

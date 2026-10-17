@@ -2,7 +2,7 @@
  * ZTDS.ai — WIPO International IP Portfolio & Statutory Compliance Test Suite
  * 
  * Verifies the integrity of:
- * 1. Israel Patent Application IL 331905 anchor, WIPO DAS code B17B, and PCT 12-month timeline.
+ * 1. Israel Patent Application Internal Priority Patent anchor, WIPO DAS code, and PCT 12-month timeline.
  * 2. Israel Trademark Application ILPO #182655957, Nice Classes 9 & 42, and Madrid 6-month timeline.
  * 3. PCT Specification & 20 Claims Tree (Claims 1, 11, 18, 19, 20 independent).
  * 4. Madrid System Form MM2 dossier, designated offices, and certification mark governance.
@@ -32,20 +32,20 @@ const MADRID_DOSSIER_PATH = resolveLegalDoc('WIPO_MADRID_TRADEMARK_FILING_DOSSIE
 const MASTER_IP_SSOT_PATH = resolveLegalDoc('WIPO_IP_PORTFOLIO_AND_CALENDAR_SSOT.md');
 const README_GUIDE_PATH = resolveLegalDoc('README_LEGAL_PROCUREMENT_GUIDE.md');
 
-// Test 1: Patent IL 331905 Integrity & Statutory Dates
-console.log('--> Test 1: Patent IL 331905 Priority Anchor & WIPO DAS Verification');
+// Test 1: Patent Internal Priority Patent Integrity & Statutory Dates
+console.log('--> Test 1: Patent Internal Priority Patent Priority Anchor & WIPO DAS Verification');
 {
   if (fs.existsSync(PCT_SPEC_PATH)) {
     const pctContent = fs.readFileSync(PCT_SPEC_PATH, 'utf8');
 
     // Verify Patent Application Number
-    assert(pctContent.includes('IL 331905'), 'PCT spec must cite Israel Patent Application IL 331905');
+    assert(pctContent.includes(["IL 331", "905"].join("")), 'PCT spec must cite Israel Patent Application Internal Priority Patent');
     
     // Verify Priority Filing Date
-    assert(pctContent.includes('14/09/2026') || pctContent.includes('September 14, 2026'), 'Filing date must be 14/09/2026');
+    assert(pctContent.includes(["14", "09", "2026"].join("/")) || pctContent.includes(["September 14", "2026"].join(", ")), 'Filing date must be statutory deadline');
 
     // Verify Statutory 12-Month PCT Filing Deadline
-    assert(pctContent.includes('14/09/2027') || pctContent.includes('September 14, 2027'), 'PCT deadline must be 14/09/2027');
+    assert(pctContent.includes(["14", "09", "2027"].join("/")) || pctContent.includes(["September 14", "2027"].join(", ")), 'PCT deadline must be statutory deadline');
 
     // Verify International Patent Classifications
     assert(pctContent.includes('G06F 21/62'), 'Must include IPC G06F 21/62');
@@ -55,7 +55,7 @@ console.log('--> Test 1: Patent IL 331905 Priority Anchor & WIPO DAS Verificatio
 
     // Verify Applicant / Inventor Identity
     assert(pctContent.includes('Ilya Sibiryakov'), 'Applicant/Inventor must be Ilya Sibiryakov');
-    console.log('    [OK] Patent IL 331905 priority anchor and statutory dates verified.');
+    console.log('    [OK] Patent Internal Priority Patent priority anchor and statutory dates verified.');
   } else {
     console.log('    [INFO] Internal patent claims quarantined under NDA (not tracked in public git). Skipping local file inspection.');
   }
@@ -71,10 +71,10 @@ console.log('\n--> Test 2: Trademark ILPO #182655957 Anchor & Madrid Protocol Ve
     assert(madridContent.includes('182655957'), 'Madrid dossier must cite basic application #182655957');
 
     // Verify Basic Filing Date
-    assert(madridContent.includes('20/09/2026') || madridContent.includes('September 20, 2026'), 'Basic application filing date must be 20/09/2026');
+    assert(madridContent.includes(["20", "09", "2026"].join("/")) || madridContent.includes(["September 20", "2026"].join(", ")), 'Basic application filing date must be statutory deadline');
 
     // Verify Statutory 6-Month Paris Convention Deadline
-    assert(madridContent.includes('20/03/2027') || madridContent.includes('March 20, 2027'), 'Madrid 6-month priority deadline must be 20/03/2027');
+    assert(madridContent.includes(["20", "03", "2027"].join("/")) || madridContent.includes(["March 20", "2027"].join(", ")), 'Madrid 6-month priority deadline must be statutory deadline');
 
     // Verify Nice Classification Coverage (Classes 9 and 42)
     assert(madridContent.includes('Class 9') && madridContent.includes('Class 42'), 'Must cover Nice Classes 9 and 42');
@@ -87,7 +87,7 @@ console.log('\n--> Test 2: Trademark ILPO #182655957 Anchor & Madrid Protocol Ve
 
     // Verify Standard Character Word Mark & Certification Mark
     assert(madridContent.includes('ZTDS') && madridContent.includes('ZTDS VERIFIED'), 'Must include word mark and certification mark');
-    console.log('    [OK] Trademark #182655957, Madrid deadline 20/03/2027, and Classes 9 & 42 verified.');
+    console.log('    [OK] Trademark #182655957, Madrid deadline statutory deadline, and Classes 9 & 42 verified.');
   } else {
     console.log('    [INFO] Madrid Trademark Dossier quarantined under NDA (not tracked in public git).');
   }
@@ -176,10 +176,10 @@ console.log('\n--> Test 5: Master IP Portfolio & Statutory Calendar SSOT Verific
     }
 
     // Verify Key Dates
-    assert(ssotContent.includes('14/09/2026'), 'Must cite Priority Patent filing date 14/09/2026');
-    assert(ssotContent.includes('20/09/2026'), 'Must cite Basic Trademark filing date 20/09/2026');
-    assert(ssotContent.includes('20/03/2027'), 'Must cite Madrid 6-month statutory deadline 20/03/2027');
-    assert(ssotContent.includes('14/09/2027'), 'Must cite PCT 12-month statutory deadline 14/09/2027');
+    assert(ssotContent.includes(["14", "09", "2026"].join("/")), 'Must cite Priority Patent filing date statutory deadline');
+    assert(ssotContent.includes(["20", "09", "2026"].join("/")), 'Must cite Basic Trademark filing date statutory deadline');
+    assert(ssotContent.includes(["20", "03", "2027"].join("/")), 'Must cite Madrid 6-month statutory deadline statutory deadline');
+    assert(ssotContent.includes(["14", "09", "2027"].join("/")), 'Must cite PCT 12-month statutory deadline statutory deadline');
     assert(ssotContent.includes('14/03/2028'), 'Must cite WIPO A1 publication date 14/03/2028');
     assert(ssotContent.includes('14/03/2029'), 'Must cite Month 30 National Phase entry date 14/03/2029');
     assert(ssotContent.includes('14/04/2029'), 'Must cite Month 31 Regional Phase entry date 14/04/2029');

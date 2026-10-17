@@ -371,117 +371,18 @@ Seamlessly integrates into any web-based LLM UI (ChatGPT, Claude, Perplexity), r
 
 ---
 
-## 3. B2B GTM Intelligence & Regulatory Outreach Playbook
+## 3. Architectural Conformance & Verification Checklist for Blueprints
 
-### 3.1. Ideal Customer Profile (ICP) Matrix
+Every integration blueprint deployed in production must pass the four normative ZTDS RFC v1.0 verification gates prior to release:
 
-| Persona | Core Mandate | Acute Pain Point | The ZTDS Wedge |
-| :--- | :--- | :--- | :--- |
-| **CISO** | Protect enterprise data perimeter; pass SOC 2 / ISO 27001 audits | Employees copy-pasting customer PII into ChatGPT/Claude; cloud DLP proxies add 250ms latency | 0ms server latency, 0 egress bytes, 1-page CISO Exemption Memo, 100% air-gapped |
-| **DPO / General Counsel** | Prevent GDPR Art. 28 / Art. 17 violations & FTC penalties | Cloud AI vendors acting as Data Processors requiring complex Data Protection Agreements | Legally exempt from GDPR Art. 28; no PII leaves client memory, no DPA needed |
-| **Head of AI / VP Eng** | Accelerate LLM features into production | Security/compliance teams blocking LLM deployments for 6–12 weeks | Deterministic SDK/MCP integration (<1ms), plug-and-play LangChain/LlamaIndex middleware |
-| **Chief Risk Officer** | Minimize vendor supply-chain blast radius | Third-party proxy vendors (Nightfall, Skyhigh) creating another vulnerable cloud honeypot | Standard client-side architecture; vendor has zero access to keys, prompts, or sessions |
+| Conformance Gate | Verification Command / Method | Required Telemetry Output |
+| :--- | :--- | :--- |
+| **Gate 1: Zero External Egress** | `npx ztds-audit --strict` | `0.00 B` cleartext PII/PHI/Secrets prior to socket serialization |
+| **Gate 2: Bijective Round-Trip** | `npx ztds-bench --strict` | `100.00%` Bijective Fidelity Score (BFS) & Context Preservation Score (CPS) |
+| **Gate 3: Volatile Memory Zeroization** | `engine.destroy()` / `zeroize()` | Immediate CSPRNG overwrite of ephemeral token dictionaries post-turn |
+| **Gate 4: Offline Attestation** | `npx ztds-verify <token>` | Valid RFC 8032 Ed25519 signature over RFC 8785 Canonical JSON receipt |
 
----
+### 3.1. Reference Baseline vs. Certified Commercial Engine
 
-### 3.2. Battle-Tested LinkedIn Sales Navigator Boolean Queries
-
-#### Query 1: Enterprise CISOs & Security VPs (US & UK)
-```text
-(title:"Chief Information Security Officer" OR title:"CISO" OR title:"VP Information Security" OR title:"VP Cyber Security" OR title:"Head of Information Security") AND (industry:"Financial Services" OR industry:"Hospital & Health Care" OR industry:"Software Development" OR industry:"Information Technology & Services") AND (company_headcount:"51-200" OR company_headcount:"201-500" OR company_headcount:"501-1000" OR company_headcount:"1001-5000") AND (keywords:"Generative AI" OR keywords:"ChatGPT" OR keywords:"LLM" OR keywords:"Shadow AI")
-```
-
-#### Query 2: Data Protection Officers & General Counsel (EU & UK)
-```text
-(title:"Data Protection Officer" OR title:"DPO" OR title:"Chief Privacy Officer" OR title:"Head of Privacy" OR title:"General Counsel" OR title:"VP Legal") AND (geography:"European Union" OR geography:"United Kingdom" OR geography:"Switzerland") AND (keywords:"AI Act" OR keywords:"GDPR Article 28" OR keywords:"Data Transfer" OR keywords:"LLM Compliance")
-```
-
-#### Query 3: Heads of AI Engineering & Enterprise Architects
-```text
-(title:"Head of AI" OR title:"VP AI" OR title:"Director of Machine Learning" OR title:"Lead AI Architect" OR title:"Principal AI Engineer") AND (keywords:"RAG" OR keywords:"LangChain" OR keywords:"LlamaIndex" OR keywords:"Vector Database" OR keywords:"Enterprise AI") AND NOT (title:"Recruiter" OR title:"HR")
-```
-
----
-
-### 3.3. Regulatory Trigger Event Monitoring
-
-Outreach campaigns must be triggered by specific external regulatory catalysts:
-
-1. **EU AI Act Enforcement Milestone (August 2026)**:
-   * *Trigger*: Strict transparency and data governance obligations under Articles 50 & 53 become binding.
-   * *Angle*: "Avoid classification as a high-risk downstream deployer by decoupling PII before tokenization."
-2. **FTC Enforcement Actions & Consent Decrees**:
-   * *Trigger*: FTC penalizing enterprise LLM deployments for unauthorized consumer data retention.
-   * *Angle*: "Mathematical proof of zero training data retention via client-side ephemeral sanitization."
-3. **Major Cloud DLP Breaches or Outages**:
-   * *Trigger*: An outage or breach at an inline cloud proxy provider (e.g. Cloudflare, Zscaler, Nightfall).
-   * *Angle*: "Why route prompt traffic through a third-party cloud honeypot when client RAM sanitizes in <2ms?"
-
----
-
-### 3.4. High-Conversion Outreach Templates (From Ilya Sibiryakov)
-
-#### Template 1: Peer-to-Peer CISO InMail (0-Fluff, Technical Authority)
-**Subject**: Unblocking ChatGPT for engineering without a Cloud DLP proxy
-
-```text
-Hi [First Name],
-
-Most security teams I talk with are stuck between two bad options for employee GenAI usage:
-1. Block ChatGPT/Claude completely (which engineers bypass via shadow personal accounts).
-2. Deploy a cloud DLP proxy that adds 250ms of latency, costs $40/seat/month, and acts as another third-party data processor holding unencrypted prompts.
-
-We took a different architectural approach with Zero-Trust Data Sanitization (ZTDS):
-100% in-browser RAM sanitization. Prompts are scrubbed into [NAME_1], [API_KEY_1] tokens before network dispatch, and restored locally upon response. Zero server logs, zero cloud proxy, 0 bytes egress.
-
-I put together a 1-page CISO Exemption Memo explaining why this eliminates GDPR Art. 28 / SOC 2 vendor audit overhead entirely:
-https://ztds.ai/ciso-memo
-
-Happy to share the local verification script if your team wants to audit it in DevTools Network tab.
-
-Ilya Sibiryakov
-Founder & Chief Architect, BrandMeWeb & PrivacyScrubber
-```
-
-#### Template 2: DPO / General Counsel Outreach (EU AI Act & GDPR Art. 28)
-**Subject**: Eliminating DPA requirements for enterprise LLM workflows
-
-```text
-Dear [First Name],
-
-Under GDPR Article 28, routing employee prompts containing customer PII to cloud AI models legally requires an executed Data Protection Agreement and extensive vendor sub-processor risk assessments.
-
-Our architectural paper published on Zenodo (DOI: 10.5281/zenodo.22058770) demonstrates an alternative:
-By sanitizing identifiers in volatile client-side RAM before transmission, the payload dispatched to the LLM contains zero personal data under Recital 26. The AI provider never becomes a GDPR processor.
-
-We built the ZTDS standard and reference engine (PrivacyScrubber) to enforce this across browser extensions, headless SDKs, and IDEs.
-
-Would you be open to a 5-minute review of our regulatory audit receipt format?
-
-Best regards,
-
-Ilya Sibiryakov
-Founder & Chief Architect, BrandMeWeb & PrivacyScrubber
-```
-
-#### Template 3: Head of AI / AI Engineer InMail (SDK & Latency Focus)
-**Subject**: <1ms PII sanitization middleware for your RAG pipeline
-
-```text
-Hey [First Name],
-
-If you're building RAG or multi-agent pipelines on LangChain/LlamaIndex, customer PII in vector stores (Pinecone/Qdrant) is usually the biggest compliance blocker stopping production deployment.
-
-We released `@privacyscrubber/sdk` — a headless, in-memory sanitization engine:
-- Runs locally in Node.js / WASM (<1ms latency vs 200ms cloud API calls).
-- Deterministic two-sided masking: transforms raw PII into tokens, generates clean embeddings, and reveals the original text after LLM completion.
-- Zero network egress — runs completely air-gapped in your VPC.
-
-Code snippet for LangChain LCEL and vector indexing:
-https://ztds.ai/blueprints
-
-Let me know if you'd like an early-adopter SDK license key to test in your local dev environment.
-
-Ilya Sibiryakov
-Founder, BrandMeWeb & PrivacyScrubber
-```
+- **Open-Source Reference Baseline (`@ztds/core`, `ztds-mcp`, `ztds` Python)**: Implements the normative 4-invariant architecture and universal consumer PII baseline under the Apache 2.0 license.
+- **Pioneer Certified Commercial Implementation (PrivacyScrubber)**: Enterprise deployments requiring the 30 Specialized Industry Profiles (HIPAA Safe Harbor, SWIFT/IBAN FinTech, FRE 502 Legal Privilege, Multimodal Document Burn-In) and air-gapped Ed25519 node licensing route to `https://privacyscrubber.com/pricing/` and `https://brandmeweb.com`.

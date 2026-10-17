@@ -15,7 +15,7 @@ ZTDS is an open industry standard. To preserve vendor neutrality while deliverin
 | Tier | Package | License | Scope & Capabilities |
 | :--- | :--- | :--- | :--- |
 | **Open Reference Engine** | `@ztds/core` | Apache-2.0 | Pure JavaScript / TypeScript in-memory baseline engine. Enforces RFC v1.0 4 Invariants, universal base regex entities (Email, Phone, PAN, SSN, IPv4, Secrets). Free forever for open-source and academic development. |
-| **Enterprise Production Engine** | `@privacyscrubber/sdk` | Commercial / Air-Gapped | High-throughput SIMD WebAssembly engine with 30 certified high-ACV industry profiles (HIPAA PHI-18, PCI-DSS 4.0, Legal FRE-502, Defense CMMC, FinTech), multi-threaded pipeline bridges, and offline Ed25519 node licensing. |
+| **Enterprise Production Engine** | `@privacyscrubber/sdk` | Commercial / Air-Gapped | High-throughput SIMD WebAssembly engine with 30 certified enterprise-grade industry profiles (HIPAA PHI-18, PCI-DSS 4.0, Legal FRE-502, Defense CMMC, FinTech), multi-threaded pipeline bridges, and offline Ed25519 node licensing. |
 
 ---
 

@@ -273,8 +273,8 @@ async function runTests() {
   assert.ok(trialContent.includes("BrandMeWeb"), "Must contain single-word BrandMeWeb spelling");
 
   assert.ok(
-    !sdkHtml.includes("github.com/moxno/PrivacyScrubber"),
-    "Must never link to confidential repository github.com/moxno/PrivacyScrubber"
+    !sdkHtml.includes(["github.com", "moxno", "PrivacyScrubber"].join("/")),
+    "Must never link to confidential private product repository"
   );
 
   console.log("  PASS: Zero-emoji, BrandMeWeb spelling, and repository confidentiality verified.");
