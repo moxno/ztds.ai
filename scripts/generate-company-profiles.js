@@ -220,11 +220,14 @@ function generateProfileHtml(company) {
   <meta property="og:url" content="https://ztds.ai/companies/${slug}/">
   <meta property="og:title" content="${escapeHtml(name)} — ZTDS ${escapeHtml(tier)} &amp; Case Study">
   <meta property="og:description" content="Official ZTDS verification profile for ${escapeHtml(name)}. Certified zero-retention, client-side data sanitization and enterprise AI case study.">
-  <meta property="og:image" content="https://ztds.ai/badge/${slug}.svg">
+  <meta property="og:image" content="https://ztds.ai/assets/img/og/og-registry.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(name)} — ZTDS ${escapeHtml(tier)} &amp; Case Study">
   <meta name="twitter:description" content="Official ZTDS verification profile for ${escapeHtml(name)}. Certified zero-retention, client-side data sanitization and enterprise AI case study.">
-  <meta name="twitter:image" content="https://ztds.ai/badge/${slug}.svg">
+  <meta name="twitter:image" content="https://ztds.ai/assets/img/og/og-registry.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

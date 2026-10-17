@@ -287,4 +287,39 @@ for (const relPath of fellowPages) {
 }
 console.log(`    [PASS] All ${fellowPages.length} fellow profiles conform 100% to the layout & interactive architecture invariant.`);
 
-console.log('\n[SUMMARY] ALL 6 ROUTES INTEGRITY & COMPLIANCE TESTS PASSED.');
+// Test 7: Open Graph & Twitter Card Raster PNG Integrity (1200x630 Invariant)
+console.log('--> Test 7: Open Graph & Twitter Card Raster PNG Integrity (1200x630 Invariant)');
+assert(fs.existsSync(path.join(rootDir, 'og-image.png')), 'Missing root og-image.png');
+assert(fs.existsSync(path.join(rootDir, 'public', 'og-image.png')), 'Missing public/og-image.png');
+
+for (const relPath of prodPages) {
+  const fullPath = path.join(rootDir, relPath);
+  const html = fs.readFileSync(fullPath, 'utf8');
+
+  const ogImgMatch = html.match(/<meta\s+[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i);
+  assert(ogImgMatch, `Missing og:image in ${relPath}`);
+  const ogImgUrl = ogImgMatch[1];
+  assert(
+    ogImgUrl.startsWith('https://ztds.ai/assets/img/og/') && ogImgUrl.endsWith('.png'),
+    `og:image in ${relPath} must be a canonical raster PNG in /assets/img/og/, got: ${ogImgUrl}`
+  );
+  assert(
+    /<meta\s+[^>]*property=["']og:image:width["'][^>]*content=["']1200["']/i.test(html),
+    `Missing og:image:width="1200" in ${relPath}`
+  );
+  assert(
+    /<meta\s+[^>]*property=["']og:image:height["'][^>]*content=["']630["']/i.test(html),
+    `Missing og:image:height="630" in ${relPath}`
+  );
+
+  const twImgMatch = html.match(/<meta\s+[^>]*name=["']twitter:image["'][^>]*content=["']([^"']+)["']/i);
+  assert(twImgMatch && twImgMatch[1] === ogImgUrl, `Missing or mismatched twitter:image in ${relPath}`);
+
+  const diskRel = ogImgUrl.replace('https://ztds.ai/', '');
+  assert(fs.existsSync(path.join(rootDir, diskRel)), `Missing physical OG PNG file: ${diskRel}`);
+  assert(fs.existsSync(path.join(rootDir, 'public', diskRel)), `Missing public mirror OG PNG file: public/${diskRel}`);
+}
+console.log(`    [PASS] All ${prodPages.length} production routes use verified 1200x630 raster PNG Open Graph & Twitter cards.`);
+
+console.log('\n[SUMMARY] ALL 7 ROUTES INTEGRITY & COMPLIANCE TESTS PASSED.');
+
