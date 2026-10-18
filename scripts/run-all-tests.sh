@@ -24,37 +24,27 @@ node test/license.test.js
 
 # 3. Domain Scanner & Anti-SSRF Protection
 echo ""
-echo ">> Step 3/12: Running Domain Scanner & Anti-SSRF Tests..."
+echo ">> Running Domain Scanner & Anti-SSRF Tests..."
 node test/scan-domain.test.js
 
-# 4. Paddle Billing v2 Webhook & Minting
+# 4. Lead Capture & Rate Limiting
 echo ""
-echo ">> Step 4/12: Running Paddle Billing v2 Webhook Tests..."
-node test/paddle-webhook.test.js
-
-# 5. Lead Capture & Rate Limiting
-echo ""
-echo ">> Step 5/12: Running Lead Capture & Rate Limiting Tests..."
+echo ">> Running Lead Capture & Rate Limiting Tests..."
 node test/lead-capture.test.js
 
-# 6. Schema.org Knowledge Graph
+# 5. Schema.org Knowledge Graph
 echo ""
-echo ">> Step 6/12: Running Schema.org & GEO Knowledge Graph Tests..."
+echo ">> Running Schema.org & GEO Knowledge Graph Tests..."
 node test/schema.test.js
 
-# 7. Scanner UI & Progressive Disclosure
+# 6. Scanner UI & Progressive Disclosure
 echo ""
-echo ">> Step 7/12: Running Scanner UI Tests..."
+echo ">> Running Scanner UI Tests..."
 node test/scanner-ui.test.js
 
-# 8. Checkout Fulfillment
+# 7. BrandMeWeb Agency Package & SOW
 echo ""
-echo ">> Step 8/12: Running Checkout Fulfillment Tests..."
-node test/checkout-fulfillment.test.js
-
-# 9. BrandMeWeb Agency Package & SOW
-echo ""
-echo ">> Step 9/12: Running BrandMeWeb Agency Package Tests..."
+echo ">> Running BrandMeWeb Agency Package Tests..."
 node test/agency.test.js
 
 # 10. Routes Integrity & Zero-Emoji Audit

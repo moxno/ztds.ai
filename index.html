@@ -3,23 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZTDS.ai — Zero-Trust Data Sanitization Architecture</title>
+  <title>Zero-Trust Data Sanitization (ZTDS) Open Standard | ZTDS.ai</title>
   <meta name="description" content="Open standard for in-memory zero-trust data sanitization in AI &amp; RAG workflows. Eliminate credential leaks with sub-millisecond local tokenization.">
   <meta name="keywords" content="Zero Trust Data Sanitization, ZTDS, Model Context Protocol, MCP privacy, Cursor IDE data leak, Claude Desktop MCP, in-memory PII de-identification, GDPR Article 28 processor path elimination, GDPR Article 17 vector database, LangChain privacy, ztds-mcp, ztds-audit">
   <link rel="canonical" href="https://ztds.ai/">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="theme-color" content="#020617">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
   
   <!-- Open Graph & Social Cards -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ztds.ai/">
-  <meta property="og:title" content="ZTDS.ai — Zero-Trust Data Sanitization Architecture">
+  <meta property="og:title" content="Zero-Trust Data Sanitization (ZTDS) Open Standard | ZTDS.ai">
   <meta property="og:description" content="Open standard for in-memory zero-trust data sanitization in AI &amp; RAG workflows. Eliminate credential leaks with sub-millisecond local tokenization.">
   <meta property="og:image" content="https://ztds.ai/assets/img/og/og-default.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ZTDS.ai — Zero-Trust Data Sanitization Architecture">
+  <meta name="twitter:title" content="Zero-Trust Data Sanitization (ZTDS) Open Standard | ZTDS.ai">
   <meta name="twitter:description" content="Open standard for in-memory zero-trust data sanitization in AI &amp; RAG workflows. Eliminate credential leaks with sub-millisecond local tokenization.">
   <meta name="twitter:image" content="https://ztds.ai/assets/img/og/og-default.png">
 
@@ -40,7 +44,9 @@
         "url": "https://ztds.ai",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://ztds.ai/favicon.svg"
+          "url": "https://ztds.ai/assets/img/logo-512.png",
+          "width": 512,
+          "height": 512
         },
         "founder": {
           "@id": "https://ztds.ai/#founder"
@@ -125,7 +131,7 @@
         "description": "Automated static analysis CLI auditing AI pipelines and agent connectors against ZTDS RFC v1.0 invariants in sub-10ms with Ed25519 receipts.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Node.js / Cross-platform",
-        "softwareVersion": "1.0.0",
+        "softwareVersion": "1.1.1",
         "license": "https://www.apache.org/licenses/LICENSE-2.0",
         "downloadUrl": "https://www.npmjs.com/package/ztds-audit",
         "url": "https://ztds.ai/scanner/",
@@ -157,6 +163,22 @@
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "Under ZTDS Invariant 4, data sanitization executes 100% inside client volatile memory prior to WAN serialization; exactly 0.00 bytes of raw personal data leave the local application runtime. Because the sanitization engine never receives, stores, or transmits personal data, it eliminates intermediary vendors from the data processor supply chain under GDPR Article 28 and functions as a proactive technical safe harbor under GDPR Article 32."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between open reference ztds-mcp and @privacyscrubber/mcp-server?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ztds-mcp is the open-source reference implementation published under Apache 2.0 by the ZTDS Consortium, providing baseline universal entity sanitization (emails, keys, credit cards, SSNs, IPs) for individual developers. @privacyscrubber/mcp-server is the certified enterprise production engine engineered by BrandMeWeb, including 30 specialized industry profiles (HIPAA clinical PHI, banking routing/IBANs, legal work product, cloud IAM credentials) and offline Ed25519 cryptographic token licensing for corporate teams."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How can I independently verify zero external network egress in my own environment?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ZTDS conforms to the Airplane Mode Verification Protocol: load the web playground or run the CLI auditor npx ztds-audit --strict, physically disconnect your network interface (or enable Airplane Mode), and observe that all sanitization, detokenization, and verification execute with 100% functionality without error. You can also run Wireshark or inspect the Chrome DevTools Network panel to confirm that exactly 0 network requests are dispatched during processing."
             }
           }
         ]
@@ -311,7 +333,7 @@
 
         <!-- Main Headline -->
         <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-          <span class="text-slate-900">ZTDS<sup class="text-emerald-600 font-bold text-lg sm:text-2xl lg:text-3xl align-super ml-0.5">&trade;</sup></span> <span class="text-slate-500 font-medium text-xl sm:text-2xl lg:text-3xl block sm:inline">(Zero Trust Data Sanitization)</span>
+          <span class="text-slate-900">ZTDS<sup class="text-emerald-600 font-bold text-lg sm:text-2xl lg:text-3xl align-super ml-0.5">&trade;</sup></span> <span class="text-slate-500 font-medium text-xl sm:text-2xl lg:text-3xl block sm:inline">(Zero-Trust Data Sanitization)</span>
           <span class="block text-emerald-600 mt-1.5 text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] tracking-tight whitespace-normal lg:whitespace-nowrap font-extrabold">The Open Standard &amp; Enterprise AI Trust Seal</span>
         </h1>
 
