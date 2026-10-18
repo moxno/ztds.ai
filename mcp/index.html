@@ -24,9 +24,8 @@
   <meta name="twitter:image" content="https://ztds.ai/assets/img/og/og-mcp.png">
 
   <!-- Fonts & Styles -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
@@ -212,14 +211,14 @@
           </div>
           <div class="flex flex-col">
             <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
-            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+            <span class="text-xs text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
           </div>
         </a>
 
         <!-- Status Pill -->
         <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
           <span class="pulse-dot"></span>
-          <span class="font-mono text-[11px] font-semibold">RFC v1.0 &middot; MCP PROFILE</span>
+          <span class="font-mono text-xs font-semibold">RFC v1.0 &middot; MCP PROFILE</span>
         </div>
       </div>
 
@@ -271,7 +270,7 @@
     </div>
 
     <div class="py-4 space-y-1 text-sm font-medium">
-      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
+      <div class="px-2 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
       <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
       <a href="/ietf/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">IETF Standards Track (draft-02)</a>
       <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
@@ -285,7 +284,7 @@
       <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
       <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 &amp; Trust Center</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
+      <div class="px-2 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
       <a href="/certification/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Certification Authority</a>
       <a href="/verify/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Ed25519 Certificate Validator</a>
       <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
@@ -295,7 +294,7 @@
       <a href="/case-studies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Enterprise Case Studies</a>
       <a href="/agency/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">BrandMeWeb Enterprise Retainer</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <div class="px-2 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
       <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
       <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
       <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive DAG Inspector</a>
@@ -403,7 +402,7 @@
             <p class="text-xs text-slate-600 leading-relaxed">
               When an agent indexes a workspace, tool calls like <code>read_file</code> or <code>grep_search</code> ingest local <code>.env</code> files, AWS credentials, database URIs, and confidential client customer dumps.
             </p>
-            <div class="pt-2 text-[11px] font-mono text-red-700 bg-red-50 p-2 rounded border border-red-200">
+            <div class="pt-2 text-xs font-mono text-red-700 bg-red-50 p-2 rounded border border-red-200">
               Vulnerability: Raw secrets loaded into prompt context window.
             </div>
           </div>
@@ -414,7 +413,7 @@
             <p class="text-xs text-slate-600 leading-relaxed">
               Desktop IDEs (Cursor, Windsurf) serialize the composite context window over outbound HTTPS/gRPC sockets to remote LLM providers. Unmasked credentials enter external server logs, model memory caches, and training sets.
             </p>
-            <div class="pt-2 text-[11px] font-mono text-amber-800 bg-amber-50 p-2 rounded border border-amber-200">
+            <div class="pt-2 text-xs font-mono text-amber-800 bg-amber-50 p-2 rounded border border-amber-200">
               Regulatory Exposure: GDPR Art. 28 processor liability.
             </div>
           </div>
@@ -425,7 +424,7 @@
             <p class="text-xs text-slate-600 leading-relaxed">
               Cloud DLP gateways cannot inspect local desktop stdio pipes. Attempting to route IDE traffic through intermediate cloud proxies breaks TLS certificates, introduces 300ms+ network latency, and adds new subprocessor chains.
             </p>
-            <div class="pt-2 text-[11px] font-mono text-slate-700 bg-slate-100 p-2 rounded border border-slate-200">
+            <div class="pt-2 text-xs font-mono text-slate-700 bg-slate-100 p-2 rounded border border-slate-200">
               Architectural Flaw: Wrong physical boundary.
             </div>
           </div>
@@ -452,7 +451,7 @@
       <div class="code-container shadow-lg mb-12">
         <div class="code-header flex items-center justify-between">
           <span class="font-mono text-xs text-slate-300">ASCII Sequence Diagram &middot; In-RAM Model Context Protocol Execution</span>
-          <span class="text-[11px] font-mono text-emerald-400">Zero Socket Telemetry</span>
+          <span class="text-xs font-mono text-emerald-400">Zero Socket Telemetry</span>
         </div>
         <pre class="p-6 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed"><code>
 [ IDE Workspace (Cursor / Claude / Zed) ]
@@ -487,7 +486,7 @@
           <p class="text-slate-600 leading-relaxed">
             All JSON-RPC messages (tools/call, prompts/get, diff evaluations) are parsed from the local stdio pipe. No network listener or port is opened.
           </p>
-          <span class="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded inline-block">OS Process Boundary</span>
+          <span class="text-xs font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded inline-block">OS Process Boundary</span>
         </div>
 
         <div class="p-5 bg-white border border-slate-200 rounded-xl space-y-2">
@@ -495,7 +494,7 @@
           <p class="text-slate-600 leading-relaxed">
             Sensitive patterns are replaced with typed surrogate tokens (<code>[API_SECRET_TOKEN_1]</code>). Code syntax and AST parsing trees remain completely intact.
           </p>
-          <span class="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded inline-block">Invariant 2 Conformance</span>
+          <span class="text-xs font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded inline-block">Invariant 2 Conformance</span>
         </div>
 
         <div class="p-5 bg-white border border-slate-200 rounded-xl space-y-2">
@@ -503,7 +502,7 @@
           <p class="text-slate-600 leading-relaxed">
             The remote LLM receives only de-identified text. Even if cloud prompts are cached, retained, or logged, exactly 0.00 bytes of confidential data exist in them.
           </p>
-          <span class="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded inline-block">0.00 B Cloud Leakage</span>
+          <span class="text-xs font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded inline-block">0.00 B Cloud Leakage</span>
         </div>
 
         <div class="p-5 bg-white border border-slate-200 rounded-xl space-y-2">
@@ -511,7 +510,7 @@
           <p class="text-slate-600 leading-relaxed">
             Model completions are resolved locally against the volatile dictionary and written back to stdout. Real values reappear in the IDE without delay.
           </p>
-          <span class="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded inline-block">Bijective In-RAM Recovery</span>
+          <span class="text-xs font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded inline-block">Bijective In-RAM Recovery</span>
         </div>
 
       </div>
@@ -539,12 +538,12 @@
             <div class="space-y-3">
               <div class="flex items-center justify-between">
                 <span class="font-mono text-xs font-bold text-slate-900 bg-white px-2 py-1 rounded border border-slate-200">ztds_sanitize</span>
-                <span class="text-[10px] font-mono text-emerald-700 font-semibold">Core Invariant 1+2</span>
+                <span class="text-xs font-mono text-emerald-700 font-semibold">Core Invariant 1+2</span>
               </div>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Interprets raw code or prompt text in volatile RAM, detects credentials/PII, and substitutes them with deterministic surrogate tokens.
               </p>
-              <div class="text-[11px] font-mono text-slate-500 bg-white p-3 rounded border border-slate-200 space-y-1">
+              <div class="text-xs font-mono text-slate-500 bg-white p-3 rounded border border-slate-200 space-y-1">
                 <div class="text-slate-700 font-semibold">Input:</div>
                 <div>text: string (max 500 KB)</div>
                 <div>sessionId?: string</div>
@@ -559,12 +558,12 @@
             <div class="space-y-3">
               <div class="flex items-center justify-between">
                 <span class="font-mono text-xs font-bold text-slate-900 bg-white px-2 py-1 rounded border border-slate-200">ztds_restore</span>
-                <span class="text-[10px] font-mono text-emerald-700 font-semibold">Core Invariant 2</span>
+                <span class="text-xs font-mono text-emerald-700 font-semibold">Core Invariant 2</span>
               </div>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Replaces surrogate tokens in model completion outputs back with original cleartext values using the active in-memory session map.
               </p>
-              <div class="text-[11px] font-mono text-slate-500 bg-white p-3 rounded border border-slate-200 space-y-1">
+              <div class="text-xs font-mono text-slate-500 bg-white p-3 rounded border border-slate-200 space-y-1">
                 <div class="text-slate-700 font-semibold">Input:</div>
                 <div>text: string</div>
                 <div>sessionId?: string</div>
@@ -579,12 +578,12 @@
             <div class="space-y-3">
               <div class="flex items-center justify-between">
                 <span class="font-mono text-xs font-bold text-slate-900 bg-white px-2 py-1 rounded border border-slate-200">ztds_audit</span>
-                <span class="text-[10px] font-mono text-blue-700 font-semibold">Pre-Commit AST Linter</span>
+                <span class="text-xs font-mono text-blue-700 font-semibold">Pre-Commit AST Linter</span>
               </div>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Performs static AST inspection of workspace files or text snippets without modifying memory, generating SHA-256 cryptographic receipts.
               </p>
-              <div class="text-[11px] font-mono text-slate-500 bg-white p-3 rounded border border-slate-200 space-y-1">
+              <div class="text-xs font-mono text-slate-500 bg-white p-3 rounded border border-slate-200 space-y-1">
                 <div class="text-slate-700 font-semibold">Input:</div>
                 <div>target: string (path or text)</div>
                 <div class="text-slate-700 font-semibold mt-1">Output:</div>
@@ -598,12 +597,12 @@
             <div class="space-y-3">
               <div class="flex items-center justify-between">
                 <span class="font-mono text-xs font-bold text-slate-900 bg-white px-2 py-1 rounded border border-slate-200">ztds_reset_session</span>
-                <span class="text-[10px] font-mono text-purple-700 font-semibold">Theorem 2 Zeroization</span>
+                <span class="text-xs font-mono text-purple-700 font-semibold">Theorem 2 Zeroization</span>
               </div>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Triggers cryptographic in-RAM zeroization (`crypto.randomFillSync`), overwriting session token maps in volatile heap immediately.
               </p>
-              <div class="text-[11px] font-mono text-slate-500 bg-white p-3 rounded border border-slate-200 space-y-1">
+              <div class="text-xs font-mono text-slate-500 bg-white p-3 rounded border border-slate-200 space-y-1">
                 <div class="text-slate-700 font-semibold">Input:</div>
                 <div>sessionId: string</div>
                 <div class="text-slate-700 font-semibold mt-1">Output:</div>
@@ -617,12 +616,12 @@
             <div class="space-y-3">
               <div class="flex items-center justify-between">
                 <span class="font-mono text-xs font-bold text-slate-900 bg-white px-2 py-1 rounded border border-slate-200">ztds_status</span>
-                <span class="text-[10px] font-mono text-emerald-700 font-semibold">Self-Test Diagnostic</span>
+                <span class="text-xs font-mono text-emerald-700 font-semibold">Self-Test Diagnostic</span>
               </div>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Inspects installed client configuration paths (Cursor, Claude, Windsurf) and executes an in-RAM roundtrip test verifying zero data egress.
               </p>
-              <div class="text-[11px] font-mono text-slate-500 bg-white p-3 rounded border border-slate-200 space-y-1">
+              <div class="text-xs font-mono text-slate-500 bg-white p-3 rounded border border-slate-200 space-y-1">
                 <div class="text-slate-700 font-semibold">Input:</div>
                 <div>(none)</div>
                 <div class="text-slate-700 font-semibold mt-1">Output:</div>
@@ -636,12 +635,12 @@
             <div class="space-y-3">
               <div class="flex items-center justify-between">
                 <span class="font-mono text-xs font-bold text-slate-900 bg-white px-2 py-1 rounded border border-slate-200">MCP Prompts</span>
-                <span class="text-[10px] font-mono text-amber-700 font-semibold">IDE System Directives</span>
+                <span class="text-xs font-mono text-amber-700 font-semibold">IDE System Directives</span>
               </div>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Provides native prompt templates: <code>ztds_secure_code_review</code> and <code>ztds_redact_and_analyze</code> instructing agents to operate over surrogate tokens.
               </p>
-              <div class="text-[11px] font-mono text-slate-500 bg-white p-3 rounded border border-slate-200 space-y-1">
+              <div class="text-xs font-mono text-slate-500 bg-white p-3 rounded border border-slate-200 space-y-1">
                 <div class="text-slate-700 font-semibold">Prompts Registered:</div>
                 <div>ztds_secure_code_review</div>
                 <div>ztds_redact_and_analyze</div>
@@ -688,10 +687,10 @@
 
             <!-- Presets Buttons -->
             <div class="flex items-center gap-2 shrink-0">
-              <span class="text-[11px] font-mono text-slate-400 uppercase hidden sm:inline">Presets:</span>
-              <button type="button" class="sim-preset-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-[11px] font-mono transition-colors cursor-pointer" data-preset="api_key">API Keys</button>
-              <button type="button" class="sim-preset-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-[11px] font-mono transition-colors cursor-pointer" data-preset="pii">PII &amp; Billing</button>
-              <button type="button" class="sim-preset-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-[11px] font-mono transition-colors cursor-pointer" data-preset="database">Database</button>
+              <span class="text-xs font-mono text-slate-400 uppercase hidden sm:inline">Presets:</span>
+              <button type="button" class="sim-preset-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-mono transition-colors cursor-pointer" data-preset="api_key">API Keys</button>
+              <button type="button" class="sim-preset-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-mono transition-colors cursor-pointer" data-preset="pii">PII &amp; Billing</button>
+              <button type="button" class="sim-preset-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-mono transition-colors cursor-pointer" data-preset="database">Database</button>
             </div>
 
           </div>
@@ -713,10 +712,10 @@
                 
                 <div class="flex items-center justify-between gap-3 text-xs font-mono">
                   <div class="flex items-center gap-2">
-                    <label for="simSessionInput" class="text-slate-400 text-[11px]">Session ID:</label>
+                    <label for="simSessionInput" class="text-slate-400 text-xs">Session ID:</label>
                     <input type="text" id="simSessionInput" value="sess_cursor_01" class="bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-200 text-base sm:text-xs font-mono w-36 focus:outline-none focus:border-emerald-500">
                   </div>
-                  <span class="text-[11px] text-slate-400 font-sans hidden sm:inline">JSON-RPC 2.0 Mode</span>
+                  <span class="text-xs text-slate-400 font-sans hidden sm:inline">JSON-RPC 2.0 Mode</span>
                 </div>
               </div>
 
@@ -733,33 +732,33 @@
               <div class="space-y-3">
                 <div class="flex items-center justify-between border-b border-slate-800 pb-2">
                   <div class="flex items-center gap-1 text-xs" id="sim-output-tabs" role="tablist" aria-label="Simulator Output View">
-                    <button type="button" role="tab" aria-selected="true" class="sim-out-tab active px-2.5 py-1 rounded bg-slate-800 text-emerald-400 font-mono text-[11px] font-semibold cursor-pointer" data-out="stdio">Stdio JSON-RPC</button>
-                    <button type="button" role="tab" aria-selected="false" class="sim-out-tab px-2.5 py-1 rounded text-slate-400 hover:text-white font-mono text-[11px] font-semibold cursor-pointer" data-out="session">TokenMap</button>
-                    <button type="button" role="tab" aria-selected="false" class="sim-out-tab px-2.5 py-1 rounded text-slate-400 hover:text-white font-mono text-[11px] font-semibold cursor-pointer" data-out="masked">Masked View</button>
+                    <button type="button" role="tab" aria-selected="true" class="sim-out-tab active px-2.5 py-1 rounded bg-slate-800 text-emerald-400 font-mono text-xs font-semibold cursor-pointer" data-out="stdio">Stdio JSON-RPC</button>
+                    <button type="button" role="tab" aria-selected="false" class="sim-out-tab px-2.5 py-1 rounded text-slate-400 hover:text-white font-mono text-xs font-semibold cursor-pointer" data-out="session">TokenMap</button>
+                    <button type="button" role="tab" aria-selected="false" class="sim-out-tab px-2.5 py-1 rounded text-slate-400 hover:text-white font-mono text-xs font-semibold cursor-pointer" data-out="masked">Masked View</button>
                   </div>
-                  <button type="button" id="btnCopySimOutput" class="text-slate-400 hover:text-emerald-400 text-[11px] font-mono flex items-center gap-1 cursor-pointer">
+                  <button type="button" id="btnCopySimOutput" class="text-slate-400 hover:text-emerald-400 text-xs font-mono flex items-center gap-1 cursor-pointer">
                     <span id="copySimBtnText">Copy Output</span>
                   </button>
                 </div>
 
                 <!-- Pane 1: Stdio JSON-RPC -->
                 <div id="simPaneStdio" class="sim-out-pane">
-                  <pre id="simStdioDisplay" class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 font-mono text-[11.5px] text-slate-200 overflow-x-auto leading-relaxed h-[230px] overflow-y-auto whitespace-pre-wrap"></pre>
+                  <pre id="simStdioDisplay" class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed h-[230px] overflow-y-auto whitespace-pre-wrap"></pre>
                 </div>
 
                 <!-- Pane 2: TokenMap -->
                 <div id="simPaneSession" class="sim-out-pane hidden">
-                  <pre id="simSessionDisplay" class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 font-mono text-[11.5px] text-sky-300 overflow-x-auto leading-relaxed h-[230px] overflow-y-auto whitespace-pre-wrap"></pre>
+                  <pre id="simSessionDisplay" class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 font-mono text-xs text-sky-300 overflow-x-auto leading-relaxed h-[230px] overflow-y-auto whitespace-pre-wrap"></pre>
                 </div>
 
                 <!-- Pane 3: Masked View -->
                 <div id="simPaneMasked" class="sim-out-pane hidden">
-                  <div id="simMaskedDisplay" class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 font-mono text-[11.5px] text-slate-200 overflow-x-auto leading-relaxed h-[230px] overflow-y-auto whitespace-pre-wrap"></div>
+                  <div id="simMaskedDisplay" class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed h-[230px] overflow-y-auto whitespace-pre-wrap"></div>
                 </div>
               </div>
 
               <!-- In-Console Metrics -->
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-slate-800/80 text-[10.5px] font-mono">
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-slate-800/80 text-xs font-mono">
                 <div class="bg-slate-900/80 p-2 rounded border border-slate-800">
                   <div class="text-slate-400">WAN Egress</div>
                   <div class="text-emerald-400 font-bold text-xs mt-0.5" id="simMetricEgress">0.00 B</div>
@@ -789,8 +788,8 @@
               <span>All 5 tools run 100% locally in your IDE child process.</span>
             </div>
             <div class="flex items-center gap-3">
-              <span class="text-slate-400 text-[11px]">Install in Cursor/Claude:</span>
-              <code class="px-2.5 py-1 bg-black/60 text-emerald-300 rounded border border-slate-700 text-[11px]">npx ztds-mcp init</code>
+              <span class="text-slate-400 text-xs">Install in Cursor/Claude:</span>
+              <code class="px-2.5 py-1 bg-black/60 text-emerald-300 rounded border border-slate-700 text-xs">npx ztds-mcp init</code>
               <a href="#setup" class="text-emerald-400 hover:text-emerald-300 font-bold">Config Blocks &rarr;</a>
             </div>
           </div>
@@ -830,7 +829,7 @@
             <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
             <span class="font-mono text-xs text-slate-300 font-semibold">1-Command Automated Setup &middot; Auto-Detects All Clients</span>
           </div>
-          <button type="button" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 cursor-pointer" data-target="cmd-init">Copy Command</button>
+          <button type="button" class="btn-copy-code text-xs font-mono text-emerald-400 hover:text-emerald-300 cursor-pointer" data-target="cmd-init">Copy Command</button>
         </div>
         <pre class="p-4 font-mono text-sm text-slate-100 overflow-x-auto"><code id="cmd-init">npx ztds-mcp init</code></pre>
         <div class="mt-2 text-xs font-mono text-slate-400">
@@ -855,11 +854,11 @@
             <div class="grid grid-cols-2 gap-2 p-1 bg-white border border-slate-200 rounded-xl" role="radiogroup" aria-label="Package Edition">
               <button type="button" id="btnEditionOpen" class="edition-toggle-btn active py-2 px-3 rounded-lg text-xs font-mono font-semibold transition-all bg-slate-900 text-white shadow-sm cursor-pointer text-left" data-edition="open">
                 <div class="font-bold">Open Reference</div>
-                <div class="text-[10px] text-slate-300 font-sans">ztds-mcp (Apache-2.0)</div>
+                <div class="text-xs text-slate-300 font-sans">ztds-mcp (Apache-2.0)</div>
               </button>
               <button type="button" id="btnEditionCommercial" class="edition-toggle-btn py-2 px-3 rounded-lg text-xs font-mono font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer text-left" data-edition="commercial">
                 <div class="font-bold">Certified Enterprise</div>
-                <div class="text-[10px] text-slate-500 font-sans">@privacyscrubber/mcp</div>
+                <div class="text-xs text-slate-500 font-sans">@privacyscrubber/mcp</div>
               </button>
             </div>
           </div>
@@ -919,10 +918,10 @@
               <div class="flex items-center gap-2">
                 <span class="font-mono text-xs text-slate-400">Target File:</span>
                 <span id="cfgActivePath" class="font-mono text-xs text-emerald-400 font-semibold">~/.cursor/mcp.json</span>
-                <button type="button" id="btnCopyConfigPath" class="text-[11px] font-mono text-slate-400 hover:text-white underline cursor-pointer ml-1">Copy Path</button>
+                <button type="button" id="btnCopyConfigPath" class="text-xs font-mono text-slate-400 hover:text-white underline cursor-pointer ml-1">Copy Path</button>
               </div>
               <div class="flex items-center gap-3">
-                <button type="button" id="btnCopyGeneratedCode" class="btn-copy-code text-[11px] font-mono text-emerald-400 hover:text-emerald-300 font-semibold cursor-pointer" data-target="cfgGeneratedCode">Copy Configuration</button>
+                <button type="button" id="btnCopyGeneratedCode" class="btn-copy-code text-xs font-mono text-emerald-400 hover:text-emerald-300 font-semibold cursor-pointer" data-target="cfgGeneratedCode">Copy Configuration</button>
               </div>
             </div>
 
@@ -940,7 +939,7 @@
 }</code></pre>
 
             <!-- Quick Open Footer -->
-            <div class="px-5 py-3 bg-slate-900/60 border-t border-slate-800/80 flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-400 gap-2">
+            <div class="px-5 py-3 bg-slate-900/60 border-t border-slate-800/80 flex flex-wrap items-center justify-between text-xs font-mono text-slate-400 gap-2">
               <span id="cfgTerminalHint">Terminal Open: cursor ~/.cursor/mcp.json</span>
               <span class="text-slate-500">In-Memory Volatile Stdio Pipe &middot; Invariant 1 (Zero-Egress)</span>
             </div>
@@ -1109,7 +1108,7 @@
           <div class="ztds-card p-8 bg-slate-900 text-white rounded-2xl flex flex-col justify-between shadow-xl">
             <div>
               <div class="flex items-center justify-between mb-4">
-                <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px] font-mono font-bold">
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-mono font-bold">
                   CERTIFIED COMMERCIAL PIONEER
                 </span>
                 <span class="text-xs font-mono text-slate-400">BrandMeWeb</span>
@@ -1282,7 +1281,7 @@
 
         <!-- Col 2: Specification & RFC -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
             <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track (draft-02)</a></li>
@@ -1298,7 +1297,7 @@
 
         <!-- Col 3: Architecture & Tools -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
             <li><a href="/mcp/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Model Context Protocol (MCP) &rarr;</a></li>
@@ -1312,7 +1311,7 @@
 
         <!-- Col 4: Consortium & Governance -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/certification/" class="hover:text-slate-900 transition-colors">Certification Authority</a></li>
             <li><a href="/soc2/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">SOC 2 &amp; Trust Center &rarr;</a></li>
@@ -1326,7 +1325,7 @@
 
         <!-- Col 5: Community & Verified -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
             <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
@@ -1334,16 +1333,16 @@
             <li><a href="/case-studies/" class="hover:text-slate-900 transition-colors">Enterprise Case Studies</a></li>
             <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
             <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
-            <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
+            <li class="pt-2 text-xs text-slate-400 leading-tight">GitOps automated attestation.</li>
           </ul>
         </div>
       </div>
 
       <!-- Legal Conformance Notice Card -->
-      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-500 leading-relaxed">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
-          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
-          <span class="text-slate-400 font-mono text-[10px]">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-xs font-mono">Legal Notice &amp; Intellectual Property Protection</span>
+          <span class="text-slate-400 font-mono text-xs">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
         </div>
         <p>
           ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. &sect; 119 Priority). The word mark <strong>ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
@@ -1357,7 +1356,7 @@
           <span>&middot;</span>
           <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
         </div>
-        <div class="flex items-center gap-4 text-[11px] font-mono">
+        <div class="flex items-center gap-4 text-xs font-mono">
           <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
             ALL SYSTEMS VERIFIED
@@ -1719,7 +1718,7 @@
           else if (type.includes("IBAN") || type.includes("FIN") || type.includes("SSN")) color = "bg-purple-950 text-purple-300 border-purple-500/50";
           else if (type.includes("EMAIL")) color = "bg-sky-950 text-sky-300 border-sky-500/50";
           else if (type.includes("PERSON")) color = "bg-amber-950 text-amber-300 border-amber-500/50";
-          return `<span class="inline-block px-1.5 py-0.2 rounded border font-mono font-bold text-[11px] shadow-sm ${color}">${token}</span>`;
+          return `<span class="inline-block px-1.5 py-0.2 rounded border font-mono font-bold text-xs shadow-sm ${color}">${token}</span>`;
         });
       }
 
@@ -1823,7 +1822,7 @@
             }
           };
 
-          maskedHtml = `<div class="text-slate-300 font-semibold mb-2 text-[11px] text-emerald-400">Restored Cleartext in Local Editor Buffer:</div><div class="whitespace-pre-wrap">${escapeHtml(restored)}</div>`;
+          maskedHtml = `<div class="text-slate-300 font-semibold mb-2 text-xs text-emerald-400">Restored Cleartext in Local Editor Buffer:</div><div class="whitespace-pre-wrap">${escapeHtml(restored)}</div>`;
 
           if (metricEgress) metricEgress.textContent = "0.00 B";
           if (metricLatency) metricLatency.textContent = `<${latency}ms`;

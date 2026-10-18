@@ -229,9 +229,8 @@ function generateProfileHtml(company) {
   <meta name="twitter:description" content="Official ZTDS verification profile for ${escapeHtml(name)}. Certified zero-retention, client-side data sanitization and enterprise AI case study.">
   <meta name="twitter:image" content="https://ztds.ai/assets/img/og/og-registry.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
@@ -313,14 +312,14 @@ function generateProfileHtml(company) {
           </div>
           <div class="flex flex-col">
             <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
-            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+            <span class="text-xs text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
           </div>
         </a>
 
         <!-- Status Pill -->
         <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
           <span class="pulse-dot"></span>
-          <span class="font-mono text-[11px] font-semibold">RFC v1.0 &middot; OPEN CONSORTIUM</span>
+          <span class="font-mono text-xs font-semibold">RFC v1.0 &middot; OPEN CONSORTIUM</span>
         </div>
       </div>
 
@@ -372,7 +371,7 @@ function generateProfileHtml(company) {
     </div>
 
     <div class="py-4 space-y-1 text-sm font-medium">
-      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
+      <div class="px-2 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
       <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
       <a href="/ietf/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">IETF Standards Track (draft-02)</a>
       <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
@@ -386,7 +385,7 @@ function generateProfileHtml(company) {
       <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
       <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 &amp; Trust Center</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
+      <div class="px-2 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
       <a href="/certification/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Certification Authority</a>
       <a href="/verify/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Ed25519 Certificate Validator</a>
       <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
@@ -396,7 +395,7 @@ function generateProfileHtml(company) {
       <a href="/case-studies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Enterprise Case Studies</a>
       <a href="/agency/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">BrandMeWeb Enterprise Retainer</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <div class="px-2 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
       <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
       <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
       <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive DAG Inspector</a>
@@ -595,7 +594,7 @@ function generateProfileHtml(company) {
 
           <label class="block text-xs font-mono text-slate-600 mb-1.5 font-semibold">Embed HTML Code</label>
           <div class="relative">
-            <pre class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-[11px] font-mono text-slate-700 overflow-x-auto leading-relaxed"><code>&lt;a href="https://ztds.ai/companies/${slug}/" target="_blank" rel="noopener" title="ZTDS Verified Corporate Member"&gt;
+            <pre class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs font-mono text-slate-700 overflow-x-auto leading-relaxed"><code>&lt;a href="https://ztds.ai/companies/${slug}/" target="_blank" rel="noopener" title="ZTDS Verified Corporate Member"&gt;
   &lt;img src="https://ztds.ai/badge/${slug}.svg" alt="ZTDS Verified" width="138" height="22" /&gt;
 &lt;/a&gt;</code></pre>
           </div>
@@ -649,7 +648,7 @@ function generateProfileHtml(company) {
 
         <!-- Col 2: Specification & RFC -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
             <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track (draft-02)</a></li>
@@ -666,7 +665,7 @@ function generateProfileHtml(company) {
 
         <!-- Col 3: Architecture & Tools -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
             <li><a href="/blueprints/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">10 AI &amp; RAG Blueprints &rarr;</a></li>
@@ -681,7 +680,7 @@ function generateProfileHtml(company) {
 
         <!-- Col 4: Consortium & Governance -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/certification/" class="hover:text-slate-900 transition-colors">Certification Authority</a></li>
             <li><a href="/soc2/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">SOC 2 &amp; Trust Center &rarr;</a></li>
@@ -695,7 +694,7 @@ function generateProfileHtml(company) {
 
         <!-- Col 5: Community & Verified -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
             <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
@@ -703,16 +702,16 @@ function generateProfileHtml(company) {
             <li><a href="/case-studies/" class="hover:text-slate-900 transition-colors">Enterprise Case Studies</a></li>
             <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
             <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
-            <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
+            <li class="pt-2 text-xs text-slate-400 leading-tight">GitOps automated attestation.</li>
           </ul>
         </div>
       </div>
 
       <!-- Legal Conformance Notice Card -->
-      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-500 leading-relaxed">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
-          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
-          <span class="text-slate-400 font-mono text-[10px]">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-xs font-mono">Legal Notice &amp; Intellectual Property Protection</span>
+          <span class="text-slate-400 font-mono text-xs">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
         </div>
         <p>
           ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. &sect; 119 Priority). The word mark <strong>ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
@@ -726,7 +725,7 @@ function generateProfileHtml(company) {
           <span>&middot;</span>
           <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
         </div>
-        <div class="flex items-center gap-4 text-[11px] font-mono">
+        <div class="flex items-center gap-4 text-xs font-mono">
           <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
             ALL SYSTEMS VERIFIED

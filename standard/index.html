@@ -23,9 +23,8 @@
   <meta name="twitter:image" content="https://ztds.ai/assets/img/og/og-default.png">
 
   <!-- Fonts & Styles -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
@@ -161,14 +160,14 @@
           </div>
           <div class="flex flex-col">
             <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
-            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+            <span class="text-xs text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
           </div>
         </a>
 
         <!-- Status Pill -->
         <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
           <span class="pulse-dot"></span>
-          <span class="font-mono text-[11px] font-semibold">RFC v1.0 &middot; OPEN CONSORTIUM</span>
+          <span class="font-mono text-xs font-semibold">RFC v1.0 &middot; OPEN CONSORTIUM</span>
         </div>
       </div>
 
@@ -220,7 +219,7 @@
     </div>
 
     <div class="py-4 space-y-1 text-sm font-medium">
-      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
+      <div class="px-2 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
       <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
       <a href="/ietf/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">IETF Standards Track (draft-02)</a>
       <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
@@ -234,7 +233,7 @@
       <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
       <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 &amp; Trust Center</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
+      <div class="px-2 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
       <a href="/certification/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Certification Authority</a>
       <a href="/verify/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Ed25519 Certificate Validator</a>
       <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
@@ -244,7 +243,7 @@
       <a href="/case-studies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Enterprise Case Studies</a>
       <a href="/agency/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">BrandMeWeb Enterprise Retainer</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <div class="px-2 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
       <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
       <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
       <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive DAG Inspector</a>
@@ -269,7 +268,7 @@
         
         <!-- Table of Contents -->
         <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm rounded-xl">
-          <div class="text-[11px] uppercase text-slate-400 font-bold tracking-wider mb-3 font-mono">RFC Contents</div>
+          <div class="text-xs uppercase text-slate-400 font-bold tracking-wider mb-3 font-mono">RFC Contents</div>
           <ul class="space-y-2 text-xs">
             <li><a href="#metadata" class="text-slate-600 hover:text-slate-900 transition-colors block">00. Document Metadata</a></li>
             <li><a href="#scope" class="text-slate-600 hover:text-slate-900 transition-colors block">01. Scope &amp; Threat Model</a></li>
@@ -287,25 +286,25 @@
 
         <!-- Citation & BibTeX Box -->
         <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm rounded-xl space-y-3">
-          <div class="text-[11px] uppercase text-emerald-800 font-bold tracking-wider font-mono">Academic Citation &amp; DOI</div>
+          <div class="text-xs uppercase text-emerald-800 font-bold tracking-wider font-mono">Academic Citation &amp; DOI</div>
           <p class="text-xs text-slate-500 leading-relaxed">Canonical academic citation for research papers, enterprise compliance filings, and CISO RFPs.</p>
           <button id="btnCopyBibtex" type="button" class="w-full py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-slate-700 font-medium text-left transition-colors flex items-center justify-between">
             <span>Copy BibTeX Entry</span>
-            <span class="text-[10px] text-slate-400 font-mono">&darr;</span>
+            <span class="text-xs text-slate-400 font-mono">&darr;</span>
           </button>
           <a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="w-full py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-slate-700 font-medium text-left transition-colors flex items-center justify-between block">
             <span>Zenodo DOI (10.5281)</span>
-            <span class="text-[10px] text-slate-400 font-mono">&rarr;</span>
+            <span class="text-xs text-slate-400 font-mono">&rarr;</span>
           </a>
           <a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="w-full py-2 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs text-slate-700 font-medium text-left transition-colors flex items-center justify-between block">
             <span>OSF Latency Benchmark</span>
-            <span class="text-[10px] text-slate-400 font-mono">&rarr;</span>
+            <span class="text-xs text-slate-400 font-mono">&rarr;</span>
           </a>
         </div>
 
         <!-- Working Group Errata Box -->
         <div class="ztds-card p-5 bg-emerald-50/60 border border-emerald-200 rounded-xl space-y-2">
-          <div class="text-[11px] uppercase text-emerald-900 font-bold tracking-wider font-mono">Working Group 1 (WG-1)</div>
+          <div class="text-xs uppercase text-emerald-900 font-bold tracking-wider font-mono">Working Group 1 (WG-1)</div>
           <p class="text-xs text-slate-600 leading-relaxed">
             Submit RFC errata, mathematical bounds, or vertical entity profile expansions via GitOps PR.
           </p>
@@ -325,7 +324,7 @@
         <div id="metadata" class="border-b border-slate-200 pb-8 mb-8">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-4 shadow-sm">
             <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span class="font-mono text-[11px]">RFC DOCUMENT ID: ZTDS-SPEC-2026-V1 &middot; STATUS: STANDARD / ACTIVE</span>
+            <span class="font-mono text-xs">RFC DOCUMENT ID: ZTDS-SPEC-2026-V1 &middot; STATUS: STANDARD / ACTIVE</span>
           </div>
           <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Zero-Trust Data Sanitization<sup class="text-emerald-600 font-bold text-lg sm:text-2xl align-super ml-0.5">&trade;</sup> (ZTDS<sup class="text-emerald-600 font-bold text-lg sm:text-2xl align-super ml-0.5">&trade;</sup>) Specification (RFC v1.0)
@@ -337,27 +336,27 @@
           <!-- Sovereign Metadata Grid -->
           <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs font-sans">
             <div>
-              <span class="text-slate-400 block text-[11px] font-medium uppercase font-mono">Lead Author</span>
+              <span class="text-slate-400 block text-xs font-medium uppercase font-mono">Lead Author</span>
               <span class="text-slate-900 font-semibold">Ilya Sibiryakov</span>
             </div>
             <div>
-              <span class="text-slate-400 block text-[11px] font-medium uppercase font-mono">Published</span>
+              <span class="text-slate-400 block text-xs font-medium uppercase font-mono">Published</span>
               <span class="text-slate-700 font-medium">2026-09-15</span>
             </div>
             <div>
-              <span class="text-slate-400 block text-[11px] font-medium uppercase font-mono">Patent &amp; TM</span>
+              <span class="text-slate-400 block text-xs font-medium uppercase font-mono">Patent &amp; TM</span>
               <a href="/terms/" class="text-slate-900 font-semibold hover:text-emerald-700 transition-colors" title="U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS™ #182655957">Patents Pending &middot; TM Reg.</a>
             </div>
             <div>
-              <span class="text-slate-400 block text-[11px] font-medium uppercase font-mono">Zenodo DOI</span>
+              <span class="text-slate-400 block text-xs font-medium uppercase font-mono">Zenodo DOI</span>
               <a href="https://zenodo.org/records/22058770" target="_blank" rel="noopener" class="text-emerald-700 font-medium hover:underline">10.5281/zenodo</a>
             </div>
             <div>
-              <span class="text-slate-400 block text-[11px] font-medium uppercase font-mono">Research Square</span>
+              <span class="text-slate-400 block text-xs font-medium uppercase font-mono">Research Square</span>
               <a href="https://doi.org/10.21203/rs.3.rs-11117457/v1" target="_blank" rel="noopener" class="text-emerald-700 font-medium hover:underline">10.21203/rs</a>
             </div>
             <div>
-              <span class="text-slate-400 block text-[11px] font-medium uppercase font-mono">ORCID iD</span>
+              <span class="text-slate-400 block text-xs font-medium uppercase font-mono">ORCID iD</span>
               <a href="https://orcid.org/0009-0002-0642-5985" target="_blank" rel="noopener" class="text-emerald-700 font-medium hover:underline">0009-0002-0642</a>
             </div>
           </div>
@@ -365,7 +364,7 @@
 
         <!-- GEO / LLM Canonical Definition Snippet Card -->
         <div class="mb-10 p-5 rounded-xl bg-slate-900 text-slate-200 border border-slate-800 shadow-md">
-          <div class="flex items-center gap-2 mb-2 font-mono text-[11px] uppercase tracking-wider text-emerald-400 font-bold">
+          <div class="flex items-center gap-2 mb-2 font-mono text-xs uppercase tracking-wider text-emerald-400 font-bold">
             <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -411,7 +410,7 @@
             
             <div class="p-5 rounded-xl bg-slate-900 text-emerald-400 font-mono text-xs space-y-3 leading-relaxed border border-slate-800">
               <div>P = U &cup; S, &nbsp;where U &cap; S = &empty;</div>
-              <div class="text-slate-400 text-[11px]">// S is the set of discrete entity instances: S = {s_1, s_2, ..., s_k} detected in local process memory</div>
+              <div class="text-slate-400 text-xs">// S is the set of discrete entity instances: S = {s_1, s_2, ..., s_k} detected in local process memory</div>
               <div class="pt-2 border-t border-slate-800">
                 1. Local Host RAM Transformation T: S &rarr; M<br>
                 &nbsp;&nbsp;&nbsp;M = {m_1, m_2, ..., m_k}, &nbsp;where each surrogate token m_i = "[TYPE_N]"
@@ -434,7 +433,7 @@
                 5. Deterministic Client Rehydration:<br>
                 &nbsp;&nbsp;&nbsp;P_final = T^(-1)(Response_payload, R) &mdash; Reconstructed solely on the client endpoint.
               </div>
-              <div class="text-slate-400 text-[11px] pt-1 border-t border-slate-800">
+              <div class="text-slate-400 text-xs pt-1 border-t border-slate-800">
                 6. Cryptographic Memory Zeroization: lim_{t &rarr; session_end} R = &empty; (explicit memory wipe on termination)
               </div>
             </div>
@@ -458,7 +457,7 @@
               <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
                 <div class="flex items-center justify-between text-xs mb-2">
                   <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono"><dfn class="not-italic">Invariant 1 &middot; Zero External Egress Prior to Sanitization</dfn></span>
-                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">MANDATORY</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-bold font-mono">MANDATORY</span>
                 </div>
                 <h3 class="text-base font-bold text-slate-900 mb-2">Physical Socket Egress Elimination</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
@@ -470,7 +469,7 @@
               <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
                 <div class="flex items-center justify-between text-xs mb-2">
                   <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono"><dfn class="not-italic">Invariant 2 &middot; Deterministic Reversible Tokenization</dfn></span>
-                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">MANDATORY</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-bold font-mono">MANDATORY</span>
                 </div>
                 <h3 class="text-base font-bold text-slate-900 mb-2">Bijective Semantic Preservation &amp; Sub-2ms Latency</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
@@ -482,7 +481,7 @@
               <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
                 <div class="flex items-center justify-between text-xs mb-2">
                   <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono"><dfn class="not-italic">Invariant 3 &middot; Verifiable Cryptographic Isolation</dfn></span>
-                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">MANDATORY</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-bold font-mono">MANDATORY</span>
                 </div>
                 <h3 class="text-base font-bold text-slate-900 mb-2">Volatile Memory Boundary &amp; Zero Secondary Storage</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
@@ -494,7 +493,7 @@
               <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
                 <div class="flex items-center justify-between text-xs mb-2">
                   <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono"><dfn class="not-italic">Invariant 4 &middot; Continuous Compliance &amp; Zero Subprocessor Chain</dfn></span>
-                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold font-mono">MANDATORY</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-bold font-mono">MANDATORY</span>
                 </div>
                 <h3 class="text-base font-bold text-slate-900 mb-2">Complete DPA Exemption under GDPR Article 28</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
@@ -510,7 +509,7 @@
                   <span class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">Formal Topology Proof</span>
                   <h3 class="text-lg sm:text-xl font-bold text-white mt-0.5">Physical In-RAM Execution Topology &amp; Zero Subprocessor Guarantee</h3>
                 </div>
-                <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px] font-mono font-bold w-fit">
+                <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-mono font-bold w-fit">
                   0.00 B Egress
                 </span>
               </div>
@@ -521,22 +520,22 @@
 
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
                 <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
-                  <div class="text-emerald-400 font-bold mb-1 uppercase text-[11px]">1. In-RAM Perimeter</div>
-                  <p class="text-slate-400 font-sans leading-relaxed text-[11px]">
+                  <div class="text-emerald-400 font-bold mb-1 uppercase text-xs">1. In-RAM Perimeter</div>
+                  <p class="text-slate-400 font-sans leading-relaxed text-xs">
                     All entity tokenization, surrogate generation, and session mapping tables execute strictly in volatile process RAM. No unmasked data crosses the network socket or disk storage.
                   </p>
                 </div>
 
                 <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
-                  <div class="text-blue-400 font-bold mb-1 uppercase text-[11px]">2. Zero Subprocessor</div>
-                  <p class="text-slate-400 font-sans leading-relaxed text-[11px]">
+                  <div class="text-blue-400 font-bold mb-1 uppercase text-xs">2. Zero Subprocessor</div>
+                  <p class="text-slate-400 font-sans leading-relaxed text-xs">
                     Because 0.00 B of user data ever reaches the software vendor, the vendor is legally excluded from Data Processor status. Conforming implementations are 100% DPA and BAA exempt.
                   </p>
                 </div>
 
                 <div class="p-4 bg-slate-950 rounded-xl border border-slate-800">
-                  <div class="text-amber-400 font-bold mb-1 uppercase text-[11px]">3. Hardware Enclaves</div>
-                  <p class="text-slate-400 font-sans leading-relaxed text-[11px]">
+                  <div class="text-amber-400 font-bold mb-1 uppercase text-xs">3. Hardware Enclaves</div>
+                  <p class="text-slate-400 font-sans leading-relaxed text-xs">
                     Compatible with sandboxed WebAssembly (WASM), Nitro Enclaves, and OS process-isolated dynamic binaries (C-ABI) with sub-0.8ms local execution latency.
                   </p>
                 </div>
@@ -556,7 +555,7 @@
             <!-- Layer 1: Universal Baseline -->
             <div class="mb-6">
               <div class="flex items-center gap-2 mb-3">
-                <span class="px-2 py-0.5 rounded bg-slate-900 text-white font-mono text-[10px] font-bold uppercase">Layer 1: Universal Consumer Baseline</span>
+                <span class="px-2 py-0.5 rounded bg-slate-900 text-white font-mono text-xs font-bold uppercase">Layer 1: Universal Consumer Baseline</span>
                 <span class="text-xs text-slate-500 font-mono">Open Core (MIT) &middot; Sub-1ms Latency</span>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
@@ -594,131 +593,131 @@
             <div>
               <div class="flex items-center justify-between gap-2 mb-3">
                 <div class="flex items-center gap-2">
-                  <span class="px-2 py-0.5 rounded bg-emerald-700 text-white font-mono text-[10px] font-bold uppercase">Layer 2: 30 Specialized Industry Profiles</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-700 text-white font-mono text-xs font-bold uppercase">Layer 2: 30 Specialized Industry Profiles</span>
                   <span class="text-xs text-slate-500 font-mono">Enterprise Engine &middot; Cryptographic Validation</span>
                 </div>
                 <span class="text-slate-500 font-mono text-xs hidden sm:inline">Universal Open Taxonomy &middot; RFC v1.0 Normative</span>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs">
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">01. legal</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">Bates stamps, docket IDs, ECLI, attorney-client work product markers.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">01. legal</div>
+                  <div class="text-xs text-slate-600 mt-0.5">Bates stamps, docket IDs, ECLI, attorney-client work product markers.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">02. hr</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">Workday CAND IDs, employee EEIDs, compensation, Works Council references.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">02. hr</div>
+                  <div class="text-xs text-slate-600 mt-0.5">Workday CAND IDs, employee EEIDs, compensation, Works Council references.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">03. finance</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">SWIFT/BIC, IBAN, CUSIP, ISIN, LEI, SEC CIK, portfolio account hashes.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">03. finance</div>
+                  <div class="text-xs text-slate-600 mt-0.5">SWIFT/BIC, IBAN, CUSIP, ISIN, LEI, SEC CIK, portfolio account hashes.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">04. medical</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">18 HIPAA PHI identifiers, HL7 v2 pipes, NPI, DEA, MRN, FHIR paths.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">04. medical</div>
+                  <div class="text-xs text-slate-600 mt-0.5">18 HIPAA PHI identifiers, HL7 v2 pipes, NPI, DEA, MRN, FHIR paths.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">05. security</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">Cloud API keys, JWT, SSH/PGP keys, CVEs, MITRE techniques, SIEM rules.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">05. security</div>
+                  <div class="text-xs text-slate-600 mt-0.5">Cloud API keys, JWT, SSH/PGP keys, CVEs, MITRE techniques, SIEM rules.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">06. dev</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">Database credentials, webhook secrets, localhost ports, env tokens.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">06. dev</div>
+                  <div class="text-xs text-slate-600 mt-0.5">Database credentials, webhook secrets, localhost ports, env tokens.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">07. marketing</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">GCLID, FBCLID, GA4 client cookies, HubSpot/Marketo lead records.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">07. marketing</div>
+                  <div class="text-xs text-slate-600 mt-0.5">GCLID, FBCLID, GA4 client cookies, HubSpot/Marketo lead records.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">08. bizops</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">VDR room codes, cap table equity grants, Safe notes, M&amp;A term sheets.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">08. bizops</div>
+                  <div class="text-xs text-slate-600 mt-0.5">VDR room codes, cap table equity grants, Safe notes, M&amp;A term sheets.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">09. sales</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">Salesforce 18-char IDs, DocuSign envelope UUIDs, Gong conversation IDs.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">09. sales</div>
+                  <div class="text-xs text-slate-600 mt-0.5">Salesforce 18-char IDs, DocuSign envelope UUIDs, Gong conversation IDs.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">10. support</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">ServiceNow INC/RITM, Jira tickets, Zendesk hashes, RMA warranty codes.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">10. support</div>
+                  <div class="text-xs text-slate-600 mt-0.5">ServiceNow INC/RITM, Jira tickets, Zendesk hashes, RMA warranty codes.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">11. realestate</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">MLS numbers, APN parcel tax IDs, escrow closing files, lease agreements.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">11. realestate</div>
+                  <div class="text-xs text-slate-600 mt-0.5">MLS numbers, APN parcel tax IDs, escrow closing files, lease agreements.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">12. compliance</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">SAR filing numbers, CTR, OFAC SDN list tags, ISO 27001 audit findings.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">12. compliance</div>
+                  <div class="text-xs text-slate-600 mt-0.5">SAR filing numbers, CTR, OFAC SDN list tags, ISO 27001 audit findings.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">13. logistics</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">Bill of Lading, Container BIC codes, FedEx/UPS/DHL tracking barcodes.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">13. logistics</div>
+                  <div class="text-xs text-slate-600 mt-0.5">Bill of Lading, Container BIC codes, FedEx/UPS/DHL tracking barcodes.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">14. education</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">FERPA student records, transcript IDs, FAFSA case files, GPA scores.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">14. education</div>
+                  <div class="text-xs text-slate-600 mt-0.5">FERPA student records, transcript IDs, FAFSA case files, GPA scores.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">15. government</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">ITAR control tags, CUI markers, clearance badges, CAGE/DUNS vendor codes.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">15. government</div>
+                  <div class="text-xs text-slate-600 mt-0.5">ITAR control tags, CUI markers, clearance badges, CAGE/DUNS vendor codes.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">16. crypto</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">Solana/BTC/ETH addresses, seed phrases, ENS domains, smart contract hashes.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">16. crypto</div>
+                  <div class="text-xs text-slate-600 mt-0.5">Solana/BTC/ETH addresses, seed phrases, ENS domains, smart contract hashes.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">17. gaming</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">Steam IDs, Discord user snowflaking, in-game item wallet identifiers.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">17. gaming</div>
+                  <div class="text-xs text-slate-600 mt-0.5">Steam IDs, Discord user snowflaking, in-game item wallet identifiers.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">18. insurance</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">Policy declarations, FNOL claim numbers, VIN numbers, adjuster reports.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">18. insurance</div>
+                  <div class="text-xs text-slate-600 mt-0.5">Policy declarations, FNOL claim numbers, VIN numbers, adjuster reports.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">19. hospitality</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">Amadeus/Sabre PNR locator codes, loyalty club numbers, room keys.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">19. hospitality</div>
+                  <div class="text-xs text-slate-600 mt-0.5">Amadeus/Sabre PNR locator codes, loyalty club numbers, room keys.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">20. energy</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">NERC-CIP asset IDs, SCADA telemetry tags, smart meter POD/MPAN IDs.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">20. energy</div>
+                  <div class="text-xs text-slate-600 mt-0.5">NERC-CIP asset IDs, SCADA telemetry tags, smart meter POD/MPAN IDs.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">21. automotive</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">WMI/VIN 17-char serials, CAN-bus arbitration IDs, connected car telemetry.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">21. automotive</div>
+                  <div class="text-xs text-slate-600 mt-0.5">WMI/VIN 17-char serials, CAN-bus arbitration IDs, connected car telemetry.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">22. biotech</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">Genomic FASTA tags, CRISPR guide targets, patent formulation codes.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">22. biotech</div>
+                  <div class="text-xs text-slate-600 mt-0.5">Genomic FASTA tags, CRISPR guide targets, patent formulation codes.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">23. telecom</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">IMEI (15-digit), IMSI, ICCID SIM card numbers, cell tower CGI tuples.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">23. telecom</div>
+                  <div class="text-xs text-slate-600 mt-0.5">IMEI (15-digit), IMSI, ICCID SIM card numbers, cell tower CGI tuples.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">24. media</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">ISAN audiovisual IDs, ISRC music codes, talent contract deal points.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">24. media</div>
+                  <div class="text-xs text-slate-600 mt-0.5">ISAN audiovisual IDs, ISRC music codes, talent contract deal points.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">25. retail</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">Shopify order UUIDs, Amazon order IDs, POS terminal serials, loyalty cards.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">25. retail</div>
+                  <div class="text-xs text-slate-600 mt-0.5">Shopify order UUIDs, Amazon order IDs, POS terminal serials, loyalty cards.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">26. manufacturing</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">ERP Part numbers, Bill of Materials (BOM) revisions, CNC job IDs.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">26. manufacturing</div>
+                  <div class="text-xs text-slate-600 mt-0.5">ERP Part numbers, Bill of Materials (BOM) revisions, CNC job IDs.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">27. accounting</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">General Ledger account codes, tax return E-File IDs, depreciation books.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">27. accounting</div>
+                  <div class="text-xs text-slate-600 mt-0.5">General Ledger account codes, tax return E-File IDs, depreciation books.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">28. nonprofit</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">Donor ledger IDs, endowment account codes, grant solicitation numbers.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">28. nonprofit</div>
+                  <div class="text-xs text-slate-600 mt-0.5">Donor ledger IDs, endowment account codes, grant solicitation numbers.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">29. aerospace</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">FAA tail numbers, tail serial codes, flight manifest PNR records.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">29. aerospace</div>
+                  <div class="text-xs text-slate-600 mt-0.5">FAA tail numbers, tail serial codes, flight manifest PNR records.</div>
                 </div>
                 <div class="p-2.5 bg-white rounded-lg border border-slate-200 shadow-sm">
-                  <div class="font-bold text-slate-900 font-mono text-[11px] text-emerald-800">30. agriculture</div>
-                  <div class="text-[11px] text-slate-600 mt-0.5">Livestock RFID tags, agricultural parcel boundary coordinates, yield logs.</div>
+                  <div class="font-bold text-slate-900 font-mono text-xs text-emerald-800">30. agriculture</div>
+                  <div class="text-xs text-slate-600 mt-0.5">Livestock RFID tags, agricultural parcel boundary coordinates, yield logs.</div>
                 </div>
               </div>
             </div>
@@ -733,9 +732,9 @@
               To guarantee that LLMs execute valid clinical, financial, or legal reasoning, surrogate tokens retain grammatical part-of-speech context. For example:
             </p>
             <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 font-mono text-xs text-slate-800 space-y-2 mb-4">
-              <div class="text-slate-500 font-bold uppercase text-[10px]">Cleartext Input:</div>
+              <div class="text-slate-500 font-bold uppercase text-xs">Cleartext Input:</div>
               <div class="text-rose-700">"Patient Alice Smith was prescribed Metformin by Dr. David Miller on 2026-09-15."</div>
-              <div class="text-slate-500 font-bold uppercase text-[10px] pt-2 border-t border-slate-200">Sanitized WAN Egress (Invariant 1 &amp; 2):</div>
+              <div class="text-slate-500 font-bold uppercase text-xs pt-2 border-t border-slate-200">Sanitized WAN Egress (Invariant 1 &amp; 2):</div>
               <div class="text-emerald-700">"Patient [NAME_1] was prescribed Metformin by Dr. [NAME_2] on [DATE_1]."</div>
             </div>
             <p class="mb-3 text-xs text-slate-600">
@@ -757,9 +756,9 @@
               <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs">
                 <div class="flex items-center justify-between font-mono font-bold text-slate-900 mb-2">
                   <span>Track A: data/registry.json</span>
-                  <span class="text-emerald-700 text-[11px]">RFC v1.0 Product Schema</span>
+                  <span class="text-emerald-700 text-xs">RFC v1.0 Product Schema</span>
                 </div>
-                <pre class="p-3 rounded-lg bg-slate-900 text-emerald-300 font-mono text-[11px] overflow-x-auto leading-relaxed"><code>{
+                <pre class="p-3 rounded-lg bg-slate-900 text-emerald-300 font-mono text-xs overflow-x-auto leading-relaxed"><code>{
   "id": "privacyscrubber-web",
   "name": "PrivacyScrubber Web",
   "slug": "privacyscrubber-web",
@@ -778,9 +777,9 @@
               <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs">
                 <div class="flex items-center justify-between font-mono font-bold text-slate-900 mb-2">
                   <span>Track B: data/companies.json</span>
-                  <span class="text-blue-700 text-[11px]">Corporate Adopter Schema</span>
+                  <span class="text-blue-700 text-xs">Corporate Adopter Schema</span>
                 </div>
-                <pre class="p-3 rounded-lg bg-slate-900 text-sky-300 font-mono text-[11px] overflow-x-auto leading-relaxed"><code>{
+                <pre class="p-3 rounded-lg bg-slate-900 text-sky-300 font-mono text-xs overflow-x-auto leading-relaxed"><code>{
   "id": "brandmeweb",
   "slug": "brandmeweb",
   "name": "BrandMeWeb",
@@ -872,25 +871,25 @@
             <!-- 2026 Compliance Triad Strategic Breakdown -->
             <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3.5 text-xs text-slate-600 leading-relaxed font-sans">
               <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg space-y-1.5">
-                <span class="text-[10px] font-mono uppercase font-bold text-emerald-700 tracking-wider">Statutory Mandate</span>
+                <span class="text-xs font-mono uppercase font-bold text-emerald-700 tracking-wider">Statutory Mandate</span>
                 <strong class="text-slate-900 font-semibold block text-xs">EU AI Act Phase 2 (August 2026+)</strong>
-                <p class="text-slate-600 text-[11px] leading-relaxed">
+                <p class="text-slate-600 text-xs leading-relaxed">
                   Mandates strict data governance under Article 10 for AI deployers. ZTDS mathematically immunizes agentic tool-use loops (MCP, LangChain) by enforcing local in-memory tokenization before prompt data reaches General-Purpose AI (GPAI) endpoints.
                 </p>
               </div>
 
               <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg space-y-1.5">
-                <span class="text-[10px] font-mono uppercase font-bold text-emerald-700 tracking-wider">Risk Framework</span>
+                <span class="text-xs font-mono uppercase font-bold text-emerald-700 tracking-wider">Risk Framework</span>
                 <strong class="text-slate-900 font-semibold block text-xs">NIST AI RMF 600-1 (Generative AI)</strong>
-                <p class="text-slate-600 text-[11px] leading-relaxed">
+                <p class="text-slate-600 text-xs leading-relaxed">
                   Maps directly to NIST SP 600-1 Risk 12 (Sensitive Data Disclosure) controls GOVERN-1.2, MAP-1.5, and MANAGE-2.4. Zero-egress RAM isolation physically eliminates prompt extraction and training set data contamination.
                 </p>
               </div>
 
               <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg space-y-1.5">
-                <span class="text-[10px] font-mono uppercase font-bold text-emerald-700 tracking-wider">Management System</span>
+                <span class="text-xs font-mono uppercase font-bold text-emerald-700 tracking-wider">Management System</span>
                 <strong class="text-slate-900 font-semibold block text-xs">ISO/IEC 42001:2023 (AIMS)</strong>
-                <p class="text-slate-600 text-[11px] leading-relaxed">
+                <p class="text-slate-600 text-xs leading-relaxed">
                   Fulfills Annex A.6 (AI Data Lifecycle), A.7 (Security), and A.8 (Third-Party Supplier Risk). By converting sensitive entities into context-preserving surrogates locally, enterprise controllers eliminate third-party AI subprocessor liability.
                 </p>
               </div>
@@ -1068,7 +1067,7 @@
 
         <!-- Col 2: Specification & RFC -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
             <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track (draft-02)</a></li>
@@ -1084,7 +1083,7 @@
 
         <!-- Col 3: Architecture & Tools -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
             <li><a href="/mcp/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Model Context Protocol (MCP) &rarr;</a></li>
@@ -1098,7 +1097,7 @@
 
         <!-- Col 4: Consortium & Governance -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/certification/" class="hover:text-slate-900 transition-colors">Certification Authority</a></li>
             <li><a href="/soc2/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">SOC 2 &amp; Trust Center &rarr;</a></li>
@@ -1112,7 +1111,7 @@
 
         <!-- Col 5: Community & Verified -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
             <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
@@ -1120,16 +1119,16 @@
             <li><a href="/case-studies/" class="hover:text-slate-900 transition-colors">Enterprise Case Studies</a></li>
             <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
             <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
-            <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
+            <li class="pt-2 text-xs text-slate-400 leading-tight">GitOps automated attestation.</li>
           </ul>
         </div>
       </div>
 
       <!-- Legal Conformance Notice Card -->
-      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-500 leading-relaxed">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
-          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
-          <span class="text-slate-400 font-mono text-[10px]">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-xs font-mono">Legal Notice &amp; Intellectual Property Protection</span>
+          <span class="text-slate-400 font-mono text-xs">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
         </div>
         <p>
           ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. &sect; 119 Priority). The word mark <strong>ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
@@ -1143,7 +1142,7 @@
           <span>&middot;</span>
           <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
         </div>
-        <div class="flex items-center gap-4 text-[11px] font-mono">
+        <div class="flex items-center gap-4 text-xs font-mono">
           <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
             ALL SYSTEMS VERIFIED
@@ -1171,7 +1170,7 @@
         const btn = document.getElementById('btnCopyBibtex');
         btn.innerHTML = '<span>Copied BibTeX!</span><span class="text-emerald-600 font-bold">&check;</span>';
         setTimeout(() => {
-          btn.innerHTML = '<span>Copy BibTeX Entry</span><span class="text-[10px] text-slate-400 font-mono">&darr;</span>';
+          btn.innerHTML = '<span>Copy BibTeX Entry</span><span class="text-xs text-slate-400 font-mono">&darr;</span>';
         }, 2000);
       });
     });

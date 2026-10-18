@@ -27,9 +27,8 @@
   <meta name="twitter:image" content="https://ztds.ai/assets/img/og/og-compliance.png">
 
   <!-- Fonts & Styles -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
@@ -163,7 +162,7 @@
 
   <!-- Top Announcement Bar: MCP Security Standard -->
   <div class="bg-slate-900 text-white text-xs py-2 px-4 border-b border-slate-800 flex items-center justify-center gap-3 text-center no-print">
-    <span class="inline-flex items-center gap-1.5 font-mono text-[11px] text-emerald-400 font-bold uppercase tracking-wider">
+    <span class="inline-flex items-center gap-1.5 font-mono text-xs text-emerald-400 font-bold uppercase tracking-wider">
       <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
       Model Context Protocol (MCP)
     </span>
@@ -188,14 +187,14 @@
           </div>
           <div class="flex flex-col">
             <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
-            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+            <span class="text-xs text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
           </div>
         </a>
 
         <!-- Status Pill -->
         <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
           <span class="pulse-dot"></span>
-          <span class="font-mono text-[11px] font-semibold">RFC v1.0 &middot; OPEN CONSORTIUM</span>
+          <span class="font-mono text-xs font-semibold">RFC v1.0 &middot; OPEN CONSORTIUM</span>
         </div>
       </div>
 
@@ -247,7 +246,7 @@
     </div>
 
     <div class="py-4 space-y-1 text-sm font-medium">
-      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
+      <div class="px-2 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
       <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
       <a href="/ietf/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">IETF Standards Track (draft-02)</a>
       <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
@@ -261,7 +260,7 @@
       <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
       <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 &amp; Trust Center</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
+      <div class="px-2 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
       <a href="/certification/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Certification Authority</a>
       <a href="/verify/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Ed25519 Certificate Validator</a>
       <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
@@ -271,7 +270,7 @@
       <a href="/case-studies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Enterprise Case Studies</a>
       <a href="/agency/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">BrandMeWeb Enterprise Retainer</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <div class="px-2 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
       <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
       <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
       <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive DAG Inspector</a>
@@ -372,22 +371,22 @@
           <div>DOC ID: <strong class="text-slate-800">ZTDS-CISO-2026-V1</strong></div>
           <div>RATIFIED: <strong class="text-slate-800">September 2026</strong></div>
           <div>STATUS: <strong class="text-emerald-700 font-bold">LEGALLY SOUND &amp; AUDIT-READY</strong></div>
-          <div class="text-[10px] text-slate-400 mt-0.5">DOI: 10.5281/zenodo.22058770</div>
+          <div class="text-xs text-slate-400 mt-0.5">DOI: 10.5281/zenodo.22058770</div>
         </div>
       </div>
 
       <!-- Memo Header Meta -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-6 mb-8 border-b border-slate-200 text-xs sm:text-sm">
         <div>
-          <span class="text-slate-400 uppercase font-semibold text-[11px] block">To:</span>
+          <span class="text-slate-400 uppercase font-semibold text-xs block">To:</span>
           <strong class="text-slate-900">Chief Information Security Officer (CISO), Data Protection Officer (DPO), Enterprise Procurement &amp; Risk Committees</strong>
         </div>
         <div>
-          <span class="text-slate-400 uppercase font-semibold text-[11px] block">From:</span>
+          <span class="text-slate-400 uppercase font-semibold text-xs block">From:</span>
           <strong class="text-slate-900">Ilya Sibiryakov, Specification Author &amp; Chief Architect (ZTDS.ai / BrandMeWeb)</strong>
         </div>
         <div class="sm:col-span-2">
-          <span class="text-slate-400 uppercase font-semibold text-[11px] block">Subject:</span>
+          <span class="text-slate-400 uppercase font-semibold text-xs block">Subject:</span>
           <strong class="text-slate-900">Architectural &amp; Statutory Legal Grounds for Exemption from Third-Party Data Processing Agreements (DPA) and Subprocessor Chains</strong>
         </div>
       </div>
@@ -397,7 +396,7 @@
         <div>
           <div class="flex items-center justify-between gap-2 mb-2">
             <h2 class="text-lg font-bold text-slate-900">1. Executive Summary &amp; Core Architectural Principle</h2>
-            <span class="text-[11px] font-mono font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded">100% Client-Side Utility</span>
+            <span class="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded">100% Client-Side Utility</span>
           </div>
           <p>
             Software conforming to the <strong>Zero-Trust Data Sanitization (ZTDS RFC v1.0)</strong> specification operates strictly as a <strong>pure client-side computational utility</strong>. Because conforming software executes de-identification strictly within volatile client RAM before outbound network socket serialization, exactly <strong>zero (0.00) bytes of cleartext sensitive data</strong> are transmitted to or processed by external vendor servers.
@@ -408,26 +407,26 @@
 
           <!-- The 4 Non-Negotiable Invariants Box -->
           <div class="mt-4 p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-3 font-mono text-xs">
-            <div class="text-slate-900 font-bold uppercase tracking-wider text-[11px] font-sans flex items-center justify-between">
+            <div class="text-slate-900 font-bold uppercase tracking-wider text-xs font-sans flex items-center justify-between">
               <span>The 4 Non-Negotiable Mathematical Invariants (RFC v1.0)</span>
               <a href="/standard/#invariants" class="text-emerald-700 hover:text-emerald-800 underline font-normal text-xs font-sans">Full RFC Spec &rarr;</a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
               <div class="p-3 bg-white border border-slate-200 rounded-lg">
                 <div class="text-emerald-800 font-bold">Invariant 1: Zero External Egress</div>
-                <div class="text-slate-500 text-[11px] mt-0.5">&Delta;Egress(S) &equiv; 0.00 bytes across public sockets S_WAN.</div>
+                <div class="text-slate-500 text-xs mt-0.5">&Delta;Egress(S) &equiv; 0.00 bytes across public sockets S_WAN.</div>
               </div>
               <div class="p-3 bg-white border border-slate-200 rounded-lg">
                 <div class="text-emerald-800 font-bold">Invariant 2: Deterministic Reversible Tokens</div>
-                <div class="text-slate-500 text-[11px] mt-0.5">Bijective in-memory transformation P_final = T^-1(P_out, R).</div>
+                <div class="text-slate-500 text-xs mt-0.5">Bijective in-memory transformation P_final = T^-1(P_out, R).</div>
               </div>
               <div class="p-3 bg-white border border-slate-200 rounded-lg">
                 <div class="text-emerald-800 font-bold">Invariant 3: Verifiable Memory Isolation</div>
-                <div class="text-slate-500 text-[11px] mt-0.5">Zero persistent disk/storage writes. RAM purges on termination.</div>
+                <div class="text-slate-500 text-xs mt-0.5">Zero persistent disk/storage writes. RAM purges on termination.</div>
               </div>
               <div class="p-3 bg-white border border-slate-200 rounded-lg">
                 <div class="text-emerald-800 font-bold">Invariant 4: Subprocessor Exclusion</div>
-                <div class="text-slate-500 text-[11px] mt-0.5">GDPR Article 28 disengaged; subprocessor liability chain = 0.</div>
+                <div class="text-slate-500 text-xs mt-0.5">GDPR Article 28 disengaged; subprocessor liability chain = 0.</div>
               </div>
             </div>
           </div>
@@ -442,13 +441,13 @@
               <div>
                 <div class="flex items-center justify-between mb-1">
                   <strong class="text-slate-900 text-sm">EU GDPR Article 28 &amp; EDPB 07/2020</strong>
-                  <span class="text-[10px] font-mono bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">NO DPA REQUIRED</span>
+                  <span class="text-xs font-mono bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">NO DPA REQUIRED</span>
                 </div>
                 <p class="text-xs text-slate-600 leading-relaxed mt-1">
                   Article 28 applies only when an external entity processes personal data on behalf of a controller. Under European Data Protection Board (EDPB) Guidelines 07/2020, providers of pure client-side software utilities that never access or receive personal data do NOT qualify as processors. Zero data custody = zero DPA required.
                 </p>
               </div>
-              <div class="mt-3 pt-2 border-t border-slate-200 text-[11px] text-slate-500 font-mono">
+              <div class="mt-3 pt-2 border-t border-slate-200 text-xs text-slate-500 font-mono">
                 Statutory Defense: Complete absence of Article 4(8) processor relationship.
               </div>
             </div>
@@ -457,13 +456,13 @@
               <div>
                 <div class="flex items-center justify-between mb-1">
                   <strong class="text-slate-900 text-sm">EU GDPR Art. 28 &amp; Recital 26 (Vendor Exemption)</strong>
-                  <span class="text-[10px] font-mono bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">DPA EXEMPT</span>
+                  <span class="text-xs font-mono bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">DPA EXEMPT</span>
                 </div>
                 <p class="text-xs text-slate-600 leading-relaxed mt-1">
                   Software conforming to ZTDS executes strictly inside volatile client RAM without cloud egress to vendor servers. Under CJEU Case C-582/14 (<em>Breyer</em>) and EDPB Guidelines 07/2020, the software vendor never obtains custody or means of identification, and is legally excluded from Data Processor status under GDPR Article 28.
                 </p>
               </div>
-              <div class="mt-3 pt-2 border-t border-slate-200 text-[11px] text-slate-500 font-mono">
+              <div class="mt-3 pt-2 border-t border-slate-200 text-xs text-slate-500 font-mono">
                 Statutory Defense: Complete exclusion of software vendor from GDPR Art. 28 processor obligations.
               </div>
             </div>
@@ -472,13 +471,13 @@
               <div>
                 <div class="flex items-center justify-between mb-1">
                   <strong class="text-slate-900 text-sm">GDPR Article 17 (Vector Store Protection)</strong>
-                  <span class="text-[10px] font-mono bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">NO RAG POISONING</span>
+                  <span class="text-xs font-mono bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">NO RAG POISONING</span>
                 </div>
                 <p class="text-xs text-slate-600 leading-relaxed mt-1">
                   When raw PII is ingested into high-dimensional vector databases, data cannot be erased without total re-indexing ($100k+ cost). ZTDS ensures only surrogate tokens enter RAG embeddings, preventing irreversible vector poisoning and guaranteeing automated Right to Erasure compliance.
                 </p>
               </div>
-              <div class="mt-3 pt-2 border-t border-slate-200 text-[11px] text-slate-500 font-mono">
+              <div class="mt-3 pt-2 border-t border-slate-200 text-xs text-slate-500 font-mono">
                 Statutory Defense: Zero immutable PII embeddings in knowledge stores.
               </div>
             </div>
@@ -487,13 +486,13 @@
               <div>
                 <div class="flex items-center justify-between mb-1">
                   <strong class="text-slate-900 text-sm">US HIPAA Safe Harbor (45 CFR &sect; 164.514)</strong>
-                  <span class="text-[10px] font-mono bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">NO BAA NEEDED</span>
+                  <span class="text-xs font-mono bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">NO BAA NEEDED</span>
                 </div>
                 <p class="text-xs text-slate-600 leading-relaxed mt-1">
                   By deterministically excluding all 18 PHI identifiers locally in volatile RAM before network egress, outbound prompts qualify as de-identified health information under 45 CFR &sect; 164.514(b). The downstream AI model provider never receives PHI, eliminating mandatory BAA requirements.
                 </p>
               </div>
-              <div class="mt-3 pt-2 border-t border-slate-200 text-[11px] text-slate-500 font-mono">
+              <div class="mt-3 pt-2 border-t border-slate-200 text-xs text-slate-500 font-mono">
                 Statutory Defense: De-identified clinical data excluded from HIPAA scope.
               </div>
             </div>
@@ -510,7 +509,7 @@
           
           <div class="overflow-x-auto md:border md:border-slate-200 md:rounded-xl">
             <table class="w-full text-left text-xs bg-white divide-y divide-slate-200 table-responsive-cards">
-              <thead class="bg-slate-50 text-slate-700 font-semibold uppercase font-mono text-[11px]">
+              <thead class="bg-slate-50 text-slate-700 font-semibold uppercase font-mono text-xs">
                 <tr>
                   <th class="py-3 px-4">Jurisdiction &amp; Regulatory Statute</th>
                   <th class="py-3 px-4">Statutory Maximum Penalty Ceiling</th>
@@ -521,7 +520,7 @@
                 <tr>
                   <td class="py-3 px-4 font-semibold text-slate-900" data-label="Jurisdiction &amp; Statute">
                     EU GDPR Article 83(5)<br>
-                    <span class="text-[11px] font-normal text-slate-500">Cross-Border Data Transfer / Processor Breach</span>
+                    <span class="text-xs font-normal text-slate-500">Cross-Border Data Transfer / Processor Breach</span>
                   </td>
                   <td class="py-3 px-4 font-mono font-bold text-rose-700" data-label="Max Penalty Ceiling">
                     Up to &euro;20,000,000 or 4% of Global Annual Turnover
@@ -533,7 +532,7 @@
                 <tr>
                   <td class="py-3 px-4 font-semibold text-slate-900" data-label="Jurisdiction &amp; Statute">
                     EU Artificial Intelligence Act (Article 99)<br>
-                    <span class="text-[11px] font-normal text-slate-500">High-Risk AI Data Governance &amp; Transparency</span>
+                    <span class="text-xs font-normal text-slate-500">High-Risk AI Data Governance &amp; Transparency</span>
                   </td>
                   <td class="py-3 px-4 font-mono font-bold text-rose-700" data-label="Max Penalty Ceiling">
                     Up to &euro;15,000,000 or 3% of Global Annual Turnover
@@ -545,7 +544,7 @@
                 <tr>
                   <td class="py-3 px-4 font-semibold text-slate-900" data-label="Jurisdiction &amp; Statute">
                     US HIPAA HITECH (45 CFR Part 160)<br>
-                    <span class="text-[11px] font-normal text-slate-500">Tier 4 Uncorrected Willful Neglect</span>
+                    <span class="text-xs font-normal text-slate-500">Tier 4 Uncorrected Willful Neglect</span>
                   </td>
                   <td class="py-3 px-4 font-mono font-bold text-rose-700" data-label="Max Penalty Ceiling">
                     $2,067,813 Statutory Annual Cap per Violation Category
@@ -557,7 +556,7 @@
                 <tr>
                   <td class="py-3 px-4 font-semibold text-slate-900" data-label="Jurisdiction &amp; Statute">
                     US Federal Rule of Evidence 502(b)<br>
-                    <span class="text-[11px] font-normal text-slate-500">Attorney-Client Privilege &amp; Work Product</span>
+                    <span class="text-xs font-normal text-slate-500">Attorney-Client Privilege &amp; Work Product</span>
                   </td>
                   <td class="py-3 px-4 font-mono font-bold text-amber-700" data-label="Max Penalty Ceiling">
                     Subject-Matter Privilege Waiver in Commercial Litigation
@@ -569,7 +568,7 @@
                 <tr>
                   <td class="py-3 px-4 font-semibold text-slate-900" data-label="Jurisdiction &amp; Statute">
                     US GLBA &amp; SEC Item 106<br>
-                    <span class="text-[11px] font-normal text-slate-500">Financial Customer NPI &amp; Cyber Disclosures</span>
+                    <span class="text-xs font-normal text-slate-500">Financial Customer NPI &amp; Cyber Disclosures</span>
                   </td>
                   <td class="py-3 px-4 font-mono font-bold text-rose-700" data-label="Max Penalty Ceiling">
                     Regulatory Enforcement &amp; $7,500/record Statutory Damages
@@ -599,7 +598,7 @@
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
             <div class="p-4 bg-white border border-slate-200 rounded-lg">
-              <div class="text-slate-400 font-mono text-[10px] uppercase font-bold">Component 1</div>
+              <div class="text-slate-400 font-mono text-xs uppercase font-bold">Component 1</div>
               <div class="text-slate-900 font-bold text-sm mt-1">Legal DPA Review &amp; SCCs</div>
               <div class="text-emerald-700 font-mono font-bold text-base mt-1">$8,000 <span class="text-slate-400 text-xs font-normal">/ yr</span></div>
               <p class="text-slate-500 mt-2 leading-relaxed">
@@ -608,7 +607,7 @@
             </div>
 
             <div class="p-4 bg-white border border-slate-200 rounded-lg">
-              <div class="text-slate-400 font-mono text-[10px] uppercase font-bold">Component 2</div>
+              <div class="text-slate-400 font-mono text-xs uppercase font-bold">Component 2</div>
               <div class="text-slate-900 font-bold text-sm mt-1">TPRM &amp; SIG Lite Audits</div>
               <div class="text-emerald-700 font-mono font-bold text-base mt-1">$9,000 <span class="text-slate-400 text-xs font-normal">/ yr</span></div>
               <p class="text-slate-500 mt-2 leading-relaxed">
@@ -617,7 +616,7 @@
             </div>
 
             <div class="p-4 bg-white border border-slate-200 rounded-lg">
-              <div class="text-slate-400 font-mono text-[10px] uppercase font-bold">Component 3</div>
+              <div class="text-slate-400 font-mono text-xs uppercase font-bold">Component 3</div>
               <div class="text-slate-900 font-bold text-sm mt-1">SOC 2 Subprocessor Chain</div>
               <div class="text-emerald-700 font-mono font-bold text-base mt-1">$8,000 <span class="text-slate-400 text-xs font-normal">/ yr</span></div>
               <p class="text-slate-500 mt-2 leading-relaxed">
@@ -632,7 +631,7 @@
           <h2 class="text-lg font-bold text-slate-900 mb-3">5. Architectural Liability Comparison</h2>
           <div class="overflow-x-auto md:border md:border-slate-200 md:rounded-xl">
             <table class="w-full text-left text-xs bg-white divide-y divide-slate-200 table-responsive-cards">
-              <thead class="bg-slate-50 text-slate-700 font-semibold uppercase font-mono text-[11px]">
+              <thead class="bg-slate-50 text-slate-700 font-semibold uppercase font-mono text-xs">
                 <tr>
                   <th class="py-3 px-4">Evaluation Dimension</th>
                   <th class="py-3 px-4 text-red-600">Legacy Cloud DLP / API Proxy</th>
@@ -681,8 +680,8 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
             <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg">
               <div class="flex items-center justify-between mb-1">
-                <strong class="text-slate-900 font-mono text-[11px] uppercase">Control DSP-01 (Data Storage)</strong>
-                <span class="text-[10px] text-slate-400 font-mono">CAIQ v4</span>
+                <strong class="text-slate-900 font-mono text-xs uppercase">Control DSP-01 (Data Storage)</strong>
+                <span class="text-xs text-slate-400 font-mono">CAIQ v4</span>
               </div>
               <p class="text-slate-600"><strong class="text-slate-800">Q: Where is customer prompt data hosted or stored?</strong><br>
               A: Nowhere. Cleartext data and token maps reside strictly in volatile RAM. No data is ever written to disk, databases, cookies, or cloud storage.</p>
@@ -690,8 +689,8 @@
 
             <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg">
               <div class="flex items-center justify-between mb-1">
-                <strong class="text-slate-900 font-mono text-[11px] uppercase">Control NET-02 (External Egress)</strong>
-                <span class="text-[10px] text-slate-400 font-mono">SIG Lite</span>
+                <strong class="text-slate-900 font-mono text-xs uppercase">Control NET-02 (External Egress)</strong>
+                <span class="text-xs text-slate-400 font-mono">SIG Lite</span>
               </div>
               <p class="text-slate-600"><strong class="text-slate-800">Q: What data egresses to vendor servers during sanitization?</strong><br>
               A: Exactly 0.00 bytes. The sanitization engine is self-contained in WebAssembly/TypeScript. No telemetry, analytics, or socket communication exists.</p>
@@ -699,8 +698,8 @@
 
             <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg">
               <div class="flex items-center justify-between mb-1">
-                <strong class="text-slate-900 font-mono text-[11px] uppercase">Control CRY-03 (Key Custody)</strong>
-                <span class="text-[10px] text-slate-400 font-mono">ISO 27001 A.8.11</span>
+                <strong class="text-slate-900 font-mono text-xs uppercase">Control CRY-03 (Key Custody)</strong>
+                <span class="text-xs text-slate-400 font-mono">ISO 27001 A.8.11</span>
               </div>
               <p class="text-slate-600"><strong class="text-slate-800">Q: Does the vendor have custody or access to customer encryption keys?</strong><br>
               A: No. Masking tables and session keys are derived strictly in client RAM. The vendor maintains zero key escrow and zero remote access.</p>
@@ -708,8 +707,8 @@
 
             <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg">
               <div class="flex items-center justify-between mb-1">
-                <strong class="text-slate-900 font-mono text-[11px] uppercase">Control CRY-04 (Team Handoff)</strong>
-                <span class="text-[10px] text-slate-400 font-mono">RFC 9106</span>
+                <strong class="text-slate-900 font-mono text-xs uppercase">Control CRY-04 (Team Handoff)</strong>
+                <span class="text-xs text-slate-400 font-mono">RFC 9106</span>
               </div>
               <p class="text-slate-600"><strong class="text-slate-800">Q: How does collaborative unmasking work across enterprise teams?</strong><br>
               A: Token maps are encrypted client-side using Argon2id and XChaCha20-Poly1305. Central relays act as blind zero-knowledge conduits.</p>
@@ -717,8 +716,8 @@
 
             <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg">
               <div class="flex items-center justify-between mb-1">
-                <strong class="text-slate-900 font-mono text-[11px] uppercase">Control TPR-05 (Subprocessors)</strong>
-                <span class="text-[10px] text-slate-400 font-mono">GDPR Art. 28</span>
+                <strong class="text-slate-900 font-mono text-xs uppercase">Control TPR-05 (Subprocessors)</strong>
+                <span class="text-xs text-slate-400 font-mono">GDPR Art. 28</span>
               </div>
               <p class="text-slate-600"><strong class="text-slate-800">Q: What third-party subprocessors have access to customer data?</strong><br>
               A: Zero. Zero subprocessors are involved in data processing, providing an architectural basis for DPA/BAA scope exclusion analysis.</p>
@@ -726,8 +725,8 @@
 
             <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg">
               <div class="flex items-center justify-between mb-1">
-                <strong class="text-slate-900 font-mono text-[11px] uppercase">Control AUD-06 (Independent Audit)</strong>
-                <span class="text-[10px] text-slate-400 font-mono">SOC 2 CC6.7</span>
+                <strong class="text-slate-900 font-mono text-xs uppercase">Control AUD-06 (Independent Audit)</strong>
+                <span class="text-xs text-slate-400 font-mono">SOC 2 CC6.7</span>
               </div>
               <p class="text-slate-600"><strong class="text-slate-800">Q: How can our security team verify zero egress independently?</strong><br>
               A: Run the 5-Step Airplane Mode protocol in DevTools or execute <code>npx ztds-audit --dir ./src</code> to generate a verifiable cryptographic audit hash.</p>
@@ -739,7 +738,7 @@
         <div class="p-6 bg-white border border-slate-200 rounded-xl space-y-4 shadow-sm">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
             <div>
-              <span class="text-[10px] font-mono uppercase font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              <span class="text-xs font-mono uppercase font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                 FORENSIC &amp; INVESTIGATIVE COMPLIANCE
               </span>
               <h2 class="text-base font-bold text-slate-900 mt-1">7. Evidentiary Sovereignty: Why Paper DPAs Fail Under Judicial Cross-Examination</h2>
@@ -787,7 +786,7 @@
         <div class="p-6 bg-white border border-slate-200 rounded-xl space-y-4 shadow-sm">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
             <div>
-              <span class="text-[10px] font-mono uppercase font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">
+              <span class="text-xs font-mono uppercase font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">
                 STATUTORY RISK ALLOCATION &amp; NON-RELIANCE
               </span>
               <h2 class="text-base font-bold text-slate-900 mt-1">8. Multi-Vertical Statutory Demarcation Schedule</h2>
@@ -884,7 +883,7 @@
         <div class="p-6 bg-slate-900 text-slate-200 rounded-xl space-y-4">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
             <div>
-              <span class="text-[10px] font-mono uppercase font-bold text-sky-400 tracking-wider">Enterprise Procurement Model</span>
+              <span class="text-xs font-mono uppercase font-bold text-sky-400 tracking-wider">Enterprise Procurement Model</span>
               <h2 class="text-base font-bold text-white mt-0.5">9. On-Premise Air-Gapped Source Code License Agreement</h2>
             </div>
             <div class="text-right font-mono text-xs text-slate-400">
@@ -923,9 +922,9 @@
         <!-- Signature & Conformance Disclaimer -->
         <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-6 text-xs text-slate-500">
           <div>
-            <div class="font-mono text-[11px] uppercase text-slate-400">Ratified on behalf of ZTDS AI Consortium:</div>
+            <div class="font-mono text-xs uppercase text-slate-400">Ratified on behalf of ZTDS AI Consortium:</div>
             <div class="font-bold text-slate-900 text-sm mt-1">Ilya Sibiryakov</div>
-            <div class="text-[11px] text-slate-400">Specification Author &middot; Chief Architect &middot; BrandMeWeb &middot; ORCID: 0009-0002-0642-5985</div>
+            <div class="text-xs text-slate-400">Specification Author &middot; Chief Architect &middot; BrandMeWeb &middot; ORCID: 0009-0002-0642-5985</div>
           </div>
           <div class="flex items-center gap-3 no-print">
             <a href="/roi/" class="btn-outline text-xs py-2 px-3.5">
@@ -966,7 +965,7 @@
 
       <!-- Presets Selector -->
       <div class="mb-6 p-4 rounded-xl bg-slate-50 border border-slate-200">
-        <div class="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider mb-2.5">
+        <div class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider mb-2.5">
           Select Standard Enterprise Architecture Preset:
         </div>
         <div class="flex flex-wrap gap-2">
@@ -1000,13 +999,13 @@
               <span id="cisoCallsVal" class="text-sm font-bold text-slate-900 font-mono">2,000,000 / mo</span>
             </div>
             <input type="range" id="cisoCallsSlider" min="50000" max="20000000" step="50000" value="2000000" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600">
-            <div class="flex items-center justify-between text-[11px] text-slate-400 font-mono">
+            <div class="flex items-center justify-between text-xs text-slate-400 font-mono">
               <span>50k</span>
               <div class="flex items-center gap-1.5">
-                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoCallsSlider" data-val="500000">500k</button>
-                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoCallsSlider" data-val="2000000">2M</button>
-                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoCallsSlider" data-val="5000000">5M</button>
-                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoCallsSlider" data-val="10000000">10M</button>
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-xs" data-target="cisoCallsSlider" data-val="500000">500k</button>
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-xs" data-target="cisoCallsSlider" data-val="2000000">2M</button>
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-xs" data-target="cisoCallsSlider" data-val="5000000">5M</button>
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-xs" data-target="cisoCallsSlider" data-val="10000000">10M</button>
               </div>
               <span>20M</span>
             </div>
@@ -1021,13 +1020,13 @@
               <span id="cisoVendorsVal" class="text-sm font-bold text-slate-900 font-mono">8 vendors</span>
             </div>
             <input type="range" id="cisoVendorsSlider" min="1" max="30" step="1" value="8" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600">
-            <div class="flex items-center justify-between text-[11px] text-slate-400 font-mono">
+            <div class="flex items-center justify-between text-xs text-slate-400 font-mono">
               <span>1</span>
               <div class="flex items-center gap-1.5">
-                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoVendorsSlider" data-val="3">3</button>
-                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoVendorsSlider" data-val="8">8</button>
-                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoVendorsSlider" data-val="15">15</button>
-                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-[10px]" data-target="cisoVendorsSlider" data-val="25">25</button>
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-xs" data-target="cisoVendorsSlider" data-val="3">3</button>
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-xs" data-target="cisoVendorsSlider" data-val="8">8</button>
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-xs" data-target="cisoVendorsSlider" data-val="15">15</button>
+                <button type="button" class="ciso-step-btn px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 font-mono text-xs" data-target="cisoVendorsSlider" data-val="25">25</button>
               </div>
               <span>30</span>
             </div>
@@ -1045,7 +1044,7 @@
               <option value="us_fintech">US Financial / FinTech (GLBA &middot; SEC Item 106 &middot; NYDFS)</option>
               <option value="us_legal">US Legal &amp; Corporate Discovery (FRE 502 &middot; ABA Model Rule 1.6)</option>
             </select>
-            <div class="text-[11px] text-slate-500 leading-tight">
+            <div class="text-xs text-slate-500 leading-tight">
               Adjusts statutory penalty caps, regulatory disclosure buffers, and legal discovery rules.
             </div>
           </div>
@@ -1059,18 +1058,18 @@
             
             <!-- Output 1: DPA Savings -->
             <div class="p-5 rounded-xl bg-slate-900 text-white border border-slate-800 space-y-1">
-              <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400">DPA &amp; TPRM Overhead Savings</div>
+              <div class="text-xs font-mono uppercase tracking-wider text-slate-400">DPA &amp; TPRM Overhead Savings</div>
               <div id="cisoDpaSavings" class="text-2xl font-black text-emerald-400 font-mono">$200,000 / yr</div>
-              <div class="text-[11px] text-slate-400 leading-tight pt-1">
+              <div class="text-xs text-slate-400 leading-tight pt-1">
                 $25,000 / vendor eliminated across Legal ($8k), TPRM ($9k), and SOC 2 subprocessor audits ($8k).
               </div>
             </div>
 
             <!-- Output 2: Actuarial Breach Avoidance -->
             <div class="p-5 rounded-xl bg-slate-900 text-white border border-slate-800 space-y-1">
-              <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400">Actuarial Breach Avoidance</div>
+              <div class="text-xs font-mono uppercase tracking-wider text-slate-400">Actuarial Breach Avoidance</div>
               <div id="cisoBreachSavings" class="text-2xl font-black text-sky-400 font-mono">$1,158,300 / yr</div>
-              <div class="text-[11px] text-slate-400 leading-tight pt-1">
+              <div class="text-xs text-slate-400 leading-tight pt-1">
                 Ponemon benchmark ($165/record &middot; 0.5% breach prob &middot; 7.8% AI share) mitigated by Invariant 1.
               </div>
             </div>
@@ -1081,18 +1080,18 @@
             
             <!-- Output 3: Total Risk Exposure -->
             <div class="p-5 rounded-xl bg-emerald-950 text-white border border-emerald-800 space-y-1">
-              <div class="text-[11px] font-mono uppercase tracking-wider text-emerald-300">Total Risk Exposure Avoided</div>
+              <div class="text-xs font-mono uppercase tracking-wider text-emerald-300">Total Risk Exposure Avoided</div>
               <div id="cisoTotalExposure" class="text-2xl font-black text-white font-mono">$1,408,300 / yr</div>
-              <div class="text-[11px] text-emerald-200 leading-tight pt-1">
+              <div class="text-xs text-emerald-200 leading-tight pt-1">
                 Sum of DPA elimination + expected breach avoidance + regulatory mitigation buffer.
               </div>
             </div>
 
             <!-- Output 4: Projected ROI Multiple -->
             <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 space-y-1">
-              <div class="text-[11px] font-mono uppercase tracking-wider text-slate-500">Projected Enterprise ROI</div>
+              <div class="text-xs font-mono uppercase tracking-wider text-slate-500">Projected Enterprise ROI</div>
               <div id="cisoRoiMultiple" class="text-2xl font-black text-slate-900 font-mono">117x Multiple</div>
-              <div class="text-[11px] text-slate-500 leading-tight pt-1">
+              <div class="text-xs text-slate-500 leading-tight pt-1">
                 Payback period &lt;3 weeks against standard enterprise VPC deployment.
               </div>
             </div>
@@ -1147,7 +1146,7 @@
       <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
         <table class="w-full text-left text-xs border-collapse md:min-w-[760px]">
           <thead>
-            <tr class="bg-slate-900 text-white font-mono text-[11px] uppercase tracking-wider">
+            <tr class="bg-slate-900 text-white font-mono text-xs uppercase tracking-wider">
               <th class="p-3.5 border-b border-slate-800 w-1/5">Architectural Criteria</th>
               <th class="p-3.5 border-b border-slate-800 bg-emerald-950/80 text-emerald-300 font-bold border-l border-r border-emerald-800 w-1/5">
                 ZTDS RFC v1.0 (In-Memory Engine)
@@ -1372,7 +1371,7 @@
           <input type="text" id="bcSearchInput" aria-label="Filter competitor battlecards" placeholder="Filter competitor battlecards by keyword (e.g. Purview, latency, GDPR, HIPAA, regex)..." class="w-full pl-9 pr-8 py-2 rounded-lg border border-slate-300 bg-white text-base sm:text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
           <button type="button" id="bcSearchClear" aria-label="Clear search" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 font-mono text-xs cursor-pointer">&times;</button>
         </div>
-        <div id="bcSearchCount" class="text-[11px] font-mono text-slate-400 self-center whitespace-nowrap">
+        <div id="bcSearchCount" class="text-xs font-mono text-slate-400 self-center whitespace-nowrap">
           Showing 7 comparison architectures
         </div>
       </div>
@@ -1404,13 +1403,13 @@
 
       <!-- Nominative Fair Use & Architectural Citation Notice -->
       <div class="mb-6 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 leading-relaxed space-y-1.5 no-print">
-        <div class="flex items-center gap-2 font-mono font-bold text-slate-700 text-[11px] uppercase tracking-wider">
+        <div class="flex items-center gap-2 font-mono font-bold text-slate-700 text-xs uppercase tracking-wider">
           <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Nominative Fair Use &amp; Technical Source Citations
         </div>
         <p>
           Microsoft Purview, Nightfall AI, BigID, AWS Macie, Google Cloud Sensitive Data Protection (DLP), Cyberhaven, Skyflow, CloakLLM, and MCP Conceal are registered trademarks or open projects of their respective proprietors. Comparative analyses are strictly architectural, evaluating local in-memory execution boundaries against cloud network proxy topologies, centralized vaults, and unverified scripts based on publicly available documentation as of Q3 2026:
         </p>
-        <ul class="list-disc list-inside text-[11px] text-slate-500 space-y-0.5 font-mono">
+        <ul class="list-disc list-inside text-xs text-slate-500 space-y-0.5 font-mono">
           <li>Microsoft Purview: Endpoint &amp; Exchange Information Protection Architecture (docs.microsoft.com/purview)</li>
           <li>Google Cloud DLP &amp; AWS Macie: Cloud API latency characteristics &amp; automated discovery (cloud.google.com/dlp &amp; aws.amazon.com/macie)</li>
           <li>Nightfall AI &amp; BigID: Cloud API SaaS proxy webhooks &amp; DSPM datastore discovery (docs.nightfall.ai &amp; bigid.com)</li>
@@ -1426,7 +1425,7 @@
           
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
             <div>
-              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
+              <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
               <h3 class="text-xl font-bold text-slate-900">Microsoft Purview (Information Protection &amp; Data Loss Prevention)</h3>
             </div>
             <div class="inline-flex items-center px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-mono font-bold">
@@ -1449,10 +1448,10 @@
             <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
               <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span class="font-mono text-xs px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
                   <span>"We already have Microsoft E5 / Purview deployed across our entire enterprise."</span>
                 </div>
-                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
               </div>
               <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
                 <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
@@ -1463,10 +1462,10 @@
             <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
               <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span class="font-mono text-xs px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
                   <span>"Can't we just configure Purview to block prompts that contain sensitive data?"</span>
                 </div>
-                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
               </div>
               <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
                 <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
@@ -1479,7 +1478,7 @@
           <!-- The One-Sentence CISO Defense -->
           <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-4">
             <div>
-              <span class="text-[10px] font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
+              <span class="text-xs font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
               <span class="text-xs font-semibold text-emerald-950">"Purview stops documents from leaving your network; ZTDS allows your AI applications to safely compute over sensitive data without ever letting raw PII leave the device."</span>
             </div>
             <a href="/roi/" class="btn-trust text-xs py-2 px-3.5 shrink-0">Model ROI &rarr;</a>
@@ -1494,7 +1493,7 @@
           
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
             <div>
-              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
+              <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
               <h3 class="text-xl font-bold text-slate-900">Nightfall AI (Cloud-Hosted SaaS Data Loss Prevention)</h3>
             </div>
             <div class="inline-flex items-center px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-mono font-bold">
@@ -1517,10 +1516,10 @@
             <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
               <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span class="font-mono text-xs px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
                   <span>"Nightfall is already integrated into our Slack, Jira, and GitHub."</span>
                 </div>
-                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
               </div>
               <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
                 <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
@@ -1531,10 +1530,10 @@
             <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
               <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span class="font-mono text-xs px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
                   <span>"Nightfall offers an AI Guardrails API for LLM prompts."</span>
                 </div>
-                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
               </div>
               <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
                 <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
@@ -1547,7 +1546,7 @@
           <!-- The One-Sentence CISO Defense -->
           <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-4">
             <div>
-              <span class="text-[10px] font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
+              <span class="text-xs font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
               <span class="text-xs font-semibold text-emerald-950">"Nightfall requires sending your private data to their cloud to filter it; ZTDS sanitizes your data locally so it never leaves your execution perimeter in the first place."</span>
             </div>
             <a href="/roi/" class="btn-trust text-xs py-2 px-3.5 shrink-0">Model ROI &rarr;</a>
@@ -1562,7 +1561,7 @@
           
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
             <div>
-              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
+              <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
               <h3 class="text-xl font-bold text-slate-900">BigID / Securiti.ai (Data Security Posture Management &amp; Discovery)</h3>
             </div>
             <div class="inline-flex items-center px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-mono font-bold">
@@ -1585,10 +1584,10 @@
             <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
               <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span class="font-mono text-xs px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
                   <span>"BigID is our enterprise standard for sensitive data discovery."</span>
                 </div>
-                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
               </div>
               <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
                 <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
@@ -1601,7 +1600,7 @@
           <!-- The One-Sentence CISO Defense -->
           <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-4">
             <div>
-              <span class="text-[10px] font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
+              <span class="text-xs font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
               <span class="text-xs font-semibold text-emerald-950">"BigID catalogs where your data sits in databases; ZTDS actively prevents your live AI workloads from leaking sensitive payloads to third-party models."</span>
             </div>
             <a href="/roi/" class="btn-trust text-xs py-2 px-3.5 shrink-0">Model ROI &rarr;</a>
@@ -1616,7 +1615,7 @@
           
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
             <div>
-              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
+              <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
               <h3 class="text-xl font-bold text-slate-900">Google Cloud Sensitive Data Protection &amp; AWS Macie</h3>
             </div>
             <div class="inline-flex items-center px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-mono font-bold">
@@ -1639,10 +1638,10 @@
             <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
               <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span class="font-mono text-xs px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
                   <span>"We can just call Google Cloud DLP API or AWS Comprehend before calling the LLM."</span>
                 </div>
-                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
               </div>
               <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
                 <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
@@ -1655,7 +1654,7 @@
           <!-- The One-Sentence CISO Defense -->
           <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-4">
             <div>
-              <span class="text-[10px] font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
+              <span class="text-xs font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
               <span class="text-xs font-semibold text-emerald-950">"Cloud DLP APIs double your network latency and charge per megabyte; ZTDS executes in local memory in &lt;1.2ms with zero marginal cloud cost."</span>
             </div>
             <a href="/roi/" class="btn-trust text-xs py-2 px-3.5 shrink-0">Model ROI &rarr;</a>
@@ -1670,7 +1669,7 @@
           
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
             <div>
-              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
+              <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
               <h3 class="text-xl font-bold text-slate-900">Cyberhaven (Data Lineage &amp; Endpoint Agent DLP)</h3>
             </div>
             <div class="inline-flex items-center px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-mono font-bold">
@@ -1693,10 +1692,10 @@
             <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
               <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span class="font-mono text-xs px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
                   <span>"Cyberhaven already gives us complete data lineage visibility over shadow AI."</span>
                 </div>
-                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
               </div>
               <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
                 <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
@@ -1707,10 +1706,10 @@
             <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
               <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span class="font-mono text-xs px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
                   <span>"Can't Cyberhaven just block users from pasting sensitive customer files into AI tools?"</span>
                 </div>
-                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
               </div>
               <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
                 <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
@@ -1723,7 +1722,7 @@
           <!-- The One-Sentence CISO Defense -->
           <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-4">
             <div>
-              <span class="text-[10px] font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
+              <span class="text-xs font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
               <span class="text-xs font-semibold text-emerald-950">"Cyberhaven records the breach after your data leaves; ZTDS sanitizes payloads in volatile RAM so raw secrets never cross your perimeter in the first place."</span>
             </div>
             <a href="/roi/" class="btn-trust text-xs py-2 px-3.5 shrink-0">Model ROI &rarr;</a>
@@ -1738,7 +1737,7 @@
           
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
             <div>
-              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
+              <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
               <h3 class="text-xl font-bold text-slate-900">Skyflow (Cloud Data Privacy Vault &amp; Tokenization Gateway)</h3>
             </div>
             <div class="inline-flex items-center px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-mono font-bold">
@@ -1761,10 +1760,10 @@
             <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
               <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span class="font-mono text-xs px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
                   <span>"Skyflow is already our enterprise data vault for PCI-DSS credit card tokenization."</span>
                 </div>
-                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
               </div>
               <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
                 <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
@@ -1775,10 +1774,10 @@
             <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
               <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span class="font-mono text-xs px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
                   <span>"Can Skyflow de-identify data in our private cloud VPC?"</span>
                 </div>
-                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
               </div>
               <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
                 <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
@@ -1791,7 +1790,7 @@
           <!-- The One-Sentence CISO Defense -->
           <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-4">
             <div>
-              <span class="text-[10px] font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
+              <span class="text-xs font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
               <span class="text-xs font-semibold text-emerald-950">"Skyflow stores your secrets in an external cloud vault; ZTDS keeps tokenization strictly in local volatile RAM with zero egress and zero subprocessor overhead."</span>
             </div>
             <a href="/roi/" class="btn-trust text-xs py-2 px-3.5 shrink-0">Model ROI &rarr;</a>
@@ -1806,7 +1805,7 @@
           
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
             <div>
-              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
+              <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Target Competitor</div>
               <h3 class="text-xl font-bold text-slate-900">Ad-Hoc MCP Utilities &amp; Regex Scripts (CloakLLM, MCP Conceal, mcp-pvp)</h3>
             </div>
             <div class="inline-flex items-center px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-mono font-bold">
@@ -1829,10 +1828,10 @@
             <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
               <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span class="font-mono text-xs px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
                   <span>"Our developers can just configure an open-source MCP redaction tool in Cursor or Claude Desktop."</span>
                 </div>
-                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
               </div>
               <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
                 <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
@@ -1843,10 +1842,10 @@
             <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2">
               <div class="text-xs font-bold text-rose-700 flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-2">
-                  <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
+                  <span class="font-mono text-xs px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">CISO Says</span>
                   <span>"Why standardize on ZTDS instead of letting each team use their own regex filters?"</span>
                 </div>
-                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[10px] font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
+                <button type="button" class="copy-objection-btn px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-xs font-semibold transition-colors shrink-0">Copy for Slack / Email</button>
               </div>
               <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
                 <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
@@ -1859,7 +1858,7 @@
           <!-- The One-Sentence CISO Defense -->
           <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-4">
             <div>
-              <span class="text-[10px] font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
+              <span class="text-xs font-mono uppercase font-bold text-emerald-800 block">The One-Sentence CISO Takeaway</span>
               <span class="text-xs font-semibold text-emerald-950">"Hobbyist MCP regex scripts offer zero legal defense; ZTDS provides mathematically verified RFC v1.0 invariants and audited GRC regulatory compliance."</span>
             </div>
             <a href="/roi/" class="btn-trust text-xs py-2 px-3.5 shrink-0">Model ROI &rarr;</a>
@@ -1906,8 +1905,8 @@
         <div class="p-6 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-rose-100 text-rose-800">PDF Document</span>
-              <span class="text-[10px] font-mono text-slate-400">1-Page Executive</span>
+              <span class="text-xs font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-rose-100 text-rose-800">PDF Document</span>
+              <span class="text-xs font-mono text-slate-400">1-Page Executive</span>
             </div>
             <h3 class="text-base font-bold text-slate-900">CISO Legal DPA Exemption Memo</h3>
             <p class="text-xs text-slate-600 leading-relaxed">
@@ -1926,8 +1925,8 @@
         <div class="p-6 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-sky-100 text-sky-800">ZIP Archive</span>
-              <span class="text-[10px] font-mono text-slate-400">4.8 MB Pack</span>
+              <span class="text-xs font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-sky-100 text-sky-800">ZIP Archive</span>
+              <span class="text-xs font-mono text-slate-400">4.8 MB Pack</span>
             </div>
             <h3 class="text-base font-bold text-slate-900">Complete Enterprise Security Pack</h3>
             <p class="text-xs text-slate-600 leading-relaxed">
@@ -1946,8 +1945,8 @@
         <div class="p-6 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-purple-100 text-purple-800">PDF Slide Deck</span>
-              <span class="text-[10px] font-mono text-slate-400">12 Slides</span>
+              <span class="text-xs font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-purple-100 text-purple-800">PDF Slide Deck</span>
+              <span class="text-xs font-mono text-slate-400">12 Slides</span>
             </div>
             <h3 class="text-base font-bold text-slate-900">Board &amp; CISO Risk Committee Pitch Deck</h3>
             <p class="text-xs text-slate-600 leading-relaxed">
@@ -1966,8 +1965,8 @@
         <div class="p-6 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">JSON Schema</span>
-              <span class="text-[10px] font-mono text-slate-400">CTS Test Vectors</span>
+              <span class="text-xs font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">JSON Schema</span>
+              <span class="text-xs font-mono text-slate-400">CTS Test Vectors</span>
             </div>
             <h3 class="text-base font-bold text-slate-900">Cryptographic Evidence Binder</h3>
             <p class="text-xs text-slate-600 leading-relaxed">
@@ -1986,8 +1985,8 @@
         <div class="p-6 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-100 text-amber-800">Markdown (.md)</span>
-              <span class="text-[10px] font-mono text-slate-400">Confluence / Notion</span>
+              <span class="text-xs font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-100 text-amber-800">Markdown (.md)</span>
+              <span class="text-xs font-mono text-slate-400">Confluence / Notion</span>
             </div>
             <h3 class="text-base font-bold text-slate-900">Markdown Procurement Dossier</h3>
             <p class="text-xs text-slate-600 leading-relaxed">
@@ -2006,8 +2005,8 @@
         <div class="p-6 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors flex flex-col justify-between space-y-4">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-200 text-slate-800">CI/CD Gate</span>
-              <span class="text-[10px] font-mono text-slate-400">GitHub Actions</span>
+              <span class="text-xs font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-200 text-slate-800">CI/CD Gate</span>
+              <span class="text-xs font-mono text-slate-400">GitHub Actions</span>
             </div>
             <h3 class="text-base font-bold text-slate-900">Pre-Commit ZTDS Audit Workflow</h3>
             <p class="text-xs text-slate-600 leading-relaxed">
@@ -2030,7 +2029,7 @@
     <section class="mt-12 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-slate-700 text-white shadow-lg no-print">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div class="space-y-2">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-800/80 text-[11px] font-mono font-bold text-emerald-400">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-800/80 text-xs font-mono font-bold text-emerald-400">
             <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
             <span>Accredited Implementation Partner</span>
           </div>
@@ -2076,7 +2075,7 @@
 
         <!-- Col 2: Specification & RFC -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
             <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track (draft-02)</a></li>
@@ -2092,7 +2091,7 @@
 
         <!-- Col 3: Architecture & Tools -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
             <li><a href="/mcp/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Model Context Protocol (MCP) &rarr;</a></li>
@@ -2106,7 +2105,7 @@
 
         <!-- Col 4: Consortium & Governance -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/certification/" class="hover:text-slate-900 transition-colors">Certification Authority</a></li>
             <li><a href="/soc2/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">SOC 2 &amp; Trust Center &rarr;</a></li>
@@ -2120,7 +2119,7 @@
 
         <!-- Col 5: Community & Verified -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
             <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
@@ -2128,16 +2127,16 @@
             <li><a href="/case-studies/" class="hover:text-slate-900 transition-colors">Enterprise Case Studies</a></li>
             <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
             <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
-            <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
+            <li class="pt-2 text-xs text-slate-400 leading-tight">GitOps automated attestation.</li>
           </ul>
         </div>
       </div>
 
       <!-- Legal Conformance Notice Card -->
-      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-500 leading-relaxed">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
-          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
-          <span class="text-slate-400 font-mono text-[10px]">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-xs font-mono">Legal Notice &amp; Intellectual Property Protection</span>
+          <span class="text-slate-400 font-mono text-xs">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
         </div>
         <p>
           ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. &sect; 119 Priority). The word mark <strong>ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
@@ -2151,7 +2150,7 @@
           <span>&middot;</span>
           <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
         </div>
-        <div class="flex items-center gap-4 text-[11px] font-mono">
+        <div class="flex items-center gap-4 text-xs font-mono">
           <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
             ALL SYSTEMS VERIFIED
@@ -2172,7 +2171,7 @@
         <div>
           <div class="flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span class="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-wider">Document ID: ZTDS-CISO-2026-V1</span>
+            <span class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Document ID: ZTDS-CISO-2026-V1</span>
           </div>
           <h2 id="modalTitle" class="text-lg font-bold text-slate-900 mt-0.5">
             CISO Procurement &amp; Safe Harbor Pack
@@ -2212,7 +2211,7 @@
           </div>
           
           <div class="space-y-2 border-b border-slate-100 pb-4">
-            <h3 class="font-bold text-slate-900 uppercase font-mono text-[11px]">The 4 Fundamental Invariants (RFC v1.0)</h3>
+            <h3 class="font-bold text-slate-900 uppercase font-mono text-xs">The 4 Fundamental Invariants (RFC v1.0)</h3>
             <ul class="list-disc list-inside space-y-1 text-slate-600">
               <li><strong>Invariant 1 (Zero External Egress):</strong> Delta Egress(S) is strictly 0.00 bytes across public sockets prior to sanitization.</li>
               <li><strong>Invariant 2 (Deterministic Reversible Tokens):</strong> Bijective in-memory transformation preserves LLM context while mapping tables remain strictly in client volatile RAM.</li>
@@ -2222,11 +2221,11 @@
           </div>
 
           <div class="space-y-2">
-            <h3 class="font-bold text-slate-900 uppercase font-mono text-[11px]">Subprocessor Chain Overhead Elimination</h3>
+            <h3 class="font-bold text-slate-900 uppercase font-mono text-xs">Subprocessor Chain Overhead Elimination</h3>
             <p class="text-slate-600">
               By deploying ZTDS in-RAM sanitization, enterprises eliminate an estimated <strong>$25,000 per third-party vendor annually</strong> in procurement friction:
             </p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 font-mono text-[11px]">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 font-mono text-xs">
               <div class="p-2.5 bg-slate-50 border border-slate-200 rounded">
                 <span class="text-slate-400 block">DPA Negotiation</span>
                 <strong class="text-slate-900">$8,000 / vendor / yr</strong>
@@ -2247,22 +2246,22 @@
         <div id="modalViewSig" class="modal-view hidden space-y-4">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
             <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg space-y-1">
-              <span class="font-mono text-[10px] text-slate-400 uppercase font-bold">Control DSP-01 (Data Storage)</span>
+              <span class="font-mono text-xs text-slate-400 uppercase font-bold">Control DSP-01 (Data Storage)</span>
               <p class="text-slate-900 font-semibold">Q: Where is customer prompt data hosted or stored?</p>
               <p class="text-slate-600">A: Nowhere. Cleartext data and token maps reside strictly in volatile RAM. No data is ever written to disk, databases, cookies, or cloud storage.</p>
             </div>
             <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg space-y-1">
-              <span class="font-mono text-[10px] text-slate-400 uppercase font-bold">Control NET-02 (External Egress)</span>
+              <span class="font-mono text-xs text-slate-400 uppercase font-bold">Control NET-02 (External Egress)</span>
               <p class="text-slate-900 font-semibold">Q: Does the engine transmit telemetry or analytics to vendor servers?</p>
               <p class="text-slate-600">A: Exactly 0.00 bytes. Conforming builds operate air-gapped with zero phone-home calls, analytics pings, or license heartbeats.</p>
             </div>
             <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg space-y-1">
-              <span class="font-mono text-[10px] text-slate-400 uppercase font-bold">Control CRY-03 (Key Custody)</span>
+              <span class="font-mono text-xs text-slate-400 uppercase font-bold">Control CRY-03 (Key Custody)</span>
               <p class="text-slate-900 font-semibold">Q: Who holds custody of reversible tokenization keys?</p>
               <p class="text-slate-600">A: The customer process exclusively. Keys are generated in client RAM via CSPRNG and destroyed immediately upon process exit.</p>
             </div>
             <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg space-y-1">
-              <span class="font-mono text-[10px] text-slate-400 uppercase font-bold">Control TPR-05 (Subprocessors)</span>
+              <span class="font-mono text-xs text-slate-400 uppercase font-bold">Control TPR-05 (Subprocessors)</span>
               <p class="text-slate-900 font-semibold">Q: Which third-party subprocessors process customer data?</p>
               <p class="text-slate-600">A: None. Zero third-party subprocessors exist in the data path. Conforming software operates as a local computational binary.</p>
             </div>
@@ -2288,7 +2287,7 @@
         <!-- Tab 4: Air-Gapped License View -->
         <div id="modalViewLicense" class="modal-view hidden space-y-4 font-mono text-xs">
           <div class="p-4 bg-slate-900 text-slate-200 rounded-xl space-y-3">
-            <div class="text-[11px] uppercase tracking-wider text-sky-400 font-bold">On-Premise Air-Gapped Source Code License Key Points</div>
+            <div class="text-xs uppercase tracking-wider text-sky-400 font-bold">On-Premise Air-Gapped Source Code License Key Points</div>
             <p class="text-slate-300 leading-relaxed">
               1. <strong>Perpetual Execution:</strong> Non-exclusive license to compile and execute ZTDS source code within internal networks, microservices, and private VPCs.<br>
               2. <strong>100% Disconnected SCIF:</strong> Authorized for air-gapped, SCIF, or classified environments with zero telemetry or phone-home heartbeats.<br>

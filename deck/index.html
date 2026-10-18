@@ -80,9 +80,8 @@
   </script>
 
   <!-- Fonts & Tailwind -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
 
   <style>
@@ -239,14 +238,14 @@
 
       <div class="flex items-center gap-1.5 sm:gap-3">
         <!-- Slide Progress Pill -->
-        <div class="px-2 sm:px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] sm:text-xs font-mono text-slate-300 whitespace-nowrap">
+        <div class="px-2 sm:px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs sm:text-xs font-mono text-slate-300 whitespace-nowrap">
           <span class="hidden sm:inline">Slide </span><span id="current-slide-num" class="text-emerald-400 font-bold">01</span>/<span id="total-slides-num">10</span>
         </div>
 
         <!-- Speaker Notes Button -->
         <button id="toggle-notes-btn" type="button" aria-label="Toggle Presenter Notes (N)" class="touch-target px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-300 hover:text-white transition flex items-center gap-1.5" title="Toggle Presenter Notes (N)">
           <svg class="w-3.5 h-3.5 text-sky-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-          <span class="hidden sm:inline">Notes <kbd class="text-[10px] text-slate-400 bg-white/5 px-1 py-0.5 rounded">N</kbd></span>
+          <span class="hidden sm:inline">Notes <kbd class="text-xs text-slate-400 bg-white/5 px-1 py-0.5 rounded">N</kbd></span>
         </button>
 
         <!-- PDF Export Button -->
@@ -290,24 +289,24 @@
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-white/10">
             <div class="p-3.5 rounded-xl bg-white/[0.03] border border-white/5">
-              <div class="text-[11px] font-mono uppercase text-slate-400">Data Egress</div>
+              <div class="text-xs font-mono uppercase text-slate-400">Data Egress</div>
               <div class="text-xl font-bold font-mono text-emerald-400 mt-0.5">0.00 Bytes</div>
-              <div class="text-[11px] text-slate-500 mt-0.5">Client volatile RAM only</div>
+              <div class="text-xs text-slate-500 mt-0.5">Client volatile RAM only</div>
             </div>
             <div class="p-3.5 rounded-xl bg-white/[0.03] border border-white/5">
-              <div class="text-[11px] font-mono uppercase text-slate-400">Sanitization Latency</div>
+              <div class="text-xs font-mono uppercase text-slate-400">Sanitization Latency</div>
               <div class="text-xl font-bold font-mono text-sky-400 mt-0.5">&lt; 1.8 ms</div>
-              <div class="text-[11px] text-slate-500 mt-0.5">100x faster than cloud DLP</div>
+              <div class="text-xs text-slate-500 mt-0.5">100x faster than cloud DLP</div>
             </div>
             <div class="p-3.5 rounded-xl bg-white/[0.03] border border-white/5">
-              <div class="text-[11px] font-mono uppercase text-slate-400">GDPR Compliance</div>
+              <div class="text-xs font-mono uppercase text-slate-400">GDPR Compliance</div>
               <div class="text-xl font-bold font-mono text-emerald-400 mt-0.5">Art. 28 Exempt</div>
-              <div class="text-[11px] text-slate-500 mt-0.5">Zero subprocessor chain</div>
+              <div class="text-xs text-slate-500 mt-0.5">Zero subprocessor chain</div>
             </div>
             <div class="p-3.5 rounded-xl bg-white/[0.03] border border-white/5">
-              <div class="text-[11px] font-mono uppercase text-slate-400">Offline Attestation</div>
+              <div class="text-xs font-mono uppercase text-slate-400">Offline Attestation</div>
               <div class="text-xl font-bold font-mono text-sky-400 mt-0.5">Ed25519 Token</div>
-              <div class="text-[11px] text-slate-500 mt-0.5">Zero telemetry heartbeats</div>
+              <div class="text-xs text-slate-500 mt-0.5">Zero telemetry heartbeats</div>
             </div>
           </div>
         </div>
@@ -342,7 +341,7 @@
             <div class="p-4 rounded-xl bg-red-950/20 border border-red-500/20">
               <div class="flex items-center justify-between mb-2">
                 <span class="font-mono text-xs font-bold text-red-400 uppercase tracking-wider">Chokepoint 01</span>
-                <span class="text-[11px] font-mono text-slate-400">EU Regulation 2016/679</span>
+                <span class="text-xs font-mono text-slate-400">EU Regulation 2016/679</span>
               </div>
               <h3 class="text-lg font-bold text-white mb-1">GDPR Article 28: Subprocessor Trap</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
@@ -353,7 +352,7 @@
             <div class="p-4 rounded-xl bg-red-950/20 border border-red-500/20">
               <div class="flex items-center justify-between mb-2">
                 <span class="font-mono text-xs font-bold text-red-400 uppercase tracking-wider">Chokepoint 02</span>
-                <span class="text-[11px] font-mono text-slate-400">GDPR Art. 17 / Data Erasure</span>
+                <span class="text-xs font-mono text-slate-400">GDPR Art. 17 / Data Erasure</span>
               </div>
               <h3 class="text-lg font-bold text-white mb-1">Vector Database Poisoning</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
@@ -364,7 +363,7 @@
             <div class="p-4 rounded-xl bg-amber-950/20 border border-amber-500/20">
               <div class="flex items-center justify-between mb-2">
                 <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">Chokepoint 03</span>
-                <span class="text-[11px] font-mono text-slate-400">EU AI Act (2024/1689)</span>
+                <span class="text-xs font-mono text-slate-400">EU AI Act (2024/1689)</span>
               </div>
               <h3 class="text-lg font-bold text-white mb-1">Article 50: Synthetic Provenance</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
@@ -375,7 +374,7 @@
             <div class="p-4 rounded-xl bg-amber-950/20 border border-amber-500/20">
               <div class="flex items-center justify-between mb-2">
                 <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">Chokepoint 04</span>
-                <span class="text-[11px] font-mono text-slate-400">US HIPAA &amp; FRE Rule 502</span>
+                <span class="text-xs font-mono text-slate-400">US HIPAA &amp; FRE Rule 502</span>
               </div>
               <h3 class="text-lg font-bold text-white mb-1">Loss of Clinical &amp; Legal Privilege</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
@@ -495,7 +494,7 @@
               <p class="text-xs text-slate-300 leading-relaxed mb-2">
                 Raw PII, PHI, or intellectual property never crosses the local execution boundary in cleartext. Sanitization occurs strictly prior to socket write.
               </p>
-              <div class="text-[11px] font-mono text-emerald-400 bg-black/40 px-2 py-1 rounded border border-emerald-500/20">
+              <div class="text-xs font-mono text-emerald-400 bg-black/40 px-2 py-1 rounded border border-emerald-500/20">
                 Formula: Δ_Egress(Cleartext) ≡ 0.00 Bytes
               </div>
             </div>
@@ -508,7 +507,7 @@
               <p class="text-xs text-slate-300 leading-relaxed mb-2">
                 Masked entities are replaced with bijective surrogate tokens preserving grammatical syntax, entity classes, and token distance for optimal LLM attention weights.
               </p>
-              <div class="text-[11px] font-mono text-sky-400 bg-black/40 px-2 py-1 rounded border border-sky-500/20">
+              <div class="text-xs font-mono text-sky-400 bg-black/40 px-2 py-1 rounded border border-sky-500/20">
                 Map: T = M(V, C) | Scoped strictly to Thread RAM
               </div>
             </div>
@@ -521,7 +520,7 @@
               <p class="text-xs text-slate-300 leading-relaxed mb-2">
                 Execution is verified inside volatile RAM or hardware-attested enclaves (AWS Nitro, Apple Secure Enclave, WASM sandbox) with zero disk swapping.
               </p>
-              <div class="text-[11px] font-mono text-sky-400 bg-black/40 px-2 py-1 rounded border border-sky-500/20">
+              <div class="text-xs font-mono text-sky-400 bg-black/40 px-2 py-1 rounded border border-sky-500/20">
                 Memory: Zero Persistence, Instant Auto-Zeroization
               </div>
             </div>
@@ -534,7 +533,7 @@
               <p class="text-xs text-slate-300 leading-relaxed mb-2">
                 Software operates as an endpoint utility. Completely eliminates third-party subprocessor status under GDPR Article 28 and HIPAA Business Associate rules.
               </p>
-              <div class="text-[11px] font-mono text-emerald-400 bg-black/40 px-2 py-1 rounded border border-emerald-500/20">
+              <div class="text-xs font-mono text-emerald-400 bg-black/40 px-2 py-1 rounded border border-emerald-500/20">
                 Legal Status: 100% DPA &amp; BAA Exemption
               </div>
             </div>
@@ -570,46 +569,46 @@
           <div class="p-4 rounded-xl bg-black/60 border border-white/10 font-mono text-xs mb-4 overflow-x-auto">
             <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 text-center md:min-w-[750px]">
               <div class="flex-1 p-3 rounded-lg bg-slate-900 border border-slate-700">
-                <div class="text-[10px] uppercase text-slate-400">1. Client Ingest</div>
+                <div class="text-xs uppercase text-slate-400">1. Client Ingest</div>
                 <div class="text-white font-bold mt-1">Raw User Prompt / RAG Document</div>
-                <div class="text-[10px] text-amber-400 mt-1">Contains PII / Secrets</div>
+                <div class="text-xs text-amber-400 mt-1">Contains PII / Secrets</div>
               </div>
               <div class="text-emerald-400 font-bold text-base">&rarr;</div>
               <div class="flex-1 p-3 rounded-lg bg-emerald-950/40 border border-emerald-500/50">
-                <div class="text-[10px] uppercase text-emerald-400">2. ZTDS Tokenizer</div>
+                <div class="text-xs uppercase text-emerald-400">2. ZTDS Tokenizer</div>
                 <div class="text-white font-bold mt-1">In-RAM Scan &amp; Mask</div>
-                <div class="text-[10px] text-emerald-300 mt-1 font-bold">&lt; 1.8 ms Latency</div>
+                <div class="text-xs text-emerald-300 mt-1 font-bold">&lt; 1.8 ms Latency</div>
               </div>
               <div class="text-sky-400 font-bold text-base">&rarr;</div>
               <div class="flex-1 p-3 rounded-lg bg-sky-950/40 border border-sky-500/50">
-                <div class="text-[10px] uppercase text-sky-400">3. Upstream LLM</div>
+                <div class="text-xs uppercase text-sky-400">3. Upstream LLM</div>
                 <div class="text-white font-bold mt-1">OpenAI / Bedrock / Claude</div>
-                <div class="text-[10px] text-sky-300 mt-1">Zero Sensitive Entities</div>
+                <div class="text-xs text-sky-300 mt-1">Zero Sensitive Entities</div>
               </div>
               <div class="text-emerald-400 font-bold text-base">&rarr;</div>
               <div class="flex-1 p-3 rounded-lg bg-slate-900 border border-slate-700">
-                <div class="text-[10px] uppercase text-slate-400">4. Re-hydration</div>
+                <div class="text-xs uppercase text-slate-400">4. Re-hydration</div>
                 <div class="text-white font-bold mt-1">Bijective In-RAM Swap</div>
-                <div class="text-[10px] text-slate-400 mt-1">Cleartext Output to User</div>
+                <div class="text-xs text-slate-400 mt-1">Cleartext Output to User</div>
               </div>
             </div>
           </div>
 
           <div class="grid grid-cols-3 gap-3">
             <div class="p-3 rounded-lg bg-white/[0.03] border border-white/5">
-              <div class="text-[11px] font-mono text-slate-400">Airplane Mode Audit</div>
+              <div class="text-xs font-mono text-slate-400">Airplane Mode Audit</div>
               <div class="text-sm font-bold text-white mt-0.5">5-Minute Live Terminal Test</div>
-              <div class="text-[11px] text-slate-400 mt-0.5">Turn off Wi-Fi; run audit; 100% passes.</div>
+              <div class="text-xs text-slate-400 mt-0.5">Turn off Wi-Fi; run audit; 100% passes.</div>
             </div>
             <div class="p-3 rounded-lg bg-white/[0.03] border border-white/5">
-              <div class="text-[11px] font-mono text-slate-400">Throughput Capacity</div>
+              <div class="text-xs font-mono text-slate-400">Throughput Capacity</div>
               <div class="text-sm font-bold text-emerald-400 mt-0.5">25,000+ Tokens / Sec</div>
-              <div class="text-[11px] text-slate-400 mt-0.5">Single-core WebAssembly runtime.</div>
+              <div class="text-xs text-slate-400 mt-0.5">Single-core WebAssembly runtime.</div>
             </div>
             <div class="p-3 rounded-lg bg-white/[0.03] border border-white/5">
-              <div class="text-[11px] font-mono text-slate-400">Pre-Built Integrations</div>
+              <div class="text-xs font-mono text-slate-400">Pre-Built Integrations</div>
               <div class="text-sm font-bold text-sky-400 mt-0.5">LangChain, LlamaIndex, MCP</div>
-              <div class="text-[11px] text-slate-400 mt-0.5">Drop-in middleware for existing code.</div>
+              <div class="text-xs text-slate-400 mt-0.5">Drop-in middleware for existing code.</div>
             </div>
           </div>
         </div>
@@ -703,10 +702,10 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div class="p-4 rounded-xl bg-black/60 border border-white/10 font-mono text-xs">
               <div class="text-sky-400 font-bold mb-2">Cryptographic Token Spec (Ed25519)</div>
-              <div class="p-2.5 rounded bg-slate-900 border border-slate-700 text-slate-300 break-all mb-3 text-[11px] select-all">
+              <div class="p-2.5 rounded bg-slate-900 border border-slate-700 text-slate-300 break-all mb-3 text-xs select-all">
                 ZTDS-LIC-v1.eyJjdXN0b21lcklkIjoiQUNNRS1DT1JQIiwidGllciI6IkVOVEVSUFJJU0VfQUlSIiwibm9kZXMiOjUsInByb2ZpbGVzIjpbIioiXX0.k9F...b9a
               </div>
-              <ul class="space-y-1.5 text-slate-400 text-[11px]">
+              <ul class="space-y-1.5 text-slate-400 text-xs">
                 <li class="flex items-center gap-1.5"><span class="text-emerald-400">&bull;</span> In-Memory Verification: <strong>111.8 microseconds (~0.1ms)</strong></li>
                 <li class="flex items-center gap-1.5"><span class="text-emerald-400">&bull;</span> Network Egress / Heartbeats: <strong>Exactly 0.00 Bytes</strong></li>
                 <li class="flex items-center gap-1.5"><span class="text-emerald-400">&bull;</span> Native Node.js &amp; WebAssembly crypto engine</li>
@@ -731,7 +730,7 @@
                   </li>
                 </ul>
               </div>
-              <div class="mt-3 p-2 rounded bg-white/[0.02] border border-white/5 text-[11px] font-mono text-slate-400">
+              <div class="mt-3 p-2 rounded bg-white/[0.02] border border-white/5 text-xs font-mono text-slate-400">
                 CLI: <code>npx ztds-audit --check-license</code>
               </div>
             </div>
@@ -766,8 +765,8 @@
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
             <div class="p-3 rounded-xl bg-slate-900/80 border border-white/10">
-              <div class="text-[11px] font-mono text-emerald-400 font-bold mb-1">HEALTHCARE / PHI</div>
-              <ul class="text-[11px] text-slate-300 space-y-1">
+              <div class="text-xs font-mono text-emerald-400 font-bold mb-1">HEALTHCARE / PHI</div>
+              <ul class="text-xs text-slate-300 space-y-1">
                 <li>&bull; 18 HIPAA Identifiers</li>
                 <li>&bull; ICD-10 / ICD-11 Codes</li>
                 <li>&bull; Physician NPI Numbers</li>
@@ -777,8 +776,8 @@
             </div>
 
             <div class="p-3 rounded-xl bg-slate-900/80 border border-white/10">
-              <div class="text-[11px] font-mono text-sky-400 font-bold mb-1">FINANCIAL &amp; BANKING</div>
-              <ul class="text-[11px] text-slate-300 space-y-1">
+              <div class="text-xs font-mono text-sky-400 font-bold mb-1">FINANCIAL &amp; BANKING</div>
+              <ul class="text-xs text-slate-300 space-y-1">
                 <li>&bull; PCI DSS PAN (Checksum Verified)</li>
                 <li>&bull; SWIFT / BIC Codes</li>
                 <li>&bull; IBAN Numbers (ISO 7064)</li>
@@ -788,8 +787,8 @@
             </div>
 
             <div class="p-3 rounded-xl bg-slate-900/80 border border-white/10">
-              <div class="text-[11px] font-mono text-amber-400 font-bold mb-1">LEGAL &amp; M&amp;A SECRECY</div>
-              <ul class="text-[11px] text-slate-300 space-y-1">
+              <div class="text-xs font-mono text-amber-400 font-bold mb-1">LEGAL &amp; M&amp;A SECRECY</div>
+              <ul class="text-xs text-slate-300 space-y-1">
                 <li>&bull; Acquisition Target Entities</li>
                 <li>&bull; Attorney Work Product (FRE 502)</li>
                 <li>&bull; Executive Comp Plans</li>
@@ -799,8 +798,8 @@
             </div>
 
             <div class="p-3 rounded-xl bg-slate-900/80 border border-white/10">
-              <div class="text-[11px] font-mono text-purple-400 font-bold mb-1">CLOUD &amp; INFRA SECRETS</div>
-              <ul class="text-[11px] text-slate-300 space-y-1">
+              <div class="text-xs font-mono text-purple-400 font-bold mb-1">CLOUD &amp; INFRA SECRETS</div>
+              <ul class="text-xs text-slate-300 space-y-1">
                 <li>&bull; AWS IAM &amp; Secret Keys</li>
                 <li>&bull; GitHub Personal Tokens</li>
                 <li>&bull; Kubernetes JWT Tokens</li>
@@ -812,7 +811,7 @@
 
           <div class="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 text-xs text-slate-300 flex items-center justify-between">
             <span><strong>Two-Tier Domain Isolation Model:</strong> Free standard handles basic consumer PII. The 30 specialized enterprise profiles require signed Enterprise tokens.</span>
-            <span class="text-emerald-400 font-mono text-[11px]">Quarterly Regulatory Taxonomy Updates</span>
+            <span class="text-emerald-400 font-mono text-xs">Quarterly Regulatory Taxonomy Updates</span>
           </div>
         </div>
 
@@ -854,11 +853,11 @@
                   <li>&bull; Standard engineering support (48h SLA)</li>
                 </ul>
               </div>
-              <div class="pt-2 border-t border-white/10 text-[11px] font-mono text-slate-400">AI Engineering Teams</div>
+              <div class="pt-2 border-t border-white/10 text-xs font-mono text-slate-400">AI Engineering Teams</div>
             </div>
 
             <div class="p-4 rounded-xl bg-emerald-950/30 border-2 border-emerald-500/60 flex flex-col justify-between relative shadow-lg shadow-emerald-500/5">
-              <div class="absolute -top-3 right-4 px-2.5 py-0.5 rounded-full bg-emerald-500 text-black font-mono text-[10px] font-extrabold uppercase">
+              <div class="absolute -top-3 right-4 px-2.5 py-0.5 rounded-full bg-emerald-500 text-black font-mono text-xs font-extrabold uppercase">
                 Recommended
               </div>
               <div>
@@ -872,7 +871,7 @@
                   <li>&bull; Priority support (4h response SLA)</li>
                 </ul>
               </div>
-              <div class="pt-2 border-t border-emerald-500/20 text-[11px] font-mono text-emerald-300">Core Enterprise VPCs</div>
+              <div class="pt-2 border-t border-emerald-500/20 text-xs font-mono text-emerald-300">Core Enterprise VPCs</div>
             </div>
 
             <div class="p-4 rounded-xl bg-slate-900/60 border border-white/10 flex flex-col justify-between">
@@ -887,18 +886,18 @@
                   <li>&bull; 24/7 critical incident response (1h SLA)</li>
                 </ul>
               </div>
-              <div class="pt-2 border-t border-white/10 text-[11px] font-mono text-sky-400">Fortune 500 Enterprise</div>
+              <div class="pt-2 border-t border-white/10 text-xs font-mono text-sky-400">Fortune 500 Enterprise</div>
             </div>
           </div>
 
           <div class="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 text-xs text-slate-300 flex items-center justify-between">
             <span><strong>TCO Comparison:</strong> In-house custom build: $350k+ in salaries. Cloud DLP SaaS: $120k+/yr + 400ms latency. ZTDS: turnkey local RAM deployment.</span>
-            <span class="text-emerald-400 font-mono text-[11px]">Net 30 &middot; Schedule A</span>
+            <span class="text-emerald-400 font-mono text-xs">Net 30 &middot; Schedule A</span>
           </div>
 
           <div class="mt-2 p-2 rounded-lg bg-emerald-950/20 border border-emerald-500/20 text-xs text-slate-300 flex items-center justify-between">
             <span><strong>Two-Brand Isolation:</strong> ZTDS RFC v1.0 is an open standard. Commercial licensing is powered by reference engine <strong>PrivacyScrubber</strong> (@privacyscrubber/sdk).</span>
-            <a href="https://privacyscrubber.com?utm_source=ztds.ai&utm_medium=enterprise_pitch_deck&utm_campaign=canonical_pioneer&utm_content=slide9_isolation" target="_blank" rel="noopener" class="text-slate-400 hover:text-emerald-400 font-mono text-[11px] underline">privacyscrubber.com &rarr;</a>
+            <a href="https://privacyscrubber.com?utm_source=ztds.ai&utm_medium=enterprise_pitch_deck&utm_campaign=canonical_pioneer&utm_content=slide9_isolation" target="_blank" rel="noopener" class="text-slate-400 hover:text-emerald-400 font-mono text-xs underline">privacyscrubber.com &rarr;</a>
           </div>
         </div>
 

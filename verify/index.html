@@ -23,9 +23,8 @@
   <meta name="twitter:image" content="https://ztds.ai/assets/img/og/og-default.png">
 
   <!-- Fonts & Styles -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
@@ -166,14 +165,14 @@
           </div>
           <div class="flex flex-col">
             <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
-            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+            <span class="text-xs text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
           </div>
         </a>
 
         <!-- Status Pill -->
         <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
           <span class="pulse-dot"></span>
-          <span class="font-mono text-[11px] font-semibold">RFC v1.0 &middot; OPEN CONSORTIUM</span>
+          <span class="font-mono text-xs font-semibold">RFC v1.0 &middot; OPEN CONSORTIUM</span>
         </div>
       </div>
 
@@ -226,7 +225,7 @@
     </div>
 
     <div class="py-4 space-y-1 text-sm font-medium">
-      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
+      <div class="px-2 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
       <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
       <a href="/ietf/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">IETF Standards Track (draft-02)</a>
       <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
@@ -240,7 +239,7 @@
       <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
       <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 &amp; Trust Center</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
+      <div class="px-2 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
       <a href="/certification/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Certification Authority</a>
       <a href="/verify/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Ed25519 Certificate Validator</a>
       <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
@@ -250,7 +249,7 @@
       <a href="/case-studies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Enterprise Case Studies</a>
       <a href="/agency/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">BrandMeWeb Enterprise Retainer</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <div class="px-2 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
       <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
       <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
       <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive DAG Inspector</a>
@@ -285,19 +284,19 @@
       <!-- Trust Pillars Grid -->
       <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-left">
         <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-          <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Algorithm</div>
+          <div class="text-xs font-mono text-slate-400 uppercase font-bold tracking-wider">Algorithm</div>
           <div class="text-xs font-bold text-slate-800 font-mono mt-0.5">Ed25519 (RFC 8032)</div>
         </div>
         <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-          <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Data Privacy</div>
+          <div class="text-xs font-mono text-slate-400 uppercase font-bold tracking-wider">Data Privacy</div>
           <div class="text-xs font-bold text-emerald-600 font-mono mt-0.5">0.00 Bytes Egress</div>
         </div>
         <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-          <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Canonicalization</div>
+          <div class="text-xs font-mono text-slate-400 uppercase font-bold tracking-wider">Canonicalization</div>
           <div class="text-xs font-bold text-slate-800 font-mono mt-0.5">RFC 8785 JSON</div>
         </div>
         <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-          <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">SubtleCrypto</div>
+          <div class="text-xs font-mono text-slate-400 uppercase font-bold tracking-wider">SubtleCrypto</div>
           <div class="text-xs font-bold text-slate-800 font-mono mt-0.5">Web Crypto Native</div>
         </div>
       </div>
@@ -312,7 +311,7 @@
             <span id="targetEntitySector" class="text-xs font-mono font-bold text-emerald-800 uppercase tracking-wider bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
               Official Accredited Entity
             </span>
-            <span id="targetEntityTier" class="text-[11px] font-mono text-slate-500 font-semibold">
+            <span id="targetEntityTier" class="text-xs font-mono text-slate-500 font-semibold">
               Corporate Member
             </span>
           </div>
@@ -345,7 +344,7 @@
             <label for="certInput" class="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider">
               Certificate Token Input
             </label>
-            <span class="text-[11px] font-mono text-slate-400">ZTDS-CERT-v1</span>
+            <span class="text-xs font-mono text-slate-400">ZTDS-CERT-v1</span>
           </div>
 
           <!-- Drag & Drop Dropzone Container -->
@@ -360,7 +359,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
                 <span id="fileNameMount" class="font-mono font-bold text-slate-800 truncate"></span>
-                <span id="fileSizeMount" class="text-slate-500 font-mono text-[11px] shrink-0"></span>
+                <span id="fileSizeMount" class="text-slate-500 font-mono text-xs shrink-0"></span>
               </div>
               <button id="btnRemoveFile" type="button" aria-label="Remove loaded file" class="text-slate-400 hover:text-rose-600 p-1 rounded-lg transition-colors ml-2 touch-target" title="Remove loaded file">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -378,20 +377,20 @@
             ></textarea>
 
             <!-- Real-time Token Diagnostics Bar -->
-            <div id="tokenDiagnosticsBar" class="mt-2 pt-2.5 border-t border-slate-200/70 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
+            <div id="tokenDiagnosticsBar" class="mt-2 pt-2.5 border-t border-slate-200/70 flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
               <div class="flex items-center gap-1.5">
                 <span class="text-slate-400">Segments:</span>
                 <span id="tokenPartsIndicator" class="inline-flex items-center gap-1">
-                  <span id="tagPartHeader" class="px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]">Header</span>
+                  <span id="tagPartHeader" class="px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-xs">Header</span>
                   <span class="text-slate-300">.</span>
-                  <span id="tagPartPayload" class="px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]">Payload</span>
+                  <span id="tagPartPayload" class="px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-xs">Payload</span>
                   <span class="text-slate-300">.</span>
-                  <span id="tagPartSig" class="px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]">Sig (64B)</span>
+                  <span id="tagPartSig" class="px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-xs">Sig (64B)</span>
                 </span>
               </div>
               <div class="flex items-center gap-2">
                 <span id="tokenLengthCount" class="text-slate-400">0 chars</span>
-                <span id="formatStatusPill" class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-slate-100 text-slate-700 border border-slate-200">Awaiting Input</span>
+                <span id="formatStatusPill" class="px-2 py-0.5 rounded-full text-xs font-bold uppercase bg-slate-100 text-slate-700 border border-slate-200">Awaiting Input</span>
               </div>
             </div>
             
@@ -435,7 +434,7 @@
 
           <!-- Preset Sample Loaders -->
           <div class="mt-6 pt-5 border-t border-slate-100">
-            <div class="text-[11px] font-bold uppercase font-mono text-slate-400 tracking-wider mb-2.5">
+            <div class="text-xs font-bold uppercase font-mono text-slate-400 tracking-wider mb-2.5">
               Load Preset Test Tokens:
             </div>
             <div class="space-y-1.5">
@@ -445,7 +444,7 @@
                 class="w-full text-left px-3 py-2 rounded-lg bg-slate-50 hover:bg-emerald-50/70 border border-slate-200 hover:border-emerald-300 text-xs transition-colors flex items-center justify-between text-slate-700 hover:text-emerald-900"
               >
                 <span class="font-medium">PrivacyScrubber Web &middot; Valid Cert</span>
-                <span class="font-mono text-[10px] text-emerald-600 font-bold bg-emerald-100/60 px-1.5 py-0.5 rounded">AUTHENTIC</span>
+                <span class="font-mono text-xs text-emerald-600 font-bold bg-emerald-100/60 px-1.5 py-0.5 rounded">AUTHENTIC</span>
               </button>
 
               <button
@@ -454,7 +453,7 @@
                 class="w-full text-left px-3 py-2 rounded-lg bg-slate-50 hover:bg-rose-50/70 border border-slate-200 hover:border-rose-300 text-xs transition-colors flex items-center justify-between text-slate-700 hover:text-rose-900"
               >
                 <span class="font-medium">Tampered Payload &middot; Invalid Signature</span>
-                <span class="font-mono text-[10px] text-rose-700 font-bold bg-rose-100/60 px-1.5 py-0.5 rounded">MUTATED</span>
+                <span class="font-mono text-xs text-rose-700 font-bold bg-rose-100/60 px-1.5 py-0.5 rounded">MUTATED</span>
               </button>
 
               <button
@@ -463,7 +462,7 @@
                 class="w-full text-left px-3 py-2 rounded-lg bg-slate-50 hover:bg-amber-50/70 border border-slate-200 hover:border-amber-300 text-xs transition-colors flex items-center justify-between text-slate-700 hover:text-amber-900"
               >
                 <span class="font-medium">Legacy RAG Pipeline &middot; Expired Cert</span>
-                <span class="font-mono text-[10px] text-amber-600 font-bold bg-amber-100/60 px-1.5 py-0.5 rounded">EXPIRED</span>
+                <span class="font-mono text-xs text-amber-600 font-bold bg-amber-100/60 px-1.5 py-0.5 rounded">EXPIRED</span>
               </button>
             </div>
           </div>
@@ -471,14 +470,14 @@
 
         <!-- CISO Verification Quick Tip -->
         <div class="bg-slate-900 text-slate-300 rounded-2xl p-5 text-xs leading-relaxed border border-slate-800 shadow-sm">
-          <div class="font-mono font-bold text-white uppercase text-[11px] tracking-wider mb-2 flex items-center gap-2">
+          <div class="font-mono font-bold text-white uppercase text-xs tracking-wider mb-2 flex items-center gap-2">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
             Independent CLI Verification
           </div>
           <p class="text-slate-400 mb-3">
             To verify this certificate inside an air-gapped terminal or automated CI/CD pipeline without opening a web browser:
           </p>
-          <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono text-[11px] text-emerald-300 overflow-x-auto select-all">
+          <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono text-xs text-emerald-300 overflow-x-auto select-all">
             npx ztds-verify &lt;TOKEN_STRING&gt;
           </div>
         </div>
@@ -499,7 +498,7 @@
           <p class="text-xs text-slate-500 max-w-md mx-auto leading-relaxed mb-6">
             Paste a token or select one of the test tokens on the left. Cryptographic verification is computed directly in your browser using standard Web Crypto primitives.
           </p>
-          <div class="inline-flex flex-wrap items-center justify-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] font-mono text-slate-600 max-w-full">
+          <div class="inline-flex flex-wrap items-center justify-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs font-mono text-slate-600 max-w-full">
             <span>Root Key:</span>
             <span class="text-slate-800 font-bold select-all break-all">MCowBQYDK2VwAyEAg3N98ZgL4Uqbu0PmqvG8KN8vUicYkgKfUNVgwlLObr4=</span>
           </div>
@@ -515,7 +514,7 @@
               <div class="flex-1">
                 <div class="flex flex-wrap items-center justify-between gap-2">
                   <h2 id="statusTitle" class="text-lg font-extrabold tracking-tight"></h2>
-                  <span id="statusPill" class="text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border"></span>
+                  <span id="statusPill" class="text-xs font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border"></span>
                 </div>
                 <p id="statusDescription" class="text-xs mt-1 leading-relaxed"></p>
               </div>
@@ -535,39 +534,39 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Certificate ID</div>
+                <div class="text-xs font-mono text-slate-400 uppercase font-bold tracking-wider">Certificate ID</div>
                 <div id="metaCertId" class="text-xs font-mono font-bold text-slate-900 mt-1 select-all break-all"></div>
               </div>
 
               <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Applicant / Authority</div>
+                <div class="text-xs font-mono text-slate-400 uppercase font-bold tracking-wider">Applicant / Authority</div>
                 <div id="metaApplicant" class="text-xs font-semibold text-slate-800 mt-1 truncate"></div>
               </div>
 
               <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Target Product</div>
+                <div class="text-xs font-mono text-slate-400 uppercase font-bold tracking-wider">Target Product</div>
                 <div id="metaProduct" class="text-xs font-bold text-slate-900 mt-1 truncate"></div>
               </div>
 
               <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Assurance Level</div>
+                <div class="text-xs font-mono text-slate-400 uppercase font-bold tracking-wider">Assurance Level</div>
                 <div id="metaLevel" class="text-xs font-bold text-emerald-700 mt-1"></div>
               </div>
 
               <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Issued Timestamp</div>
+                <div class="text-xs font-mono text-slate-400 uppercase font-bold tracking-wider">Issued Timestamp</div>
                 <div id="metaIssued" class="text-xs font-mono text-slate-700 mt-1"></div>
               </div>
 
               <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                <div class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider">Expiration &amp; Validity</div>
+                <div class="text-xs font-mono text-slate-400 uppercase font-bold tracking-wider">Expiration &amp; Validity</div>
                 <div id="metaExpires" class="text-xs font-mono text-slate-700 mt-1"></div>
               </div>
             </div>
 
             <!-- Target Audit SHA-256 Hash Card -->
             <div class="mt-4 p-3 bg-slate-900 text-slate-300 rounded-xl border border-slate-800">
-              <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-1">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-1">
                 <span class="uppercase tracking-wider font-bold text-slate-300">Target Audit SHA-256 Digest</span>
                 <span id="metaFilesCount" class="text-slate-400"></span>
               </div>
@@ -589,7 +588,7 @@
                 </div>
                 <div>
                   <div class="text-xs font-bold text-slate-900">Invariant 1: Zero External Egress</div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">0.00 bytes transmitted prior to sanitization.</div>
+                  <div class="text-xs text-slate-500 mt-0.5">0.00 bytes transmitted prior to sanitization.</div>
                 </div>
               </div>
 
@@ -600,7 +599,7 @@
                 </div>
                 <div>
                   <div class="text-xs font-bold text-slate-900">Invariant 2: Reversible Surrogates</div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">Context preserved for attention mechanisms.</div>
+                  <div class="text-xs text-slate-500 mt-0.5">Context preserved for attention mechanisms.</div>
                 </div>
               </div>
 
@@ -611,7 +610,7 @@
                 </div>
                 <div>
                   <div class="text-xs font-bold text-slate-900">Invariant 3: Volatile RAM Isolation</div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">Sandboxed execution with memory zeroization.</div>
+                  <div class="text-xs text-slate-500 mt-0.5">Sandboxed execution with memory zeroization.</div>
                 </div>
               </div>
 
@@ -622,7 +621,7 @@
                 </div>
                 <div>
                   <div class="text-xs font-bold text-slate-900">Invariant 4: Zero Subprocessors</div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">GDPR Article 28 DPA statutory exemption.</div>
+                  <div class="text-xs text-slate-500 mt-0.5">GDPR Article 28 DPA statutory exemption.</div>
                 </div>
               </div>
             </div>
@@ -642,11 +641,11 @@
             </button>
             <div id="jsonContainer" class="hidden p-4 border-t border-slate-100 bg-slate-950">
               <div class="flex justify-end mb-2">
-                <button id="btnCopyJson" type="button" class="text-[11px] font-mono text-emerald-400 hover:text-emerald-300">
+                <button id="btnCopyJson" type="button" class="text-xs font-mono text-emerald-400 hover:text-emerald-300">
                   Copy JSON
                 </button>
               </div>
-              <pre id="jsonPayloadMount" class="text-[11px] font-mono text-emerald-300 overflow-x-auto leading-relaxed max-h-72"></pre>
+              <pre id="jsonPayloadMount" class="text-xs font-mono text-emerald-300 overflow-x-auto leading-relaxed max-h-72"></pre>
             </div>
           </div>
 
@@ -708,7 +707,7 @@
             <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
               <!-- Markdown Snippet -->
               <div class="space-y-1.5">
-                <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+                <div class="flex items-center justify-between text-xs font-mono text-slate-400">
                   <span>Markdown Embed (GitHub / GitLab)</span>
                   <button id="btnCopyBadgeMd" type="button" class="text-emerald-400 hover:text-emerald-300 font-bold transition-colors cursor-pointer">
                     Copy Markdown
@@ -720,14 +719,14 @@
                     type="text"
                     aria-label="Markdown Embed Code"
                     readonly
-                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-base sm:text-[11px] font-mono text-slate-300 select-all focus:outline-none focus:border-emerald-500"
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-base sm:text-xs font-mono text-slate-300 select-all focus:outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
 
               <!-- HTML Snippet -->
               <div class="space-y-1.5">
-                <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+                <div class="flex items-center justify-between text-xs font-mono text-slate-400">
                   <span>HTML Embed (Trust Center / Docs)</span>
                   <button id="btnCopyBadgeHtml" type="button" class="text-emerald-400 hover:text-emerald-300 font-bold transition-colors cursor-pointer">
                     Copy HTML
@@ -739,7 +738,7 @@
                     type="text"
                     aria-label="HTML Embed Code"
                     readonly
-                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-base sm:text-[11px] font-mono text-slate-300 select-all focus:outline-none focus:border-emerald-500"
+                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-base sm:text-xs font-mono text-slate-300 select-all focus:outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
@@ -900,7 +899,7 @@
 
         <!-- Col 2: Specification & RFC -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
             <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track (draft-02)</a></li>
@@ -916,7 +915,7 @@
 
         <!-- Col 3: Architecture & Tools -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
             <li><a href="/mcp/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Model Context Protocol (MCP) &rarr;</a></li>
@@ -930,7 +929,7 @@
 
         <!-- Col 4: Consortium & Governance -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/certification/" class="hover:text-slate-900 transition-colors">Certification Authority</a></li>
             <li><a href="/soc2/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">SOC 2 &amp; Trust Center &rarr;</a></li>
@@ -944,7 +943,7 @@
 
         <!-- Col 5: Community & Verified -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
             <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
@@ -952,16 +951,16 @@
             <li><a href="/case-studies/" class="hover:text-slate-900 transition-colors">Enterprise Case Studies</a></li>
             <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
             <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
-            <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
+            <li class="pt-2 text-xs text-slate-400 leading-tight">GitOps automated attestation.</li>
           </ul>
         </div>
       </div>
 
       <!-- Legal Conformance Notice Card -->
-      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-500 leading-relaxed">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
-          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
-          <span class="text-slate-400 font-mono text-[10px]">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-xs font-mono">Legal Notice &amp; Intellectual Property Protection</span>
+          <span class="text-slate-400 font-mono text-xs">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
         </div>
         <p>
           ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. &sect; 119 Priority). The word mark <strong>ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
@@ -975,7 +974,7 @@
           <span>&middot;</span>
           <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
         </div>
-        <div class="flex items-center gap-4 text-[11px] font-mono">
+        <div class="flex items-center gap-4 text-xs font-mono">
           <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
             ALL SYSTEMS VERIFIED
@@ -1036,11 +1035,11 @@
                 </div>
                 <div class="text-left">
                   <div class="font-extrabold text-lg text-slate-900 tracking-tight leading-none">ZTDS<span class="text-emerald-600">.ai</span></div>
-                  <div class="text-[10px] font-mono text-slate-500 uppercase tracking-wider mt-0.5">Standards &amp; Conformance Authority</div>
+                  <div class="text-xs font-mono text-slate-500 uppercase tracking-wider mt-0.5">Standards &amp; Conformance Authority</div>
                 </div>
               </div>
 
-              <div class="inline-block px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-mono font-bold uppercase tracking-wider mb-2">
+              <div class="inline-block px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-bold uppercase tracking-wider mb-2">
                 RFC 8032 Ed25519 Cryptographically Certified
               </div>
               <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 tracking-tight">CERTIFICATE OF CONFORMANCE</h2>
@@ -1058,70 +1057,70 @@
               <div class="bg-slate-50 rounded-xl border border-slate-200 p-5 space-y-3">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                   <div>
-                    <span class="text-[10px] font-mono uppercase text-slate-400 block">Certified Entity / Licensee</span>
+                    <span class="text-xs font-mono uppercase text-slate-400 block">Certified Entity / Licensee</span>
                     <span id="certModalEntityName" class="font-bold text-slate-900 text-sm">--</span>
                   </div>
                   <div>
-                    <span class="text-[10px] font-mono uppercase text-slate-400 block">Product / Implementation</span>
+                    <span class="text-xs font-mono uppercase text-slate-400 block">Product / Implementation</span>
                     <span id="certModalProductLine" class="font-bold text-slate-900 text-sm">--</span>
                   </div>
                   <div>
-                    <span class="text-[10px] font-mono uppercase text-slate-400 block">Certificate Identifier</span>
+                    <span class="text-xs font-mono uppercase text-slate-400 block">Certificate Identifier</span>
                     <span id="certModalId" class="font-mono font-bold text-slate-800 text-xs">--</span>
                   </div>
                   <div>
-                    <span class="text-[10px] font-mono uppercase text-slate-400 block">Conformance Level</span>
+                    <span class="text-xs font-mono uppercase text-slate-400 block">Conformance Level</span>
                     <span id="certModalLevel" class="font-semibold text-emerald-800 text-xs">Level 1: Automated CTS Invariant Conformance</span>
                   </div>
                   <div>
-                    <span class="text-[10px] font-mono uppercase text-slate-400 block">Issuance Timestamp</span>
+                    <span class="text-xs font-mono uppercase text-slate-400 block">Issuance Timestamp</span>
                     <span id="certModalIssued" class="font-mono text-slate-700 text-xs">--</span>
                   </div>
                   <div>
-                    <span class="text-[10px] font-mono uppercase text-slate-400 block">Expiration Timestamp</span>
+                    <span class="text-xs font-mono uppercase text-slate-400 block">Expiration Timestamp</span>
                     <span id="certModalExpires" class="font-mono text-slate-700 text-xs">--</span>
                   </div>
                 </div>
 
                 <div class="pt-3 border-t border-slate-200">
-                  <span class="text-[10px] font-mono uppercase text-slate-400 block">Deterministic Cryptographic Audit Digest (SHA-256)</span>
-                  <span id="certModalAuditHash" class="font-mono text-[11px] text-slate-800 break-all leading-tight">--</span>
+                  <span class="text-xs font-mono uppercase text-slate-400 block">Deterministic Cryptographic Audit Digest (SHA-256)</span>
+                  <span id="certModalAuditHash" class="font-mono text-xs text-slate-800 break-all leading-tight">--</span>
                 </div>
               </div>
             </div>
 
             <!-- Invariant Conformance Proof Grid -->
             <div class="my-4">
-              <div class="text-[10px] font-mono uppercase tracking-wider text-slate-500 mb-2 font-bold">
+              <div class="text-xs font-mono uppercase tracking-wider text-slate-500 mb-2 font-bold">
                 Audited Core Invariants (RFC v1.0 Section 3)
               </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                 <div class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 flex items-start gap-2">
                   <span class="text-emerald-700 font-bold font-mono">[PASS]</span>
                   <div>
                     <div class="font-bold text-slate-900">Invariant 1: Zero External Egress</div>
-                    <div class="text-[10px] text-slate-600">0.00 B transmission before client-side sanitization.</div>
+                    <div class="text-xs text-slate-600">0.00 B transmission before client-side sanitization.</div>
                   </div>
                 </div>
                 <div class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 flex items-start gap-2">
                   <span class="text-emerald-700 font-bold font-mono">[PASS]</span>
                   <div>
                     <div class="font-bold text-slate-900">Invariant 2: Reversible Surrogates</div>
-                    <div class="text-[10px] text-slate-600">Deterministic format-preserving local restoration.</div>
+                    <div class="text-xs text-slate-600">Deterministic format-preserving local restoration.</div>
                   </div>
                 </div>
                 <div class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 flex items-start gap-2">
                   <span class="text-emerald-700 font-bold font-mono">[PASS]</span>
                   <div>
                     <div class="font-bold text-slate-900">Invariant 3: Volatile RAM Isolation</div>
-                    <div class="text-[10px] text-slate-600">Ephemeral memory-only session isolation.</div>
+                    <div class="text-xs text-slate-600">Ephemeral memory-only session isolation.</div>
                   </div>
                 </div>
                 <div class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 flex items-start gap-2">
                   <span class="text-emerald-700 font-bold font-mono">[PASS]</span>
                   <div>
                     <div class="font-bold text-slate-900">Invariant 4: Zero Subprocessors</div>
-                    <div class="text-[10px] text-slate-600">GDPR Art. 28 statutory DPA safe harbor.</div>
+                    <div class="text-xs text-slate-600">GDPR Art. 28 statutory DPA safe harbor.</div>
                   </div>
                 </div>
               </div>
@@ -1131,11 +1130,11 @@
             <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
               <div class="space-y-1 text-center sm:text-left">
                 <div class="font-bold text-slate-900 text-xs">ZTDS AI Consortium Standards Board</div>
-                <div class="text-[10px] font-mono text-slate-500">Root SPKI: SPKI-Ed25519-ZTDS-01 &middot; RFC 8032</div>
-                <div class="text-[10px] text-slate-400">Independent Consortium Verification Authority &middot; BrandMeWeb Ecosystem</div>
+                <div class="text-xs font-mono text-slate-500">Root SPKI: SPKI-Ed25519-ZTDS-01 &middot; RFC 8032</div>
+                <div class="text-xs text-slate-400">Independent Consortium Verification Authority &middot; BrandMeWeb Ecosystem</div>
               </div>
               <div class="text-center sm:text-right">
-                <div class="text-[10px] font-mono uppercase text-slate-400">Online Attestation Ledger</div>
+                <div class="text-xs font-mono uppercase text-slate-400">Online Attestation Ledger</div>
                 <a id="certModalVerifyUrl" href="https://ztds.ai/verify/" target="_blank" rel="noopener" class="text-xs font-mono font-bold text-emerald-700 hover:underline break-all">
                   https://ztds.ai/verify/
                 </a>
@@ -1304,19 +1303,19 @@
         if (!trimmed) {
           if (tokenLengthCount) tokenLengthCount.textContent = "0 chars";
           if (formatStatusPill) {
-            formatStatusPill.className = "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-slate-100 text-slate-700 border border-slate-200";
+            formatStatusPill.className = "px-2 py-0.5 rounded-full text-xs font-bold uppercase bg-slate-100 text-slate-700 border border-slate-200";
             formatStatusPill.textContent = "Awaiting Input";
           }
           if (tagPartHeader) {
-            tagPartHeader.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]";
+            tagPartHeader.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-xs";
             tagPartHeader.textContent = "Header";
           }
           if (tagPartPayload) {
-            tagPartPayload.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]";
+            tagPartPayload.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-xs";
             tagPartPayload.textContent = "Payload";
           }
           if (tagPartSig) {
-            tagPartSig.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]";
+            tagPartSig.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-xs";
             tagPartSig.textContent = "Sig (64B)";
           }
           return;
@@ -1331,17 +1330,17 @@
         // Header check
         if (parts[0] === "ZTDS-CERT-v1") {
           if (tagPartHeader) {
-            tagPartHeader.className = "px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]";
+            tagPartHeader.className = "px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-xs";
             tagPartHeader.textContent = "Header: v1";
           }
         } else if (parts[0].length > 0) {
           if (tagPartHeader) {
-            tagPartHeader.className = "px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 text-[10px]";
+            tagPartHeader.className = "px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 text-xs";
             tagPartHeader.textContent = "Invalid Header";
           }
         } else {
           if (tagPartHeader) {
-            tagPartHeader.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]";
+            tagPartHeader.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-xs";
             tagPartHeader.textContent = "Header";
           }
         }
@@ -1349,12 +1348,12 @@
         // Payload check
         if (parts.length > 1 && parts[1].length > 0) {
           if (tagPartPayload) {
-            tagPartPayload.className = "px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]";
+            tagPartPayload.className = "px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-xs";
             tagPartPayload.textContent = `Payload (${parts[1].length}c)`;
           }
         } else {
           if (tagPartPayload) {
-            tagPartPayload.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]";
+            tagPartPayload.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-xs";
             tagPartPayload.textContent = "Payload";
           }
         }
@@ -1364,13 +1363,13 @@
           const isSig64B = parts[2].length >= 80 && parts[2].length <= 90;
           if (tagPartSig) {
             tagPartSig.className = isSig64B
-              ? "px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px]"
-              : "px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px]";
+              ? "px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-xs"
+              : "px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 text-xs";
             tagPartSig.textContent = isSig64B ? "Sig: 64B" : `Sig (${parts[2].length}c)`;
           }
         } else {
           if (tagPartSig) {
-            tagPartSig.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-[10px]";
+            tagPartSig.className = "px-1.5 py-0.5 rounded bg-slate-200/70 text-slate-600 text-xs";
             tagPartSig.textContent = "Sig (64B)";
           }
         }
@@ -1378,13 +1377,13 @@
         // Overall format status pill
         if (formatStatusPill) {
           if (parts.length === 3 && parts[0] === "ZTDS-CERT-v1" && parts[1].length > 0 && parts[2].length > 0) {
-            formatStatusPill.className = "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-emerald-100 text-emerald-800 border border-emerald-300";
+            formatStatusPill.className = "px-2 py-0.5 rounded-full text-xs font-bold uppercase bg-emerald-100 text-emerald-800 border border-emerald-300";
             formatStatusPill.textContent = "3 Segments OK";
           } else if (parts.length > 3) {
-            formatStatusPill.className = "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-rose-100 text-rose-800 border border-rose-300";
+            formatStatusPill.className = "px-2 py-0.5 rounded-full text-xs font-bold uppercase bg-rose-100 text-rose-800 border border-rose-300";
             formatStatusPill.textContent = `${parts.length} Segments (Invalid)`;
           } else {
-            formatStatusPill.className = "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-amber-100 text-amber-800 border border-amber-300";
+            formatStatusPill.className = "px-2 py-0.5 rounded-full text-xs font-bold uppercase bg-amber-100 text-amber-800 border border-amber-300";
             formatStatusPill.textContent = `${parts.length}/3 Segments`;
           }
         }
@@ -1522,7 +1521,7 @@
           statusIconMount.className = "w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm";
           statusIconMount.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>';
           statusTitle.textContent = "Cryptographically Authentic & Valid";
-          statusPill.className = "text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border bg-emerald-100 text-emerald-800 border-emerald-300";
+          statusPill.className = "text-xs font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border bg-emerald-100 text-emerald-800 border-emerald-300";
           statusPill.textContent = "VERIFIED RFC 8032";
           statusDescription.textContent = "Digital signature corresponds exactly to the official ZTDS AI Consortium root key. All four foundational invariants are cryptographically certified with zero network telemetry.";
 
@@ -1588,7 +1587,7 @@
           statusIconMount.className = "w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0 shadow-sm";
           statusIconMount.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>';
           statusTitle.textContent = "Signature Tampering Detected";
-          statusPill.className = "text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border bg-rose-100 text-rose-800 border-rose-300";
+          statusPill.className = "text-xs font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border bg-rose-100 text-rose-800 border-rose-300";
           statusPill.textContent = "INVALID SIGNATURE";
           statusDescription.textContent = "The cryptographic signature does NOT match the payload contents. The certificate payload has been mutated, corrupted, or forged by an unauthorized party.";
         } else if (result.isExpired) {
@@ -1597,7 +1596,7 @@
           statusIconMount.className = "w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0 shadow-sm";
           statusIconMount.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>';
           statusTitle.textContent = "Certificate Has Expired";
-          statusPill.className = "text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border bg-amber-100 text-amber-800 border-amber-300";
+          statusPill.className = "text-xs font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border bg-amber-100 text-amber-800 border-amber-300";
           statusPill.textContent = "EXPIRED TOKEN";
           statusDescription.textContent = `The digital signature is authentic, but the certificate validity period expired on ${new Date(p.expires_at).toLocaleDateString()}. Re-certification required under CAB Policy.`;
         }
@@ -1646,7 +1645,7 @@
         statusIconMount.className = "w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0 shadow-sm";
         statusIconMount.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
         statusTitle.textContent = "Malformed Certificate Format";
-        statusPill.className = "text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border bg-rose-100 text-rose-800 border-rose-300";
+        statusPill.className = "text-xs font-mono font-bold uppercase px-2.5 py-0.5 rounded-full border bg-rose-100 text-rose-800 border-rose-300";
         statusPill.textContent = "PARSE ERROR";
         statusDescription.textContent = errorMessage;
 

@@ -321,5 +321,24 @@ for (const relPath of prodPages) {
 }
 console.log(`    [PASS] All ${prodPages.length} production routes use verified 1200x630 raster PNG Open Graph & Twitter cards.`);
 
-console.log('\n[SUMMARY] ALL 7 ROUTES INTEGRITY & COMPLIANCE TESTS PASSED.');
+// Test 8: Typography Invariant (min 12px, self-hosted fonts, no third-party font CDN)
+console.log('--> Test 8: Typography Invariant (min 12px, self-hosted fonts, no font CDN)');
+const { execSync } = require('child_process');
+const typoFiles = execSync('git ls-files "*.html"', { cwd: rootDir, encoding: 'utf8' }).trim().split('\n').filter(f => f && f !== 'public/logo-foundry.html');
+const typoViolations = [];
+for (const relPath of typoFiles) {
+  const html = fs.readFileSync(path.join(rootDir, relPath), 'utf8');
+  if (/text-\[(?:[0-9]|1[01])(?:\.\d+)?px\]/.test(html)) typoViolations.push(relPath + ': arbitrary text size below 12px');
+  if (/font-size:\s*(?:[0-9]|1[01])(?:\.\d+)?px/.test(html)) typoViolations.push(relPath + ': inline/CSS font-size below 12px');
+  if (/fonts\.(googleapis|gstatic)\.com/.test(html)) typoViolations.push(relPath + ': third-party font CDN');
+}
+assert.strictEqual(typoViolations.length, 0, 'Typography violations:\n' + typoViolations.join('\n'));
+for (const f of ['inter-latin', 'inter-latin-ext', 'jetbrains-mono-latin', 'jetbrains-mono-latin-ext']) {
+  assert(fs.existsSync(path.join(rootDir, 'assets/fonts', f + '.woff2')), 'Missing font assets/fonts/' + f + '.woff2');
+  assert(fs.existsSync(path.join(rootDir, 'public/assets/fonts', f + '.woff2')), 'Missing mirror public/assets/fonts/' + f + '.woff2');
+}
+const builtCss = fs.readFileSync(path.join(rootDir, 'styles.css'), 'utf8');
+assert((builtCss.match(/@font-face/g) || []).length >= 4, 'styles.css missing self-hosted @font-face rules');
+console.log('    [PASS] ' + typoFiles.length + ' pages: no text below 12px, no font CDN, local woff2 verified.');
 
+console.log('\n[SUMMARY] ALL 8 ROUTES INTEGRITY & COMPLIANCE TESTS PASSED.');

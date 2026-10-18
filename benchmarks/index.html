@@ -25,9 +25,8 @@
   <meta name="twitter:image" content="https://ztds.ai/assets/img/og/og-benchmarks.png">
 
   <!-- Fonts & Styles -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
@@ -184,14 +183,14 @@
           </div>
           <div class="flex flex-col">
             <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
-            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+            <span class="text-xs text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
           </div>
         </a>
 
         <!-- Status Pill -->
         <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
           <span class="pulse-dot"></span>
-          <span class="font-mono text-[11px] font-semibold">WG-1 &amp; WG-4 BENCHMARK LAB</span>
+          <span class="font-mono text-xs font-semibold">WG-1 &amp; WG-4 BENCHMARK LAB</span>
         </div>
       </div>
 
@@ -243,7 +242,7 @@
     </div>
 
     <div class="py-4 space-y-1 text-sm font-medium">
-      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
+      <div class="px-2 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
       <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
       <a href="/ietf/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">IETF Standards Track (draft-02)</a>
       <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
@@ -255,7 +254,7 @@
       <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
       <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 &amp; Trust Center</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
+      <div class="px-2 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
       <a href="/certification/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Certification Authority</a>
       <a href="/verify/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Ed25519 Certificate Validator</a>
       <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
@@ -265,7 +264,7 @@
       <a href="/case-studies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Enterprise Case Studies</a>
       <a href="/agency/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">BrandMeWeb Enterprise Retainer</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <div class="px-2 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
       <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
       <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
       <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive DAG Inspector</a>
@@ -317,25 +316,25 @@
         <!-- 4 Executive KPI Cards -->
         <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
-            <div class="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold">Leakage Prevention Rate (LPR)</div>
+            <div class="text-xs font-mono uppercase tracking-wider text-slate-500 font-bold">Leakage Prevention Rate (LPR)</div>
             <div class="text-3xl font-black text-emerald-700 font-mono mt-1">100.00%</div>
             <div class="text-xs text-slate-600 mt-1">0.00 Bytes cleartext WAN egress across 118 sensitive entities in 30 scenarios</div>
           </div>
 
           <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
-            <div class="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold">Median In-RAM Latency (p50)</div>
+            <div class="text-xs font-mono uppercase tracking-wider text-slate-500 font-bold">Median In-RAM Latency (p50)</div>
             <div class="text-3xl font-black text-slate-900 font-mono mt-1">42.8 &mu;s</div>
             <div class="text-xs text-slate-600 mt-1">&lt; 0.3 ms p99 execution (5,600&times; faster than 240 ms Cloud DLP proxies)</div>
           </div>
 
           <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
-            <div class="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold">Bijective Fidelity &amp; Context</div>
+            <div class="text-xs font-mono uppercase tracking-wider text-slate-500 font-bold">Bijective Fidelity &amp; Context</div>
             <div class="text-3xl font-black text-emerald-700 font-mono mt-1">100.00%</div>
             <div class="text-xs text-slate-600 mt-1">Zero surrogate collisions (0.00% SCR) &amp; 100% local response restoration</div>
           </div>
 
           <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
-            <div class="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold">Frontier Models &amp; Sectors</div>
+            <div class="text-xs font-mono uppercase tracking-wider text-slate-500 font-bold">Frontier Models &amp; Sectors</div>
             <div class="text-3xl font-black text-slate-900 font-mono mt-1">6 &times; 7</div>
             <div class="text-xs text-slate-600 mt-1">GPT-4o, Claude 3.7, Gemini 2.0, o3, DeepSeek-V3 across 7 regulated verticals</div>
           </div>
@@ -396,7 +395,7 @@
       <div class="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-x-auto">
         <table class="w-full text-left border-collapse text-xs sm:text-sm">
           <thead>
-            <tr class="bg-slate-900 text-white font-mono text-[11px] uppercase tracking-wider">
+            <tr class="bg-slate-900 text-white font-mono text-xs uppercase tracking-wider">
               <th class="py-3.5 px-4">Evaluation Vector</th>
               <th class="py-3.5 px-4 text-emerald-400">ZTDS Protocol (RFC v1.0 In-RAM)</th>
               <th class="py-3.5 px-4 text-slate-300">Heavy Local NLP Containers</th>
@@ -455,7 +454,7 @@
         <div class="border border-slate-200 rounded-2xl shadow-xs overflow-x-auto">
           <table class="w-full text-left border-collapse text-xs sm:text-sm">
             <thead>
-              <tr class="bg-slate-900 text-white font-mono text-[11px] uppercase tracking-wider">
+              <tr class="bg-slate-900 text-white font-mono text-xs uppercase tracking-wider">
                 <th class="py-3.5 px-4">Frontier LLM Family</th>
                 <th class="py-3.5 px-4">Scenarios</th>
                 <th class="py-3.5 px-4">Raw Prompt Leakage (No ZTDS)</th>
@@ -542,7 +541,7 @@
         <!-- Model & Search Controls -->
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <div>
-            <label for="benchModelSelect" class="block text-[10px] font-mono uppercase text-slate-500 font-bold mb-1">Target Frontier LLM</label>
+            <label for="benchModelSelect" class="block text-xs font-mono uppercase text-slate-500 font-bold mb-1">Target Frontier LLM</label>
             <select id="benchModelSelect" class="w-full sm:w-auto rounded-xl border border-slate-300 bg-white px-3 py-2 text-base sm:text-xs font-mono text-slate-800 focus:border-emerald-600 focus:outline-none">
               <option value="openai/gpt-4o">openai/gpt-4o</option>
               <option value="anthropic/claude-3.7-sonnet">anthropic/claude-3.7-sonnet</option>
@@ -553,7 +552,7 @@
             </select>
           </div>
           <div>
-            <label for="benchSearchInput" class="block text-[10px] font-mono uppercase text-slate-500 font-bold mb-1">Filter Scenarios</label>
+            <label for="benchSearchInput" class="block text-xs font-mono uppercase text-slate-500 font-bold mb-1">Filter Scenarios</label>
             <input id="benchSearchInput" type="search" placeholder="Search ID, IBAN, HIPAA, OCR..." class="w-full sm:w-56 rounded-xl border border-slate-300 bg-white px-3 py-2 text-base sm:text-xs font-sans text-slate-800 placeholder:text-slate-400 focus:border-emerald-600 focus:outline-none" />
           </div>
         </div>
@@ -599,18 +598,18 @@
             <div class="mt-6 space-y-3 font-mono text-xs">
               <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between gap-2">
                 <code class="text-emerald-300 overflow-x-auto" id="cmdBenchStrict">npx ztds-bench --strict</code>
-                <button type="button" class="btn-copy-bench px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] shrink-0 cursor-pointer" data-copy="npx ztds-bench --strict">Copy</button>
+                <button type="button" class="btn-copy-bench px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs shrink-0 cursor-pointer" data-copy="npx ztds-bench --strict">Copy</button>
               </div>
               <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between gap-2">
                 <code class="text-sky-300 overflow-x-auto" id="cmdBenchReport">npx ztds-bench --out-report benchmark-report.md --cert</code>
-                <button type="button" class="btn-copy-bench px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] shrink-0 cursor-pointer" data-copy="npx ztds-bench --out-report benchmark-report.md --cert">Copy</button>
+                <button type="button" class="btn-copy-bench px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs shrink-0 cursor-pointer" data-copy="npx ztds-bench --out-report benchmark-report.md --cert">Copy</button>
               </div>
             </div>
           </div>
 
           <!-- Commercial Production Implementation Handoff Card -->
           <div class="p-6 sm:p-8 rounded-2xl bg-slate-800/90 border border-slate-700 space-y-4">
-            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-emerald-950 border border-emerald-700 text-emerald-300 text-[11px] font-mono font-bold">
+            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-emerald-950 border border-emerald-700 text-emerald-300 text-xs font-mono font-bold">
               PIONEER CERTIFIED COMMERCIAL ENGINE
             </div>
             <h3 class="text-xl font-bold text-white">
@@ -724,7 +723,7 @@
 
         <!-- Col 2: Specification & RFC -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
             <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track (draft-02)</a></li>
@@ -740,7 +739,7 @@
 
         <!-- Col 3: Architecture & Tools -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
             <li><a href="/mcp/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Model Context Protocol (MCP) &rarr;</a></li>
@@ -754,7 +753,7 @@
 
         <!-- Col 4: Consortium & Governance -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/certification/" class="hover:text-slate-900 transition-colors">Certification Authority</a></li>
             <li><a href="/soc2/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">SOC 2 &amp; Trust Center &rarr;</a></li>
@@ -768,7 +767,7 @@
 
         <!-- Col 5: Community & Verified -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
             <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
@@ -776,16 +775,16 @@
             <li><a href="/case-studies/" class="hover:text-slate-900 transition-colors">Enterprise Case Studies</a></li>
             <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
             <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
-            <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
+            <li class="pt-2 text-xs text-slate-400 leading-tight">GitOps automated attestation.</li>
           </ul>
         </div>
       </div>
 
       <!-- Legal Conformance Notice Card -->
-      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-500 leading-relaxed">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
-          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
-          <span class="text-slate-400 font-mono text-[10px]">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-xs font-mono">Legal Notice &amp; Intellectual Property Protection</span>
+          <span class="text-slate-400 font-mono text-xs">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
         </div>
         <p>
           ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. &sect; 119 Priority). The word mark <strong>ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
@@ -799,7 +798,7 @@
           <span>&middot;</span>
           <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
         </div>
-        <div class="flex items-center gap-4 text-[11px] font-mono">
+        <div class="flex items-center gap-4 text-xs font-mono">
           <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
             ALL SYSTEMS VERIFIED
@@ -909,27 +908,27 @@
               <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
                 <div class="flex flex-wrap items-center gap-2">
                   <span class="px-2.5 py-0.5 rounded-md bg-slate-900 text-emerald-400 font-mono text-xs font-bold">${escapeHtml(sc.id)}</span>
-                  <span class="px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 font-mono text-[11px] font-semibold">${escapeHtml(sc.domain)}</span>
-                  ${isMultimodal ? '<span class="px-2.5 py-0.5 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-[11px] font-bold">MULTIMODAL OCR + PIXEL BURN-IN</span>' : ''}
+                  <span class="px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 font-mono text-xs font-semibold">${escapeHtml(sc.domain)}</span>
+                  ${isMultimodal ? '<span class="px-2.5 py-0.5 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-bold">MULTIMODAL OCR + PIXEL BURN-IN</span>' : ''}
                 </div>
-                <span class="text-[11px] font-mono text-emerald-700 font-bold">LPR: 100% &middot; BFS: 100% &middot; 0.00 B Egress</span>
+                <span class="text-xs font-mono text-emerald-700 font-bold">LPR: 100% &middot; BFS: 100% &middot; 0.00 B Egress</span>
               </div>
 
               <h3 class="text-base font-bold text-slate-900">${escapeHtml(sc.description)}</h3>
 
               <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 text-xs font-mono">
                 <div class="p-3.5 rounded-xl bg-rose-50/50 border border-rose-200/80 space-y-1.5">
-                  <div class="text-[10px] uppercase tracking-wider font-bold text-rose-800">1. Raw Input (Stays in Local RAM)</div>
+                  <div class="text-xs uppercase tracking-wider font-bold text-rose-800">1. Raw Input (Stays in Local RAM)</div>
                   <p class="text-slate-800 leading-relaxed break-words font-sans text-xs">${escapeHtml(sc.prompt)}</p>
                 </div>
 
                 <div class="p-3.5 rounded-xl bg-slate-900 text-slate-200 space-y-1.5">
-                  <div class="text-[10px] uppercase tracking-wider font-bold text-emerald-400">2. ZTDS Wire Payload &rarr; ${escapeHtml(activeModel)}</div>
+                  <div class="text-xs uppercase tracking-wider font-bold text-emerald-400">2. ZTDS Wire Payload &rarr; ${escapeHtml(activeModel)}</div>
                   <p class="leading-relaxed break-words text-xs text-emerald-300">${escapeHtml(sanitized)}</p>
                 </div>
 
                 <div class="p-3.5 rounded-xl bg-emerald-50/50 border border-emerald-200 space-y-1.5">
-                  <div class="text-[10px] uppercase tracking-wider font-bold text-emerald-800">3. Restored Output (Bijective Unmasking)</div>
+                  <div class="text-xs uppercase tracking-wider font-bold text-emerald-800">3. Restored Output (Bijective Unmasking)</div>
                   <p class="text-slate-800 leading-relaxed break-words font-sans text-xs">${escapeHtml(restored)}</p>
                 </div>
               </div>

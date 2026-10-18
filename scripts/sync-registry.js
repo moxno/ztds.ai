@@ -86,7 +86,7 @@ function generateHtmlCard(entity) {
     : (entity.category || '').toLowerCase().includes('extension') ? 'extension'
     : 'sdk';
 
-  const tags = (entity.frameworks || []).map(f => `<span class="text-[11px] font-medium px-2.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">${f}</span>`).join('\n            ');
+  const tags = (entity.frameworks || []).map(f => `<span class="text-xs font-medium px-2.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">${f}</span>`).join('\n            ');
 
   const shaShort = (entity.verified_hash || '').replace('sha256:', '').substring(0, 8);
   const frameworksJoined = (entity.frameworks || []).join(' &middot; ');
@@ -107,7 +107,7 @@ function generateHtmlCard(entity) {
             ${entity.description}
           </p>
 
-          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 space-y-1 mb-4 font-mono text-[11px]">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 space-y-1 mb-4 font-mono text-xs">
             <div><span class="font-semibold text-slate-900">Distribution:</span> ${entity.url}</div>
             <div><span class="font-semibold text-slate-900">Architecture:</span> ${entity.architecture}</div>
           </div>
@@ -122,10 +122,10 @@ function generateHtmlCard(entity) {
             Official Source &rarr;
           </a>
           <div class="flex items-center gap-2">
-            <a href="${entity.certificate.verify_url}" target="_blank" rel="noopener" class="cert-verify-link inline-flex items-center gap-1.5 px-2.5 py-1 rounded ${certBadgeBg} border text-[10.5px] font-mono font-semibold transition-colors">
+            <a href="${entity.certificate.verify_url}" target="_blank" rel="noopener" class="cert-verify-link inline-flex items-center gap-1.5 px-2.5 py-1 rounded ${certBadgeBg} border text-xs font-mono font-semibold transition-colors">
               <span class="w-1.5 h-1.5 rounded-full ${certDotColor}"></span> Certificate &rarr;
             </a>
-            <button type="button" class="btn-cert text-slate-500 hover:${accentColor} font-mono text-[11px] flex items-center gap-1"
+            <button type="button" class="btn-cert text-slate-500 hover:${accentColor} font-mono text-xs flex items-center gap-1"
             data-name="${entity.name}"
             data-tier="${entity.tier}"
             data-category-desc="${entity.category}"

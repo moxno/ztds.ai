@@ -23,9 +23,8 @@
   <meta name="twitter:image" content="https://ztds.ai/assets/img/og/og-registry.png">
 
   <!-- Fonts & Styles -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
@@ -150,14 +149,14 @@
           </div>
           <div class="flex flex-col">
             <span class="font-bold text-lg tracking-tight text-slate-900 font-sans leading-none">ZTDS<span class="text-emerald-600">.ai</span></span>
-            <span class="text-[9.5px] text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
+            <span class="text-xs text-slate-400 font-mono font-bold tracking-widest uppercase mt-0.5">Open AI Security Standard</span>
           </div>
         </a>
 
         <!-- Status Pill -->
         <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
           <span class="pulse-dot"></span>
-          <span class="font-mono text-[11px] font-semibold">RFC v1.0 &middot; OPEN CONSORTIUM</span>
+          <span class="font-mono text-xs font-semibold">RFC v1.0 &middot; OPEN CONSORTIUM</span>
         </div>
       </div>
 
@@ -209,7 +208,7 @@
     </div>
 
     <div class="py-4 space-y-1 text-sm font-medium">
-      <div class="px-2 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
+      <div class="px-2 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Method &amp; Standard</div>
       <a href="/standard/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Official RFC Specification</a>
       <a href="/ietf/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">IETF Standards Track (draft-02)</a>
       <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
@@ -223,7 +222,7 @@
       <a href="/roi/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">CISO Risk &amp; ROI Calculator</a>
       <a href="/soc2/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SOC 2 &amp; Trust Center</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
+      <div class="px-2 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Certification &amp; Ecosystem</div>
       <a href="/certification/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Certification Authority</a>
       <a href="/verify/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Ed25519 Certificate Validator</a>
       <a href="/apply/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Get Your AI Certified</a>
@@ -233,7 +232,7 @@
       <a href="/case-studies/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Enterprise Case Studies</a>
       <a href="/agency/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">BrandMeWeb Enterprise Retainer</a>
 
-      <div class="px-2 pt-4 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
+      <div class="px-2 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400">Developers &amp; Tools</div>
       <a href="/sdk/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">SDK Documentation</a>
       <a href="/scanner/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perimeter Scanner</a>
       <a href="/inspector/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Interactive DAG Inspector</a>
@@ -269,19 +268,19 @@
       <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto">
         <div class="p-3.5 bg-white border border-slate-200 rounded-xl shadow-xs text-center">
           <div class="text-xl sm:text-2xl font-extrabold text-slate-900 font-mono">0.00 B</div>
-          <div class="text-[11px] text-slate-500 font-medium mt-0.5">WAN Egress Exposure</div>
+          <div class="text-xs text-slate-500 font-medium mt-0.5">WAN Egress Exposure</div>
         </div>
         <div class="p-3.5 bg-white border border-slate-200 rounded-xl shadow-xs text-center">
           <div class="text-xl sm:text-2xl font-extrabold text-emerald-700 font-mono">0 Days</div>
-          <div class="text-[11px] text-slate-500 font-medium mt-0.5">DPA Legal Overhead</div>
+          <div class="text-xs text-slate-500 font-medium mt-0.5">DPA Legal Overhead</div>
         </div>
         <div class="p-3.5 bg-white border border-slate-200 rounded-xl shadow-xs text-center">
           <div class="text-xl sm:text-2xl font-extrabold text-slate-900 font-mono">&lt; 0.8ms</div>
-          <div class="text-[11px] text-slate-500 font-medium mt-0.5">In-RAM Latency</div>
+          <div class="text-xs text-slate-500 font-medium mt-0.5">In-RAM Latency</div>
         </div>
         <div class="p-3.5 bg-white border border-slate-200 rounded-xl shadow-xs text-center">
           <div class="text-xl sm:text-2xl font-extrabold text-blue-700 font-mono">100%</div>
-          <div class="text-[11px] text-slate-500 font-medium mt-0.5">DPA-Free Execution</div>
+          <div class="text-xs text-slate-500 font-medium mt-0.5">DPA-Free Execution</div>
         </div>
       </div>
 
@@ -374,34 +373,34 @@
 
           <!-- Outcome Headline -->
           <div class="mt-4 p-3 bg-emerald-50/70 border border-emerald-200 rounded-lg">
-            <div class="text-[10px] font-mono text-emerald-800 font-bold uppercase">Outcome-First Result:</div>
+            <div class="text-xs font-mono text-emerald-800 font-bold uppercase">Outcome-First Result:</div>
             <div class="text-xs font-bold text-slate-900 mt-0.5 leading-snug">100% Client Strategic Assets Shielded Across Automated GEO Workflows</div>
           </div>
 
           <!-- Outcome Metrics Strip -->
-          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-[10px]">
+          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-xs">
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">0.00 B</div>
-              <div class="text-slate-500 text-[9px]">Egress</div>
+              <div class="text-slate-500 text-xs">Egress</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-emerald-700">0 Days</div>
-              <div class="text-slate-500 text-[9px]">DPA Review</div>
+              <div class="text-slate-500 text-xs">DPA Review</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">&lt; 0.5ms</div>
-              <div class="text-slate-500 text-[9px]">In-RAM</div>
+              <div class="text-slate-500 text-xs">In-RAM</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-blue-700">100%</div>
-              <div class="text-slate-500 text-[9px]">IP Shield</div>
+              <div class="text-slate-500 text-xs">IP Shield</div>
             </div>
           </div>
 
           <!-- 3-Part Case Study Narrative -->
           <div class="mt-4 space-y-2 text-xs leading-relaxed">
             <p class="text-slate-600"><strong class="text-slate-900">Challenge:</strong> Agency AI pipelines process proprietary keyword intelligence, conversion logs, and client strategies daily. Sending raw corpora to cloud foundation models risked competitor data contamination.</p>
-            <p class="text-slate-600"><strong class="text-slate-900">SDK Integration:</strong> Deployed <code class="font-mono text-[11px] text-emerald-800 bg-emerald-50 px-1 py-0.5 rounded">@privacyscrubber/sdk</code> with Node.js and LangChain callback middleware running in local volatile memory.</p>
+            <p class="text-slate-600"><strong class="text-slate-900">SDK Integration:</strong> Deployed <code class="font-mono text-xs text-emerald-800 bg-emerald-50 px-1 py-0.5 rounded">@privacyscrubber/sdk</code> with Node.js and LangChain callback middleware running in local volatile memory.</p>
             <p class="text-slate-600"><strong class="text-slate-900">Outcome:</strong> Zero client data in training corpora. DPA-free enterprise client onboarding with 100% data sovereignty under GDPR Recital 26.</p>
           </div>
         </div>
@@ -411,13 +410,13 @@
             View Corporate Profile &rarr;
           </a>
           <div class="flex flex-wrap items-center gap-2">
-            <a href="/agency/" class="px-2.5 py-1 rounded bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-[11px] font-mono font-bold transition-colors touch-target">
+            <a href="/agency/" class="px-2.5 py-1 rounded bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-xs font-mono font-bold transition-colors touch-target">
               Agency Governance Retainer &rarr;
             </a>
-            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono transition-colors touch-target" data-slug="brandmeweb" data-name="BrandMeWeb">
+            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono transition-colors touch-target" data-slug="brandmeweb" data-name="BrandMeWeb">
               Embed Seal &rarr;
             </button>
-            <span class="text-emerald-700 font-semibold text-[11px]">&check; Zero-Egress Verified</span>
+            <span class="text-emerald-700 font-semibold text-xs">&check; Zero-Egress Verified</span>
           </div>
         </div>
       </article>
@@ -444,7 +443,7 @@
             <div>
               <h2 class="text-xl font-bold text-white tracking-tight">Deploy ZTDS in Your Stack</h2>
               <div class="text-xs text-slate-400 font-medium">B2B SaaS &middot; Healthcare &middot; FinTech &middot; Enterprise AI</div>
-              <div class="text-[11px] text-blue-400 font-semibold mt-0.5">Claim Verified Adopter Seal &middot; Zero DPA Overhead</div>
+              <div class="text-xs text-blue-400 font-semibold mt-0.5">Claim Verified Adopter Seal &middot; Zero DPA Overhead</div>
             </div>
           </div>
 
@@ -455,14 +454,14 @@
           <!-- Interactive Live Preview & Sector Selector -->
           <div class="mt-4 p-3 bg-slate-950/60 border border-blue-500/20 rounded-lg space-y-3">
             <div>
-              <label for="companyNomineeInput" class="block text-[11px] font-mono text-slate-400 mb-1">Company Name or Primary Domain:</label>
+              <label for="companyNomineeInput" class="block text-xs font-mono text-slate-400 mb-1">Company Name or Primary Domain:</label>
               <input type="text" id="companyNomineeInput" placeholder="Acme Inc. / acme.com" class="w-full px-3 py-1.5 rounded-md bg-slate-900 border border-slate-700 text-base sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400">
             </div>
 
             <!-- Sector Selector Buttons -->
             <div>
-              <div class="text-[10px] font-mono text-slate-400 mb-1.5">Select Primary Enterprise Sector:</div>
-              <div class="grid grid-cols-2 gap-1.5 text-[11px] font-mono" id="companyIndustrySelector">
+              <div class="text-xs font-mono text-slate-400 mb-1.5">Select Primary Enterprise Sector:</div>
+              <div class="grid grid-cols-2 gap-1.5 text-xs font-mono" id="companyIndustrySelector">
                 <button type="button" data-industry="saas" class="corp-sector-btn px-2 py-1 rounded bg-blue-600 text-white font-bold border border-blue-400 text-left transition-colors">
                   &check; B2B SaaS
                 </button>
@@ -480,7 +479,7 @@
 
             <!-- Dynamic Seal SVG Render Mount -->
             <div class="pt-2 border-t border-slate-800 flex items-center justify-between">
-              <span class="text-[10px] font-mono text-slate-400">Verifiable Corporate Seal:</span>
+              <span class="text-xs font-mono text-slate-400">Verifiable Corporate Seal:</span>
               <div id="companySeatBadgeMount" class="overflow-x-auto py-1">
                 <!-- Injected via JS -->
               </div>
@@ -491,16 +490,16 @@
             <a href="/apply/?track=company&industry=saas" id="btnClaimCompanyCta" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold font-mono text-xs hover:bg-blue-500 transition-colors shadow-sm">
               Register Enterprise &rarr;
             </a>
-            <a href="/sdk/" class="px-2.5 py-1.5 rounded-lg bg-slate-800 text-slate-200 border border-slate-700 font-mono text-[11px] hover:bg-slate-700 transition-colors">
+            <a href="/sdk/" class="px-2.5 py-1.5 rounded-lg bg-slate-800 text-slate-200 border border-slate-700 font-mono text-xs hover:bg-slate-700 transition-colors">
               SDK Quickstart &rarr;
             </a>
           </div>
         </div>
 
         <div class="mt-6 pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
-          <span class="text-slate-400 font-medium font-mono text-[11px]">Zero Fee &middot; Pure Merit-Based</span>
+          <span class="text-slate-400 font-medium font-mono text-xs">Zero Fee &middot; Pure Merit-Based</span>
           <div class="flex items-center gap-2">
-            <span class="text-blue-400 font-semibold text-[11px]">&bull; Open Corporate Pool</span>
+            <span class="text-blue-400 font-semibold text-xs">&bull; Open Corporate Pool</span>
           </div>
         </div>
       </article>
@@ -527,27 +526,27 @@
 
           <!-- Outcome Headline -->
           <div class="mt-4 p-3 bg-emerald-50/70 border border-emerald-200 rounded-lg">
-            <div class="text-[10px] font-mono text-emerald-800 font-bold uppercase">Outcome-First Result:</div>
+            <div class="text-xs font-mono text-emerald-800 font-bold uppercase">Outcome-First Result:</div>
             <div class="text-xs font-bold text-slate-900 mt-0.5 leading-snug">1,000,000+ Sensitive Entities Sanitized Locally with Zero Server Overhead</div>
           </div>
 
           <!-- Outcome Metrics Strip -->
-          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-[10px]">
+          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-xs">
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">0.00 B</div>
-              <div class="text-slate-500 text-[9px]">Egress</div>
+              <div class="text-slate-500 text-xs">Egress</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-emerald-700">0 Days</div>
-              <div class="text-slate-500 text-[9px]">DPA Review</div>
+              <div class="text-slate-500 text-xs">DPA Review</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">&lt; 0.4ms</div>
-              <div class="text-slate-500 text-[9px]">In-RAM</div>
+              <div class="text-slate-500 text-xs">In-RAM</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-blue-700">1M+</div>
-              <div class="text-slate-500 text-[9px]">Protected</div>
+              <div class="text-slate-500 text-xs">Protected</div>
             </div>
           </div>
 
@@ -564,10 +563,10 @@
             View Case Study &amp; SDK Architecture &rarr;
           </a>
           <div class="flex items-center gap-2">
-            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono transition-colors touch-target" data-slug="privacyscrubber" data-name="PrivacyScrubber">
+            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono transition-colors touch-target" data-slug="privacyscrubber" data-name="PrivacyScrubber">
               Embed Seal &rarr;
             </button>
-            <span class="text-emerald-700 font-semibold text-[11px]">&check; Zero-Egress Verified</span>
+            <span class="text-emerald-700 font-semibold text-xs">&check; Zero-Egress Verified</span>
           </div>
         </div>
       </article>
@@ -594,34 +593,34 @@
 
           <!-- Outcome Headline -->
           <div class="mt-4 p-3 bg-blue-50/70 border border-blue-200 rounded-lg">
-            <div class="text-[10px] font-mono text-blue-800 font-bold uppercase">Reference Architecture Scenario:</div>
+            <div class="text-xs font-mono text-blue-800 font-bold uppercase">Reference Architecture Scenario:</div>
             <div class="text-xs font-bold text-slate-900 mt-0.5 leading-snug">$180,000 Annual Savings in Cloud BAA Fees with Zero PHI Exposure</div>
           </div>
 
           <!-- Outcome Metrics Strip -->
-          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-[10px]">
+          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-xs">
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">0.00 B</div>
-              <div class="text-slate-500 text-[9px]">PHI Leaked</div>
+              <div class="text-slate-500 text-xs">PHI Leaked</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-emerald-700">0 Days</div>
-              <div class="text-slate-500 text-[9px]">BAA Friction</div>
+              <div class="text-slate-500 text-xs">BAA Friction</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">&lt; 0.6ms</div>
-              <div class="text-slate-500 text-[9px]">In-RAM</div>
+              <div class="text-slate-500 text-xs">In-RAM</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-blue-700">$180k/yr</div>
-              <div class="text-slate-500 text-[9px]">Saved</div>
+              <div class="text-slate-500 text-xs">Saved</div>
             </div>
           </div>
 
           <!-- 3-Part Case Study Narrative -->
           <div class="mt-4 space-y-2 text-xs leading-relaxed">
             <p class="text-slate-600"><strong class="text-slate-900">Challenge:</strong> Clinicians across 12 hospitals used commercial LLMs for discharge summaries, risking catastrophic HIPAA breach penalties and requiring complex Business Associate Agreements (BAAs).</p>
-            <p class="text-slate-600"><strong class="text-slate-900">SDK Integration:</strong> Deployed <code class="font-mono text-[11px] text-emerald-800 bg-emerald-50 px-1 py-0.5 rounded">@privacyscrubber/sdk</code> across 3,500 Epic/Cerner workstations, zeroizing 18 PHI identifiers in local RAM.</p>
+            <p class="text-slate-600"><strong class="text-slate-900">SDK Integration:</strong> Deployed <code class="font-mono text-xs text-emerald-800 bg-emerald-50 px-1 py-0.5 rounded">@privacyscrubber/sdk</code> across 3,500 Epic/Cerner workstations, zeroizing 18 PHI identifiers in local RAM.</p>
             <p class="text-slate-600"><strong class="text-slate-900">Outcome:</strong> Zero PHI crosses network boundary. Eliminated cloud proxy subscription fees and achieved immediate HIPAA Safe Harbor compliance.</p>
           </div>
         </div>
@@ -631,10 +630,10 @@
             View Reference Architecture &rarr;
           </a>
           <div class="flex items-center gap-2">
-            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono transition-colors touch-target" data-slug="apex-health-ai" data-name="Apex Health Systems">
+            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono transition-colors touch-target" data-slug="apex-health-ai" data-name="Apex Health Systems">
               Embed Seal &rarr;
             </button>
-            <span class="text-emerald-700 font-semibold text-[11px]">&check; Zero-Egress Verified</span>
+            <span class="text-emerald-700 font-semibold text-xs">&check; Zero-Egress Verified</span>
           </div>
         </div>
       </article>
@@ -661,27 +660,27 @@
 
           <!-- Outcome Headline -->
           <div class="mt-4 p-3 bg-amber-50/70 border border-amber-200 rounded-lg">
-            <div class="text-[10px] font-mono text-amber-800 font-bold uppercase">Reference Architecture Scenario:</div>
+            <div class="text-xs font-mono text-amber-800 font-bold uppercase">Reference Architecture Scenario:</div>
             <div class="text-xs font-bold text-slate-900 mt-0.5 leading-snug">4,500+ M&amp;A Contracts Analyzed with Inviolable Attorney-Client Privilege</div>
           </div>
 
           <!-- Outcome Metrics Strip -->
-          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-[10px]">
+          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-xs">
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">0.00 B</div>
-              <div class="text-slate-500 text-[9px]">Privilege Loss</div>
+              <div class="text-slate-500 text-xs">Privilege Loss</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-emerald-700">0 Days</div>
-              <div class="text-slate-500 text-[9px]">DPA Delay</div>
+              <div class="text-slate-500 text-xs">DPA Delay</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">&lt; 0.7ms</div>
-              <div class="text-slate-500 text-[9px]">In-RAM</div>
+              <div class="text-slate-500 text-xs">In-RAM</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-blue-700">FRE 502</div>
-              <div class="text-slate-500 text-[9px]">Shielded</div>
+              <div class="text-slate-500 text-xs">Shielded</div>
             </div>
           </div>
 
@@ -698,10 +697,10 @@
             View Reference Architecture &rarr;
           </a>
           <div class="flex items-center gap-2">
-            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono transition-colors touch-target" data-slug="lex-veritas-legal" data-name="Lex Veritas Global LLP">
+            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono transition-colors touch-target" data-slug="lex-veritas-legal" data-name="Lex Veritas Global LLP">
               Embed Seal &rarr;
             </button>
-            <span class="text-emerald-700 font-semibold text-[11px]">&check; Zero-Egress Verified</span>
+            <span class="text-emerald-700 font-semibold text-xs">&check; Zero-Egress Verified</span>
           </div>
         </div>
       </article>
@@ -728,27 +727,27 @@
 
           <!-- Outcome Headline -->
           <div class="mt-4 p-3 bg-emerald-50/70 border border-emerald-200 rounded-lg">
-            <div class="text-[10px] font-mono text-emerald-800 font-bold uppercase">Reference Architecture Scenario:</div>
+            <div class="text-xs font-mono text-emerald-800 font-bold uppercase">Reference Architecture Scenario:</div>
             <div class="text-xs font-bold text-slate-900 mt-0.5 leading-snug">PCI-DSS v4.0 Scope Elimination Across Real-Time Fraud Telemetry</div>
           </div>
 
           <!-- Outcome Metrics Strip -->
-          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-[10px]">
+          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-xs">
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">0.00 B</div>
-              <div class="text-slate-500 text-[9px]">PAN Leakage</div>
+              <div class="text-slate-500 text-xs">PAN Leakage</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-emerald-700">0 Days</div>
-              <div class="text-slate-500 text-[9px]">Swiss FADP</div>
+              <div class="text-slate-500 text-xs">Swiss FADP</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">&lt; 0.8ms</div>
-              <div class="text-slate-500 text-[9px]">In-RAM</div>
+              <div class="text-slate-500 text-xs">In-RAM</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-blue-700">PCI-DSS</div>
-              <div class="text-slate-500 text-[9px]">Zero-Scope</div>
+              <div class="text-slate-500 text-xs">Zero-Scope</div>
             </div>
           </div>
 
@@ -765,10 +764,10 @@
             View Reference Architecture &rarr;
           </a>
           <div class="flex items-center gap-2">
-            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono transition-colors touch-target" data-slug="aegis-fintech" data-name="Aegis Financial Technologies">
+            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono transition-colors touch-target" data-slug="aegis-fintech" data-name="Aegis Financial Technologies">
               Embed Seal &rarr;
             </button>
-            <span class="text-emerald-700 font-semibold text-[11px]">&check; Zero-Egress Verified</span>
+            <span class="text-emerald-700 font-semibold text-xs">&check; Zero-Egress Verified</span>
           </div>
         </div>
       </article>
@@ -795,34 +794,34 @@
 
           <!-- Outcome Headline -->
           <div class="mt-4 p-3 bg-cyan-50/70 border border-cyan-200 rounded-lg">
-            <div class="text-[10px] font-mono text-cyan-800 font-bold uppercase">Reference Architecture Scenario:</div>
+            <div class="text-xs font-mono text-cyan-800 font-bold uppercase">Reference Architecture Scenario:</div>
             <div class="text-xs font-bold text-slate-900 mt-0.5 leading-snug">Enterprise CISO Win Rate Jumped from 12% to 94% on Copilot Launch</div>
           </div>
 
           <!-- Outcome Metrics Strip -->
-          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-[10px]">
+          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-xs">
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">0.00 B</div>
-              <div class="text-slate-500 text-[9px]">Cross-Tenant</div>
+              <div class="text-slate-500 text-xs">Cross-Tenant</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-emerald-700">0 Days</div>
-              <div class="text-slate-500 text-[9px]">DPA Review</div>
+              <div class="text-slate-500 text-xs">DPA Review</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">&lt; 0.5ms</div>
-              <div class="text-slate-500 text-[9px]">In-RAM</div>
+              <div class="text-slate-500 text-xs">In-RAM</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-blue-700">94%</div>
-              <div class="text-slate-500 text-[9px]">CISO Win Rate</div>
+              <div class="text-slate-500 text-xs">CISO Win Rate</div>
             </div>
           </div>
 
           <!-- 3-Part Case Study Narrative -->
           <div class="mt-4 space-y-2 text-xs leading-relaxed">
             <p class="text-slate-600"><strong class="text-slate-900">Challenge:</strong> Enterprise customers blocked CloudScale's AI copilot during security reviews due to fears of cross-tenant data contamination and lack of continuous tenant isolation proof.</p>
-            <p class="text-slate-600"><strong class="text-slate-900">SDK Integration:</strong> Embedded <code class="font-mono text-[11px] text-emerald-800 bg-emerald-50 px-1 py-0.5 rounded">@privacyscrubber/sdk</code> into Next.js Edge API routes, masking customer IDs and telemetry before LLM transmission.</p>
+            <p class="text-slate-600"><strong class="text-slate-900">SDK Integration:</strong> Embedded <code class="font-mono text-xs text-emerald-800 bg-emerald-50 px-1 py-0.5 rounded">@privacyscrubber/sdk</code> into Next.js Edge API routes, masking customer IDs and telemetry before LLM transmission.</p>
             <p class="text-slate-600"><strong class="text-slate-900">Outcome:</strong> CISO security review pass rate jumped from 12% to 94%. Guaranteed zero tenant data stored in third-party model training memory.</p>
           </div>
         </div>
@@ -832,10 +831,10 @@
             View Reference Architecture &rarr;
           </a>
           <div class="flex items-center gap-2">
-            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono transition-colors touch-target" data-slug="cloudscale-saas" data-name="CloudScale Software Inc.">
+            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono transition-colors touch-target" data-slug="cloudscale-saas" data-name="CloudScale Software Inc.">
               Embed Seal &rarr;
             </button>
-            <span class="text-emerald-700 font-semibold text-[11px]">&check; Zero-Egress Verified</span>
+            <span class="text-emerald-700 font-semibold text-xs">&check; Zero-Egress Verified</span>
           </div>
         </div>
       </article>
@@ -862,27 +861,27 @@
 
           <!-- Outcome Headline -->
           <div class="mt-4 p-3 bg-rose-50/70 border border-rose-200 rounded-lg">
-            <div class="text-[10px] font-mono text-rose-800 font-bold uppercase">Reference Architecture Scenario:</div>
+            <div class="text-xs font-mono text-rose-800 font-bold uppercase">Reference Architecture Scenario:</div>
             <div class="text-xs font-bold text-slate-900 mt-0.5 leading-snug">SCIF AI Operations Deployed with Cryptographic Zero-Egress Attestation</div>
           </div>
 
           <!-- Outcome Metrics Strip -->
-          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-[10px]">
+          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-xs">
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">0.00 B</div>
-              <div class="text-slate-500 text-[9px]">Socket Egress</div>
+              <div class="text-slate-500 text-xs">Socket Egress</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-emerald-700">0 Days</div>
-              <div class="text-slate-500 text-[9px]">Audit Friction</div>
+              <div class="text-slate-500 text-xs">Audit Friction</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">&lt; 0.9ms</div>
-              <div class="text-slate-500 text-[9px]">In-RAM</div>
+              <div class="text-slate-500 text-xs">In-RAM</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-blue-700">ITAR</div>
-              <div class="text-slate-500 text-[9px]">SCIF Cleared</div>
+              <div class="text-slate-500 text-xs">SCIF Cleared</div>
             </div>
           </div>
 
@@ -899,10 +898,10 @@
             View Reference Architecture &rarr;
           </a>
           <div class="flex items-center gap-2">
-            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono transition-colors touch-target" data-slug="valkyrie-defense" data-name="Valkyrie Aerospace &amp; Defense">
+            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono transition-colors touch-target" data-slug="valkyrie-defense" data-name="Valkyrie Aerospace &amp; Defense">
               Embed Seal &rarr;
             </button>
-            <span class="text-emerald-700 font-semibold text-[11px]">&check; Zero-Egress Verified</span>
+            <span class="text-emerald-700 font-semibold text-xs">&check; Zero-Egress Verified</span>
           </div>
         </div>
       </article>
@@ -929,27 +928,27 @@
 
           <!-- Outcome Headline -->
           <div class="mt-4 p-3 bg-emerald-50/70 border border-emerald-200 rounded-lg">
-            <div class="text-[10px] font-mono text-emerald-800 font-bold uppercase">Reference Architecture Scenario:</div>
+            <div class="text-xs font-mono text-emerald-800 font-bold uppercase">Reference Architecture Scenario:</div>
             <div class="text-xs font-bold text-slate-900 mt-0.5 leading-snug">50,000+ Incident Alerts Triaged Without Exposing API Keys or Internal Subnets</div>
           </div>
 
           <!-- Outcome Metrics Strip -->
-          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-[10px]">
+          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-xs">
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">0.00 B</div>
-              <div class="text-slate-500 text-[9px]">Secrets Exposed</div>
+              <div class="text-slate-500 text-xs">Secrets Exposed</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-emerald-700">0 Days</div>
-              <div class="text-slate-500 text-[9px]">DPA Review</div>
+              <div class="text-slate-500 text-xs">DPA Review</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">&lt; 0.4ms</div>
-              <div class="text-slate-500 text-[9px]">In-RAM</div>
+              <div class="text-slate-500 text-xs">In-RAM</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-blue-700">50k+</div>
-              <div class="text-slate-500 text-[9px]">Incidents Safe</div>
+              <div class="text-slate-500 text-xs">Incidents Safe</div>
             </div>
           </div>
 
@@ -966,10 +965,10 @@
             View Reference Architecture &rarr;
           </a>
           <div class="flex items-center gap-2">
-            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono transition-colors touch-target" data-slug="cybershield-siem" data-name="CyberShield SOC Operations">
+            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono transition-colors touch-target" data-slug="cybershield-siem" data-name="CyberShield SOC Operations">
               Embed Seal &rarr;
             </button>
-            <span class="text-emerald-700 font-semibold text-[11px]">&check; Zero-Egress Verified</span>
+            <span class="text-emerald-700 font-semibold text-xs">&check; Zero-Egress Verified</span>
           </div>
         </div>
       </article>
@@ -996,27 +995,27 @@
 
           <!-- Outcome Headline -->
           <div class="mt-4 p-3 bg-amber-50/70 border border-amber-200 rounded-lg">
-            <div class="text-[10px] font-mono text-amber-800 font-bold uppercase">Reference Architecture Scenario:</div>
+            <div class="text-xs font-mono text-amber-800 font-bold uppercase">Reference Architecture Scenario:</div>
             <div class="text-xs font-bold text-slate-900 mt-0.5 leading-snug">GDPR Article 9 Special Category PII Cleared for AI Interview Analytics</div>
           </div>
 
           <!-- Outcome Metrics Strip -->
-          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-[10px]">
+          <div class="mt-3 grid grid-cols-4 gap-1.5 font-mono text-center text-xs">
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">0.00 B</div>
-              <div class="text-slate-500 text-[9px]">Egress</div>
+              <div class="text-slate-500 text-xs">Egress</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-emerald-700">0 Days</div>
-              <div class="text-slate-500 text-[9px]">DPA Review</div>
+              <div class="text-slate-500 text-xs">DPA Review</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-slate-900">&lt; 0.5ms</div>
-              <div class="text-slate-500 text-[9px]">In-RAM</div>
+              <div class="text-slate-500 text-xs">In-RAM</div>
             </div>
             <div class="p-1.5 bg-slate-50 border border-slate-200 rounded">
               <div class="font-bold text-blue-700">PIPEDA</div>
-              <div class="text-slate-500 text-[9px]">Consent Safe</div>
+              <div class="text-slate-500 text-xs">Consent Safe</div>
             </div>
           </div>
 
@@ -1033,10 +1032,10 @@
             View Reference Architecture &rarr;
           </a>
           <div class="flex items-center gap-2">
-            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-mono transition-colors touch-target" data-slug="talenthub-hr" data-name="TalentHub Global PeopleOps">
+            <button type="button" class="btn-embed-seal px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono transition-colors touch-target" data-slug="talenthub-hr" data-name="TalentHub Global PeopleOps">
               Embed Seal &rarr;
             </button>
-            <span class="text-emerald-700 font-semibold text-[11px]">&check; Zero-Egress Verified</span>
+            <span class="text-emerald-700 font-semibold text-xs">&check; Zero-Egress Verified</span>
           </div>
         </div>
       </article>
@@ -1068,7 +1067,7 @@
     <section class="ztds-card p-8 bg-white border border-slate-200 rounded-xl shadow-sm mb-12 overflow-hidden">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
         <div>
-          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-[11px] font-mono font-bold mb-2">
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-xs font-mono font-bold mb-2">
             Outcome-First Architectural Matrix
           </div>
           <h2 class="text-xl font-bold text-slate-900 tracking-tight">Why Enterprises Migrate from Cloud Proxies to ZTDS In-RAM SDK</h2>
@@ -1082,7 +1081,7 @@
       <div class="overflow-x-auto">
         <table class="w-full text-left text-xs border-collapse">
           <thead>
-            <tr class="border-b border-slate-200 bg-slate-50 text-[11px] font-mono text-slate-600 uppercase">
+            <tr class="border-b border-slate-200 bg-slate-50 text-xs font-mono text-slate-600 uppercase">
               <th class="py-3 px-4 font-semibold">Architectural Vector</th>
               <th class="py-3 px-4 font-semibold text-rose-700 bg-rose-50/50">Traditional Cloud Proxy (e.g. Presidio Cloud)</th>
               <th class="py-3 px-4 font-semibold text-emerald-800 bg-emerald-50/70">ZTDS In-RAM SDK (@ztds/core &middot; @privacyscrubber/sdk)</th>
@@ -1090,32 +1089,32 @@
           </thead>
           <tbody class="divide-y divide-slate-100 font-sans">
             <tr class="hover:bg-slate-50/60 transition-colors">
-              <td class="py-3.5 px-4 font-semibold text-slate-900 font-mono text-[11px]">Network Socket Egress</td>
+              <td class="py-3.5 px-4 font-semibold text-slate-900 font-mono text-xs">Network Socket Egress</td>
               <td class="py-3.5 px-4 text-slate-600 bg-rose-50/20">Raw PII leaves local perimeter, crosses public WAN to vendor cloud</td>
               <td class="py-3.5 px-4 text-emerald-900 font-bold bg-emerald-50/30">0.00 Bytes. Physical zero-egress prior to sanitization (Invariant 1)</td>
             </tr>
             <tr class="hover:bg-slate-50/60 transition-colors">
-              <td class="py-3.5 px-4 font-semibold text-slate-900 font-mono text-[11px]">GDPR Art. 28 Subprocessor Chain</td>
+              <td class="py-3.5 px-4 font-semibold text-slate-900 font-mono text-xs">GDPR Art. 28 Subprocessor Chain</td>
               <td class="py-3.5 px-4 text-slate-600 bg-rose-50/20">Vendor is a Subprocessor. Mandatory 90-day DPA &amp; vendor audit</td>
               <td class="py-3.5 px-4 text-emerald-900 font-bold bg-emerald-50/30">100% Subprocessor Exclusion. DPAs legally moot under Recital 26</td>
             </tr>
             <tr class="hover:bg-slate-50/60 transition-colors">
-              <td class="py-3.5 px-4 font-semibold text-slate-900 font-mono text-[11px]">Prompt Roundtrip Latency</td>
+              <td class="py-3.5 px-4 font-semibold text-slate-900 font-mono text-xs">Prompt Roundtrip Latency</td>
               <td class="py-3.5 px-4 text-slate-600 bg-rose-50/20">+250ms to +600ms network roundtrip overhead per prompt</td>
               <td class="py-3.5 px-4 text-emerald-900 font-bold bg-emerald-50/30">&lt; 0.8ms in local volatile process RAM (Rust/WASM runtime)</td>
             </tr>
             <tr class="hover:bg-slate-50/60 transition-colors">
-              <td class="py-3.5 px-4 font-semibold text-slate-900 font-mono text-[11px]">Data Residue &amp; Honeypot Risk</td>
+              <td class="py-3.5 px-4 font-semibold text-slate-900 font-mono text-xs">Data Residue &amp; Honeypot Risk</td>
               <td class="py-3.5 px-4 text-slate-600 bg-rose-50/20">Centralized vendor honeypot storing enterprise logs and caches</td>
               <td class="py-3.5 px-4 text-emerald-900 font-bold bg-emerald-50/30">Volatile RAM only. Session mapping destroyed on process exit</td>
             </tr>
             <tr class="hover:bg-slate-50/60 transition-colors">
-              <td class="py-3.5 px-4 font-semibold text-slate-900 font-mono text-[11px]">Infrastructure &amp; Proxy Fees</td>
+              <td class="py-3.5 px-4 font-semibold text-slate-900 font-mono text-xs">Infrastructure &amp; Proxy Fees</td>
               <td class="py-3.5 px-4 text-slate-600 bg-rose-50/20">$15,000–$60,000/year in cloud proxy bandwidth and SaaS seats</td>
               <td class="py-3.5 px-4 text-emerald-900 font-bold bg-emerald-50/30">$0 Cloud Proxy Bandwidth. Embeds headless in existing host runtime</td>
             </tr>
             <tr class="hover:bg-slate-50/60 transition-colors">
-              <td class="py-3.5 px-4 font-semibold text-slate-900 font-mono text-[11px]">AI Model Reasoning Quality</td>
+              <td class="py-3.5 px-4 font-semibold text-slate-900 font-mono text-xs">AI Model Reasoning Quality</td>
               <td class="py-3.5 px-4 text-slate-600 bg-rose-50/20">Lossy irreversible redaction (&lt;REDACTED&gt;) breaks LLM grammar &amp; context</td>
               <td class="py-3.5 px-4 text-emerald-900 font-bold bg-emerald-50/30">Deterministic reversible tokenization preserves full syntactic context</td>
             </tr>
@@ -1201,8 +1200,8 @@
           <div class="flex flex-wrap items-center gap-2">
             <span id="csModalMonogram" class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center font-mono text-xs font-bold text-emerald-400">BM</span>
             <span id="csModalName" class="text-sm font-bold text-slate-900">BrandMeWeb</span>
-            <span id="csModalTier" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Founding Corporate Member</span>
-            <span id="csModalSector" class="px-2 py-0.5 rounded text-[10px] font-mono text-slate-600 bg-slate-100 border border-slate-200">GEO &amp; SEO Agency</span>
+            <span id="csModalTier" class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Founding Corporate Member</span>
+            <span id="csModalSector" class="px-2 py-0.5 rounded text-xs font-mono text-slate-600 bg-slate-100 border border-slate-200">GEO &amp; SEO Agency</span>
           </div>
           <h3 id="csModalHeadline" class="text-lg sm:text-xl font-bold text-slate-900 leading-snug">
             Case Study Headline
@@ -1218,19 +1217,19 @@
       <!-- 4-Outcome Metric Tiles -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3 rounded-xl bg-slate-900 text-white">
         <div class="text-center p-2 rounded-lg bg-slate-800/80 border border-slate-700/60">
-          <span class="block text-[10px] font-mono text-slate-400 uppercase tracking-wider">Perimeter Egress</span>
+          <span class="block text-xs font-mono text-slate-400 uppercase tracking-wider">Perimeter Egress</span>
           <span id="csModalEgress" class="text-sm sm:text-base font-bold font-mono text-emerald-400">0.00 B</span>
         </div>
         <div class="text-center p-2 rounded-lg bg-slate-800/80 border border-slate-700/60">
-          <span class="block text-[10px] font-mono text-slate-400 uppercase tracking-wider">DPA Ingestion</span>
+          <span class="block text-xs font-mono text-slate-400 uppercase tracking-wider">DPA Ingestion</span>
           <span id="csModalDpa" class="text-sm sm:text-base font-bold font-mono text-cyan-400">0 Days</span>
         </div>
         <div class="text-center p-2 rounded-lg bg-slate-800/80 border border-slate-700/60">
-          <span class="block text-[10px] font-mono text-slate-400 uppercase tracking-wider">In-RAM Latency</span>
+          <span class="block text-xs font-mono text-slate-400 uppercase tracking-wider">In-RAM Latency</span>
           <span id="csModalLatency" class="text-sm sm:text-base font-bold font-mono text-amber-400">&lt; 0.5ms</span>
         </div>
         <div class="text-center p-2 rounded-lg bg-slate-800/80 border border-slate-700/60">
-          <span class="block text-[10px] font-mono text-slate-400 uppercase tracking-wider">Domain Outcome</span>
+          <span class="block text-xs font-mono text-slate-400 uppercase tracking-wider">Domain Outcome</span>
           <span id="csModalRoi" class="text-xs sm:text-sm font-bold font-mono text-white truncate">100% Shielded</span>
         </div>
       </div>
@@ -1255,14 +1254,14 @@
               <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
               2. ZTDS SDK Integration &amp; In-RAM Flow
             </div>
-            <button type="button" id="copyCsCodeBtn" class="text-[11px] font-mono text-slate-600 hover:text-slate-900 px-2.5 py-1 rounded bg-white border border-slate-200 shadow-xs touch-target font-semibold">
+            <button type="button" id="copyCsCodeBtn" class="text-xs font-mono text-slate-600 hover:text-slate-900 px-2.5 py-1 rounded bg-white border border-slate-200 shadow-xs touch-target font-semibold">
               Copy Code
             </button>
           </div>
           <p id="csModalIntegration" class="text-slate-700 mb-3">
             Integration architecture description.
           </p>
-          <pre class="bg-slate-900 text-slate-100 p-3 sm:p-4 rounded-lg font-mono text-[11px] sm:text-xs overflow-x-auto leading-relaxed border border-slate-800"><code id="csModalCode">// SDK Integration Code Snippet</code></pre>
+          <pre class="bg-slate-900 text-slate-100 p-3 sm:p-4 rounded-lg font-mono text-xs sm:text-xs overflow-x-auto leading-relaxed border border-slate-800"><code id="csModalCode">// SDK Integration Code Snippet</code></pre>
         </div>
 
         <!-- Outcome -->
@@ -1279,10 +1278,10 @@
         <!-- Statutory Citations -->
         <div class="p-3 rounded-lg bg-white border border-slate-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-slate-600">
           <div>
-            <span class="font-semibold text-slate-800 font-mono text-[11px] uppercase tracking-wider block">Statutory Basis:</span>
+            <span class="font-semibold text-slate-800 font-mono text-xs uppercase tracking-wider block">Statutory Basis:</span>
             <span id="csModalStatutory" class="text-slate-700">GDPR Recital 26 / Article 28</span>
           </div>
-          <span class="shrink-0 px-2 py-1 rounded bg-emerald-50 text-emerald-800 font-mono text-[10px] font-bold border border-emerald-200 w-fit">
+          <span class="shrink-0 px-2 py-1 rounded bg-emerald-50 text-emerald-800 font-mono text-xs font-bold border border-emerald-200 w-fit">
             &check; DPA-EXEMPT
           </span>
         </div>
@@ -1315,7 +1314,7 @@
           </div>
           <div>
             <h3 class="text-base font-bold text-slate-900" id="modalTitle">Corporate Adopter Trust Seal</h3>
-            <p class="text-[11px] text-slate-500" id="modalSubtitle">Embed on your security center or trust page</p>
+            <p class="text-xs text-slate-500" id="modalSubtitle">Embed on your security center or trust page</p>
           </div>
         </div>
         <button type="button" id="modalCloseBtn" aria-label="Close modal" class="p-1 text-slate-400 hover:text-slate-700 rounded-lg touch-target">
@@ -1328,7 +1327,7 @@
       <!-- Live Vector Mount -->
       <div class="p-5 bg-slate-950 rounded-xl border border-slate-800 flex flex-col items-center justify-center gap-3">
         <div id="modalBadgeMount" class="flex items-center justify-center min-h-[30px]"></div>
-        <span class="text-[11px] font-mono text-emerald-400">Active Dynamic SVG Receipt</span>
+        <span class="text-xs font-mono text-emerald-400">Active Dynamic SVG Receipt</span>
       </div>
 
       <!-- Markdown Snippet -->
@@ -1354,7 +1353,7 @@
       </div>
 
       <div class="pt-2 flex items-center justify-between text-xs text-slate-500 border-t border-slate-100">
-        <span>Verified endpoint: <code class="font-mono text-[11px] text-slate-700" id="modalBadgeUrlText">ztds.ai/badge/...</code></span>
+        <span>Verified endpoint: <code class="font-mono text-xs text-slate-700" id="modalBadgeUrlText">ztds.ai/badge/...</code></span>
         <a id="modalDirectSvgLink" href="#" target="_blank" class="text-emerald-700 font-semibold hover:underline">
           Open Raw SVG &rarr;
         </a>
@@ -1390,7 +1389,7 @@
 
         <!-- Col 2: Specification & RFC -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
             <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track (draft-02)</a></li>
@@ -1406,7 +1405,7 @@
 
         <!-- Col 3: Architecture & Tools -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Developer &amp; Tools</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
             <li><a href="/mcp/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Model Context Protocol (MCP) &rarr;</a></li>
@@ -1420,7 +1419,7 @@
 
         <!-- Col 4: Consortium & Governance -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Consortium &amp; Trust</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/certification/" class="hover:text-slate-900 transition-colors">Certification Authority</a></li>
             <li><a href="/soc2/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">SOC 2 &amp; Trust Center &rarr;</a></li>
@@ -1434,7 +1433,7 @@
 
         <!-- Col 5: Community & Verified -->
         <div>
-          <div class="font-bold text-[11px] uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
+          <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">Verified Registry</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
             <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
@@ -1442,16 +1441,16 @@
             <li><a href="/case-studies/" class="hover:text-slate-900 transition-colors">Enterprise Case Studies</a></li>
             <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
             <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
-            <li class="pt-2 text-[11px] text-slate-400 leading-tight">GitOps automated attestation.</li>
+            <li class="pt-2 text-xs text-slate-400 leading-tight">GitOps automated attestation.</li>
           </ul>
         </div>
       </div>
 
       <!-- Legal Conformance Notice Card -->
-      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 leading-relaxed">
+      <div class="mt-8 p-5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-500 leading-relaxed">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/60">
-          <span class="font-bold text-slate-700 uppercase tracking-wider text-[10px] font-mono">Legal Notice &amp; Intellectual Property Protection</span>
-          <span class="text-slate-400 font-mono text-[10px]">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
+          <span class="font-bold text-slate-700 uppercase tracking-wider text-xs font-mono">Legal Notice &amp; Intellectual Property Protection</span>
+          <span class="text-slate-400 font-mono text-xs">U.S. &amp; Int'l Patents Pending (Paris Convention Priority) &middot; Trademark ZTDS&trade; #182655957</span>
         </div>
         <p>
           ZTDS.ai is an independent technical consortium and specification authority. The Zero-Trust Data Sanitization standard is an open specification published under Apache 2.0 and CC BY 4.0. The deterministic in-RAM sanitization methods, reversible surrogate token structures, and local memory verification mechanisms are intellectual property protected under <strong>U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. &sect; 119 Priority). The word mark <strong>ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42). The "ZTDS Verified" designation confirms strictly that a software build demonstrated compliance with the four foundational invariants under automated network inspection. Technical verification does not constitute formal legal counsel; consult qualified privacy counsel for jurisdiction-specific compliance determinations.
@@ -1465,7 +1464,7 @@
           <span>&middot;</span>
           <span>Open Specification under Apache 2.0 &amp; CC BY 4.0.</span>
         </div>
-        <div class="flex items-center gap-4 text-[11px] font-mono">
+        <div class="flex items-center gap-4 text-xs font-mono">
           <span class="flex items-center gap-1.5 text-emerald-700 font-semibold">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
             ALL SYSTEMS VERIFIED
