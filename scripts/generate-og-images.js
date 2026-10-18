@@ -650,8 +650,53 @@ function syncHtmlOgMeta() {
     const orig = fs.readFileSync(absPath, 'utf8');
     let html = orig;
     const ogUrl = resolveOgImageForFile(relPath);
+    const is404 = relPath === '404.html' || relPath.endsWith('/404.html');
+    const desiredRobots = is404
+      ? 'noindex, follow'
+      : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 
-    // Remove existing og:image:type, og:image:width, og:image:height to avoid duplicates
+    // 1. Ensure <meta name="robots"> is present and standardized
+    if (/<meta[^>]+name=["']robots["'][^>]*>/i.test(html)) {
+      html = html.replace(
+        /^[ \t]*<meta[^>]+name=["']robots["'][^>]*>/im,
+        `  <meta name="robots" content="${desiredRobots}">`
+      );
+    } else if (/<link[^>]+rel=["']canonical["'][^>]*>/i.test(html)) {
+      html = html.replace(
+        /(^[ \t]*<link[^>]+rel=["']canonical["'][^>]*>)/im,
+        `$1\n  <meta name="robots" content="${desiredRobots}">`
+      );
+    }
+
+    // 2. Ensure <meta name="theme-color" content="#020617"> is present
+    if (!/<meta[^>]+name=["']theme-color["'][^>]*>/i.test(html)) {
+      html = html.replace(
+        /(^[ \t]*<meta name="robots"[^>]*>)/im,
+        `$1\n  <meta name="theme-color" content="#020617">`
+      );
+    }
+
+    // 3. Ensure raster favicon-48.png and apple-touch-icon.png follow /favicon.svg
+    html = html.replace(/^[ \t]*<link[^>]+href=["']\/assets\/img\/(favicon-48|apple-touch-icon)\.png["'][^>]*>\r?\n?/gim, '');
+    if (/<link[^>]+href=["']\/favicon\.svg["'][^>]*>/i.test(html)) {
+      html = html.replace(
+        /^[ \t]*<link[^>]+href=["']\/favicon\.svg["'][^>]*>/im,
+        [
+          `  <link rel="icon" type="image/svg+xml" href="/favicon.svg">`,
+          `  <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48.png">`,
+          `  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">`
+        ].join('\n')
+      );
+    }
+
+    // 4. Replace SVG Organization.logo in JSON-LD with 512x512 raster ImageObject
+    html = html.replace(
+      /(^[ \t]*)"logo":\s*"https:\/\/ztds\.ai\/favicon\.svg"/gm,
+      (_, indent) =>
+        `${indent}"logo": {\n${indent}  "@type": "ImageObject",\n${indent}  "url": "https://ztds.ai/assets/img/logo-512.png",\n${indent}  "width": 512,\n${indent}  "height": 512\n${indent}}`
+    );
+
+    // 5. Remove existing og:image:type, og:image:width, og:image:height to avoid duplicates
     html = html.replace(/^[ \t]*<meta[^>]+property=["']og:image:(type|width|height)["'][^>]*>\r?\n?/gim, '');
 
     const ogBlock = [
@@ -670,7 +715,7 @@ function syncHtmlOgMeta() {
       );
     }
 
-    // Ensure twitter:image is present and updated
+    // 6. Ensure twitter:image is present and updated
     if (/<meta[^>]+name=["']twitter:image["'][^>]*>/i.test(html)) {
       html = html.replace(
         /^[ \t]*<meta[^>]+name=["']twitter:image["'][^>]*>/im,
@@ -693,7 +738,7 @@ function syncHtmlOgMeta() {
     }
   }
 
-  console.log(`[OG Generator] Synchronized OG & Twitter meta tags across ${updatedCount} HTML files.`);
+  console.log(`[OG Generator] Synchronized OG, robots, raster icons & JSON-LD logo across ${updatedCount} HTML files.`);
 }
 
 function main() {

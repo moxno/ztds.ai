@@ -213,7 +213,11 @@ function generateProfileHtml(company) {
   <title>${escapeHtml(name)} — ZTDS ${escapeHtml(tier)} &amp; Case Study</title>
   <meta name="description" content="Official ZTDS verification profile for ${escapeHtml(name)}. Certified zero-retention, client-side data sanitization and enterprise AI case study.">
   <link rel="canonical" href="https://ztds.ai/companies/${slug}/">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="theme-color" content="#020617">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
 
   <!-- Open Graph & Social Cards -->
   <meta property="og:type" content="website">

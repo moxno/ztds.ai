@@ -86,9 +86,31 @@ for (const relPath of prodPages) {
   assert(/<meta\s+[^>]*property=["']og:title["']/i.test(html), `Missing og:title in ${relPath}`);
   assert(/<meta\s+[^>]*property=["']og:description["']/i.test(html), `Missing og:description in ${relPath}`);
 
+  // Robots, theme-color & raster icon checks
+  if (relPath === '404.html') {
+    assert(
+      /<meta\s+[^>]*name=["']robots["'][^>]*content=["']noindex,\s*follow["']/i.test(html),
+      `404.html must have robots="noindex, follow"`
+    );
+  } else {
+    assert(
+      /<meta\s+[^>]*name=["']robots["'][^>]*content=["'][^"']*max-image-preview:large/i.test(html),
+      `Missing robots max-image-preview:large directive in ${relPath}`
+    );
+  }
+  assert(/<meta\s+[^>]*name=["']theme-color["']/i.test(html), `Missing theme-color meta in ${relPath}`);
+  assert(/href=["']\/assets\/img\/favicon-48\.png["']/i.test(html), `Missing raster favicon-48.png in ${relPath}`);
+  assert(/href=["']\/assets\/img\/apple-touch-icon\.png["']/i.test(html), `Missing apple-touch-icon.png in ${relPath}`);
+
+  // Ensure JSON-LD does not use SVG for Organization.logo
+  const jsonLdBlocks = [...html.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+  for (const block of jsonLdBlocks) {
+    assert(!block[1].includes('favicon.svg'), `JSON-LD in ${relPath} must use raster logo-512.png instead of favicon.svg`);
+  }
+
   metaChecks++;
 }
-console.log(`    [PASS] All ${metaChecks} production routes have valid titles, canonicals, and OG metadata.`);
+console.log(`    [PASS] All ${metaChecks} production routes have valid titles, canonicals, OG, robots, and raster icons.`);
 
 // Test 2: Zero-Emoji Compliance Audit across HTML & JSON
 console.log('--> Test 2: Zero-Emoji Compliance Audit (Strict Policy)');
