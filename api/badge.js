@@ -69,9 +69,12 @@ module.exports = (req, res) => {
 
   const isLight = (query.theme === 'light');
 
-  // Custom label overrides via query parameters
+  // Custom label overrides via query parameters (sanitized against XML/SVG injection)
   if (query.label) {
-    labelRight = String(query.label).trim().toUpperCase();
+    const cleanLabel = String(query.label).trim().toUpperCase().replace(/[^A-Z0-9 ._\-/]/g, '').slice(0, 28);
+    if (cleanLabel) {
+      labelRight = cleanLabel;
+    }
   } else if (query.status === 'sovereign' || query.tier === 'sovereign' || slug.includes('sovereign')) {
     labelRight = 'SOVEREIGN';
     colorRight = '#2563eb';

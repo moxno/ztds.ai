@@ -86,8 +86,18 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: 'Invalid JSON payload' });
   }
 
+  // H2 API Poison-Pill Guard: return synthetic 200 OK if bot/escalation trap fields are populated
+  if (event && (event.website_url_confirm || event.org_fax_ext || event.botcheck || event.admin_override)) {
+    return res.status(200).json({ status: 'processed', license_id: 'ZTDS-2026-SYNTH-0000' });
+  }
+
   const signatureHeader = req.headers['paddle-signature'] || req.headers['Paddle-Signature'];
-  const webhookSecret = process.env.PADDLE_WEBHOOK_SECRET_KEY || 'pdl_whsec_test_development';
+  const isProdRuntime = process.env.VERCEL_ENV === 'production';
+  const webhookSecret = process.env.PADDLE_WEBHOOK_SECRET_KEY || (!isProdRuntime ? 'pdl_whsec_test_development' : '');
+
+  if (isProdRuntime && !webhookSecret) {
+    return res.status(500).json({ error: 'Webhook verification secret not configured' });
+  }
 
   // Signature verification (enforced in production, bypassed if explicitly marked test in mock suite)
   const isTestEnvironment = process.env.NODE_ENV === 'test' && (!signatureHeader || signatureHeader === 'test-bypass');
@@ -104,16 +114,25 @@ module.exports = async (req, res) => {
   const eventType = event.event_type || '';
   const data = event.data || {};
 
-  // We process transaction.completed and subscription.created / subscription.activated
-  const isPaymentEvent = eventType === 'transaction.completed' ||
-    eventType === 'subscription.created' ||
-    eventType === 'subscription.activated';
+  // Canonical payment completion event filter
+  const isPaymentEvent = eventType === 'transaction.completed';
 
   if (!isPaymentEvent) {
     return res.status(200).json({
       status: 'ignored',
       message: `Event type ${eventType} does not require license minting.`
     });
+  }
+
+  if (!globalThis.__ztds_paddle_fulfilled) {
+    globalThis.__ztds_paddle_fulfilled = new Map();
+  }
+  if (globalThis.__ztds_paddle_fulfilled.size > 5000) {
+    globalThis.__ztds_paddle_fulfilled.clear();
+  }
+  const dedupKey = String(data.id || event.event_id || '');
+  if (dedupKey && globalThis.__ztds_paddle_fulfilled.has(dedupKey)) {
+    return res.status(200).json(globalThis.__ztds_paddle_fulfilled.get(dedupKey));
   }
 
   const customData = data.custom_data || {};
@@ -140,7 +159,7 @@ module.exports = async (req, res) => {
 
     console.log(`[PADDLE WEBHOOK] Minted ${license.licenseId} for ${customerName} (${customerEmail}) - Tier: ${tier}`);
 
-    return res.status(200).json({
+    const responsePayload = {
       status: 'processed',
       event_type: eventType,
       license_id: license.licenseId,
@@ -148,7 +167,12 @@ module.exports = async (req, res) => {
       tier: license.tier,
       expires_at: license.expiresAt,
       token: license.token
-    });
+    };
+    if (dedupKey) {
+      globalThis.__ztds_paddle_fulfilled.set(dedupKey, responsePayload);
+    }
+
+    return res.status(200).json(responsePayload);
   } catch (err) {
     console.error('[PADDLE WEBHOOK ERROR]', err);
     return res.status(500).json({

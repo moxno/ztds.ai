@@ -212,7 +212,23 @@ async function runTests() {
   assert.strictEqual(teamsVerification.maxNodes, 10);
   console.log(`    [PASS] TEAMS license minted: ${teamsRes.data.license_id} (10 nodes).`);
 
-  console.log('\n[SUMMARY] ALL 7 PADDLE WEBHOOK & MINTING TESTS PASSED.');
+  // Test 8: Idempotency Deduplication on Replay
+  console.log('--> Test 8: Webhook Idempotency Deduplication on Replay');
+  const { req: replayReq, res: replayRes } = createMockReqRes({
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      'paddle-signature': teamsSig
+    },
+    body: teamsPayload
+  });
+  await paddleWebhookHandler(replayReq, replayRes);
+  assert.strictEqual(replayRes.statusCode, 200);
+  assert.strictEqual(replayRes.data.license_id, teamsRes.data.license_id, 'Replayed webhook must return identical license_id');
+  assert.strictEqual(replayRes.data.token, teamsRes.data.token, 'Replayed webhook must return identical token');
+  console.log('    [PASS] Duplicate webhook delivery deduplicated idempotently.');
+
+  console.log('\n[SUMMARY] ALL 8 PADDLE WEBHOOK & MINTING TESTS PASSED.');
 }
 
 runTests().catch(err => {

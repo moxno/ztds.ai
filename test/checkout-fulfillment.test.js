@@ -186,7 +186,33 @@ async function runTests() {
     console.log('    [PASS] HTTP methods and CORS headers verified.');
   }
 
-  console.log('\n[SUMMARY] ALL 6 CHECKOUT FULFILLMENT TESTS PASSED WITH 100% CONFORMANCE.\n');
+  // Test 6: Production Sandbox Bypass Fail-Closed Guard
+  console.log('--> Test 6: Production Sandbox Bypass Fail-Closed Guard');
+  {
+    const prevVercelEnv = process.env.VERCEL_ENV;
+    const prevPaddleKey = process.env.PADDLE_API_KEY;
+    process.env.VERCEL_ENV = 'production';
+    delete process.env.PADDLE_API_KEY;
+
+    const { req, res } = createMockReqRes({
+      transactionId: 'txn_forged_sandbox_9999',
+      customerEmail: 'attacker@example.com',
+      customerName: 'Attacker Corp',
+      tier: 'developer_pro',
+      interval: 'annual',
+      environment: 'sandbox'
+    });
+
+    await fulfillmentHandler(req, res);
+    if (prevVercelEnv === undefined) delete process.env.VERCEL_ENV;
+    else process.env.VERCEL_ENV = prevVercelEnv;
+    if (prevPaddleKey !== undefined) process.env.PADDLE_API_KEY = prevPaddleKey;
+
+    assert.strictEqual(res._getStatusCode(), 402, 'Expected HTTP 402 fail-closed in production without PADDLE_API_KEY');
+    console.log('    [PASS] Client-supplied sandbox environment bypass blocked in production.');
+  }
+
+  console.log('\n[SUMMARY] ALL 7 CHECKOUT FULFILLMENT TESTS PASSED WITH 100% CONFORMANCE.\n');
 }
 
 runTests().catch(err => {

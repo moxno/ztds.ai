@@ -22,6 +22,9 @@ function checkRateLimit(ip) {
     return { limited: false };
   }
   const now = Date.now();
+  if (mintHistory.size > 5000) {
+    mintHistory.clear();
+  }
   const timestamps = mintHistory.get(ip) || [];
   const valid = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW_MS);
   if (valid.length >= RATE_LIMIT_MAX_MINTS) {
@@ -42,10 +45,12 @@ function getPrivateKey() {
   if (fs.existsSync(defaultPath)) {
     return fs.readFileSync(defaultPath, 'utf8');
   }
-  const exampleKeyName = ['ztds', 'license', 'private.pem.example'].join('_');
-  const examplePath = path.join(__dirname, '..', 'keys', exampleKeyName);
-  if (fs.existsSync(examplePath)) {
-    return fs.readFileSync(examplePath, 'utf8');
+  if (process.env.VERCEL_ENV !== 'production') {
+    const exampleKeyName = ['ztds', 'license', 'private.pem.example'].join('_');
+    const examplePath = path.join(__dirname, '..', 'keys', exampleKeyName);
+    if (fs.existsSync(examplePath)) {
+      return fs.readFileSync(examplePath, 'utf8');
+    }
   }
   if (process.env.NODE_ENV === 'test') {
     if (!global.__ZTDS_TEST_PRIVATE_KEY__) {

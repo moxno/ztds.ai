@@ -156,12 +156,16 @@ assert.strictEqual(dpaLightRes.status, 200);
 assert(dpaLightRes.output.includes('DPA EXEMPT'), 'Must display DPA EXEMPT');
 assert(dpaLightRes.output.includes('fill="#047857"'), 'DPA light theme must have emerald text');
 
-// 7e: Custom Label
+// 7e: Custom Label & SVG XSS Sanitization
 const customRes = testBadgeRequest({ slug: 'my-app', label: 'WASM-ONLY' });
 assert.strictEqual(customRes.status, 200);
 assert(customRes.output.includes('WASM-ONLY'), 'Must render custom label WASM-ONLY');
 
-console.log('    [PASS] Dynamic API endpoint passed all theme, tier, and custom label validations.');
+const xssRes = testBadgeRequest({ slug: 'my-app', label: '</text><script>alert(1)</script><text>' });
+assert.strictEqual(xssRes.status, 200);
+assert(!xssRes.output.includes('<script') && !xssRes.output.includes('<SCRIPT'), 'Must strip XML/SVG script tags from label');
+
+console.log('    [PASS] Dynamic API endpoint passed all theme, tier, custom label, and XSS sanitization validations.');
 
 // --> Test 8: Mobile Touch Target & Ergonomics
 console.log('\n--> Test 8: Mobile Touch Target & Ergonomics');

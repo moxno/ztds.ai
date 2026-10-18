@@ -893,6 +893,9 @@ function checkRateLimit(ip) {
         requestHistory.delete(key);
       }
     }
+    if (requestHistory.size > 5000) {
+      requestHistory.clear();
+    }
   }
 
   return { limited: false, remaining: RATE_LIMIT_MAX_REQUESTS - validTimestamps.length };

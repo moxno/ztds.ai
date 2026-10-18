@@ -22,6 +22,9 @@ function checkFulfillRateLimit(ip) {
     return { limited: false };
   }
   const now = Date.now();
+  if (fulfillmentHistory.size > 5000) {
+    fulfillmentHistory.clear();
+  }
   const timestamps = fulfillmentHistory.get(ip) || [];
   const valid = timestamps.filter(t => now - t < FULFILL_WINDOW_MS);
   if (valid.length >= FULFILL_MAX_PER_WINDOW) {
@@ -34,16 +37,21 @@ function checkFulfillRateLimit(ip) {
 }
 
 /**
- * Optional Paddle API transaction status verification
+ * Paddle API transaction status verification (Fail-Closed in production)
  */
 async function verifyPaddleTransaction(transactionId, environment = 'sandbox') {
+  const isProdRuntime = process.env.VERCEL_ENV === 'production';
   const apiKey = process.env.PADDLE_API_KEY;
-  if (!apiKey || process.env.NODE_ENV === 'test' || environment === 'sandbox') {
-    // In sandbox, CI, or when API key is unconfigured, bypass upstream network call
+  if (!isProdRuntime && (!apiKey || process.env.NODE_ENV === 'test' || environment === 'sandbox')) {
+    // In local/CI test environments or non-production sandbox, bypass upstream network call
     return { verified: true, status: 'completed' };
   }
+  if (isProdRuntime && !apiKey) {
+    return { verified: false, error: 'Payment verification gateway not configured' };
+  }
 
-  const host = environment === 'production' ? 'api.paddle.com' : 'sandbox-api.paddle.com';
+  const effectiveEnv = isProdRuntime ? 'production' : environment;
+  const host = effectiveEnv === 'production' ? 'api.paddle.com' : 'sandbox-api.paddle.com';
   const path = `/transactions/${encodeURIComponent(transactionId)}`;
 
   return new Promise((resolve) => {
@@ -137,10 +145,10 @@ module.exports = async (req, res) => {
   const environment = (body.environment || PADDLE_CONFIG.defaultEnvironment).toLowerCase();
 
   // Strict input validation
-  if (!transactionId || transactionId.length < 4) {
+  if (!transactionId || !/^txn_[a-zA-Z0-9_-]{4,64}$/.test(transactionId)) {
     return res.status(400).json({
       error: 'Missing or invalid transactionId',
-      details: 'Valid Paddle transaction ID required.'
+      details: 'Valid Paddle transaction ID (txn_...) required.'
     });
   }
 

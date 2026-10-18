@@ -28,6 +28,9 @@ function checkRateLimit(ip) {
     return { limited: false };
   }
   const now = Date.now();
+  if (rateLimitHistory.size > 5000) {
+    rateLimitHistory.clear();
+  }
   const timestamps = rateLimitHistory.get(ip) || [];
   const valid = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW_MS);
   if (valid.length >= RATE_LIMIT_MAX_REQUESTS) {
