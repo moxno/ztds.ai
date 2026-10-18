@@ -341,4 +341,41 @@ const builtCss = fs.readFileSync(path.join(rootDir, 'styles.css'), 'utf8');
 assert((builtCss.match(/@font-face/g) || []).length >= 4, 'styles.css missing self-hosted @font-face rules');
 console.log('    [PASS] ' + typoFiles.length + ' pages: no text below 12px, no font CDN, local woff2 verified.');
 
-console.log('\n[SUMMARY] ALL 8 ROUTES INTEGRITY & COMPLIANCE TESTS PASSED.');
+// Test 9: Root vs. public/ Mirror Parity & Deployable Route Resolution Invariant
+console.log('--> Test 9: Root vs. public/ Mirror Parity & Deployable Route Resolution Invariant');
+const mirrorPairs = [
+  ['assets/js/scanner-engine.js', 'public/assets/js/scanner-engine.js'],
+  ['sitemap.xml', 'public/sitemap.xml'],
+  ['llms.txt', 'public/llms.txt'],
+  ['llms-full.txt', 'public/llms-full.txt'],
+  ['robots.txt', 'public/robots.txt'],
+  ['favicon.svg', 'public/favicon.svg'],
+  ['og-image.png', 'public/og-image.png'],
+  ['mcp_config.json', 'public/mcp_config.json'],
+  ['plugin.json', 'public/plugin.json'],
+  ['server-card.json', 'public/server-card.json'],
+  ['server-card.json', 'public/.well-known/mcp/server-card.json'],
+  ['docs/legal/order-form.html', 'public/docs/legal/order-form.html'],
+  ['docs/legal/order-form/index.html', 'public/docs/legal/order-form/index.html']
+];
+for (const [srcRel, pubRel] of mirrorPairs) {
+  const srcPath = path.join(rootDir, srcRel);
+  const pubPath = path.join(rootDir, pubRel);
+  assert(fs.existsSync(srcPath), `Missing root mirror source: ${srcRel}`);
+  assert(fs.existsSync(pubPath), `Missing public mirror target: ${pubRel}`);
+  assert(
+    fs.readFileSync(srcPath).equals(fs.readFileSync(pubPath)),
+    `Mirror drift detected between ${srcRel} and ${pubRel}`
+  );
+}
+for (const relPath of typoFiles) {
+  const html = fs.readFileSync(path.join(rootDir, relPath), 'utf8');
+  assert(
+    !html.includes('/docs/enterprise/'),
+    `${relPath} references /docs/enterprise/ which is excluded by .vercelignore; use /docs/ instead`
+  );
+}
+console.log(`    [PASS] All ${mirrorPairs.length} root-to-public mirror pairs are 100% synchronized and deployable routes verified.`);
+
+console.log('\n[SUMMARY] ALL 9 ROUTES INTEGRITY & COMPLIANCE TESTS PASSED.');
+

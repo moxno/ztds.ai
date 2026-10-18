@@ -134,12 +134,12 @@
       };
 
       const legacyFlowHtml = (dag.legacy.flow || []).map((step, idx, arr) => `
-        <span class="px-1.5 py-0.5 rounded text-[10px] font-mono shrink-0 ${idx === 2 ? 'bg-rose-100 text-rose-900 font-bold border border-rose-300' : 'bg-slate-100 text-slate-700 border border-slate-200'}">${escape(step)}</span>
+        <span class="px-1.5 py-0.5 rounded text-xs font-mono shrink-0 ${idx === 2 ? 'bg-rose-100 text-rose-900 font-bold border border-rose-300' : 'bg-slate-100 text-slate-700 border border-slate-200'}">${escape(step)}</span>
         ${idx < arr.length - 1 ? '<span class="text-rose-400 font-bold text-xs shrink-0">&rarr;</span>' : ''}
       `).join('');
 
       const ztdsFlowHtml = (dag.ztds.flow || []).map((step, idx, arr) => `
-        <span class="px-1.5 py-0.5 rounded text-[10px] font-mono shrink-0 ${idx === 1 ? 'bg-emerald-100 text-emerald-900 font-bold border border-emerald-300' : idx === 0 ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 border border-slate-200'}">${escape(step)}</span>
+        <span class="px-1.5 py-0.5 rounded text-xs font-mono shrink-0 ${idx === 1 ? 'bg-emerald-100 text-emerald-900 font-bold border border-emerald-300' : idx === 0 ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 border border-slate-200'}">${escape(step)}</span>
         ${idx < arr.length - 1 ? '<span class="text-emerald-500 font-bold text-xs shrink-0">&rarr;</span>' : ''}
       `).join('');
 
@@ -147,40 +147,40 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
           <!-- Legacy Route -->
           <div class="p-3.5 rounded-xl bg-rose-50/60 border border-rose-200 text-rose-950">
-            <div class="font-bold text-[11px] mb-2 flex items-center justify-between">
+            <div class="font-bold text-xs mb-2 flex items-center justify-between">
               <span class="flex items-center gap-1.5">
                 <span class="w-2 h-2 rounded-full bg-rose-500"></span>
                 <span>${escape(dag.legacy.title || 'Legacy Cloud Proxy Route')}</span>
               </span>
-              <span class="text-[10px] text-rose-700 font-bold px-1.5 py-0.5 rounded bg-rose-100 border border-rose-200">${escape(dag.legacy.latencyOverhead || '+450ms WAN')}</span>
+              <span class="text-xs text-rose-700 font-bold px-1.5 py-0.5 rounded bg-rose-100 border border-rose-200">${escape(dag.legacy.latencyOverhead || '+450ms WAN')}</span>
             </div>
             <div class="p-2 bg-white border border-rose-200 rounded-lg mb-2.5 flex items-center gap-1 overflow-x-auto">
               ${legacyFlowHtml}
             </div>
-            <div class="flex items-center justify-between text-[10px] font-bold text-rose-800 mb-1">
+            <div class="flex items-center justify-between text-xs font-bold text-rose-800 mb-1">
               <span>Subprocessors: +${escape(String(dag.legacy.subprocessorsCount || 3))} Entities</span>
               <span>DPA: Mandatory (Art. 28)</span>
             </div>
-            <p class="text-[11px] text-slate-600 font-sans leading-relaxed">Honeypot risk: ${escape(dag.legacy.honeypotRisk || 'Unmasked customer tokens reside in third-party cloud RAM and remote log stores.')}</p>
+            <p class="text-xs text-slate-600 font-sans leading-relaxed">Honeypot risk: ${escape(dag.legacy.honeypotRisk || 'Unmasked customer tokens reside in third-party cloud RAM and remote log stores.')}</p>
           </div>
 
           <!-- ZTDS Route -->
           <div class="p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-300 text-emerald-950 shadow-xs">
-            <div class="font-bold text-[11px] mb-2 flex items-center justify-between">
+            <div class="font-bold text-xs mb-2 flex items-center justify-between">
               <span class="flex items-center gap-1.5">
                 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                 <span>${escape(dag.ztds.title || 'ZTDS In-RAM Enclave Route')}</span>
               </span>
-              <span class="text-[10px] text-emerald-700 font-bold px-1.5 py-0.5 rounded bg-emerald-100 border border-emerald-200">${escape(dag.ztds.latencyOverhead || '< 0.8ms In-RAM')}</span>
+              <span class="text-xs text-emerald-700 font-bold px-1.5 py-0.5 rounded bg-emerald-100 border border-emerald-200">${escape(dag.ztds.latencyOverhead || '< 0.8ms In-RAM')}</span>
             </div>
             <div class="p-2 bg-white border border-emerald-200 rounded-lg mb-2.5 flex items-center gap-1 overflow-x-auto shadow-xs">
               ${ztdsFlowHtml}
             </div>
-            <div class="flex items-center justify-between text-[10px] font-bold text-emerald-800 mb-1">
+            <div class="flex items-center justify-between text-xs font-bold text-emerald-800 mb-1">
               <span>Subprocessors: 0 (Disapplied)</span>
               <span>DPA: Exempt (Recital 26)</span>
             </div>
-            <p class="text-[11px] text-slate-600 font-sans leading-relaxed">Lossless attention: Bijective cryptographic tokens preserve full LLM reasoning without sending cleartext data off-device.</p>
+            <p class="text-xs text-slate-600 font-sans leading-relaxed">Lossless attention: Bijective cryptographic tokens preserve full LLM reasoning without sending cleartext data off-device.</p>
           </div>
         </div>
       `;

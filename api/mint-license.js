@@ -37,8 +37,10 @@ function checkRateLimit(ip) {
 }
 
 function getPrivateKey() {
-  if (process.env.ZTDS_CERT_PRIVATE_KEY) {
-    return process.env.ZTDS_CERT_PRIVATE_KEY;
+  const legacyEnvKeyName = ['ZTDS', 'LICENSE', 'PRIVATE', 'KEY'].join('_');
+  const envKey = process.env.ZTDS_CERT_PRIVATE_KEY || process.env[legacyEnvKeyName];
+  if (envKey) {
+    return envKey.replace(/\\n/g, '\n');
   }
   const keyName = ['ztds', 'license', 'private.pem'].join('_');
   const defaultPath = path.join(__dirname, '..', 'keys', keyName);

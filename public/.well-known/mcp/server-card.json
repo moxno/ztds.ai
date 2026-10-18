@@ -72,6 +72,31 @@
       }
     }
   ],
-  "resources": [],
-  "prompts": []
+  "resources": [
+    {
+      "uri": "ztds://spec/rfc-v1",
+      "name": "ZTDS RFC v1.0 Protocol Specification & 4 Core Invariants",
+      "description": "Formal Zero-Trust Data Sanitization (ZTDS RFC v1.0 / IETF draft-sibiryakov-ztds-protocol) invariant definitions and compliance boundaries.",
+      "mimeType": "application/json"
+    },
+    {
+      "uri": "ztds://session/telemetry",
+      "name": "ZTDS Volatile RAM Session Telemetry",
+      "description": "Real-time ephemeral session count and zero-egress attestation status (zero cleartext exposure).",
+      "mimeType": "application/json"
+    }
+  ],
+  "prompts": [
+    {
+      "name": "ztds_guard",
+      "description": "Activates the ZTDS Zero-Trust Data Sanitization guardrail in Claude or Cursor.",
+      "arguments": [
+        {
+          "name": "task",
+          "description": "The task description or prompt to execute safely.",
+          "required": true
+        }
+      ]
+    }
+  ]
 }
