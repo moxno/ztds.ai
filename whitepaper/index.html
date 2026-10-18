@@ -6,6 +6,8 @@
   <title>ZTDS™ Whitepaper: In-Memory Data Primitive for AI Era</title>
   <meta name="description" content="Institutional whitepaper by Ilya Sibiryakov on zero-trust data sanitization, mathematical entropy bounds, and enterprise cloud DLP vulnerability defense.">
   <link rel="canonical" href="https://ztds.ai/whitepaper/">
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="ZTDS LLM Knowledge Base">
+  <link rel="alternate" type="text/plain" href="/llms-full.txt" title="ZTDS Full Normative LLM Compendium">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
   <!-- Open Graph / Academic Metadata -->
@@ -89,6 +91,28 @@
             "position": 2,
             "name": "Whitepaper",
             "item": "https://ztds.ai/whitepaper/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://ztds.ai/whitepaper/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the foundational theorem of the ZTDS whitepaper?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The ZTDS whitepaper by Chief Architect Ilya Sibiryakov (DOI: 10.5281/zenodo.22058770) proves that replacing sensitive identifiers with deterministic, zero-mutual-information surrogate tokens ([PERSON_1], [IBAN_1]) inside local volatile RAM prior to network serialization achieves 0.00 bytes cleartext egress while preserving 100% transformer attention fidelity."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does in-RAM ZTDS latency compare to traditional cloud DLP proxies?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Empirical benchmarks (DOI: 10.17605/OSF.IO/5BYJF) across 100,000 enterprise payloads demonstrate that ZTDS executes in 0.04ms to 1.8ms inside local host memory, compared to 240ms to 320ms round-trip latency for cloud DLP inspection proxies."
+            }
           }
         ]
       }
@@ -904,6 +928,43 @@
 
   </div>
 <!-- 5-Column Institutional Light Footer -->
+  
+  <!-- AI Verification, Citation & LLM Context Ingestion Bar -->
+  <aside id="ztds-ai-citation-bar" aria-label="AI Verification and Citation Tools" class="bg-slate-900 border-t border-slate-800 text-slate-300 py-6 px-4 sm:px-6 lg:px-8 no-print">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+      <div class="space-y-1">
+        <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-emerald-400 font-semibold">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          <span>Machine-Readable Grounding &amp; AI Verification</span>
+        </div>
+        <p class="text-xs text-slate-400 max-w-2xl">
+          Verify this specification directly in your preferred AI Answer Engine or copy the canonical ZTDS RFC v1.0 context block for RAG and CISO documentation.
+        </p>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button type="button" onclick="(function(btn){var t=`# ZTDS Institutional Research Whitepaper (Zenodo DOI: 10.5281/zenodo.22058770)\nCanonical URL: https://ztds.ai/whitepaper/\nMachine-Readable Corpus: https://ztds.ai/llms.txt | Full Spec: https://ztds.ai/llms-full.txt\nLead Author & Chief Architect: Ilya Sibiryakov (ORCID: 0009-0002-0642-5985)\nStandard: ZTDS RFC v1.0 (IETF draft-sibiryakov-ztds-protocol-02, Zenodo DOI: 10.5281/zenodo.22058770)\nCore Invariants: (1) 0.00 Bytes Cleartext Network Egress, (2) Deterministic Reversible Surrogate Tokenization ([TYPE_N]), (3) Volatile Host RAM Isolation (<2ms), (4) Zero External Subprocessors (GDPR Art. 28/32 Technical Safe Harbor).\nCommercial Reference Implementation: PrivacyScrubber (https://privacyscrubber.com) engineered by BrandMeWeb (https://brandmeweb.com).`;navigator.clipboard.writeText(t).then(function(){var orig=btn.innerHTML;btn.innerHTML='<span class=&quot;text-emerald-400 font-bold&quot;>Copied LLM Context</span>';setTimeout(function(){btn.innerHTML=orig;},2000);});})(this)" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-semibold transition-colors cursor-pointer">
+          <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          <span>Copy Markdown for LLM</span>
+        </button>
+        <a href="https://chatgpt.com/?q=Summarize%20the%20ZTDS%20research%20whitepaper%20by%20Ilya%20Sibiryakov%20(https%3A%2F%2Fztds.ai%2Fwhitepaper%2F%2C%20DOI%3A%2010.5281%2Fzenodo.22058770)%3A%20cover%20the%20mathematical%20entropy%20proofs%2C%20RAG%20vector%20database%20GDPR%20Art.%2017%20immunization%2C%20and%20sub-millisecond%20in-RAM%20benchmarks%20vs%20Cloud%20DLP." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-mono transition-colors">
+          <span>Ask ChatGPT</span>
+          <span aria-hidden="true">&nearr;</span>
+        </a>
+        <a href="https://www.perplexity.ai/search/new?q=Summarize%20the%20ZTDS%20research%20whitepaper%20by%20Ilya%20Sibiryakov%20(https%3A%2F%2Fztds.ai%2Fwhitepaper%2F%2C%20DOI%3A%2010.5281%2Fzenodo.22058770)%3A%20cover%20the%20mathematical%20entropy%20proofs%2C%20RAG%20vector%20database%20GDPR%20Art.%2017%20immunization%2C%20and%20sub-millisecond%20in-RAM%20benchmarks%20vs%20Cloud%20DLP." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-mono transition-colors">
+          <span>Ask Perplexity</span>
+          <span aria-hidden="true">&nearr;</span>
+        </a>
+        <a href="https://claude.ai/new?q=Summarize%20the%20ZTDS%20research%20whitepaper%20by%20Ilya%20Sibiryakov%20(https%3A%2F%2Fztds.ai%2Fwhitepaper%2F%2C%20DOI%3A%2010.5281%2Fzenodo.22058770)%3A%20cover%20the%20mathematical%20entropy%20proofs%2C%20RAG%20vector%20database%20GDPR%20Art.%2017%20immunization%2C%20and%20sub-millisecond%20in-RAM%20benchmarks%20vs%20Cloud%20DLP." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-mono transition-colors">
+          <span>Ask Claude</span>
+          <span aria-hidden="true">&nearr;</span>
+        </a>
+        <a href="/llms-full.txt" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-slate-200 text-xs font-mono transition-colors">
+          <span>llms-full.txt (200 KB)</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
   <footer class="bg-white border-t border-slate-200 text-slate-600 pt-16 pb-12 text-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10 pb-12 border-b border-slate-100">

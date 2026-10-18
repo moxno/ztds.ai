@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ztds.ai/schemas/v1/forensic-docket-receipt.json",
+  "title": "ZTDS Evidentiary Sovereignty & Forensic Docket Receipt v1.0",
+  "description": "Schema for FRE 502 / 902(13)-(14) judicial chain-of-custody and Web3 AML forensic sanitization receipts.",
+  "type": "object",
+  "required": [
+    "standard",
+    "docketDigest",
+    "egressBytes"
+  ],
+  "properties": {
+    "standard": {
+      "type": "string",
+      "const": "ZTDS-RFC-v1.0"
+    },
+    "docketDigest": {
+      "type": "string"
+    },
+    "egressBytes": {
+      "type": "integer",
+      "const": 0
+    }
+  }
+}

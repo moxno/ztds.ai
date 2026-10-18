@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ztds.ai/schemas/audit-receipt.v1.json",
+  "title": "ZTDS Cryptographic Audit Receipt v1.0",
+  "description": "Machine-readable schema for Zero-Trust Data Sanitization (ZTDS RFC v1.0) in-memory sanitization audit receipts and SHA-256/Ed25519 telemetry.",
+  "type": "object",
+  "required": [
+    "standard",
+    "invariantsVerified",
+    "egressBytes",
+    "timestamp"
+  ],
+  "properties": {
+    "standard": {
+      "type": "string",
+      "const": "ZTDS-RFC-v1.0"
+    },
+    "egressBytes": {
+      "type": "integer",
+      "const": 0
+    },
+    "invariantsVerified": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sha256": {
+      "type": "string"
+    },
+    "signature": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

@@ -18,11 +18,12 @@ assert(robotsContent.includes('Sitemap: https://ztds.ai/sitemap.xml'), 'robots.t
 assert(robotsContent.includes('User-agent: *'), 'robots.txt must declare User-agent: *');
 assert(robotsContent.includes('Allow: /'), 'robots.txt must allow root crawling');
 
-const aiBots = ['GPTBot', 'ClaudeBot', 'PerplexityBot', 'Google-Extended'];
+const aiBots = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'PerplexityBot', 'Google-Extended', 'DuckAssistBot', 'Meta-ExternalAgent', 'Amazonbot', 'YouBot'];
 for (const bot of aiBots) {
   assert(robotsContent.includes(bot), `robots.txt must include explicit directive for AI bot: ${bot}`);
 }
-console.log(`    [PASS] robots.txt valid and authorizes ${aiBots.length} AI search bots.`);
+assert(robotsContent.includes('LLMs-Txt: https://ztds.ai/llms.txt'), 'robots.txt must include LLMs-Txt directive');
+console.log(`    [PASS] robots.txt valid and authorizes ${aiBots.length} AI search bots + LLMs-Txt directive.`);
 
 // Test 2: sitemap.xml XML Structure & File Correspondence
 console.log('--> Test 2: sitemap.xml URL Resolution & Local File Presence');
@@ -170,4 +171,41 @@ console.log('\n--> Test 5: PART 14 Scanner Egress Presets & Dynamic Badge Foundr
   console.log('    [PASS] PART 14 specifications, 4 leak presets, CISO audit exporter, and dynamic badge theme/tier parameters validated.');
 }
 
-console.log('\n[SUMMARY] ALL 5 GEO CORPUS & MACHINE-READABLE TESTS PASSED.');
+// Test 6: JSON Schemas, <link rel="alternate"> Discovery & AI Citation Bar
+console.log('\n--> Test 6: JSON Schemas, <link rel="alternate"> Discovery & AI Citation Bar');
+{
+  const requiredSchemas = [
+    'schemas/audit-receipt.v1.json',
+    'schemas/ciso-risk-assessment-v1.json',
+    'schemas/evidence-binder-v1.json',
+    'schemas/registry-v1.json',
+    'schemas/companies-v1.json',
+    'schemas/fellows-v1.json',
+    'schemas/v1/forensic-docket-receipt.json'
+  ];
+  for (const s of requiredSchemas) {
+    assert(fs.existsSync(path.join(rootDir, s)), `Missing root JSON schema: ${s}`);
+    assert(fs.existsSync(path.join(rootDir, 'public', s)), `Missing public JSON schema mirror: public/${s}`);
+    JSON.parse(fs.readFileSync(path.join(rootDir, s), 'utf8'));
+  }
+
+  const coreCitationPages = [
+    'index.html',
+    'standard/index.html',
+    'ciso/index.html',
+    'mcp/index.html',
+    'whitepaper/index.html',
+    'benchmarks/index.html',
+    'sdk/index.html',
+    'compliance/index.html'
+  ];
+  for (const p of coreCitationPages) {
+    const html = fs.readFileSync(path.join(rootDir, p), 'utf8');
+    assert(html.includes('href="/llms.txt"'), `Missing /llms.txt link in ${p}`);
+    assert(html.includes('href="/llms-full.txt"'), `Missing /llms-full.txt link in ${p}`);
+    assert(html.includes('id="ztds-ai-citation-bar"'), `Missing AI Verification & Citation Bar in ${p}`);
+  }
+  console.log(`    [PASS] Verified ${requiredSchemas.length} JSON Schemas and AI Citation Bars across ${coreCitationPages.length} core pages.`);
+}
+
+console.log('\n[SUMMARY] ALL 6 GEO CORPUS & MACHINE-READABLE TESTS PASSED.');

@@ -66,6 +66,10 @@
       "destination": "/public/docs/:path*"
     },
     {
+      "source": "/schemas/:path*",
+      "destination": "/public/schemas/:path*"
+    },
+    {
       "source": "/robots.txt",
       "destination": "/public/robots.txt"
     },
@@ -230,6 +234,14 @@
       ]
     },
     {
+      "source": "/schemas/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Content-Type", "value": "application/schema+json; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
@@ -238,7 +250,7 @@
         { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; frame-src 'none'; font-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" },
         { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
-        { "key": "Link", "value": "<https://ztds.ai/llms.txt>; rel=\"alternate\"; type=\"text/plain\"" }
+        { "key": "Link", "value": "<https://ztds.ai/llms.txt>; rel=\"alternate\"; type=\"text/plain\"; title=\"ZTDS LLM Knowledge Base\", <https://ztds.ai/llms-full.txt>; rel=\"alternate\"; type=\"text/plain\"; title=\"ZTDS Full Normative LLM Compendium\"" }
       ]
     }
   ]

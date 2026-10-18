@@ -111,7 +111,9 @@ function build() {
       throw new Error(`Doc file missing: ${doc.relPath}`);
     }
 
-    const content = fs.readFileSync(filePath, 'utf8');
+    let content = fs.readFileSync(filePath, 'utf8').trim();
+    // Strip leading duplicate "# PART X: ..." line if already present in doc file
+    content = content.replace(/^#\s+PART\s+\d+:[^\n]*\n+/, '');
     fullCorpus += `\n--------------------------------------------------------------------------------\n`;
     fullCorpus += `# ${doc.part}\n`;
     fullCorpus += `## ${doc.title}\n`;
