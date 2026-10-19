@@ -1,0 +1,488 @@
+{
+  "study_title": "Preserving Data Sovereignty in Decentralized Storage: Client-Side Ephemeral Sanitization for Solid Pod AI Ingestion",
+  "authors": [
+    {
+      "name": "Ilya Sibiryakov",
+      "role": "First Author & Principal Architect",
+      "affiliation": "ZTDS AI Consortium / BrandMeWeb"
+    },
+    {
+      "name": "Jeremy Pesner",
+      "role": "Co-First Author & Corresponding Author",
+      "affiliation": "Georgetown University"
+    }
+  ],
+  "standard_specification": "ZTDS RFC v1.0 / IETF draft-sibiryakov-ztds-protocol-02",
+  "harness_version": "2.4.0",
+  "execution_timestamp": "2026-10-19T15:17:24.623Z",
+  "environment": {
+    "node_version": "v24.12.0",
+    "os_platform": "Darwin 27.0.0 (arm64)",
+    "cpu_model": "Apple M1 Pro",
+    "cpu_cores": 10,
+    "ram_total_gb": 16,
+    "ztds_engine": "ZTDS RFC v1.0 Built-in Reference Sanitizer (Consortium Core)",
+    "llm_inference_mode": "DETERMINISTIC_LOOPBACK_ENCLAVE (llama3.2-local-enclave)"
+  },
+  "aggregate_3_boundary_metrics": {
+    "total_solid_pod_scenarios": 12,
+    "total_experimental_runs": 24,
+    "total_sensitive_pod_entities_evaluated": 61,
+    "condition_a_baseline_unprotected": {
+      "boundary1_client_ram_entities": 61,
+      "boundary2_mitm_wire_exposed_entities": 61,
+      "boundary2_mitm_wire_exposed_bytes": 968,
+      "boundary2_mitm_wire_exposure_rate_pct": 100,
+      "boundary3_llm_server_exposed_entities": 61,
+      "boundary3_llm_server_exposure_rate_pct": 100
+    },
+    "condition_b_ztds_in_memory_sanitized": {
+      "boundary1_client_ram_entities": 61,
+      "boundary1_sanitization_latency_median_p50_us": 9.1,
+      "boundary1_sanitization_latency_median_p95_us": 14.5,
+      "boundary1_sanitization_latency_median_p99_us": 69.2,
+      "boundary2_mitm_wire_exposed_entities": 0,
+      "boundary2_mitm_wire_exposed_bytes": 0,
+      "boundary2_mitm_wire_exposure_rate_pct": 0,
+      "boundary2_leakage_prevention_rate_pct": 100,
+      "boundary3_llm_server_exposed_entities": 0,
+      "boundary3_llm_server_exposure_rate_pct": 0,
+      "client_bijective_stream_restoration_fidelity_pct": 100,
+      "theorem2_ram_zeroization_pass_rate_pct": 100
+    }
+  },
+  "scenarios": [
+    {
+      "id": "SOLID-HLTH-01",
+      "domain": "Healthcare & Clinical EHR Pod (HIPAA)",
+      "pod_uri": "https://alice.solidcommunity.net/health/encounters/2026-10-cardiology.ttl",
+      "content_type": "text/turtle",
+      "access_control": "WAC (acl:Read granted to Solid-RAG-Agent)",
+      "total_sensitive_entities": 5,
+      "surrogate_tokens_minted": 6,
+      "latency_us": {
+        "p50Us": 13.5,
+        "p95Us": 23.9,
+        "p99Us": 75.3,
+        "meanUs": 15.9
+      },
+      "baseline": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 828,
+        "boundary2_mitm_exposed_entities": 5,
+        "boundary2_mitm_exposed_bytes": 79,
+        "boundary2_mitm_exposure_rate_pct": 100,
+        "boundary3_server_exposed_entities": 5,
+        "boundary3_server_exposure_rate_pct": 100
+      },
+      "ztds": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 787,
+        "boundary2_mitm_exposed_entities": 0,
+        "boundary2_mitm_exposed_bytes": 0,
+        "boundary2_mitm_exposure_rate_pct": 0,
+        "boundary2_mitm_lpr_pct": 100,
+        "boundary3_server_exposed_entities": 0,
+        "boundary3_server_exposure_rate_pct": 0,
+        "bijective_restoration_fidelity_pct": 100,
+        "ram_zeroization_verified": true
+      }
+    },
+    {
+      "id": "SOLID-HLTH-02",
+      "domain": "Healthcare & Clinical EHR Pod (HIPAA)",
+      "pod_uri": "https://arthur.solidweb.org/medical/prescriptions/rx-metformin.jsonld",
+      "content_type": "application/ld+json",
+      "access_control": "ACP (acp:allow acl:Read for Local-Health-Copilot)",
+      "total_sensitive_entities": 5,
+      "surrogate_tokens_minted": 5,
+      "latency_us": {
+        "p50Us": 9.4,
+        "p95Us": 14.5,
+        "p99Us": 41.4,
+        "meanUs": 11.6
+      },
+      "baseline": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 769,
+        "boundary2_mitm_exposed_entities": 5,
+        "boundary2_mitm_exposed_bytes": 81,
+        "boundary2_mitm_exposure_rate_pct": 100,
+        "boundary3_server_exposed_entities": 5,
+        "boundary3_server_exposure_rate_pct": 100
+      },
+      "ztds": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 728,
+        "boundary2_mitm_exposed_entities": 0,
+        "boundary2_mitm_exposed_bytes": 0,
+        "boundary2_mitm_exposure_rate_pct": 0,
+        "boundary2_mitm_lpr_pct": 100,
+        "boundary3_server_exposed_entities": 0,
+        "boundary3_server_exposure_rate_pct": 0,
+        "bijective_restoration_fidelity_pct": 100,
+        "ram_zeroization_verified": true
+      }
+    },
+    {
+      "id": "SOLID-HLTH-03",
+      "domain": "Healthcare & Clinical EHR Pod (HIPAA)",
+      "pod_uri": "https://clara.inrupt.net/clinical/lab-results/immunology-panel.ttl",
+      "content_type": "text/turtle",
+      "access_control": "WAC (acl:Read granted to Patient-Portal-Assistant)",
+      "total_sensitive_entities": 5,
+      "surrogate_tokens_minted": 5,
+      "latency_us": {
+        "p50Us": 9.1,
+        "p95Us": 22.9,
+        "p99Us": 132,
+        "meanUs": 12.9
+      },
+      "baseline": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 734,
+        "boundary2_mitm_exposed_entities": 5,
+        "boundary2_mitm_exposed_bytes": 79,
+        "boundary2_mitm_exposure_rate_pct": 100,
+        "boundary3_server_exposed_entities": 5,
+        "boundary3_server_exposure_rate_pct": 100
+      },
+      "ztds": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 695,
+        "boundary2_mitm_exposed_entities": 0,
+        "boundary2_mitm_exposed_bytes": 0,
+        "boundary2_mitm_exposure_rate_pct": 0,
+        "boundary2_mitm_lpr_pct": 100,
+        "boundary3_server_exposed_entities": 0,
+        "boundary3_server_exposure_rate_pct": 0,
+        "bijective_restoration_fidelity_pct": 100,
+        "ram_zeroization_verified": true
+      }
+    },
+    {
+      "id": "SOLID-FIN-01",
+      "domain": "Financial & Sovereign Wealth Pod (GLBA / PCI-DSS)",
+      "pod_uri": "https://mchang.solidcommunity.net/finance/ledger/sepa-transfer-2026.jsonld",
+      "content_type": "application/ld+json",
+      "access_control": "ACP (acp:allow acl:Read for Wealth-Advisor-LLM)",
+      "total_sensitive_entities": 5,
+      "surrogate_tokens_minted": 5,
+      "latency_us": {
+        "p50Us": 9.5,
+        "p95Us": 15.8,
+        "p99Us": 168.6,
+        "meanUs": 13.4
+      },
+      "baseline": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 785,
+        "boundary2_mitm_exposed_entities": 5,
+        "boundary2_mitm_exposed_bytes": 82,
+        "boundary2_mitm_exposure_rate_pct": 100,
+        "boundary3_server_exposed_entities": 5,
+        "boundary3_server_exposure_rate_pct": 100
+      },
+      "ztds": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 741,
+        "boundary2_mitm_exposed_entities": 0,
+        "boundary2_mitm_exposed_bytes": 0,
+        "boundary2_mitm_exposure_rate_pct": 0,
+        "boundary2_mitm_lpr_pct": 100,
+        "boundary3_server_exposed_entities": 0,
+        "boundary3_server_exposure_rate_pct": 0,
+        "bijective_restoration_fidelity_pct": 100,
+        "ram_zeroization_verified": true
+      }
+    },
+    {
+      "id": "SOLID-FIN-02",
+      "domain": "Financial & Sovereign Wealth Pod (GLBA / PCI-DSS)",
+      "pod_uri": "https://rsterling.inrupt.net/vault/tax/1040-workpaper.ttl",
+      "content_type": "text/turtle",
+      "access_control": "WAC (acl:Read granted to Tax-Prep-Agent)",
+      "total_sensitive_entities": 5,
+      "surrogate_tokens_minted": 5,
+      "latency_us": {
+        "p50Us": 8.9,
+        "p95Us": 11.8,
+        "p99Us": 50,
+        "meanUs": 10.5
+      },
+      "baseline": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 723,
+        "boundary2_mitm_exposed_entities": 5,
+        "boundary2_mitm_exposed_bytes": 86,
+        "boundary2_mitm_exposure_rate_pct": 100,
+        "boundary3_server_exposed_entities": 5,
+        "boundary3_server_exposure_rate_pct": 100
+      },
+      "ztds": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 677,
+        "boundary2_mitm_exposed_entities": 0,
+        "boundary2_mitm_exposed_bytes": 0,
+        "boundary2_mitm_exposure_rate_pct": 0,
+        "boundary2_mitm_lpr_pct": 100,
+        "boundary3_server_exposed_entities": 0,
+        "boundary3_server_exposure_rate_pct": 0,
+        "bijective_restoration_fidelity_pct": 100,
+        "ram_zeroization_verified": true
+      }
+    },
+    {
+      "id": "SOLID-FIN-03",
+      "domain": "Financial & Sovereign Wealth Pod (GLBA / PCI-DSS)",
+      "pod_uri": "https://hlocke.solidweb.org/treasury/audit-trail.jsonld",
+      "content_type": "application/ld+json",
+      "access_control": "ACP (acp:allow acl:Read for Portfolio-RAG)",
+      "total_sensitive_entities": 6,
+      "surrogate_tokens_minted": 6,
+      "latency_us": {
+        "p50Us": 8.4,
+        "p95Us": 10.1,
+        "p99Us": 26.5,
+        "meanUs": 9.1
+      },
+      "baseline": {
+        "boundary1_client_entities": 6,
+        "boundary2_mitm_wire_bytes": 664,
+        "boundary2_mitm_exposed_entities": 6,
+        "boundary2_mitm_exposed_bytes": 87,
+        "boundary2_mitm_exposure_rate_pct": 100,
+        "boundary3_server_exposed_entities": 6,
+        "boundary3_server_exposure_rate_pct": 100
+      },
+      "ztds": {
+        "boundary1_client_entities": 6,
+        "boundary2_mitm_wire_bytes": 623,
+        "boundary2_mitm_exposed_entities": 0,
+        "boundary2_mitm_exposed_bytes": 0,
+        "boundary2_mitm_exposure_rate_pct": 0,
+        "boundary2_mitm_lpr_pct": 100,
+        "boundary3_server_exposed_entities": 0,
+        "boundary3_server_exposure_rate_pct": 0,
+        "bijective_restoration_fidelity_pct": 100,
+        "ram_zeroization_verified": true
+      }
+    },
+    {
+      "id": "SOLID-LGL-01",
+      "domain": "Legal & Fiduciary Trust Pod (FRE 502 Privilege)",
+      "pod_uri": "https://thorne.solidcommunity.net/legal/fiduciary-trust-deed.ttl",
+      "content_type": "text/turtle",
+      "access_control": "WAC (acl:Read granted to Legal-Discovery-Copilot)",
+      "total_sensitive_entities": 5,
+      "surrogate_tokens_minted": 5,
+      "latency_us": {
+        "p50Us": 9,
+        "p95Us": 13.6,
+        "p99Us": 71.6,
+        "meanUs": 11
+      },
+      "baseline": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 757,
+        "boundary2_mitm_exposed_entities": 5,
+        "boundary2_mitm_exposed_bytes": 85,
+        "boundary2_mitm_exposure_rate_pct": 100,
+        "boundary3_server_exposed_entities": 5,
+        "boundary3_server_exposure_rate_pct": 100
+      },
+      "ztds": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 712,
+        "boundary2_mitm_exposed_entities": 0,
+        "boundary2_mitm_exposed_bytes": 0,
+        "boundary2_mitm_exposure_rate_pct": 0,
+        "boundary2_mitm_lpr_pct": 100,
+        "boundary3_server_exposed_entities": 0,
+        "boundary3_server_exposure_rate_pct": 0,
+        "bijective_restoration_fidelity_pct": 100,
+        "ram_zeroization_verified": true
+      }
+    },
+    {
+      "id": "SOLID-LGL-02",
+      "domain": "Legal & Fiduciary Trust Pod (FRE 502 Privilege)",
+      "pod_uri": "https://mercer.inrupt.net/litigation/deposition-summary.jsonld",
+      "content_type": "application/ld+json",
+      "access_control": "ACP (acp:allow acl:Read for Brief-Synthesizer)",
+      "total_sensitive_entities": 5,
+      "surrogate_tokens_minted": 5,
+      "latency_us": {
+        "p50Us": 9.1,
+        "p95Us": 26.6,
+        "p99Us": 69.2,
+        "meanUs": 12.5
+      },
+      "baseline": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 720,
+        "boundary2_mitm_exposed_entities": 5,
+        "boundary2_mitm_exposed_bytes": 78,
+        "boundary2_mitm_exposure_rate_pct": 100,
+        "boundary3_server_exposed_entities": 5,
+        "boundary3_server_exposure_rate_pct": 100
+      },
+      "ztds": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 682,
+        "boundary2_mitm_exposed_entities": 0,
+        "boundary2_mitm_exposed_bytes": 0,
+        "boundary2_mitm_exposure_rate_pct": 0,
+        "boundary2_mitm_lpr_pct": 100,
+        "boundary3_server_exposed_entities": 0,
+        "boundary3_server_exposure_rate_pct": 0,
+        "bijective_restoration_fidelity_pct": 100,
+        "ram_zeroization_verified": true
+      }
+    },
+    {
+      "id": "SOLID-LGL-03",
+      "domain": "Legal & Fiduciary Trust Pod (FRE 502 Privilege)",
+      "pod_uri": "https://kessler.solidweb.org/arbitration/settlement-term-sheet.ttl",
+      "content_type": "text/turtle",
+      "access_control": "WAC (acl:Read granted to Arbitration-Assistant)",
+      "total_sensitive_entities": 5,
+      "surrogate_tokens_minted": 5,
+      "latency_us": {
+        "p50Us": 8.8,
+        "p95Us": 11.8,
+        "p99Us": 39.3,
+        "meanUs": 10.2
+      },
+      "baseline": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 725,
+        "boundary2_mitm_exposed_entities": 5,
+        "boundary2_mitm_exposed_bytes": 81,
+        "boundary2_mitm_exposure_rate_pct": 100,
+        "boundary3_server_exposed_entities": 5,
+        "boundary3_server_exposure_rate_pct": 100
+      },
+      "ztds": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 684,
+        "boundary2_mitm_exposed_entities": 0,
+        "boundary2_mitm_exposed_bytes": 0,
+        "boundary2_mitm_exposure_rate_pct": 0,
+        "boundary2_mitm_lpr_pct": 100,
+        "boundary3_server_exposed_entities": 0,
+        "boundary3_server_exposure_rate_pct": 0,
+        "bijective_restoration_fidelity_pct": 100,
+        "ram_zeroization_verified": true
+      }
+    },
+    {
+      "id": "SOLID-DEV-01",
+      "domain": "Decentralized Identity & DevSecOps Pod (WebID / OIDC)",
+      "pod_uri": "https://sconnor.solidcommunity.net/settings/cloud-credentials.ttl",
+      "content_type": "text/turtle",
+      "access_control": "ACP (acp:allow acl:Read for DevSecOps-Agent)",
+      "total_sensitive_entities": 5,
+      "surrogate_tokens_minted": 5,
+      "latency_us": {
+        "p50Us": 9.1,
+        "p95Us": 10.9,
+        "p99Us": 37.3,
+        "meanUs": 10.1
+      },
+      "baseline": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 758,
+        "boundary2_mitm_exposed_entities": 5,
+        "boundary2_mitm_exposed_bytes": 76,
+        "boundary2_mitm_exposure_rate_pct": 100,
+        "boundary3_server_exposed_entities": 5,
+        "boundary3_server_exposure_rate_pct": 100
+      },
+      "ztds": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 720,
+        "boundary2_mitm_exposed_entities": 0,
+        "boundary2_mitm_exposed_bytes": 0,
+        "boundary2_mitm_exposure_rate_pct": 0,
+        "boundary2_mitm_lpr_pct": 100,
+        "boundary3_server_exposed_entities": 0,
+        "boundary3_server_exposure_rate_pct": 0,
+        "bijective_restoration_fidelity_pct": 100,
+        "ram_zeroization_verified": true
+      }
+    },
+    {
+      "id": "SOLID-DEV-02",
+      "domain": "Decentralized Identity & DevSecOps Pod (WebID / OIDC)",
+      "pod_uri": "https://bwayne.inrupt.net/profile/card#me",
+      "content_type": "text/turtle",
+      "access_control": "WAC (acl:Read granted to Personal-AI-Agent)",
+      "total_sensitive_entities": 5,
+      "surrogate_tokens_minted": 5,
+      "latency_us": {
+        "p50Us": 8.6,
+        "p95Us": 27.6,
+        "p99Us": 181.4,
+        "meanUs": 13.4
+      },
+      "baseline": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 679,
+        "boundary2_mitm_exposed_entities": 5,
+        "boundary2_mitm_exposed_bytes": 77,
+        "boundary2_mitm_exposure_rate_pct": 100,
+        "boundary3_server_exposed_entities": 5,
+        "boundary3_server_exposure_rate_pct": 100
+      },
+      "ztds": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 640,
+        "boundary2_mitm_exposed_entities": 0,
+        "boundary2_mitm_exposed_bytes": 0,
+        "boundary2_mitm_exposure_rate_pct": 0,
+        "boundary2_mitm_lpr_pct": 100,
+        "boundary3_server_exposed_entities": 0,
+        "boundary3_server_exposure_rate_pct": 0,
+        "bijective_restoration_fidelity_pct": 100,
+        "ram_zeroization_verified": true
+      }
+    },
+    {
+      "id": "SOLID-DEV-03",
+      "domain": "Decentralized Identity & DevSecOps Pod (WebID / OIDC)",
+      "pod_uri": "https://hmorgan.solidweb.org/security/siem-incident.jsonld",
+      "content_type": "application/ld+json",
+      "access_control": "ACP (acp:allow acl:Read for SOC-Triage-LLM)",
+      "total_sensitive_entities": 5,
+      "surrogate_tokens_minted": 5,
+      "latency_us": {
+        "p50Us": 8.8,
+        "p95Us": 12.1,
+        "p99Us": 64.7,
+        "meanUs": 12.3
+      },
+      "baseline": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 749,
+        "boundary2_mitm_exposed_entities": 5,
+        "boundary2_mitm_exposed_bytes": 77,
+        "boundary2_mitm_exposure_rate_pct": 100,
+        "boundary3_server_exposed_entities": 5,
+        "boundary3_server_exposure_rate_pct": 100
+      },
+      "ztds": {
+        "boundary1_client_entities": 5,
+        "boundary2_mitm_wire_bytes": 710,
+        "boundary2_mitm_exposed_entities": 0,
+        "boundary2_mitm_exposed_bytes": 0,
+        "boundary2_mitm_exposure_rate_pct": 0,
+        "boundary2_mitm_lpr_pct": 100,
+        "boundary3_server_exposed_entities": 0,
+        "boundary3_server_exposure_rate_pct": 0,
+        "bijective_restoration_fidelity_pct": 100,
+        "ram_zeroization_verified": true
+      }
+    }
+  ]
+}

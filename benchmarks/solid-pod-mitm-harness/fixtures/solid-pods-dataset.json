@@ -1,0 +1,219 @@
+{
+  "dataset_metadata": {
+    "title": "W3C Solid Pod Decentralized Storage AI Ingestion Benchmark Dataset",
+    "version": "2.4.0",
+    "standard": "ZTDS RFC v1.0 / IETF draft-sibiryakov-ztds-protocol-02",
+    "authors": [
+      "Ilya Sibiryakov (First Author & Principal Architect, ZTDS AI Consortium)",
+      "Jeremy Pesner (Co-First & Corresponding Author, Georgetown University)"
+    ],
+    "description": "12 synthetic W3C Solid Pod RDF/Turtle and JSON-LD resources governed by Web Access Control (WAC) and Access Control Policy (ACP), designed to evaluate cleartext data exposure across Client Memory (Boundary 1), Active MITM Network Transit (Boundary 2), and LLM Server Context Window (Boundary 3)."
+  },
+  "scenarios": [
+    {
+      "id": "SOLID-HLTH-01",
+      "domain": "Healthcare & Clinical EHR Pod (HIPAA)",
+      "pod_uri": "https://alice.solidcommunity.net/health/encounters/2026-10-cardiology.ttl",
+      "content_type": "text/turtle",
+      "access_control": "WAC (acl:Read granted to Solid-RAG-Agent)",
+      "profile": "General",
+      "rag_query": "Summarize the patient diagnosis, attending physician, and follow-up contact details from this Solid Pod clinical record.",
+      "raw_pod_payload": "@prefix foaf: <http://xmlns.com/foaf/0.1/> .\n@prefix schema: <http://schema.org/> .\n<#patient> a schema:Patient ;\n  foaf:name \"Eleanor Vance\" ;\n  schema:birthDate \"1984-06-14\" ;\n  schema:identifier \"123-45-6789\" ;\n  foaf:mbox <mailto:eleanor.vance@healthmail.org> ;\n  schema:telephone \"+1-415-555-0192\" ;\n  schema:diagnosis \"Acute pericarditis evaluated by Dr. Marcus Brody\" .",
+      "sensitive_entities": [
+        { "text": "Eleanor Vance", "type": "NAME" },
+        { "text": "123-45-6789", "type": "ID" },
+        { "text": "eleanor.vance@healthmail.org", "type": "EMAIL" },
+        { "text": "+1-415-555-0192", "type": "PHONE" },
+        { "text": "Marcus Brody", "type": "NAME" }
+      ]
+    },
+    {
+      "id": "SOLID-HLTH-02",
+      "domain": "Healthcare & Clinical EHR Pod (HIPAA)",
+      "pod_uri": "https://arthur.solidweb.org/medical/prescriptions/rx-metformin.jsonld",
+      "content_type": "application/ld+json",
+      "access_control": "ACP (acp:allow acl:Read for Local-Health-Copilot)",
+      "profile": "General",
+      "rag_query": "Verify the patient refill status, prescribing doctor, and pharmacy contact information.",
+      "raw_pod_payload": "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"MedicalRecord\",\n  \"patientName\": \"Arthur Pendelton\",\n  \"nationalId\": \"987-65-4321\",\n  \"prescribingPhysician\": \"Dr. Sarah Jenkins\",\n  \"pharmacyEmail\": \"rx-verify@stjudehealth.net\",\n  \"pharmacyPhone\": \"+1-212-555-3920\",\n  \"medication\": \"Metformin 500mg twice daily\"\n}",
+      "sensitive_entities": [
+        { "text": "Arthur Pendelton", "type": "NAME" },
+        { "text": "987-65-4321", "type": "ID" },
+        { "text": "Sarah Jenkins", "type": "NAME" },
+        { "text": "rx-verify@stjudehealth.net", "type": "EMAIL" },
+        { "text": "+1-212-555-3920", "type": "PHONE" }
+      ]
+    },
+    {
+      "id": "SOLID-HLTH-03",
+      "domain": "Healthcare & Clinical EHR Pod (HIPAA)",
+      "pod_uri": "https://clara.inrupt.net/clinical/lab-results/immunology-panel.ttl",
+      "content_type": "text/turtle",
+      "access_control": "WAC (acl:Read granted to Patient-Portal-Assistant)",
+      "profile": "General",
+      "rag_query": "Draft a concise lab notification note for the patient and their emergency contact.",
+      "raw_pod_payload": "@prefix foaf: <http://xmlns.com/foaf/0.1/> .\n<#labReport> foaf:name \"Clara Oswald\" ;\n  <#ssn> \"456-78-9012\" ;\n  <#patientEmail> \"clara.oswald@clinical-pod.org\" ;\n  <#emergencyContact> \"David Oswald\" ;\n  <#emergencyPhone> \"+1-312-555-8471\" ;\n  <#finding> \"Comprehensive metabolic panel within normal reference range.\" .",
+      "sensitive_entities": [
+        { "text": "Clara Oswald", "type": "NAME" },
+        { "text": "456-78-9012", "type": "ID" },
+        { "text": "clara.oswald@clinical-pod.org", "type": "EMAIL" },
+        { "text": "David Oswald", "type": "NAME" },
+        { "text": "+1-312-555-8471", "type": "PHONE" }
+      ]
+    },
+    {
+      "id": "SOLID-FIN-01",
+      "domain": "Financial & Sovereign Wealth Pod (GLBA / PCI-DSS)",
+      "pod_uri": "https://mchang.solidcommunity.net/finance/ledger/sepa-transfer-2026.jsonld",
+      "content_type": "application/ld+json",
+      "access_control": "ACP (acp:allow acl:Read for Wealth-Advisor-LLM)",
+      "profile": "General",
+      "rag_query": "Review this Solid Pod wire transfer record and confirm the sender, tax identifier, and settlement contact.",
+      "raw_pod_payload": "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"MoneyTransfer\",\n  \"accountHolder\": \"Michael Chang\",\n  \"taxId\": \"321-54-9870\",\n  \"settlementEmail\": \"m.chang@fintech-capital.co.uk\",\n  \"confirmationPhone\": \"+1-650-555-2840\",\n  \"originIp\": \"192.168.42.108\",\n  \"memo\": \"Quarterly treasury liquidity allocation\"\n}",
+      "sensitive_entities": [
+        { "text": "Michael Chang", "type": "NAME" },
+        { "text": "321-54-9870", "type": "ID" },
+        { "text": "m.chang@fintech-capital.co.uk", "type": "EMAIL" },
+        { "text": "+1-650-555-2840", "type": "PHONE" },
+        { "text": "192.168.42.108", "type": "IP" }
+      ]
+    },
+    {
+      "id": "SOLID-FIN-02",
+      "domain": "Financial & Sovereign Wealth Pod (GLBA / PCI-DSS)",
+      "pod_uri": "https://rsterling.inrupt.net/vault/tax/1040-workpaper.ttl",
+      "content_type": "text/turtle",
+      "access_control": "WAC (acl:Read granted to Tax-Prep-Agent)",
+      "profile": "General",
+      "rag_query": "Extract the taxpayer filing summary and CPA contact details for quarterly audit review.",
+      "raw_pod_payload": "@prefix schema: <http://schema.org/> .\n<#taxFiling> schema:name \"Roger Sterling\" ;\n  schema:taxID \"654-32-1098\" ;\n  schema:email \"r.sterling@sterling-partners.com\" ;\n  schema:telephone \"+1-212-555-7741\" ;\n  schema:accountant \"Daniel Thacker\" ;\n  schema:description \"Schedule K-1 partnership distribution reconciliation\" .",
+      "sensitive_entities": [
+        { "text": "Roger Sterling", "type": "NAME" },
+        { "text": "654-32-1098", "type": "ID" },
+        { "text": "r.sterling@sterling-partners.com", "type": "EMAIL" },
+        { "text": "+1-212-555-7741", "type": "PHONE" },
+        { "text": "Daniel Thacker", "type": "NAME" }
+      ]
+    },
+    {
+      "id": "SOLID-FIN-03",
+      "domain": "Financial & Sovereign Wealth Pod (GLBA / PCI-DSS)",
+      "pod_uri": "https://hlocke.solidweb.org/treasury/audit-trail.jsonld",
+      "content_type": "application/ld+json",
+      "access_control": "ACP (acp:allow acl:Read for Portfolio-RAG)",
+      "profile": "General",
+      "rag_query": "Summarize the portfolio audit log entry and compliance officer contact.",
+      "raw_pod_payload": "{\n  \"@context\": \"https://schema.org\",\n  \"beneficiary\": \"Helena Locke\",\n  \"ssn\": \"741-85-9632\",\n  \"complianceOfficer\": \"Robert Vance\",\n  \"officerEmail\": \"rvance@treasury-guard.org\",\n  \"officerPhone\": \"+1-617-555-9014\",\n  \"clientNodeIp\": \"10.240.18.92\"\n}",
+      "sensitive_entities": [
+        { "text": "Helena Locke", "type": "NAME" },
+        { "text": "741-85-9632", "type": "ID" },
+        { "text": "Robert Vance", "type": "NAME" },
+        { "text": "rvance@treasury-guard.org", "type": "EMAIL" },
+        { "text": "+1-617-555-9014", "type": "PHONE" },
+        { "text": "10.240.18.92", "type": "IP" }
+      ]
+    },
+    {
+      "id": "SOLID-LGL-01",
+      "domain": "Legal & Fiduciary Trust Pod (FRE 502 Privilege)",
+      "pod_uri": "https://thorne.solidcommunity.net/legal/fiduciary-trust-deed.ttl",
+      "content_type": "text/turtle",
+      "access_control": "WAC (acl:Read granted to Legal-Discovery-Copilot)",
+      "profile": "General",
+      "rag_query": "Identify the grantor, trustee, and legal counsel contact from this Solid Pod trust instrument.",
+      "raw_pod_payload": "@prefix legal: <https://w3id.org/legal#> .\n<#trustInstrument> legal:grantor \"Harrison Thorne\" ;\n  legal:trustee \"Victoria Sterling\" ;\n  legal:grantorSSN \"852-96-7410\" ;\n  legal:counselEmail \"v.sterling@chancery-law.org\" ;\n  legal:counselPhone \"+1-202-555-6182\" ;\n  legal:clause \"Irrevocable inter vivos asset protection covenant.\" .",
+      "sensitive_entities": [
+        { "text": "Harrison Thorne", "type": "NAME" },
+        { "text": "Victoria Sterling", "type": "NAME" },
+        { "text": "852-96-7410", "type": "ID" },
+        { "text": "v.sterling@chancery-law.org", "type": "EMAIL" },
+        { "text": "+1-202-555-6182", "type": "PHONE" }
+      ]
+    },
+    {
+      "id": "SOLID-LGL-02",
+      "domain": "Legal & Fiduciary Trust Pod (FRE 502 Privilege)",
+      "pod_uri": "https://mercer.inrupt.net/litigation/deposition-summary.jsonld",
+      "content_type": "application/ld+json",
+      "access_control": "ACP (acp:allow acl:Read for Brief-Synthesizer)",
+      "profile": "General",
+      "rag_query": "Summarize the witness statement metadata and lead counsel contact.",
+      "raw_pod_payload": "{\n  \"@context\": \"https://schema.org\",\n  \"deponentName\": \"Julian Mercer\",\n  \"deponentSSN\": \"369-25-8147\",\n  \"leadCounsel\": \"Rachel Zane\",\n  \"counselEmail\": \"rzane@litigation-counsel.net\",\n  \"counselPhone\": \"+1-310-555-4829\",\n  \"privilegeStatus\": \"Attorney-Client Privileged Work Product under FRE 502\"\n}",
+      "sensitive_entities": [
+        { "text": "Julian Mercer", "type": "NAME" },
+        { "text": "369-25-8147", "type": "ID" },
+        { "text": "Rachel Zane", "type": "NAME" },
+        { "text": "rzane@litigation-counsel.net", "type": "EMAIL" },
+        { "text": "+1-310-555-4829", "type": "PHONE" }
+      ]
+    },
+    {
+      "id": "SOLID-LGL-03",
+      "domain": "Legal & Fiduciary Trust Pod (FRE 502 Privilege)",
+      "pod_uri": "https://kessler.solidweb.org/arbitration/settlement-term-sheet.ttl",
+      "content_type": "text/turtle",
+      "access_control": "WAC (acl:Read granted to Arbitration-Assistant)",
+      "profile": "General",
+      "rag_query": "Provide a status summary of the arbitration parties and mediator contact details.",
+      "raw_pod_payload": "@prefix foaf: <http://xmlns.com/foaf/0.1/> .\n<#arbitration> foaf:name \"Jessica Pearson\" ;\n  <#mediator> \"Deborah Gaines\" ;\n  <#claimantId> \"159-35-7248\" ;\n  <#mediatorEmail> \"dgaines@adr-resolution.org\" ;\n  <#mediatorPhone> \"+1-404-555-7391\" ;\n  <#resolution> \"Binding commercial arbitration covenant executed.\" .",
+      "sensitive_entities": [
+        { "text": "Jessica Pearson", "type": "NAME" },
+        { "text": "Deborah Gaines", "type": "NAME" },
+        { "text": "159-35-7248", "type": "ID" },
+        { "text": "dgaines@adr-resolution.org", "type": "EMAIL" },
+        { "text": "+1-404-555-7391", "type": "PHONE" }
+      ]
+    },
+    {
+      "id": "SOLID-DEV-01",
+      "domain": "Decentralized Identity & DevSecOps Pod (WebID / OIDC)",
+      "pod_uri": "https://sconnor.solidcommunity.net/settings/cloud-credentials.ttl",
+      "content_type": "text/turtle",
+      "access_control": "ACP (acp:allow acl:Read for DevSecOps-Agent)",
+      "profile": "General",
+      "rag_query": "Audit this Solid Pod infrastructure configuration and report the administrator contact and bastion endpoint.",
+      "raw_pod_payload": "@prefix solid: <http://www.w3.org/ns/solid/terms#> .\n<#adminProfile> solid:owner \"Sarah Connor\" ;\n  solid:adminEmail \"s.connor@cyberdyne-ops.io\" ;\n  solid:adminPhone \"+1-408-555-9182\" ;\n  solid:bastionHost \"172.16.254.12\" ;\n  solid:employeeSSN \"753-95-1482\" ;\n  solid:role \"Principal Infrastructure Reliability Architect\" .",
+      "sensitive_entities": [
+        { "text": "Sarah Connor", "type": "NAME" },
+        { "text": "s.connor@cyberdyne-ops.io", "type": "EMAIL" },
+        { "text": "+1-408-555-9182", "type": "PHONE" },
+        { "text": "172.16.254.12", "type": "IP" },
+        { "text": "753-95-1482", "type": "ID" }
+      ]
+    },
+    {
+      "id": "SOLID-DEV-02",
+      "domain": "Decentralized Identity & DevSecOps Pod (WebID / OIDC)",
+      "pod_uri": "https://bwayne.inrupt.net/profile/card#me",
+      "content_type": "text/turtle",
+      "access_control": "WAC (acl:Read granted to Personal-AI-Agent)",
+      "profile": "General",
+      "rag_query": "Summarize the WebID owner profile and primary notification channels.",
+      "raw_pod_payload": "@prefix foaf: <http://xmlns.com/foaf/0.1/> .\n@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .\n<#me> a foaf:Person ;\n  foaf:name \"Bruce Wayne\" ;\n  vcard:hasEmail <mailto:b.wayne@wayne-enterprises.org> ;\n  vcard:hasTelephone \"+1-973-555-0144\" ;\n  <#taxIdentifier> \"951-75-3842\" ;\n  <#homeNodeIp> \"10.0.14.205\" .",
+      "sensitive_entities": [
+        { "text": "Bruce Wayne", "type": "NAME" },
+        { "text": "b.wayne@wayne-enterprises.org", "type": "EMAIL" },
+        { "text": "+1-973-555-0144", "type": "PHONE" },
+        { "text": "951-75-3842", "type": "ID" },
+        { "text": "10.0.14.205", "type": "IP" }
+      ]
+    },
+    {
+      "id": "SOLID-DEV-03",
+      "domain": "Decentralized Identity & DevSecOps Pod (WebID / OIDC)",
+      "pod_uri": "https://hmorgan.solidweb.org/security/siem-incident.jsonld",
+      "content_type": "application/ld+json",
+      "access_control": "ACP (acp:allow acl:Read for SOC-Triage-LLM)",
+      "profile": "General",
+      "rag_query": "Generate an incident triage summary identifying the reporting analyst and affected endpoint.",
+      "raw_pod_payload": "{\n  \"@context\": \"https://schema.org\",\n  \"incidentAnalyst\": \"Hannah Morgan\",\n  \"analystEmail\": \"h.morgan@soc-defense.net\",\n  \"analystPhone\": \"+1-512-555-6039\",\n  \"analystClearanceSSN\": \"258-14-7369\",\n  \"affectedHostIp\": \"192.168.100.54\",\n  \"summary\": \"Anomalous OIDC token refresh blocked at perimeter gateway.\"\n}",
+      "sensitive_entities": [
+        { "text": "Hannah Morgan", "type": "NAME" },
+        { "text": "h.morgan@soc-defense.net", "type": "EMAIL" },
+        { "text": "+1-512-555-6039", "type": "PHONE" },
+        { "text": "258-14-7369", "type": "ID" },
+        { "text": "192.168.100.54", "type": "IP" }
+      ]
+    }
+  ]
+}
