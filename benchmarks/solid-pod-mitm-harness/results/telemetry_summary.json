@@ -3,19 +3,33 @@
   "authors": [
     {
       "name": "Ilya Sibiryakov",
-      "role": "First Author & Principal Architect",
-      "affiliation": "ZTDS AI Consortium / BrandMeWeb"
+      "role": "First Author, Principal Architect & Sole Inventor of Conception",
+      "affiliation": "ZTDS AI Consortium / BrandMeWeb",
+      "credit_roles": [
+        "Conceptualization",
+        "Methodology",
+        "Software (ZTDS Protocol & Middleware)",
+        "Formal Analysis",
+        "Supervision"
+      ]
     },
     {
       "name": "Jeremy Pesner",
-      "role": "Co-First Author & Corresponding Author",
-      "affiliation": "Georgetown University"
+      "role": "Co-First Author & Corresponding Author (Empirical Validation & Policy Analysis)",
+      "affiliation": "Independent Researcher / Georgetown University (Personal Academic Capacity)",
+      "credit_roles": [
+        "Investigation (Local Workstation Benchmark Verification)",
+        "Writing - Original Draft (Section 3 Literature Review)",
+        "Policy Analysis"
+      ]
     }
   ],
-  "standard_specification": "ZTDS RFC v1.0 / IETF draft-sibiryakov-ztds-protocol-02",
+  "standard_specification": "ZTDS™ RFC v1.0 / IETF draft-sibiryakov-ztds-protocol-02",
+  "statutory_ip_notice": "ZTDS™ is a trademark of Ilya Sibiryakov / BrandMeWeb. U.S. & International Patents Pending. Academic evaluation only; no express or implied patent license granted.",
   "harness_version": "2.4.0",
-  "execution_timestamp": "2026-10-19T15:17:24.623Z",
+  "execution_timestamp": "2026-10-19T15:38:17.490Z",
   "environment": {
+    "execution_context": "Off-the-shelf personal developer workstation (zero institutional cluster or grant resources)",
     "node_version": "v24.12.0",
     "os_platform": "Darwin 27.0.0 (arm64)",
     "cpu_model": "Apple M1 Pro",
@@ -31,16 +45,16 @@
     "condition_a_baseline_unprotected": {
       "boundary1_client_ram_entities": 61,
       "boundary2_mitm_wire_exposed_entities": 61,
-      "boundary2_mitm_wire_exposed_bytes": 968,
+      "boundary2_mitm_wire_exposed_bytes": 971,
       "boundary2_mitm_wire_exposure_rate_pct": 100,
       "boundary3_llm_server_exposed_entities": 61,
       "boundary3_llm_server_exposure_rate_pct": 100
     },
     "condition_b_ztds_in_memory_sanitized": {
       "boundary1_client_ram_entities": 61,
-      "boundary1_sanitization_latency_median_p50_us": 9.1,
-      "boundary1_sanitization_latency_median_p95_us": 14.5,
-      "boundary1_sanitization_latency_median_p99_us": 69.2,
+      "boundary1_sanitization_latency_median_p50_us": 9.3,
+      "boundary1_sanitization_latency_median_p95_us": 23.4,
+      "boundary1_sanitization_latency_median_p99_us": 141.7,
       "boundary2_mitm_wire_exposed_entities": 0,
       "boundary2_mitm_wire_exposed_bytes": 0,
       "boundary2_mitm_wire_exposure_rate_pct": 0,
@@ -61,10 +75,10 @@
       "total_sensitive_entities": 5,
       "surrogate_tokens_minted": 6,
       "latency_us": {
-        "p50Us": 13.5,
-        "p95Us": 23.9,
-        "p99Us": 75.3,
-        "meanUs": 15.9
+        "p50Us": 13,
+        "p95Us": 25.5,
+        "p99Us": 92.7,
+        "meanUs": 16
       },
       "baseline": {
         "boundary1_client_entities": 5,
@@ -97,10 +111,10 @@
       "total_sensitive_entities": 5,
       "surrogate_tokens_minted": 5,
       "latency_us": {
-        "p50Us": 9.4,
-        "p95Us": 14.5,
-        "p99Us": 41.4,
-        "meanUs": 11.6
+        "p50Us": 9.7,
+        "p95Us": 14.7,
+        "p99Us": 151.3,
+        "meanUs": 13
       },
       "baseline": {
         "boundary1_client_entities": 5,
@@ -133,10 +147,10 @@
       "total_sensitive_entities": 5,
       "surrogate_tokens_minted": 5,
       "latency_us": {
-        "p50Us": 9.1,
-        "p95Us": 22.9,
-        "p99Us": 132,
-        "meanUs": 12.9
+        "p50Us": 9.5,
+        "p95Us": 32.5,
+        "p99Us": 128,
+        "meanUs": 14
       },
       "baseline": {
         "boundary1_client_entities": 5,
@@ -169,10 +183,10 @@
       "total_sensitive_entities": 5,
       "surrogate_tokens_minted": 5,
       "latency_us": {
-        "p50Us": 9.5,
-        "p95Us": 15.8,
-        "p99Us": 168.6,
-        "meanUs": 13.4
+        "p50Us": 9.3,
+        "p95Us": 20.9,
+        "p99Us": 145.5,
+        "meanUs": 13.9
       },
       "baseline": {
         "boundary1_client_entities": 5,
@@ -205,10 +219,10 @@
       "total_sensitive_entities": 5,
       "surrogate_tokens_minted": 5,
       "latency_us": {
-        "p50Us": 8.9,
-        "p95Us": 11.8,
-        "p99Us": 50,
-        "meanUs": 10.5
+        "p50Us": 9.2,
+        "p95Us": 23.4,
+        "p99Us": 106.2,
+        "meanUs": 12.1
       },
       "baseline": {
         "boundary1_client_entities": 5,
@@ -241,10 +255,10 @@
       "total_sensitive_entities": 6,
       "surrogate_tokens_minted": 6,
       "latency_us": {
-        "p50Us": 8.4,
-        "p95Us": 10.1,
-        "p99Us": 26.5,
-        "meanUs": 9.1
+        "p50Us": 8.9,
+        "p95Us": 14.4,
+        "p99Us": 124.6,
+        "meanUs": 12.2
       },
       "baseline": {
         "boundary1_client_entities": 6,
@@ -277,10 +291,10 @@
       "total_sensitive_entities": 5,
       "surrogate_tokens_minted": 5,
       "latency_us": {
-        "p50Us": 9,
-        "p95Us": 13.6,
-        "p99Us": 71.6,
-        "meanUs": 11
+        "p50Us": 9.2,
+        "p95Us": 28.3,
+        "p99Us": 174.8,
+        "meanUs": 14.5
       },
       "baseline": {
         "boundary1_client_entities": 5,
@@ -313,10 +327,10 @@
       "total_sensitive_entities": 5,
       "surrogate_tokens_minted": 5,
       "latency_us": {
-        "p50Us": 9.1,
-        "p95Us": 26.6,
-        "p99Us": 69.2,
-        "meanUs": 12.5
+        "p50Us": 9.2,
+        "p95Us": 32.3,
+        "p99Us": 234.2,
+        "meanUs": 16.3
       },
       "baseline": {
         "boundary1_client_entities": 5,
@@ -349,16 +363,16 @@
       "total_sensitive_entities": 5,
       "surrogate_tokens_minted": 5,
       "latency_us": {
-        "p50Us": 8.8,
-        "p95Us": 11.8,
-        "p99Us": 39.3,
-        "meanUs": 10.2
+        "p50Us": 9.3,
+        "p95Us": 12.3,
+        "p99Us": 70.2,
+        "meanUs": 11.3
       },
       "baseline": {
         "boundary1_client_entities": 5,
-        "boundary2_mitm_wire_bytes": 725,
+        "boundary2_mitm_wire_bytes": 728,
         "boundary2_mitm_exposed_entities": 5,
-        "boundary2_mitm_exposed_bytes": 81,
+        "boundary2_mitm_exposed_bytes": 84,
         "boundary2_mitm_exposure_rate_pct": 100,
         "boundary3_server_exposed_entities": 5,
         "boundary3_server_exposure_rate_pct": 100
@@ -385,10 +399,10 @@
       "total_sensitive_entities": 5,
       "surrogate_tokens_minted": 5,
       "latency_us": {
-        "p50Us": 9.1,
-        "p95Us": 10.9,
-        "p99Us": 37.3,
-        "meanUs": 10.1
+        "p50Us": 9.5,
+        "p95Us": 14.2,
+        "p99Us": 141.7,
+        "meanUs": 12
       },
       "baseline": {
         "boundary1_client_entities": 5,
@@ -421,10 +435,10 @@
       "total_sensitive_entities": 5,
       "surrogate_tokens_minted": 5,
       "latency_us": {
-        "p50Us": 8.6,
-        "p95Us": 27.6,
-        "p99Us": 181.4,
-        "meanUs": 13.4
+        "p50Us": 8.8,
+        "p95Us": 34.4,
+        "p99Us": 214,
+        "meanUs": 16.2
       },
       "baseline": {
         "boundary1_client_entities": 5,
@@ -457,10 +471,10 @@
       "total_sensitive_entities": 5,
       "surrogate_tokens_minted": 5,
       "latency_us": {
-        "p50Us": 8.8,
-        "p95Us": 12.1,
-        "p99Us": 64.7,
-        "meanUs": 12.3
+        "p50Us": 10.6,
+        "p95Us": 22.9,
+        "p99Us": 74.8,
+        "meanUs": 13.2
       },
       "baseline": {
         "boundary1_client_entities": 5,

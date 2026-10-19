@@ -672,13 +672,25 @@ async function main() {
   const summaryReport = {
     study_title: 'Preserving Data Sovereignty in Decentralized Storage: Client-Side Ephemeral Sanitization for Solid Pod AI Ingestion',
     authors: [
-      { name: 'Ilya Sibiryakov', role: 'First Author & Principal Architect', affiliation: 'ZTDS AI Consortium / BrandMeWeb' },
-      { name: 'Jeremy Pesner', role: 'Co-First Author & Corresponding Author', affiliation: 'Georgetown University' }
+      {
+        name: 'Ilya Sibiryakov',
+        role: 'First Author, Principal Architect & Sole Inventor of Conception',
+        affiliation: 'ZTDS AI Consortium / BrandMeWeb',
+        credit_roles: ['Conceptualization', 'Methodology', 'Software (ZTDS Protocol & Middleware)', 'Formal Analysis', 'Supervision']
+      },
+      {
+        name: 'Jeremy Pesner',
+        role: 'Co-First Author & Corresponding Author (Empirical Validation & Policy Analysis)',
+        affiliation: 'Independent Researcher / Georgetown University (Personal Academic Capacity)',
+        credit_roles: ['Investigation (Local Workstation Benchmark Verification)', 'Writing - Original Draft (Section 3 Literature Review)', 'Policy Analysis']
+      }
     ],
-    standard_specification: 'ZTDS RFC v1.0 / IETF draft-sibiryakov-ztds-protocol-02',
+    standard_specification: 'ZTDS™ RFC v1.0 / IETF draft-sibiryakov-ztds-protocol-02',
+    statutory_ip_notice: 'ZTDS™ is a trademark of Ilya Sibiryakov / BrandMeWeb. U.S. & International Patents Pending. Academic evaluation only; no express or implied patent license granted.',
     harness_version: '2.4.0',
     execution_timestamp: new Date().toISOString(),
     environment: {
+      execution_context: 'Off-the-shelf personal developer workstation (zero institutional cluster or grant resources)',
       node_version: process.version,
       os_platform: `${os.type()} ${os.release()} (${os.arch()})`,
       cpu_model: os.cpus()[0] ? os.cpus()[0].model : 'Generic CPU',
@@ -730,20 +742,20 @@ async function main() {
   fs.writeFileSync(mdOutPath, buildPaperTablesMarkdown(summaryReport), 'utf8');
 
   console.log('\n=====================================================================================');
-  console.log('3-BOUNDARY EMPIRICAL STUDY SUMMARY (BASELINE WAC/ACP vs. ZTDS MIDDLEWARE)');
+  console.log('3-BOUNDARY EMPIRICAL STUDY SUMMARY (BASELINE WAC/ACP vs. ZTDS™ MIDDLEWARE)');
   console.log('=====================================================================================');
   console.log(`Total W3C Solid Pod Scenarios:       ${pairedResults.length} (${pairedResults.length * 2} paired MITM runs)`);
   console.log(`Total Sensitive Pod Entities:        ${totalEntities} across 4 decentralized storage domains`);
   console.log(`-------------------------------------------------------------------------------------`);
   console.log(`Boundary 1 (Client Pod RAM):         ${totalEntities}/${totalEntities} entities authorized via WAC/ACP`);
-  console.log(`  -> ZTDS Client Latency Profile:    p50 = ${medianP50Us} µs | p95 = ${medianP95Us} µs | p99 = ${medianP99Us} µs`);
+  console.log(`  -> ZTDS™ Client Latency Profile:   p50 = ${medianP50Us} µs | p95 = ${medianP95Us} µs | p99 = ${medianP99Us} µs`);
   console.log(`  -> Theorem 2 RAM Zeroization:      100.00% verified (0 residual keys post-session)`);
   console.log(`Boundary 2 (Network MITM Wire Tap):`);
   console.log(`  -> Condition A (Baseline RAG):     ${baselineExposedTotal}/${totalEntities} entities leaked (${baselineExposedBytesTotal} bytes cleartext on wire = 100.00% exposure)`);
-  console.log(`  -> Condition B (ZTDS Middleware):  ${ztdsExposedTotal}/${totalEntities} entities leaked (${ztdsExposedBytesTotal} bytes cleartext on wire = 0.00% exposure)`);
+  console.log(`  -> Condition B (ZTDS™ Middleware): ${ztdsExposedTotal}/${totalEntities} entities leaked (${ztdsExposedBytesTotal} bytes cleartext on wire = 0.00% exposure)`);
   console.log(`Boundary 3 (LLM Server Context):`);
   console.log(`  -> Condition A (Baseline RAG):     100.00% raw Pod PII/PHI ingested into model weights/logs`);
-  console.log(`  -> Condition B (ZTDS Middleware):  0.00% raw Pod PII/PHI ingested; 100.00% bijective stream restoration`);
+  console.log(`  -> Condition B (ZTDS™ Middleware): 0.00% raw Pod PII/PHI ingested; 100.00% bijective stream restoration`);
   console.log('=====================================================================================\n');
   console.log('Exported Peer-Review & Publication Artifacts:');
   console.log(`  1. JSON Telemetry Summary:  ${jsonOutPath}`);
@@ -769,16 +781,17 @@ function buildPaperTablesMarkdown(report) {
   return `# Empirical Evaluation Tables: W3C Solid Pod & Local LLM 3-Boundary MITM Study
 
 **Paper Title:** *Preserving Data Sovereignty in Decentralized Storage: Client-Side Ephemeral Sanitization for Solid Pod AI Ingestion*  
-**Authors:** **Ilya Sibiryakov** (First Author & Principal Architect, ZTDS AI Consortium) and **Jeremy Pesner** (Co-First & Corresponding Author, Georgetown University)  
-**Protocol Standard:** ZTDS RFC v1.0 / IETF \`draft-sibiryakov-ztds-protocol-02\`  
+**Authors:** **Ilya Sibiryakov** (First Author, Principal Architect & Sole Inventor of Conception, ZTDS AI Consortium) and **Jeremy Pesner** (Co-First & Corresponding Author, Georgetown University — Personal Academic Capacity)  
+**Protocol Standard:** ZTDS™ RFC v1.0 / IETF \`draft-sibiryakov-ztds-protocol-02\`  
+**Statutory IP Notice:** ZTDS™ is a trademark of Ilya Sibiryakov / BrandMeWeb. U.S. & International Patents Pending.  
 **Execution Timestamp:** \`${report.execution_timestamp}\`  
-**Hardware Environment:** \`${report.environment.cpu_model}\` (${report.environment.cpu_cores} cores, ${report.environment.ram_total_gb} GB RAM, ${report.environment.os_platform}, Node ${report.environment.node_version})  
+**Hardware Environment:** \`${report.environment.cpu_model}\` (${report.environment.cpu_cores} cores, ${report.environment.ram_total_gb} GB RAM, ${report.environment.os_platform}, Node ${report.environment.node_version} — Personal Developer Workstation)  
 
 ---
 
 ## Table 1: Three-Boundary Data Exposure Matrix (Condition A vs. Condition B)
 
-| Inspection Boundary | Metric | Condition A: Baseline W3C Solid Pod (WAC/ACP Only) | Condition B: Solid Pod + ZTDS In-Memory Middleware | Empirical Delta |
+| Inspection Boundary | Metric | Condition A: Baseline W3C Solid Pod (WAC/ACP Only) | Condition B: Solid Pod + ZTDS™ In-Memory Middleware | Empirical Delta |
 | :--- | :--- | :--- | :--- | :--- |
 | **Boundary 1: Client Pod RAM** | Authorized Entities Extracted | ${base.boundary1_client_ram_entities} / ${agg.total_sensitive_pod_entities_evaluated} (100.0%) | ${ztds.boundary1_client_ram_entities} / ${agg.total_sensitive_pod_entities_evaluated} (100.0%) | Full Local Utility |
 | **Boundary 1: Client Pod RAM** | Pre-Egress Sanitization Latency (p50 / p95 / p99) | N/A (0 µs) | **${ztds.boundary1_sanitization_latency_median_p50_us} µs** / ${ztds.boundary1_sanitization_latency_median_p95_us} µs / ${ztds.boundary1_sanitization_latency_median_p99_us} µs | **< 0.5 ms Overhead** |
@@ -792,22 +805,22 @@ function buildPaperTablesMarkdown(report) {
 
 ## Table 2: Scenario-Level Empirical Breakdown Across 12 W3C Solid Pod Resources
 
-| Scenario ID | Decentralized Storage Domain | Pod Serialization | Sensitive Entities | Baseline MITM Wire Leakage | ZTDS MITM Wire Leakage | Stream Restoration Fidelity | Client p50 Latency |
+| Scenario ID | Decentralized Storage Domain | Pod Serialization | Sensitive Entities | Baseline MITM Wire Leakage | ZTDS™ MITM Wire Leakage | Stream Restoration Fidelity | Client p50 Latency |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 ${scenarioRowsMd}
 
 ---
 
-## LaTeX Snippet for PoPETS / USENIX PEPR Manuscript (Section 5: Empirical Evaluation)
+## LaTeX Snippets for PoPETS / USENIX PEPR Manuscript (Section 5 & CRediT Section)
 
 \`\`\`latex
 \\begin{table*}[t]
 \\centering
-\\caption{Three-Boundary Empirical Data Exposure: Standard W3C Solid Pod (WAC/ACP) vs. ZTDS Client-Side Ephemeral Sanitization ($N = ${agg.total_sensitive_pod_entities_evaluated}$ Sensitive Entities across ${agg.total_solid_pod_scenarios} Pod Resources)}
+\\caption{Three-Boundary Empirical Data Exposure: Standard W3C Solid Pod (WAC/ACP) vs. ZTDS\\texttrademark{} Client-Side Ephemeral Sanitization ($N = ${agg.total_sensitive_pod_entities_evaluated}$ Sensitive Entities across ${agg.total_solid_pod_scenarios} Pod Resources)}
 \\label{tab:solid-ztds-boundaries}
 \\begin{tabular}{llccc}
 \\toprule
-\\textbf{Inspection Boundary} & \\textbf{Measured Telemetry Metric} & \\textbf{Baseline (WAC/ACP Only)} & \\textbf{ZTDS Middleware (RFC v1.0)} & \\textbf{Security / Privacy Gain} \\\\
+\\textbf{Inspection Boundary} & \\textbf{Measured Telemetry Metric} & \\textbf{Baseline (WAC/ACP Only)} & \\textbf{ZTDS\\texttrademark{} Middleware (RFC v1.0)} & \\textbf{Security / Privacy Gain} \\\\
 \\midrule
 Boundary 1 (Client RAM) & Authorized Pod Entities Loaded & ${base.boundary1_client_ram_entities}/${agg.total_sensitive_pod_entities_evaluated} (100\\%) & ${ztds.boundary1_client_ram_entities}/${agg.total_sensitive_pod_entities_evaluated} (100\\%) & Full Local Utility \\\\
 Boundary 1 (Client RAM) & Tokenization Latency ($p_{50} / p_{99}$) & --- & ${ztds.boundary1_sanitization_latency_median_p50_us}\\,$\\mu$s / ${ztds.boundary1_sanitization_latency_median_p99_us}\\,$\\mu$s & Sub-Millisecond ($<1$\\,ms) \\\\
@@ -819,6 +832,9 @@ Boundary 1 (Teardown) & Theorem 2 Volatile Heap Zeroization & Unprotected & \\te
 \\bottomrule
 \\end{tabular}
 \\end{table*}
+
+\\section*{Author Contributions (CRediT) \\& Statutory IP Notice}
+\\textbf{Ilya Sibiryakov} (First Author \\& Principal Architect): Conceptualization, Methodology, Software (ZTDS\\texttrademark{} Protocol Specification, In-Memory Sanitization Engine, and 3-Boundary MITM Telemetry Harness), Formal Analysis, and Supervision. \\textbf{Jeremy Pesner} (Co-First \\& Corresponding Author): Investigation (Independent Workstation Benchmark Verification), Writing -- Original Draft (Section 3: Decentralized Access Control \\& Privacy Literature Review), and Policy Analysis. The underlying Zero-Trust Data Sanitization (ZTDS\\texttrademark{}) architecture and protocol specification (\\texttt{draft-sibiryakov-ztds-protocol}) were conceived and developed solely by Ilya Sibiryakov prior to this empirical evaluation (U.S. \\& International Patents Pending). All empirical benchmarks were executed on independent personal developer workstations without institutional grant or university cluster resources.
 \`\`\`
 `;
 }
