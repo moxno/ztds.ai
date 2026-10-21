@@ -8,6 +8,9 @@
 [![Patent Pending](https://img.shields.io/badge/Patents_Pending-Paris_Priority-purple.svg)](https://ztds.ai/certification/)
 [![WAN Egress](https://img.shields.io/badge/Sensitive_WAN_Egress-0.00_Bytes-emerald.svg)](https://ztds.ai/scanner/)
 [![Smithery Badge](https://smithery.ai/badge/ilsimox/ztds-mcp)](https://smithery.ai/servers/ilsimox/ztds-mcp)
+[![MCPRush Grade A](https://img.shields.io/badge/MCPRush-Grade_A_Verified-10b981.svg)](https://mcprush.com/to/ztds-mcp?ref=badge)
+
+[![Ztds MCP server](https://mcprush.com/badge/ztds-mcp/card.svg)](https://mcprush.com/to/ztds-mcp?ref=badge)
 
 This repository contains the official **Model Context Protocol (MCP) Server implementation (`ztds-mcp`)** and **Codebase Invariant Auditor (`ztds-audit`)** for the **Zero-Trust Data Sanitization (ZTDS™ RFC v1.0)** standard. Maintained by the **ZTDS AI Consortium**.
 

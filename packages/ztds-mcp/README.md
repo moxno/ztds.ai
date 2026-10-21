@@ -6,9 +6,11 @@
 [![IETF Standards Track](https://img.shields.io/badge/IETF_Standards_Track-sibiryakov--ztds--protocol-purple.svg)](https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22058770.svg)](https://doi.org/10.5281/zenodo.22058770)
 [![Zero Network Egress](https://img.shields.io/badge/Zero_Network_Egress-Attested-brightgreen.svg)](https://ztds.ai)
-[![MCPRush Server](https://img.shields.io/badge/MCPRush-Server_Live-6366f1.svg)](https://mcprush.com/moxno/ztds-mcp)
+[![MCPRush Server](https://img.shields.io/badge/MCPRush-Grade_A_Verified-10b981.svg)](https://mcprush.com/to/ztds-mcp?ref=badge)
 [![MCPRush Skill](https://img.shields.io/badge/MCPRush-Skill_Live-4f46e5.svg)](https://mcprush.com/moxno/ztds-agent-guard)
 [![Smithery Badge](https://smithery.ai/badge/ilsimox/ztds-mcp)](https://smithery.ai/servers/ilsimox/ztds-mcp)
+
+[![Ztds MCP server](https://mcprush.com/badge/ztds-mcp/card.svg)](https://mcprush.com/to/ztds-mcp?ref=badge)
 
 Open-source reference implementation of the **Zero-Trust Data Sanitization (ZTDS)** protocol for the Model Context Protocol (MCP) ecosystem. Conforms to the open architectural specification RFC v1.0 and IETF Standards Track `sibiryakov-ztds-protocol`.
 
