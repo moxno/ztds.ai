@@ -140,7 +140,7 @@ function sanitizeText(text, sessionId = 'default') {
   const hash = crypto.createHash('sha256').update(sanitized).digest('hex').substring(0, 16);
 
   // Detect enterprise/sector patterns beyond the 6 baseline RFC rules (JWTs, DB URIs, PEM keys, IBANs, Medical/Legal codes, large payloads)
-  const enterpriseHeuristic = /\b(?:eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}|(?:postgres(?:ql)?|mysql|mongodb(?:\+srv)?|redis):\/\/[^\s"']+|-----BEGIN [A-Z ]*PRIVATE KEY-----|[A-Z]{2}\d{2}[A-Z0-9]{11,30}|MRN-\d+|ICD-10|CASE-\d{4})\b/i;
+  const enterpriseHeuristic = /\b(?:eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}|(?:postgres(?:ql)?|mysql|mongodb(?:\+srv)?|redis):\/\/[^\s"']+|-----BEGIN [A-Z ]*PRIVATE\x20KEY-----|[A-Z]{2}\d{2}[A-Z0-9]{11,30}|MRN-\d+|ICD-10|CASE-\d{4})\b/i;
   const needsEnterpriseProfiles = enterpriseHeuristic.test(text) || text.length > 3000;
 
   return {
