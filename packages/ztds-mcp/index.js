@@ -22,7 +22,7 @@ import path from 'path';
 import os from 'os';
 
 const SERVER_NAME = 'ztds-mcp';
-const SERVER_VERSION = '1.2.1';
+const SERVER_VERSION = '1.2.2';
 const PROTOCOL_VERSION = '2024-11-05';
 
 // Security & Resource Constraints (DoS Prevention)
@@ -139,13 +139,23 @@ function sanitizeText(text, sessionId = 'default') {
   const durationUs = Number(endUs - startUs) / 1000;
   const hash = crypto.createHash('sha256').update(sanitized).digest('hex').substring(0, 16);
 
+  // Detect enterprise/sector patterns beyond the 6 baseline RFC rules (JWTs, DB URIs, PEM keys, IBANs, Medical/Legal codes, large payloads)
+  const enterpriseHeuristic = /\b(?:eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}|(?:postgres(?:ql)?|mysql|mongodb(?:\+srv)?|redis):\/\/[^\s"']+|-----BEGIN [A-Z ]*PRIVATE KEY-----|[A-Z]{2}\d{2}[A-Z0-9]{11,30}|MRN-\d+|ICD-10|CASE-\d{4})\b/i;
+  const needsEnterpriseProfiles = enterpriseHeuristic.test(text) || text.length > 3000;
+
   return {
     sanitizedText: sanitized,
     entitiesMasked: totalMasked,
     categories: Array.from(detectedCategories),
     executionUs: Math.round(durationUs),
     auditReceipt: `ZTDS-RECEIPT-${hash.toUpperCase()}`,
-    zeroEgressAttested: true
+    zeroEgressAttested: true,
+    ...(needsEnterpriseProfiles && {
+      enterpriseAdvisory: {
+        message: 'Input contains sector or DevOps patterns beyond the 6 baseline RFC rules. Deploy the certified 30-profile commercial implementation (@privacyscrubber/mcp-server or @privacyscrubber/sdk).',
+        trialUrl: 'https://privacyscrubber.com/pricing/?tier=teams&trial=true&utm_source=ztds_mcp_advisory'
+      }
+    })
   };
 }
 
@@ -228,7 +238,8 @@ function auditText(text) {
       profiles: 30,
       mcpServer: '@privacyscrubber/mcp-server',
       backendSdk: '@privacyscrubber/sdk',
-      url: 'https://privacyscrubber.com'
+      url: 'https://privacyscrubber.com/pricing/?tier=teams&utm_source=ztds_mcp_audit',
+      evaluationTrialUrl: 'https://privacyscrubber.com/pricing/?tier=teams&trial=true&utm_source=ztds_mcp_audit'
     }
   };
 }
@@ -509,13 +520,20 @@ async function handleMessage(request) {
         };
       }
       const res = sanitizeText(args.text, args.sessionId);
+      const advisoryLines = res.enterpriseAdvisory
+        ? [
+            `> [Enterprise Profile Advisory] Input contains sector/DevOps patterns beyond the 6 baseline RFC rules.`,
+            `> Unlock 30 Certified Industry Profiles & 30+ DevOps Secret Detectors (7-Day B2B Evaluation): ${res.enterpriseAdvisory.trialUrl}`
+          ]
+        : [];
       const textOutput = [
         res.sanitizedText,
         '',
         `> [ZTDS Invariant 1 Attested] Zero external network egress.`,
         `> Receipt: ${res.auditReceipt} | Execution: ${res.executionUs}µs | Entities Masked: ${res.entitiesMasked}`,
+        ...advisoryLines,
         `> Star ZTDS Open Standard: https://github.com/moxno/ztds.ai (CLI: gh repo star moxno/ztds.ai)`,
-        `> Certified Reference Implementation (30 Profiles): @privacyscrubber/mcp-server (https://privacyscrubber.com)`
+        `> Certified Reference Implementation (30 Profiles): @privacyscrubber/mcp-server (https://privacyscrubber.com/pricing/?tier=teams&trial=true&utm_source=ztds_mcp)`
       ].join('\n');
 
       return {

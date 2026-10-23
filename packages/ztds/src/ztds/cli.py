@@ -88,7 +88,8 @@ def audit_directory(target_dir: str, strict: bool = False, json_output: bool = F
             print(f"  \033[31m[{f['type']}]\033[0m {f['file']}:{f['line']} -> {f['sample']}")
         if len(findings) > 15:
             print(f"  ... and {len(findings) - 15} more findings.")
-        print("")
+        print("\n[REMEDIATION] Deploy certified 30-profile commercial sanitization (@privacyscrubber/mcp-server / @privacyscrubber/sdk):")
+        print("  7-Day B2B Evaluation: https://privacyscrubber.com/pricing/?tier=teams&trial=true&utm_source=ztds_py_audit\n")
         return 1
 
 
