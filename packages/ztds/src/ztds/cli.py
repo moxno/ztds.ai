@@ -79,7 +79,8 @@ def audit_directory(target_dir: str, strict: bool = False, json_output: bool = F
 
     if passed:
         print("\033[1m\033[32m[PASS] CONFORMANCE CONFIRMED: 0 INVARIANT VIOLATIONS DETECTED\033[0m")
-        print("All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RAM Isolation).\n")
+        print("All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RAM Isolation).")
+        print("Star ZTDS Open Standard on GitHub: https://github.com/moxno/ztds.ai (CLI: gh repo star moxno/ztds.ai)\n")
         return 0
     else:
         print(f"\033[1m\033[31m[FAIL] AUDIT FAILED: {len(findings)} VIOLATION(S) DETECTED\033[0m")
