@@ -26,7 +26,7 @@
     "build:css": "tailwindcss -i src/input.css -o styles.css --minify",
     "build:llms": "node scripts/build-llms-full.js",
     "build:sync": "node scripts/sync-mirrors.js",
-    "build": "npm run build:css && npm run build:sync",
+    "build": "npm run build:css && node -e \"if(require('fs').existsSync('./scripts/sync-mirrors.js'))require('./scripts/sync-mirrors.js')\"",
     "test": "node scripts/run-tests.js",
     "test:neutrality": "node test/consortium-neutrality.test.js",
     "test:all": "npm test",
