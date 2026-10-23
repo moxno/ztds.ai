@@ -34,114 +34,117 @@
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "TechArticle",
-        "@id": "https://ztds.ai/standard/#article",
-        "headline": "Zero-Trust Data Sanitization (ZTDS) Specification (RFC v1.0)",
-        "description": "Formal RFC v1.0 technical standard defining 4 core invariants, in-memory de-identification proofs, and cryptographic isolation for enterprise AI.",
-        "url": "https://ztds.ai/standard/",
-        "datePublished": "2026-09-15",
-        "dateModified": "2026-09-21",
-        "inLanguage": "en-US",
-        "isPartOf": { "@id": "https://ztds.ai/#website" },
-        "author": {
-          "@type": "Person",
-          "name": "Ilya Sibiryakov",
-          "url": "https://orcid.org/0009-0002-0642-5985",
-          "sameAs": [
-            "https://www.wikidata.org/wiki/Q141546647",
-            "https://orcid.org/0009-0002-0642-5985",
-            "https://www.linkedin.com/in/ilya-sibiryakov/",
-            "https://www.crunchbase.com/person/ilya-sibiryakov",
-            "https://github.com/moxno",
-            "https://ssrn.com/author=12873449"
-          ]
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "ZTDS AI Consortium",
-          "url": "https://ztds.ai",
-          "sameAs": [
-            "https://www.wikidata.org/wiki/Q141575477",
-            "https://github.com/moxno/ztds.ai"
-          ]
-        },
-        "citation": [
-          "https://doi.org/10.5281/zenodo.22058770",
-          "https://doi.org/10.17605/OSF.IO/5BYJF",
-          "https://doi.org/10.21203/rs.3.rs-11117457/v1",
-          "https://hal.science/hal-05757820"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://ztds.ai/standard/#article",
+      "headline": "Zero-Trust Data Sanitization (ZTDS) Specification (RFC v1.0)",
+      "description": "Formal RFC v1.0 technical standard defining 4 core invariants, in-memory de-identification proofs, and cryptographic isolation for enterprise AI.",
+      "url": "https://ztds.ai/standard/",
+      "datePublished": "2026-09-15T00:00:00Z",
+      "dateModified": "2026-09-21T00:00:00Z",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Ilya Sibiryakov",
+        "url": "https://orcid.org/0009-0002-0642-5985",
+        "sameAs": [
+          "https://www.wikidata.org/wiki/Q141546647",
+          "https://orcid.org/0009-0002-0642-5985",
+          "https://www.linkedin.com/in/ilya-sibiryakov/",
+          "https://www.crunchbase.com/person/ilya-sibiryakov",
+          "https://github.com/moxno",
+          "https://ssrn.com/author=12873449"
         ]
       },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://ztds.ai/standard/#breadcrumbs",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://ztds.ai/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Specification (RFC v1.0)",
-            "item": "https://ztds.ai/standard/"
-          }
+      "publisher": {
+        "@type": "Organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai",
+        "sameAs": [
+          "https://www.wikidata.org/wiki/Q141575477",
+          "https://github.com/moxno/ztds.ai"
         ]
       },
-      {
-        "@type": "FAQPage",
-        "@id": "https://ztds.ai/standard/#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is the Zero-Trust Data Sanitization (ZTDS) RFC v1.0 standard?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "ZTDS RFC v1.0 is an open technical standard defining architectural execution boundaries, cryptographic isolation invariants, and in-memory de-identification rules for zero-trust data protection in enterprise LLM and agentic workflows."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What are the 4 non-negotiable invariants of the ZTDS specification?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Invariant 1: Zero External Egress Prior to Sanitization (unmasked sensitive data never crosses the local execution perimeter). Invariant 2: Deterministic Reversible Tokenization (syntactic and grammatical context is preserved for LLMs while mapping dictionaries remain strictly in client volatile RAM). Invariant 3: Verifiable Cryptographic Isolation (WebAssembly sandboxing or Nitro Enclaves with zero telemetry). Invariant 4: Continuous Compliance & Zero Subprocessor Chain (eliminating SaaS subprocessor liability under GDPR Article 28)."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How does ZTDS prevent LLM model training memorization and vendor cache exposure?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Sensitive entities are tokenized locally in client volatile memory before network transmission. Cloud LLM providers receive and log only synthetic surrogate tokens (such as [PATIENT_1] or [IBAN_2]), ensuring cleartext PII is never stored in external logs, caches, or training sets."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How does ZTDS handle token mutation by Large Language Models?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Compliant implementations apply anti-mutation fuzzy recovery regexes to accommodate minor formatting variances (such as bracket translation or sub-word BPE boundary splits) while deterministically recovering cleartext entities upon client receipt."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How can developers and compliance teams verify ZTDS conformance?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Verification is performed locally without network egress using the Airplane Mode protocol and the open-source CLI auditor (npx ztds-audit), which inspects AST syntax trees, network sockets, and volatile memory boundaries to produce a verifiable cryptographic audit hash."
-            }
+      "citation": [
+        "https://doi.org/10.5281/zenodo.22058770",
+        "https://doi.org/10.17605/OSF.IO/5BYJF",
+        "https://doi.org/10.21203/rs.3.rs-11117457/v1",
+        "https://hal.science/hal-05757820"
+      ],
+      "image": "https://ztds.ai/assets/img/og/og-default.png"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ztds.ai/standard/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ztds.ai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Specification (RFC v1.0)",
+          "item": "https://ztds.ai/standard/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ztds.ai/standard/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Zero-Trust Data Sanitization (ZTDS) RFC v1.0 standard?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ZTDS RFC v1.0 is an open technical standard defining architectural execution boundaries, cryptographic isolation invariants, and in-memory de-identification rules for zero-trust data protection in enterprise LLM and agentic workflows."
           }
-        ]
-      }
-    ]
-  }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the 4 non-negotiable invariants of the ZTDS specification?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Invariant 1: Zero External Egress Prior to Sanitization (unmasked sensitive data never crosses the local execution perimeter). Invariant 2: Deterministic Reversible Tokenization (syntactic and grammatical context is preserved for LLMs while mapping dictionaries remain strictly in client volatile RAM). Invariant 3: Verifiable Cryptographic Isolation (WebAssembly sandboxing or Nitro Enclaves with zero telemetry). Invariant 4: Continuous Compliance & Zero Subprocessor Chain (eliminating SaaS subprocessor liability under GDPR Article 28)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does ZTDS prevent LLM model training memorization and vendor cache exposure?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sensitive entities are tokenized locally in client volatile memory before network transmission. Cloud LLM providers receive and log only synthetic surrogate tokens (such as [PATIENT_1] or [IBAN_2]), ensuring cleartext PII is never stored in external logs, caches, or training sets."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does ZTDS handle token mutation by Large Language Models?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Compliant implementations apply anti-mutation fuzzy recovery regexes to accommodate minor formatting variances (such as bracket translation or sub-word BPE boundary splits) while deterministically recovering cleartext entities upon client receipt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can developers and compliance teams verify ZTDS conformance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Verification is performed locally without network egress using the Airplane Mode protocol and the open-source CLI auditor (npx ztds-audit), which inspects AST syntax trees, network sockets, and volatile memory boundaries to produce a verifiable cryptographic audit hash."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
 </head>
 <body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">

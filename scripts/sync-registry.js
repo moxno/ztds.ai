@@ -408,6 +408,29 @@ function syncRegistry(options = { checkOnly: false }) {
     } else {
       console.log(`  [PASS] All ${entities.length} entity cards and filter counts verified in registry/index.html.`);
     }
+
+    // 3. Synchronize Ecosystem Directory Switcher counts across all 4 directory hubs
+    const fellowsData = JSON.parse(readFile('data/fellows.json') || '{"fellows":[]}');
+    const companiesData2 = JSON.parse(readFile('data/companies.json') || '{"companies":[]}');
+    const felCount = (fellowsData.fellows || []).length;
+    const compCount = (companiesData2.companies || []).length;
+    for (const hubRel of ['registry/index.html', 'fellows/index.html', 'companies/index.html', 'case-studies/index.html']) {
+      let hubContent = readFile(hubRel);
+      if (!hubContent) continue;
+      const updatedHub = hubContent
+        .replace(/Verified Products \(\d+\)/g, `Verified Products (${entities.length})`)
+        .replace(/Research Fellows \(\d+\)/g, `Research Fellows (${felCount})`)
+        .replace(/Corporate Adopters \(\d+\)/g, `Corporate Adopters (${compCount})`);
+      if (updatedHub !== hubContent) {
+        if (options.checkOnly) {
+          console.error(`  [DRIFT] Ecosystem Directory Switcher counts outdated in ${hubRel}`);
+          driftCount++;
+        } else {
+          writeFile(hubRel, updatedHub);
+          console.log(`  [UPDATE] Synchronized Ecosystem Directory Switcher counts in ${hubRel}.`);
+        }
+      }
+    }
   }
 
   // Phase 4: Machine-Readable Knowledge Corpora (llms.txt & llms-full.txt)

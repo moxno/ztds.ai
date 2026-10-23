@@ -35,165 +35,170 @@
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "TechArticle",
-        "@id": "https://ztds.ai/mcp/#article",
-        "headline": "Model Context Protocol (MCP) In-RAM Security Architecture & Specification",
-        "description": "Architectural standard, threat model analysis, and in-RAM execution profile for the Model Context Protocol (MCP), providing zero-egress credential protection for AI coding agents and desktop IDEs.",
-        "url": "https://ztds.ai/mcp/",
-        "datePublished": "2026-09-20",
-        "dateModified": "2026-10-07",
-        "inLanguage": "en-US",
-        "isPartOf": { "@id": "https://ztds.ai/#website" },
-        "author": {
-          "@type": "Person",
-          "name": "Ilya Sibiryakov",
-          "url": "https://orcid.org/0009-0002-0642-5985",
-          "sameAs": [
-            "https://www.wikidata.org/wiki/Q141546647",
-            "https://orcid.org/0009-0002-0642-5985",
-            "https://www.linkedin.com/in/ilya-sibiryakov/",
-            "https://github.com/moxno"
-          ]
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "ZTDS AI Consortium",
-          "url": "https://ztds.ai"
-        },
-        "citation": [
-          "https://doi.org/10.5281/zenodo.22058770",
-          "https://doi.org/10.17605/OSF.IO/5BYJF",
-          "https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/"
-        ]
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://ztds.ai/mcp/#article",
+      "headline": "Model Context Protocol (MCP) In-RAM Security Architecture & Specification",
+      "description": "Architectural standard, threat model analysis, and in-RAM execution profile for the Model Context Protocol (MCP), providing zero-egress credential protection for AI coding agents and desktop IDEs.",
+      "url": "https://ztds.ai/mcp/",
+      "datePublished": "2026-09-20T00:00:00Z",
+      "dateModified": "2026-10-07T00:00:00Z",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
       },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://ztds.ai/mcp/#software",
-        "name": "ZTDS Reference MCP Server",
-        "alternateName": "ztds-mcp",
-        "description": "Zero-dependency open-source reference Model Context Protocol server (io.github.moxno/ztds) providing local in-memory PII and credential sanitization for Claude Desktop, Cursor, Windsurf, and Zed over stdio JSON-RPC.",
-        "applicationCategory": "SecurityApplication",
-        "operatingSystem": "Cross-platform (macOS, Linux, Windows)",
-        "softwareVersion": "1.1.1",
-        "license": "https://www.apache.org/licenses/LICENSE-2.0",
-        "downloadUrl": "https://www.npmjs.com/package/ztds-mcp",
-        "url": "https://ztds.ai/mcp/",
+      "author": {
+        "@type": "Person",
+        "name": "Ilya Sibiryakov",
+        "url": "https://orcid.org/0009-0002-0642-5985",
         "sameAs": [
-          "https://mcpservers.org/servers/ztds-ai",
-          "https://github.com/moxno/ztds-mcp"
-        ],
-        "author": { "@id": "https://ztds.ai/#organization" }
-      },
-      {
-        "@type": "HowTo",
-        "@id": "https://ztds.ai/mcp/#howto-setup",
-        "name": "How to Configure Model Context Protocol (MCP) for Zero-Trust In-Memory Data Sanitization",
-        "description": "Step-by-step setup guide to connect Cursor IDE, Claude Desktop, Claude Code CLI, Windsurf, and Zed to the local zero-trust in-RAM ZTDS MCP security server.",
-        "step": [
-          {
-            "@type": "HowToStep",
-            "position": 1,
-            "name": "Select Package Edition",
-            "text": "Choose between open-source community reference (ztds-mcp, Apache-2.0) or certified commercial suite (@privacyscrubber/mcp-server with 30 enterprise profiles)."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 2,
-            "name": "Select AI Client and Platform OS",
-            "text": "Select your IDE (Cursor, Claude Desktop, Claude Code, Windsurf, or Zed) and operating system (macOS, Windows, Linux) to display exact file paths."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 3,
-            "name": "Save Configuration File",
-            "text": "Paste the generated stdio JSON-RPC configuration block into your client configuration file, or run npx ztds-mcp init to auto-configure all detected clients."
-          },
-          {
-            "@type": "HowToStep",
-            "position": 4,
-            "name": "Restart Client and Audit Tool Registration",
-            "text": "Restart your IDE and verify that ztds_sanitize, ztds_restore, and ztds_audit are active in your local MCP tool palette."
-          }
+          "https://www.wikidata.org/wiki/Q141546647",
+          "https://orcid.org/0009-0002-0642-5985",
+          "https://www.linkedin.com/in/ilya-sibiryakov/",
+          "https://github.com/moxno"
         ]
       },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://ztds.ai/mcp/#breadcrumbs",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://ztds.ai/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Model Context Protocol (MCP)",
-            "item": "https://ztds.ai/mcp/"
-          }
-        ]
+      "publisher": {
+        "@type": "Organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai"
       },
-      {
-        "@type": "FAQPage",
-        "@id": "https://ztds.ai/mcp/#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is the fundamental security vulnerability of the Model Context Protocol (MCP)?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The Model Context Protocol (MCP) standardizes how agents read local files, execute terminal commands, and inspect databases. However, MCP lacks a native privacy or data loss prevention layer: tools and prompt serializers ingest cleartext API keys, .env secrets, and customer records from workspace files and transmit them directly to cloud LLM APIs, exposing enterprises to data breaches and GDPR Article 28 data processor liability."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How does the ZTDS In-RAM Method secure MCP without intermediate cloud proxies?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The reference server ztds-mcp runs locally as a process-isolated child process over stdio JSON-RPC pipes. It intercepts prompt strings, tool inputs, and file diffs in volatile host RAM in under 0.5 milliseconds, replacing sensitive cleartext with bijective surrogate tokens before network transmission. Cloud LLMs receive only safe synthetic tokens, while the unmasking mapping table remains strictly inside local client memory."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How does ZTDS preserve code reasoning and syntax in Cursor IDE and Claude Desktop?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Unlike coarse redaction that damages code syntax or replaces secrets with generic asterisks, ZTDS generates context-preserving synthetic tokens matching the data type (e.g., [API_SECRET_TOKEN_1], [EMAIL_TOKEN_1], [IBAN_TOKEN_2]). The LLM treats tokens as valid variable names or literal identifiers, generating accurate refactoring and tool arguments without seeing the underlying private keys."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What are the 5 standard tools provided by the ztds-mcp reference server?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The open server provides: (1) ztds_sanitize (in-memory tokenization of raw text/code), (2) ztds_restore (local unmasking of AI responses), (3) ztds_audit (static security scan of files or directories with SHA-256 receipts), (4) ztds_reset_session (Theorem 2 RAM zeroization purging volatile memory), and (5) ztds_status (environmental diagnostics of client configurations)."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Why is a Data Processing Agreement (DPA) not legally required when using ZTDS MCP?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Under GDPR Article 28 and EDPB guidelines, a DPA is mandatory only when personal data is processed by an external third party. Because ztds-mcp executes 100% inside local device volatile memory and transmits 0.00 bytes of personal data across the network socket, software providers function strictly as local computing utilities under GDPR Recital 26 and HIPAA Safe Harbor 45 CFR § 164.514(b)."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How can an engineer independently verify zero external network egress during an MCP session?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Engineers can verify zero egress using the 5-Step Airplane Mode protocol: (1) install ztds-mcp, (2) physically disconnect network interfaces or enable Airplane Mode, and (3) run npx ztds-mcp status and audit commands. All tokenization, unmasking, and diagnostics execute with 100% functionality offline. Network packet inspection via Wireshark or lsof confirms 0 open outbound sockets."
-            }
-          }
-        ]
+      "citation": [
+        "https://doi.org/10.5281/zenodo.22058770",
+        "https://doi.org/10.17605/OSF.IO/5BYJF",
+        "https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/"
+      ],
+      "image": "https://ztds.ai/assets/img/og/og-mcp.png"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://ztds.ai/mcp/#software",
+      "name": "ZTDS Reference MCP Server",
+      "alternateName": "ztds-mcp",
+      "description": "Zero-dependency open-source reference Model Context Protocol server (io.github.moxno/ztds) providing local in-memory PII and credential sanitization for Claude Desktop, Cursor, Windsurf, and Zed over stdio JSON-RPC.",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Cross-platform (macOS, Linux, Windows)",
+      "softwareVersion": "1.1.1",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "downloadUrl": "https://www.npmjs.com/package/ztds-mcp",
+      "url": "https://ztds.ai/mcp/",
+      "sameAs": [
+        "https://mcpservers.org/servers/ztds-ai",
+        "https://github.com/moxno/ztds-mcp"
+      ],
+      "author": {
+        "@id": "https://ztds.ai/#organization"
       }
-    ]
-  }
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://ztds.ai/mcp/#howto-setup",
+      "name": "How to Configure Model Context Protocol (MCP) for Zero-Trust In-Memory Data Sanitization",
+      "description": "Step-by-step setup guide to connect Cursor IDE, Claude Desktop, Claude Code CLI, Windsurf, and Zed to the local zero-trust in-RAM ZTDS MCP security server.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Select Package Edition",
+          "text": "Choose between open-source community reference (ztds-mcp, Apache-2.0) or certified commercial suite (@privacyscrubber/mcp-server with 30 enterprise profiles)."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Select AI Client and Platform OS",
+          "text": "Select your IDE (Cursor, Claude Desktop, Claude Code, Windsurf, or Zed) and operating system (macOS, Windows, Linux) to display exact file paths."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Save Configuration File",
+          "text": "Paste the generated stdio JSON-RPC configuration block into your client configuration file, or run npx ztds-mcp init to auto-configure all detected clients."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Restart Client and Audit Tool Registration",
+          "text": "Restart your IDE and verify that ztds_sanitize, ztds_restore, and ztds_audit are active in your local MCP tool palette."
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ztds.ai/mcp/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ztds.ai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Model Context Protocol (MCP)",
+          "item": "https://ztds.ai/mcp/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ztds.ai/mcp/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the fundamental security vulnerability of the Model Context Protocol (MCP)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Model Context Protocol (MCP) standardizes how agents read local files, execute terminal commands, and inspect databases. However, MCP lacks a native privacy or data loss prevention layer: tools and prompt serializers ingest cleartext API keys, .env secrets, and customer records from workspace files and transmit them directly to cloud LLM APIs, exposing enterprises to data breaches and GDPR Article 28 data processor liability."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the ZTDS In-RAM Method secure MCP without intermediate cloud proxies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The reference server ztds-mcp runs locally as a process-isolated child process over stdio JSON-RPC pipes. It intercepts prompt strings, tool inputs, and file diffs in volatile host RAM in under 0.5 milliseconds, replacing sensitive cleartext with bijective surrogate tokens before network transmission. Cloud LLMs receive only safe synthetic tokens, while the unmasking mapping table remains strictly inside local client memory."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does ZTDS preserve code reasoning and syntax in Cursor IDE and Claude Desktop?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Unlike coarse redaction that damages code syntax or replaces secrets with generic asterisks, ZTDS generates context-preserving synthetic tokens matching the data type (e.g., [API_SECRET_TOKEN_1], [EMAIL_TOKEN_1], [IBAN_TOKEN_2]). The LLM treats tokens as valid variable names or literal identifiers, generating accurate refactoring and tool arguments without seeing the underlying private keys."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the 5 standard tools provided by the ztds-mcp reference server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The open server provides: (1) ztds_sanitize (in-memory tokenization of raw text/code), (2) ztds_restore (local unmasking of AI responses), (3) ztds_audit (static security scan of files or directories with SHA-256 receipts), (4) ztds_reset_session (Theorem 2 RAM zeroization purging volatile memory), and (5) ztds_status (environmental diagnostics of client configurations)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is a Data Processing Agreement (DPA) not legally required when using ZTDS MCP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under GDPR Article 28 and EDPB guidelines, a DPA is mandatory only when personal data is processed by an external third party. Because ztds-mcp executes 100% inside local device volatile memory and transmits 0.00 bytes of personal data across the network socket, software providers function strictly as local computing utilities under GDPR Recital 26 and HIPAA Safe Harbor 45 CFR § 164.514(b)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can an engineer independently verify zero external network egress during an MCP session?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Engineers can verify zero egress using the 5-Step Airplane Mode protocol: (1) install ztds-mcp, (2) physically disconnect network interfaces or enable Airplane Mode, and (3) run npx ztds-mcp status and audit commands. All tokenization, unmasking, and diagnostics execute with 100% functionality offline. Network packet inspection via Wireshark or lsof confirms 0 open outbound sockets."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
 </head>
 <body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">

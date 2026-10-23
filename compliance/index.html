@@ -40,170 +40,171 @@
 
   <!-- JSON-LD Knowledge Graph: Organization + TechArticle + ItemList + BreadcrumbList + FAQPage -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://ztds.ai/#organization",
-        "name": "ZTDS AI Consortium",
-        "url": "https://ztds.ai/",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://ztds.ai/assets/img/logo-512.png",
-          "width": 512,
-          "height": 512
-        },
-        "founder": {
-          "@type": "Person",
-          "@id": "https://ztds.ai/#ilya-sibiryakov",
-          "name": "Ilya Sibiryakov",
-          "jobTitle": "Chief Architect & Lead Author",
-          "url": "https://www.linkedin.com/in/ilya-sibiryakov/"
-        }
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://ztds.ai/#organization",
+      "name": "ZTDS AI Consortium",
+      "url": "https://ztds.ai/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://ztds.ai/assets/img/logo-512.png",
+        "width": 512,
+        "height": 512
       },
-      {
-        "@type": "TechArticle",
-        "@id": "https://ztds.ai/compliance/#article",
-        "headline": "Global Regulatory Compliance & Statutory Safe Harbor Matrix for Zero-Trust Data Sanitization (ZTDS RFC v1.0)",
-        "description": "Normative legal and technical demarcation matrix mapping ZTDS RFC v1.0 4 Invariants to GDPR Articles 28 and 32, Recital 26, HIPAA Safe Harbor 45 CFR § 164.514(b), EU AI Act Article 10, US Federal Rules of Evidence Rule 502(b), SOC 2 Type II, and CCPA/CPRA.",
-        "url": "https://ztds.ai/compliance/",
-        "datePublished": "2026-09-14",
-        "dateModified": "2026-10-18",
-        "inLanguage": "en-US",
-        "proficiencyLevel": "Expert",
-        "author": {
-          "@id": "https://ztds.ai/#ilya-sibiryakov"
-        },
-        "publisher": {
-          "@id": "https://ztds.ai/#organization"
-        },
-        "isPartOf": {
-          "@id": "https://ztds.ai/standard/#specification"
-        }
-      },
-      {
-        "@type": "ItemList",
-        "@id": "https://ztds.ai/compliance/#frameworks",
-        "name": "Global Regulatory & Statutory Safe Harbor Frameworks Mapped to ZTDS RFC v1.0",
-        "numberOfItems": 8,
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "GDPR Article 28 — Subprocessor Scope Reduction & Zero-DPA Architecture",
-            "url": "https://ztds.ai/compliance/#reg-gdpr-art28"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "GDPR Article 32 — Security of Processing & Technical Safe Harbor (Defense-in-Depth)",
-            "url": "https://ztds.ai/compliance/#reg-gdpr-art32"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "GDPR Recital 26 — Client-Bounded Pseudonymization & Anonymization Boundaries",
-            "url": "https://ztds.ai/compliance/#reg-gdpr-recital26"
-          },
-          {
-            "@type": "ListItem",
-            "position": 4,
-            "name": "HIPAA Safe Harbor — 45 CFR § 164.514(b)(2) 18-Identifier De-Identification",
-            "url": "https://ztds.ai/compliance/#reg-hipaa"
-          },
-          {
-            "@type": "ListItem",
-            "position": 5,
-            "name": "EU AI Act Article 10 — Data Governance & Training/Inference Hygiene",
-            "url": "https://ztds.ai/compliance/#reg-eu-ai-act"
-          },
-          {
-            "@type": "ListItem",
-            "position": 6,
-            "name": "US Federal Rules of Evidence Rule 502(b) — Attorney-Client Privilege Preservation",
-            "url": "https://ztds.ai/compliance/#reg-fre-502b"
-          },
-          {
-            "@type": "ListItem",
-            "position": 7,
-            "name": "SOC 2 Type II (CC6.1 / CC6.6) & ISO/IEC 27701 — Boundary Access Controls",
-            "url": "https://ztds.ai/compliance/#reg-soc2-iso27701"
-          },
-          {
-            "@type": "ListItem",
-            "position": 8,
-            "name": "CCPA / CPRA (Cal. Civ. Code § 1798.140(v)) — De-Identified Consumer Information",
-            "url": "https://ztds.ai/compliance/#reg-ccpa-cpra"
-          }
-        ]
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://ztds.ai/compliance/#breadcrumb",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://ztds.ai/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Regulatory Compliance & Safe Harbor Matrix",
-            "item": "https://ztds.ai/compliance/"
-          }
-        ]
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://ztds.ai/compliance/#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Does a ZTDS-compliant client-side sanitization appliance require a Data Processing Addendum (DPA) under GDPR Article 28?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "No Data Processing Addendum (DPA) is required with the sanitization vendor when running a certified ZTDS Level 1–3 client-side or air-gapped appliance. Because tokenization executes 100% within the data controller's volatile memory (RAM) with zero external network egress and zero third-party subprocessors (Invariant 4), the software vendor never receives, stores, or processes personal data under GDPR Article 4(2) and Article 28."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How does ZTDS provide Technical Safe Harbor under GDPR Article 32 without claiming absolute exemption for free-text prompts?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "ZTDS operates under a strict Statutory Risk Minimization and Defense-in-Depth model. While free-text narrative prompts can theoretically contain contextual quasi-identifiers, ZTDS establishes GDPR Article 32 Technical Safe Harbor through three verifiable layers: (1) 100% Direct PII Zero-Egress via client RAM tokenization before any network socket call, (2) Contextual Entropy Reduction using specialized industry profiles, and (3) Cryptographic SHA-256 Compliance Receipts that provide Data Protection Officers (DPOs) and CISOs with auditable proof of state-of-the-art technical due diligence."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How does ZTDS satisfy HIPAA Safe Harbor De-Identification under 45 CFR § 164.514(b)(2) for clinical AI workflows?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Under HIPAA 45 CFR § 164.514(b)(2), health information is de-identified when all 18 specified direct and temporal identifiers are removed prior to external transmission, and the covered entity has no actual knowledge that the residual information can identify an individual. ZTDS clinical profiles intercept and replace all 18 identifier categories with deterministic syntactic tokens inside the covered entity's clinical perimeter before invoking external LLMs, keeping the private re-identification key strictly on-premise under 45 CFR § 164.514(c)."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How does pre-egress tokenization prevent inadvertent waiver of attorney-client privilege under US Federal Rules of Evidence Rule 502(b)?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Under US Federal Rules of Evidence Rule 502(b), a disclosure does not operate as a privilege waiver if the holder took reasonable steps to prevent disclosure of privileged identifiers. Deploying deterministic client-side tokenization to strip client names, matter numbers, opposing counsel identities, and financial figures prior to external LLM analysis constitutes demonstrable, state-of-the-art technical precautions that preserve work-product confidentiality."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How should security teams answer SIG Lite, CSA CAIQ, and VSAQ vendor risk questionnaires for a ZTDS appliance?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "For ZTDS-certified local appliances, subprocessor, cloud data residency, and data-at-rest encryption questions are answered as 'Not Applicable — Zero Data Egress Architecture (Client-Side Volatile RAM Only).' Cryptographic verification is evidenced via offline Ed25519 signature validation and local SHA-256 compliance receipts generated by npx ztds-audit."
-            }
-          }
-        ]
+      "founder": {
+        "@type": "Person",
+        "@id": "https://ztds.ai/#ilya-sibiryakov",
+        "name": "Ilya Sibiryakov",
+        "jobTitle": "Chief Architect & Lead Author",
+        "url": "https://www.linkedin.com/in/ilya-sibiryakov/"
       }
-    ]
-  }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://ztds.ai/compliance/#article",
+      "headline": "Global Regulatory Compliance & Statutory Safe Harbor Matrix for Zero-Trust Data Sanitization (ZTDS RFC v1.0)",
+      "description": "Normative legal and technical demarcation matrix mapping ZTDS RFC v1.0 4 Invariants to GDPR Articles 28 and 32, Recital 26, HIPAA Safe Harbor 45 CFR § 164.514(b), EU AI Act Article 10, US Federal Rules of Evidence Rule 502(b), SOC 2 Type II, and CCPA/CPRA.",
+      "url": "https://ztds.ai/compliance/",
+      "datePublished": "2026-09-14T00:00:00Z",
+      "dateModified": "2026-10-18T00:00:00Z",
+      "inLanguage": "en-US",
+      "proficiencyLevel": "Expert",
+      "author": {
+        "@id": "https://ztds.ai/#ilya-sibiryakov"
+      },
+      "publisher": {
+        "@id": "https://ztds.ai/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://ztds.ai/standard/#specification"
+      },
+      "image": "https://ztds.ai/assets/img/og/og-compliance.png"
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://ztds.ai/compliance/#frameworks",
+      "name": "Global Regulatory & Statutory Safe Harbor Frameworks Mapped to ZTDS RFC v1.0",
+      "numberOfItems": 8,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "GDPR Article 28 — Subprocessor Scope Reduction & Zero-DPA Architecture",
+          "url": "https://ztds.ai/compliance/#reg-gdpr-art28"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "GDPR Article 32 — Security of Processing & Technical Safe Harbor (Defense-in-Depth)",
+          "url": "https://ztds.ai/compliance/#reg-gdpr-art32"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "GDPR Recital 26 — Client-Bounded Pseudonymization & Anonymization Boundaries",
+          "url": "https://ztds.ai/compliance/#reg-gdpr-recital26"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "HIPAA Safe Harbor — 45 CFR § 164.514(b)(2) 18-Identifier De-Identification",
+          "url": "https://ztds.ai/compliance/#reg-hipaa"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "EU AI Act Article 10 — Data Governance & Training/Inference Hygiene",
+          "url": "https://ztds.ai/compliance/#reg-eu-ai-act"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "US Federal Rules of Evidence Rule 502(b) — Attorney-Client Privilege Preservation",
+          "url": "https://ztds.ai/compliance/#reg-fre-502b"
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "name": "SOC 2 Type II (CC6.1 / CC6.6) & ISO/IEC 27701 — Boundary Access Controls",
+          "url": "https://ztds.ai/compliance/#reg-soc2-iso27701"
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "name": "CCPA / CPRA (Cal. Civ. Code § 1798.140(v)) — De-Identified Consumer Information",
+          "url": "https://ztds.ai/compliance/#reg-ccpa-cpra"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ztds.ai/compliance/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ztds.ai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Regulatory Compliance & Safe Harbor Matrix",
+          "item": "https://ztds.ai/compliance/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ztds.ai/compliance/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does a ZTDS-compliant client-side sanitization appliance require a Data Processing Addendum (DPA) under GDPR Article 28?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No Data Processing Addendum (DPA) is required with the sanitization vendor when running a certified ZTDS Level 1–3 client-side or air-gapped appliance. Because tokenization executes 100% within the data controller's volatile memory (RAM) with zero external network egress and zero third-party subprocessors (Invariant 4), the software vendor never receives, stores, or processes personal data under GDPR Article 4(2) and Article 28."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does ZTDS provide Technical Safe Harbor under GDPR Article 32 without claiming absolute exemption for free-text prompts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ZTDS operates under a strict Statutory Risk Minimization and Defense-in-Depth model. While free-text narrative prompts can theoretically contain contextual quasi-identifiers, ZTDS establishes GDPR Article 32 Technical Safe Harbor through three verifiable layers: (1) 100% Direct PII Zero-Egress via client RAM tokenization before any network socket call, (2) Contextual Entropy Reduction using specialized industry profiles, and (3) Cryptographic SHA-256 Compliance Receipts that provide Data Protection Officers (DPOs) and CISOs with auditable proof of state-of-the-art technical due diligence."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does ZTDS satisfy HIPAA Safe Harbor De-Identification under 45 CFR § 164.514(b)(2) for clinical AI workflows?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under HIPAA 45 CFR § 164.514(b)(2), health information is de-identified when all 18 specified direct and temporal identifiers are removed prior to external transmission, and the covered entity has no actual knowledge that the residual information can identify an individual. ZTDS clinical profiles intercept and replace all 18 identifier categories with deterministic syntactic tokens inside the covered entity's clinical perimeter before invoking external LLMs, keeping the private re-identification key strictly on-premise under 45 CFR § 164.514(c)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does pre-egress tokenization prevent inadvertent waiver of attorney-client privilege under US Federal Rules of Evidence Rule 502(b)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under US Federal Rules of Evidence Rule 502(b), a disclosure does not operate as a privilege waiver if the holder took reasonable steps to prevent disclosure of privileged identifiers. Deploying deterministic client-side tokenization to strip client names, matter numbers, opposing counsel identities, and financial figures prior to external LLM analysis constitutes demonstrable, state-of-the-art technical precautions that preserve work-product confidentiality."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How should security teams answer SIG Lite, CSA CAIQ, and VSAQ vendor risk questionnaires for a ZTDS appliance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For ZTDS-certified local appliances, subprocessor, cloud data residency, and data-at-rest encryption questions are answered as 'Not Applicable — Zero Data Egress Architecture (Client-Side Volatile RAM Only).' Cryptographic verification is evidenced via offline Ed25519 signature validation and local SHA-256 compliance receipts generated by npx ztds-audit."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
 </head>
 <body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans antialiased">

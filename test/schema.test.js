@@ -132,8 +132,9 @@ for (const page of articlePages) {
     if (article) {
       assert(article.datePublished, `datePublished missing in ${page}`);
       assert(article.dateModified, `dateModified missing in ${page}`);
-      assert(/^\d{4}-\d{2}-\d{2}$/.test(article.datePublished), `datePublished format invalid in ${page}`);
-      assert(/^\d{4}-\d{2}-\d{2}$/.test(article.dateModified), `dateModified format invalid in ${page}`);
+      assert(article.image, `image missing on article in ${page}`);
+      assert(/^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2}))?$/.test(article.datePublished), `datePublished format invalid in ${page}`);
+      assert(/^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2}))?$/.test(article.dateModified), `dateModified format invalid in ${page}`);
       checked = true;
     }
   }

@@ -38,157 +38,168 @@
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://ztds.ai/#organization",
+      "name": "ZTDS AI Consortium",
+      "url": "https://ztds.ai",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://ztds.ai/assets/img/logo-512.png",
+        "width": 512,
+        "height": 512
+      },
+      "founder": {
+        "@id": "https://ztds.ai/#founder"
+      },
+      "sameAs": [
+        "https://github.com/moxno/ztds.ai",
+        "https://zenodo.org/records/22058770",
+        "https://osf.io/5byjf/",
+        "https://www.wikidata.org/wiki/Q141575477"
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://ztds.ai/#founder",
+      "name": "Ilya Sibiryakov",
+      "jobTitle": "Specification Author & Chief Architect",
+      "url": "https://orcid.org/0009-0002-0642-5985",
+      "sameAs": [
+        "https://www.wikidata.org/wiki/Q141546647",
+        "https://scholar.google.com/citations?user=lsNThrUAAAAJ",
+        "https://orcid.org/0009-0002-0642-5985",
+        "https://www.linkedin.com/in/ilya-sibiryakov/",
+        "https://www.crunchbase.com/person/ilya-sibiryakov",
+        "https://github.com/moxno",
+        "https://ssrn.com/author=12873449"
+      ],
+      "affiliation": {
         "@type": "Organization",
-        "@id": "https://ztds.ai/#organization",
-        "name": "ZTDS AI Consortium",
-        "url": "https://ztds.ai",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://ztds.ai/assets/img/logo-512.png",
-          "width": 512,
-          "height": 512
-        },
-        "founder": {
-          "@id": "https://ztds.ai/#founder"
-        },
-        "sameAs": [
-          "https://github.com/moxno/ztds.ai",
-          "https://zenodo.org/records/22058770",
-          "https://osf.io/5byjf/",
-          "https://www.wikidata.org/wiki/Q141575477"
-        ]
-      },
-      {
-        "@type": "Person",
-        "@id": "https://ztds.ai/#founder",
-        "name": "Ilya Sibiryakov",
-        "jobTitle": "Specification Author & Chief Architect",
-        "url": "https://orcid.org/0009-0002-0642-5985",
-        "sameAs": [
-          "https://www.wikidata.org/wiki/Q141546647",
-          "https://scholar.google.com/citations?user=lsNThrUAAAAJ",
-          "https://orcid.org/0009-0002-0642-5985",
-          "https://www.linkedin.com/in/ilya-sibiryakov/",
-          "https://www.crunchbase.com/person/ilya-sibiryakov",
-          "https://github.com/moxno",
-          "https://ssrn.com/author=12873449"
-        ],
-        "affiliation": {
-          "@type": "Organization",
-          "name": "BrandMeWeb",
-          "url": "https://brandmeweb.com"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://ztds.ai/#website",
-        "url": "https://ztds.ai",
-        "name": "ZTDS.ai",
-        "description": "Zero-Trust Data Sanitization (ZTDS) — Open Industry Standard and Verification Authority for Enterprise AI",
-        "publisher": { "@id": "https://ztds.ai/#organization" },
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": {
-            "@type": "EntryPoint",
-            "urlTemplate": "https://ztds.ai/scanner/?domain={search_term_string}"
-          },
-          "query-input": "required name=search_term_string"
-        }
-      },
-      {
-        "@type": "TechArticle",
-        "@id": "https://ztds.ai/standard/#tech-article",
-        "headline": "Zero-Trust Data Sanitization (ZTDS) Specification v1.0",
-        "description": "The open industry standard for in-memory client-side data de-identification in Generative AI pipelines.",
-        "datePublished": "2026-09-15",
-        "dateModified": "2026-09-21",
-        "author": { "@id": "https://ztds.ai/#founder" },
-        "publisher": { "@id": "https://ztds.ai/#organization" }
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://ztds.ai/#software-mcp",
-        "name": "ZTDS Reference MCP Server",
-        "alternateName": "ztds-mcp",
-        "description": "Zero-dependency open-source reference Model Context Protocol server (io.github.moxno/ztds) providing local in-memory PII sanitization for Claude Desktop, Cursor, and Zed.",
-        "applicationCategory": "SecurityApplication",
-        "operatingSystem": "Cross-platform (macOS, Linux, Windows)",
-        "softwareVersion": "1.1.1",
-        "license": "https://www.apache.org/licenses/LICENSE-2.0",
-        "downloadUrl": "https://www.npmjs.com/package/ztds-mcp",
-        "url": "https://ztds.ai/mcp/",
-        "sameAs": [
-          "https://mcpservers.org/servers/ztds-ai",
-          "https://github.com/moxno/ztds-mcp"
-        ],
-        "author": { "@id": "https://ztds.ai/#organization" }
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://ztds.ai/#software-cli",
-        "name": "ZTDS Codebase Invariant Auditor CLI",
-        "alternateName": "ztds-audit",
-        "description": "Automated static analysis CLI auditing AI pipelines and agent connectors against ZTDS RFC v1.0 invariants in sub-10ms with Ed25519 receipts.",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Node.js / Cross-platform",
-        "softwareVersion": "1.1.1",
-        "license": "https://www.apache.org/licenses/LICENSE-2.0",
-        "downloadUrl": "https://www.npmjs.com/package/ztds-audit",
-        "url": "https://ztds.ai/scanner/",
-        "author": { "@id": "https://ztds.ai/#organization" }
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://ztds.ai/#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "How does ZTDS protect sensitive data in Model Context Protocol (MCP) for Cursor and Claude Desktop?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The open reference MCP server (ztds-mcp) executes locally over stdio JSON-RPC pipes in volatile RAM. It intercepts developer prompts, diffs, and tool arguments, replacing cleartext secrets and PII with context-preserving surrogate tokens before network transmission, guaranteeing 0.00 bytes socket telemetry."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How does ZTDS solve GDPR Article 17 Right to be Forgotten in RAG vector databases?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Cleartext PII embedded into dense vector stores cannot be deleted without re-indexing the entire corpus. Ingesting documents through ZTDS transforms sensitive identifiers into ephemeral surrogate tokens prior to embedding generation, permanently eliminating vector store contamination from persistent PII, preventing costly re-indexing and non-compliance under GDPR Article 17."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How does ZTDS address GDPR Article 28 data processor obligations for AI architectures?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Under ZTDS Invariant 4, data sanitization executes 100% inside client volatile memory prior to WAN serialization; exactly 0.00 bytes of raw personal data leave the local application runtime. Because the sanitization engine never receives, stores, or transmits personal data, it eliminates intermediary vendors from the data processor supply chain under GDPR Article 28 and functions as a proactive technical safe harbor under GDPR Article 32."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the difference between open reference ztds-mcp and @privacyscrubber/mcp-server?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "ztds-mcp is the open-source reference implementation published under Apache 2.0 by the ZTDS Consortium, providing baseline universal entity sanitization (emails, keys, credit cards, SSNs, IPs) for individual developers. @privacyscrubber/mcp-server is the certified enterprise production engine engineered by BrandMeWeb, including 30 specialized industry profiles (HIPAA clinical PHI, banking routing/IBANs, legal work product, cloud IAM credentials) and offline Ed25519 cryptographic token licensing for corporate teams."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How can I independently verify zero external network egress in my own environment?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "ZTDS conforms to the Airplane Mode Verification Protocol: load the web playground or run the CLI auditor npx ztds-audit --strict, physically disconnect your network interface (or enable Airplane Mode), and observe that all sanitization, detokenization, and verification execute with 100% functionality without error. You can also run Wireshark or inspect the Chrome DevTools Network panel to confirm that exactly 0 network requests are dispatched during processing."
-            }
-          }
-        ]
+        "name": "BrandMeWeb",
+        "url": "https://brandmeweb.com"
       }
-    ]
-  }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://ztds.ai/#website",
+      "url": "https://ztds.ai",
+      "name": "ZTDS.ai",
+      "description": "Zero-Trust Data Sanitization (ZTDS) — Open Industry Standard and Verification Authority for Enterprise AI",
+      "publisher": {
+        "@id": "https://ztds.ai/#organization"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://ztds.ai/scanner/?domain={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://ztds.ai/standard/#tech-article",
+      "headline": "Zero-Trust Data Sanitization (ZTDS) Specification v1.0",
+      "description": "The open industry standard for in-memory client-side data de-identification in Generative AI pipelines.",
+      "datePublished": "2026-09-15T00:00:00Z",
+      "dateModified": "2026-09-21T00:00:00Z",
+      "author": {
+        "@id": "https://ztds.ai/#founder"
+      },
+      "publisher": {
+        "@id": "https://ztds.ai/#organization"
+      },
+      "image": "https://ztds.ai/assets/img/og/og-default.png"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://ztds.ai/#software-mcp",
+      "name": "ZTDS Reference MCP Server",
+      "alternateName": "ztds-mcp",
+      "description": "Zero-dependency open-source reference Model Context Protocol server (io.github.moxno/ztds) providing local in-memory PII sanitization for Claude Desktop, Cursor, and Zed.",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Cross-platform (macOS, Linux, Windows)",
+      "softwareVersion": "1.1.1",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "downloadUrl": "https://www.npmjs.com/package/ztds-mcp",
+      "url": "https://ztds.ai/mcp/",
+      "sameAs": [
+        "https://mcpservers.org/servers/ztds-ai",
+        "https://github.com/moxno/ztds-mcp"
+      ],
+      "author": {
+        "@id": "https://ztds.ai/#organization"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://ztds.ai/#software-cli",
+      "name": "ZTDS Codebase Invariant Auditor CLI",
+      "alternateName": "ztds-audit",
+      "description": "Automated static analysis CLI auditing AI pipelines and agent connectors against ZTDS RFC v1.0 invariants in sub-10ms with Ed25519 receipts.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Node.js / Cross-platform",
+      "softwareVersion": "1.1.1",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "downloadUrl": "https://www.npmjs.com/package/ztds-audit",
+      "url": "https://ztds.ai/scanner/",
+      "author": {
+        "@id": "https://ztds.ai/#organization"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ztds.ai/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does ZTDS protect sensitive data in Model Context Protocol (MCP) for Cursor and Claude Desktop?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The open reference MCP server (ztds-mcp) executes locally over stdio JSON-RPC pipes in volatile RAM. It intercepts developer prompts, diffs, and tool arguments, replacing cleartext secrets and PII with context-preserving surrogate tokens before network transmission, guaranteeing 0.00 bytes socket telemetry."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does ZTDS solve GDPR Article 17 Right to be Forgotten in RAG vector databases?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cleartext PII embedded into dense vector stores cannot be deleted without re-indexing the entire corpus. Ingesting documents through ZTDS transforms sensitive identifiers into ephemeral surrogate tokens prior to embedding generation, permanently eliminating vector store contamination from persistent PII, preventing costly re-indexing and non-compliance under GDPR Article 17."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does ZTDS address GDPR Article 28 data processor obligations for AI architectures?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under ZTDS Invariant 4, data sanitization executes 100% inside client volatile memory prior to WAN serialization; exactly 0.00 bytes of raw personal data leave the local application runtime. Because the sanitization engine never receives, stores, or transmits personal data, it eliminates intermediary vendors from the data processor supply chain under GDPR Article 28 and functions as a proactive technical safe harbor under GDPR Article 32."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between open reference ztds-mcp and @privacyscrubber/mcp-server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ztds-mcp is the open-source reference implementation published under Apache 2.0 by the ZTDS Consortium, providing baseline universal entity sanitization (emails, keys, credit cards, SSNs, IPs) for individual developers. @privacyscrubber/mcp-server is the certified enterprise production engine engineered by BrandMeWeb, including 30 specialized industry profiles (HIPAA clinical PHI, banking routing/IBANs, legal work product, cloud IAM credentials) and offline Ed25519 cryptographic token licensing for corporate teams."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I independently verify zero external network egress in my own environment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ZTDS conforms to the Airplane Mode Verification Protocol: load the web playground or run the CLI auditor npx ztds-audit --strict, physically disconnect your network interface (or enable Airplane Mode), and observe that all sanitization, detokenization, and verification execute with 100% functionality without error. You can also run Wireshark or inspect the Chrome DevTools Network panel to confirm that exactly 0 network requests are dispatched during processing."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
 </head>
 <body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">

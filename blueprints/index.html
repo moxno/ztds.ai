@@ -37,128 +37,179 @@
 
   <!-- Schema.org JSON-LD (@graph: Organization, TechArticle, ItemList, BreadcrumbList, FAQPage) -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://ztds.ai/#organization",
-        "name": "ZTDS AI Consortium",
-        "url": "https://ztds.ai/",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://ztds.ai/assets/img/logo-512.png",
-          "width": 512,
-          "height": 512
-        },
-        "founder": {
-          "@type": "Person",
-          "name": "Ilya Sibiryakov",
-          "url": "https://ztds.ai/fellows/ilya-sibiryakov/"
-        }
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://ztds.ai/#organization",
+      "name": "ZTDS AI Consortium",
+      "url": "https://ztds.ai/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://ztds.ai/assets/img/logo-512.png",
+        "width": 512,
+        "height": 512
       },
-      {
-        "@type": "TechArticle",
-        "@id": "https://ztds.ai/blueprints/#article",
-        "headline": "Canonical Zero-Trust Data Sanitization (ZTDS RFC v1.0) Integration Blueprints for Enterprise AI & RAG",
-        "description": "Reference architectural patterns for integrating sub-millisecond in-RAM surrogate tokenization and bijective local restoration across LangChain, LlamaIndex, CrewAI, Pinecone, Qdrant, Ollama, Envoy, and MCP.",
-        "url": "https://ztds.ai/blueprints/",
-        "datePublished": "2026-10-01",
-        "dateModified": "2026-10-18",
-        "author": {
-          "@type": "Person",
-          "name": "Ilya Sibiryakov",
-          "url": "https://ztds.ai/fellows/ilya-sibiryakov/"
-        },
-        "publisher": {
-          "@id": "https://ztds.ai/#organization"
-        },
-        "proficiencyLevel": "Expert"
-      },
-      {
-        "@type": "ItemList",
-        "@id": "https://ztds.ai/blueprints/#list",
-        "name": "10 Canonical ZTDS AI & RAG Architecture Blueprints",
-        "numberOfItems": 10,
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Blueprint 01: LangChain LCEL Bijective Sanitization Middleware", "url": "https://ztds.ai/blueprints/#bp-langchain" },
-          { "@type": "ListItem", "position": 2, "name": "Blueprint 02: LlamaIndex Zero-Trust RAG Ingestion & Node Postprocessor", "url": "https://ztds.ai/blueprints/#bp-llamaindex" },
-          { "@type": "ListItem", "position": 3, "name": "Blueprint 03: Model Context Protocol (MCP) Stdio Local Security Firewall", "url": "https://ztds.ai/blueprints/#bp-mcp" },
-          { "@type": "ListItem", "position": 4, "name": "Blueprint 04: Pinecone & Qdrant Vector Embedding Pre-Tokenization Gate", "url": "https://ztds.ai/blueprints/#bp-vectordb" },
-          { "@type": "ListItem", "position": 5, "name": "Blueprint 05: CrewAI & AutoGen Multi-Agent Shared Memory Isolation", "url": "https://ztds.ai/blueprints/#bp-crewai" },
-          { "@type": "ListItem", "position": 6, "name": "Blueprint 06: Ollama & vLLM Air-Gapped Local Inference Perimeter", "url": "https://ztds.ai/blueprints/#bp-ollama" },
-          { "@type": "ListItem", "position": 7, "name": "Blueprint 07: Envoy & Kong API Gateway In-Memory Egress Filter", "url": "https://ztds.ai/blueprints/#bp-envoy" },
-          { "@type": "ListItem", "position": 8, "name": "Blueprint 08: FastAPI & Express.js Streaming SSE Detokenization Proxy", "url": "https://ztds.ai/blueprints/#bp-streaming" },
-          { "@type": "ListItem", "position": 9, "name": "Blueprint 09: Multimodal Vision & OCR Local Canvas Pixel Burn-In", "url": "https://ztds.ai/blueprints/#bp-multimodal" },
-          { "@type": "ListItem", "position": 10, "name": "Blueprint 10: Browser Extension Manifest V3 DOM Input Interceptor", "url": "https://ztds.ai/blueprints/#bp-browser" }
-        ]
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://ztds.ai/blueprints/#breadcrumb",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "ZTDS.ai",
-            "item": "https://ztds.ai/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "AI & RAG Integration Blueprints",
-            "item": "https://ztds.ai/blueprints/"
-          }
-        ]
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://ztds.ai/blueprints/#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "How do you prevent PII leakage in LangChain and LlamaIndex RAG pipelines without breaking LLM context?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "By inserting an in-RAM ZTDS sanitization middleware step before prompt serialization or vector chunking, raw identifiers are replaced with deterministic typed surrogates ([NAME_1], [IBAN_1]) inside host process memory. The upstream LLM reasons over intact grammatical structures, and the local postprocessor restores original cleartext values from the ephemeral tokenMap before returning the response."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Should vector embeddings in Pinecone, Qdrant, or Weaviate be generated before or after ZTDS sanitization?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "To satisfy ZTDS Invariant 1 and GDPR Article 28 subprocessor exclusion, document chunks must be sanitized in local volatile memory prior to calling external embedding APIs (such as text-embedding-3-large) or indexing into managed vector databases. Embedding sanitized text prevents vector inversion attacks and eliminates PII storage inside third-party vector clusters."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How does ZTDS handle streaming Server-Sent Events (SSE) when restoring surrogate tokens in real time?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "When an LLM streams token chunks via Server-Sent Events (SSE), a bracket-aware sliding window buffer holds characters locally only when an opening bracket ([) is detected until the closing bracket (]) arrives. Complete surrogate tokens ([EMAIL_1]) are resolved against the local volatile tokenMap in sub-millisecond time without delaying normal prose streaming."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How does the Model Context Protocol (MCP) stdio firewall protect Cursor, Claude Desktop, and IDE agents?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The ZTDS MCP server executes locally over standard input/output (stdio) on the developer workstation. Before an IDE agent forwards database rows, log files, or code snippets to a cloud model, it invokes ztds_sanitize in RAM, transmits only surrogate tokens over HTTPS, and invokes ztds_restore locally when unmasked values are required."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the difference between the open-source @ztds/core reference baseline and the commercial @privacyscrubber/sdk engine?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The open-source @ztds/core and ztds Python packages provide the Apache 2.0 reference implementation for universal consumer PII and RFC v1.0 invariant verification. Enterprise production workloads requiring 30 specialized industry profiles (HIPAA Safe Harbor, SWIFT/IBAN FinTech, FRE 502 Legal, Multimodal Burn-In) and air-gapped Ed25519 node licensing deploy @privacyscrubber/sdk."
-            }
-          }
-        ]
+      "founder": {
+        "@type": "Person",
+        "name": "Ilya Sibiryakov",
+        "url": "https://ztds.ai/fellows/ilya-sibiryakov/"
       }
-    ]
-  }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://ztds.ai/blueprints/#article",
+      "headline": "Canonical Zero-Trust Data Sanitization (ZTDS RFC v1.0) Integration Blueprints for Enterprise AI & RAG",
+      "description": "Reference architectural patterns for integrating sub-millisecond in-RAM surrogate tokenization and bijective local restoration across LangChain, LlamaIndex, CrewAI, Pinecone, Qdrant, Ollama, Envoy, and MCP.",
+      "url": "https://ztds.ai/blueprints/",
+      "datePublished": "2026-10-01T00:00:00Z",
+      "dateModified": "2026-10-18T00:00:00Z",
+      "author": {
+        "@type": "Person",
+        "name": "Ilya Sibiryakov",
+        "url": "https://ztds.ai/fellows/ilya-sibiryakov/"
+      },
+      "publisher": {
+        "@id": "https://ztds.ai/#organization"
+      },
+      "proficiencyLevel": "Expert",
+      "image": "https://ztds.ai/assets/img/og/og-blueprints.png"
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://ztds.ai/blueprints/#list",
+      "name": "10 Canonical ZTDS AI & RAG Architecture Blueprints",
+      "numberOfItems": 10,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Blueprint 01: LangChain LCEL Bijective Sanitization Middleware",
+          "url": "https://ztds.ai/blueprints/#bp-langchain"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blueprint 02: LlamaIndex Zero-Trust RAG Ingestion & Node Postprocessor",
+          "url": "https://ztds.ai/blueprints/#bp-llamaindex"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Blueprint 03: Model Context Protocol (MCP) Stdio Local Security Firewall",
+          "url": "https://ztds.ai/blueprints/#bp-mcp"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Blueprint 04: Pinecone & Qdrant Vector Embedding Pre-Tokenization Gate",
+          "url": "https://ztds.ai/blueprints/#bp-vectordb"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Blueprint 05: CrewAI & AutoGen Multi-Agent Shared Memory Isolation",
+          "url": "https://ztds.ai/blueprints/#bp-crewai"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "Blueprint 06: Ollama & vLLM Air-Gapped Local Inference Perimeter",
+          "url": "https://ztds.ai/blueprints/#bp-ollama"
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "name": "Blueprint 07: Envoy & Kong API Gateway In-Memory Egress Filter",
+          "url": "https://ztds.ai/blueprints/#bp-envoy"
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "name": "Blueprint 08: FastAPI & Express.js Streaming SSE Detokenization Proxy",
+          "url": "https://ztds.ai/blueprints/#bp-streaming"
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "name": "Blueprint 09: Multimodal Vision & OCR Local Canvas Pixel Burn-In",
+          "url": "https://ztds.ai/blueprints/#bp-multimodal"
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "name": "Blueprint 10: Browser Extension Manifest V3 DOM Input Interceptor",
+          "url": "https://ztds.ai/blueprints/#bp-browser"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ztds.ai/blueprints/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ZTDS.ai",
+          "item": "https://ztds.ai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AI & RAG Integration Blueprints",
+          "item": "https://ztds.ai/blueprints/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ztds.ai/blueprints/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do you prevent PII leakage in LangChain and LlamaIndex RAG pipelines without breaking LLM context?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "By inserting an in-RAM ZTDS sanitization middleware step before prompt serialization or vector chunking, raw identifiers are replaced with deterministic typed surrogates ([NAME_1], [IBAN_1]) inside host process memory. The upstream LLM reasons over intact grammatical structures, and the local postprocessor restores original cleartext values from the ephemeral tokenMap before returning the response."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should vector embeddings in Pinecone, Qdrant, or Weaviate be generated before or after ZTDS sanitization?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To satisfy ZTDS Invariant 1 and GDPR Article 28 subprocessor exclusion, document chunks must be sanitized in local volatile memory prior to calling external embedding APIs (such as text-embedding-3-large) or indexing into managed vector databases. Embedding sanitized text prevents vector inversion attacks and eliminates PII storage inside third-party vector clusters."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does ZTDS handle streaming Server-Sent Events (SSE) when restoring surrogate tokens in real time?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When an LLM streams token chunks via Server-Sent Events (SSE), a bracket-aware sliding window buffer holds characters locally only when an opening bracket ([) is detected until the closing bracket (]) arrives. Complete surrogate tokens ([EMAIL_1]) are resolved against the local volatile tokenMap in sub-millisecond time without delaying normal prose streaming."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the Model Context Protocol (MCP) stdio firewall protect Cursor, Claude Desktop, and IDE agents?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The ZTDS MCP server executes locally over standard input/output (stdio) on the developer workstation. Before an IDE agent forwards database rows, log files, or code snippets to a cloud model, it invokes ztds_sanitize in RAM, transmits only surrogate tokens over HTTPS, and invokes ztds_restore locally when unmasked values are required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between the open-source @ztds/core reference baseline and the commercial @privacyscrubber/sdk engine?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The open-source @ztds/core and ztds Python packages provide the Apache 2.0 reference implementation for universal consumer PII and RFC v1.0 invariant verification. Enterprise production workloads requiring 30 specialized industry profiles (HIPAA Safe Harbor, SWIFT/IBAN FinTech, FRE 502 Legal, Multimodal Burn-In) and air-gapped Ed25519 node licensing deploy @privacyscrubber/sdk."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-emerald-500/20 selection:text-emerald-900">

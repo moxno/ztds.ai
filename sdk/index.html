@@ -35,137 +35,145 @@
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "SoftwareSourceCode",
-        "@id": "https://ztds.ai/sdk/#core",
-        "name": "@ztds/core",
-        "description": "Open reference implementation of the ZTDS RFC v1.0 zero-trust data sanitization standard under Apache 2.0.",
-        "url": "https://ztds.ai/sdk/",
-        "license": "https://www.apache.org/licenses/LICENSE-2.0",
-        "codeRepository": "https://github.com/moxno/ztds.ai",
-        "programmingLanguage": ["TypeScript", "JavaScript"],
-        "datePublished": "2026-09-18",
-        "dateModified": "2026-09-21",
-        "publisher": {
-          "@type": "Organization",
-          "name": "ZTDS AI Consortium",
-          "url": "https://ztds.ai"
-        }
-      },
-      {
-        "@type": "SoftwareSourceCode",
-        "@id": "https://ztds.ai/sdk/#enterprise-sdk",
-        "name": "@privacyscrubber/sdk",
-        "description": "Sub-millisecond in-memory PII de-identification library for Node.js, WASM, LangChain, and RAG vector databases. Zero network egress.",
-        "url": "https://ztds.ai/sdk/",
-        "programmingLanguage": ["TypeScript", "JavaScript", "Python"],
-        "datePublished": "2026-09-16",
-        "dateModified": "2026-09-21",
-        "publisher": {
-          "@type": "Organization",
-          "name": "ZTDS AI Consortium",
-          "url": "https://ztds.ai"
-        }
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://ztds.ai/sdk/#breadcrumbs",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://ztds.ai/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Developer Engine & SDK",
-            "item": "https://ztds.ai/sdk/"
-          }
-        ]
-      },
-      {
-        "@type": "TechArticle",
-        "@id": "https://ztds.ai/sdk/#techarticle",
-        "headline": "ZTDS Developer SDK & Pre-Built Connectors — Zero-Trust AI Sanitization",
-        "description": "Technical documentation, API specifications, Model Context Protocol (MCP) stdio setup, and framework blueprints for in-memory zero-trust data sanitization.",
-        "url": "https://ztds.ai/sdk/",
-        "author": {
-          "@type": "Person",
-          "name": "Ilya Sibiryakov",
-          "sameAs": "https://www.linkedin.com/in/ilya-sibiryakov/"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "ZTDS AI Consortium",
-          "url": "https://ztds.ai"
-        },
-        "citation": [
-          "https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/",
-          "https://doi.org/10.5281/zenodo.22058770",
-          "https://doi.org/10.17605/OSF.IO/5BYJF"
-        ]
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://ztds.ai/sdk/#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is the ZTDS Developer SDK and how does it prevent PII leakage to LLMs?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The ZTDS Developer SDK is an in-memory runtime engine and set of pre-built connectors that intercepts prompts and documents directly in host volatile RAM before external socket transmission. Sensitive PII, PHI, API keys, and corporate secrets are deterministically replaced with context-preserving surrogate tokens in under 0.8ms with 0.00 bytes socket egress. Model completions are losslessly restored locally in client memory."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I configure ZTDS with Model Context Protocol (MCP) in Cursor IDE or Claude Desktop?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Add ztds-mcp (open reference server) or @privacyscrubber/mcp-server (enterprise 30-profile suite) to your .cursor/mcp.json or claude_desktop_config.json using stdio transport with command 'npx' and args ['-y', 'ztds-mcp']. It executes locally over stdin/stdout with zero network telemetry."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Does the ZTDS runtime send any telemetry or licensing phone-home beacons?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "No. All ZTDS runtime engines enforce Invariant 1 (Zero External Egress Prior to Sanitization). Commercial license validation uses local asymmetric Ed25519 digital signatures (RFC 8032) embedded directly into offline license tokens, executing verification in under 0.12ms in RAM with zero network calls."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Why is a Data Processing Agreement (DPA) unnecessary under GDPR Article 28?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Under GDPR Article 28, a DPA is only required when personal data is transmitted to an external third-party data processor. Because ZTDS operates as a computational utility strictly inside the customer's own execution perimeter, no personal data ever crosses the network boundary to ZTDS or PrivacyScrubber servers, eliminating third-party subprocessor legal liability."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do offline Ed25519 asymmetric cryptographic license tokens work?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Commercial licenses (Developer Pro, TEAMS, Enterprise) provide an offline token (ZTDS-LIC-v1...). The engine verifies the Ed25519 signature against an embedded public key in local memory in under 120 microseconds. It operates 100% offline in air-gapped Docker containers, Kubernetes pods, and AWS Nitro Enclaves with an automated 60-day AP grace period."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the difference between @ztds/core and @privacyscrubber/sdk?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "@ztds/core is the permissive Apache 2.0 open-source baseline reference implementation providing core invariant compliance and universal regex detectors. @privacyscrubber/sdk is the enterprise production engine featuring SIMD-accelerated WebAssembly, 30 certified industry profiles (HIPAA, PCI-DSS v4, Legal Privilege), offline multi-node licensing, and pre-built framework connectors."
-            }
-          }
-        ]
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://ztds.ai/sdk/#core",
+      "name": "@ztds/core",
+      "description": "Open reference implementation of the ZTDS RFC v1.0 zero-trust data sanitization standard under Apache 2.0.",
+      "url": "https://ztds.ai/sdk/",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "codeRepository": "https://github.com/moxno/ztds.ai",
+      "programmingLanguage": [
+        "TypeScript",
+        "JavaScript"
+      ],
+      "datePublished": "2026-09-18",
+      "dateModified": "2026-09-21",
+      "publisher": {
+        "@type": "Organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai"
       }
-    ]
-  }
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://ztds.ai/sdk/#enterprise-sdk",
+      "name": "@privacyscrubber/sdk",
+      "description": "Sub-millisecond in-memory PII de-identification library for Node.js, WASM, LangChain, and RAG vector databases. Zero network egress.",
+      "url": "https://ztds.ai/sdk/",
+      "programmingLanguage": [
+        "TypeScript",
+        "JavaScript",
+        "Python"
+      ],
+      "datePublished": "2026-09-16",
+      "dateModified": "2026-09-21",
+      "publisher": {
+        "@type": "Organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ztds.ai/sdk/#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ztds.ai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Developer Engine & SDK",
+          "item": "https://ztds.ai/sdk/"
+        }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://ztds.ai/sdk/#techarticle",
+      "headline": "ZTDS Developer SDK & Pre-Built Connectors — Zero-Trust AI Sanitization",
+      "description": "Technical documentation, API specifications, Model Context Protocol (MCP) stdio setup, and framework blueprints for in-memory zero-trust data sanitization.",
+      "url": "https://ztds.ai/sdk/",
+      "author": {
+        "@type": "Person",
+        "name": "Ilya Sibiryakov",
+        "sameAs": "https://www.linkedin.com/in/ilya-sibiryakov/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai"
+      },
+      "citation": [
+        "https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/",
+        "https://doi.org/10.5281/zenodo.22058770",
+        "https://doi.org/10.17605/OSF.IO/5BYJF"
+      ],
+      "image": "https://ztds.ai/assets/img/og/og-mcp.png"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ztds.ai/sdk/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the ZTDS Developer SDK and how does it prevent PII leakage to LLMs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The ZTDS Developer SDK is an in-memory runtime engine and set of pre-built connectors that intercepts prompts and documents directly in host volatile RAM before external socket transmission. Sensitive PII, PHI, API keys, and corporate secrets are deterministically replaced with context-preserving surrogate tokens in under 0.8ms with 0.00 bytes socket egress. Model completions are losslessly restored locally in client memory."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I configure ZTDS with Model Context Protocol (MCP) in Cursor IDE or Claude Desktop?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Add ztds-mcp (open reference server) or @privacyscrubber/mcp-server (enterprise 30-profile suite) to your .cursor/mcp.json or claude_desktop_config.json using stdio transport with command 'npx' and args ['-y', 'ztds-mcp']. It executes locally over stdin/stdout with zero network telemetry."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the ZTDS runtime send any telemetry or licensing phone-home beacons?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. All ZTDS runtime engines enforce Invariant 1 (Zero External Egress Prior to Sanitization). Commercial license validation uses local asymmetric Ed25519 digital signatures (RFC 8032) embedded directly into offline license tokens, executing verification in under 0.12ms in RAM with zero network calls."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is a Data Processing Agreement (DPA) unnecessary under GDPR Article 28?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under GDPR Article 28, a DPA is only required when personal data is transmitted to an external third-party data processor. Because ZTDS operates as a computational utility strictly inside the customer's own execution perimeter, no personal data ever crosses the network boundary to ZTDS or PrivacyScrubber servers, eliminating third-party subprocessor legal liability."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do offline Ed25519 asymmetric cryptographic license tokens work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Commercial licenses (Developer Pro, TEAMS, Enterprise) provide an offline token (ZTDS-LIC-v1...). The engine verifies the Ed25519 signature against an embedded public key in local memory in under 120 microseconds. It operates 100% offline in air-gapped Docker containers, Kubernetes pods, and AWS Nitro Enclaves with an automated 60-day AP grace period."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between @ztds/core and @privacyscrubber/sdk?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "@ztds/core is the permissive Apache 2.0 open-source baseline reference implementation providing core invariant compliance and universal regex detectors. @privacyscrubber/sdk is the enterprise production engine featuring SIMD-accelerated WebAssembly, 30 certified industry profiles (HIPAA, PCI-DSS v4, Legal Privilege), offline multi-node licensing, and pre-built framework connectors."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
 </head>
 <body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">
