@@ -2,6 +2,8 @@
 ### Local Security Firewall for AI Agents & IDEs (Cursor, Claude Code, Windsurf)
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![NPM Downloads](https://img.shields.io/npm/dm/ztds-mcp.svg?color=6366f1&label=NPM%20Downloads)](https://www.npmjs.com/package/ztds-mcp)
+[![GitHub Stars](https://img.shields.io/github/stars/moxno/ztds-mcp.svg?style=social&label=Star)](https://github.com/moxno/ztds-mcp)
 [![Specification: RFC v1.0](https://img.shields.io/badge/Specification-RFC_v1.0-emerald.svg)](https://ztds.ai/standard/)
 [![IETF Standards Track](https://img.shields.io/badge/IETF_Standards_Track-sibiryakov--ztds--protocol-purple.svg)](https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22058770.svg)](https://doi.org/10.5281/zenodo.22058770)
