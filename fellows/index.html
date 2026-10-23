@@ -1009,7 +1009,7 @@ gh pr create --title "feat(fellow): Nominate [Full Name]" --body "ZTDS Fellowshi
 
       <div class="pt-2 flex items-center justify-between text-xs text-slate-500 border-t border-slate-100">
         <span>Verified endpoint: <code class="font-mono text-xs text-slate-700" id="fellowModalBadgeUrlText">ztds.ai/badge/...</code></span>
-        <a id="fellowModalDirectSvgLink" href="#" target="_blank" class="text-emerald-700 font-semibold hover:underline">
+        <a id="fellowModalDirectSvgLink" href="#" target="_blank" rel="noopener" class="text-emerald-700 font-semibold hover:underline">
           Open Raw SVG &rarr;
         </a>
       </div>
@@ -1403,7 +1403,7 @@ gh pr create --title "feat(fellow): Nominate [Full Name]" --body "ZTDS Fellowshi
         fellowModalSubtitle.textContent = `RFC v1.0 Research Fellow Seal for ${name}`;
         fellowModalBadgeMount.innerHTML = generateBadgeSvg(badgeLabel);
         fellowModalMdSnippet.value = `[![ZTDS Fellow](${badgeUrl})](${fellowUrl})`;
-        fellowModalHtmlSnippet.value = `<a href="${fellowUrl}" target="_blank" rel="noopener"><img src="${badgeUrl}" alt="ZTDS Research Fellow - ${name}"></a>`;
+        fellowModalHtmlSnippet.value = `<a href="${fellowUrl}" target="_blank" rel="noopener"><img src="${badgeUrl}" alt="ZTDS Research Fellow - ${name}" width="168" height="22"></a>`;
         fellowModalBadgeUrlText.textContent = badgeUrl;
         fellowModalDirectSvgLink.href = badgeUrl;
 

@@ -23,7 +23,7 @@ assert(fs.existsSync(agencyHtmlPath), 'agency/index.html must exist');
 const agencyHtml = fs.readFileSync(agencyHtmlPath, 'utf8');
 
 assert(agencyHtml.includes('<!DOCTYPE html>'), 'agency/index.html must contain HTML5 DOCTYPE');
-assert(agencyHtml.includes('<title>AI Safety &amp; GEO Audit Retainer — BrandMeWeb Enterprise Snapshot | ZTDS.ai</title>'), 'Title must declare BrandMeWeb Enterprise Snapshot');
+assert(agencyHtml.includes('<title>AI Safety &amp; GEO Audit — BrandMeWeb Enterprise Snapshot | ZTDS.ai</title>'), 'Title must declare BrandMeWeb Enterprise Snapshot');
 assert(agencyHtml.includes('rel="canonical" href="https://ztds.ai/agency/"'), 'Canonical link must point to https://ztds.ai/agency/');
 assert(agencyHtml.includes('name="description"'), 'Meta description must be present');
 console.log('    [PASS] HTML5 structure, title, canonical, and meta tags validated.');

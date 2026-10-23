@@ -377,6 +377,11 @@ const mirrorPairs = [
   ['plugin.json', 'public/plugin.json'],
   ['server-card.json', 'public/server-card.json'],
   ['server-card.json', 'public/.well-known/mcp/server-card.json'],
+  ['.well-known/security.txt', 'public/.well-known/security.txt'],
+  ['ciso/memo/index.html', 'ciso/memo.html'],
+  ['ietf/draft-sibiryakov-ztds-protocol-01/index.html', 'ietf/draft-sibiryakov-ztds-protocol-01.html'],
+  ['ietf/draft-sibiryakov-ztds-protocol-02/index.html', 'ietf/draft-sibiryakov-ztds-protocol-02.html'],
+  ['docs/legal/order-form/index.html', 'docs/legal/order-form.html'],
   ['docs/legal/order-form.html', 'public/docs/legal/order-form.html'],
   ['docs/legal/order-form/index.html', 'public/docs/legal/order-form/index.html']
 ];
@@ -399,5 +404,32 @@ for (const relPath of typoFiles) {
 }
 console.log(`    [PASS] All ${mirrorPairs.length} root-to-public mirror pairs are 100% synchronized and deployable routes verified.`);
 
-console.log('\n[SUMMARY] ALL 9 ROUTES INTEGRITY & COMPLIANCE TESTS PASSED.');
+// Test 10: SERP Length Bounds, <main> Landmark, Skip Link, and Zero External CSS @import Invariant
+console.log('--> Test 10: SERP Length Bounds, <main> Landmarks, Skip Links & Zero External CSS @import');
+for (const relPath of typoFiles) {
+  const html = fs.readFileSync(path.join(rootDir, relPath), 'utf8');
+  const titleM = html.match(/<title>([\s\S]*?)<\/title>/i);
+  const title = titleM ? titleM[1].trim().replace(/&amp;/g, '&').replace(/&mdash;/g, '—').replace(/&ndash;/g, '–') : '';
+  assert(title.length >= 30 && title.length <= 70, `Title length out of SERP bounds (${title.length}) in ${relPath}: "${title}"`);
+
+  const descM = html.match(/<meta\s+name=["']description["']\s+content=["']([^"']*)["']/i) ||
+                html.match(/<meta\s+content=["']([^"']*)["']\s+name=["']description["']/i);
+  const desc = descM ? descM[1].trim().replace(/&amp;/g, '&').replace(/&mdash;/g, '—') : '';
+  assert(desc.length >= 70 && desc.length <= 165, `Meta description length out of SERP bounds (${desc.length}) in ${relPath}`);
+
+  const canM = html.match(/<link\s+[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["']/i);
+  const ogUrlM = html.match(/<meta\s+[^>]*property=["']og:url["'][^>]*content=["']([^"']+)["']/i);
+  assert(canM && ogUrlM && canM[1] === ogUrlM[1], `Canonical and og:url mismatch in ${relPath}`);
+  if (relPath !== '404.html') {
+    assert(canM[1].endsWith('/'), `Canonical URL in ${relPath} must end with trailing slash: ${canM[1]}`);
+  }
+
+  assert(/<main[\s>]/i.test(html), `Missing <main> landmark in ${relPath}`);
+  assert(/href=["']#main/i.test(html) || /Skip to/i.test(html), `Missing skip-to-content link in ${relPath}`);
+  assert(!/@import\s+url\(["']?https?:/i.test(html), `External CSS @import violates strict CSP in ${relPath}`);
+}
+console.log(`    [PASS] All ${typoFiles.length} public HTML files pass SERP bounds, <main> landmarks, trailing-slash canonicals, and CSP checks.`);
+
+console.log('\n[SUMMARY] ALL 10 ROUTES INTEGRITY & COMPLIANCE TESTS PASSED.');
+
 

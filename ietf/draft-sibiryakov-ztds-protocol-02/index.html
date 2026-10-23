@@ -123,8 +123,10 @@
   ]
 }
   </script>
-<link href="draft-sibiryakov-ztds-protocol-02.xml" rel="alternate" type="application/rfc+xml">
+<link href="/ietf/draft-sibiryakov-ztds-protocol-02.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
+<link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style type="text/css">/*
 
   NOTE: Changes at the bottom of this file overrides some earlier settings.
@@ -138,15 +140,26 @@
 
 */
 
-/* fonts */
-@import url('https://static.ietf.org/fonts/noto-sans/import.css'); /* Sans-serif */
-@import url('https://static.ietf.org/fonts/noto-serif/import.css'); /* Serif (print) */
-@import url('https://static.ietf.org/fonts/roboto-mono/import.css'); /* Monospace */
+/* fonts (self-hosted zero-egress) */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/assets/fonts/inter-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/assets/fonts/jetbrains-mono-latin.woff2') format('woff2');
+}
 
 :root {
-  --font-sans: 'Noto Sans', Arial, Helvetica, sans-serif;
-  --font-serif: 'Noto Serif', 'Times', 'Times New Roman', serif;
-  --font-mono: 'Roboto Mono', Courier, 'Courier New', monospace;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  --font-serif: 'Georgia', 'Times', 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', Courier, 'Courier New', monospace;
 }
 
 @viewport {
@@ -672,8 +685,8 @@ hr.addr {
   }
   #toc {
     position: fixed;
-    z-index: 2;
-    top: 0;
+    z-index: 999;
+    top: 48px;
     right: 0;
     padding: 0;
     margin: 0;
@@ -1321,24 +1334,27 @@ li > p:last-of-type:only-child {
   }
 }
 </style>
-<link href="rfc-local.css" rel="stylesheet" type="text/css">
+<link href="/ietf/rfc-local.css" rel="stylesheet" type="text/css">
 <script type="application/javascript">async function addMetadata(){try{const e=document.styleSheets[0].cssRules;for(let t=0;t<e.length;t++)if(/#identifiers/.exec(e[t].selectorText)){const a=e[t].cssText.replace("#identifiers","#external-updates");document.styleSheets[0].insertRule(a,document.styleSheets[0].cssRules.length)}}catch(e){console.log(e)}const e=document.getElementById("external-metadata");if(e)try{var t,a="",o=function(e){const t=document.getElementsByTagName("meta");for(let a=0;a<t.length;a++)if(t[a].getAttribute("name")===e)return t[a].getAttribute("content");return""}("rfc.number");if(o){t="https://www.rfc-editor.org/rfc/rfc"+o+".json";try{const e=await fetch(t);a=await e.json()}catch(e){t=document.URL.indexOf("html")>=0?document.URL.replace(/html$/,"json"):document.URL+".json";const o=await fetch(t);a=await o.json()}}if(!a)return;e.style.display="block";const s="",d="https://datatracker.ietf.org/doc",n="https://datatracker.ietf.org/ipr/search",c="https://www.rfc-editor.org/info",l=a.doc_id.toLowerCase(),i=a.doc_id.slice(0,3).toLowerCase(),f=a.doc_id.slice(3).replace(/^0+/,""),u={status:"Status",obsoletes:"Obsoletes",obsoleted_by:"Obsoleted By",updates:"Updates",updated_by:"Updated By",see_also:"See Also",errata_url:"Errata"};let h="<dl style='overflow:hidden' id='external-updates'>";["status","obsoletes","obsoleted_by","updates","updated_by","see_also","errata_url"].forEach(e=>{if("status"==e){a[e]=a[e].toLowerCase();var t=a[e].split(" "),o=t.length,w="",p=1;for(let e=0;e<o;e++)p<o?w=w+r(t[e])+" ":w+=r(t[e]),p++;a[e]=w}else if("obsoletes"==e||"obsoleted_by"==e||"updates"==e||"updated_by"==e){var g,m="",b=1;g=a[e].length;for(let t=0;t<g;t++)a[e][t]&&(a[e][t]=String(a[e][t]).toLowerCase(),m=b<g?m+"<a href='"+s+"/rfc/".concat(a[e][t])+"'>"+a[e][t].slice(3)+"</a>, ":m+"<a href='"+s+"/rfc/".concat(a[e][t])+"'>"+a[e][t].slice(3)+"</a>",b++);a[e]=m}else if("see_also"==e){var y,L="",C=1;y=a[e].length;for(let t=0;t<y;t++)if(a[e][t]){a[e][t]=String(a[e][t]);var _=a[e][t].slice(0,3),v=a[e][t].slice(3).replace(/^0+/,"");L=C<y?"RFC"!=_?L+"<a href='"+s+"/info/"+_.toLowerCase().concat(v.toLowerCase())+"'>"+_+" "+v+"</a>, ":L+"<a href='"+s+"/info/"+_.toLowerCase().concat(v.toLowerCase())+"'>"+v+"</a>, ":"RFC"!=_?L+"<a href='"+s+"/info/"+_.toLowerCase().concat(v.toLowerCase())+"'>"+_+" "+v+"</a>":L+"<a href='"+s+"/info/"+_.toLowerCase().concat(v.toLowerCase())+"'>"+v+"</a>",C++}a[e]=L}else if("errata_url"==e){var R="";R=a[e]?R+"<a href='"+a[e]+"'>Errata exist</a> | <a href='"+d+"/"+l+"'>Datatracker</a>| <a href='"+n+"/?"+i+"="+f+"&submit="+i+"'>IPR</a> | <a href='"+c+"/"+l+"'>Info page</a>":"<a href='"+d+"/"+l+"'>Datatracker</a> | <a href='"+n+"/?"+i+"="+f+"&submit="+i+"'>IPR</a> | <a href='"+c+"/"+l+"'>Info page</a>",a[e]=R}""!=a[e]?"Errata"==u[e]?h+=`<dt>More info:</dt><dd>${a[e]}</dd>`:h+=`<dt>${u[e]}:</dt><dd>${a[e]}</dd>`:"Errata"==u[e]&&(h+=`<dt>More info:</dt><dd>${a[e]}</dd>`)}),h+="</dl>",e.innerHTML=h}catch(e){console.log(e)}else console.log("Could not locate metadata <div> element");function r(e){return e.charAt(0).toUpperCase()+e.slice(1)}}window.removeEventListener("load",addMetadata),window.addEventListener("load",addMetadata);</script>
 </head>
 <body class="xml2rfc">
+<a href="#main-content" class="skip-link" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">Skip to main content</a>
 <div style="background: #0f172a; border-bottom: 1px solid #334155; padding: 10px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; color: #94a3b8; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 1000;">
-  <div style="display: flex; align-items: center; gap: 12px;">
+  <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
     <a href="/ietf/" style="color: #38bdf8; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">&larr; Back to ZTDS IETF Standards Track</a>
     <span style="color: #475569;">|</span>
     <span style="color: #cbd5e1; font-weight: 500;">draft-sibiryakov-ztds-protocol-02</span>
     <span style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 4px; padding: 2px 8px; font-size:0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Active Draft</span>
   </div>
-  <div style="display: flex; align-items: center; gap: 12px;">
+  <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+    <button type="button" id="mobile-menu-toggle" aria-expanded="false" aria-controls="toc" onclick="const t=document.getElementById('toc');if(t){const a=t.classList.toggle('active');this.setAttribute('aria-expanded',String(a));}" style="background: #1e293b; color: #e2e8f0; border: 1px solid #475569; border-radius: 4px; padding: 3px 8px; font-size: 0.75rem; font-weight: 600; cursor: pointer;">Contents (TOC)</button>
     <span style="color: #64748b;">Formats:</span>
     <a href="/ietf/draft-sibiryakov-ztds-protocol-02.txt" style="color: #94a3b8; text-decoration: none; padding: 2px 6px; border: 1px solid #334155; border-radius: 3px; font-size:0.75rem; font-family: monospace;">Plain Text (.txt)</a>
     <a href="/ietf/draft-sibiryakov-ztds-protocol-02.xml" style="color: #94a3b8; text-decoration: none; padding: 2px 6px; border: 1px solid #334155; border-radius: 3px; font-size:0.75rem; font-family: monospace;">RFC XML (.xml)</a>
     <a href="https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; text-decoration: none; font-size: 12px;">IETF Datatracker &rarr;</a>
   </div>
 </div>
+<main id="main-content">
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
@@ -2075,6 +2091,7 @@ ZTDS-CERT-v1.{payload_b64url}.{signature_b64url}
 </address>
 </section>
 </div>
+</main>
 <script>const toc = document.getElementById("toc");
 toc.querySelector("h2").addEventListener("click", e => {
   toc.classList.toggle("active");

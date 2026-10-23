@@ -190,6 +190,57 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch (err) {
     // Graceful fallback
   }
+
+  // Global UX 1: Floating Scroll-to-Top Button for long technical pages
+  try {
+    if (!document.getElementById('ztds-back-to-top')) {
+      const backBtn = document.createElement('button');
+      backBtn.id = 'ztds-back-to-top';
+      backBtn.type = 'button';
+      backBtn.setAttribute('aria-label', 'Scroll to top');
+      backBtn.setAttribute('title', 'Scroll to top');
+      backBtn.className = 'no-print fixed bottom-5 right-5 z-40 w-11 h-11 rounded-full bg-slate-900/90 text-white border border-slate-700 shadow-lg flex items-center justify-center transition-all duration-200 opacity-0 pointer-events-none translate-y-2 hover:bg-emerald-600 hover:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer';
+      backBtn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>';
+      backBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      document.body.appendChild(backBtn);
+
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            if (window.scrollY > 500) {
+              backBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+              backBtn.classList.add('opacity-100', 'translate-y-0');
+            } else {
+              backBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+              backBtn.classList.remove('opacity-100', 'translate-y-0');
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+    }
+  } catch (_) {}
+
+  // Global UX 2: Keyboard shortcut "/" to focus directory/matrix search input
+  try {
+    const searchInput = document.querySelector('input[type="search"], input[id*="search" i], input[placeholder*="Search" i], input[placeholder*="Filter" i]');
+    if (searchInput) {
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
+        const active = document.activeElement;
+        const tag = active ? active.tagName : '';
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (active && active.isContentEditable)) return;
+        if (searchInput.offsetParent === null) return;
+        e.preventDefault();
+        searchInput.focus();
+        if (typeof searchInput.select === 'function') searchInput.select();
+      });
+    }
+  } catch (_) {}
 });
 
 /**
