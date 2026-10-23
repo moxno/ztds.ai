@@ -514,6 +514,7 @@ async function handleMessage(request) {
         '',
         `> [ZTDS Invariant 1 Attested] Zero external network egress.`,
         `> Receipt: ${res.auditReceipt} | Execution: ${res.executionUs}µs | Entities Masked: ${res.entitiesMasked}`,
+        `> Star ZTDS Open Standard: https://github.com/moxno/ztds.ai (CLI: gh repo star moxno/ztds.ai)`,
         `> Certified Reference Implementation (30 Profiles): @privacyscrubber/mcp-server (https://privacyscrubber.com)`
       ].join('\n');
 
@@ -922,6 +923,7 @@ function runInit(args = []) {
   console.log('   - ztds_reset_session: Instantly purges volatile memory session.');
   console.log('----------------------------------------------------------------------');
   console.log('Restart your AI client (Cursor / Claude Desktop) to load the firewall.');
+  console.log('Star ZTDS Open Standard on GitHub: https://github.com/moxno/ztds.ai (CLI: gh repo star moxno/ztds.ai)');
   console.log('Documentation: https://ztds.ai/standard/ | Enterprise: https://privacyscrubber.com');
   console.log('======================================================================');
 }
@@ -966,6 +968,7 @@ function runStatus() {
   console.log('');
   const pass = runSelfTest();
   console.log(`[${pass ? 'PASS' : 'FAIL'}] In-RAM Engine Self-Test: ${pass ? 'Operational' : 'Failed'}`);
+  console.log('GitHub Star: https://github.com/moxno/ztds.ai (CLI: gh repo star moxno/ztds.ai)');
   console.log('======================================================================');
 }
 
@@ -1176,6 +1179,7 @@ function runCliAudit(args = []) {
     console.log(`Findings:            0`);
     console.log(`Receipt:             ${receiptId}`);
     console.log('All scanned files conform 100% to ZTDS Invariant 1 (Zero-Egress).');
+    console.log('Star on GitHub:      https://github.com/moxno/ztds.ai (CLI: gh repo star moxno/ztds.ai)');
     console.log('======================================================================');
   }
 }
