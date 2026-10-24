@@ -118,7 +118,7 @@ console.log(`    [PASS] All ${prodPages.length - 1} subpages feature valid Schem
 
 // Test 4: Article publication date integrity
 console.log('--> Test 4: Article Publication & Modification Date Integrity');
-const articlePages = ['standard/index.html', 'ciso/index.html', 'ciso/memo.html', 'whitepaper/index.html', 'scanner/index.html'];
+const articlePages = ['standard/index.html', 'ciso/index.html', 'ciso/memo.html', 'whitepaper/index.html', 'scanner/index.html', 'sdk/index.html', 'mcp/index.html', 'benchmarks/index.html', 'compliance/index.html'];
 for (const page of articlePages) {
   const fullPath = path.join(__dirname, '..', page);
   const html = fs.readFileSync(fullPath, 'utf8');
@@ -142,4 +142,27 @@ for (const page of articlePages) {
 }
 console.log(`    [PASS] All ${articlePages.length} article pages feature valid publication and modification timestamps.`);
 
-console.log('\n[SUMMARY] ALL 4 SCHEMA & GEO KNOWLEDGE GRAPH TESTS PASSED.\n');
+// Test 5: SoftwareApplication & WebApplication Rich Results offers compliance
+console.log('--> Test 5: SoftwareApplication & WebApplication Rich Results Offers Validation');
+let appEntitiesChecked = 0;
+for (const page of prodPages) {
+  const fullPath = path.join(__dirname, '..', page);
+  const html = fs.readFileSync(fullPath, 'utf8');
+  const regex = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi;
+  let match;
+  while ((match = regex.exec(html)) !== null) {
+    const data = JSON.parse(match[1]);
+    const items = data['@graph'] || [data];
+    for (const node of items) {
+      if (['SoftwareApplication', 'WebApplication'].includes(node['@type'])) {
+        assert(node.applicationCategory, `Missing applicationCategory on ${node['@type']} in ${page}`);
+        assert(node.operatingSystem, `Missing operatingSystem on ${node['@type']} in ${page}`);
+        assert(node.offers && node.offers.price === '0' && node.offers.priceCurrency === 'USD', `Missing free Offer on ${node['@type']} in ${page}`);
+        appEntitiesChecked++;
+      }
+    }
+  }
+}
+console.log(`    [PASS] All ${appEntitiesChecked} SoftwareApplication/WebApplication entities include valid Rich Results offers.`);
+
+console.log('\n[SUMMARY] ALL 5 SCHEMA & GEO KNOWLEDGE GRAPH TESTS PASSED.\n');

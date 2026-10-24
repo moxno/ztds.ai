@@ -241,6 +241,82 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   } catch (_) {}
+
+  // Global UX 3: Automatic 1-Click Copy Button on standalone <pre> code blocks
+  try {
+    document.querySelectorAll('main pre').forEach((pre) => {
+      if (pre.dataset.ztdsCopyInit) return;
+      const parent = pre.parentElement;
+      if (!parent) return;
+      // Skip if parent or grandparent already has a dedicated copy button
+      const container = parent.parentElement || parent;
+      if (container.querySelector('button[onclick*="Copy" i], button[onclick*="copy" i], button[class*="copy" i], button[id*="copy" i]')) {
+        return;
+      }
+      const rawText = (pre.innerText || pre.textContent || '').trim();
+      if (!rawText || rawText.length < 12) return;
+
+      pre.dataset.ztdsCopyInit = '1';
+      if (window.getComputedStyle(pre).position === 'static') {
+        pre.style.position = 'relative';
+      }
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.setAttribute('aria-label', 'Copy code snippet');
+      btn.className = 'no-print absolute top-2.5 right-2.5 z-10 px-2.5 py-1 rounded bg-slate-800/90 hover:bg-emerald-600 text-slate-200 hover:text-white border border-slate-700 hover:border-emerald-500 font-mono text-xs font-semibold transition-colors shadow-sm cursor-pointer';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const codeEl = pre.querySelector('code');
+        const textToCopy = (codeEl ? (codeEl.innerText || codeEl.textContent) : (pre.innerText || pre.textContent)).replace(/\bCopy$|\bCopied!$/g, '').trim();
+        window.ztdsCopy(textToCopy, () => {
+          btn.textContent = 'Copied!';
+          btn.classList.add('bg-emerald-600', 'text-white', 'border-emerald-500');
+          setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-500');
+          }, 1800);
+        });
+      });
+      pre.appendChild(btn);
+    });
+  } catch (_) {}
+
+  // Global UX 4: Deep-link anchor copy (#) on section headings (h2[id], section[id] > h2)
+  try {
+    document.querySelectorAll('main h2[id], main section[id] > h2:not([id])').forEach((h2) => {
+      if (h2.dataset.ztdsAnchorInit || h2.querySelector('a, button')) return;
+      const targetId = h2.id || (h2.parentElement && h2.parentElement.id);
+      if (!targetId) return;
+      h2.dataset.ztdsAnchorInit = '1';
+      h2.classList.add('group');
+
+      const anchorBtn = document.createElement('button');
+      anchorBtn.type = 'button';
+      anchorBtn.setAttribute('aria-label', 'Copy link to section');
+      anchorBtn.setAttribute('title', 'Copy link to section');
+      anchorBtn.className = 'no-print ml-2 inline-flex items-center justify-center px-1.5 py-0.5 rounded text-xs font-mono text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity cursor-pointer align-middle';
+      anchorBtn.textContent = '#';
+      anchorBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const url = window.location.origin + window.location.pathname + '#' + targetId;
+        if (history.replaceState) {
+          try { history.replaceState(null, '', '#' + targetId); } catch (_) {}
+        }
+        window.ztdsCopy(url, () => {
+          anchorBtn.textContent = 'Copied';
+          anchorBtn.classList.add('opacity-100', 'text-emerald-700', 'bg-emerald-50');
+          setTimeout(() => {
+            anchorBtn.textContent = '#';
+            anchorBtn.classList.remove('text-emerald-700', 'bg-emerald-50');
+          }, 1600);
+        });
+      });
+      h2.appendChild(anchorBtn);
+    });
+  } catch (_) {}
 });
 
 /**

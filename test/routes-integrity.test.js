@@ -372,6 +372,7 @@ const mirrorPairs = [
   ['llms-full.txt', 'public/llms-full.txt'],
   ['robots.txt', 'public/robots.txt'],
   ['favicon.svg', 'public/favicon.svg'],
+  ['site.webmanifest', 'public/site.webmanifest'],
   ['og-image.png', 'public/og-image.png'],
   ['mcp_config.json', 'public/mcp_config.json'],
   ['plugin.json', 'public/plugin.json'],
@@ -427,8 +428,20 @@ for (const relPath of typoFiles) {
   assert(/<main[\s>]/i.test(html), `Missing <main> landmark in ${relPath}`);
   assert(/href=["']#main/i.test(html) || /Skip to/i.test(html), `Missing skip-to-content link in ${relPath}`);
   assert(!/@import\s+url\(["']?https?:/i.test(html), `External CSS @import violates strict CSP in ${relPath}`);
+  assert(html.includes('href="/site.webmanifest"'), `Missing <link rel="manifest" href="/site.webmanifest"> in ${relPath}`);
+  assert(/<meta\s+[^>]*property=["']og:site_name["']/i.test(html), `Missing og:site_name in ${relPath}`);
+  assert(/<meta\s+[^>]*property=["']og:locale["']/i.test(html), `Missing og:locale in ${relPath}`);
+  assert(/<meta\s+[^>]*property=["']og:image:alt["']/i.test(html), `Missing og:image:alt in ${relPath}`);
+  assert(/<meta\s+[^>]*name=["']twitter:title["']/i.test(html), `Missing twitter:title in ${relPath}`);
+  assert(/<meta\s+[^>]*name=["']twitter:description["']/i.test(html), `Missing twitter:description in ${relPath}`);
+  assert(/<meta\s+[^>]*name=["']twitter:image:alt["']/i.test(html), `Missing twitter:image:alt in ${relPath}`);
+  assert(html.includes('/assets/fonts/inter-latin.woff2'), `Missing font preload inter-latin.woff2 in ${relPath}`);
+  assert(html.includes('/assets/fonts/jetbrains-mono-latin.woff2'), `Missing font preload jetbrains-mono-latin.woff2 in ${relPath}`);
+  if (html.includes('src="/nav.js"')) {
+    assert(/<script\s+[^>]*src=["']\/nav\.js["'][^>]*\bdefer\b/i.test(html), `<script src="/nav.js"> must have defer in ${relPath}`);
+  }
 }
-console.log(`    [PASS] All ${typoFiles.length} public HTML files pass SERP bounds, <main> landmarks, trailing-slash canonicals, and CSP checks.`);
+console.log(`    [PASS] All ${typoFiles.length} public HTML files pass SERP bounds, <main> landmarks, trailing-slash canonicals, manifest, OG/Twitter, font preloads, and CSP checks.`);
 
 console.log('\n[SUMMARY] ALL 10 ROUTES INTEGRITY & COMPLIANCE TESTS PASSED.');
 

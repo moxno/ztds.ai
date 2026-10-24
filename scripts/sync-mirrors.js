@@ -16,6 +16,7 @@ const mirrorPairs = [
   ['llms-full.txt', 'public/llms-full.txt'],
   ['robots.txt', 'public/robots.txt'],
   ['favicon.svg', 'public/favicon.svg'],
+  ['site.webmanifest', 'public/site.webmanifest'],
   ['og-image.png', 'public/og-image.png'],
   ['mcp_config.json', 'public/mcp_config.json'],
   ['plugin.json', 'public/plugin.json'],
