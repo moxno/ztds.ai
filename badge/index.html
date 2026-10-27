@@ -138,6 +138,12 @@
           "h1",
           "main h2"
         ]
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://ztds.ai/assets/img/og/og-default.png",
+        "width": 1200,
+        "height": 630
       }
     }
   ]
@@ -1099,7 +1105,7 @@
         codeHtml.textContent = `<a href="${verifyUrl}"><img src="${remoteUrl}" alt="ZTDS ${effectiveLabel}" width="168" height="22" decoding="async"></a>`;
         codeSvg.textContent = currentSvgXml;
         if (codeReact) {
-          codeReact.textContent = `<a href="${verifyUrl}" target="_blank" rel="noopener noreferrer">\n  <img src="${remoteUrl}" alt="ZTDS ${effectiveLabel}" width={168} height={22} / decoding="async">\n</a>`;
+          codeReact.textContent = `<a href="${verifyUrl}" target="_blank" rel="noopener noreferrer">\n  <img src="${remoteUrl}" alt="ZTDS ${effectiveLabel}" width={168} height={22} decoding="async" />\n</a>`;
         }
       }
 
@@ -1307,6 +1313,29 @@
             });
         });
       });
+
+      // Hydrate from URL query parameters (?slug=, ?tier=, ?theme=, ?label=)
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const qSlug = params.get('slug') || params.get('entity');
+        const qTier = params.get('tier');
+        const qTheme = params.get('theme') || params.get('style');
+        const qLabel = params.get('label');
+        if (qSlug) {
+          slugInput.value = qSlug.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+        }
+        if (qTier) {
+          const matchTier = Array.from(tierBtns).find(b => (b.getAttribute('data-tier') || '').toLowerCase() === qTier.trim().toLowerCase());
+          if (matchTier) matchTier.click();
+        }
+        if (qTheme) {
+          const matchTheme = Array.from(themeBtns).find(b => (b.getAttribute('data-theme') || '').toLowerCase() === qTheme.trim().toLowerCase());
+          if (matchTheme) matchTheme.click();
+        }
+        if (qLabel) {
+          customLabelInput.value = qLabel.trim().toUpperCase().slice(0, 24);
+        }
+      } catch (_) {}
 
       // Initial render
       updateBadge();

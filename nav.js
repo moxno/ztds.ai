@@ -341,6 +341,93 @@ document.addEventListener('DOMContentLoaded', () => {
     expandDetailsForHash();
     window.addEventListener('hashchange', expandDetailsForHash);
 
+    // 1-Click # deep-link copy on FAQ <details id="..."> > <summary>
+    document.querySelectorAll('main details[id] > summary').forEach((summary) => {
+      if (summary.dataset.ztdsFaqCopyInit) return;
+      const detailsEl = summary.parentElement;
+      if (!detailsEl || !detailsEl.id) return;
+      summary.dataset.ztdsFaqCopyInit = '1';
+      summary.classList.add('group');
+
+      const copyBtn = document.createElement('button');
+      copyBtn.type = 'button';
+      copyBtn.setAttribute('aria-label', 'Copy direct link to FAQ question');
+      copyBtn.setAttribute('title', 'Copy direct link to FAQ');
+      copyBtn.className = 'no-print ml-2 px-1.5 py-0.5 rounded text-xs font-mono text-slate-400 hover:text-emerald-700 hover:bg-emerald-50 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity cursor-pointer shrink-0';
+      copyBtn.textContent = '#';
+      copyBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const url = window.location.origin + window.location.pathname + '#' + detailsEl.id;
+        if (history.replaceState) {
+          try { history.replaceState(null, '', '#' + detailsEl.id); } catch (_) {}
+        }
+        window.ztdsCopy(url, () => {
+          copyBtn.textContent = 'Copied';
+          copyBtn.classList.add('opacity-100', 'text-emerald-700', 'bg-emerald-50');
+          setTimeout(() => {
+            copyBtn.textContent = '#';
+            copyBtn.classList.remove('text-emerald-700', 'bg-emerald-50');
+          }, 1600);
+        });
+      });
+
+      const firstSpan = summary.querySelector('span');
+      if (firstSpan && firstSpan !== summary.lastElementChild) {
+        firstSpan.appendChild(copyBtn);
+      } else {
+        summary.appendChild(copyBtn);
+      }
+    });
+
+    // Inject Expand All / Collapse All bar above FAQ groups with >= 3 <details> items
+    const detailsParents = new Set();
+    document.querySelectorAll('main details').forEach((d) => {
+      if (d.parentElement) detailsParents.add(d.parentElement);
+    });
+    detailsParents.forEach((parent) => {
+      const childDetails = Array.from(parent.children).filter((c) => c.tagName === 'DETAILS');
+      if (childDetails.length >= 3 && !parent.dataset.ztdsFaqToolbar) {
+        parent.dataset.ztdsFaqToolbar = '1';
+        const toolbar = document.createElement('div');
+        toolbar.className = 'no-print flex items-center justify-end gap-2 mb-2 text-xs font-mono';
+        const toggleAllBtn = document.createElement('button');
+        toggleAllBtn.type = 'button';
+        toggleAllBtn.className = 'px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 font-semibold transition-colors cursor-pointer shadow-2xs';
+
+        function syncLabel() {
+          const allOpen = childDetails.every((d) => d.open);
+          toggleAllBtn.textContent = allOpen ? 'Collapse All FAQs' : 'Expand All FAQs';
+          toggleAllBtn.setAttribute('aria-expanded', String(allOpen));
+        }
+        syncLabel();
+
+        toggleAllBtn.addEventListener('click', () => {
+          const allOpen = childDetails.every((d) => d.open);
+          childDetails.forEach((d) => { d.open = !allOpen; });
+          syncLabel();
+        });
+        childDetails.forEach((d) => d.addEventListener('toggle', syncLabel));
+
+        toolbar.appendChild(toggleAllBtn);
+        parent.insertBefore(toolbar, childDetails[0]);
+      }
+    });
+
+    // Auto-open all <details> during print / PDF export and restore state afterwards
+    let closedBeforePrint = [];
+    window.addEventListener('beforeprint', () => {
+      closedBeforePrint = [];
+      document.querySelectorAll('main details:not([open])').forEach((d) => {
+        closedBeforePrint.push(d);
+        d.open = true;
+      });
+    });
+    window.addEventListener('afterprint', () => {
+      closedBeforePrint.forEach((d) => { d.open = false; });
+      closedBeforePrint = [];
+    });
+
     // TOC ScrollSpy for in-page sidebar navigation links
     const tocLinks = Array.from(document.querySelectorAll('aside a[href^="#"]:not([href="#"]):not([href="#main-content"])'));
     if (tocLinks.length >= 2 && 'IntersectionObserver' in window) {

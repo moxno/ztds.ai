@@ -138,6 +138,12 @@
           "h1",
           "main h2"
         ]
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://ztds.ai/assets/img/og/og-default.png",
+        "width": 1200,
+        "height": 630
       }
     }
   ]
@@ -1574,7 +1580,7 @@
             const certUrl = `https://ztds.ai/verify/#cert=${encodeURIComponent(result.token)}`;
             const badgeUrl = `https://ztds.ai/badge/${productSlug}.svg`;
             const mdSnippet = `[![ZTDS Verified](${badgeUrl})](${certUrl})`;
-            const htmlSnippet = `<a href="${certUrl}" target="_blank" rel="noopener noreferrer"><img src="${badgeUrl}" alt="ZTDS Verified" width="168" height="22" / decoding="async"></a>`;
+            const htmlSnippet = `<a href="${certUrl}" target="_blank" rel="noopener noreferrer"><img src="${badgeUrl}" alt="ZTDS Verified" width="168" height="22" decoding="async" /></a>`;
 
             if (badgeMarkdownInput) badgeMarkdownInput.value = mdSnippet;
             if (badgeHtmlInput) badgeHtmlInput.value = htmlSnippet;

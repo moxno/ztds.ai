@@ -229,6 +229,12 @@
           "h1",
           "main h2"
         ]
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://ztds.ai/assets/img/og/og-mcp.png",
+        "width": 1200,
+        "height": 630
       }
     }
   ]
@@ -1703,6 +1709,26 @@
           }
         });
       });
+
+      // Hydrate from URL query parameters (?client=, ?os=, ?edition=, ?debug=, ?timeout=)
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const qClient = (params.get('client') || '').trim().toLowerCase();
+        const qOS = (params.get('os') || '').trim().toLowerCase();
+        const qEdition = (params.get('edition') || '').trim().toLowerCase();
+        if (qClient) {
+          const cBtn = document.querySelector(`.client-tab-btn[data-client="${CSS.escape(qClient)}"]`);
+          if (cBtn) cBtn.click();
+        }
+        if (qOS) {
+          const oBtn = document.querySelector(`.os-toggle-btn[data-os="${CSS.escape(qOS)}"]`);
+          if (oBtn) oBtn.click();
+        }
+        if (qEdition) {
+          const eBtn = document.querySelector(`.edition-toggle-btn[data-edition="${CSS.escape(qEdition)}"]`);
+          if (eBtn) eBtn.click();
+        }
+      } catch (_) {}
 
       // Initial render
       updateConfig();

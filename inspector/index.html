@@ -138,6 +138,12 @@
           "h1",
           "main h2"
         ]
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://ztds.ai/assets/img/og/og-scanner.png",
+        "width": 1200,
+        "height": 630
       }
     }
   ]
@@ -1070,6 +1076,32 @@
           });
         }
       });
+
+      // Hydrate from URL query parameters (?preset=health|finance|devops|legal|hr|crypto|insurance, ?q= / ?payload=)
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const qPreset = (params.get('preset') || params.get('scenario') || '').trim().toLowerCase();
+        const qPayload = params.get('q') || params.get('payload');
+        const presetIdMap = {
+          health: 'presetHealth',
+          healthcare: 'presetHealth',
+          hipaa: 'presetHealth',
+          finance: 'presetFinance',
+          fintech: 'presetFinance',
+          devops: 'presetDevOps',
+          secrets: 'presetDevOps',
+          legal: 'presetLegal',
+          hr: 'presetHR',
+          crypto: 'presetCrypto',
+          insurance: 'presetInsurance'
+        };
+        if (qPreset && presetIdMap[qPreset]) {
+          const pBtn = document.getElementById(presetIdMap[qPreset]);
+          if (pBtn) pBtn.click();
+        } else if (qPayload && qPayload.trim()) {
+          inputArea.value = qPayload.trim();
+        }
+      } catch (_) {}
 
       // Initial execution on page load
       executePipeline(true);

@@ -192,6 +192,13 @@ for (const page of prodPages) {
         assert(node.isPartOf && node.isPartOf['@id'] === 'https://ztds.ai/#website', `Missing isPartOf #website on ${node['@type']} in ${page}`);
         assert(node.inLanguage === 'en-US', `Missing inLanguage "en-US" on ${node['@type']} in ${page}`);
         assert(node.speakable && node.speakable['@type'] === 'SpeakableSpecification', `Missing SpeakableSpecification on ${node['@type']} in ${page}`);
+        assert(
+          node.primaryImageOfPage &&
+          node.primaryImageOfPage['@type'] === 'ImageObject' &&
+          node.primaryImageOfPage.width === 1200 &&
+          node.primaryImageOfPage.height === 630,
+          `Missing 1200x630 primaryImageOfPage ImageObject on ${node['@type']} in ${page}`
+        );
       }
     }
   }

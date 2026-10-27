@@ -454,7 +454,8 @@ for (const relPath of typoFiles) {
   assert(/<script\s+[^>]*src=["']\/nav\.js["'][^>]*\bdefer\b/i.test(html), `<script src="/nav.js" defer> required in ${relPath}`);
   assert(/<footer[\s>]/i.test(html), `Missing semantic <footer> in ${relPath}`);
 
-  // Verify all <img> tags have decoding="async" for CWV non-blocking decode
+  // Verify all <img> tags have decoding="async" for CWV non-blocking decode and zero malformed "/ decoding"
+  assert(!html.includes('/ decoding="async"'), `Malformed self-closing slash before decoding="async" in ${relPath}`);
   const allImgs = html.match(/<img\b[^>]*>/gi) || [];
   for (const imgTag of allImgs) {
     assert(/\bdecoding=["']async["']/i.test(imgTag), `<img> missing decoding="async" in ${relPath}: ${imgTag}`);
@@ -497,7 +498,14 @@ for (const relPath of typoFiles) {
     }
   }
 }
-console.log(`    [PASS] All ${typoFiles.length} public HTML files pass SERP bounds, <main>/<footer> landmarks, <h2 id> anchors, cross-page fragment links, manifest, OG/Twitter, font preloads, and CSP checks.`);
+console.log(`    [PASS] All ${typoFiles.length} public HTML files pass SERP bounds, <main>/<footer> landmarks, <h2/h3/details id> anchors, cross-page fragment links, manifest, OG/Twitter, font preloads, and CSP checks.`);
+
+// Verify Google Image Sitemap extension in sitemap.xml
+const sitemapXml = fs.readFileSync(path.join(rootDir, 'sitemap.xml'), 'utf8');
+assert(sitemapXml.includes('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'), 'sitemap.xml missing xmlns:image namespace');
+const sitemapUrlCount = (sitemapXml.match(/<url>/g) || []).length;
+const sitemapImgCount = (sitemapXml.match(/<image:image>/g) || []).length;
+assert.strictEqual(sitemapImgCount, sitemapUrlCount, `sitemap.xml <image:image> count (${sitemapImgCount}) must match <url> count (${sitemapUrlCount})`);
 
 console.log('\n[SUMMARY] ALL 10 ROUTES INTEGRITY & COMPLIANCE TESTS PASSED.');
 
