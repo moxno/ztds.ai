@@ -73,7 +73,7 @@
       "description": "Reference architectural patterns for integrating sub-millisecond in-RAM surrogate tokenization and bijective local restoration across LangChain, LlamaIndex, CrewAI, Pinecone, Qdrant, Ollama, Envoy, and MCP.",
       "url": "https://ztds.ai/blueprints/",
       "datePublished": "2026-10-01T00:00:00Z",
-      "dateModified": "2026-10-18T00:00:00Z",
+      "dateModified": "2026-10-27T00:00:00Z",
       "author": {
         "@type": "Person",
         "name": "Ilya Sibiryakov",
@@ -222,6 +222,18 @@
       ],
       "breadcrumb": {
         "@id": "https://ztds.ai/blueprints/#breadcrumb"
+      },
+      "url": "https://ztds.ai/blueprints/",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h1",
+          "main h2"
+        ]
       }
     }
   ]
@@ -467,7 +479,7 @@
               <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-bold">BLUEPRINT 01 &middot; LANGCHAIN LCEL</span>
               <span class="text-xs font-mono text-slate-500">TypeScript / Python</span>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">LangChain RunnableSequence Bijective Sanitization Middleware</h3>
+            <h3 id="langchain-runnablesequence-bijective-sanitizatio" class="text-lg font-bold text-slate-900 mb-2 scroll-mt-24">LangChain RunnableSequence Bijective Sanitization Middleware</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               Wraps any LangChain Expression Language (LCEL) chain in a stateful volatile closure. Raw user variables are sanitized in local process RAM prior to <code class="font-mono bg-slate-100 px-1 rounded">ChatOpenAI</code> or <code class="font-mono bg-slate-100 px-1 rounded">ChatAnthropic</code> invocation and restored locally before returning to the caller.
             </p>
@@ -502,7 +514,7 @@ export async function invokeZeroTrustChain(chain, rawPrompt) {
               <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-bold">BLUEPRINT 02 &middot; LLAMAINDEX RAG</span>
               <span class="text-xs font-mono text-slate-500">Python / Node.js</span>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">LlamaIndex Ingestion Transform &amp; Query Postprocessor</h3>
+            <h3 id="llamaindex-ingestion-transform-query-postprocess" class="text-lg font-bold text-slate-900 mb-2 scroll-mt-24">LlamaIndex Ingestion Transform &amp; Query Postprocessor</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               Intercepts retrieved document nodes and query strings in local volatile RAM before LLM synthesis. Prevents sensitive clinical or legal records stored in internal knowledge bases from crossing the external API boundary.
             </p>
@@ -533,7 +545,7 @@ def zero_trust_rag_query(query_engine, raw_query: str, nodes: list) -> str:
               <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-bold">BLUEPRINT 03 &middot; MCP STDIO FIREWALL</span>
               <span class="text-xs font-mono text-slate-500">Cursor / Claude Desktop</span>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">Model Context Protocol (MCP) Local Stdio Security Gateway</h3>
+            <h3 id="model-context-protocol-mcp-local-stdio-security" class="text-lg font-bold text-slate-900 mb-2 scroll-mt-24">Model Context Protocol (MCP) Local Stdio Security Gateway</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               Executes as an air-gapped local child process over <code class="font-mono bg-slate-100 px-1 rounded">stdin/stdout</code>. Exposes <code class="font-mono bg-slate-100 px-1 rounded">ztds_sanitize</code>, <code class="font-mono bg-slate-100 px-1 rounded">ztds_restore</code>, and <code class="font-mono bg-slate-100 px-1 rounded">ztds_audit</code> to IDE agents so production secrets and database dumps never leak into cloud LLM context windows.
             </p>
@@ -566,7 +578,7 @@ def zero_trust_rag_query(query_engine, raw_query: str, nodes: list) -> str:
               <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-bold">BLUEPRINT 04 &middot; VECTOR DB INGESTION</span>
               <span class="text-xs font-mono text-slate-500">Pinecone / Qdrant / Weaviate</span>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">Pre-Embedding Sanitization Gate for Managed Vector Stores</h3>
+            <h3 id="pre-embedding-sanitization-gate-for-managed-vect" class="text-lg font-bold text-slate-900 mb-2 scroll-mt-24">Pre-Embedding Sanitization Gate for Managed Vector Stores</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               Raw PII embedded into high-dimensional vectors is vulnerable to embedding inversion attacks and turns your vector DB vendor into a GDPR Article 28 subprocessor. Sanitize chunks in RAM before calling <code class="font-mono bg-slate-100 px-1 rounded">embeddings.create()</code>.
             </p>
@@ -603,7 +615,7 @@ await pineconeIndex.upsert([{
               <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-bold">BLUEPRINT 05 &middot; MULTI-AGENT CREWS</span>
               <span class="text-xs font-mono text-slate-500">CrewAI / AutoGen / LangGraph</span>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">Deterministic Coreference Across Multi-Agent Delegation</h3>
+            <h3 id="deterministic-coreference-across-multi-agent-del" class="text-lg font-bold text-slate-900 mb-2 scroll-mt-24">Deterministic Coreference Across Multi-Agent Delegation</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               Maintains a single session-scoped <code class="font-mono bg-slate-100 px-1 rounded">tokenMap</code> across an entire multi-agent task graph so Agent A (<code class="font-mono bg-slate-100 px-1 rounded">Researcher</code>) and Agent B (<code class="font-mono bg-slate-100 px-1 rounded">Legal Reviewer</code>) reference identical surrogates (<code class="font-mono bg-slate-100 px-1 rounded">[PARTY_1]</code>) without ever accessing cleartext.
             </p>
@@ -632,7 +644,7 @@ with ZtdsSession(profile="legal") as crew_session:
               <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-bold">BLUEPRINT 06 &middot; OLLAMA &amp; VLLM</span>
               <span class="text-xs font-mono text-slate-500">Self-Hosted / VPC GPU</span>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">Zero-Trust Sanitization Before Shared VPC GPU Clusters</h3>
+            <h3 id="zero-trust-sanitization-before-shared-vpc-gpu-cl" class="text-lg font-bold text-slate-900 mb-2 scroll-mt-24">Zero-Trust Sanitization Before Shared VPC GPU Clusters</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               Even when running self-hosted open-weights models (Llama 3, Qwen, DeepSeek) via Ollama or vLLM, internal inference logs and shared GPU KV-caches create insider threat exposure. Sanitize at the application caller boundary.
             </p>
@@ -664,7 +676,7 @@ engine.destroy(tokenMap);</code></pre>
               <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-bold">BLUEPRINT 07 &middot; ENVOY / KONG GATEWAY</span>
               <span class="text-xs font-mono text-slate-500">VPC Egress Perimeter</span>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">VPC Egress Gateway In-Memory Sanitization Filter</h3>
+            <h3 id="vpc-egress-gateway-in-memory-sanitization-filter" class="text-lg font-bold text-slate-900 mb-2 scroll-mt-24">VPC Egress Gateway In-Memory Sanitization Filter</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               Enforces organization-wide ZTDS Invariant 1 at the Kubernetes ingress/egress controller layer without requiring third-party SaaS cloud DLP relays. Attaches cryptographic compliance headers (<code class="font-mono bg-slate-100 px-1 rounded">X-ZTDS-Receipt-SHA256</code>) to every outbound LLM call.
             </p>
@@ -696,7 +708,7 @@ app.use("/v1/chat/completions", (req, res, next) => {
               <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-bold">BLUEPRINT 08 &middot; STREAMING SSE</span>
               <span class="text-xs font-mono text-slate-500">Node.js TransformStream</span>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">Real-Time Server-Sent Events (SSE) Token Stream Rehydration</h3>
+            <h3 id="real-time-server-sent-events-sse-token-stream-re" class="text-lg font-bold text-slate-900 mb-2 scroll-mt-24">Real-Time Server-Sent Events (SSE) Token Stream Rehydration</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               Rehydrates surrogate tokens across chunked BPE token streams in real time using a lightweight Web Streams <code class="font-mono bg-slate-100 px-1 rounded">TransformStream</code> buffer, maintaining zero perceived time-to-first-token (TTFT) penalty.
             </p>
@@ -730,7 +742,7 @@ return new Response(upstreamResponse.body.pipeThrough(ztdsStream), {
               <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-bold">BLUEPRINT 09 &middot; MULTIMODAL VISION</span>
               <span class="text-xs font-mono text-slate-500">HTML5 Canvas / OffscreenCanvas</span>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">Multimodal OCR &amp; 6px Safety-Padded Pixel Burn-In</h3>
+            <h3 id="multimodal-ocr-6px-safety-padded-pixel-burn-in" class="text-lg font-bold text-slate-900 mb-2 scroll-mt-24">Multimodal OCR &amp; 6px Safety-Padded Pixel Burn-In</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               Gaussian blur and pixelation filters are mathematically reversible by modern vision models. ZTDS mandates solid-fill (<code class="font-mono bg-slate-100 px-1 rounded">#000000</code>) bounding-box pixel destruction with a 6px anti-bleed margin in local canvas memory prior to Vision LLM upload.
             </p>
@@ -758,7 +770,7 @@ return new Response(upstreamResponse.body.pipeThrough(ztdsStream), {
               <span class="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 font-mono text-xs font-bold">BLUEPRINT 10 &middot; CHROME MANIFEST V3</span>
               <span class="text-xs font-mono text-slate-500">Browser V8 Content Script</span>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">Zero-Server Browser DOM Input Interceptor for Web AI Chats</h3>
+            <h3 id="zero-server-browser-dom-input-interceptor-for-we" class="text-lg font-bold text-slate-900 mb-2 scroll-mt-24">Zero-Server Browser DOM Input Interceptor for Web AI Chats</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               Intercepts prompt submission events directly inside the browser tab on ChatGPT, Claude, and Gemini. Scrubs sensitive entities in local V8 memory and dispatches native <code class="font-mono bg-slate-100 px-1 rounded">InputEvent</code> updates before the web app initiates its <code class="font-mono bg-slate-100 px-1 rounded">fetch()</code> call.
             </p>
@@ -824,7 +836,7 @@ return new Response(upstreamResponse.body.pipeThrough(ztdsStream), {
       </div>
 
       <div class="space-y-4">
-        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs" open>
+        <details id="faq-how-do-you-prevent-pii-leakage-in-langchain-and" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24" open>
           <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
             <span>How do you prevent PII leakage in LangChain and LlamaIndex RAG pipelines without breaking LLM context?</span>
             <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
@@ -834,7 +846,7 @@ return new Response(upstreamResponse.body.pipeThrough(ztdsStream), {
           </div>
         </details>
 
-        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+        <details id="faq-should-vector-embeddings-in-pinecone-qdrant-or-w" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
           <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
             <span>Should vector embeddings in Pinecone, Qdrant, or Weaviate be generated before or after ZTDS sanitization?</span>
             <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
@@ -844,7 +856,7 @@ return new Response(upstreamResponse.body.pipeThrough(ztdsStream), {
           </div>
         </details>
 
-        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+        <details id="faq-how-does-ztds-handle-streaming-server-sent-event" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
           <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
             <span>How does ZTDS handle streaming Server-Sent Events (SSE) when restoring surrogate tokens in real time?</span>
             <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
@@ -854,7 +866,7 @@ return new Response(upstreamResponse.body.pipeThrough(ztdsStream), {
           </div>
         </details>
 
-        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+        <details id="faq-how-does-the-model-context-protocol-mcp-stdio-fi" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
           <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
             <span>How does the Model Context Protocol (MCP) stdio firewall protect Cursor, Claude Desktop, and IDE agents?</span>
             <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
@@ -864,7 +876,7 @@ return new Response(upstreamResponse.body.pipeThrough(ztdsStream), {
           </div>
         </details>
 
-        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+        <details id="faq-what-is-the-difference-between-the-open-source-z" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
           <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
             <span>What is the difference between the open-source @ztds/core reference baseline and the commercial @privacyscrubber/sdk engine?</span>
             <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>

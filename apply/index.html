@@ -64,7 +64,15 @@
       },
       "breadcrumb": {
         "@id": "https://ztds.ai/apply/#breadcrumb"
-      }
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h1",
+          "main h2"
+        ]
+      },
+      "dateModified": "2026-10-27T00:00:00Z"
     },
     {
       "@type": "ContactPage",
@@ -364,13 +372,13 @@
     <!-- Track Selector Tabs -->
     <div class="flex flex-wrap items-center justify-center gap-2 mb-8">
       <div class="flex flex-wrap items-center justify-center gap-2" role="tablist" aria-label="Accreditation Tracks">
-        <button id="trackProductBtn" class="track-btn px-4 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-white shadow-sm min-h-[44px] touch-target" data-track="product" role="tab" aria-selected="true" aria-controls="applyForm">
+        <button type="button" id="trackProductBtn" class="track-btn px-4 py-2.5 rounded-lg text-xs font-bold bg-slate-900 text-white shadow-sm min-h-[44px] touch-target" data-track="product" role="tab" aria-selected="true" aria-controls="applyForm">
           Track A: Product Certification
         </button>
-        <button id="trackCompanyBtn" class="track-btn px-4 py-2.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 min-h-[44px] touch-target" data-track="company" role="tab" aria-selected="false" aria-controls="applyForm">
+        <button type="button" id="trackCompanyBtn" class="track-btn px-4 py-2.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 min-h-[44px] touch-target" data-track="company" role="tab" aria-selected="false" aria-controls="applyForm">
           Track B: Corporate Adopter
         </button>
-        <button id="trackFellowBtn" class="track-btn px-4 py-2.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 min-h-[44px] touch-target" data-track="fellow" role="tab" aria-selected="false" aria-controls="applyForm">
+        <button type="button" id="trackFellowBtn" class="track-btn px-4 py-2.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 min-h-[44px] touch-target" data-track="fellow" role="tab" aria-selected="false" aria-controls="applyForm">
           Track C: Research Fellow
         </button>
       </div>
@@ -436,7 +444,7 @@
                 <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">Step 1 of 3</span>
                 <span class="text-xs text-slate-500">Accreditation Path</span>
               </div>
-              <h3 class="text-base sm:text-lg font-bold text-slate-900">Select Accreditation Track</h3>
+              <h3 id="select-accreditation-track" class="text-base sm:text-lg font-bold text-slate-900 scroll-mt-24">Select Accreditation Track</h3>
               <p class="text-xs text-slate-600 mt-0.5">Choose your participation track to configure corresponding technical matrices, audit scopes, and registry destination.</p>
             </div>
 
@@ -691,7 +699,7 @@
                 <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">Step 3 of 3</span>
                 <span class="text-xs text-slate-500 font-mono" id="step3TrackBadge">Verification &amp; PR</span>
               </div>
-              <h3 class="text-base sm:text-lg font-bold text-slate-900">Cryptographic Verification &amp; Invariant Affirmation</h3>
+              <h3 id="cryptographic-verification-invariant-affirmation" class="text-base sm:text-lg font-bold text-slate-900 scroll-mt-24">Cryptographic Verification &amp; Invariant Affirmation</h3>
               <p class="text-xs text-slate-600 mt-0.5">Audit external network sockets, verify cryptographic receipt, and generate your GitOps submission record.</p>
             </div>
 

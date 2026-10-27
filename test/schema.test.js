@@ -187,6 +187,12 @@ for (const page of prodPages) {
         assert(node.offers && node.offers.price === '0' && node.offers.priceCurrency === 'USD', `Missing free Offer on ${node['@type']} in ${page}`);
         appEntitiesChecked++;
       }
+      const nodeTypes = Array.isArray(node['@type']) ? node['@type'] : [node['@type']];
+      if (page !== '404.html' && nodeTypes.some(t => ['WebPage', 'CollectionPage', 'ProfilePage', 'AboutPage', 'FAQPage'].includes(t))) {
+        assert(node.isPartOf && node.isPartOf['@id'] === 'https://ztds.ai/#website', `Missing isPartOf #website on ${node['@type']} in ${page}`);
+        assert(node.inLanguage === 'en-US', `Missing inLanguage "en-US" on ${node['@type']} in ${page}`);
+        assert(node.speakable && node.speakable['@type'] === 'SpeakableSpecification', `Missing SpeakableSpecification on ${node['@type']} in ${page}`);
+      }
     }
   }
   if (page !== '404.html') {

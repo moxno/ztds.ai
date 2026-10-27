@@ -174,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (cleanHref === rawPath || (cleanHref !== '/' && rawPath.startsWith(cleanHref))) {
         link.classList.add('text-emerald-700', 'font-bold', 'active');
         link.classList.remove('text-slate-600');
+        if (cleanHref === rawPath) link.setAttribute('aria-current', 'page');
       }
     });
 
@@ -185,6 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (cleanHref === rawPath || (cleanHref !== '/' && rawPath.startsWith(cleanHref))) {
         link.classList.add('text-emerald-800', 'bg-emerald-50', 'font-semibold');
         link.classList.remove('text-slate-700', 'hover:bg-slate-100');
+        if (cleanHref === rawPath) link.setAttribute('aria-current', 'page');
       }
     });
   } catch (err) {
@@ -283,14 +285,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   } catch (_) {}
 
-  // Global UX 4: Deep-link anchor copy (#) on section headings (h2[id], section[id] > h2)
+  // Global UX 4: Deep-link anchor copy (#) on section & subsection headings (h2[id], section[id] > h2, h3[id])
   try {
-    document.querySelectorAll('main h2[id], main section[id] > h2:not([id])').forEach((h2) => {
-      if (h2.dataset.ztdsAnchorInit || h2.querySelector('a, button')) return;
-      const targetId = h2.id || (h2.parentElement && h2.parentElement.id);
+    document.querySelectorAll('main h2[id], main section[id] > h2:not([id]), main h3[id]').forEach((heading) => {
+      if (heading.dataset.ztdsAnchorInit || heading.querySelector('a, button')) return;
+      const targetId = heading.id || (heading.parentElement && heading.parentElement.id);
       if (!targetId) return;
-      h2.dataset.ztdsAnchorInit = '1';
-      h2.classList.add('group');
+      heading.dataset.ztdsAnchorInit = '1';
+      heading.classList.add('group');
 
       const anchorBtn = document.createElement('button');
       anchorBtn.type = 'button';
@@ -314,8 +316,58 @@ document.addEventListener('DOMContentLoaded', () => {
           }, 1600);
         });
       });
-      h2.appendChild(anchorBtn);
+      heading.appendChild(anchorBtn);
     });
+  } catch (_) {}
+
+  // Global UX 4b: Auto-expand <details> FAQ accordions when targeted via URL #hash + TOC ScrollSpy
+  try {
+    function expandDetailsForHash() {
+      const rawHash = (window.location.hash || '').replace(/^#/, '');
+      if (!rawHash) return;
+      let target = null;
+      try { target = document.getElementById(decodeURIComponent(rawHash)); } catch (_) { target = document.getElementById(rawHash); }
+      if (!target) return;
+      const detailsEl = target.tagName === 'DETAILS' ? target : target.closest('details');
+      if (detailsEl && !detailsEl.open) {
+        detailsEl.open = true;
+        setTimeout(() => {
+          if (typeof target.scrollIntoView === 'function') {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 40);
+      }
+    }
+    expandDetailsForHash();
+    window.addEventListener('hashchange', expandDetailsForHash);
+
+    // TOC ScrollSpy for in-page sidebar navigation links
+    const tocLinks = Array.from(document.querySelectorAll('aside a[href^="#"]:not([href="#"]):not([href="#main-content"])'));
+    if (tocLinks.length >= 2 && 'IntersectionObserver' in window) {
+      const targetMap = new Map();
+      tocLinks.forEach((a) => {
+        const id = (a.getAttribute('href') || '').slice(1);
+        const el = id ? document.getElementById(id) : null;
+        if (el) targetMap.set(el, a);
+      });
+      if (targetMap.size >= 2) {
+        const spy = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const activeLink = targetMap.get(entry.target);
+              if (!activeLink) return;
+              tocLinks.forEach((l) => {
+                l.classList.remove('text-emerald-700', 'font-bold');
+                l.removeAttribute('aria-current');
+              });
+              activeLink.classList.add('text-emerald-700', 'font-bold');
+              activeLink.setAttribute('aria-current', 'location');
+            }
+          });
+        }, { rootMargin: '-15% 0px -75% 0px', threshold: 0 });
+        targetMap.forEach((_, el) => spy.observe(el));
+      }
+    }
   } catch (_) {}
 
   // Global UX 5: Top Reading Progress Bar on long-form specification pages
@@ -437,16 +489,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === modal) window.ztdsModal.close(modal);
       });
 
-      // Collect current page h2 sections dynamically
+      // Collect current page h2, h3, and FAQ details sections dynamically
       const pageSections = [];
-      document.querySelectorAll('main h2[id]').forEach((h2) => {
-        const cleanTitle = (h2.textContent || '').replace(/#$/, '').replace(/Copied$/, '').trim();
-        if (cleanTitle && h2.id) {
+      document.querySelectorAll('main h2[id], main h3[id], main details[id] > summary').forEach((el) => {
+        const isSummary = el.tagName === 'SUMMARY';
+        const idOwner = isSummary ? el.parentElement : el;
+        const cleanTitle = (el.textContent || '').replace(/#$/, '').replace(/Copied$/, '').trim();
+        if (cleanTitle && idOwner && idOwner.id) {
           pageSections.push({
             title: cleanTitle,
-            cat: 'On This Page',
-            url: '#' + h2.id,
-            kw: cleanTitle.toLowerCase() + ' section anchor'
+            cat: isSummary ? 'Page FAQ' : 'On This Page',
+            url: '#' + idOwner.id,
+            kw: cleanTitle.toLowerCase() + (isSummary ? ' faq question' : ' section anchor')
           });
         }
       });
@@ -553,7 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.ztdsModal.open(modal, '#ztds-cmd-input');
     }
 
-    // Inject compact Cmd+K trigger button in header action bar next to Get Certified
+    // Inject compact Cmd+K trigger button in header action bar (accessible on both mobile & desktop)
     const mobileMenuBtn = document.getElementById('mobile-menu-toggle');
     if (mobileMenuBtn && mobileMenuBtn.parentElement && !document.getElementById('ztds-cmd-trigger')) {
       const actionContainer = mobileMenuBtn.parentElement;
@@ -562,8 +616,8 @@ document.addEventListener('DOMContentLoaded', () => {
       cmdBtn.id = 'ztds-cmd-trigger';
       cmdBtn.setAttribute('aria-label', 'Quick Jump Search (Command+K)');
       cmdBtn.setAttribute('title', 'Quick Jump Search (⌘K / Ctrl+K)');
-      cmdBtn.className = 'no-print hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-600 hover:text-slate-900 font-mono text-xs font-medium transition-colors cursor-pointer';
-      cmdBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span>&#8984;K</span>';
+      cmdBtn.className = 'no-print inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-600 hover:text-slate-900 font-mono text-xs font-medium transition-colors cursor-pointer';
+      cmdBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span class="hidden sm:inline">&#8984;K</span>';
       cmdBtn.addEventListener('click', openCmdPalette);
       actionContainer.insertBefore(cmdBtn, actionContainer.firstChild);
     }

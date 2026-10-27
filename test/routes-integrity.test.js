@@ -460,17 +460,24 @@ for (const relPath of typoFiles) {
     assert(/\bdecoding=["']async["']/i.test(imgTag), `<img> missing decoding="async" in ${relPath}: ${imgTag}`);
   }
 
-  // Verify subpages (except index.html, 404.html, and raw IETF RFC drafts) feature semantic <nav aria-label="Breadcrumb">
-  if (relPath !== 'index.html' && relPath !== '404.html' && !relPath.startsWith('ietf/draft-')) {
+  // Verify all subpages (except index.html and 404.html) feature semantic <nav aria-label="Breadcrumb">
+  if (relPath !== 'index.html' && relPath !== '404.html') {
     assert(/<nav\b[^>]*aria-label=["']Breadcrumb["']/i.test(html), `Missing <nav aria-label="Breadcrumb"> in ${relPath}`);
     assert(/aria-current=["']page["']/i.test(html), `Missing aria-current="page" on active breadcrumb item in ${relPath}`);
   }
 
-  // Verify every <h2> inside <main> has an id attribute for SERP fragment sitelinks & deep linking
-  const mainBlock = html.match(/<main\b[\s\S]*?<\/main>/i)?.[0] || '';
-  const mainH2s = mainBlock.match(/<h2\b[^>]*>/gi) || [];
-  for (const h2Tag of mainH2s) {
-    assert(/\bid=["'][^"']+["']/i.test(h2Tag), `<h2> inside <main> missing id attribute in ${relPath}: ${h2Tag}`);
+  // Verify every <button> (outside <script>) has explicit type= attribute
+  const htmlWithoutScripts = html.replace(/<script\b[\s\S]*?<\/script>/gi, '');
+  const allBtns = htmlWithoutScripts.match(/<button\b[^>]*>/gi) || [];
+  for (const btnTag of allBtns) {
+    assert(/\btype=["'](?:button|submit|reset)["']/i.test(btnTag), `<button> missing explicit type attribute in ${relPath}: ${btnTag}`);
+  }
+
+  // Verify every <h2>, <h3>, and <details> inside <main> has an id attribute for SERP fragment sitelinks & deep linking
+  const mainBlock = (htmlWithoutScripts.match(/<main\b[\s\S]*?<\/main>/i)?.[0] || '');
+  const mainAnchorTags = mainBlock.match(/<(?:h2|h3|details)\b[^>]*>/gi) || [];
+  for (const tag of mainAnchorTags) {
+    assert(/\bid=["'][^"']+["']/i.test(tag), `<h2/h3/details> inside <main> missing id attribute in ${relPath}: ${tag}`);
   }
 
   // Verify zero invalid #fragment?query syntax and zero broken cross-page fragment links

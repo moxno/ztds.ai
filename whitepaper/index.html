@@ -84,7 +84,7 @@
         }
       ],
       "datePublished": "2026-09-17T00:00:00Z",
-      "dateModified": "2026-09-21T00:00:00Z",
+      "dateModified": "2026-10-27T00:00:00Z",
       "inLanguage": "en-US",
       "identifier": "https://doi.org/10.5281/zenodo.22058770",
       "publisher": {
@@ -140,6 +140,18 @@
       ],
       "breadcrumb": {
         "@id": "https://ztds.ai/whitepaper/#breadcrumb"
+      },
+      "url": "https://ztds.ai/whitepaper/",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h1",
+          "main h2"
+        ]
       }
     }
   ]
@@ -482,7 +494,7 @@
             
             <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
               <span class="text-xs font-mono font-bold text-rose-700 uppercase">Case 01 &middot; Proprietary IP Exfiltration</span>
-              <h3 class="text-sm font-bold text-slate-900">The Semiconductor Source Code Incident</h3>
+              <h3 id="the-semiconductor-source-code-incident" class="text-sm font-bold text-slate-900 scroll-mt-24">The Semiconductor Source Code Incident</h3>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Engineers at a major global electronics conglomerate pasted confidential semiconductor yield-measurement source code and internal meeting transcripts directly into public LLM conversational interfaces to optimize test algorithms. The cleartext data crossed the corporate boundary, entering the external provider's retention pipeline, triggering emergency company-wide bans and statutory IP disclosure alerts.
               </p>
@@ -490,7 +502,7 @@
 
             <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
               <span class="text-xs font-mono font-bold text-rose-700 uppercase">Case 02 &middot; Retrieval-Augmented Exfiltration</span>
-              <h3 class="text-sm font-bold text-slate-900">Slack AI &amp; Indirect Prompt Infiltration</h3>
+              <h3 id="slack-ai-indirect-prompt-infiltration" class="text-sm font-bold text-slate-900 scroll-mt-24">Slack AI &amp; Indirect Prompt Infiltration</h3>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Security researchers demonstrated that unauthorized prompt injection techniques inside private enterprise communication tools could exploit generative search and summarization agents. By embedding malicious hidden text within shared channels, adversaries induced the AI assistant to read private user direct messages and exfiltrate API keys to external webhook domains.
               </p>
@@ -498,7 +510,7 @@
 
             <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
               <span class="text-xs font-mono font-bold text-rose-700 uppercase">Case 03 &middot; Supply-Chain SaaS Exploitation</span>
-              <h3 class="text-sm font-bold text-slate-900">MOVEit Transfer Zero-Day Payload Harvesting</h3>
+              <h3 id="moveit-transfer-zero-day-payload-harvesting" class="text-sm font-bold text-slate-900 scroll-mt-24">MOVEit Transfer Zero-Day Payload Harvesting</h3>
               <p class="text-xs text-slate-600 leading-relaxed">
                 The exploitation of CVE-2023-34362 demonstrated that enterprise perimeter controls are rendered completely ineffective once external data transfer tools are compromised. Over 2,600 organizations suffered cascading data leaks because sensitive PII was stored and transmitted in cleartext payloads rather than pre-sanitized tokens.
               </p>
@@ -506,7 +518,7 @@
 
             <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
               <span class="text-xs font-mono font-bold text-rose-700 uppercase">Case 04 &middot; Vector Database Inversion</span>
-              <h3 class="text-sm font-bold text-slate-900">Embedding Store Reconstruction Attacks</h3>
+              <h3 id="embedding-store-reconstruction-attacks" class="text-sm font-bold text-slate-900 scroll-mt-24">Embedding Store Reconstruction Attacks</h3>
               <p class="text-xs text-slate-600 leading-relaxed">
                 Academic research (Morris et al., 2023) established that dense vector embeddings stored in RAG retrieval pipelines can be mathematically inverted to reconstruct exact original input sentences, including Social Security Numbers and passwords, confirming that vector representations of unmasked data remain legally identifiable personal data.
               </p>
@@ -525,7 +537,7 @@
           </p>
 
           <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl space-y-3">
-            <h3 class="text-sm font-bold text-rose-900">The Cloud DLP Paradox</h3>
+            <h3 id="the-cloud-dlp-paradox" class="text-sm font-bold text-rose-900 scroll-mt-24">The Cloud DLP Paradox</h3>
             <p class="text-xs text-rose-800 leading-relaxed">
               To detect and mask sensitive data, a Cloud DLP service must itself receive unencrypted, plaintext data across the network. Thus, the enterprise attempts to solve the problem of sending data to an untrusted cloud provider by sending that exact same data to a second cloud provider.
             </p>
@@ -597,7 +609,7 @@
             <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-sm">
               <div class="flex items-center gap-2 mb-2">
                 <span class="w-6 h-6 rounded-full bg-slate-900 text-white font-mono font-bold text-xs flex items-center justify-center">1</span>
-                <h3 class="text-base font-bold text-slate-900">Invariant 1: Zero External Egress Prior to Sanitization</h3>
+                <h3 id="invariant-1-zero-external-egress-prior-to-saniti" class="text-base font-bold text-slate-900 scroll-mt-24">Invariant 1: Zero External Egress Prior to Sanitization</h3>
               </div>
               <p class="text-xs text-slate-600 leading-relaxed pl-8">
                 Raw sensitive identifiers (PII, PHI, financial records, cryptographic credentials, API secrets) must undergo full de-identification strictly inside the local execution environment prior to crossing the network boundary. Exactly zero bytes of unmasked data may traverse external sockets.
@@ -607,7 +619,7 @@
             <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-sm">
               <div class="flex items-center gap-2 mb-2">
                 <span class="w-6 h-6 rounded-full bg-slate-900 text-white font-mono font-bold text-xs flex items-center justify-center">2</span>
-                <h3 class="text-base font-bold text-slate-900">Invariant 2: Deterministic Reversible Tokenization</h3>
+                <h3 id="invariant-2-deterministic-reversible-tokenizatio" class="text-base font-bold text-slate-900 scroll-mt-24">Invariant 2: Deterministic Reversible Tokenization</h3>
               </div>
               <p class="text-xs text-slate-600 leading-relaxed pl-8">
                 Masked entities are replaced with synthetic, context-preserving tokens (e.g., <code>[EMAIL_TOKEN_1]</code>, <code>[IBAN_TOKEN_2]</code>). The mapping table mapping tokens back to raw entities exists solely in volatile RAM, is never persisted to disk or network, and is destroyed upon session termination. When the LLM responds with tokens, the client locally reverses the mapping without server intervention.
@@ -617,7 +629,7 @@
             <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-sm">
               <div class="flex items-center gap-2 mb-2">
                 <span class="w-6 h-6 rounded-full bg-slate-900 text-white font-mono font-bold text-xs flex items-center justify-center">3</span>
-                <h3 class="text-base font-bold text-slate-900">Invariant 3: Verifiable Cryptographic Isolation</h3>
+                <h3 id="invariant-3-verifiable-cryptographic-isolation" class="text-base font-bold text-slate-900 scroll-mt-24">Invariant 3: Verifiable Cryptographic Isolation</h3>
               </div>
               <p class="text-xs text-slate-600 leading-relaxed pl-8">
                 The sanitization engine must execute within a provably sandboxed computational boundary: a client-side WebAssembly (WASM) sandbox inside the user's browser, an isolated process in the client OS, or an AWS Nitro Enclave / confidential computing VM with hardware cryptographic attestation. Zero third-party telemetry, tracking pixels, or diagnostics are permitted.
@@ -627,7 +639,7 @@
             <div class="p-5 bg-white border border-slate-200 rounded-xl shadow-sm">
               <div class="flex items-center gap-2 mb-2">
                 <span class="w-6 h-6 rounded-full bg-slate-900 text-white font-mono font-bold text-xs flex items-center justify-center">4</span>
-                <h3 class="text-base font-bold text-slate-900">Invariant 4: Continuous Compliance &amp; Zero Subprocessor Chain</h3>
+                <h3 id="invariant-4-continuous-compliance-zero-subproces" class="text-base font-bold text-slate-900 scroll-mt-24">Invariant 4: Continuous Compliance &amp; Zero Subprocessor Chain</h3>
               </div>
               <p class="text-xs text-slate-600 leading-relaxed pl-8">
                 Because conforming software operates as a local utility and never assumes custody of data, the software vendor does not qualify as a data processor under GDPR Article 28. Downstream AI APIs receive only anonymized tokens, breaking the subprocessor chain and eliminating Data Processing Agreement (DPA) requirements.
@@ -646,7 +658,7 @@
             To provide the rigorous mathematical foundation required for enterprise CISO verification, we formalize the sanitization transformation <span class="font-mono font-semibold">f: X &rarr; T</span> under Shannon information-theoretic security bounds and topological memory constraints.
           </p>
 
-          <h3 class="text-base font-bold text-slate-900 pt-2">Theorem 1: Zero Mutual Information of Emitted Token Payloads</h3>
+          <h3 id="theorem-1-zero-mutual-information-of-emitted-tok" class="text-base font-bold text-slate-900 pt-2 scroll-mt-24">Theorem 1: Zero Mutual Information of Emitted Token Payloads</h3>
           <p class="text-slate-700 text-sm leading-relaxed">
             Let <span class="font-mono font-semibold">X</span> denote a discrete random variable over the sensitive entity domain (e.g. government IDs, clinical MRNs, banking IBANs, API secret keys). Let <span class="font-mono font-semibold">T</span> denote the surrogate token generated by the ZTDS deterministic tokenization function. The mutual information <span class="font-mono font-semibold">I(X; T)</span> between sensitive source entities and emitted payload tokens must be strictly identical to zero:
           </p>
@@ -673,7 +685,7 @@
             Therefore, observing the masked prompt provides an adversary or downstream LLM provider with zero reduction in uncertainty regarding <span class="font-mono font-semibold">X</span>. Under Shannon entropy bounds, no confidential personal data crosses the local execution boundary.
           </p>
 
-          <h3 class="text-base font-bold text-slate-900 pt-2">Theorem 2: Ephemeral Memory Destruction Invariant</h3>
+          <h3 id="theorem-2-ephemeral-memory-destruction-invariant" class="text-base font-bold text-slate-900 pt-2 scroll-mt-24">Theorem 2: Ephemeral Memory Destruction Invariant</h3>
           <p class="text-slate-700 text-sm leading-relaxed">
             Let <span class="font-mono font-semibold">M_map = {(T_i, X_i)}</span> represent the in-memory bidirectional substitution mapping dictionary. Let <span class="font-mono font-semibold">t_session</span> denote the active client conversation lifecycle. Conformance mandates the topological memory isolation and auto-zeroization invariant:
           </p>
@@ -919,7 +931,7 @@
           <div class="p-5 bg-slate-900 text-slate-200 rounded-xl font-mono text-xs space-y-2">
             <div class="flex justify-between items-center text-slate-400 border-b border-slate-800 pb-2 mb-2">
               <span>BibTeX Academic Citation</span>
-              <button id="btnCopyBibtexBlock" class="text-emerald-400 hover:text-emerald-300 font-bold">Copy Citation</button>
+              <button type="button" id="btnCopyBibtexBlock" class="text-emerald-400 hover:text-emerald-300 font-bold">Copy Citation</button>
             </div>
             <pre class="overflow-x-auto leading-relaxed text-xs text-slate-300" id="bibtexBlock">@article{sibiryakov2026ztds,
   title     = {ZTDS: A Data-Plane Primitive for the AI Era -- Formal Specification, Cryptographic Isolation, and Subprocessor Elimination in Enterprise Generative Workloads},

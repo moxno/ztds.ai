@@ -134,6 +134,18 @@
       ],
       "breadcrumb": {
         "@id": "https://ztds.ai/soc2/#breadcrumb"
+      },
+      "url": "https://ztds.ai/soc2/",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h1",
+          "main h2"
+        ]
       }
     }
   ]
@@ -341,10 +353,10 @@
 
         <!-- Filter Controls -->
         <div class="flex flex-wrap items-center gap-2 no-print">
-          <button class="filter-btn active px-3 py-1.5 text-xs rounded-lg font-medium transition-all bg-slate-900 text-white" data-filter="all">All (11)</button>
-          <button class="filter-btn px-3 py-1.5 text-xs rounded-lg font-medium transition-all bg-white border border-slate-200 text-slate-600 hover:text-slate-900" data-filter="cc">Common Criteria (CC6/7) (6)</button>
-          <button class="filter-btn px-3 py-1.5 text-xs rounded-lg font-medium transition-all bg-white border border-slate-200 text-slate-600 hover:text-slate-900" data-filter="privacy">Confidentiality &amp; Privacy (3)</button>
-          <button class="filter-btn px-3 py-1.5 text-xs rounded-lg font-medium transition-all bg-white border border-slate-200 text-slate-600 hover:text-slate-900" data-filter="iso">ISO 27001:2022 (2)</button>
+          <button type="button" class="filter-btn active px-3 py-1.5 text-xs rounded-lg font-medium transition-all bg-slate-900 text-white" data-filter="all">All (11)</button>
+          <button type="button" class="filter-btn px-3 py-1.5 text-xs rounded-lg font-medium transition-all bg-white border border-slate-200 text-slate-600 hover:text-slate-900" data-filter="cc">Common Criteria (CC6/7) (6)</button>
+          <button type="button" class="filter-btn px-3 py-1.5 text-xs rounded-lg font-medium transition-all bg-white border border-slate-200 text-slate-600 hover:text-slate-900" data-filter="privacy">Confidentiality &amp; Privacy (3)</button>
+          <button type="button" class="filter-btn px-3 py-1.5 text-xs rounded-lg font-medium transition-all bg-white border border-slate-200 text-slate-600 hover:text-slate-900" data-filter="iso">ISO 27001:2022 (2)</button>
         </div>
       </div>
 
@@ -657,7 +669,7 @@
               <span class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">EU GDPR &middot; Recital 26</span>
               <span class="text-xs font-mono text-slate-400">Pseudonymization</span>
             </div>
-            <h3 class="text-sm font-bold text-slate-900 mb-1.5">Effective De-Identification Threshold</h3>
+            <h3 id="effective-de-identification-threshold" class="text-sm font-bold text-slate-900 mb-1.5 scroll-mt-24">Effective De-Identification Threshold</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               Under Recital 26 and Art. 4(5), data stripped of direct and indirect identifiers ceases to be personal data in the hands of an external recipient lacking the reversal key. When ZTDS confines the mapping table strictly to volatile client RAM, outgoing prompts dispatched to cloud models constitute legally de-identified text.
             </p>
@@ -675,7 +687,7 @@
               <span class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">EU GDPR &middot; Article 28</span>
               <span class="text-xs font-mono text-slate-400">Zero-Subprocessor</span>
             </div>
-            <h3 class="text-sm font-bold text-slate-900 mb-1.5">DPA &amp; Subprocessor Chain Exemption</h3>
+            <h3 id="dpa-subprocessor-chain-exemption" class="text-sm font-bold text-slate-900 mb-1.5 scroll-mt-24">DPA &amp; Subprocessor Chain Exemption</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               According to EDPB doctrine, software executing exclusively within client-controlled hardware/RAM without transmitting telemetry or cleartext back to the software developer does not constitute third-party data processing. Consequently, no Data Processing Agreement (DPA) or SCCs are statutorily required.
             </p>
@@ -693,7 +705,7 @@
               <span class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">EU GDPR &middot; Article 17</span>
               <span class="text-xs font-mono text-slate-400">Right to Erasure</span>
             </div>
-            <h3 class="text-sm font-bold text-slate-900 mb-1.5">Vector DB &amp; RAG Inversion Defense</h3>
+            <h3 id="vector-db-rag-inversion-defense" class="text-sm font-bold text-slate-900 mb-1.5 scroll-mt-24">Vector DB &amp; RAG Inversion Defense</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               High-dimensional vector embeddings can leak cleartext PII through embedding inversion attacks (Morris et al., EMNLP 2023). Ingesting strictly ZTDS-sanitized surrogate tokens prevents PII from poisoning vector stores (Pinecone, Milvus), ensuring instantaneous Art. 17 compliance by zeroing client mapping tables.
             </p>
@@ -711,7 +723,7 @@
               <span class="text-xs font-mono font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">EU AI Act &middot; Article 10</span>
               <span class="text-xs font-mono text-slate-400">High-Risk Governance</span>
             </div>
-            <h3 class="text-sm font-bold text-slate-900 mb-1.5">High-Risk AI System Data Governance</h3>
+            <h3 id="high-risk-ai-system-d" class="text-sm font-bold text-slate-900 mb-1.5 scroll-mt-24">High-Risk AI System Data Governance</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               Regulation (EU) 2024/1689 Article 10 mandates that training, validation, and testing datasets must be subject to appropriate data governance practices, specifically privacy protection and mitigation of data leakage risks. ZTDS guarantees zero unmasked egress with entropy bounds (I(X; T) = 0.00 bits).
             </p>
@@ -729,7 +741,7 @@
               <span class="text-xs font-mono font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">US HHS &middot; HIPAA Safe Harbor</span>
               <span class="text-xs font-mono text-slate-400">45 CFR § 164.514</span>
             </div>
-            <h3 class="text-sm font-bold text-slate-900 mb-1.5">Safe Harbor De-Identification</h3>
+            <h3 id="safe-harbor-de-identification" class="text-sm font-bold text-slate-900 mb-1.5 scroll-mt-24">Safe Harbor De-Identification</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               Under 45 CFR § 164.514, health information stripped of the 18 specified personal identifiers ceases to constitute Protected Health Information (PHI). Because sanitization executes before socket serialization, downstream foundation models receive solely de-identified data. No Business Associate Agreement (BAA) is required.
             </p>
@@ -747,7 +759,7 @@
               <span class="text-xs font-mono font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">US Federal Evidence &middot; FRE 502</span>
               <span class="text-xs font-mono text-slate-400">Privilege Defense</span>
             </div>
-            <h3 class="text-sm font-bold text-slate-900 mb-1.5">Attorney-Client Privilege Protection</h3>
+            <h3 id="attorney-client-privilege-protection" class="text-sm font-bold text-slate-900 mb-1.5 scroll-mt-24">Attorney-Client Privilege Protection</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
               Submitting sensitive litigation notes or M&amp;A transaction codenames to commercial AI chatbots risks waiver of attorney-client privilege. Deploying an audited, client-side zero-trust redaction mechanism satisfies the statutory "reasonable steps to prevent disclosure" standard under FRE 502(b)(2), shielding work product immunity.
             </p>
@@ -773,7 +785,7 @@
         </div>
 
         <div class="no-print">
-          <button id="copyAllSigBtn" class="btn-trust text-xs py-2 px-4 shadow-sm flex items-center gap-1.5">
+          <button type="button" id="copyAllSigBtn" class="btn-trust text-xs py-2 px-4 shadow-sm flex items-center gap-1.5">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
             </svg>
@@ -931,7 +943,7 @@
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
               <span>Download JSON</span>
             </a>
-            <button id="copyJsonBtn" class="text-slate-400 hover:text-emerald-400 transition-colors text-xs flex items-center gap-1">
+            <button type="button" id="copyJsonBtn" class="text-slate-400 hover:text-emerald-400 transition-colors text-xs flex items-center gap-1">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
               </svg>
@@ -1016,28 +1028,28 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         
         <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-          <h3 class="font-bold text-slate-900 text-sm mb-2">How do we present ZTDS to our AICPA audit firm?</h3>
+          <h3 id="how-do-we-present-ztds-to-our-aicpa-audit-firm" class="font-bold text-slate-900 text-sm mb-2 scroll-mt-24">How do we present ZTDS to our AICPA audit firm?</h3>
           <p class="text-xs text-slate-600 leading-relaxed">
             Present ZTDS as an endpoint data-plane security control for Invariant 1 (perimeter egress defense) and Invariant 2 (presentation layer pseudonymization). Submit the pre-filled SIG Lite packet along with your repository's cryptographic <code>ztds-audit-receipt.json</code> artifact to demonstrate automated control testing.
           </p>
         </div>
 
         <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-          <h3 class="font-bold text-slate-900 text-sm mb-2">Why does our legal counsel not need to negotiate a DPA?</h3>
+          <h3 id="why-does-our-legal-counsel-not-need-to-negotiate" class="font-bold text-slate-900 text-sm mb-2 scroll-mt-24">Why does our legal counsel not need to negotiate a DPA?</h3>
           <p class="text-xs text-slate-600 leading-relaxed">
             Under GDPR Article 28 and European Data Protection Board doctrine, a software provider that does not receive, access, or transmit customer personal data is legally classified as a software vendor, not a data processor. No subprocessor relationship is established.
           </p>
         </div>
 
         <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-          <h3 class="font-bold text-slate-900 text-sm mb-2">How is continuous compliance maintained across code updates?</h3>
+          <h3 id="how-is-continuous-compliance-maintained-across-c" class="font-bold text-slate-900 text-sm mb-2 scroll-mt-24">How is continuous compliance maintained across code updates?</h3>
           <p class="text-xs text-slate-600 leading-relaxed">
             Integrate <code>npx ztds-audit</code> directly into your GitHub Actions or GitLab CI pipeline. If any developer introduces a library or network socket that transmits unmasked cleartext data, the CI test fails immediately before production merge.
           </p>
         </div>
 
         <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-          <h3 class="font-bold text-slate-900 text-sm mb-2">Does ZTDS replace or complement our existing SIEM / DLP?</h3>
+          <h3 id="does-ztds-replace-or-complement-our-existing-sie" class="font-bold text-slate-900 text-sm mb-2 scroll-mt-24">Does ZTDS replace or complement our existing SIEM / DLP?</h3>
           <p class="text-xs text-slate-600 leading-relaxed">
             ZTDS operates at the presentation and data plane layer (prior to egress), whereas traditional SIEMs monitor network perimeter logs. ZTDS prevents sensitive data from ever reaching the network, eliminating SIEM alert fatigue and DLP false positives.
           </p>

@@ -54,7 +54,7 @@
       "description": "Formal RFC v1.0 technical standard defining 4 core invariants, in-memory de-identification proofs, and cryptographic isolation for enterprise AI.",
       "url": "https://ztds.ai/standard/",
       "datePublished": "2026-09-15T00:00:00Z",
-      "dateModified": "2026-09-21T00:00:00Z",
+      "dateModified": "2026-10-27T00:00:00Z",
       "inLanguage": "en-US",
       "isPartOf": {
         "@id": "https://ztds.ai/#website"
@@ -158,6 +158,18 @@
       ],
       "breadcrumb": {
         "@id": "https://ztds.ai/standard/#breadcrumb"
+      },
+      "url": "https://ztds.ai/standard/",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h1",
+          "main h2"
+        ]
       }
     }
   ]
@@ -488,7 +500,7 @@
                   <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono"><dfn class="not-italic">Invariant 1 &middot; Zero External Egress Prior to Sanitization</dfn></span>
                   <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-bold font-mono">MANDATORY</span>
                 </div>
-                <h3 class="text-base font-bold text-slate-900 mb-2">Physical Socket Egress Elimination</h3>
+                <h3 id="physical-socket-egress-elimination" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">Physical Socket Egress Elimination</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
                   The mandatory architectural rule that raw personally identifiable information (PII), protected health information (PHI), financial accounts, or corporate secrets must never cross the local hardware or process perimeter unmasked. Sanitization occurs strictly prior to socket write, physically guaranteeing zero external data egress: <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">Egress(S) == 0.00 bytes</code>.
                 </p>
@@ -500,7 +512,7 @@
                   <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono"><dfn class="not-italic">Invariant 2 &middot; Deterministic Reversible Tokenization</dfn></span>
                   <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-bold font-mono">MANDATORY</span>
                 </div>
-                <h3 class="text-base font-bold text-slate-900 mb-2">Bijective Semantic Preservation &amp; Sub-2ms Latency</h3>
+                <h3 id="bijective-semantic-preservation-sub-2ms-latency" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">Bijective Semantic Preservation &amp; Sub-2ms Latency</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
                   The mandatory requirement that sensitive entities are replaced with grammatically consistent surrogate tokens (<code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">[PATIENT_1]</code>, <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">[EMAIL_1]</code>) that preserve model reasoning context while token mapping dictionaries remain exclusively in local volatile memory. Reversible inversion must be strictly bijective and execute deterministically with sub-2.0ms latency per 15,000 characters.
                 </p>
@@ -512,7 +524,7 @@
                   <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono"><dfn class="not-italic">Invariant 3 &middot; Verifiable Cryptographic Isolation</dfn></span>
                   <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-bold font-mono">MANDATORY</span>
                 </div>
-                <h3 class="text-base font-bold text-slate-900 mb-2">Volatile Memory Boundary &amp; Zero Secondary Storage</h3>
+                <h3 id="volatile-memory-boundary-zero-secondary-storage" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">Volatile Memory Boundary &amp; Zero Secondary Storage</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
                   The execution boundary rule requiring that all cleartext entity mappings <code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200 text-slate-800">R</code>, surrogate lookup tables, and session keys exist exclusively within local volatile RAM (or sandboxed WebAssembly/Nitro Enclave perimeters). Writing unencrypted session state to disk, browser storage, unencrypted swap, or third-party telemetry sockets is strictly prohibited.
                 </p>
@@ -524,7 +536,7 @@
                   <span class="text-emerald-800 font-bold uppercase tracking-wide font-mono"><dfn class="not-italic">Invariant 4 &middot; Continuous Compliance &amp; Zero Subprocessor Chain</dfn></span>
                   <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-bold font-mono">MANDATORY</span>
                 </div>
-                <h3 class="text-base font-bold text-slate-900 mb-2">Complete DPA Exemption under GDPR Article 28</h3>
+                <h3 id="complete-dpa-exemption-under-gdpr-article-28" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">Complete DPA Exemption under GDPR Article 28</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
                   The statutory compliance invariant establishing that the sanitization engine functions as a localized computational utility within customer premises rather than a hosted SaaS subprocessor. Because zero customer data egresses to vendor infrastructure, the vendor is excluded from Data Processor classification under GDPR Article 28 (CJEU Case C-582/14 <em>Breyer</em>), eliminating third-party DPA and BAA liabilities.
                 </p>
@@ -536,7 +548,7 @@
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
                 <div>
                   <span class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">Formal Topology Proof</span>
-                  <h3 class="text-lg sm:text-xl font-bold text-white mt-0.5">Physical In-RAM Execution Topology &amp; Zero Subprocessor Guarantee</h3>
+                  <h3 id="physical-in-ram-execution-topology-zero-subproce" class="text-lg sm:text-xl font-bold text-white mt-0.5 scroll-mt-24">Physical In-RAM Execution Topology &amp; Zero Subprocessor Guarantee</h3>
                 </div>
                 <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-mono font-bold w-fit">
                   0.00 B Egress
@@ -945,7 +957,7 @@
                 <span class="text-xs font-mono font-bold tracking-wider text-emerald-800 uppercase bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">RFC Normative Profile 01 &middot; Stdio Stream Profile</span>
                 <span class="text-xs text-slate-500 font-mono">io.github.moxno/ztds</span>
               </div>
-              <h3 class="text-base font-bold text-slate-900 tracking-tight">
+              <h3 id="model-context-protocol-mcp-process-isolated-in-r" class="text-base font-bold text-slate-900 tracking-tight scroll-mt-24">
                 Model Context Protocol (MCP) Process-Isolated In-RAM Profile
               </h3>
               <p class="text-xs text-slate-600 leading-relaxed">

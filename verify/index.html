@@ -126,6 +126,18 @@
       ],
       "breadcrumb": {
         "@id": "https://ztds.ai/verify/#breadcrumb"
+      },
+      "url": "https://ztds.ai/verify/",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h1",
+          "main h2"
+        ]
       }
     }
   ]
@@ -603,7 +615,7 @@
 
           <!-- 4 Invariants Verification Cards -->
           <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-            <h3 class="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider mb-4">
+            <h3 id="four-foundational-invariants-conformance-rfc-v1" class="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider mb-4 scroll-mt-24">
               Four Foundational Invariants Conformance (RFC v1.0)
             </h3>
 
@@ -684,7 +696,7 @@
                   <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                   <span class="text-xs font-mono uppercase font-bold text-emerald-400 tracking-wider">Official Verified Trust Seal</span>
                 </div>
-                <h3 class="text-base font-bold text-white tracking-tight">Cryptographically Certified Vector Badge</h3>
+                <h3 id="cryptographically-certified-vector-badge" class="text-base font-bold text-white tracking-tight scroll-mt-24">Cryptographically Certified Vector Badge</h3>
                 <p class="text-xs text-slate-400 max-w-lg leading-relaxed">
                   Generated directly from verified Ed25519 signature payload. Embed this vector seal in your GitHub README, documentation, and enterprise trust portal.
                 </p>
@@ -816,7 +828,7 @@
           <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 font-mono font-bold text-sm flex items-center justify-center mb-3">
             01
           </div>
-          <h3 class="text-sm font-bold text-slate-900 mb-1">Deterministic JSON Canonicalization</h3>
+          <h3 id="deterministic-json-canonicalization" class="text-sm font-bold text-slate-900 mb-1 scroll-mt-24">Deterministic JSON Canonicalization</h3>
           <p class="text-xs text-slate-500 leading-relaxed">
             The certificate payload is serialized strictly conforming to RFC 8785 (canonical key sorting, uniform UTF-8 normalization), ensuring byte-for-byte identical hashing across disparate programming languages and runtimes.
           </p>
@@ -826,7 +838,7 @@
           <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 font-mono font-bold text-sm flex items-center justify-center mb-3">
             02
           </div>
-          <h3 class="text-sm font-bold text-slate-900 mb-1">RFC 8032 Ed25519 Signatures</h3>
+          <h3 id="rfc-8032-ed25519-signatures" class="text-sm font-bold text-slate-900 mb-1 scroll-mt-24">RFC 8032 Ed25519 Signatures</h3>
           <p class="text-xs text-slate-500 leading-relaxed">
             Signatures are computed over the Edwards-curve Digital Signature Algorithm (Ed25519). The 64-byte signature is immune to side-channel timing attacks and cannot be forged without the Consortium master key.
           </p>
@@ -836,7 +848,7 @@
           <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 font-mono font-bold text-sm flex items-center justify-center mb-3">
             03
           </div>
-          <h3 class="text-sm font-bold text-slate-900 mb-1">SubtleCrypto In-RAM Validation</h3>
+          <h3 id="subtlecrypto-in-ram-validation" class="text-sm font-bold text-slate-900 mb-1 scroll-mt-24">SubtleCrypto In-RAM Validation</h3>
           <p class="text-xs text-slate-500 leading-relaxed">
             Verification runs entirely inside browser client volatile RAM via <code class="font-mono text-slate-800">window.crypto.subtle</code>. 0.00 bytes of data are sent to vendor or third-party cloud infrastructure.
           </p>
@@ -854,7 +866,7 @@
         </div>
         <div class="space-y-3.5">
 
-          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs" open>
+          <details id="faq-how-does-the-ztds-cryptographic-certificate-vali" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24" open>
             <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
               <span>How does the ZTDS Cryptographic Certificate Validator verify conformance tokens offline?</span>
               <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
@@ -864,7 +876,7 @@
             </div>
           </details>
 
-          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+          <details id="faq-what-public-key-is-used-to-authenticate-official" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
             <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
               <span>What public key is used to authenticate official ZTDS-CERT-v1 certificates?</span>
               <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
@@ -874,7 +886,7 @@
             </div>
           </details>
 
-          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+          <details id="faq-can-enterprise-procurement-teams-verify-certific" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
             <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
               <span>Can enterprise procurement teams verify certificates via the command line in CI/CD pipelines?</span>
               <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
@@ -884,7 +896,7 @@
             </div>
           </details>
 
-          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+          <details id="faq-does-verifying-a-certificate-transmit-any-corpor" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
             <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
               <span>Does verifying a certificate transmit any corporate data or telemetry to ZTDS.ai?</span>
               <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>

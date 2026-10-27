@@ -126,6 +126,18 @@
       ],
       "breadcrumb": {
         "@id": "https://ztds.ai/badge/#breadcrumb"
+      },
+      "url": "https://ztds.ai/badge/",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h1",
+          "main h2"
+        ]
       }
     }
   ]
@@ -520,7 +532,7 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-2.5 shrink-0">
-              <button id="btnDownloadBadgeSvg" class="btn-outline text-xs py-2.5 px-4 shadow-sm flex items-center gap-1.5 touch-target min-h-[44px]">
+              <button type="button" id="btnDownloadBadgeSvg" class="btn-outline text-xs py-2.5 px-4 shadow-sm flex items-center gap-1.5 touch-target min-h-[44px]">
                 <svg class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                 Download Badge (.svg)
               </button>
@@ -536,7 +548,7 @@
           <div class="min-w-0 max-w-full">
             <div class="flex items-center justify-between mb-1.5">
               <span class="text-xs text-slate-500 uppercase font-semibold">GitHub Markdown (README.md)</span>
-              <button id="copyMdBtn" class="text-xs text-emerald-700 hover:text-emerald-800 font-bold touch-target">Copy Markdown</button>
+              <button type="button" id="copyMdBtn" class="text-xs text-emerald-700 hover:text-emerald-800 font-bold touch-target">Copy Markdown</button>
             </div>
             <pre class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-xs font-mono text-emerald-400 select-all overflow-x-auto max-w-full break-all whitespace-pre-wrap"><code id="codeMd">[![ZTDS Verified](https://ztds.ai/badge/privacyscrubber-web.svg)](https://ztds.ai/registry/)</code></pre>
           </div>
@@ -544,7 +556,7 @@
           <div class="min-w-0 max-w-full">
             <div class="flex items-center justify-between mb-1.5">
               <span class="text-xs text-slate-500 uppercase font-semibold">HTML Embed</span>
-              <button id="copyHtmlBtn" class="text-xs text-emerald-700 hover:text-emerald-800 font-bold touch-target">Copy HTML</button>
+              <button type="button" id="copyHtmlBtn" class="text-xs text-emerald-700 hover:text-emerald-800 font-bold touch-target">Copy HTML</button>
             </div>
             <pre class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-xs font-mono text-slate-300 select-all overflow-x-auto max-w-full break-all whitespace-pre-wrap"><code id="codeHtml">&lt;a href="https://ztds.ai/registry/"&gt;&lt;img src="https://ztds.ai/badge/privacyscrubber-web.svg" alt="ZTDS Verified"&gt;&lt;/a&gt;</code></pre>
           </div>
@@ -552,7 +564,7 @@
           <div class="min-w-0 max-w-full">
             <div class="flex items-center justify-between mb-1.5">
               <span class="text-xs text-slate-500 uppercase font-semibold">Raw SVG XML (Direct Embedding)</span>
-              <button id="copySvgBtn" class="text-xs text-emerald-700 hover:text-emerald-800 font-bold touch-target">Copy SVG</button>
+              <button type="button" id="copySvgBtn" class="text-xs text-emerald-700 hover:text-emerald-800 font-bold touch-target">Copy SVG</button>
             </div>
             <pre class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-xs font-mono text-sky-400 select-all overflow-x-auto max-w-full break-all whitespace-pre-wrap"><code id="codeSvg"></code></pre>
           </div>
@@ -560,7 +572,7 @@
           <div class="min-w-0 max-w-full">
             <div class="flex items-center justify-between mb-1.5">
               <span class="text-xs text-slate-500 uppercase font-semibold">React / Next.js Component (JSX)</span>
-              <button id="copyReactBtn" class="text-xs text-emerald-700 hover:text-emerald-800 font-bold touch-target">Copy JSX</button>
+              <button type="button" id="copyReactBtn" class="text-xs text-emerald-700 hover:text-emerald-800 font-bold touch-target">Copy JSX</button>
             </div>
             <pre class="bg-slate-900 border border-slate-800 rounded-lg p-3 text-xs font-mono text-amber-300 select-all overflow-x-auto max-w-full break-all whitespace-pre-wrap"><code id="codeReact"></code></pre>
           </div>
@@ -573,19 +585,19 @@
     <div class="mb-4">
       <div class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Pioneer Reference Implementations</div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-sans">
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-web">
+        <button type="button" class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-web">
           <div class="text-slate-900 font-bold mb-1">Web Platform</div>
           <div class="text-slate-400 font-mono text-xs">privacyscrubber-web</div>
         </button>
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-extension">
+        <button type="button" class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-extension">
           <div class="text-slate-900 font-bold mb-1">Chrome Extension</div>
           <div class="text-slate-400 font-mono text-xs">privacyscrubber-extension</div>
         </button>
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-mcp">
+        <button type="button" class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-mcp">
           <div class="text-slate-900 font-bold mb-1">MCP Gateway</div>
           <div class="text-slate-400 font-mono text-xs">privacyscrubber-mcp</div>
         </button>
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-sdk">
+        <button type="button" class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-sdk">
           <div class="text-slate-900 font-bold mb-1">Developer SDK</div>
           <div class="text-slate-400 font-mono text-xs">privacyscrubber-sdk</div>
         </button>
@@ -595,19 +607,19 @@
     <div class="mb-12">
       <div class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Canonical Connectors &amp; Gateways</div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-sans">
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="langchain-ztds">
+        <button type="button" class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="langchain-ztds">
           <div class="text-slate-900 font-bold mb-1">LangChain Callback</div>
           <div class="text-slate-400 font-mono text-xs">langchain-ztds</div>
         </button>
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="llamaindex-ztds">
+        <button type="button" class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="llamaindex-ztds">
           <div class="text-slate-900 font-bold mb-1">LlamaIndex Node</div>
           <div class="text-slate-400 font-mono text-xs">llamaindex-ztds</div>
         </button>
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="ollama-ztds-filter">
+        <button type="button" class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="ollama-ztds-filter">
           <div class="text-slate-900 font-bold mb-1">Ollama Filter</div>
           <div class="text-slate-400 font-mono text-xs">ollama-ztds-filter</div>
         </button>
-        <button class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="envoy-ztds-wasm">
+        <button type="button" class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="envoy-ztds-wasm">
           <div class="text-slate-900 font-bold mb-1">Envoy WASM Filter</div>
           <div class="text-slate-400 font-mono text-xs">envoy-ztds-wasm</div>
         </button>
@@ -645,10 +657,10 @@
             <img src="/badge/seal-verified.svg" alt="ZTDS Verified Implementation Seal" width="280" height="56" class="h-14" decoding="async">
           </div>
           <div class="space-y-2 pt-2 border-t border-slate-200/60">
-            <button class="copy-seal-btn w-full btn-outline text-xs py-2 touch-target" data-url="https://ztds.ai/badge/seal-verified.svg">
+            <button type="button" class="copy-seal-btn w-full btn-outline text-xs py-2 touch-target" data-url="https://ztds.ai/badge/seal-verified.svg">
               Copy Seal HTML Embed
             </button>
-            <button class="download-seal-btn w-full btn-ghost text-xs py-1.5 text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1 touch-target" data-file="seal-verified.svg">
+            <button type="button" class="download-seal-btn w-full btn-ghost text-xs py-1.5 text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1 touch-target" data-file="seal-verified.svg">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
               Download Vector (.svg)
             </button>
@@ -671,10 +683,10 @@
             <img src="/badge/seal-sovereign.svg" alt="ZTDS Air-Gapped Sovereign Seal" width="280" height="56" class="h-14" decoding="async">
           </div>
           <div class="space-y-2 pt-2 border-t border-slate-200/60">
-            <button class="copy-seal-btn w-full btn-outline text-xs py-2 touch-target" data-url="https://ztds.ai/badge/seal-sovereign.svg">
+            <button type="button" class="copy-seal-btn w-full btn-outline text-xs py-2 touch-target" data-url="https://ztds.ai/badge/seal-sovereign.svg">
               Copy Seal HTML Embed
             </button>
-            <button class="download-seal-btn w-full btn-ghost text-xs py-1.5 text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1 touch-target" data-file="seal-sovereign.svg">
+            <button type="button" class="download-seal-btn w-full btn-ghost text-xs py-1.5 text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1 touch-target" data-file="seal-sovereign.svg">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
               Download Vector (.svg)
             </button>
@@ -697,10 +709,10 @@
             <img src="/badge/seal-dpa.svg" alt="ZTDS Zero-Subprocessor DPA-Exempt Conformance Seal" width="280" height="56" class="h-14" decoding="async">
           </div>
           <div class="space-y-2 pt-2 border-t border-slate-200/60">
-            <button class="copy-seal-btn w-full btn-outline text-xs py-2 touch-target" data-url="https://ztds.ai/badge/seal-dpa.svg">
+            <button type="button" class="copy-seal-btn w-full btn-outline text-xs py-2 touch-target" data-url="https://ztds.ai/badge/seal-dpa.svg">
               Copy Seal HTML Embed
             </button>
-            <button class="download-seal-btn w-full btn-ghost text-xs py-1.5 text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1 touch-target" data-file="seal-dpa.svg">
+            <button type="button" class="download-seal-btn w-full btn-ghost text-xs py-1.5 text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1 touch-target" data-file="seal-dpa.svg">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
               Download Vector (.svg)
             </button>
@@ -719,7 +731,7 @@
         </div>
         <div class="space-y-3.5">
 
-          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs" open>
+          <details id="faq-how-do-ztds-verified-svg-trust-badges-work-in-gi" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24" open>
             <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
               <span>How do ZTDS Verified SVG trust badges work in GitHub READMEs and enterprise footers?</span>
               <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
@@ -729,7 +741,7 @@
             </div>
           </details>
 
-          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+          <details id="faq-what-badge-tiers-and-themes-are-supported-by-the" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
             <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
               <span>What badge tiers and themes are supported by the dynamic /api/badge/ endpoint?</span>
               <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
@@ -739,7 +751,7 @@
             </div>
           </details>
 
-          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+          <details id="faq-does-embedding-a-ztds-trust-badge-introduce-thir" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
             <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
               <span>Does embedding a ZTDS trust badge introduce third-party tracking cookies or client scripts?</span>
               <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
@@ -749,7 +761,7 @@
             </div>
           </details>
 
-          <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+          <details id="faq-who-is-authorized-to-display-the-official-ztds-v" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
             <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
               <span>Who is authorized to display the official ZTDS Verified and Sovereign seals?</span>
               <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>

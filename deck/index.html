@@ -116,7 +116,15 @@
       },
       "breadcrumb": {
         "@id": "https://ztds.ai/deck/#breadcrumb"
-      }
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h1",
+          "main h2"
+        ]
+      },
+      "dateModified": "2026-10-27T00:00:00Z"
     }
   ]
 }
@@ -388,7 +396,7 @@
                 <span class="font-mono text-xs font-bold text-red-400 uppercase tracking-wider">Chokepoint 01</span>
                 <span class="text-xs font-mono text-slate-400">EU Regulation 2016/679</span>
               </div>
-              <h3 class="text-lg font-bold text-white mb-1">GDPR Article 28: Subprocessor Trap</h3>
+              <h3 id="gdpr-article-28-subprocessor-trap" class="text-lg font-bold text-white mb-1 scroll-mt-24">GDPR Article 28: Subprocessor Trap</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
                 Routing cleartext prompts through cloud AI vendors or proxies legally classifies them as data processors. Requires 30-day customer notification windows, complex DPA redlines, and unlimited cross-border transfer risk.
               </p>
@@ -399,7 +407,7 @@
                 <span class="font-mono text-xs font-bold text-red-400 uppercase tracking-wider">Chokepoint 02</span>
                 <span class="text-xs font-mono text-slate-400">GDPR Art. 17 / Data Erasure</span>
               </div>
-              <h3 class="text-lg font-bold text-white mb-1">Vector Database Poisoning</h3>
+              <h3 id="vector-database-poisoning" class="text-lg font-bold text-white mb-1 scroll-mt-24">Vector Database Poisoning</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
                 Cleartext PII converted into high-dimensional vector embeddings cannot be deleted upon user "Right to Erasure" request without destroying and re-indexing the entire multi-million vector index.
               </p>
@@ -410,7 +418,7 @@
                 <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">Chokepoint 03</span>
                 <span class="text-xs font-mono text-slate-400">EU AI Act (2024/1689)</span>
               </div>
-              <h3 class="text-lg font-bold text-white mb-1">Article 50: Synthetic Provenance</h3>
+              <h3 id="article-50-synthetic-provenance" class="text-lg font-bold text-white mb-1 scroll-mt-24">Article 50: Synthetic Provenance</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
                 Mandates verifiable provenance and transparency for high-risk generative AI pipelines. Penalties for unverified sensitive data ingestion reach up to €35,000,000 or 7% of global annual turnover.
               </p>
@@ -421,7 +429,7 @@
                 <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">Chokepoint 04</span>
                 <span class="text-xs font-mono text-slate-400">US HIPAA &amp; FRE Rule 502</span>
               </div>
-              <h3 class="text-lg font-bold text-white mb-1">Loss of Clinical &amp; Legal Privilege</h3>
+              <h3 id="loss-of-clinical-legal-privilege" class="text-lg font-bold text-white mb-1 scroll-mt-24">Loss of Clinical &amp; Legal Privilege</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
                 Transmitting unmasked PHI violates HIPAA Safe Harbor (45 CFR § 164.514) triggering mandatory BAA audits. Sending unredacted M&amp;A contracts or litigation notes waives Attorney-Client Work Product Privilege.
               </p>
@@ -534,7 +542,7 @@
             <div class="p-4 rounded-xl bg-slate-900/80 border border-emerald-500/30">
               <div class="flex items-center gap-2 mb-1.5">
                 <span class="w-5 h-5 rounded bg-emerald-500/20 text-emerald-400 font-mono text-xs flex items-center justify-center font-bold">1</span>
-                <h3 class="text-sm font-bold text-white uppercase tracking-wider font-mono">Zero External Egress</h3>
+                <h3 id="zero-external-egress" class="text-sm font-bold text-white uppercase tracking-wider font-mono scroll-mt-24">Zero External Egress</h3>
               </div>
               <p class="text-xs text-slate-300 leading-relaxed mb-2">
                 Raw PII, PHI, or intellectual property never crosses the local execution boundary in cleartext. Sanitization occurs strictly prior to socket write.
@@ -547,7 +555,7 @@
             <div class="p-4 rounded-xl bg-slate-900/80 border border-sky-500/30">
               <div class="flex items-center gap-2 mb-1.5">
                 <span class="w-5 h-5 rounded bg-sky-500/20 text-sky-400 font-mono text-xs flex items-center justify-center font-bold">2</span>
-                <h3 class="text-sm font-bold text-white uppercase tracking-wider font-mono">Deterministic Tokenization</h3>
+                <h3 id="deterministic-tokenization" class="text-sm font-bold text-white uppercase tracking-wider font-mono scroll-mt-24">Deterministic Tokenization</h3>
               </div>
               <p class="text-xs text-slate-300 leading-relaxed mb-2">
                 Masked entities are replaced with bijective surrogate tokens preserving grammatical syntax, entity classes, and token distance for optimal LLM attention weights.
@@ -560,7 +568,7 @@
             <div class="p-4 rounded-xl bg-slate-900/80 border border-sky-500/30">
               <div class="flex items-center gap-2 mb-1.5">
                 <span class="w-5 h-5 rounded bg-sky-500/20 text-sky-400 font-mono text-xs flex items-center justify-center font-bold">3</span>
-                <h3 class="text-sm font-bold text-white uppercase tracking-wider font-mono">Cryptographic Isolation</h3>
+                <h3 id="cryptographic-isolation" class="text-sm font-bold text-white uppercase tracking-wider font-mono scroll-mt-24">Cryptographic Isolation</h3>
               </div>
               <p class="text-xs text-slate-300 leading-relaxed mb-2">
                 Execution is verified inside volatile RAM or hardware-attested enclaves (AWS Nitro, Apple Secure Enclave, WASM sandbox) with zero disk swapping.
@@ -573,7 +581,7 @@
             <div class="p-4 rounded-xl bg-slate-900/80 border border-emerald-500/30">
               <div class="flex items-center gap-2 mb-1.5">
                 <span class="w-5 h-5 rounded bg-emerald-500/20 text-emerald-400 font-mono text-xs flex items-center justify-center font-bold">4</span>
-                <h3 class="text-sm font-bold text-white uppercase tracking-wider font-mono">Continuous Compliance</h3>
+                <h3 id="continuous-compliance" class="text-sm font-bold text-white uppercase tracking-wider font-mono scroll-mt-24">Continuous Compliance</h3>
               </div>
               <p class="text-xs text-slate-300 leading-relaxed mb-2">
                 Software operates as an endpoint utility. Completely eliminates third-party subprocessor status under GDPR Article 28 and HIPAA Business Associate rules.
@@ -687,7 +695,7 @@
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
             <div class="p-4 rounded-xl bg-slate-900/60 border border-white/10">
               <div class="text-xs font-bold font-mono text-emerald-400 uppercase mb-1">EDPB Doctrine &amp; GDPR</div>
-              <h3 class="text-sm font-bold text-white mb-1.5">Article 28 Exemption</h3>
+              <h3 id="article-28-exemption" class="text-sm font-bold text-white mb-1.5 scroll-mt-24">Article 28 Exemption</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
                 Under European Data Protection Board doctrine, local computational utilities executing in client volatile memory do not constitute "data processors". No DPA or Standard Contractual Clauses (SCCs) are legally required.
               </p>
@@ -695,7 +703,7 @@
 
             <div class="p-4 rounded-xl bg-slate-900/60 border border-white/10">
               <div class="text-xs font-bold font-mono text-sky-400 uppercase mb-1">US HHS / HIPAA</div>
-              <h3 class="text-sm font-bold text-white mb-1.5">Safe Harbor De-identification</h3>
+              <h3 id="safe-harbor-de-identification" class="text-sm font-bold text-white mb-1.5 scroll-mt-24">Safe Harbor De-identification</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
                 Under 45 CFR § 164.514, clinical text stripped of the 18 designated identifiers ceases to be PHI. Because masking occurs prior to network dispatch, neither ZTDS nor the LLM handles PHI. No BAA required.
               </p>
@@ -703,7 +711,7 @@
 
             <div class="p-4 rounded-xl bg-slate-900/60 border border-white/10">
               <div class="text-xs font-bold font-mono text-amber-400 uppercase mb-1">AICPA SOC 2 Type II</div>
-              <h3 class="text-sm font-bold text-white mb-1.5">Automated Evidence Binder</h3>
+              <h3 id="automated-evidence-binder" class="text-sm font-bold text-white mb-1.5 scroll-mt-24">Automated Evidence Binder</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
                 Direct export of <code>ztds-evidence-binder.json</code> mapped to Common Criteria CC6.1 (Access), CC6.6 (Perimeter), and CC6.8 (Malicious Code) ready for Drata, Vanta, and AuditBoard ingestion.
               </p>
@@ -759,7 +767,7 @@
 
             <div class="p-4 rounded-xl bg-slate-900/60 border border-white/10 flex flex-col justify-between">
               <div>
-                <h3 class="text-sm font-bold text-white mb-2">Enterprise Operational Guarantees</h3>
+                <h3 id="enterprise-operational-guarantees" class="text-sm font-bold text-white mb-2 scroll-mt-24">Enterprise Operational Guarantees</h3>
                 <ul class="space-y-2 text-xs text-slate-300">
                   <li class="flex items-start gap-2">
                     <span class="text-emerald-400 font-bold">&check;</span>
@@ -975,7 +983,7 @@
           <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
             <div class="p-3.5 rounded-xl bg-slate-900/80 border border-white/10">
               <div class="text-xs font-mono font-bold text-sky-400 mb-1">DAY 1</div>
-              <h3 class="text-sm font-bold text-white mb-1">5-Min Verification</h3>
+              <h3 id="5-min-verification" class="text-sm font-bold text-white mb-1 scroll-mt-24">5-Min Verification</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
                 Run <code>npx ztds-audit</code> on your workstation. Inspect network traffic with Wireshark/DevTools. Confirm 0 bytes egress.
               </p>
@@ -983,7 +991,7 @@
 
             <div class="p-3.5 rounded-xl bg-slate-900/80 border border-emerald-500/30">
               <div class="text-xs font-mono font-bold text-emerald-400 mb-1">DAYS 2 – 10</div>
-              <h3 class="text-sm font-bold text-white mb-1">Air-Gapped Sandbox</h3>
+              <h3 id="air-gapped-sandbox" class="text-sm font-bold text-white mb-1 scroll-mt-24">Air-Gapped Sandbox</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
                 Deploy 14-day evaluation license token into your staging VPC or Nitro Enclave. Benchmark 30 profiles against real payloads.
               </p>
@@ -991,7 +999,7 @@
 
             <div class="p-3.5 rounded-xl bg-slate-900/80 border border-sky-500/30">
               <div class="text-xs font-mono font-bold text-sky-400 mb-1">DAYS 11 – 12</div>
-              <h3 class="text-sm font-bold text-white mb-1">Fast-Track Clearance</h3>
+              <h3 id="fast-track-clearance" class="text-sm font-bold text-white mb-1 scroll-mt-24">Fast-Track Clearance</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
                 Deliver 1-Page DPA Exemption Memo to Legal. Ingest SOC 2 Type II Evidence Binder into Drata / Vanta.
               </p>
@@ -999,7 +1007,7 @@
 
             <div class="p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-500/50">
               <div class="text-xs font-mono font-bold text-emerald-400 mb-1">DAY 14</div>
-              <h3 class="text-sm font-bold text-white mb-1">Production Token</h3>
+              <h3 id="production-token" class="text-sm font-bold text-white mb-1 scroll-mt-24">Production Token</h3>
               <p class="text-xs text-slate-300 leading-relaxed">
                 Execute Schedule A Order Form (Net 30 terms). Production Ed25519 token delivered via PGP within 2 business hours.
               </p>

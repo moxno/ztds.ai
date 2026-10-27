@@ -55,7 +55,7 @@
       "description": "Architectural standard, threat model analysis, and in-RAM execution profile for the Model Context Protocol (MCP), providing zero-egress credential protection for AI coding agents and desktop IDEs.",
       "url": "https://ztds.ai/mcp/",
       "datePublished": "2026-09-20T00:00:00Z",
-      "dateModified": "2026-10-07T00:00:00Z",
+      "dateModified": "2026-10-27T00:00:00Z",
       "inLanguage": "en-US",
       "isPartOf": {
         "@id": "https://ztds.ai/#website"
@@ -217,6 +217,18 @@
       ],
       "breadcrumb": {
         "@id": "https://ztds.ai/mcp/#breadcrumb"
+      },
+      "url": "https://ztds.ai/mcp/",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h1",
+          "main h2"
+        ]
       }
     }
   ]
@@ -434,7 +446,7 @@
           
           <div class="ztds-card p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
             <div class="w-8 h-8 rounded-lg bg-red-100 text-red-700 flex items-center justify-center font-bold text-xs font-mono">01</div>
-            <h3 class="text-base font-bold text-slate-900">Uncontrolled Local File Ingestion</h3>
+            <h3 id="uncontrolled-local-file-ingestion" class="text-base font-bold text-slate-900 scroll-mt-24">Uncontrolled Local File Ingestion</h3>
             <p class="text-xs text-slate-600 leading-relaxed">
               When an agent indexes a workspace, tool calls like <code>read_file</code> or <code>grep_search</code> ingest local <code>.env</code> files, AWS credentials, database URIs, and confidential client customer dumps.
             </p>
@@ -445,7 +457,7 @@
 
           <div class="ztds-card p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
             <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs font-mono">02</div>
-            <h3 class="text-base font-bold text-slate-900">Cleartext WAN Socket Transmission</h3>
+            <h3 id="cleartext-wan-socket-transmission" class="text-base font-bold text-slate-900 scroll-mt-24">Cleartext WAN Socket Transmission</h3>
             <p class="text-xs text-slate-600 leading-relaxed">
               Desktop IDEs (Cursor, Windsurf) serialize the composite context window over outbound HTTPS/gRPC sockets to remote LLM providers. Unmasked credentials enter external server logs, model memory caches, and training sets.
             </p>
@@ -456,7 +468,7 @@
 
           <div class="ztds-card p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
             <div class="w-8 h-8 rounded-lg bg-slate-200 text-slate-800 flex items-center justify-center font-bold text-xs font-mono">03</div>
-            <h3 class="text-base font-bold text-slate-900">Failure of Cloud DLP Proxies</h3>
+            <h3 id="failure-of-cloud-dlp-proxies" class="text-base font-bold text-slate-900 scroll-mt-24">Failure of Cloud DLP Proxies</h3>
             <p class="text-xs text-slate-600 leading-relaxed">
               Cloud DLP gateways cannot inspect local desktop stdio pipes. Attempting to route IDE traffic through intermediate cloud proxies breaks TLS certificates, introduces 300ms+ network latency, and adds new subprocessor chains.
             </p>
@@ -923,11 +935,11 @@
           </div>
           <div class="flex flex-wrap items-center gap-4 text-xs font-mono">
             <label class="inline-flex items-center gap-2 cursor-pointer select-none text-slate-700 hover:text-slate-900">
-              <input type="checkbox" id="cfgToggleDebug" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer">
+              <input type="checkbox" id="cfgToggleDebug" aria-label="Enable DEBUG mode to inspect stdio frames" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer">
               <span>DEBUG=true (Inspect Stdio Frames)</span>
             </label>
             <label class="inline-flex items-center gap-2 cursor-pointer select-none text-slate-700 hover:text-slate-900">
-              <input type="checkbox" id="cfgToggleTimeout" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer">
+              <input type="checkbox" id="cfgToggleTimeout" aria-label="Enable 30-minute session RAM zeroization timeout" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer">
               <span>Session Purge (30m RAM Zeroization)</span>
             </label>
           </div>
@@ -1005,7 +1017,7 @@
 
       <!-- 4-Step Verification Workflow -->
       <div class="max-w-4xl mx-auto mb-16">
-        <h3 class="text-lg font-bold text-slate-900 mb-4 text-center font-mono">
+        <h3 id="4-step-verification-protocol" class="text-lg font-bold text-slate-900 mb-4 text-center font-mono scroll-mt-24">
           4-Step Verification Protocol
         </h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -1037,7 +1049,7 @@
         <div class="p-6 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-4">
           <div>
             <span class="text-xs font-mono font-semibold text-emerald-400 uppercase tracking-wider">Security Architecture Demarcation</span>
-            <h3 class="text-xl font-bold mt-1">Raw MCP Server vs. ZTDS-Protected In-RAM Gateway</h3>
+            <h3 id="raw-mcp-server-vs-ztds-protected-in-ram-gateway" class="text-xl font-bold mt-1 scroll-mt-24">Raw MCP Server vs. ZTDS-Protected In-RAM Gateway</h3>
           </div>
           <a href="/ciso/" class="text-xs font-mono text-slate-300 hover:text-white underline">
             CISO Procurement Memo &rarr;
@@ -1106,7 +1118,7 @@
                 </span>
                 <span class="text-xs font-mono text-slate-400">Apache-2.0 &middot; CC BY 4.0</span>
               </div>
-              <h3 class="text-xl font-bold text-slate-900 mb-2">ztds-mcp (v1.2.1)</h3>
+              <h3 id="ztds-mcp-v1-2-1" class="text-xl font-bold text-slate-900 mb-2 scroll-mt-24">ztds-mcp (v1.2.1)</h3>
               <p class="text-xs text-slate-600 leading-relaxed mb-4">
                 The open-source baseline reference implementation developed by the ZTDS Consortium. Zero external dependencies, pure standard library execution in volatile RAM.
               </p>
@@ -1149,7 +1161,7 @@
                 </span>
                 <span class="text-xs font-mono text-slate-400">BrandMeWeb</span>
               </div>
-              <h3 class="text-xl font-bold text-white mb-2">@privacyscrubber/mcp-server</h3>
+              <h3 id="privacyscrubber-mcp-server" class="text-xl font-bold text-white mb-2 scroll-mt-24">@privacyscrubber/mcp-server</h3>
               <p class="text-xs text-slate-300 leading-relaxed mb-4">
                 The pioneer production reference implementation certified under the ZTDS standard. Engineered by BrandMeWeb for enterprise engineering teams and regulated environments.
               </p>
@@ -1209,7 +1221,7 @@
       <div class="space-y-4">
         
         <!-- Q1 -->
-        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300">
+        <details id="faq-what-is-the-fundamental-security-vulnerability-o" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300 scroll-mt-24">
           <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-base select-none">
             <span>What is the fundamental security vulnerability of the Model Context Protocol (MCP)?</span>
             <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
@@ -1222,7 +1234,7 @@
         </details>
 
         <!-- Q2 -->
-        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300">
+        <details id="faq-how-does-the-ztds-in-ram-method-secure-mcp-witho" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300 scroll-mt-24">
           <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-base select-none">
             <span>How does the ZTDS In-RAM Method secure MCP without intermediate cloud proxies?</span>
             <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
@@ -1235,7 +1247,7 @@
         </details>
 
         <!-- Q3 -->
-        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300">
+        <details id="faq-how-does-ztds-mcp-preserve-code-syntax-and-reaso" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300 scroll-mt-24">
           <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-base select-none">
             <span>How does ztds-mcp preserve code syntax and reasoning in Cursor IDE and Claude Desktop?</span>
             <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
@@ -1248,7 +1260,7 @@
         </details>
 
         <!-- Q4 -->
-        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300">
+        <details id="faq-what-are-the-5-core-tools-provided-by-the-ztds-m" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300 scroll-mt-24">
           <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-base select-none">
             <span>What are the 5 core tools provided by the ZTDS MCP reference server?</span>
             <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
@@ -1261,7 +1273,7 @@
         </details>
 
         <!-- Q5 -->
-        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300">
+        <details id="faq-why-is-a-data-processing-agreement-dpa-not-requi" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300 scroll-mt-24">
           <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-base select-none">
             <span>Why is a Data Processing Agreement (DPA) not required when using ZTDS MCP?</span>
             <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
@@ -1274,7 +1286,7 @@
         </details>
 
         <!-- Q6 -->
-        <details class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300">
+        <details id="faq-how-can-an-engineer-independently-verify-zero-ex" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs transition-all hover:border-slate-300 scroll-mt-24">
           <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-base select-none">
             <span>How can an engineer independently verify zero external network egress during an MCP session?</span>
             <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
