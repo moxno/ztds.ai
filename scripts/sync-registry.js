@@ -81,9 +81,9 @@ function generateHtmlCard(entity) {
   const certBadgeBg = isReference ? 'bg-sky-50 hover:bg-sky-100/80 border-sky-200 text-sky-800' : 'bg-emerald-50 hover:bg-emerald-100/80 border-emerald-200 text-emerald-800';
   const certDotColor = isReference ? 'bg-sky-500' : 'bg-emerald-500';
 
-  const category = (entity.category || '').toLowerCase().includes('mcp') ? 'mcp'
-    : (entity.category || '').toLowerCase().includes('app') ? 'app'
-    : (entity.category || '').toLowerCase().includes('extension') ? 'extension'
+  const catLower = (entity.category || '').toLowerCase();
+  const category = catLower.includes('mcp') ? 'mcp'
+    : (catLower.includes('app') || catLower.includes('cms') || catLower.includes('form') || catLower.includes('extension') || catLower.includes('browser')) ? 'app'
     : 'sdk';
 
   const tags = (entity.frameworks || []).map(f => `<span class="text-xs font-medium px-2.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">${f}</span>`).join('\n            ');
@@ -92,7 +92,7 @@ function generateHtmlCard(entity) {
   const frameworksJoined = (entity.frameworks || []).join(' &middot; ');
 
   return `      <!-- Card: ${entity.name} -->
-      <div class="ztds-card p-7 bg-white ${borderClass} rounded-xl shadow-sm flex flex-col justify-between scroll-mt-24" id="${entity.id}" data-category="${category}">
+      <div class="ztds-card p-7 bg-white ${borderClass} rounded-xl shadow-sm flex flex-col justify-between scroll-mt-24" data-category="${category}">
         <div>
           <div class="flex items-center justify-between mb-4">
             <span class="pill-trust">
@@ -101,7 +101,7 @@ function generateHtmlCard(entity) {
             </span>
             <span class="text-xs font-mono text-slate-500 font-bold">${entity.license || 'MIT'}</span>
           </div>
-          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">${entity.name}</h2>
+          <h2 id="${entity.id}" class="text-2xl font-bold text-slate-900 tracking-tight scroll-mt-24">${entity.name}</h2>
           <div class="text-xs font-semibold ${accentColor} mt-1 mb-3">${entity.tier || 'Verified Conformance'} &middot; ${entity.category || 'Open Standard Engine'}</div>
           <p class="text-sm text-slate-600 leading-relaxed mb-4">
             ${entity.description}
@@ -374,10 +374,12 @@ function syncRegistry(options = { checkOnly: false }) {
         } else {
           console.log(`  [INJECT] Generating and inserting HTML card for '${entity.id}'...`);
           const cardHtml = generateHtmlCard(entity);
-          // Insert inside registryGrid before closing </div>
-          const gridCloseIndex = registryHtml.indexOf('</div>\n\n    <!-- Verification Certificate Modal -->');
+          // Insert inside registryGrid before registryEmptyState (or closing </div>)
+          const emptyStateAnchor = '      <!-- Empty State (Zero Matches) -->';
+          const emptyStateIndex = registryHtml.indexOf(emptyStateAnchor);
+          const gridCloseIndex = emptyStateIndex !== -1 ? emptyStateIndex : registryHtml.indexOf('</div>\n\n    <!-- Verification Certificate Modal -->');
           if (gridCloseIndex !== -1) {
-            registryHtml = registryHtml.substring(0, gridCloseIndex) + cardHtml + '\n\n    ' + registryHtml.substring(gridCloseIndex);
+            registryHtml = registryHtml.substring(0, gridCloseIndex) + cardHtml + '\n\n' + registryHtml.substring(gridCloseIndex);
             modifiedHtml = true;
           } else {
             console.error('  [WARN] Could not find registryGrid insertion anchor in registry/index.html.');

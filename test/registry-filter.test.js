@@ -47,7 +47,7 @@ console.log('--> Test 1: Search & Category Filter Tabs DOM Integrity');
   console.log('    [PASS] All 6 category filter tabs and search controls verified.');
 }
 
-// Test 2: Card Count and Registry Parity (13 Certified Solutions)
+// Test 2: Card Count and Registry Parity (14 Certified Solutions)
 console.log('--> Test 2: Certified Solutions Parity with data/registry.json');
 {
   const cardRegex = /<div[^>]*class="[^"]*ztds-card[^"]*"[^>]*>([\s\S]*?)(?=<div[^>]*class="[^"]*ztds-card[^"]*"|<div id="registryEmptyState"|<div id="certModal")/g;
@@ -57,13 +57,13 @@ console.log('--> Test 2: Certified Solutions Parity with data/registry.json');
     cards.push(match[0]);
   }
 
-  assert.strictEqual(registryData.entities.length, 13, 'data/registry.json must contain exactly 13 entities');
-  assert.strictEqual(cards.length, 13, `registry/index.html must contain exactly 13 cards, found ${cards.length}`);
+  assert.strictEqual(registryData.entities.length, 14, 'data/registry.json must contain exactly 14 entities');
+  assert.strictEqual(cards.length, 14, `registry/index.html must contain exactly 14 cards, found ${cards.length}`);
 
-  console.log(`    [PASS] Exact parity confirmed: 13 cards in HTML matching 13 entities in JSON.`);
+  console.log(`    [PASS] Exact parity confirmed: 14 cards in HTML matching 14 entities in JSON.`);
 }
 
-// Test 3: Category Distribution (3 MCP, 3 RAG, 3 SDK, 2 App, 2 Proxy)
+// Test 3: Category Distribution (3 MCP, 3 RAG, 3 SDK, 3 App, 2 Proxy)
 console.log('--> Test 3: Normalized Category Distribution');
 {
   const cardRegex = /<div[^>]*class="[^"]*ztds-card[^"]*"[^>]*>([\s\S]*?)(?=<div[^>]*class="[^"]*ztds-card[^"]*"|<div id="registryEmptyState"|<div id="certModal")/g;
@@ -84,11 +84,11 @@ console.log('--> Test 3: Normalized Category Distribution');
   assert.strictEqual(categoryCounts.mcp, 3, `Expected 3 MCP servers, found ${categoryCounts.mcp}`);
   assert.strictEqual(categoryCounts.rag, 3, `Expected 3 RAG & Agent SDKs, found ${categoryCounts.rag}`);
   assert.strictEqual(categoryCounts.sdk, 3, `Expected 3 Core Engines & SDK, found ${categoryCounts.sdk}`);
-  assert.strictEqual(categoryCounts.app, 2, `Expected 2 Apps & Extensions, found ${categoryCounts.app}`);
+  assert.strictEqual(categoryCounts.app, 3, `Expected 3 Apps & Extensions, found ${categoryCounts.app}`);
   assert.strictEqual(categoryCounts.proxy, 2, `Expected 2 Proxies & Local LLM, found ${categoryCounts.proxy}`);
-  assert.strictEqual(categoryCounts.all, 13, `Expected 13 total cards, found ${categoryCounts.all}`);
+  assert.strictEqual(categoryCounts.all, 14, `Expected 14 total cards, found ${categoryCounts.all}`);
 
-  console.log('    [PASS] Category distribution verified: MCP (3), RAG (3), SDK (3), App (2), Proxy (2).');
+  console.log('    [PASS] Category distribution verified: MCP (3), RAG (3), SDK (3), App (3), Proxy (2).');
 }
 
 // Test 4: Certificate Uniqueness & No Duplicate Tokens
@@ -102,10 +102,10 @@ console.log('--> Test 4: Zero Duplicate Certificates or Tokens');
   }
 
   const uniqueCertIds = new Set(certIds);
-  assert.strictEqual(certIds.length, 13, `Expected 13 cert IDs, found ${certIds.length}`);
-  assert.strictEqual(uniqueCertIds.size, 13, 'All 13 certificate IDs must be completely unique');
+  assert.strictEqual(certIds.length, 14, `Expected 14 cert IDs, found ${certIds.length}`);
+  assert.strictEqual(uniqueCertIds.size, 14, 'All 14 certificate IDs must be completely unique');
 
-  console.log('    [PASS] 13 unique certificate IDs verified with zero duplicate collisions.');
+  console.log('    [PASS] 14 unique certificate IDs verified with zero duplicate collisions.');
 }
 
 // Test 5: Client-Side Controller Functions & Hash Deep-Linking
