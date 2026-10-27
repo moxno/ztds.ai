@@ -365,13 +365,17 @@ https://ztds.ai &middot; Patents Pending &middot; TM #182655957 &middot; CC BY 4
           const riskScore = memoData?.ev?.riskScore || 70;
 
           try {
+            const hpConfirm = form.querySelector('input[name="website_url_confirm"]');
+            const hpBotcheck = form.querySelector('input[name="botcheck"]');
             const resData = await ZTDSScanner.submitLead({
               email,
               role,
               domain: targetDomain,
               industryProfile: targetProfile,
               riskScore,
-              source
+              source,
+              website_url_confirm: hpConfirm ? hpConfirm.value : '',
+              botcheck: hpBotcheck ? hpBotcheck.checked : false
             });
 
             if (memoData) {

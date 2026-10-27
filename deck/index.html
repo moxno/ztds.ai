@@ -6,10 +6,15 @@
   <title>ZTDS Enterprise CISO Pitch Deck — Zero Data Egress AI</title>
   <meta name="description" content="Executive pitch deck for CISOs, DPOs, and Enterprise Architects: Deploying LLMs, Multi-Agent Loops, and RAG with Zero Data Egress and Zero DPA Liability.">
   <link rel="canonical" href="https://ztds.ai/deck/">
+  <link rel="alternate" hreflang="en" href="https://ztds.ai/deck/">
+  <link rel="alternate" hreflang="x-default" href="https://ztds.ai/deck/">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#020617">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon-96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="alternate" type="text/plain" href="/llms.txt" title="ZTDS LLM Knowledge Base">
@@ -96,7 +101,8 @@
           "name": "CISO Pitch Deck",
           "item": "https://ztds.ai/deck/"
         }
-      ]
+      ],
+      "@id": "https://ztds.ai/deck/#breadcrumb"
     },
     {
       "@type": "WebPage",
@@ -107,6 +113,9 @@
       "inLanguage": "en-US",
       "isPartOf": {
         "@id": "https://ztds.ai/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://ztds.ai/deck/#breadcrumb"
       }
     }
   ]
@@ -255,7 +264,7 @@
     
     <!-- Presentation Top Bar -->
     <header class="h-14 px-3 sm:px-6 flex items-center justify-between border-b border-white/10 bg-[#090f1d]/80 backdrop-blur-md no-print shrink-0">
-      <div class="flex items-center gap-2 sm:gap-4">
+      <nav aria-label="Breadcrumb" class="flex items-center gap-2 sm:gap-4">
         <a href="/" class="flex items-center gap-2 sm:gap-2.5 group touch-target">
           <div class="w-8 h-8 rounded-lg bg-slate-900 border border-emerald-500/40 flex items-center justify-center p-1">
             <svg class="w-full h-full" viewBox="0 0 32 32" fill="none">
@@ -266,9 +275,11 @@
           </div>
           <span class="font-bold text-base tracking-tight text-white">ZTDS<span class="text-emerald-400">.ai</span></span>
         </a>
-        <div class="h-4 w-px bg-white/10 hidden sm:block"></div>
-        <span class="text-xs font-mono uppercase tracking-widest text-slate-400 hidden sm:inline-block">CISO Executive Briefing</span>
-      </div>
+        <div class="h-4 w-px bg-white/10 hidden sm:block" aria-hidden="true"></div>
+        <a href="/ciso/" class="text-xs font-mono uppercase tracking-widest text-slate-400 hover:text-white transition-colors hidden md:inline-block">CISO Hub</a>
+        <span class="text-slate-600 hidden md:inline-block" aria-hidden="true">/</span>
+        <span class="text-xs font-mono uppercase tracking-widest text-slate-300 hidden sm:inline-block" aria-current="page">CISO Executive Briefing</span>
+      </nav>
 
       <div class="flex items-center gap-1.5 sm:gap-3">
         <!-- Slide Progress Pill -->

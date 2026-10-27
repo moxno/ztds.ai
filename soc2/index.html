@@ -6,12 +6,17 @@
   <title>Trust Center &amp; Security Controls | ZTDS.ai</title>
   <meta name="description" content="ZTDS SOC 2 Type II trust center and evidence repository. Continuous control mapping for AICPA CC6/CC7 and ISO 27001 with automated compliance telemetry.">
   <link rel="canonical" href="https://ztds.ai/soc2/">
+  <link rel="alternate" hreflang="en" href="https://ztds.ai/soc2/">
+  <link rel="alternate" hreflang="x-default" href="https://ztds.ai/soc2/">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#020617">
   <link rel="alternate" type="text/plain" href="/llms.txt" title="ZTDS LLM Knowledge Base">
   <link rel="alternate" type="text/plain" href="/llms-full.txt" title="ZTDS Full Normative LLM Compendium">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon-96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
 
@@ -57,78 +62,82 @@
     }
   </style>
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "SecurityService",
-        "@id": "https://ztds.ai/soc2/#service",
-        "name": "ZTDS.ai SOC 2 Type II Compliance & Trust Center",
-        "url": "https://ztds.ai/soc2/",
-        "description": "Continuous compliance framework and Trust Services Criteria mapping for Zero-Trust Data Sanitization in enterprise AI pipelines.",
-        "provider": {
-          "@type": "Organization",
-          "name": "ZTDS AI Consortium",
-          "url": "https://ztds.ai"
-        }
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "ZTDS.ai",
-            "item": "https://ztds.ai/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "SOC 2 & Trust Center",
-            "item": "https://ztds.ai/soc2/"
-          }
-        ]
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://ztds.ai/soc2/#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "How do we present ZTDS to our AICPA audit firm?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Present ZTDS as an endpoint data-plane security control for Invariant 1 (perimeter egress defense) and Invariant 2 (presentation layer pseudonymization). Submit the pre-filled SIG Lite packet along with your repository's cryptographic ztds-audit-receipt.json artifact to demonstrate automated control testing."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Why does our legal counsel not need to negotiate a DPA?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Under GDPR Article 28 and European Data Protection Board doctrine, a software provider that does not receive, access, or transmit customer personal data is legally classified as a software vendor, not a data processor. No subprocessor relationship is established."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How is continuous compliance maintained across code updates?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Integrate npx ztds-audit directly into your GitHub Actions or GitLab CI pipeline. If any developer introduces a library or network socket that transmits unmasked cleartext data, the CI test fails immediately before production merge."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Does ZTDS replace or complement our existing SIEM / DLP?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "ZTDS operates at the presentation and data plane layer (prior to egress), whereas traditional SIEMs monitor network perimeter logs. ZTDS prevents sensitive data from ever reaching the network, eliminating SIEM alert fatigue and DLP false positives."
-            }
-          }
-        ]
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SecurityService",
+      "@id": "https://ztds.ai/soc2/#service",
+      "name": "ZTDS.ai SOC 2 Type II Compliance & Trust Center",
+      "url": "https://ztds.ai/soc2/",
+      "description": "Continuous compliance framework and Trust Services Criteria mapping for Zero-Trust Data Sanitization in enterprise AI pipelines.",
+      "provider": {
+        "@type": "Organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai"
       }
-    ]
-  }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ZTDS.ai",
+          "item": "https://ztds.ai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "SOC 2 & Trust Center",
+          "item": "https://ztds.ai/soc2/"
+        }
+      ],
+      "@id": "https://ztds.ai/soc2/#breadcrumb"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ztds.ai/soc2/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do we present ZTDS to our AICPA audit firm?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Present ZTDS as an endpoint data-plane security control for Invariant 1 (perimeter egress defense) and Invariant 2 (presentation layer pseudonymization). Submit the pre-filled SIG Lite packet along with your repository's cryptographic ztds-audit-receipt.json artifact to demonstrate automated control testing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does our legal counsel not need to negotiate a DPA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under GDPR Article 28 and European Data Protection Board doctrine, a software provider that does not receive, access, or transmit customer personal data is legally classified as a software vendor, not a data processor. No subprocessor relationship is established."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is continuous compliance maintained across code updates?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Integrate npx ztds-audit directly into your GitHub Actions or GitLab CI pipeline. If any developer introduces a library or network socket that transmits unmasked cleartext data, the CI test fails immediately before production merge."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does ZTDS replace or complement our existing SIEM / DLP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ZTDS operates at the presentation and data plane layer (prior to egress), whereas traditional SIEMs monitor network perimeter logs. ZTDS prevents sensitive data from ever reaching the network, eliminating SIEM alert fatigue and DLP false positives."
+          }
+        }
+      ],
+      "breadcrumb": {
+        "@id": "https://ztds.ai/soc2/#breadcrumb"
+      }
+    }
+  ]
+}
   </script>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-emerald-100 selection:text-emerald-900">
@@ -257,7 +266,10 @@
     
     <!-- Hero Header -->
     <div class="max-w-4xl mb-12 sm:mb-16">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 text-white text-xs font-mono mb-4 shadow-sm">
+      <nav aria-label="Breadcrumb" class="no-print mb-3">
+          <ol class="flex flex-wrap items-center  gap-1.5 text-xs font-mono text-slate-500"><li><a href="/" class="hover:text-slate-900 transition-colors">ZTDS.ai</a></li><li aria-hidden="true" class="text-slate-300">/</li><li class="text-emerald-700 font-semibold" aria-current="page">SOC 2 &amp; Trust Center</li></ol>
+        </nav>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 text-white text-xs font-mono mb-4 shadow-sm">
         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
         <span>AICPA Trust Services Criteria &middot; ISO/IEC 27001:2022 &middot; Zero Subprocessor Chain</span>
       </div>

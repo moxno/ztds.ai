@@ -93,8 +93,8 @@ console.log('--> Test 2: WebSite SearchAction & Founder Entity in index.html');
   console.log('    [PASS] WebSite SearchAction, Person founder, and Organization entities validated.');
 }
 
-// Test 3: BreadcrumbList coverage on all subpages
-console.log('--> Test 3: BreadcrumbList Coverage on Subpages');
+// Test 3: BreadcrumbList coverage & WebPage.#breadcrumb linkage on all subpages
+console.log('--> Test 3: BreadcrumbList Coverage & WebPage.#breadcrumb Linkage on Subpages');
 for (const page of prodPages) {
   if (page === 'index.html') continue;
   const fullPath = path.join(__dirname, '..', page);
@@ -102,6 +102,8 @@ for (const page of prodPages) {
   const regex = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi;
   let match;
   let hasBreadcrumb = false;
+  let bcId = null;
+  let pageBreadcrumbRef = null;
   while ((match = regex.exec(html)) !== null) {
     const data = JSON.parse(match[1]);
     const items = data['@graph'] || [data];
@@ -110,11 +112,23 @@ for (const page of prodPages) {
       const bc = items.find(e => e['@type'] === 'BreadcrumbList');
       assert(Array.isArray(bc.itemListElement) && bc.itemListElement.length >= 2, `BreadcrumbList incomplete in ${page}`);
       assert(bc.itemListElement[0].item === 'https://ztds.ai/' || bc.itemListElement[0].item === 'https://ztds.ai', `Home breadcrumb root invalid in ${page}`);
+      assert(bc['@id'] && bc['@id'].endsWith('#breadcrumb'), `BreadcrumbList missing @id "#breadcrumb" in ${page}`);
+      bcId = bc['@id'];
+    }
+    const pageNode = items.find(e => {
+      const types = Array.isArray(e['@type']) ? e['@type'] : [e['@type']];
+      return types.some(t => ['WebPage', 'CollectionPage', 'ProfilePage', 'AboutPage', 'ItemPage', 'ContactPage', 'FAQPage'].includes(t));
+    });
+    if (pageNode && pageNode.breadcrumb) {
+      pageBreadcrumbRef = pageNode.breadcrumb['@id'];
     }
   }
   assert(hasBreadcrumb, `Missing BreadcrumbList in ${page}`);
+  if (page !== '404.html') {
+    assert(pageBreadcrumbRef === bcId, `WebPage.breadcrumb (@id: ${pageBreadcrumbRef}) does not match BreadcrumbList (@id: ${bcId}) in ${page}`);
+  }
 }
-console.log(`    [PASS] All ${prodPages.length - 1} subpages feature valid Schema.org BreadcrumbList.`);
+console.log(`    [PASS] All ${prodPages.length - 1} subpages feature valid Schema.org BreadcrumbList linked to WebPage.#breadcrumb.`);
 
 // Test 4: Article publication date integrity
 console.log('--> Test 4: Article Publication & Modification Date Integrity');

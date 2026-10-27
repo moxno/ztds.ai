@@ -6,12 +6,17 @@
   <title>ZTDS Case Studies &amp; Field Reports — Zero-Trust AI Deployments</title>
   <meta name="description" content="Empirical field validation reports, case studies, and enterprise deployment evaluations of the Zero-Trust Data Sanitization (ZTDS) standard.">
   <link rel="canonical" href="https://ztds.ai/case-studies/">
+  <link rel="alternate" hreflang="en" href="https://ztds.ai/case-studies/">
+  <link rel="alternate" hreflang="x-default" href="https://ztds.ai/case-studies/">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#020617">
   <link rel="alternate" type="text/plain" href="/llms.txt" title="ZTDS LLM Knowledge Base">
   <link rel="alternate" type="text/plain" href="/llms-full.txt" title="ZTDS Full Normative LLM Compendium">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon-96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
 
@@ -38,62 +43,66 @@
   <link rel="stylesheet" href="/styles.css">
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "CollectionPage",
-        "@id": "https://ztds.ai/case-studies/#collection",
-        "name": "ZTDS Case Studies & Field Reports",
-        "url": "https://ztds.ai/case-studies/",
-        "description": "Collection of empirical field validation reports evaluating client-side Zero-Trust Data Sanitization.",
-        "publisher": {
-          "@type": "Organization",
-          "name": "ZTDS AI Consortium",
-          "url": "https://ztds.ai"
-        }
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://ztds.ai/case-studies/#collection",
+      "name": "ZTDS Case Studies & Field Reports",
+      "url": "https://ztds.ai/case-studies/",
+      "description": "Collection of empirical field validation reports evaluating client-side Zero-Trust Data Sanitization.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai"
       },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "ZTDS.ai",
-            "item": "https://ztds.ai/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Case Studies",
-            "item": "https://ztds.ai/case-studies/"
-          }
-        ]
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://ztds.ai/case-studies/#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "How do regulated healthcare and legal enterprises deploy ZTDS in production?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Regulated enterprises deploy ZTDS at the originating client or microservice boundary (via browser extension, MCP stdio server, or headless Node.js/WASM SDK) to tokenize HIPAA PHI, legal work product under FRE 502, and PCI-DSS financial records in volatile RAM before prompts reach frontier LLMs or vector databases."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Are the architectural reference blueprints on ZTDS.ai vendor-neutral?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. All architectural case studies and reference blueprints on ZTDS.ai validate conformance with the four open ZTDS RFC v1.0 invariants and can be implemented using the Apache-2.0 reference engines or certified commercial implementations such as PrivacyScrubber."
-            }
-          }
-        ]
+      "breadcrumb": {
+        "@id": "https://ztds.ai/case-studies/#breadcrumb"
       }
-    ]
-  }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ZTDS.ai",
+          "item": "https://ztds.ai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Case Studies",
+          "item": "https://ztds.ai/case-studies/"
+        }
+      ],
+      "@id": "https://ztds.ai/case-studies/#breadcrumb"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ztds.ai/case-studies/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do regulated healthcare and legal enterprises deploy ZTDS in production?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Regulated enterprises deploy ZTDS at the originating client or microservice boundary (via browser extension, MCP stdio server, or headless Node.js/WASM SDK) to tokenize HIPAA PHI, legal work product under FRE 502, and PCI-DSS financial records in volatile RAM before prompts reach frontier LLMs or vector databases."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are the architectural reference blueprints on ZTDS.ai vendor-neutral?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. All architectural case studies and reference blueprints on ZTDS.ai validate conformance with the four open ZTDS RFC v1.0 invariants and can be implemented using the Apache-2.0 reference engines or certified commercial implementations such as PrivacyScrubber."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
 </head>
 <body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans">
@@ -220,7 +229,10 @@
   <!-- Main Content -->
   <main id="main-content" class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
     <div class="mb-12 text-center max-w-3xl mx-auto">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-4 shadow-sm">
+      <nav aria-label="Breadcrumb" class="no-print mb-3">
+          <ol class="flex flex-wrap items-center justify-center gap-1.5 text-xs font-mono text-slate-500"><li><a href="/" class="hover:text-slate-900 transition-colors">ZTDS.ai</a></li><li aria-hidden="true" class="text-slate-300">/</li><li class="text-emerald-700 font-semibold" aria-current="page">Case Studies</li></ol>
+        </nav>
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-4 shadow-sm">
         EMPIRICAL VALIDATION &middot; FIELD DEPLOYMENTS
       </div>
       <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">ZTDS Case Studies &amp; Reports</h1>

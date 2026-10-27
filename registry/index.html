@@ -3,15 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZTDS Verified™ Public Registry — Accredited AI Tools</title>
-  <meta name="description" content="Official registry of AI applications, tools, and developer libraries verified compliant with the Zero-Trust Data Sanitization (ZTDS RFC v1.0) standard.">
+  <title>ZTDS Verified™ Public Registry — AI Governance &amp; Security Tools</title>
+  <meta name="description" content="Official public registry of accredited AI governance tools, AI security software, and zero-trust data sanitization libraries compliant with ZTDS RFC v1.0.">
   <link rel="canonical" href="https://ztds.ai/registry/">
+  <link rel="alternate" hreflang="en" href="https://ztds.ai/registry/">
+  <link rel="alternate" hreflang="x-default" href="https://ztds.ai/registry/">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#020617">
   <link rel="alternate" type="text/plain" href="/llms.txt" title="ZTDS LLM Knowledge Base">
   <link rel="alternate" type="text/plain" href="/llms-full.txt" title="ZTDS Full Normative LLM Compendium">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon-96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
 
@@ -20,8 +25,8 @@
   <meta property="og:site_name" content="ZTDS.ai">
   <meta property="og:locale" content="en_US">
   <meta property="og:url" content="https://ztds.ai/registry/">
-  <meta property="og:title" content="ZTDS Verified™ Public Registry — Accredited AI Tools">
-  <meta property="og:description" content="Official registry of AI applications, tools, and developer libraries verified compliant with the Zero-Trust Data Sanitization (ZTDS RFC v1.0) standard.">
+  <meta property="og:title" content="ZTDS Verified™ Public Registry — AI Governance &amp; Security Tools">
+  <meta property="og:description" content="Official public registry of accredited AI governance tools, AI security software, and zero-trust data sanitization libraries compliant with ZTDS RFC v1.0.">
   <meta property="og:image" content="https://ztds.ai/assets/img/og/og-registry.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
@@ -55,6 +60,9 @@
         "@type": "Organization",
         "name": "ZTDS AI Consortium",
         "url": "https://ztds.ai"
+      },
+      "breadcrumb": {
+        "@id": "https://ztds.ai/registry/#breadcrumb"
       }
     },
     {
@@ -151,7 +159,7 @@
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://ztds.ai/registry/#breadcrumbs",
+      "@id": "https://ztds.ai/registry/#breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -335,7 +343,10 @@
     
     <!-- Hero Header -->
     <div class="mb-12 text-center max-w-3xl mx-auto">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-4 shadow-sm">
+      <nav aria-label="Breadcrumb" class="no-print mb-3">
+          <ol class="flex flex-wrap items-center justify-center gap-1.5 text-xs font-mono text-slate-500"><li><a href="/" class="hover:text-slate-900 transition-colors">Home</a></li><li aria-hidden="true" class="text-slate-300">/</li><li class="text-emerald-700 font-semibold" aria-current="page">Verified Registry</li></ol>
+        </nav>
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 mb-4 shadow-sm">
         <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
         <span>Public Directory &middot; Verifiable Cryptographic Receipts</span>
       </div>
@@ -1630,9 +1641,14 @@
       btnEmptyReset.addEventListener('click', resetAllFilters);
     }
 
-    // Initialize from URL hash if matching a category
+    // Initialize from URL hash or query parameters (?category=...&q=...)
     window.addEventListener('DOMContentLoaded', () => {
-      const hash = window.location.hash.toLowerCase().replace('#', '');
+      const regParams = new URLSearchParams(window.location.search);
+      const qVal = (regParams.get('q') || regParams.get('search') || '').trim();
+      if (qVal && searchInput) {
+        searchInput.value = qVal;
+      }
+      const hash = (regParams.get('category') || window.location.hash.replace('#', '')).toLowerCase();
       const validCategories = ['all', 'mcp', 'rag', 'sdk', 'app', 'proxy'];
       if (validCategories.includes(hash)) {
         setActiveTab(hash);
@@ -1664,9 +1680,9 @@
       if (currentEmbedFormat === 'markdown') {
         codeEl.textContent = `[![ZTDS Verified](${badgeUrl})](${targetUrl})`;
       } else if (currentEmbedFormat === 'html') {
-        codeEl.textContent = `<a href="${targetUrl}" target="_blank" rel="noopener"><img src="${badgeUrl}" alt="ZTDS Verified Conformance" width="168" height="32" /></a>`;
+        codeEl.textContent = `<a href="${targetUrl}" target="_blank" rel="noopener"><img src="${badgeUrl}" alt="ZTDS Verified Conformance" width="168" height="32" / decoding="async"></a>`;
       } else if (currentEmbedFormat === 'jsx') {
-        codeEl.textContent = `<a href="${targetUrl}" target="_blank" rel="noopener">\n  <img src="${badgeUrl}" alt="ZTDS Verified Conformance" width={168} height={32} />\n</a>`;
+        codeEl.textContent = `<a href="${targetUrl}" target="_blank" rel="noopener">\n  <img src="${badgeUrl}" alt="ZTDS Verified Conformance" width={168} height={32} / decoding="async">\n</a>`;
       }
     }
 

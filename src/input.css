@@ -820,7 +820,7 @@ h1, h2, h3 {
 }
 
 /* ==========================================================================
-   Trust Badge Preview Canvas Pattern
+   Trust Badge Preview Canvas Pattern & Offscreen Render Optimization (CWV)
    ========================================================================== */
 .canvas-bg-grid {
   background-color: #ffffff !important;
@@ -831,5 +831,12 @@ h1, h2, h3 {
     linear-gradient(-45deg, transparent 75%, #e2e8f0 75%) !important;
   background-size: 16px 16px !important;
   background-position: 0 0, 0 8px, 8px -8px, -8px 0px !important;
+}
+
+@media screen {
+  body > footer {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 480px;
+  }
 }
 

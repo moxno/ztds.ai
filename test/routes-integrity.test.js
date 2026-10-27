@@ -438,6 +438,11 @@ for (const relPath of typoFiles) {
   assert(/href=["']#main/i.test(html) || /Skip to/i.test(html), `Missing skip-to-content link in ${relPath}`);
   assert(!/@import\s+url\(["']?https?:/i.test(html), `External CSS @import violates strict CSP in ${relPath}`);
   assert(html.includes('href="/site.webmanifest"'), `Missing <link rel="manifest" href="/site.webmanifest"> in ${relPath}`);
+  assert(html.includes('href="/favicon.ico"'), `Missing <link rel="icon" href="/favicon.ico"> in ${relPath}`);
+  assert(html.includes('href="/assets/img/favicon-96.png"'), `Missing <link rel="icon" href="/assets/img/favicon-96.png"> in ${relPath}`);
+  assert(html.includes('href="/assets/img/favicon-192.png"'), `Missing <link rel="icon" href="/assets/img/favicon-192.png"> in ${relPath}`);
+  assert(new RegExp(`<link\\s+[^>]*rel=["']alternate["'][^>]*hreflang=["']en["'][^>]*href=["']${canM[1].replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["']`, 'i').test(html), `Missing or mismatched hreflang="en" in ${relPath}`);
+  assert(new RegExp(`<link\\s+[^>]*rel=["']alternate["'][^>]*hreflang=["']x-default["'][^>]*href=["']${canM[1].replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["']`, 'i').test(html), `Missing or mismatched hreflang="x-default" in ${relPath}`);
   assert(/<meta\s+[^>]*property=["']og:site_name["']/i.test(html), `Missing og:site_name in ${relPath}`);
   assert(/<meta\s+[^>]*property=["']og:locale["']/i.test(html), `Missing og:locale in ${relPath}`);
   assert(/<meta\s+[^>]*property=["']og:image:alt["']/i.test(html), `Missing og:image:alt in ${relPath}`);
@@ -448,6 +453,18 @@ for (const relPath of typoFiles) {
   assert(html.includes('/assets/fonts/jetbrains-mono-latin.woff2'), `Missing font preload jetbrains-mono-latin.woff2 in ${relPath}`);
   assert(/<script\s+[^>]*src=["']\/nav\.js["'][^>]*\bdefer\b/i.test(html), `<script src="/nav.js" defer> required in ${relPath}`);
   assert(/<footer[\s>]/i.test(html), `Missing semantic <footer> in ${relPath}`);
+
+  // Verify all <img> tags have decoding="async" for CWV non-blocking decode
+  const allImgs = html.match(/<img\b[^>]*>/gi) || [];
+  for (const imgTag of allImgs) {
+    assert(/\bdecoding=["']async["']/i.test(imgTag), `<img> missing decoding="async" in ${relPath}: ${imgTag}`);
+  }
+
+  // Verify subpages (except index.html, 404.html, and raw IETF RFC drafts) feature semantic <nav aria-label="Breadcrumb">
+  if (relPath !== 'index.html' && relPath !== '404.html' && !relPath.startsWith('ietf/draft-')) {
+    assert(/<nav\b[^>]*aria-label=["']Breadcrumb["']/i.test(html), `Missing <nav aria-label="Breadcrumb"> in ${relPath}`);
+    assert(/aria-current=["']page["']/i.test(html), `Missing aria-current="page" on active breadcrumb item in ${relPath}`);
+  }
 
   // Verify every <h2> inside <main> has an id attribute for SERP fragment sitelinks & deep linking
   const mainBlock = html.match(/<main\b[\s\S]*?<\/main>/i)?.[0] || '';
