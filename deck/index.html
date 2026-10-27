@@ -130,6 +130,12 @@
         "url": "https://ztds.ai/assets/img/og/og-default.png",
         "width": 1200,
         "height": 630
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://ztds.ai/#organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai"
       }
     }
   ]
@@ -473,9 +479,9 @@
             <table class="w-full text-left text-xs border-collapse">
               <thead>
                 <tr class="border-b border-white/10 bg-white/[0.04] text-slate-300 font-mono">
-                  <th class="py-3 px-4 font-semibold">Architectural Vector</th>
-                  <th class="py-3 px-4 font-semibold text-red-300">Legacy Cloud DLP Proxy (SaaS)</th>
-                  <th class="py-3 px-4 font-semibold text-emerald-400">ZTDS RFC v1.0 Local Engine</th>
+                  <th scope="col" class="py-3 px-4 font-semibold">Architectural Vector</th>
+                  <th scope="col" class="py-3 px-4 font-semibold text-red-300">Legacy Cloud DLP Proxy (SaaS)</th>
+                  <th scope="col" class="py-3 px-4 font-semibold text-emerald-400">ZTDS RFC v1.0 Local Engine</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-white/5 text-slate-300">
@@ -1228,9 +1234,10 @@
         }
       });
 
-      // Handle direct hash navigation e.g. /deck/#5
+      // Handle direct hash or query navigation e.g. /deck/#5 or /deck/?slide=5
       function handleHash() {
-        const hash = window.location.hash.replace('#', '');
+        const params = new URLSearchParams(window.location.search);
+        const hash = window.location.hash.replace('#', '') || params.get('slide') || '';
         const slideNum = parseInt(hash, 10);
         if (!isNaN(slideNum) && slideNum >= 1 && slideNum <= totalSlides) {
           showSlide(slideNum - 1);

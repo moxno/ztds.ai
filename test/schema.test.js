@@ -200,6 +200,10 @@ for (const page of prodPages) {
           `Missing 1200x630 primaryImageOfPage ImageObject on ${node['@type']} in ${page}`
         );
       }
+      if (page !== '404.html' && nodeTypes.some(t => ['WebPage', 'CollectionPage', 'ProfilePage', 'AboutPage', 'ContactPage', 'ItemPage'].includes(t))) {
+        assert(node.dateModified, `Missing dateModified on ${node['@type']} in ${page}`);
+        assert(node.publisher && node.publisher['@id'] === 'https://ztds.ai/#organization', `Missing publisher #organization on ${node['@type']} in ${page}`);
+      }
     }
   }
   if (page !== '404.html') {

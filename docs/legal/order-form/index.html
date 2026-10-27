@@ -128,6 +128,12 @@
         "url": "https://ztds.ai/assets/img/og/og-compliance.png",
         "width": 1200,
         "height": 630
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://ztds.ai/#organization",
+        "name": "ZTDS AI Consortium",
+        "url": "https://ztds.ai"
       }
     }
   ]
@@ -355,10 +361,10 @@
           <table class="w-full border-collapse border border-slate-200 text-xs">
             <thead>
               <tr class="bg-slate-100 border-b border-slate-200 font-mono text-slate-700">
-                <th class="p-2 text-left">Selected Product Tier</th>
-                <th class="p-2 text-center">Deployment Scope</th>
-                <th class="p-2 text-center">Term</th>
-                <th class="p-2 text-right">Annual Price (USD)</th>
+                <th scope="col" class="p-2 text-left">Selected Product Tier</th>
+                <th scope="col" class="p-2 text-center">Deployment Scope</th>
+                <th scope="col" class="p-2 text-center">Term</th>
+                <th scope="col" class="p-2 text-right">Annual Price (USD)</th>
               </tr>
             </thead>
             <tbody>
@@ -513,12 +519,24 @@
 
       tierCards.forEach(function(card) {
         card.addEventListener('click', function() {
-          selectTier(card.getAttribute('data-tier'));
+          const t = card.getAttribute('data-tier');
+          selectTier(t);
+          if (window.history && window.history.replaceState && t) {
+            const np = new URLSearchParams(window.location.search);
+            np.set('tier', t);
+            window.history.replaceState(null, '', window.location.pathname + '?' + np.toString() + window.location.hash);
+          }
         });
         card.addEventListener('keydown', function(e) {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            selectTier(card.getAttribute('data-tier'));
+            const t = card.getAttribute('data-tier');
+            selectTier(t);
+            if (window.history && window.history.replaceState && t) {
+              const np = new URLSearchParams(window.location.search);
+              np.set('tier', t);
+              window.history.replaceState(null, '', window.location.pathname + '?' + np.toString() + window.location.hash);
+            }
           }
         });
       });

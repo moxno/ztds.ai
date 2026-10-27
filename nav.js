@@ -516,7 +516,18 @@ document.addEventListener('DOMContentLoaded', () => {
       { title: 'Consortium Governance & Charter', cat: 'Governance', url: '/governance/', kw: 'bylaws working groups voting steering' },
       { title: 'Security Policy & CVD (PGP)', cat: 'Governance', url: '/security/', kw: 'vulnerability disclosure security.txt' },
       { title: 'Standards, RAND-Z Patent Policy & Terms', cat: 'Governance', url: '/terms/', kw: 'cc-by-4.0 apache 2.0 trademark covenant' },
-      { title: 'Zero-Telemetry Privacy Policy', cat: 'Governance', url: '/privacy/', kw: 'zero cookies zero analytics gdpr' }
+      { title: 'Zero-Telemetry Privacy Policy', cat: 'Governance', url: '/privacy/', kw: 'zero cookies zero analytics gdpr' },
+      { title: 'BrandMeWeb — Corporate Member & GEO Case Study', cat: 'Case Study', url: '/companies/brandmeweb/', kw: 'brandmeweb agency geo seo langchain' },
+      { title: 'PrivacyScrubber — Pioneer Reference Implementation', cat: 'Case Study', url: '/companies/privacyscrubber/', kw: 'privacyscrubber wasm chrome extension sdk mcp' },
+      { title: 'Apex Health Systems — HIPAA Clinical Blueprint', cat: 'Case Study', url: '/companies/apex-health-ai/', kw: 'hipaa safe harbor ehr epic cerner phi' },
+      { title: 'Lex Veritas Global LLP — FRE 502 Legal Blueprint', cat: 'Case Study', url: '/companies/lex-veritas-legal/', kw: 'fre 502 attorney client privilege m&a legal' },
+      { title: 'Aegis Financial Technologies — PCI-DSS FinTech Blueprint', cat: 'Case Study', url: '/companies/aegis-fintech/', kw: 'pci dss swift iban banking fintech' },
+      { title: 'CloudScale Software Inc. — SOC 2 Multi-Tenant SaaS', cat: 'Case Study', url: '/companies/cloudscale-saas/', kw: 'soc 2 cc6.7 saas copilot nextjs' },
+      { title: 'Valkyrie Aerospace & Defense — ITAR / CMMC SCIF Enclave', cat: 'Case Study', url: '/companies/valkyrie-defense/', kw: 'itar cmmc scif nitro enclave defense' },
+      { title: 'CyberShield SOC Operations — SIEM & Secret Redaction', cat: 'Case Study', url: '/companies/cybershield-siem/', kw: 'siem soc mitre nist secrets logs' },
+      { title: 'TalentHub Global PeopleOps — GDPR Art. 9 HR Analytics', cat: 'Case Study', url: '/companies/talenthub-hr/', kw: 'gdpr article 9 pipeda hr recruitment' },
+      { title: 'Ilya Sibiryakov — Chief Architect & Lead Author', cat: 'Fellow', url: '/fellows/ilya-sibiryakov/', kw: 'founder author ietf draft rfc brandmeweb' },
+      { title: 'Cliford Fanyuy — Accredited Research Fellow', cat: 'Fellow', url: '/fellows/cliford-fanyuy/', kw: 'fellow researcher benchmark validation' }
     ];
 
     function buildCmdPalette() {
@@ -718,7 +729,56 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           openCmdPalette();
         }
+      } else if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        const tag = (e.target && e.target.tagName) ? e.target.tagName.toUpperCase() : '';
+        if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT' && !(e.target && e.target.isContentEditable)) {
+          const openDialog = document.querySelector('[role="dialog"]:not(.hidden)');
+          if (!openDialog) {
+            e.preventDefault();
+            openCmdPalette();
+          }
+        }
       }
+    });
+  } catch (_) {}
+
+  // Global UX 7: 1-Click Copy Table as Markdown for CISO/GRC & Engineering Matrices
+  try {
+    document.querySelectorAll('main .overflow-x-auto > table').forEach((table) => {
+      const wrapper = table.parentElement;
+      if (!wrapper || wrapper.dataset.tableCopyBound === 'true') return;
+      wrapper.dataset.tableCopyBound = 'true';
+
+      const bar = document.createElement('div');
+      bar.className = 'no-print flex justify-end mb-1.5';
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.setAttribute('aria-label', 'Copy table as Markdown');
+      btn.className = 'px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold transition-colors cursor-pointer';
+      btn.textContent = 'Copy Table (MD)';
+
+      btn.addEventListener('click', () => {
+        const rows = Array.from(table.querySelectorAll('tr'));
+        if (!rows.length) return;
+        const mdLines = [];
+        rows.forEach((tr, rIdx) => {
+          const cells = Array.from(tr.querySelectorAll('th, td')).map(c =>
+            (c.textContent || '').replace(/\s+/g, ' ').replace(/\|/g, '\\|').trim()
+          );
+          if (!cells.length) return;
+          mdLines.push('| ' + cells.join(' | ') + ' |');
+          if (rIdx === 0) {
+            mdLines.push('| ' + cells.map(() => '---').join(' | ') + ' |');
+          }
+        });
+        window.ztdsCopy(mdLines.join('\n'), () => {
+          btn.textContent = 'Copied Markdown!';
+          setTimeout(() => { btn.textContent = 'Copy Table (MD)'; }, 1600);
+        });
+      });
+
+      wrapper.parentNode.insertBefore(bar, wrapper);
+      bar.appendChild(btn);
     });
   } catch (_) {}
 });

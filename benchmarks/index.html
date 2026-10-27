@@ -451,10 +451,10 @@
         <table class="w-full text-left border-collapse text-xs sm:text-sm">
           <thead>
             <tr class="bg-slate-900 text-white font-mono text-xs uppercase tracking-wider">
-              <th class="py-3.5 px-4">Evaluation Vector</th>
-              <th class="py-3.5 px-4 text-emerald-400">ZTDS Protocol (RFC v1.0 In-RAM)</th>
-              <th class="py-3.5 px-4 text-slate-300">Heavy Local NLP Containers</th>
-              <th class="py-3.5 px-4 text-slate-300">Legacy Cloud DLP Proxies</th>
+              <th scope="col" class="py-3.5 px-4">Evaluation Vector</th>
+              <th scope="col" class="py-3.5 px-4 text-emerald-400">ZTDS Protocol (RFC v1.0 In-RAM)</th>
+              <th scope="col" class="py-3.5 px-4 text-slate-300">Heavy Local NLP Containers</th>
+              <th scope="col" class="py-3.5 px-4 text-slate-300">Legacy Cloud DLP Proxies</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-200">
@@ -510,13 +510,13 @@
           <table class="w-full text-left border-collapse text-xs sm:text-sm">
             <thead>
               <tr class="bg-slate-900 text-white font-mono text-xs uppercase tracking-wider">
-                <th class="py-3.5 px-4">Frontier LLM Family</th>
-                <th class="py-3.5 px-4">Scenarios</th>
-                <th class="py-3.5 px-4">Raw Prompt Leakage (No ZTDS)</th>
-                <th class="py-3.5 px-4">Protected Egress (With ZTDS)</th>
-                <th class="py-3.5 px-4">Leakage Prevention (LPR)</th>
-                <th class="py-3.5 px-4">Bijective Fidelity (BFS)</th>
-                <th class="py-3.5 px-4">Context Score (CPS)</th>
+                <th scope="col" class="py-3.5 px-4">Frontier LLM Family</th>
+                <th scope="col" class="py-3.5 px-4">Scenarios</th>
+                <th scope="col" class="py-3.5 px-4">Raw Prompt Leakage (No ZTDS)</th>
+                <th scope="col" class="py-3.5 px-4">Protected Egress (With ZTDS)</th>
+                <th scope="col" class="py-3.5 px-4">Leakage Prevention (LPR)</th>
+                <th scope="col" class="py-3.5 px-4">Bijective Fidelity (BFS)</th>
+                <th scope="col" class="py-3.5 px-4">Context Score (CPS)</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 font-mono text-xs">
@@ -999,7 +999,7 @@
           const isMultimodal = sc.modality === 'multimodal/image';
 
           return `
-            <article class="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4">
+            <article id="bench-${escapeHtml((sc.id || '').toLowerCase())}" class="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4 scroll-mt-24">
               <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
                 <div class="flex flex-wrap items-center gap-2">
                   <span class="px-2.5 py-0.5 rounded-md bg-slate-900 text-emerald-400 font-mono text-xs font-bold">${escapeHtml(sc.id)}</span>
@@ -1032,6 +1032,50 @@
         }).join('');
       }
 
+      function syncBenchUrl() {
+        if (!window.history || !window.history.replaceState) return;
+        const params = new URLSearchParams(window.location.search);
+        if (activeDomain && activeDomain !== 'ALL') params.set('domain', activeDomain);
+        else params.delete('domain');
+        if (activeModel && activeModel !== 'openai/gpt-4o') params.set('model', activeModel);
+        else params.delete('model');
+        if (searchQuery && searchQuery.trim()) params.set('q', searchQuery.trim());
+        else params.delete('q');
+        const qs = params.toString();
+        window.history.replaceState(null, '', window.location.pathname + (qs ? '?' + qs : '') + window.location.hash);
+      }
+
+      const initParams = new URLSearchParams(window.location.search);
+      const initDomain = initParams.get('domain');
+      const initModel = initParams.get('model');
+      const initQ = initParams.get('q') || initParams.get('search');
+
+      if (initDomain) {
+        activeDomain = initDomain;
+        domainBtns.forEach(b => {
+          const isMatch = (b.getAttribute('data-domain') || 'ALL').toLowerCase() === initDomain.toLowerCase();
+          if (isMatch) {
+            activeDomain = b.getAttribute('data-domain') || 'ALL';
+            b.className = 'bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors';
+            b.setAttribute('aria-selected', 'true');
+          } else {
+            b.className = 'bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors';
+            b.setAttribute('aria-selected', 'false');
+          }
+        });
+      }
+      if (initModel && modelSelect) {
+        const hasOpt = Array.from(modelSelect.options).some(o => o.value === initModel);
+        if (hasOpt) {
+          modelSelect.value = initModel;
+          activeModel = initModel;
+        }
+      }
+      if (initQ && searchInput) {
+        searchInput.value = initQ;
+        searchQuery = initQ;
+      }
+
       // Render fallback immediately, then hydrate full 30 scenarios
       renderScenarios();
 
@@ -1055,6 +1099,7 @@
           btn.className = 'bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors';
           btn.setAttribute('aria-selected', 'true');
           renderScenarios();
+          syncBenchUrl();
         });
       });
 
@@ -1062,6 +1107,7 @@
         modelSelect.addEventListener('change', () => {
           activeModel = modelSelect.value;
           renderScenarios();
+          syncBenchUrl();
         });
       }
 
@@ -1069,6 +1115,7 @@
         searchInput.addEventListener('input', () => {
           searchQuery = searchInput.value || '';
           renderScenarios();
+          syncBenchUrl();
         });
       }
 

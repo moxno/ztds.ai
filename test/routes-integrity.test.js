@@ -503,6 +503,12 @@ for (const relPath of typoFiles) {
   for (const om of overflowTableMatches) {
     assert(/\btabindex=["']0["']/i.test(om[0]) && /\brole=["']region["']/i.test(om[0]), `Scrollable .overflow-x-auto table wrapper missing tabindex="0" role="region" in ${relPath}: ${om[0]}`);
   }
+
+  // Verify every <th> table header cell has explicit scope="col" or scope="row"
+  const thMatches = htmlWithoutScripts.match(/<th\b[^>]*>/gi) || [];
+  for (const thTag of thMatches) {
+    assert(/\bscope=["'](?:col|row|colgroup|rowgroup)["']/i.test(thTag), `<th> missing explicit scope attribute in ${relPath}: ${thTag}`);
+  }
 }
 console.log(`    [PASS] All ${typoFiles.length} public HTML files pass SERP bounds, <main>/<footer> landmarks, <h2/h3/details id> anchors, cross-page fragment links, manifest, OG/Twitter, font preloads, and CSP checks.`);
 
