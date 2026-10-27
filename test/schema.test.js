@@ -211,4 +211,37 @@ for (const page of prodPages) {
 }
 console.log(`    [PASS] All ${appEntitiesChecked} SoftwareApplication/WebApplication entities and ${prodPages.length} page graphs verified.`);
 
-console.log('\n[SUMMARY] ALL 5 SCHEMA & GEO KNOWLEDGE GRAPH TESTS PASSED.\n');
+// Test 6: 100% Visible DOM <-> JSON-LD FAQPage Question Parity & Case Studies ItemList
+console.log('--> Test 6: 100% Visible DOM <-> JSON-LD FAQPage Question Parity & Case Studies ItemList');
+let faqQuestionsVerified = 0;
+for (const page of prodPages) {
+  const fullPath = path.join(__dirname, '..', page);
+  const html = fs.readFileSync(fullPath, 'utf8');
+  const bodyHtml = html.replace(/<script\b[\s\S]*?<\/script>/gi, '')
+    .replace(/&amp;/g, '&')
+    .replace(/&sect;/g, '§')
+    .replace(/&quot;/g, '"')
+    .replace(/&mdash;/g, '—')
+    .replace(/&ndash;/g, '–');
+  const regex = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi;
+  let match;
+  while ((match = regex.exec(html)) !== null) {
+    const data = JSON.parse(match[1]);
+    const items = data['@graph'] || [data];
+    for (const node of items) {
+      const types = Array.isArray(node['@type']) ? node['@type'] : [node['@type']];
+      if (types.includes('FAQPage') && Array.isArray(node.mainEntity)) {
+        for (const q of node.mainEntity) {
+          assert(q.name && bodyHtml.includes(q.name), `FAQPage Question "${q.name}" in ${page} is missing from visible DOM (Google FAQ Rich Results spam risk)`);
+          faqQuestionsVerified++;
+        }
+      }
+      if (page === 'case-studies/index.html' && types.includes('ItemList')) {
+        assert(node.numberOfItems === 9 && Array.isArray(node.itemListElement) && node.itemListElement.length === 9, 'case-studies/index.html ItemList must contain all 9 enterprise case studies');
+      }
+    }
+  }
+}
+console.log(`    [PASS] All ${faqQuestionsVerified} FAQPage JSON-LD questions verified against visible DOM markup.`);
+
+console.log('\n[SUMMARY] ALL 6 SCHEMA & GEO KNOWLEDGE GRAPH TESTS PASSED.\n');

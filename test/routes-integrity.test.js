@@ -497,6 +497,12 @@ for (const relPath of typoFiles) {
       );
     }
   }
+
+  // Verify every .overflow-x-auto table wrapper has tabindex="0" and role="region" for WCAG 2.1 AA keyboard scrollability
+  const overflowTableMatches = [...htmlWithoutScripts.matchAll(/<div\b[^>]*class=["'][^"']*overflow-x-auto[^"']*["'][^>]*>\s*<table\b/gi)];
+  for (const om of overflowTableMatches) {
+    assert(/\btabindex=["']0["']/i.test(om[0]) && /\brole=["']region["']/i.test(om[0]), `Scrollable .overflow-x-auto table wrapper missing tabindex="0" role="region" in ${relPath}: ${om[0]}`);
+  }
 }
 console.log(`    [PASS] All ${typoFiles.length} public HTML files pass SERP bounds, <main>/<footer> landmarks, <h2/h3/details id> anchors, cross-page fragment links, manifest, OG/Twitter, font preloads, and CSP checks.`);
 

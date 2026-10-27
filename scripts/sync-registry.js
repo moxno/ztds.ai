@@ -416,13 +416,15 @@ function syncRegistry(options = { checkOnly: false }) {
     const companiesData2 = JSON.parse(readFile('data/companies.json') || '{"companies":[]}');
     const felCount = (fellowsData.fellows || []).length;
     const compCount = (companiesData2.companies || []).length;
+    const csCount = (companiesData2.companies || []).filter(c => c.case_study).length;
     for (const hubRel of ['registry/index.html', 'fellows/index.html', 'companies/index.html', 'case-studies/index.html']) {
       let hubContent = readFile(hubRel);
       if (!hubContent) continue;
       const updatedHub = hubContent
         .replace(/Verified Products \(\d+\)/g, `Verified Products (${entities.length})`)
         .replace(/Research Fellows \(\d+\)/g, `Research Fellows (${felCount})`)
-        .replace(/Corporate Adopters \(\d+\)/g, `Corporate Adopters (${compCount})`);
+        .replace(/Corporate Adopters \(\d+\)/g, `Corporate Adopters (${compCount})`)
+        .replace(/Field Case Studies \((?:\d+|Under Review)\)/g, `Field Case Studies (${csCount})`);
       if (updatedHub !== hubContent) {
         if (options.checkOnly) {
           console.error(`  [DRIFT] Ecosystem Directory Switcher counts outdated in ${hubRel}`);

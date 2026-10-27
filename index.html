@@ -189,7 +189,7 @@
           "name": "How does ZTDS protect sensitive data in Model Context Protocol (MCP) for Cursor and Claude Desktop?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The open reference MCP server (ztds-mcp) executes locally over stdio JSON-RPC pipes in volatile RAM. It intercepts developer prompts, diffs, and tool arguments, replacing cleartext secrets and PII with context-preserving surrogate tokens before network transmission, guaranteeing 0.00 bytes socket telemetry."
+            "text": "The open reference MCP server ( ztds-mcp ) executes locally on your workstation as a child process over stdio JSON-RPC pipes. It intercepts prompts, code diffs, and tool arguments in volatile RAM before network transmission. Cleartext API keys, internal IPs, and customer PII are replaced with contextual surrogate tokens ( [KEY_1] , [EMAIL_1] ) so AI reasoning is unaffected, while zero bytes of sensitive data leave the machine. The mapping table is preserved strictly in client volatile memory and re-applied locally to responses before display."
           }
         },
         {
@@ -197,15 +197,15 @@
           "name": "How does ZTDS solve GDPR Article 17 Right to be Forgotten in RAG vector databases?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Cleartext PII embedded into dense vector stores cannot be deleted without re-indexing the entire corpus. Ingesting documents through ZTDS transforms sensitive identifiers into ephemeral surrogate tokens prior to embedding generation, permanently eliminating vector store contamination from persistent PII, preventing costly re-indexing and non-compliance under GDPR Article 17."
+            "text": "In standard RAG architectures, raw customer PII is embedded into dense vectors stored in Pinecone, Qdrant, or Milvus. When a customer exercises their GDPR Article 17 \"Right to be Forgotten\", dense embeddings cannot be deleted individually without re-indexing the entire multi-million vector index. ZTDS sanitizes raw entities into deterministic surrogate tokens prior to embedding generation . The vector database stores mathematical embeddings of de-identified tokens, ensuring zero direct linkability to natural persons. Deleting the customer's reversible token map from local keystores renders the vectors permanently de-identified without needing a costly corpus re-index."
           }
         },
         {
           "@type": "Question",
-          "name": "How does ZTDS address GDPR Article 28 data processor obligations for AI architectures?",
+          "name": "How does ZTDS eliminate data processor liability under GDPR Article 28?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Under ZTDS Invariant 4, data sanitization executes 100% inside client volatile memory prior to WAN serialization; exactly 0.00 bytes of raw personal data leave the local application runtime. Because the sanitization engine never receives, stores, or transmits personal data, it eliminates intermediary vendors from the data processor supply chain under GDPR Article 28 and functions as a proactive technical safe harbor under GDPR Article 32."
+            "text": "Under GDPR Article 28, a Data Processing Agreement (DPA) is required when external third parties process personal data on your behalf. Because the ZTDS protocol executes 100% inside client volatile host RAM with 0.00 bytes of raw personal data transmitted over the network, ZTDS software never receives personal data and is physically eliminated from the data processor supply chain. By neutralizing direct PII in local RAM and reducing entropy across vertical profiles, ZTDS establishes a proactive technical safe harbor under GDPR Article 32 (Technical & Organizational Measures) and Israel Protection of Privacy Law Amendment 13 Section 17, drastically mitigating statutory liability and eliminating subprocessor risk assessments."
           }
         },
         {
@@ -221,7 +221,7 @@
           "name": "How can I independently verify zero external network egress in my own environment?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "ZTDS conforms to the Airplane Mode Verification Protocol: load the web playground or run the CLI auditor npx ztds-audit --strict, physically disconnect your network interface (or enable Airplane Mode), and observe that all sanitization, detokenization, and verification execute with 100% functionality without error. You can also run Wireshark or inspect the Chrome DevTools Network panel to confirm that exactly 0 network requests are dispatched during processing."
+            "text": "ZTDS conforms to the Airplane Mode Verification Protocol : load the web playground or run the CLI auditor npx ztds-audit --strict , physically disconnect your network interface (or enable Airplane Mode), and observe that all sanitization, detokenization, and verification execute with 100% functionality without error. You can also run Wireshark or inspect the Chrome DevTools Network panel to confirm that exactly 0 network requests are dispatched during processing."
           }
         }
       ],
@@ -1392,7 +1392,7 @@ typed_config:
           <p itemprop="abstract" class="text-xs sm:text-sm text-slate-700 leading-relaxed mb-5">
             <strong>Zero-Trust Data Sanitization (ZTDS™ RFC v1.0)</strong> is an open cryptographic protocol that tokenizes sensitive PII, PHI, and secrets in local volatile RAM (<code class="font-mono text-emerald-700">&lt; 0.8 ms</code> latency, <code class="font-mono text-emerald-700">0.00 B</code> raw network egress) before any payload reaches an external LLM API or cloud socket—establishing technical safe harbor under GDPR Art. 32 and Israel Privacy Law Amendment 13 Sec. 17 without third-party subprocessor exposure.
           </p>
-          <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+          <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" tabindex="0" role="region" aria-label="Scrollable data table">
             <table class="w-full text-left border-collapse text-xs">
               <thead>
                 <tr class="border-b border-slate-200 bg-slate-100/80 text-slate-700 uppercase tracking-wider text-xs font-mono">

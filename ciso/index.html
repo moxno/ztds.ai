@@ -553,7 +553,7 @@
             <a href="/roi/" class="text-emerald-700 hover:text-emerald-800 text-xs font-semibold underline">Model Custom Exposure in CISO Calculator &rarr;</a>
           </div>
           
-          <div class="overflow-x-auto md:border md:border-slate-200 md:rounded-xl">
+          <div class="overflow-x-auto md:border md:border-slate-200 md:rounded-xl" tabindex="0" role="region" aria-label="Scrollable data table">
             <table class="w-full text-left text-xs bg-white divide-y divide-slate-200 table-responsive-cards">
               <thead class="bg-slate-50 text-slate-700 font-semibold uppercase font-mono text-xs">
                 <tr>
@@ -675,7 +675,7 @@
         <!-- Section 5: Risk Comparison Table -->
         <div>
           <h2 id="architectural-liability-comparison" class="text-lg font-bold text-slate-900 mb-3 scroll-mt-24">5. Architectural Liability Comparison</h2>
-          <div class="overflow-x-auto md:border md:border-slate-200 md:rounded-xl">
+          <div class="overflow-x-auto md:border md:border-slate-200 md:rounded-xl" tabindex="0" role="region" aria-label="Scrollable data table">
             <table class="w-full text-left text-xs bg-white divide-y divide-slate-200 table-responsive-cards">
               <thead class="bg-slate-50 text-slate-700 font-semibold uppercase font-mono text-xs">
                 <tr>
@@ -776,6 +776,15 @@
               </div>
               <p class="text-slate-600"><strong class="text-slate-800">Q: How can our security team verify zero egress independently?</strong><br>
               A: Run the 5-Step Airplane Mode protocol in DevTools or execute <code>npx ztds-audit --dir ./src</code> to generate a verifiable cryptographic audit hash.</p>
+            </div>
+
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-lg sm:col-span-2">
+              <div class="flex items-center justify-between mb-1">
+                <strong class="text-slate-900 font-mono text-xs uppercase">Control DPA-07 (Processor Exclusion)</strong>
+                <span class="text-xs text-slate-400 font-mono">GDPR Art. 28 &amp; 32</span>
+              </div>
+              <p class="text-slate-600"><strong class="text-slate-800">Q: Why is a Data Processing Agreement (DPA) under GDPR Article 28 not required for ZTDS?</strong><br>
+              A: Because ZTDS sanitization executes 100% locally in volatile client memory with 0.00 bytes of cleartext egress to vendor servers, no third-party data processor relationship is created under GDPR Article 28, establishing a Technical Safe Harbor under Article 32.</p>
             </div>
           </div>
         </div>
@@ -1189,7 +1198,7 @@
       </div>
 
       <!-- Responsive Comparison Table -->
-      <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+      <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm" tabindex="0" role="region" aria-label="Scrollable data table">
         <table class="w-full text-left text-xs border-collapse md:min-w-[760px]">
           <thead>
             <tr class="bg-slate-900 text-white font-mono text-xs uppercase tracking-wider">

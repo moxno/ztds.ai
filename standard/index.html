@@ -846,7 +846,7 @@
             <h2 id="statutory-safe-harbors-grc-cross-mapping" class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2 flex items-center gap-2 font-sans scroll-mt-24">
               <span class="text-emerald-600 font-mono">07.</span> Statutory Safe Harbors &amp; GRC Cross-Mapping
             </h2>
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Scrollable data table">
               <table class="w-full text-left border-collapse text-xs">
                 <thead>
                   <tr class="border-b border-slate-200 text-slate-500 bg-slate-50">
@@ -1006,7 +1006,7 @@
               <p class="text-xs text-slate-600 mb-4">
                 Empirical evaluation across OpenAI GPT-4o, Anthropic Claude 3.5 Sonnet, Google Gemini 2.0 Pro, and DeepSeek-V3 measuring cleartext leakage prevention, bijective fidelity, and microsecond latency:
               </p>
-              <div class="overflow-x-auto">
+              <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Scrollable data table">
                 <table class="w-full text-xs text-left border-collapse">
                   <thead>
                     <tr class="border-b border-slate-200 bg-slate-50 text-slate-700 font-mono">
@@ -1083,7 +1083,68 @@
 
         </div>
       </div>
-    </main>
+    
+    <!-- DIRECT ANSWER FAQ SECTION (GEO & RAG CITATION OPTIMIZED) -->
+    <section id="faq" class="py-12 border-t border-slate-200 mt-12">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-8">
+          <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Direct Answer Knowledge Base</span>
+          <h2 id="frequently-asked-questions" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight scroll-mt-24">Frequently Asked Questions</h2>
+        </div>
+        <div class="space-y-3.5">
+          <details id="faq-what-is-the-zero-trust-data-sanitization-ztd" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24" open>
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>What is the Zero-Trust Data Sanitization (ZTDS) RFC v1.0 standard?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              ZTDS RFC v1.0 is an open technical standard defining architectural execution boundaries, cryptographic isolation invariants, and in-memory de-identification rules for zero-trust data protection in enterprise LLM and agentic workflows.
+            </div>
+          </details>
+
+          <details id="faq-what-are-the-4-non-negotiable-invariants-of" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>What are the 4 non-negotiable invariants of the ZTDS specification?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Invariant 1: Zero External Egress Prior to Sanitization (unmasked sensitive data never crosses the local execution perimeter). Invariant 2: Deterministic Reversible Tokenization (syntactic and grammatical context is preserved for LLMs while mapping dictionaries remain strictly in client volatile RAM). Invariant 3: Verifiable Cryptographic Isolation (WebAssembly sandboxing or Nitro Enclaves with zero telemetry). Invariant 4: Continuous Compliance &amp; Zero Subprocessor Chain (eliminating SaaS subprocessor liability under GDPR Article 28).
+            </div>
+          </details>
+
+          <details id="faq-how-does-ztds-prevent-llm-model-training-mem" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>How does ZTDS prevent LLM model training memorization and vendor cache exposure?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Sensitive entities are tokenized locally in client volatile memory before network transmission. Cloud LLM providers receive and log only synthetic surrogate tokens (such as [PATIENT_1] or [IBAN_2]), ensuring cleartext PII is never stored in external logs, caches, or training sets.
+            </div>
+          </details>
+
+          <details id="faq-how-does-ztds-handle-token-mutation-by-large" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>How does ZTDS handle token mutation by Large Language Models?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Compliant implementations apply anti-mutation fuzzy recovery regexes to accommodate minor formatting variances (such as bracket translation or sub-word BPE boundary splits) while deterministically recovering cleartext entities upon client receipt.
+            </div>
+          </details>
+
+          <details id="faq-how-can-developers-and-compliance-teams-veri" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>How can developers and compliance teams verify ZTDS conformance?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Verification is performed locally without network egress using the Airplane Mode protocol and the open-source CLI auditor (npx ztds-audit), which inspects AST syntax trees, network sockets, and volatile memory boundaries to produce a verifiable cryptographic audit hash.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
   </div>
 
   <!-- 5-Column Institutional Light Footer -->

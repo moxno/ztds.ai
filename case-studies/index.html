@@ -77,7 +77,27 @@
         "url": "https://ztds.ai/assets/img/og/og-registry.png",
         "width": 1200,
         "height": 630
+      },
+      "mainEntity": {
+        "@id": "https://ztds.ai/case-studies/#itemlist"
       }
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://ztds.ai/case-studies/#itemlist",
+      "name": "ZTDS Enterprise Deployment Case Studies & Reference Blueprints",
+      "numberOfItems": 9,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "BrandMeWeb — 100% Client Strategic Assets Shielded Across Automated GEO Workflows", "url": "https://ztds.ai/companies/brandmeweb/" },
+        { "@type": "ListItem", "position": 2, "name": "PrivacyScrubber — 1,000,000+ Sensitive Entities Sanitized Locally with Zero Server Overhead", "url": "https://ztds.ai/companies/privacyscrubber/" },
+        { "@type": "ListItem", "position": 3, "name": "Apex Health Systems — Cloud BAA Scope Elimination with Zero PHI Exposure", "url": "https://ztds.ai/companies/apex-health-ai/" },
+        { "@type": "ListItem", "position": 4, "name": "Lex Veritas Global LLP — 4,500+ M&A Contracts Analyzed with Inviolable Attorney-Client Privilege", "url": "https://ztds.ai/companies/lex-veritas-legal/" },
+        { "@type": "ListItem", "position": 5, "name": "Aegis Financial Technologies — PCI-DSS v4.0 Scope Elimination Across Real-Time Fraud Telemetry", "url": "https://ztds.ai/companies/aegis-fintech/" },
+        { "@type": "ListItem", "position": 6, "name": "CloudScale Software Inc. — Enterprise CISO Win Rate Jumped from 12% to 94% on Copilot Launch", "url": "https://ztds.ai/companies/cloudscale-saas/" },
+        { "@type": "ListItem", "position": 7, "name": "Valkyrie Aerospace & Defense — SCIF AI Operations Deployed with Cryptographic Zero-Egress Attestation", "url": "https://ztds.ai/companies/valkyrie-defense/" },
+        { "@type": "ListItem", "position": 8, "name": "CyberShield SOC Operations — 50,000+ Incident Alerts Triaged Without Exposing API Keys or Internal Subnets", "url": "https://ztds.ai/companies/cybershield-siem/" },
+        { "@type": "ListItem", "position": 9, "name": "TalentHub Global PeopleOps — GDPR Article 9 Special Category PII Cleared for AI Interview Analytics", "url": "https://ztds.ai/companies/talenthub-hr/" }
+      ]
     },
     {
       "@type": "BreadcrumbList",
@@ -288,15 +308,306 @@
           Corporate Adopters (9)
         </a>
         <a href="/case-studies/" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow-xs">
-          Field Case Studies (Under Review)
+          Field Case Studies (9)
         </a>
       </nav>
+
+      <!-- Search Bar -->
+      <div class="mt-8 max-w-xl mx-auto flex items-center gap-2 p-1.5 bg-white border border-slate-300 rounded-xl shadow-sm focus-within:ring-2 focus-within:ring-emerald-500 focus-within:border-emerald-500">
+        <svg class="w-5 h-5 text-slate-400 ml-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <label for="caseStudySearch" class="sr-only">Search enterprise case studies</label>
+        <input type="text" id="caseStudySearch" aria-label="Search enterprise case studies" placeholder="Search by sector, statutory mandate (HIPAA, FRE 502, PCI-DSS), or SDK..." class="w-full bg-transparent border-none text-base sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none px-2 py-1.5">
+      </div>
+    </div>
+
+    <!-- Sector Filter Tabs -->
+    <div class="flex flex-wrap items-center justify-center gap-2 mb-6" id="csFilterTabs" role="tablist" aria-label="Case Study Industry Sectors">
+      <button type="button" class="cs-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all" data-filter="all" role="tab" aria-selected="true">All Case Studies (9)</button>
+      <button type="button" class="cs-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="agency" role="tab" aria-selected="false">Agency &amp; GEO (1)</button>
+      <button type="button" class="cs-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="privacy" role="tab" aria-selected="false">Zero-Server Reference (1)</button>
+      <button type="button" class="cs-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="healthcare" role="tab" aria-selected="false">Clinical Healthcare (1)</button>
+      <button type="button" class="cs-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="legal" role="tab" aria-selected="false">Corporate Law (1)</button>
+      <button type="button" class="cs-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="fintech" role="tab" aria-selected="false">Banking &amp; FinTech (1)</button>
+      <button type="button" class="cs-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="saas" role="tab" aria-selected="false">Enterprise SaaS (1)</button>
+      <button type="button" class="cs-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="defense" role="tab" aria-selected="false">Defense &amp; Enclaves (1)</button>
+      <button type="button" class="cs-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="cyber" role="tab" aria-selected="false">Cybersecurity &amp; SOC (1)</button>
+      <button type="button" class="cs-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="hr" role="tab" aria-selected="false">Human Resources (1)</button>
+    </div>
+
+    <div class="flex items-center justify-between text-xs text-slate-500 mb-6 px-1">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span id="csResultsCount" class="font-mono font-medium text-slate-600">Showing all 9 enterprise case studies</span>
+      </div>
+      <button type="button" id="btnClearCsFilters" class="hidden text-xs font-mono text-emerald-700 hover:text-emerald-800 font-semibold cursor-pointer underline decoration-emerald-300">
+        Clear Search &amp; Filters
+      </button>
     </div>
 
     <!-- Case Studies Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-      
-      
+    <div id="caseStudiesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+      <!-- 1. BrandMeWeb -->
+      <article id="cs-brandmeweb" data-industry="agency" class="cs-card bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="px-2.5 py-1 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-mono font-bold">Founding Corporate Member</span>
+            <span class="text-xs font-mono text-slate-500">Technical SEO &amp; GEO</span>
+          </div>
+          <h2 id="cs-brandmeweb-title" class="text-lg font-bold text-slate-900 scroll-mt-24">BrandMeWeb: 100% Client Strategic Assets Shielded Across Automated GEO Workflows</h2>
+          <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">
+            <strong>Challenge:</strong> Agency AI pipelines process proprietary keyword intelligence, conversion logs, and client brand assets daily. Sending raw corpora to cloud foundation models risked competitor data contamination and client breach liability.
+          </p>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+            <strong>Architecture:</strong> <code class="font-mono bg-slate-100 px-1 rounded">@privacyscrubber/sdk</code> with Node.js and LangChain <code class="font-mono bg-slate-100 px-1 rounded">BaseCallbackHandler</code> middleware running in local volatile memory.
+          </p>
+          <div class="mt-4 grid grid-cols-3 gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-center font-mono text-xs">
+            <div><div class="font-bold text-slate-900">0.00 B</div><div class="text-slate-500">WAN Egress</div></div>
+            <div><div class="font-bold text-emerald-700">0 Days</div><div class="text-slate-500">DPA Delay</div></div>
+            <div><div class="font-bold text-slate-900">&lt; 0.5ms</div><div class="text-slate-500">RAM Latency</div></div>
+          </div>
+          <div class="mt-3 text-xs font-mono text-slate-500">
+            <strong>Statutory Basis:</strong> GDPR Recital 26 (Anonymous Data) &amp; Trade Secret Defend Trade Secrets Act (DTSA)
+          </div>
+        </div>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <a href="/companies/brandmeweb/" class="text-emerald-700 font-bold hover:underline">Full Case Study &amp; Profile &rarr;</a>
+          <a href="https://brandmeweb.com" target="_blank" rel="noopener" class="text-slate-500 hover:text-slate-800">brandmeweb.com &nearr;</a>
+        </div>
+      </article>
+
+      <!-- 2. PrivacyScrubber -->
+      <article id="cs-privacyscrubber" data-industry="privacy" class="cs-card bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="px-2.5 py-1 rounded bg-sky-50 text-sky-800 border border-sky-200 text-xs font-mono font-bold">Canonical Reference Implementation</span>
+            <span class="text-xs font-mono text-slate-500">Zero-Server Privacy</span>
+          </div>
+          <h2 id="cs-privacyscrubber-title" class="text-lg font-bold text-slate-900 scroll-mt-24">PrivacyScrubber: 1,000,000+ Sensitive Entities Sanitized Locally with Zero Server Overhead</h2>
+          <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">
+            <strong>Challenge:</strong> Enterprises and knowledge workers need client-side PII protection when pasting data into ChatGPT, Claude, and Gemini, but traditional proxy tools act as centralized honeypots requiring complex DPAs and security audits.
+          </p>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+            <strong>Architecture:</strong> Native WebAssembly (WASM) core running within Chrome MV3 service worker and headless <code class="font-mono bg-slate-100 px-1 rounded">@privacyscrubber/sdk</code> package.
+          </p>
+          <div class="mt-4 grid grid-cols-3 gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-center font-mono text-xs">
+            <div><div class="font-bold text-slate-900">0.00 B</div><div class="text-slate-500">WAN Egress</div></div>
+            <div><div class="font-bold text-emerald-700">0 Days</div><div class="text-slate-500">DPA Delay</div></div>
+            <div><div class="font-bold text-slate-900">&lt; 0.4ms</div><div class="text-slate-500">RAM Latency</div></div>
+          </div>
+          <div class="mt-3 text-xs font-mono text-slate-500">
+            <strong>Statutory Basis:</strong> GDPR Article 28 Subprocessor Exclusion &amp; ISO/IEC 27001 CC6.7
+          </div>
+        </div>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <a href="/companies/privacyscrubber/" class="text-emerald-700 font-bold hover:underline">Full Case Study &amp; Profile &rarr;</a>
+          <a href="https://privacyscrubber.com?utm_source=ztds.ai&amp;utm_medium=case_studies" target="_blank" rel="noopener" class="text-slate-500 hover:text-slate-800">privacyscrubber.com &nearr;</a>
+        </div>
+      </article>
+
+      <!-- 3. Apex Health Systems -->
+      <article id="cs-apex-health-ai" data-industry="healthcare" class="cs-card bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="px-2.5 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-bold">Sandbox Blueprint</span>
+            <span class="text-xs font-mono text-slate-500">Clinical Healthcare &amp; EHR</span>
+          </div>
+          <h2 id="cs-apex-health-ai-title" class="text-lg font-bold text-slate-900 scroll-mt-24">Apex Health Systems: 100% Cloud BAA Proxy Scope Elimination with Zero PHI Exposure</h2>
+          <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">
+            <strong>Challenge:</strong> Clinicians across 12 hospitals used commercial LLMs for discharge summaries, risking statutory HIPAA breach penalties and requiring complex Business Associate Agreements (BAAs) with AI vendors.
+          </p>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+            <strong>Architecture:</strong> <code class="font-mono bg-slate-100 px-1 rounded">@privacyscrubber/sdk</code> browser extension deployed across 3,500 clinical Epic/Cerner workstations, de-identifying 18 PHI identifiers in local RAM before prompt dispatch.
+          </p>
+          <div class="mt-4 grid grid-cols-3 gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-center font-mono text-xs">
+            <div><div class="font-bold text-slate-900">0.00 B</div><div class="text-slate-500">WAN Egress</div></div>
+            <div><div class="font-bold text-emerald-700">0 Days</div><div class="text-slate-500">BAA Delay</div></div>
+            <div><div class="font-bold text-slate-900">&lt; 0.6ms</div><div class="text-slate-500">RAM Latency</div></div>
+          </div>
+          <div class="mt-3 text-xs font-mono text-slate-500">
+            <strong>Statutory Basis:</strong> HIPAA Privacy Rule 45 CFR &sect; 164.514(b) (Safe Harbor De-Identification)
+          </div>
+        </div>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <a href="/companies/apex-health-ai/" class="text-emerald-700 font-bold hover:underline">Full Blueprint &amp; Profile &rarr;</a>
+          <span class="text-slate-400">18 HIPAA Identifiers</span>
+        </div>
+      </article>
+
+      <!-- 4. Lex Veritas Global LLP -->
+      <article id="cs-lex-veritas-legal" data-industry="legal" class="cs-card bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="px-2.5 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-bold">Sandbox Blueprint</span>
+            <span class="text-xs font-mono text-slate-500">Corporate Law &amp; M&amp;A</span>
+          </div>
+          <h2 id="cs-lex-veritas-legal-title" class="text-lg font-bold text-slate-900 scroll-mt-24">Lex Veritas Global LLP: 4,500+ M&amp;A Contracts Analyzed with Inviolable Attorney-Client Privilege</h2>
+          <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">
+            <strong>Challenge:</strong> Commercial AI contract review tools threaten statutory attorney-client privilege under Federal Rule of Evidence (FRE) 502 and UK privilege doctrine if confidential work-product leaves legal custody unmasked.
+          </p>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+            <strong>Architecture:</strong> In-memory Python FastAPI middleware wrapping legal LLM analysis engines with local volatile reversible surrogate substitution.
+          </p>
+          <div class="mt-4 grid grid-cols-3 gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-center font-mono text-xs">
+            <div><div class="font-bold text-slate-900">0.00 B</div><div class="text-slate-500">WAN Egress</div></div>
+            <div><div class="font-bold text-emerald-700">0 Days</div><div class="text-slate-500">DPA Delay</div></div>
+            <div><div class="font-bold text-slate-900">&lt; 0.7ms</div><div class="text-slate-500">RAM Latency</div></div>
+          </div>
+          <div class="mt-3 text-xs font-mono text-slate-500">
+            <strong>Statutory Basis:</strong> US Federal Rule of Evidence (FRE) 502 &amp; UK Legal Professional Privilege (LPP)
+          </div>
+        </div>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <a href="/companies/lex-veritas-legal/" class="text-emerald-700 font-bold hover:underline">Full Blueprint &amp; Profile &rarr;</a>
+          <span class="text-slate-400">FRE 502 Shield</span>
+        </div>
+      </article>
+
+      <!-- 5. Aegis Financial Technologies -->
+      <article id="cs-aegis-fintech" data-industry="fintech" class="cs-card bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="px-2.5 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-bold">Sandbox Blueprint</span>
+            <span class="text-xs font-mono text-slate-500">Banking &amp; FinTech</span>
+          </div>
+          <h2 id="cs-aegis-fintech-title" class="text-lg font-bold text-slate-900 scroll-mt-24">Aegis Financial Technologies: PCI-DSS v4.0 Scope Elimination Across Real-Time Fraud Telemetry</h2>
+          <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">
+            <strong>Challenge:</strong> Banking fraud investigation copilot processed millions of payment transactions containing primary account numbers (PAN) and SWIFT BIC codes, creating massive PCI-DSS audit scope and cross-border Swiss FADP transfer liabilities.
+          </p>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+            <strong>Architecture:</strong> Proxy-wasm Envoy sidecar filter intercepting core banking payload streams, replacing payment entities with reversible surrogates before API dispatch.
+          </p>
+          <div class="mt-4 grid grid-cols-3 gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-center font-mono text-xs">
+            <div><div class="font-bold text-slate-900">0.00 B</div><div class="text-slate-500">WAN Egress</div></div>
+            <div><div class="font-bold text-emerald-700">0 Days</div><div class="text-slate-500">DPA Delay</div></div>
+            <div><div class="font-bold text-slate-900">&lt; 0.8ms</div><div class="text-slate-500">RAM Latency</div></div>
+          </div>
+          <div class="mt-3 text-xs font-mono text-slate-500">
+            <strong>Statutory Basis:</strong> PCI-DSS v4.0 Requirement 3.4 &amp; GDPR Article 28 Subprocessor Exclusion
+          </div>
+        </div>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <a href="/companies/aegis-fintech/" class="text-emerald-700 font-bold hover:underline">Full Blueprint &amp; Profile &rarr;</a>
+          <span class="text-slate-400">PCI-DSS Zero-Scope</span>
+        </div>
+      </article>
+
+      <!-- 6. CloudScale Software Inc. -->
+      <article id="cs-cloudscale-saas" data-industry="saas" class="cs-card bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="px-2.5 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-bold">Sandbox Blueprint</span>
+            <span class="text-xs font-mono text-slate-500">B2B Enterprise SaaS</span>
+          </div>
+          <h2 id="cs-cloudscale-saas-title" class="text-lg font-bold text-slate-900 scroll-mt-24">CloudScale Software Inc.: Enterprise CISO Win Rate Jumped from 12% to 94% on Copilot Launch</h2>
+          <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">
+            <strong>Challenge:</strong> Enterprise customers blocked CloudScale's new AI workflow copilot during security review due to fears of cross-tenant proprietary data contamination and lack of continuous tenant isolation evidence.
+          </p>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+            <strong>Architecture:</strong> <code class="font-mono bg-slate-100 px-1 rounded">@privacyscrubber/sdk</code> integrated directly into Next.js Edge frontend API routes, masking customer names, financial IDs, and emails before LLM transmission.
+          </p>
+          <div class="mt-4 grid grid-cols-3 gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-center font-mono text-xs">
+            <div><div class="font-bold text-slate-900">0.00 B</div><div class="text-slate-500">WAN Egress</div></div>
+            <div><div class="font-bold text-emerald-700">0 Days</div><div class="text-slate-500">DPA Delay</div></div>
+            <div><div class="font-bold text-slate-900">&lt; 0.5ms</div><div class="text-slate-500">RAM Latency</div></div>
+          </div>
+          <div class="mt-3 text-xs font-mono text-slate-500">
+            <strong>Statutory Basis:</strong> SOC 2 Type II CC6.7 (Logical Boundary Separation) &amp; ISO 27001 Annex A.12
+          </div>
+        </div>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <a href="/companies/cloudscale-saas/" class="text-emerald-700 font-bold hover:underline">Full Blueprint &amp; Profile &rarr;</a>
+          <span class="text-slate-400">94% CISO Approval</span>
+        </div>
+      </article>
+
+      <!-- 7. Valkyrie Aerospace & Defense -->
+      <article id="cs-valkyrie-defense" data-industry="defense" class="cs-card bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="px-2.5 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-bold">Sandbox Blueprint</span>
+            <span class="text-xs font-mono text-slate-500">Defense &amp; Enclaves</span>
+          </div>
+          <h2 id="cs-valkyrie-defense-title" class="text-lg font-bold text-slate-900 scroll-mt-24">Valkyrie Aerospace &amp; Defense: SCIF AI Operations Deployed with Cryptographic Zero-Egress Attestation</h2>
+          <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">
+            <strong>Challenge:</strong> Defense technical specifications, munitions identifiers, and aerospace telemetry are subject to strict ITAR and European export controls, making commercial cloud AI strictly illegal without verified air-gap perimeters.
+          </p>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+            <strong>Architecture:</strong> Hardware-attested AWS Nitro Enclave C++ runtime executing ZTDS deterministic tokenization with cryptographic PCR hash verification and no network sockets.
+          </p>
+          <div class="mt-4 grid grid-cols-3 gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-center font-mono text-xs">
+            <div><div class="font-bold text-slate-900">0.00 B</div><div class="text-slate-500">WAN Egress</div></div>
+            <div><div class="font-bold text-emerald-700">0 Days</div><div class="text-slate-500">DPA Delay</div></div>
+            <div><div class="font-bold text-slate-900">&lt; 0.9ms</div><div class="text-slate-500">RAM Latency</div></div>
+          </div>
+          <div class="mt-3 text-xs font-mono text-slate-500">
+            <strong>Statutory Basis:</strong> US ITAR 22 CFR &sect; 120-130 &amp; CMMC Level 3 Confidential Compute
+          </div>
+        </div>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <a href="/companies/valkyrie-defense/" class="text-emerald-700 font-bold hover:underline">Full Blueprint &amp; Profile &rarr;</a>
+          <span class="text-slate-400">ITAR / CMMC Level 3</span>
+        </div>
+      </article>
+
+      <!-- 8. CyberShield SOC Operations -->
+      <article id="cs-cybershield-siem" data-industry="cyber" class="cs-card bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="px-2.5 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-bold">Sandbox Blueprint</span>
+            <span class="text-xs font-mono text-slate-500">Cybersecurity &amp; SIEM</span>
+          </div>
+          <h2 id="cs-cybershield-siem-title" class="text-lg font-bold text-slate-900 scroll-mt-24">CyberShield SOC Operations: 50,000+ Incident Alerts Triaged Without Exposing API Keys or Internal Subnets</h2>
+          <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">
+            <strong>Challenge:</strong> Tier-1 SOC analysts investigating breaches were pasting raw firewall logs, AWS IAM secrets, and internal network IP topologies into generative AI models, creating massive second-order attack vectors.
+          </p>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+            <strong>Architecture:</strong> Local CLI daemon (<code class="font-mono bg-slate-100 px-1 rounded">npx ztds-audit</code> interceptor) and terminal wrapper filtering stdout/stdin before forwarding incident payloads to external AI analysis.
+          </p>
+          <div class="mt-4 grid grid-cols-3 gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-center font-mono text-xs">
+            <div><div class="font-bold text-slate-900">0.00 B</div><div class="text-slate-500">WAN Egress</div></div>
+            <div><div class="font-bold text-emerald-700">0 Days</div><div class="text-slate-500">DPA Delay</div></div>
+            <div><div class="font-bold text-slate-900">&lt; 0.4ms</div><div class="text-slate-500">RAM Latency</div></div>
+          </div>
+          <div class="mt-3 text-xs font-mono text-slate-500">
+            <strong>Statutory Basis:</strong> NIST SP 800-53 Rev. 5 (System &amp; Information Integrity) &amp; MITRE ATT&amp;CK T1552
+          </div>
+        </div>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <a href="/companies/cybershield-siem/" class="text-emerald-700 font-bold hover:underline">Full Blueprint &amp; Profile &rarr;</a>
+          <span class="text-slate-400">50k+ Alerts Sanitized</span>
+        </div>
+      </article>
+
+      <!-- 9. TalentHub Global PeopleOps -->
+      <article id="cs-talenthub-hr" data-industry="hr" class="cs-card bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="px-2.5 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-bold">Sandbox Blueprint</span>
+            <span class="text-xs font-mono text-slate-500">Human Resources</span>
+          </div>
+          <h2 id="cs-talenthub-hr-title" class="text-lg font-bold text-slate-900 scroll-mt-24">TalentHub Global PeopleOps: GDPR Article 9 Special Category PII Cleared for AI Interview Analytics</h2>
+          <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">
+            <strong>Challenge:</strong> Candidate resumes and interview transcripts contained sensitive health data, diversity disclosures, and national IDs. Processing these on third-party cloud AI violated GDPR Article 9 special category restrictions.
+          </p>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+            <strong>Architecture:</strong> Client-side React and Vue form hooks sanitizing applicant CVs and scorecards in the recruiter's browser before transmission to scoring models.
+          </p>
+          <div class="mt-4 grid grid-cols-3 gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-center font-mono text-xs">
+            <div><div class="font-bold text-slate-900">0.00 B</div><div class="text-slate-500">WAN Egress</div></div>
+            <div><div class="font-bold text-emerald-700">0 Days</div><div class="text-slate-500">DPA Delay</div></div>
+            <div><div class="font-bold text-slate-900">&lt; 0.5ms</div><div class="text-slate-500">RAM Latency</div></div>
+          </div>
+          <div class="mt-3 text-xs font-mono text-slate-500">
+            <strong>Statutory Basis:</strong> GDPR Article 9 (Special Categories of Data) &amp; Canadian PIPEDA Schedule 1
+          </div>
+        </div>
+        <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+          <a href="/companies/talenthub-hr/" class="text-emerald-700 font-bold hover:underline">Full Blueprint &amp; Profile &rarr;</a>
+          <span class="text-slate-400">GDPR Art. 9 Shield</span>
+        </div>
+      </article>
 
       <!-- Submission Placeholder Card -->
       <div class="bg-white border-2 border-dashed border-slate-300 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
@@ -328,6 +639,37 @@
       </div>
 
     </div>
+  
+    <!-- DIRECT ANSWER FAQ SECTION (GEO & RAG CITATION OPTIMIZED) -->
+    <section id="faq" class="py-12 border-t border-slate-200 mt-12">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-8">
+          <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Direct Answer Knowledge Base</span>
+          <h2 id="frequently-asked-questions" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight scroll-mt-24">Frequently Asked Questions</h2>
+        </div>
+        <div class="space-y-3.5">
+          <details id="faq-how-do-regulated-healthcare-and-legal-enterp" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24" open>
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>How do regulated healthcare and legal enterprises deploy ZTDS in production?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Regulated enterprises deploy ZTDS at the originating client or microservice boundary (via browser extension, MCP stdio server, or headless Node.js/WASM SDK) to tokenize HIPAA PHI, legal work product under FRE 502, and PCI-DSS financial records in volatile RAM before prompts reach frontier LLMs or vector databases.
+            </div>
+          </details>
+
+          <details id="faq-are-the-architectural-reference-blueprints-o" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>Are the architectural reference blueprints on ZTDS.ai vendor-neutral?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Yes. All architectural case studies and reference blueprints on ZTDS.ai validate conformance with the four open ZTDS RFC v1.0 invariants and can be implemented using the Apache-2.0 reference engines or certified commercial implementations such as PrivacyScrubber.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- 5-Column Institutional Light Footer -->
@@ -446,5 +788,85 @@
   </footer>
 
   <script src="/nav.js" defer></script>
+  <script>
+    (function() {
+      const searchInput = document.getElementById('caseStudySearch');
+      const filterBtns = document.querySelectorAll('.cs-filter-btn');
+      const cards = document.querySelectorAll('.cs-card');
+      const resultsCount = document.getElementById('csResultsCount');
+      const btnClear = document.getElementById('btnClearCsFilters');
+      let activeIndustry = 'all';
+
+      function updateView(syncHistory) {
+        const q = (searchInput ? searchInput.value : '').trim().toLowerCase();
+        let visible = 0;
+
+        cards.forEach((card) => {
+          const ind = card.getAttribute('data-industry') || '';
+          const matchInd = activeIndustry === 'all' || ind === activeIndustry;
+          const matchQuery = !q || (card.textContent || '').toLowerCase().includes(q);
+          if (matchInd && matchQuery) {
+            card.classList.remove('hidden');
+            visible++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        filterBtns.forEach((b) => {
+          const isCurrent = (b.getAttribute('data-filter') || 'all') === activeIndustry;
+          b.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
+          b.className = isCurrent
+            ? 'cs-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all'
+            : 'cs-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all';
+        });
+
+        if (resultsCount) {
+          resultsCount.textContent = visible === cards.length && !q && activeIndustry === 'all'
+            ? `Showing all ${cards.length} enterprise case studies`
+            : `Showing ${visible} of ${cards.length} enterprise case studies`;
+        }
+        if (btnClear) {
+          btnClear.classList.toggle('hidden', !q && activeIndustry === 'all');
+        }
+
+        if (syncHistory && window.history && window.history.replaceState) {
+          const params = new URLSearchParams(window.location.search);
+          if (activeIndustry !== 'all') params.set('industry', activeIndustry);
+          else { params.delete('industry'); params.delete('filter'); }
+          if (q) params.set('q', q);
+          else params.delete('q');
+          const qs = params.toString();
+          window.history.replaceState(null, '', window.location.pathname + (qs ? '?' + qs : '') + window.location.hash);
+        }
+      }
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          activeIndustry = btn.getAttribute('data-filter') || 'all';
+          updateView(true);
+        });
+      });
+
+      if (searchInput) {
+        searchInput.addEventListener('input', () => updateView(true));
+      }
+
+      if (btnClear) {
+        btnClear.addEventListener('click', () => {
+          activeIndustry = 'all';
+          if (searchInput) searchInput.value = '';
+          updateView(true);
+        });
+      }
+
+      const initParams = new URLSearchParams(window.location.search);
+      const initInd = initParams.get('industry') || initParams.get('filter');
+      const initQ = initParams.get('q') || initParams.get('search');
+      if (initInd) activeIndustry = initInd;
+      if (initQ && searchInput) searchInput.value = initQ;
+      if (initInd || initQ) updateView(false);
+    })();
+  </script>
 </body>
 </html>

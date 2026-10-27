@@ -143,7 +143,7 @@
           "name": "What is the ZTDS Developer SDK and how does it prevent PII leakage to LLMs?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The ZTDS Developer SDK is an in-memory runtime engine and set of pre-built connectors that intercepts prompts and documents directly in host volatile RAM before external socket transmission. Sensitive PII, PHI, API keys, and corporate secrets are deterministically replaced with context-preserving surrogate tokens in under 0.8ms with 0.00 bytes socket egress. Model completions are losslessly restored locally in client memory."
+            "text": "The ZTDS Developer SDK is an in-memory runtime engine and set of pre-built connectors that intercepts prompts and documents directly in host volatile RAM before external socket transmission. Sensitive PII, PHI, API keys, and corporate secrets are deterministically replaced with context-preserving surrogate tokens ( [EMAIL_TOKEN_1] , [FIN_TOKEN_1] ) in under 0.8ms with 0.00 bytes socket egress. Model completions are losslessly restored locally in client memory, and the session mapping table is completely wiped on process exit."
           }
         },
         {
@@ -151,39 +151,39 @@
           "name": "How do I configure ZTDS with Model Context Protocol (MCP) in Cursor IDE or Claude Desktop?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Add ztds-mcp (open reference server) or @privacyscrubber/mcp-server (enterprise 30-profile suite) to your .cursor/mcp.json or claude_desktop_config.json using stdio transport with command 'npx' and args ['-y', 'ztds-mcp']. It executes locally over stdin/stdout with zero network telemetry."
+            "text": "Add ztds-mcp (the open-source reference server) or @privacyscrubber/mcp-server (enterprise edition) to your .cursor/mcp.json or claude_desktop_config.json using the stdio transport with command npx and args [\"-y\", \"ztds-mcp\"] . The MCP server executes as a process-isolated child process communicating strictly over local JSON-RPC 2.0 stdio pipes with 0.00 bytes network telemetry."
           }
         },
         {
           "@type": "Question",
-          "name": "Does the ZTDS runtime send any telemetry or licensing phone-home beacons?",
+          "name": "Does the ZTDS runtime send any telemetry, analytics, or licensing phone-home beacons?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. All ZTDS runtime engines enforce Invariant 1 (Zero External Egress Prior to Sanitization). Commercial license validation uses local asymmetric Ed25519 digital signatures (RFC 8032) embedded directly into offline license tokens, executing verification in under 0.12ms in RAM with zero network calls."
+            "text": "No. All ZTDS runtime engines enforce Invariant 1 (Zero External Egress Prior to Sanitization). Commercial license validation uses local asymmetric Ed25519 digital signatures (RFC 8032) embedded directly into offline license tokens ( ZTDS-LIC-v1... ). Digital signatures are verified against an embedded public key in local RAM in under 120 microseconds with zero network calls, making it safe for fully air-gapped VPCs and SCIF environments."
           }
         },
         {
           "@type": "Question",
-          "name": "Why is a Data Processing Agreement (DPA) unnecessary under GDPR Article 28?",
+          "name": "Why is a Data Processing Agreement (DPA) legally unnecessary under GDPR Article 28?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Under GDPR Article 28, a DPA is only required when personal data is transmitted to an external third-party data processor. Because ZTDS operates as a computational utility strictly inside the customer's own execution perimeter, no personal data ever crosses the network boundary to ZTDS or PrivacyScrubber servers, eliminating third-party subprocessor legal liability."
+            "text": "Under GDPR Article 28, a DPA is only required when personal data is processed by an external third-party data processor. Because ZTDS operates as a local computational utility strictly inside the customer's own execution perimeter, no personal data ever crosses the network boundary to ZTDS or PrivacyScrubber servers. This legally excludes ZTDS from the SaaS subprocessor chain, eliminating DPA overhead and third-party vendor breach liability."
           }
         },
         {
           "@type": "Question",
-          "name": "How do offline Ed25519 asymmetric cryptographic license tokens work?",
+          "name": "How does offline Ed25519 asymmetric licensing work in air-gapped environments?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Commercial licenses (Developer Pro, TEAMS, Enterprise) provide an offline token (ZTDS-LIC-v1...). The engine verifies the Ed25519 signature against an embedded public key in local memory in under 120 microseconds. It operates 100% offline in air-gapped Docker containers, Kubernetes pods, and AWS Nitro Enclaves with an automated 60-day AP grace period."
+            "text": "Commercial licenses (Developer Pro, TEAMS, Enterprise) provide an offline token that contains signed claims (tier, max nodes, validity, allowed profiles). When the SDK initializes, it performs an in-memory Ed25519 cryptographic verification without opening any sockets. All annual licenses include an automated 60-day accounts payable grace period past expiration to prevent unexpected production outages during corporate renewal cycles."
           }
         },
         {
           "@type": "Question",
-          "name": "What is the difference between @ztds/core and @privacyscrubber/sdk?",
+          "name": "What is the architectural difference between @ztds/core and @privacyscrubber/sdk?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "@ztds/core is the permissive Apache 2.0 open-source baseline reference implementation providing core invariant compliance and universal regex detectors. @privacyscrubber/sdk is the enterprise production engine featuring SIMD-accelerated WebAssembly, 30 certified industry profiles (HIPAA, PCI-DSS v4, Legal Privilege), offline multi-node licensing, and pre-built framework connectors."
+            "text": "@ztds/core is the community-governed open-source baseline reference implementation under Apache 2.0, providing universal regex detectors and four-invariant validation. @privacyscrubber/sdk is the enterprise production engine featuring SIMD-accelerated WebAssembly, 30 certified regulatory profiles (HIPAA, PCI-DSS v4, Legal Privilege), offline multi-node licensing, and pre-built framework connectors."
           }
         }
       ],
@@ -604,7 +604,7 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
           <span>Statutory Compliance &amp; Safe Harbor Crosswalk (GDPR Art. 32 &amp; Art. 28)</span>
           <span class="text-xs font-mono text-emerald-700 font-semibold">Safe Harbor Certified</span>
         </div>
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Scrollable data table">
           <table class="min-w-full text-xs text-left text-slate-600">
             <thead class="bg-slate-50 text-xs font-mono uppercase text-slate-500 border-b border-slate-200">
               <tr>
@@ -1449,7 +1449,7 @@ static_resources:
         <span class="text-xs font-mono text-slate-500">6 Supported Environments</span>
       </div>
 
-      <div class="overflow-x-auto">
+      <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Scrollable data table">
         <table class="min-w-full text-xs text-left border border-slate-200 rounded-xl overflow-hidden">
           <thead class="bg-slate-100 text-slate-700 uppercase font-mono font-bold text-xs">
             <tr>

@@ -184,15 +184,15 @@
         },
         {
           "@type": "Question",
-          "name": "How does ZTDS preserve code reasoning and syntax in Cursor IDE and Claude Desktop?",
+          "name": "How does ztds-mcp preserve code syntax and reasoning in Cursor IDE and Claude Desktop?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Unlike coarse redaction that damages code syntax or replaces secrets with generic asterisks, ZTDS generates context-preserving synthetic tokens matching the data type (e.g., [API_SECRET_TOKEN_1], [EMAIL_TOKEN_1], [IBAN_TOKEN_2]). The LLM treats tokens as valid variable names or literal identifiers, generating accurate refactoring and tool arguments without seeing the underlying private keys."
+            "text": "Unlike coarse redaction that damages code syntax or replaces secrets with generic asterisks, ZTDS generates context-preserving synthetic tokens matching the data type (e.g., [API_SECRET_TOKEN_1] , [EMAIL_TOKEN_1] ). The LLM treats tokens as valid variable names or literal identifiers, generating accurate refactoring and tool arguments without seeing the underlying private keys."
           }
         },
         {
           "@type": "Question",
-          "name": "What are the 5 standard tools provided by the ztds-mcp reference server?",
+          "name": "What are the 5 core tools provided by the ZTDS MCP reference server?",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "The open server provides: (1) ztds_sanitize (in-memory tokenization of raw text/code), (2) ztds_restore (local unmasking of AI responses), (3) ztds_audit (static security scan of files or directories with SHA-256 receipts), (4) ztds_reset_session (Theorem 2 RAM zeroization purging volatile memory), and (5) ztds_status (environmental diagnostics of client configurations)."
@@ -200,7 +200,7 @@
         },
         {
           "@type": "Question",
-          "name": "Why is a Data Processing Agreement (DPA) not legally required when using ZTDS MCP?",
+          "name": "Why is a Data Processing Agreement (DPA) not required when using ZTDS MCP?",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Under GDPR Article 28 and EDPB guidelines, a DPA is mandatory only when personal data is processed by an external third party. Because ztds-mcp executes 100% inside local device volatile memory and transmits 0.00 bytes of personal data across the network socket, software providers function strictly as local computing utilities under GDPR Recital 26 and HIPAA Safe Harbor 45 CFR § 164.514(b)."
@@ -1061,7 +1061,7 @@
             CISO Procurement Memo &rarr;
           </a>
         </div>
-        <div class="p-6 overflow-x-auto">
+        <div class="p-6 overflow-x-auto" tabindex="0" role="region" aria-label="Scrollable data table">
           <table class="w-full text-left text-xs font-mono border-collapse">
             <thead>
               <tr class="border-b border-slate-200 text-slate-500 uppercase tracking-wider">
