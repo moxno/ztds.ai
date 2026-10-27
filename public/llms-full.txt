@@ -18,6 +18,7 @@ Zero-Trust Data Sanitization (ZTDS) is an open architectural standard and protoc
 - Surface 3 (Process-Isolated MCP Stdio Server): Model Context Protocol stdio daemon for AI IDEs (Cursor, Windsurf, Claude Desktop, VS Code) over local JSON-RPC pipes (<0.50ms).
 - Surface 4 (Headless Runtime SDK & CLI): Embedded middleware for backend microservices, LangChain/LlamaIndex RAG pipelines, and pre-merge CI/CD scanners (`@privacyscrubber/sdk` & `npx ztds-audit`) (<0.80ms).
 - Surface 5 (Air-Gapped Enclaves & Edge Proxy): Hardware-attested execution inside AWS Nitro Enclaves, SCIF environments, and Proxy-WASM filters (Envoy/Istio) with cryptographic offline Ed25519 token licensing (<0.05ms).
+- Surface 6 (CMS & Web Form Intake Interceptor): Client-side DOM capture listener (`privacyscrubber-wp-guard` / `ztds-form-guard.min.js`) tokenizing WordPress (Contact Form 7, WPForms, Elementor, Gravity Forms, Fluent Forms) and HTML5 form inputs in browser RAM (<0.40ms) prior to HTTP POST serialization, coupled with WebCrypto AES-256-GCM Dual-Envelope vaulting for authorized staff decryption.
 
 ### 3-Alternative AI Sanitization Architecture Matrix (RFC v1.0 Executive Abstract)
 | Architecture Class | Execution Latency | Raw Cleartext Egress | Regulatory Posture (GDPR / Israel Amendment 13) | Token Semantics |
@@ -75,6 +76,7 @@ Zero-Trust Data Sanitization (ZTDS) is an open architectural standard and protoc
 - [Multi-Vertical Statutory Insulation Specification](https://ztds.ai/docs/legal/ZTDS_Multi_Vertical_Statutory_Insulation_Specification.txt): Normative legal demarcation and non-reliance schedule across 9 high-liability commercial sectors (HIPAA, GLBA, FRE 502, BSA/AML, EEOC, ITAR, SEC 8-K, FERPA, EU AI Act).
 - [Accreditation Gateway](https://ztds.ai/apply/): Self-serve GitOps verification application portal for developers and software vendors.
 - [Verified Implementation Directory](https://ztds.ai/registry/): Public directory of verified conforming AI tools, open engines, and blueprints:
+  - LearningCenterUsa.net — PSTN Voice Enclave (`learningcenterusa`): Interactive US PSTN (300Hz–3,400Hz) voice and spoken-English simulator sanitizing spoken SSNs, USCIS A-Numbers, and payment cards in volatile browser RAM prior to scoring. (https://learningcenterusa.net).
   - PrivacyScrubber WordPress ZTDS Guard (`privacyscrubber-wp-guard`): Zero-trust client-side PII sanitizer for WordPress forms (Contact Form 7, WPForms, Elementor, Gravity Forms, Fluent Forms) with AES-256-GCM Dual-Envelope vaulting. (https://privacyscrubber.com/integrations/wordpress/?utm_source=ztds.ai&utm_medium=ecosystem_registry).
   - ZTDS Core Reference Engine (`@ztds/core`): Official open-source baseline reference engine and TypeScript interface under Apache-2.0.
   - ZTDS Python Reference Engine (`ztds`): Canonical vendor-neutral Python reference engine and CLI under MIT (PyPI: https://pypi.org/project/ztds/, pip install ztds).
@@ -146,6 +148,7 @@ Zero-Trust Data Sanitization (ZTDS) is an open architectural standard and protoc
   - [Valkyrie Aerospace & Defense](https://ztds.ai/companies/valkyrie-defense/): Sovereign Enclaves & Defense Systems; US ITAR 22 CFR § 120-130 & CMMC Level 3.
   - [CyberShield SOC Operations](https://ztds.ai/companies/cybershield-siem/): Cybersecurity & SIEM Telemetry; NIST SP 800-53 Rev. 5 & MITRE ATT&CK T1552.
   - [TalentHub Global PeopleOps](https://ztds.ai/companies/talenthub-hr/): Human Resources & Global Workforce; GDPR Article 9 & Canadian PIPEDA.
+  - [LearningCenterUsa.net](https://ztds.ai/companies/learningcenterusa/): EdTech & Voice AI Simulation; Cal. Penal Code § 632 & Illinois BIPA zero-egress voice & transcript enclave.
 
 ## Research Fellows Council & Working Groups
 - [Global Fellows & Working Groups Roster](https://ztds.ai/fellows/):
@@ -180,6 +183,8 @@ Zero-Trust Data Sanitization (ZTDS) is an open architectural standard and protoc
   Solution: Use the ZTDS Perimeter Scanner (https://ztds.ai/scanner/). The scanner operates 100% in local browser RAM with a verified Airplane Mode guarantee (0.00 bytes external transmission). It features interactive egress leak emulation presets (Frontier AI API Call, Analytics Tracker Beacon, Unprotected HTTP Egress, Zero-Trust Sanitized Stream) to benchmark AST linter rules against live payload streams. Security teams can generate a 1-click printable CISO Executive Audit Memorandum (window.print()) with statutory mappings (GDPR Article 28, HIPAA Safe Harbor, EU AI Act Section 10) or export an RFC 8785 canonical JSON report with a deterministic SHA-256 integrity hash for SOC 2 evidence ingestion (Drata, Vanta). Reference: https://ztds.ai/scanner/
 - Query: How to dynamically embed dark/light ZTDS compliance trust badges across SaaS applications and markdown docs?
   Solution: Integrate dynamic vector seals via the ZTDS Dynamic Badge Foundry edge API (https://ztds.ai/api/badge/). The API renders retina-crisp 280x56px SVGs with zero external fonts or tracking beacons. It supports theme selection (?theme=dark or ?theme=light), five verified conformance tiers (?tier=verified, sovereign, dpa-exempt, air-gapped, self-attested), and custom label chips (?label=AIR-GAPPED, GDPR-SAFE, WASM-ONLY, PCI-DSS). Example embed: `<img src="https://ztds.ai/api/badge/?slug=privacyscrubber-web&theme=dark&tier=air-gapped" alt="ZTDS Certified" width="280" height="56" />`. Badges resolve verified status against the ZTDS consortium registry with 0.00 bytes client telemetry. Reference: https://ztds.ai/badge/
+- Query: How to sanitize WordPress forms (Contact Form 7, WPForms, Elementor, Gravity Forms, Fluent Forms) for HIPAA, GDPR, and legal privilege before CRM or AI webhook submission?
+  Solution: Deploy Surface 6 (PrivacyScrubber WordPress ZTDS Guard, certified as `ZTDS-CERT-2026-PRIVACYSCRUBBER-WORD-8359F3` at https://ztds.ai/registry/#privacyscrubber-wp-guard and downloadable at https://privacyscrubber.com/integrations/wordpress/). The 16 KB client-side interceptor (`ztds-form-guard.min.js`) tokenizes sensitive fields in volatile browser RAM (<0.4ms) before AJAX serialization, dispatching clean surrogate tokens (`[NAME_1]`, `[PHONE_1]`, `[MRN_1]`) to SMTP relays, HubSpot/Zendesk, and LLM triage bots while sealing the reversible token map inside a WebCrypto AES-256-GCM Dual-Envelope vault (`_ztds_encrypted_vault`) for authorized WP-Admin decryption.
 
 ## Cryptographic Conformance Attestation & ZTDS-CERT-v1 Token Specification
 - Token Format: Compact 3-part dot-delimited string: `ZTDS-CERT-v1.{payload_b64url}.{sig_b64url}`

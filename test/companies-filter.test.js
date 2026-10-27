@@ -69,11 +69,11 @@ console.log('--> Test 2: Corporate Adopter Parity with data/companies.json');
     cards.push({ id: match[1], industry: match[2] });
   }
 
-  assert.strictEqual(companiesData.companies.length, 9, 'data/companies.json must contain exactly 9 companies');
-  assert.strictEqual(cards.length, 10, `companies/index.html must contain exactly 10 cards (9 verified + 1 open seat), found ${cards.length}`);
+  assert.strictEqual(companiesData.companies.length, 10, 'data/companies.json must contain exactly 10 companies');
+  assert.strictEqual(cards.length, 11, `companies/index.html must contain exactly 11 cards (10 verified + 1 open seat), found ${cards.length}`);
 
   const verifiedCards = cards.filter(c => c.id !== 'open-company-card');
-  assert.strictEqual(verifiedCards.length, 9, 'Must have exactly 9 verified company cards');
+  assert.strictEqual(verifiedCards.length, 10, 'Must have exactly 10 verified company cards');
 
   // Verify every company in data/companies.json has a matching card in HTML
   companiesData.companies.forEach(company => {
@@ -81,7 +81,7 @@ console.log('--> Test 2: Corporate Adopter Parity with data/companies.json');
     assert(found, `Company "${company.slug}" from data/companies.json must exist in companies/index.html`);
   });
 
-  console.log('    [PASS] Exact parity confirmed: 9 verified companies matching data/companies.json + 1 open seat.');
+  console.log('    [PASS] Exact parity confirmed: 10 verified companies matching data/companies.json + 1 open seat.');
 }
 
 // Test 3: Industry Sector Distribution
@@ -115,7 +115,7 @@ console.log('--> Test 3: Industry Sector Distribution');
   assert.strictEqual(industryCounts.healthcare, 1, 'Expected 1 Clinical Healthcare member (Apex Health AI)');
   assert.strictEqual(industryCounts.legal, 1, 'Expected 1 Corporate Law member (Lex Veritas Legal)');
   assert.strictEqual(industryCounts.fintech, 1, 'Expected 1 Banking & FinTech member (Aegis FinTech)');
-  assert.strictEqual(industryCounts.saas, 1, 'Expected 1 Enterprise SaaS member (CloudScale SaaS)');
+  assert.strictEqual(industryCounts.saas, 2, 'Expected 2 Enterprise SaaS / EdTech members (CloudScale SaaS & LearningCenterUsa)');
   assert.strictEqual(industryCounts.defense, 1, 'Expected 1 Defense & Sovereign Enclaves member (Valkyrie Defense)');
   assert.strictEqual(industryCounts.cyber, 1, 'Expected 1 Cybersecurity & SIEM member (CyberShield SIEM)');
   assert.strictEqual(industryCounts.hr, 1, 'Expected 1 Human Resources member (TalentHub HR)');
@@ -134,8 +134,8 @@ console.log('--> Test 4: Zero Duplicate IDs or Slugs');
   }
 
   const uniqueIds = new Set(ids);
-  assert.strictEqual(ids.length, 10, `Expected 10 total cards, found ${ids.length}`);
-  assert.strictEqual(uniqueIds.size, 10, 'All 10 card IDs must be completely unique');
+  assert.strictEqual(ids.length, 11, `Expected 11 total cards, found ${ids.length}`);
+  assert.strictEqual(uniqueIds.size, 11, 'All 11 card IDs must be completely unique');
 
   console.log('    [PASS] 10 unique article card IDs verified with zero collisions.');
 }

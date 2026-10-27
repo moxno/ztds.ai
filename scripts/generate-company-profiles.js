@@ -20,7 +20,8 @@ const MONOGRAMS = {
   'cloudscale-saas': 'CSS',
   'valkyrie-defense': 'VAD',
   'cybershield-siem': 'CSO',
-  'talenthub-hr': 'THG'
+  'talenthub-hr': 'THG',
+  'learningcenterusa': 'LCU'
 };
 
 const CERT_IDS = {
@@ -32,7 +33,8 @@ const CERT_IDS = {
   'cloudscale-saas': 'ZTDS-BLUEPRINT-2026-CLOUD-01',
   'valkyrie-defense': 'ZTDS-BLUEPRINT-2026-VALK-01',
   'cybershield-siem': 'ZTDS-BLUEPRINT-2026-CYBER-01',
-  'talenthub-hr': 'ZTDS-BLUEPRINT-2026-TALENT-01'
+  'talenthub-hr': 'ZTDS-BLUEPRINT-2026-TALENT-01',
+  'learningcenterusa': 'ZTDS-CERT-2026-LEARNINGCENTERUSA-38DDD1'
 };
 
 const HASHES = {
@@ -44,7 +46,8 @@ const HASHES = {
   'cloudscale-saas': 'sha256:91823a01b23c901e23f987a01b239c01fa9e83b029384e091b2c3a0198ebf901',
   'valkyrie-defense': 'sha256:5e091b2c3a0198ebf901823a3c90184b901e23f987a01b239c01fa9e83b02938',
   'cybershield-siem': 'sha256:1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b',
-  'talenthub-hr': 'sha256:6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a'
+  'talenthub-hr': 'sha256:6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a',
+  'learningcenterusa': 'sha256:e197164f96b3e40400f14f9ae8fa10a6a058415a479108d4fd49455c347e47a9'
 };
 
 const CODE_SNIPPETS = {
@@ -178,6 +181,20 @@ export function CandidateScreeningForm() {
   return (
     <textarea {...inputProps} placeholder="Paste resume or candidate notes..." />
   );
+}`,
+
+  'learningcenterusa': `import { sanitizeVoiceTranscriptInRam } from '@/lib/ztds-client';
+
+// Cal. Penal Code § 632 & Illinois BIPA Zero-Egress Voice Enclave
+export function handleSpokenTurn(rawSpeechTranscript: string) {
+  // Tokenizes spoken SSNs ([US_SSN_TOKEN_1]) & USCIS A-Numbers ([USCIS_ANUM_TOKEN_1]) in RAM
+  const { sanitizedText, receiptHash } = sanitizeVoiceTranscriptInRam(rawSpeechTranscript);
+
+  // Dispatches only surrogate tokens to scoring API (0.00 B raw voice/PII egressed)
+  return fetch('/api/call/score', {
+    method: 'POST',
+    body: JSON.stringify({ transcript: sanitizedText, receiptHash })
+  });
 }`
 };
 
