@@ -290,7 +290,7 @@
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
           Enterprise Trust &amp; Procurement Acceleration
         </div>
-        <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-white">
+        <h2 id="why-engineering-teams-saas-founders-certify-with-ztds" class="text-xl sm:text-2xl font-bold tracking-tight text-white scroll-mt-24">
           Why Engineering Teams &amp; SaaS Founders Certify with ZTDS
         </h2>
         <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
@@ -1110,11 +1110,16 @@
         return val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'your-app';
       }
 
+      function escapeXml(str) {
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+      }
+
       function generateBadgeSvg(label, colorRight, textColorRight) {
-        const cleanLabel = String(label || 'VERIFIED').trim().toUpperCase();
+        const rawLabel = String(label || 'VERIFIED').trim().toUpperCase();
+        const cleanLabel = escapeXml(rawLabel);
         const wLeft = 58;
         const charWidth = 6.8;
-        const wRight = Math.max(64, Math.round(cleanLabel.length * charWidth + 16));
+        const wRight = Math.max(64, Math.round(rawLabel.length * charWidth + 16));
         const totalWidth = wLeft + wRight;
         const textXRight = wLeft + Math.round(wRight / 2);
 
@@ -1901,11 +1906,12 @@
 
         const banner = document.createElement('div');
         banner.className = 'mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-mono flex items-center justify-between shadow-xs';
-        const profileBadge = paramProfile ? ` &middot; <span class="uppercase text-emerald-700 font-bold">${paramProfile} Profile</span>` : '';
+        const safeDomain = escapeXml(cleanDomain);
+        const profileBadge = paramProfile ? ` &middot; <span class="uppercase text-emerald-700 font-bold">${escapeXml(paramProfile)} Profile</span>` : '';
         banner.innerHTML = `
           <div class="flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span>Pre-filled from Live Perimeter Audit: <strong>${cleanDomain}</strong>${profileBadge}</span>
+            <span>Pre-filled from Live Perimeter Audit: <strong>${safeDomain}</strong>${profileBadge}</span>
           </div>
           <span class="text-slate-500 text-xs font-sans">Ready for GitOps Attestation</span>
         `;

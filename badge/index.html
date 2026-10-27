@@ -268,7 +268,7 @@
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
           Trust Capital &amp; Procurement Velocity
         </div>
-        <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-white">
+        <h2 id="why-enterprise-buyers-look-for-the-ztds-badge" class="text-xl sm:text-2xl font-bold tracking-tight text-white scroll-mt-24">
           Why Enterprise Buyers Look for the ZTDS Badge
         </h2>
         <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
@@ -609,7 +609,7 @@
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-xs font-bold text-blue-800 mb-2">
           ENTERPRISE COMPLIANCE STAMPS
         </div>
-        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">
+        <h2 id="b2b-enterprise-trust-seals-footers-pricing-tables" class="text-2xl font-extrabold text-slate-900 tracking-tight scroll-mt-24">
           B2B Enterprise Trust Seals (Footers &amp; Pricing Tables)
         </h2>
         <p class="text-xs sm:text-sm text-slate-600 mt-2 max-w-2xl leading-relaxed">
@@ -704,7 +704,7 @@
       <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-8">
           <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Direct Answer Knowledge Base</span>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight">Trust Badge Generator &amp; Dynamic Seal Foundry FAQ</h2>
+          <h2 id="trust-badge-generator-dynamic-seal-foundry-faq" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight scroll-mt-24">Trust Badge Generator &amp; Dynamic Seal Foundry FAQ</h2>
         </div>
         <div class="space-y-3.5">
 
@@ -962,10 +962,11 @@
           textColorRight = '#ffffff';
         }
 
-        const cleanLabel = String(label || 'VERIFIED').trim().toUpperCase();
+        const rawLabel = String(label || 'VERIFIED').trim().toUpperCase();
+        const cleanLabel = rawLabel.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
         const wLeft = 58;
         const charWidth = 6.8;
-        const wRight = Math.max(64, Math.round(cleanLabel.length * charWidth + 16));
+        const wRight = Math.max(64, Math.round(rawLabel.length * charWidth + 16));
         const totalWidth = wLeft + wRight;
         const textXRight = wLeft + Math.round(wRight / 2);
 

@@ -170,6 +170,15 @@ console.log('--> Test 4: Critical Static Assets Integrity');
 const criticalAssets = [
   'styles.css',
   'favicon.svg',
+  'favicon.ico',
+  'public/favicon.ico',
+  'site.webmanifest',
+  'public/site.webmanifest',
+  'assets/img/favicon-48.png',
+  'assets/img/favicon-96.png',
+  'assets/img/favicon-192.png',
+  'assets/img/apple-touch-icon.png',
+  'assets/img/logo-512.png',
   'nav.js',
   'robots.txt',
   'sitemap.xml',
@@ -437,11 +446,34 @@ for (const relPath of typoFiles) {
   assert(/<meta\s+[^>]*name=["']twitter:image:alt["']/i.test(html), `Missing twitter:image:alt in ${relPath}`);
   assert(html.includes('/assets/fonts/inter-latin.woff2'), `Missing font preload inter-latin.woff2 in ${relPath}`);
   assert(html.includes('/assets/fonts/jetbrains-mono-latin.woff2'), `Missing font preload jetbrains-mono-latin.woff2 in ${relPath}`);
-  if (html.includes('src="/nav.js"')) {
-    assert(/<script\s+[^>]*src=["']\/nav\.js["'][^>]*\bdefer\b/i.test(html), `<script src="/nav.js"> must have defer in ${relPath}`);
+  assert(/<script\s+[^>]*src=["']\/nav\.js["'][^>]*\bdefer\b/i.test(html), `<script src="/nav.js" defer> required in ${relPath}`);
+  assert(/<footer[\s>]/i.test(html), `Missing semantic <footer> in ${relPath}`);
+
+  // Verify every <h2> inside <main> has an id attribute for SERP fragment sitelinks & deep linking
+  const mainBlock = html.match(/<main\b[\s\S]*?<\/main>/i)?.[0] || '';
+  const mainH2s = mainBlock.match(/<h2\b[^>]*>/gi) || [];
+  for (const h2Tag of mainH2s) {
+    assert(/\bid=["'][^"']+["']/i.test(h2Tag), `<h2> inside <main> missing id attribute in ${relPath}: ${h2Tag}`);
+  }
+
+  // Verify zero invalid #fragment?query syntax and zero broken cross-page fragment links
+  const crossFrags = [...html.matchAll(/<a\b[^>]*href=["'](\/[^"#?'\s]*?)#([^"']+)["']/gi)];
+  for (const m of crossFrags) {
+    const targetRoute = m[1];
+    const frag = m[2];
+    assert(!frag.includes('?'), `Invalid URL syntax (query param after #fragment) in ${relPath}: ${m[0]}`);
+    const targetFile = targetRoute === '/' ? 'index.html' : path.join(targetRoute.replace(/^\//, '').replace(/\/$/, ''), 'index.html');
+    const fullTarget = path.join(rootDir, targetFile);
+    if (fs.existsSync(fullTarget)) {
+      const targetHtml = fs.readFileSync(fullTarget, 'utf8');
+      assert(
+        targetHtml.includes(`id="${frag}"`) || targetHtml.includes(`id='${frag}'`),
+        `Broken cross-page fragment link in ${relPath}: ${m[0]} (#${frag} not found in ${targetFile})`
+      );
+    }
   }
 }
-console.log(`    [PASS] All ${typoFiles.length} public HTML files pass SERP bounds, <main> landmarks, trailing-slash canonicals, manifest, OG/Twitter, font preloads, and CSP checks.`);
+console.log(`    [PASS] All ${typoFiles.length} public HTML files pass SERP bounds, <main>/<footer> landmarks, <h2 id> anchors, cross-page fragment links, manifest, OG/Twitter, font preloads, and CSP checks.`);
 
 console.log('\n[SUMMARY] ALL 10 ROUTES INTEGRITY & COMPLIANCE TESTS PASSED.');
 

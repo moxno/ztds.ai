@@ -108,13 +108,13 @@ async function runTests() {
   console.log("[TEST 3] Verifying cross-page integration in mcp/index.html and ciso/index.html...");
 
   assert.ok(
-    mcpHtml.includes('href="/sdk/#trial?preset=mcp"'),
-    "mcp/index.html must contain deep-link button to /sdk/#trial?preset=mcp"
+    mcpHtml.includes('href="/sdk/?preset=mcp#trial"'),
+    "mcp/index.html must contain deep-link button to /sdk/?preset=mcp#trial"
   );
 
   assert.ok(
-    cisoHtml.includes('href="/sdk/#trial?preset=all"'),
-    "ciso/index.html must contain deep-link button to /sdk/#trial?preset=all"
+    cisoHtml.includes('href="/sdk/?preset=all#trial"'),
+    "ciso/index.html must contain deep-link button to /sdk/?preset=all#trial"
   );
 
   assert.ok(

@@ -133,27 +133,40 @@ for (const page of articlePages) {
       assert(article.datePublished, `datePublished missing in ${page}`);
       assert(article.dateModified, `dateModified missing in ${page}`);
       assert(article.image, `image missing on article in ${page}`);
-      assert(/^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2}))?$/.test(article.datePublished), `datePublished format invalid in ${page}`);
-      assert(/^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2}))?$/.test(article.dateModified), `dateModified format invalid in ${page}`);
+      assert(article.mainEntityOfPage, `mainEntityOfPage missing on article in ${page}`);
+      assert(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/.test(article.datePublished), `datePublished must be full ISO-8601 timestamp with timezone in ${page}`);
+      assert(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/.test(article.dateModified), `dateModified must be full ISO-8601 timestamp with timezone in ${page}`);
       checked = true;
     }
   }
   assert(checked, `No article entity validated in ${page}`);
 }
-console.log(`    [PASS] All ${articlePages.length} article pages feature valid publication and modification timestamps.`);
+console.log(`    [PASS] All ${articlePages.length} article pages feature valid ISO-8601 timestamps and mainEntityOfPage.`);
 
-// Test 5: SoftwareApplication & WebApplication Rich Results offers compliance
-console.log('--> Test 5: SoftwareApplication & WebApplication Rich Results Offers Validation');
+// Test 5: SoftwareApplication & WebApplication Rich Results offers + Universal ISO-8601 Date & WebPage Graph Validation
+console.log('--> Test 5: SoftwareApplication Offers & Universal Graph Completeness');
 let appEntitiesChecked = 0;
 for (const page of prodPages) {
   const fullPath = path.join(__dirname, '..', page);
   const html = fs.readFileSync(fullPath, 'utf8');
   const regex = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi;
   let match;
+  const pageTypes = [];
   while ((match = regex.exec(html)) !== null) {
     const data = JSON.parse(match[1]);
     const items = data['@graph'] || [data];
     for (const node of items) {
+      if (node['@type']) {
+        pageTypes.push(...(Array.isArray(node['@type']) ? node['@type'] : [node['@type']]));
+      }
+      for (const dateKey of ['datePublished', 'dateModified', 'uploadDate']) {
+        if (node[dateKey]) {
+          assert(
+            /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/.test(node[dateKey]),
+            `${dateKey} on ${node['@type']} in ${page} must include ISO-8601 timezone offset: "${node[dateKey]}"`
+          );
+        }
+      }
       if (['SoftwareApplication', 'WebApplication'].includes(node['@type'])) {
         assert(node.applicationCategory, `Missing applicationCategory on ${node['@type']} in ${page}`);
         assert(node.operatingSystem, `Missing operatingSystem on ${node['@type']} in ${page}`);
@@ -162,7 +175,13 @@ for (const page of prodPages) {
       }
     }
   }
+  if (page !== '404.html') {
+    assert(
+      pageTypes.some(t => ['WebPage', 'CollectionPage', 'ProfilePage', 'AboutPage', 'FAQPage', 'ItemPage', 'ContactPage'].includes(t)),
+      `Missing WebPage/CollectionPage/ProfilePage schema entity in ${page}`
+    );
+  }
 }
-console.log(`    [PASS] All ${appEntitiesChecked} SoftwareApplication/WebApplication entities include valid Rich Results offers.`);
+console.log(`    [PASS] All ${appEntitiesChecked} SoftwareApplication/WebApplication entities and ${prodPages.length} page graphs verified.`);
 
 console.log('\n[SUMMARY] ALL 5 SCHEMA & GEO KNOWLEDGE GRAPH TESTS PASSED.\n');

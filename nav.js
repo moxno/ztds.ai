@@ -317,6 +317,269 @@ document.addEventListener('DOMContentLoaded', () => {
       h2.appendChild(anchorBtn);
     });
   } catch (_) {}
+
+  // Global UX 5: Top Reading Progress Bar on long-form specification pages
+  try {
+    if (!document.getElementById('ztds-reading-progress') && document.documentElement.scrollHeight > window.innerHeight * 2.2) {
+      const progressWrap = document.createElement('div');
+      progressWrap.id = 'ztds-reading-progress';
+      progressWrap.setAttribute('aria-hidden', 'true');
+      progressWrap.className = 'no-print fixed top-0 left-0 right-0 z-50 h-0.5 bg-transparent pointer-events-none';
+      const bar = document.createElement('div');
+      bar.className = 'h-full bg-emerald-500 transition-all duration-75';
+      bar.style.width = '0%';
+      progressWrap.appendChild(bar);
+      document.body.appendChild(progressWrap);
+
+      let progTicking = false;
+      window.addEventListener('scroll', () => {
+        if (!progTicking) {
+          window.requestAnimationFrame(() => {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = docHeight > 0 ? Math.min(100, Math.max(0, (window.scrollY / docHeight) * 100)) : 0;
+            bar.style.width = pct.toFixed(1) + '%';
+            progTicking = false;
+          });
+          progTicking = true;
+        }
+      }, { passive: true });
+    }
+  } catch (_) {}
+
+  // Global UX 6: Accessible Command Palette (Cmd+K / Ctrl+K) + Header Trigger
+  try {
+    const SITE_INDEX = [
+      { title: 'Official RFC v1.0 Specification', cat: 'Standard', url: '/standard/', kw: 'rfc 8821 invariants math proofs normative' },
+      { title: 'IETF Standards Track Hub (draft-02)', cat: 'Standard', url: '/ietf/', kw: 'ietf internet draft datatracker protocol' },
+      { title: 'Academic Whitepaper & DOIs', cat: 'Standard', url: '/whitepaper/', kw: 'zenodo osf ssrn doi peer reviewed treatise' },
+      { title: '10 Canonical AI & RAG Blueprints', cat: 'Standard', url: '/blueprints/', kw: 'langchain llamaindex crewai pinecone envoy nitro' },
+      { title: 'AI Safety & Latency Benchmarks', cat: 'Standard', url: '/benchmarks/', kw: 'latency throughput memory overhead wasm' },
+      { title: 'Evidentiary Sovereignty & Legal Privilege', cat: 'Standard', url: '/evidentiary-sovereignty/', kw: 'fre 502 attorney client privilege discovery' },
+      { title: 'CISO Procurement & Legal Defense Pack', cat: 'CISO & GRC', url: '/ciso/', kw: 'sig lite caiq vsaq vendor risk dpo' },
+      { title: '1-Page CISO Safe Harbor Memorandum', cat: 'CISO & GRC', url: '/ciso/memo/', kw: 'gdpr art 28 32 amendment 13 dpa elimination pdf' },
+      { title: 'Global Regulatory Compliance Matrix', cat: 'CISO & GRC', url: '/compliance/', kw: 'gdpr hipaa eu ai act pci dss ccpa' },
+      { title: 'AICPA SOC 2 Type II & Trust Center', cat: 'CISO & GRC', url: '/soc2/', kw: 'soc2 evidence binder controls audit' },
+      { title: 'CISO Breach Liability & ROI Calculator', cat: 'CISO & GRC', url: '/roi/', kw: 'calculator savings breach fine cost' },
+      { title: 'Enterprise Order Form (Schedule A)', cat: 'CISO & GRC', url: '/docs/legal/order-form/', kw: 'contract msa po invoice procurement' },
+      { title: 'Executive CISO Pitch Deck', cat: 'CISO & GRC', url: '/deck/', kw: 'slides presentation briefing board' },
+      { title: 'Developer SDK & Offline Licensing', cat: 'Developers', url: '/sdk/', kw: 'npm pip typescript python wasm ed25519 trial' },
+      { title: 'Model Context Protocol (MCP) Hub', cat: 'Developers', url: '/mcp/', kw: 'claude desktop cursor windsurf stdio agent' },
+      { title: 'Live Domain Perimeter Scanner', cat: 'Tools', url: '/scanner/', kw: 'audit egress network inspector airplane mode' },
+      { title: 'Interactive In-RAM DAG Inspector', cat: 'Tools', url: '/inspector/', kw: 'playground tokenize surrogate detokenize' },
+      { title: 'Ed25519 Certificate Validator', cat: 'Tools', url: '/verify/', kw: 'cryptographic signature receipt verify' },
+      { title: 'ZTDS Verified SVG Badge Generator', cat: 'Tools', url: '/badge/', kw: 'embed seal shield markdown html' },
+      { title: 'Verified Implementations Registry', cat: 'Ecosystem', url: '/registry/', kw: 'certified software privacyscrubber directory' },
+      { title: 'Corporate Adopters & Members', cat: 'Ecosystem', url: '/companies/', kw: 'enterprise adopters brandmeweb case studies' },
+      { title: 'Accredited Research Fellows & WGs', cat: 'Ecosystem', url: '/fellows/', kw: 'ilya sibiryakov cliford fanyuy working groups' },
+      { title: 'Enterprise Architecture Case Studies', cat: 'Ecosystem', url: '/case-studies/', kw: 'healthcare fintech legal defense deployments' },
+      { title: 'Certification Authority & CAB', cat: 'Ecosystem', url: '/certification/', kw: 'conformity assessment accreditation tracks' },
+      { title: 'Apply for ZTDS Accreditation', cat: 'Ecosystem', url: '/apply/', kw: 'gitops pr submit claim badge' },
+      { title: 'Consortium Governance & Charter', cat: 'Governance', url: '/governance/', kw: 'bylaws working groups voting steering' },
+      { title: 'Security Policy & CVD (PGP)', cat: 'Governance', url: '/security/', kw: 'vulnerability disclosure security.txt' },
+      { title: 'Standards, RAND-Z Patent Policy & Terms', cat: 'Governance', url: '/terms/', kw: 'cc-by-4.0 apache 2.0 trademark covenant' },
+      { title: 'Zero-Telemetry Privacy Policy', cat: 'Governance', url: '/privacy/', kw: 'zero cookies zero analytics gdpr' }
+    ];
+
+    function buildCmdPalette() {
+      let modal = document.getElementById('ztds-cmd-palette');
+      if (modal) return modal;
+
+      modal = document.createElement('div');
+      modal.id = 'ztds-cmd-palette';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.setAttribute('aria-label', 'Quick Jump Command Palette');
+      modal.className = 'no-print hidden fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-slate-900/60 backdrop-blur-xs';
+
+      const panel = document.createElement('div');
+      panel.className = 'w-full max-w-xl rounded-2xl bg-white border border-slate-200 shadow-2xl overflow-hidden';
+
+      const topBar = document.createElement('div');
+      topBar.className = 'flex items-center gap-3 px-4 py-3 border-b border-slate-200 bg-slate-50';
+
+      const searchIcon = document.createElement('span');
+      searchIcon.className = 'text-slate-400 font-mono text-xs font-bold shrink-0';
+      searchIcon.textContent = 'JUMP //';
+
+      const input = document.createElement('input');
+      input.type = 'search';
+      input.id = 'ztds-cmd-input';
+      input.setAttribute('aria-label', 'Search pages, sections, and tools');
+      input.placeholder = 'Jump to specification, CISO memo, SDK, scanner, or section...';
+      input.className = 'w-full bg-transparent text-slate-900 placeholder-slate-400 text-sm focus:outline-none font-sans';
+
+      const escBtn = document.createElement('button');
+      escBtn.type = 'button';
+      escBtn.className = 'px-2 py-0.5 rounded bg-slate-200/80 text-slate-600 font-mono text-xs font-semibold hover:bg-slate-300 cursor-pointer shrink-0';
+      escBtn.textContent = 'ESC';
+      escBtn.addEventListener('click', () => window.ztdsModal.close(modal));
+
+      topBar.appendChild(searchIcon);
+      topBar.appendChild(input);
+      topBar.appendChild(escBtn);
+
+      const list = document.createElement('div');
+      list.id = 'ztds-cmd-list';
+      list.setAttribute('role', 'listbox');
+      list.className = 'max-h-80 overflow-y-auto divide-y divide-slate-100 p-1.5';
+
+      const footer = document.createElement('div');
+      footer.className = 'px-4 py-2 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs font-mono text-slate-500';
+      footer.innerHTML = '<span>&uarr;&darr; to navigate &middot; Enter to open</span><span>ZTDS.ai Quick Jump</span>';
+
+      panel.appendChild(topBar);
+      panel.appendChild(list);
+      panel.appendChild(footer);
+      modal.appendChild(panel);
+      document.body.appendChild(modal);
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) window.ztdsModal.close(modal);
+      });
+
+      // Collect current page h2 sections dynamically
+      const pageSections = [];
+      document.querySelectorAll('main h2[id]').forEach((h2) => {
+        const cleanTitle = (h2.textContent || '').replace(/#$/, '').replace(/Copied$/, '').trim();
+        if (cleanTitle && h2.id) {
+          pageSections.push({
+            title: cleanTitle,
+            cat: 'On This Page',
+            url: '#' + h2.id,
+            kw: cleanTitle.toLowerCase() + ' section anchor'
+          });
+        }
+      });
+
+      const allItems = pageSections.concat(SITE_INDEX);
+      let activeIdx = 0;
+      let filtered = allItems.slice(0, 12);
+
+      function renderList(q) {
+        const query = (q || '').trim().toLowerCase();
+        if (!query) {
+          filtered = pageSections.slice(0, 4).concat(SITE_INDEX.slice(0, 10));
+        } else {
+          const terms = query.split(/\s+/);
+          filtered = allItems.filter((item) => {
+            const hay = (item.title + ' ' + item.cat + ' ' + item.url + ' ' + item.kw).toLowerCase();
+            return terms.every((t) => hay.includes(t));
+          }).slice(0, 14);
+        }
+        activeIdx = 0;
+        list.textContent = '';
+        if (filtered.length === 0) {
+          const empty = document.createElement('div');
+          empty.className = 'py-8 px-4 text-center text-xs font-mono text-slate-500';
+          empty.textContent = 'No matching route found. Try "rfc", "memo", "sdk", "mcp", or "scanner".';
+          list.appendChild(empty);
+          return;
+        }
+        filtered.forEach((item, idx) => {
+          const a = document.createElement('a');
+          a.href = item.url;
+          a.setAttribute('role', 'option');
+          a.setAttribute('aria-selected', idx === activeIdx ? 'true' : 'false');
+          a.className = 'flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl text-xs transition-colors ' +
+            (idx === activeIdx ? 'bg-emerald-50 text-emerald-950 font-semibold' : 'text-slate-700 hover:bg-slate-50');
+
+          const left = document.createElement('div');
+          left.className = 'truncate';
+          left.textContent = item.title;
+
+          const right = document.createElement('div');
+          right.className = 'flex items-center gap-2 shrink-0 font-mono text-xs';
+          const badge = document.createElement('span');
+          badge.className = 'px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200';
+          badge.textContent = item.cat;
+          right.appendChild(badge);
+
+          a.appendChild(left);
+          a.appendChild(right);
+          a.addEventListener('click', () => {
+            window.ztdsModal.close(modal);
+          });
+          list.appendChild(a);
+        });
+      }
+
+      function updateActiveHighlight() {
+        const opts = list.querySelectorAll('[role="option"]');
+        opts.forEach((el, idx) => {
+          const isAct = idx === activeIdx;
+          el.setAttribute('aria-selected', isAct ? 'true' : 'false');
+          el.className = 'flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl text-xs transition-colors ' +
+            (isAct ? 'bg-emerald-50 text-emerald-950 font-semibold' : 'text-slate-700 hover:bg-slate-50');
+          if (isAct && typeof el.scrollIntoView === 'function') {
+            el.scrollIntoView({ block: 'nearest' });
+          }
+        });
+      }
+
+      input.addEventListener('input', () => renderList(input.value));
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (filtered.length > 0) {
+            activeIdx = (activeIdx + 1) % filtered.length;
+            updateActiveHighlight();
+          }
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (filtered.length > 0) {
+            activeIdx = (activeIdx - 1 + filtered.length) % filtered.length;
+            updateActiveHighlight();
+          }
+        } else if (e.key === 'Enter') {
+          if (filtered[activeIdx]) {
+            e.preventDefault();
+            const targetUrl = filtered[activeIdx].url;
+            window.ztdsModal.close(modal);
+            window.location.href = targetUrl;
+          }
+        }
+      });
+
+      modal._renderInitial = () => {
+        input.value = '';
+        renderList('');
+      };
+      return modal;
+    }
+
+    function openCmdPalette() {
+      const modal = buildCmdPalette();
+      if (modal._renderInitial) modal._renderInitial();
+      window.ztdsModal.open(modal, '#ztds-cmd-input');
+    }
+
+    // Inject compact Cmd+K trigger button in header action bar next to Get Certified
+    const mobileMenuBtn = document.getElementById('mobile-menu-toggle');
+    if (mobileMenuBtn && mobileMenuBtn.parentElement && !document.getElementById('ztds-cmd-trigger')) {
+      const actionContainer = mobileMenuBtn.parentElement;
+      const cmdBtn = document.createElement('button');
+      cmdBtn.type = 'button';
+      cmdBtn.id = 'ztds-cmd-trigger';
+      cmdBtn.setAttribute('aria-label', 'Quick Jump Search (Command+K)');
+      cmdBtn.setAttribute('title', 'Quick Jump Search (⌘K / Ctrl+K)');
+      cmdBtn.className = 'no-print hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-600 hover:text-slate-900 font-mono text-xs font-medium transition-colors cursor-pointer';
+      cmdBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span>&#8984;K</span>';
+      cmdBtn.addEventListener('click', openCmdPalette);
+      actionContainer.insertBefore(cmdBtn, actionContainer.firstChild);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const existing = document.getElementById('ztds-cmd-palette');
+        if (existing && !existing.classList.contains('hidden')) {
+          window.ztdsModal.close(existing);
+        } else {
+          openCmdPalette();
+        }
+      }
+    });
+  } catch (_) {}
 });
 
 /**

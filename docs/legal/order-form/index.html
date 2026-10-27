@@ -35,63 +35,80 @@
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://ztds.ai/#organization",
-        "name": "ZTDS AI Consortium",
-        "url": "https://ztds.ai",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://ztds.ai/assets/img/logo-512.png",
-          "width": 512,
-          "height": 512
-        }
-      },
-      {
-        "@type": "DigitalDocument",
-        "@id": "https://ztds.ai/docs/legal/order-form/#document",
-        "name": "ZTDS Enterprise Commercial Order Form & Schedule A",
-        "headline": "ZTDS Enterprise Commercial Order Form & Schedule A",
-        "description": "ZTDS Enterprise commercial order form, licensing schedule, and zero-DPA computational utility agreement for offline air-gapped AI deployments.",
-        "url": "https://ztds.ai/docs/legal/order-form/",
-        "datePublished": "2026-09-17T00:00:00Z",
-        "dateModified": "2026-10-18T00:00:00Z",
-        "author": {
-          "@type": "Person",
-          "name": "Ilya Sibiryakov",
-          "url": "https://orcid.org/0009-0002-0642-5985"
-        },
-        "publisher": { "@id": "https://ztds.ai/#organization" },
-        "image": "https://ztds.ai/assets/img/og/og-compliance.png"
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "ZTDS.ai",
-            "item": "https://ztds.ai/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Legal & Terms",
-            "item": "https://ztds.ai/terms/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "Order Form",
-            "item": "https://ztds.ai/docs/legal/order-form/"
-          }
-        ]
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://ztds.ai/#organization",
+      "name": "ZTDS AI Consortium",
+      "url": "https://ztds.ai",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://ztds.ai/assets/img/logo-512.png",
+        "width": 512,
+        "height": 512
       }
-    ]
-  }
+    },
+    {
+      "@type": "DigitalDocument",
+      "@id": "https://ztds.ai/docs/legal/order-form/#document",
+      "name": "ZTDS Enterprise Commercial Order Form & Schedule A",
+      "headline": "ZTDS Enterprise Commercial Order Form & Schedule A",
+      "description": "ZTDS Enterprise commercial order form, licensing schedule, and zero-DPA computational utility agreement for offline air-gapped AI deployments.",
+      "url": "https://ztds.ai/docs/legal/order-form/",
+      "datePublished": "2026-09-17T00:00:00Z",
+      "dateModified": "2026-10-18T00:00:00Z",
+      "author": {
+        "@type": "Person",
+        "name": "Ilya Sibiryakov",
+        "url": "https://orcid.org/0009-0002-0642-5985"
+      },
+      "publisher": {
+        "@id": "https://ztds.ai/#organization"
+      },
+      "image": "https://ztds.ai/assets/img/og/og-compliance.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ztds.ai/docs/legal/order-form/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ZTDS.ai",
+          "item": "https://ztds.ai/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Legal & Terms",
+          "item": "https://ztds.ai/terms/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Order Form",
+          "item": "https://ztds.ai/docs/legal/order-form/"
+        }
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://ztds.ai/docs/legal/order-form/#webpage",
+      "url": "https://ztds.ai/docs/legal/order-form/",
+      "name": "ZTDS Enterprise Commercial Order Form & Schedule A",
+      "description": "ZTDS Enterprise commercial order form, licensing schedule, and zero-DPA computational utility agreement for offline air-gapped AI deployments.",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
+      }
+    }
+  ]
+}
   </script>
 
   <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -191,55 +208,58 @@
           <div class="text-xs text-slate-500 font-mono mt-0.5">BrandMeWeb Ecosystem &middot; Zero-Trust Data Sanitization &middot; AICPA SOC 2 Type II</div>
         </div>
         <div class="text-right font-mono text-xs text-slate-600 space-y-0.5">
-          <div>ORDER ID: <strong class="text-slate-900">ZTDS-2026-OF-[XXXX]</strong></div>
-          <div>DATE: <strong class="text-slate-900">[Date, e.g., September 18, 2026]</strong></div>
+          <div>ORDER ID: <strong id="orderIdField" contenteditable="true" spellcheck="false" class="text-slate-900 rounded px-1 focus:outline-none focus:ring-1 focus:ring-emerald-500">ZTDS-2026-OF-[XXXX]</strong></div>
+          <div>DATE: <strong id="orderDateField" contenteditable="true" spellcheck="false" class="text-slate-900 rounded px-1 focus:outline-none focus:ring-1 focus:ring-emerald-500">[Date, e.g., September 18, 2026]</strong></div>
           <div>PAYMENT: <strong class="text-emerald-700 font-bold">NET 30 ANNUAL</strong></div>
         </div>
       </header>
 
       <!-- Section 1: Customer Profile -->
       <div class="mb-5">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono mb-2 pb-1 border-b border-slate-200">
-          1. Customer &amp; Billing Profile
-        </h2>
-        <div class="grid grid-cols-2 gap-2 border border-slate-200 rounded-lg p-3 bg-slate-50">
+        <div class="flex items-center justify-between mb-2 pb-1 border-b border-slate-200">
+          <h2 id="customer-billing-profile" class="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono scroll-mt-24">
+            1. Customer &amp; Billing Profile
+          </h2>
+          <span class="no-print text-xs font-mono text-emerald-700">Click any bracketed field to edit before printing</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 border border-slate-200 rounded-lg p-3 bg-slate-50">
           <div>
             <span class="text-xs text-slate-500 font-mono uppercase block">Customer Legal Entity:</span>
-            <div class="border-b border-slate-300 pb-0.5 font-semibold text-slate-900">[Customer Full Legal Company Name]</div>
+            <div id="orderCustomerEntity" contenteditable="true" spellcheck="false" aria-label="Customer Legal Entity" class="border-b border-slate-300 pb-0.5 font-semibold text-slate-900 rounded px-1 -mx-1 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500">[Customer Full Legal Company Name]</div>
           </div>
           <div>
             <span class="text-xs text-slate-500 font-mono uppercase block">Jurisdiction of Incorporation:</span>
-            <div class="border-b border-slate-300 pb-0.5 font-semibold text-slate-900">[e.g., Delaware, USA / Tel Aviv, Israel / UK]</div>
+            <div id="orderCustomerJurisdiction" contenteditable="true" spellcheck="false" aria-label="Jurisdiction of Incorporation" class="border-b border-slate-300 pb-0.5 font-semibold text-slate-900 rounded px-1 -mx-1 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500">[e.g., Delaware, USA / Tel Aviv, Israel / UK]</div>
           </div>
           <div>
             <span class="text-xs text-slate-500 font-mono uppercase block">Company Registration / Tax ID:</span>
-            <div class="border-b border-slate-300 pb-0.5 font-semibold text-slate-900">[EIN / VAT / Co. ID Number]</div>
+            <div id="orderCustomerTaxId" contenteditable="true" spellcheck="false" aria-label="Company Registration or Tax ID" class="border-b border-slate-300 pb-0.5 font-semibold text-slate-900 rounded px-1 -mx-1 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500">[EIN / VAT / Co. ID Number]</div>
           </div>
           <div>
             <span class="text-xs text-slate-500 font-mono uppercase block">Billing Address:</span>
-            <div class="border-b border-slate-300 pb-0.5 font-semibold text-slate-900">[Full Physical Corporate Address]</div>
+            <div id="orderCustomerAddress" contenteditable="true" spellcheck="false" aria-label="Billing Address" class="border-b border-slate-300 pb-0.5 font-semibold text-slate-900 rounded px-1 -mx-1 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500">[Full Physical Corporate Address]</div>
           </div>
           <div>
             <span class="text-xs text-slate-500 font-mono uppercase block">Executive Contact (CISO / VP):</span>
-            <div class="border-b border-slate-300 pb-0.5 font-semibold text-slate-900">[Name, Title, Email]</div>
+            <div id="orderCustomerContact" contenteditable="true" spellcheck="false" aria-label="Executive Contact" class="border-b border-slate-300 pb-0.5 font-semibold text-slate-900 rounded px-1 -mx-1 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500">[Name, Title, Email]</div>
           </div>
           <div>
             <span class="text-xs text-slate-500 font-mono uppercase block">Accounts Payable Email:</span>
-            <div class="border-b border-slate-300 pb-0.5 font-semibold text-slate-900">[ap@company.com]</div>
+            <div id="orderCustomerApEmail" contenteditable="true" spellcheck="false" aria-label="Accounts Payable Email" class="border-b border-slate-300 pb-0.5 font-semibold text-slate-900 rounded px-1 -mx-1 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500">[ap@company.com]</div>
           </div>
         </div>
       </div>
 
       <!-- Section 2: Product Tiers -->
       <div>
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono mb-2 pb-1 border-b border-slate-200">
+        <h2 id="product-selection-subscription-tiers" class="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono mb-2 pb-1 border-b border-slate-200 scroll-mt-24">
           2. Product Selection &amp; Subscription Tiers
         </h2>
         
-        <div class="space-y-3">
+        <div class="space-y-3" id="orderTierGroup">
           <!-- Tier A -->
-          <div class="p-3 rounded-lg border border-slate-200 bg-white flex items-start gap-3">
-            <div class="w-4 h-4 rounded border border-slate-400 mt-0.5 shrink-0"></div>
+          <div data-tier="A" data-title="Developer Pro Annual SDK License (Option A)" data-scope="Up to 5 Developer Seats &amp; Microservice Nodes" role="button" tabindex="0" class="order-tier-card p-3 rounded-lg border border-slate-200 bg-white flex items-start gap-3 cursor-pointer transition-colors">
+            <div class="order-tier-check w-4 h-4 rounded border border-slate-400 mt-0.5 shrink-0 flex items-center justify-center font-bold text-xs text-emerald-800"></div>
             <div class="flex-grow">
               <div class="flex items-center justify-between">
                 <span class="font-bold text-slate-900 text-xs">Option A: Developer Pro Annual SDK License</span>
@@ -252,8 +272,8 @@
           </div>
 
           <!-- Tier B -->
-          <div class="p-3 rounded-lg border-2 border-emerald-600 bg-emerald-50/40 flex items-start gap-3 relative">
-            <div class="w-4 h-4 rounded border-2 border-emerald-600 mt-0.5 shrink-0 flex items-center justify-center font-bold text-xs text-emerald-800">&check;</div>
+          <div data-tier="B" data-title="Enterprise Air-Gapped Cluster License (Option B)" data-scope="Up to 5 Production Nodes / VPCs" role="button" tabindex="0" class="order-tier-card p-3 rounded-lg border-2 border-emerald-600 bg-emerald-50/40 flex items-start gap-3 relative cursor-pointer transition-colors">
+            <div class="order-tier-check w-4 h-4 rounded border-2 border-emerald-600 mt-0.5 shrink-0 flex items-center justify-center font-bold text-xs text-emerald-800">&check;</div>
             <div class="flex-grow">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
@@ -269,8 +289,8 @@
           </div>
 
           <!-- Tier C -->
-          <div class="p-3 rounded-lg border border-slate-200 bg-white flex items-start gap-3">
-            <div class="w-4 h-4 rounded border border-slate-400 mt-0.5 shrink-0"></div>
+          <div data-tier="C" data-title="Global Enterprise Site License (Option C)" data-scope="Unlimited Global Internal Nodes, Enclaves &amp; Seats" role="button" tabindex="0" class="order-tier-card p-3 rounded-lg border border-slate-200 bg-white flex items-start gap-3 cursor-pointer transition-colors">
+            <div class="order-tier-check w-4 h-4 rounded border border-slate-400 mt-0.5 shrink-0 flex items-center justify-center font-bold text-xs text-emerald-800"></div>
             <div class="flex-grow">
               <div class="flex items-center justify-between">
                 <span class="font-bold text-slate-900 text-xs">Option C: Global Enterprise Site License</span>
@@ -298,38 +318,40 @@
       <!-- Header Page 2 -->
       <header class="border-b border-slate-300 pb-2 mb-4 flex items-center justify-between">
         <span class="font-mono text-xs text-slate-500 uppercase font-bold">ZTDS Enterprise Commercial Order Form &middot; Schedule A (Continued)</span>
-        <span class="font-mono text-xs text-slate-500">ORDER ID: ZTDS-2026-OF-[XXXX]</span>
+        <span id="orderIdHeaderPage2" class="font-mono text-xs text-slate-500">ORDER ID: ZTDS-2026-OF-[XXXX]</span>
       </header>
 
       <!-- Section 3: Commercial Summary -->
       <div class="mb-5">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono mb-2 pb-1 border-b border-slate-200">
+        <h2 id="commercial-summary-payment-schedule" class="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono mb-2 pb-1 border-b border-slate-200 scroll-mt-24">
           3. Commercial Summary &amp; Payment Schedule
         </h2>
-        <table class="w-full border-collapse border border-slate-200 text-xs mb-3">
-          <thead>
-            <tr class="bg-slate-100 border-b border-slate-200 font-mono text-slate-700">
-              <th class="p-2 text-left">Selected Product Tier</th>
-              <th class="p-2 text-center">Deployment Scope</th>
-              <th class="p-2 text-center">Term</th>
-              <th class="p-2 text-right">Annual Price (USD)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border-b border-slate-200">
-              <td class="p-2 font-semibold text-slate-900">Enterprise Air-Gapped Cluster License (Option B)</td>
-              <td class="p-2 text-center">Up to 5 Production Nodes / VPCs</td>
-              <td class="p-2 text-center">12 Months</td>
-              <td class="p-2 text-right font-mono font-bold text-slate-900">Per Executed Schedule A</td>
-            </tr>
-            <tr class="bg-slate-50 font-bold">
-              <td colspan="3" class="p-2 text-right uppercase font-mono">Total Annual Commitment:</td>
-              <td class="p-2 text-right font-mono text-emerald-800 text-xs">Per Executed Schedule A</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="overflow-x-auto mb-3">
+          <table class="w-full border-collapse border border-slate-200 text-xs">
+            <thead>
+              <tr class="bg-slate-100 border-b border-slate-200 font-mono text-slate-700">
+                <th class="p-2 text-left">Selected Product Tier</th>
+                <th class="p-2 text-center">Deployment Scope</th>
+                <th class="p-2 text-center">Term</th>
+                <th class="p-2 text-right">Annual Price (USD)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-slate-200">
+                <td id="orderSummaryTierTitle" class="p-2 font-semibold text-slate-900">Enterprise Air-Gapped Cluster License (Option B)</td>
+                <td id="orderSummaryTierScope" class="p-2 text-center">Up to 5 Production Nodes / VPCs</td>
+                <td class="p-2 text-center">12 Months</td>
+                <td class="p-2 text-right font-mono font-bold text-slate-900">Per Executed Schedule A</td>
+              </tr>
+              <tr class="bg-slate-50 font-bold">
+                <td colspan="3" class="p-2 text-right uppercase font-mono">Total Annual Commitment:</td>
+                <td class="p-2 text-right font-mono text-emerald-800 text-xs">Per Executed Schedule A</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-        <div class="grid grid-cols-2 gap-2 text-xs p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs p-2.5 rounded-lg bg-slate-50 border border-slate-200">
           <div>Payment Terms: <strong>Net 30 Days from invoice</strong></div>
           <div>Billing Frequency: <strong>Annual in advance</strong></div>
           <div>Payment Method: <strong>Electronic Wire Transfer (SWIFT/ACH)</strong></div>
@@ -339,7 +361,7 @@
 
       <!-- Section 4: Special Terms & Invariant Guarantees -->
       <div class="mb-5">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono mb-2 pb-1 border-b border-slate-200">
+        <h2 id="operational-guarantees-legal-exemption" class="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono mb-2 pb-1 border-b border-slate-200 scroll-mt-24">
           4. Operational Guarantees &amp; Legal Exemption
         </h2>
         <ul class="space-y-1.5 text-xs text-slate-700 leading-snug">
@@ -352,14 +374,14 @@
 
       <!-- Section 5: Mutual Signatures -->
       <div>
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono mb-2 pb-1 border-b border-slate-200">
+        <h2 id="mutual-signature-acceptance" class="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono mb-2 pb-1 border-b border-slate-200 scroll-mt-24">
           5. Mutual Signature &amp; Acceptance
         </h2>
         <p class="text-xs text-slate-500 mb-3">
           By signing below, the Parties agree to be bound by the terms of this Order Form and the Master Services Agreement (MSA).
         </p>
 
-        <div class="grid grid-cols-2 gap-6 p-4 rounded-xl border border-slate-300 bg-slate-50">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 rounded-xl border border-slate-300 bg-slate-50">
           <!-- Licensor -->
           <div class="space-y-2">
             <div class="font-bold text-slate-900 uppercase font-mono text-xs">FOR LICENSOR: BrandMeWeb / ZTDS.ai</div>
@@ -371,7 +393,7 @@
 
           <!-- Customer -->
           <div class="space-y-2">
-            <div class="font-bold text-slate-900 uppercase font-mono text-xs">FOR CUSTOMER: [Company Name]</div>
+            <div id="orderCustomerSignHeader" class="font-bold text-slate-900 uppercase font-mono text-xs">FOR CUSTOMER: [Company Name]</div>
             <div class="pt-6 border-b border-slate-400 text-slate-400 italic text-xs">[Authorized Executive Signature]</div>
             <div class="text-xs text-slate-600">Name: _______________________________________</div>
             <div class="text-xs text-slate-600">Title: ________________________________________</div>
@@ -382,12 +404,106 @@
     </div>
 
     <!-- Footer Page 2 -->
-    <div class="border-t border-slate-200 pt-2 flex items-center justify-between text-xs text-slate-500 font-mono">
+    <footer class="border-t border-slate-200 pt-2 flex items-center justify-between text-xs text-slate-500 font-mono">
       <span>ZTDS.ai Commercial Order Form &middot; Page 2 of 2</span>
       <span>U.S. &amp; Int'l Patents Pending &middot; TM #182655957 &middot; BrandMeWeb Ecosystem</span>
-    </div>
+    </footer>
   </div>
   </main>
 
+  <script src="/nav.js" defer></script>
+  <script>
+  (function() {
+    try {
+      const p = new URLSearchParams(window.location.search);
+      const entityEl = document.getElementById('orderCustomerEntity');
+      const signHeaderEl = document.getElementById('orderCustomerSignHeader');
+      const orderIdEl = document.getElementById('orderIdField');
+      const orderIdP2El = document.getElementById('orderIdHeaderPage2');
+      const dateEl = document.getElementById('orderDateField');
+
+      const todayStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      if (dateEl && dateEl.textContent.indexOf('[Date') === 0) {
+        dateEl.textContent = todayStr;
+      }
+
+      const org = (p.get('org') || p.get('company') || '').trim();
+      if (org) {
+        if (entityEl) entityEl.textContent = org;
+        if (signHeaderEl) signHeaderEl.textContent = 'FOR CUSTOMER: ' + org.toUpperCase();
+        const code = org.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6) || 'CORP';
+        const generatedId = 'ZTDS-2026-OF-' + code;
+        if (orderIdEl) orderIdEl.textContent = generatedId;
+        if (orderIdP2El) orderIdP2El.textContent = 'ORDER ID: ' + generatedId;
+      }
+
+      if (entityEl && signHeaderEl) {
+        entityEl.addEventListener('input', function() {
+          const val = (entityEl.textContent || '').trim();
+          if (val && val.indexOf('[') !== 0) {
+            signHeaderEl.textContent = 'FOR CUSTOMER: ' + val.toUpperCase();
+          }
+        });
+      }
+
+      const fieldMap = {
+        jurisdiction: 'orderCustomerJurisdiction',
+        taxid: 'orderCustomerTaxId',
+        address: 'orderCustomerAddress',
+        contact: 'orderCustomerContact',
+        ap: 'orderCustomerApEmail'
+      };
+      Object.keys(fieldMap).forEach(function(k) {
+        const val = (p.get(k) || '').trim();
+        const el = document.getElementById(fieldMap[k]);
+        if (val && el) el.textContent = val;
+      });
+
+      const tierCards = document.querySelectorAll('.order-tier-card');
+      const summaryTitle = document.getElementById('orderSummaryTierTitle');
+      const summaryScope = document.getElementById('orderSummaryTierScope');
+
+      function selectTier(tierCode) {
+        const upper = String(tierCode || 'B').toUpperCase();
+        tierCards.forEach(function(card) {
+          const isMatch = card.getAttribute('data-tier') === upper;
+          const check = card.querySelector('.order-tier-check');
+          if (isMatch) {
+            card.className = 'order-tier-card p-3 rounded-lg border-2 border-emerald-600 bg-emerald-50/40 flex items-start gap-3 relative cursor-pointer transition-colors';
+            if (check) {
+              check.className = 'order-tier-check w-4 h-4 rounded border-2 border-emerald-600 mt-0.5 shrink-0 flex items-center justify-center font-bold text-xs text-emerald-800';
+              check.textContent = '\u2713';
+            }
+            if (summaryTitle) summaryTitle.textContent = card.getAttribute('data-title');
+            if (summaryScope) summaryScope.textContent = card.getAttribute('data-scope');
+          } else {
+            card.className = 'order-tier-card p-3 rounded-lg border border-slate-200 bg-white flex items-start gap-3 cursor-pointer transition-colors';
+            if (check) {
+              check.className = 'order-tier-check w-4 h-4 rounded border border-slate-400 mt-0.5 shrink-0 flex items-center justify-center font-bold text-xs text-emerald-800';
+              check.textContent = '';
+            }
+          }
+        });
+      }
+
+      tierCards.forEach(function(card) {
+        card.addEventListener('click', function() {
+          selectTier(card.getAttribute('data-tier'));
+        });
+        card.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            selectTier(card.getAttribute('data-tier'));
+          }
+        });
+      });
+
+      const paramTier = (p.get('tier') || '').trim();
+      if (paramTier && ['A', 'B', 'C'].indexOf(paramTier.toUpperCase()) !== -1) {
+        selectTier(paramTier);
+      }
+    } catch (e) {}
+  })();
+  </script>
 </body>
 </html>

@@ -71,7 +71,11 @@
       "publisher": {
         "@id": "https://ztds.ai/#organization"
       },
-      "image": "https://ztds.ai/assets/img/og/og-compliance.png"
+      "image": "https://ztds.ai/assets/img/og/og-compliance.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ztds.ai/ciso/memo/"
+      }
     },
     {
       "@type": "BreadcrumbList",
@@ -95,6 +99,17 @@
           "item": "https://ztds.ai/ciso/memo/"
         }
       ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://ztds.ai/ciso/memo/#webpage",
+      "url": "https://ztds.ai/ciso/memo/",
+      "name": "ZTDS Executive Memorandum — CISO Procurement & Safe Harbor Pack",
+      "description": "Executive CISO memorandum establishing GDPR Art. 28 processor elimination and Art. 32 & Israel Amendment 13 technical safe harbor via ZTDS in-RAM masking.",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
+      }
     }
   ]
 }
@@ -331,6 +346,7 @@
 
   </main>
 
+  <script src="/nav.js" defer></script>
   <script>
   (function() {
     try {
@@ -340,7 +356,11 @@
       if (org || domain) {
         const toEl = document.getElementById('memoToRecipient');
         if (toEl) {
-          toEl.innerHTML = `Chief Information Security Officer &middot; <span class="text-emerald-800 font-bold">${org || domain}</span>`;
+          toEl.textContent = 'Chief Information Security Officer · ';
+          const span = document.createElement('span');
+          span.className = 'text-emerald-800 font-bold';
+          span.textContent = org || domain;
+          toEl.appendChild(span);
         }
         const docIdEl = document.getElementById('memoDocId');
         if (docIdEl && domain) {
