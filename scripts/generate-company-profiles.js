@@ -221,6 +221,14 @@ function generateProfileHtml(company) {
   const codeSnippet = CODE_SNIPPETS[slug] || '// ZTDS Zero-Trust SDK Integration\nimport { ZTDSEngine } from \'@privacyscrubber/sdk\';';
   const websiteUrl = company.url.startsWith('http') && !company.url.includes('ztds.ai/companies/#') ? company.url : `https://ztds.ai/companies/${slug}/`;
   const websiteDomain = websiteUrl.replace(/^https?:\/\//, '').split(/[/?#]/)[0];
+  const hasSvgLogo = fs.existsSync(path.join(ROOT, 'assets', 'img', 'companies', `${slug}.svg`));
+  const logoBoxHtml = hasSvgLogo
+    ? `<div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm shrink-0 overflow-hidden">
+            <img src="/assets/img/companies/${slug}.svg" alt="${escapeHtml(name)} Logo" width="64" height="64" class="w-full h-full object-contain" decoding="async">
+          </div>`
+    : `<div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center font-bold text-white text-2xl font-mono shadow-sm shrink-0">
+            ${escapeHtml(monogram)}
+          </div>`;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -448,9 +456,7 @@ function generateProfileHtml(company) {
     <div class="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-8 sm:p-10 mb-8 relative overflow-hidden">
       <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-slate-100">
         <div class="flex items-center gap-5">
-          <div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center font-bold text-white text-2xl font-mono shadow-sm shrink-0">
-            ${escapeHtml(monogram)}
-          </div>
+          ${logoBoxHtml}
           <div>
             <div class="flex items-center gap-3 flex-wrap">
               <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">${escapeHtml(name)}</h1>

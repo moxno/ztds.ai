@@ -74,4 +74,21 @@ if (fs.existsSync(badgeDir) && fs.existsSync(pubBadgeDir)) {
   }
 }
 
+// Synchronize assets/img/companies/*.svg <-> public/assets/img/companies/*.svg
+const compLogoDir = path.join(rootDir, 'assets/img/companies');
+const pubCompLogoDir = path.join(rootDir, 'public/assets/img/companies');
+if (fs.existsSync(compLogoDir)) {
+  fs.mkdirSync(pubCompLogoDir, { recursive: true });
+  for (const file of fs.readdirSync(compLogoDir)) {
+    if (!file.endsWith('.svg')) continue;
+    const src = path.join(compLogoDir, file);
+    const dst = path.join(pubCompLogoDir, file);
+    const srcBuf = fs.readFileSync(src);
+    if (!fs.existsSync(dst) || !srcBuf.equals(fs.readFileSync(dst))) {
+      fs.writeFileSync(dst, srcBuf);
+      syncedCount++;
+    }
+  }
+}
+
 console.log(`[ZTDS Build] Mirror sync complete (${mirrorPairs.length} canonical pairs verified, ${syncedCount} updated).`);

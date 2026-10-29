@@ -280,8 +280,8 @@
     <div class="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-5 sm:p-10 mb-8 relative overflow-hidden">
       <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-slate-100">
         <div class="flex flex-wrap sm:flex-nowrap items-center gap-4 sm:gap-5 min-w-0">
-          <div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center font-bold text-white text-2xl font-mono shadow-sm shrink-0">
-            LCU
+          <div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm shrink-0 overflow-hidden">
+            <img src="/assets/img/companies/learningcenterusa.svg" alt="Learning Center USA Logo" width="64" height="64" class="w-full h-full object-contain" decoding="async">
           </div>
           <div>
             <div class="flex items-center gap-3 flex-wrap">
@@ -370,7 +370,7 @@
             <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-mono font-bold">CASE STUDY</span>
             <span class="text-xs text-slate-400 font-mono">Cal. Penal Code &sect; 632, Illinois BIPA (740 ILCS 14/) &amp; GDPR Recital 26</span>
           </div>
-          <h3 id="gdpr-article-9-special-category-pii-cleared-for" class="text-xl font-bold text-slate-900 mb-4 scroll-mt-24">Zero-Egress Voice &amp; Transcript Sanitization Under Cal. Penal Code &sect; 632 &amp; Illinois BIPA</h3>
+          <h3 id="zero-egress-voice-transcript-sanitization-under-cal" class="text-xl font-bold text-slate-900 mb-4 scroll-mt-24">Zero-Egress Voice &amp; Transcript Sanitization Under Cal. Penal Code &sect; 632 &amp; Illinois BIPA</h3>
           
           <div class="space-y-4 text-sm text-slate-600 leading-relaxed mb-6">
             <div>
@@ -389,18 +389,18 @@
               <span>Reference Architecture Snippet</span>
               <span>Volatile RAM Execution</span>
             </div>
-            <pre class="bg-slate-950 text-slate-100 p-4 rounded-b-xl text-xs font-mono overflow-x-auto leading-relaxed border border-slate-900"><code>import { useZTDSField } from '@privacyscrubber/sdk/react';
+            <pre class="bg-slate-950 text-slate-100 p-4 rounded-b-xl text-xs font-mono overflow-x-auto leading-relaxed border border-slate-900"><code>import { sanitizeVoiceTranscriptInRam } from '@/lib/ztds-client';
 
-export function CandidateScreeningForm() {
-  // Masks GDPR Art. 9 special category PII in browser memory
-  const { inputProps, sanitizeAndSubmit } = useZTDSField({
-    rules: ['candidate_medical', 'diversity_data', 'national_id'],
-    endpoint: '/api/ai-screen-resume'
+// Cal. Penal Code &sect; 632 &amp; Illinois BIPA Zero-Egress Voice Enclave
+export function handleSpokenTurn(rawSpeechTranscript: string) {
+  // Tokenizes spoken SSNs ([US_SSN_TOKEN_1]) &amp; USCIS A-Numbers ([USCIS_ANUM_TOKEN_1]) in RAM
+  const { sanitizedText, receiptHash } = sanitizeVoiceTranscriptInRam(rawSpeechTranscript);
+
+  // Dispatches only surrogate tokens to scoring API (0.00 B raw voice/PII egressed)
+  return fetch('/api/call/score', {
+    method: 'POST',
+    body: JSON.stringify({ transcript: sanitizedText, receiptHash })
   });
-
-  return (
-    &lt;textarea {...inputProps} placeholder=&quot;Paste resume or candidate notes...&quot; /&gt;
-  );
 }</code></pre>
           </div>
 
@@ -421,7 +421,7 @@ export function CandidateScreeningForm() {
             </div>
             <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
               <div class="text-xs text-slate-400">IN-RAM LATENCY</div>
-              <div class="text-lg font-bold text-slate-900">&lt; 0.5ms</div>
+              <div class="text-lg font-bold text-slate-900">&lt; 0.4ms</div>
             </div>
             <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
               <div class="text-xs text-slate-400">STATUTORY ROI</div>
