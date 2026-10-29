@@ -11,6 +11,7 @@
 [![MCPRush Server](https://img.shields.io/badge/MCPRush-Grade_A_Verified-10b981.svg)](https://mcprush.com/to/ztds-mcp?ref=badge)
 [![MCPRush Skill](https://img.shields.io/badge/MCPRush-Skill_Live-4f46e5.svg)](https://mcprush.com/moxno/ztds-agent-guard)
 [![Smithery Badge](https://smithery.ai/badge/ilsimox/ztds-mcp)](https://smithery.ai/servers/ilsimox/ztds-mcp)
+[![moxno/ztds-mcp MCP server](https://glama.ai/mcp/servers/moxno/ztds-mcp/badges/score.svg)](https://glama.ai/mcp/servers/moxno/ztds-mcp)
 
 [![Ztds MCP server](https://mcprush.com/badge/ztds-mcp/card.svg)](https://mcprush.com/to/ztds-mcp?ref=badge)
 

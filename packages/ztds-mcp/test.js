@@ -327,7 +327,24 @@ async function runTests() {
   assert.strictEqual(hasNodeModules, false);
   console.log('    [PASS] Directory scanner respects ignored paths (node_modules, .git).');
 
-  console.log('\n[SUMMARY] ALL 19 ZTDS MCP SERVER TESTS PASSED (100% CONFORMANCE).\n');
+  // 20. MCP Tool Annotations, OutputSchema & StructuredContent Parity
+  console.log('--> Test 20: MCP Tool Annotations, OutputSchema & StructuredContent Parity');
+  for (const tool of TOOLS) {
+    assert(typeof tool.title === 'string' && tool.title.length > 0, `Tool ${tool.name} must define title`);
+    assert(tool.annotations && typeof tool.annotations === 'object', `Tool ${tool.name} must define annotations`);
+    assert.strictEqual(typeof tool.annotations.readOnlyHint, 'boolean', `Tool ${tool.name} must define readOnlyHint`);
+    assert.strictEqual(typeof tool.annotations.destructiveHint, 'boolean', `Tool ${tool.name} must define destructiveHint`);
+    assert.strictEqual(typeof tool.annotations.idempotentHint, 'boolean', `Tool ${tool.name} must define idempotentHint`);
+    assert.strictEqual(tool.annotations.openWorldHint, false, `Tool ${tool.name} must set openWorldHint: false`);
+    assert(tool.outputSchema && tool.outputSchema.type === 'object', `Tool ${tool.name} must define outputSchema`);
+    assert(Array.isArray(tool.outputSchema.required) && tool.outputSchema.required.length > 0, `Tool ${tool.name} outputSchema must specify required fields`);
+  }
+  assert(sanitizeRes.result.structuredContent && sanitizeRes.result.structuredContent.zeroEgressAttested === true);
+  assert(restoreRes.result.structuredContent && restoreRes.result.structuredContent.tokensRestored === 1);
+  assert(auditRes.result.structuredContent && auditRes.result.structuredContent.totalEntitiesFound === 2);
+  console.log('    [PASS] All 5 tools define annotations, outputSchema, and structuredContent.');
+
+  console.log('\n[SUMMARY] ALL 20 ZTDS MCP SERVER TESTS PASSED (100% CONFORMANCE).\n');
 }
 
 runTests().catch((err) => {

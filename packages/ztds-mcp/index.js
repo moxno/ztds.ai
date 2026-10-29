@@ -248,73 +248,241 @@ function auditText(text) {
 const TOOLS = [
   {
     name: 'ztds_sanitize',
-    description: 'Sanitize sensitive PII and secrets in prompt text locally using ZTDS RFC v1.0 zero-egress invariants.',
+    title: 'Sanitize PII & Secrets Locally',
+    description: 'Redact sensitive PII, PHI, and credentials (API keys, emails, credit cards, IBANs, SSNs, IPv4 addresses, phone numbers) from raw UTF-8 text (up to 500,000 chars) locally in process RAM, replacing matches with deterministic reversible surrogate tokens (e.g., [EMAIL_TOKEN_1], [API_SECRET_TOKEN_1]). Stores cleartext-to-token mappings in the local session table keyed by sessionId (alphanumeric/hyphen string, default "default", up to 5,000 tokens across 500 LRU sessions) with zero network egress and no authentication required. Use before sending untrusted prompts or logs to an external LLM; do not use for read-only compliance inspection (use ztds_audit instead), and pair with ztds_restore afterward to rehydrate tokens in LLM output.',
+    annotations: {
+      title: 'Sanitize PII & Secrets Locally',
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false
+    },
     inputSchema: {
       type: 'object',
       properties: {
         text: {
           type: 'string',
-          description: 'The raw text to sanitize before sending to LLM context.'
+          description: 'Raw UTF-8 plain text, code, or log content (1 to 500,000 characters) to sanitize before sending to an LLM. Existing surrogate tokens in the input are preserved without collision.'
         },
         sessionId: {
           type: 'string',
-          description: 'Optional session identifier to preserve token consistency across conversational turns (default: "default").'
+          default: 'default',
+          description: 'Optional session identifier (e.g., "default" or conversation UUID) scoping the in-memory token map so identical entities receive the same token across turns. Defaults to "default" if omitted.'
         }
       },
       required: ['text']
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        sanitizedText: {
+          type: 'string',
+          description: 'The redacted text with sensitive values replaced by bracketed surrogate tokens (e.g., [EMAIL_TOKEN_1]).'
+        },
+        entitiesMasked: {
+          type: 'integer',
+          description: 'Total count of new sensitive entities tokenized during this call.'
+        },
+        categories: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'List of detected entity categories (API_SECRET, EMAIL, CREDIT_CARD, IBAN, SSN, IPV4, PHONE).'
+        },
+        executionUs: {
+          type: 'integer',
+          description: 'In-memory execution latency in microseconds.'
+        },
+        auditReceipt: {
+          type: 'string',
+          description: 'Deterministic SHA-256 cryptographic compliance receipt identifier (ZTDS-RECEIPT-<HEX>).'
+        },
+        zeroEgressAttested: {
+          type: 'boolean',
+          description: 'True when sanitization executed 100% locally in RAM with zero external network calls.'
+        }
+      },
+      required: ['sanitizedText', 'entitiesMasked', 'categories', 'executionUs', 'auditReceipt', 'zeroEgressAttested']
     }
   },
   {
     name: 'ztds_restore',
-    description: 'Restore authentic cleartext values into LLM-generated output from local in-memory token mapping.',
+    title: 'Restore Cleartext from Surrogate Tokens',
+    description: 'Rehydrate bracketed surrogate tokens (format [CATEGORY_TOKEN_N], e.g., [EMAIL_TOKEN_1]) in LLM-generated UTF-8 text back into their original cleartext values using the local in-memory session mapping. Executes read-only in process RAM without consuming or deleting the session map, requires no authentication, and safely leaves unknown tokens or expired/empty sessions unchanged (returning tokensRestored: 0). Prerequisite: must be called in the same server process with the matching sessionId (default "default") used during ztds_sanitize; use after receiving an LLM response, or call ztds_reset_session instead when ready to permanently purge session memory.',
+    annotations: {
+      title: 'Restore Cleartext from Surrogate Tokens',
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false
+    },
     inputSchema: {
       type: 'object',
       properties: {
         text: {
           type: 'string',
-          description: 'The sanitized response text received from the LLM containing surrogate tokens.'
+          description: 'The UTF-8 text or LLM response containing surrogate tokens (e.g., [EMAIL_TOKEN_1], [PHONE_TOKEN_1]) to resolve back to original cleartext.'
         },
         sessionId: {
           type: 'string',
-          description: 'Optional session identifier used during initial sanitization.'
+          default: 'default',
+          description: 'Optional session identifier matching the sessionId passed to ztds_sanitize. Defaults to "default" if omitted; if the session does not exist, input text is returned unmodified.'
         }
       },
       required: ['text']
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        restoredText: {
+          type: 'string',
+          description: 'The output text with recognized surrogate tokens replaced by their original cleartext values.'
+        },
+        tokensRestored: {
+          type: 'integer',
+          description: 'Number of surrogate token occurrences successfully resolved from the session map.'
+        },
+        executionUs: {
+          type: 'integer',
+          description: 'In-memory single-pass restoration latency in microseconds.'
+        }
+      },
+      required: ['restoredText', 'tokensRestored', 'executionUs']
     }
   },
   {
     name: 'ztds_audit',
-    description: 'Audit text for PII/secrets exposure against ZTDS RFC v1.0 standard and generate an attestation receipt.',
+    title: 'Audit Text for PII & Secret Exposure',
+    description: 'Inspect UTF-8 text, source code, or configuration content (up to 500,000 chars) for exposed PII and secrets locally in RAM, returning a risk classification (CLEAN, MODERATE, CRITICAL), per-category entity counts, and a SHA-256 content hash receipt. Runs strictly read-only with zero network egress, no authentication, and zero state persistence (ephemeral scan memory is purged immediately without modifying input text or creating session tokens). Use for pre-flight compliance verification and secret scanning when you do not need redacted output; prefer ztds_sanitize when you need reversible token replacement, or ztds_info for static protocol documentation.',
+    annotations: {
+      title: 'Audit Text for PII & Secret Exposure',
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false
+    },
     inputSchema: {
       type: 'object',
       properties: {
         text: {
           type: 'string',
-          description: 'The text to inspect for exposure risks.'
+          description: 'UTF-8 text, prompt, or configuration snippet (1 to 500,000 characters) to inspect for cleartext PII and credential exposure.'
         }
       },
       required: ['text']
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        riskLevel: {
+          type: 'string',
+          enum: ['CLEAN', 'MODERATE', 'CRITICAL'],
+          description: 'Exposure severity: CLEAN (0 findings), MODERATE (1-4 findings), or CRITICAL (5+ findings).'
+        },
+        totalEntitiesFound: {
+          type: 'integer',
+          description: 'Total count of PII and secret matches detected across all baseline categories.'
+        },
+        breakdown: {
+          type: 'object',
+          description: 'Map of detected category names (e.g., API_SECRET, EMAIL, IPV4) to their match counts.'
+        },
+        contentHash: {
+          type: 'string',
+          description: 'SHA-256 digest prefix of the inspected text (format "sha256:<16-hex-chars>").'
+        },
+        rfcCompliance: {
+          type: 'object',
+          description: 'Boolean attestation flags for the 4 ZTDS RFC v1.0 invariants.'
+        }
+      },
+      required: ['riskLevel', 'totalEntitiesFound', 'breakdown', 'contentHash', 'rfcCompliance']
     }
   },
   {
     name: 'ztds_info',
-    description: 'Retrieve ZTDS open specification details (RFC v1.0, IETF Standards Track) and enterprise upgrade guide.',
+    title: 'Get ZTDS Specification & Capabilities',
+    description: 'Retrieve static specification metadata for the ZTDS RFC v1.0 standard (IETF draft-sibiryakov-ztds-protocol), including the 4 core zero-egress invariants, academic DOI references, baseline entity categories, and 30-profile enterprise reference documentation. Executes read-only and offline with zero parameters, no side effects, no authentication, and no rate limits, returning both structured metadata and a formatted Markdown summary. Use when answering questions about ZTDS architecture, compliance invariants, or supported entity types; do not use to scan or redact text (use ztds_audit or ztds_sanitize instead).',
+    annotations: {
+      title: 'Get ZTDS Specification & Capabilities',
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false
+    },
     inputSchema: {
       type: 'object',
       properties: {}
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        specification: {
+          type: 'string',
+          description: 'Canonical protocol standard identifier and URL.'
+        },
+        ietfTrack: {
+          type: 'string',
+          description: 'Active IETF Internet-Draft identifier.'
+        },
+        doi: {
+          type: 'string',
+          description: 'Permanent academic DOI anchor (Zenodo/CERN).'
+        },
+        version: {
+          type: 'string',
+          description: 'Running ztds-mcp server version.'
+        },
+        invariants: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'List of the 4 normative ZTDS RFC v1.0 invariants.'
+        },
+        baselineCategories: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Supported baseline regex categories in the open reference engine.'
+        }
+      },
+      required: ['specification', 'ietfTrack', 'doi', 'version', 'invariants', 'baselineCategories']
     }
   },
   {
     name: 'ztds_reset_session',
-    description: 'Zeroize and purge volatile in-memory token mappings (Theorem 2 RAM zeroization).',
+    title: 'Purge In-Memory Session Token Mappings',
+    description: 'Irreversibly delete and zeroize local in-memory surrogate token mappings for a specific sessionId, or purge all active sessions in process RAM when sessionId is omitted. Destructive to volatile session state: once cleared, previously generated surrogate tokens (e.g., [EMAIL_TOKEN_1]) from that session can no longer be restored to cleartext by ztds_restore; requires no authentication and performs zero network or disk I/O. Use at the end of a sensitive workflow or conversation to enforce memory zeroization; do not call before ztds_restore has completed, and use ztds_sanitize to mask new inputs.',
+    annotations: {
+      title: 'Purge In-Memory Session Token Mappings',
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: true,
+      openWorldHint: false
+    },
     inputSchema: {
       type: 'object',
       properties: {
         sessionId: {
           type: 'string',
-          description: 'Optional session identifier to clear. If omitted, clears all sessions.'
+          description: 'Optional session identifier (e.g., "default") to purge. If omitted or empty, irreversibly clears token mappings across all active sessions in process memory.'
         }
       }
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        purged: {
+          type: 'boolean',
+          description: 'True confirming volatile in-memory token mappings were zeroized.'
+        },
+        scope: {
+          type: 'string',
+          description: 'Purged target scope: specific sessionId name or "all_sessions".'
+        },
+        activeSessionsRemaining: {
+          type: 'integer',
+          description: 'Number of active sessions remaining in RAM after zeroization.'
+        }
+      },
+      required: ['purged', 'scope', 'activeSessionsRemaining']
     }
   }
 ];
@@ -541,6 +709,14 @@ async function handleMessage(request) {
         id,
         result: {
           content: [{ type: 'text', text: textOutput }],
+          structuredContent: {
+            sanitizedText: res.sanitizedText,
+            entitiesMasked: res.entitiesMasked,
+            categories: res.categories,
+            executionUs: res.executionUs,
+            auditReceipt: res.auditReceipt,
+            zeroEgressAttested: res.zeroEgressAttested
+          },
           isError: false,
           _ztds: res
         }
@@ -561,6 +737,11 @@ async function handleMessage(request) {
         id,
         result: {
           content: [{ type: 'text', text: res.restoredText }],
+          structuredContent: {
+            restoredText: res.restoredText,
+            tokensRestored: res.tokensRestored,
+            executionUs: res.executionUs
+          },
           isError: false,
           _ztds: res
         }
@@ -581,6 +762,13 @@ async function handleMessage(request) {
         id,
         result: {
           content: [{ type: 'text', text: JSON.stringify(res, null, 2) }],
+          structuredContent: {
+            riskLevel: res.riskLevel,
+            totalEntitiesFound: res.totalEntitiesFound,
+            breakdown: res.breakdown,
+            contentHash: res.contentHash,
+            rfcCompliance: res.rfcCompliance
+          },
           isError: false,
           _ztds: res
         }
@@ -613,6 +801,19 @@ async function handleMessage(request) {
         id,
         result: {
           content: [{ type: 'text', text: infoText }],
+          structuredContent: {
+            specification: 'ZTDS RFC v1.0 (https://ztds.ai/standard/)',
+            ietfTrack: 'draft-sibiryakov-ztds-protocol',
+            doi: '10.5281/zenodo.22058770',
+            version: SERVER_VERSION,
+            invariants: [
+              'Zero External Egress Prior to Sanitization',
+              'Deterministic Context-Preserving Reversible Tokenization',
+              'Verifiable Ephemeral RAM Isolation (Theorem 2 Zeroization)',
+              'Continuous Subprocessor Exclusion (GDPR Art. 28 / Recital 26)'
+            ],
+            baselineCategories: Object.keys(PATTERNS)
+          },
           isError: false
         }
       };
@@ -625,6 +826,11 @@ async function handleMessage(request) {
         id,
         result: {
           content: [{ type: 'text', text: `Session memory purged. Theorem 2 volatile RAM zeroization verified.` }],
+          structuredContent: {
+            purged: true,
+            scope: args.sessionId || 'all_sessions',
+            activeSessionsRemaining: sessionStores.size
+          },
           isError: false
         }
       };
