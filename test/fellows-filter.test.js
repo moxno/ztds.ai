@@ -55,7 +55,7 @@ console.log('--> Test 1: Search & Track Filter Tabs DOM Integrity');
   console.log('    [PASS] All 6 track filter tabs and search controls verified.');
 }
 
-// Test 2: Fellows & Working Groups Parity with data/fellows.json (7 Verified + 1 Open Seat)
+// Test 2: Fellows & Working Groups Parity with data/fellows.json (6 Verified + 1 Open Seat)
 console.log('--> Test 2: Fellows Parity with data/fellows.json');
 {
   const cardRegex = /<article[^>]*id="([^"]+)"[^>]*data-track="([^"]+)"[^>]*>/g;
@@ -65,11 +65,11 @@ console.log('--> Test 2: Fellows Parity with data/fellows.json');
     cards.push({ id: match[1], track: match[2] });
   }
 
-  assert.strictEqual(fellowsData.fellows.length, 7, 'data/fellows.json must contain exactly 7 fellows/WGs');
-  assert.strictEqual(cards.length, 8, `fellows/index.html must contain exactly 8 cards (7 verified + 1 open seat), found ${cards.length}`);
+  assert.strictEqual(fellowsData.fellows.length, 6, 'data/fellows.json must contain exactly 6 fellows/WGs');
+  assert.strictEqual(cards.length, 7, `fellows/index.html must contain exactly 7 cards (6 verified + 1 open seat), found ${cards.length}`);
 
   const verifiedCards = cards.filter(c => c.id !== 'open-fellow-seat');
-  assert.strictEqual(verifiedCards.length, 7, 'Must have exactly 7 verified fellow cards');
+  assert.strictEqual(verifiedCards.length, 6, 'Must have exactly 6 verified fellow cards');
 
   // Verify every fellow in data/fellows.json has a matching card in HTML
   fellowsData.fellows.forEach(fellow => {
@@ -77,7 +77,7 @@ console.log('--> Test 2: Fellows Parity with data/fellows.json');
     assert(found, `Fellow "${fellow.slug}" from data/fellows.json must exist in fellows/index.html`);
   });
 
-  console.log('    [PASS] Exact parity confirmed: 7 verified fellows matching data/fellows.json + 1 open seat.');
+  console.log('    [PASS] Exact parity confirmed: 6 verified fellows matching data/fellows.json + 1 open seat.');
 }
 
 // Test 3: Fellowship Track Distribution
@@ -107,10 +107,10 @@ console.log('--> Test 3: Fellowship Track Distribution');
   assert.strictEqual(trackCounts.governance, 1, 'Expected 1 Architecture & Governance fellow (Ilya Sibiryakov)');
   assert.strictEqual(trackCounts.crypto, 2, 'Expected 2 Cryptography members (Cliford Fanyuy + WG-1 Cryptography)');
   assert.strictEqual(trackCounts.grc, 1, 'Expected 1 Legal & GRC member (WG-2 Legal & GRC)');
-  assert.strictEqual(trackCounts.systems, 3, 'Expected 3 Systems & WASM members (Cliford Fanyuy + Vishal Vijay Pawar + WG-3 Systems)');
+  assert.strictEqual(trackCounts.systems, 2, 'Expected 2 Systems & WASM members (Cliford Fanyuy + WG-3 Systems)');
   assert.strictEqual(trackCounts.profiles, 1, 'Expected 1 Industry Taxonomy member (WG-4 Industry Taxonomy)');
 
-  console.log('    [PASS] Track distribution verified: Governance (1), Crypto (2), GRC (1), Systems (3), Profiles (1).');
+  console.log('    [PASS] Track distribution verified: Governance (1), Crypto (2), GRC (1), Systems (2), Profiles (1).');
 }
 
 // Test 4: Card ID and Slug Uniqueness
@@ -124,10 +124,10 @@ console.log('--> Test 4: Zero Duplicate IDs or Slugs');
   }
 
   const uniqueIds = new Set(ids);
-  assert.strictEqual(ids.length, 8, `Expected 8 total cards, found ${ids.length}`);
-  assert.strictEqual(uniqueIds.size, 8, 'All 8 card IDs must be completely unique');
+  assert.strictEqual(ids.length, 7, `Expected 7 total cards, found ${ids.length}`);
+  assert.strictEqual(uniqueIds.size, 7, 'All 7 card IDs must be completely unique');
 
-  console.log('    [PASS] 8 unique article card IDs verified with zero collisions.');
+  console.log('    [PASS] 7 unique article card IDs verified with zero collisions.');
 }
 
 // Test 5: Client-Side Controller Functions & Hash Deep-Linking
