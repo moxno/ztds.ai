@@ -296,8 +296,7 @@ function generateProfileHtml(company) {
               "@type": "Organization",
               "name": "ZTDS AI Consortium",
               "url": "https://ztds.ai"
-            },
-            "validFrom": "${verifiedDate}"
+            }
           },
           "knowsAbout": [
             "${escapeHtml(industry)}",

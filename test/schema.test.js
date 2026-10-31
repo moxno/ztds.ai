@@ -142,7 +142,10 @@ for (const page of articlePages) {
   while ((match = regex.exec(html)) !== null) {
     const data = JSON.parse(match[1]);
     const items = data['@graph'] || [data];
-    const article = items.find(e => ['TechArticle', 'ScholarlyArticle'].includes(e['@type']));
+    const article = items.find(e => {
+      const types = Array.isArray(e['@type']) ? e['@type'] : [e['@type']];
+      return types.some(t => ['TechArticle', 'ScholarlyArticle', 'Article'].includes(t));
+    });
     if (article) {
       assert(article.datePublished, `datePublished missing in ${page}`);
       assert(article.dateModified, `dateModified missing in ${page}`);
@@ -248,4 +251,60 @@ for (const page of prodPages) {
 }
 console.log(`    [PASS] All ${faqQuestionsVerified} FAQPage JSON-LD questions verified against visible DOM markup.`);
 
-console.log('\n[SUMMARY] ALL 6 SCHEMA & GEO KNOWLEDGE GRAPH TESTS PASSED.\n');
+// Test 7: Ahrefs Schema.org & Inlink Guard (Zero Orphan/Single-Inlink & AI Discoverability)
+console.log('--> Test 7: Schema.org Strict Type Guard, Article AI Discoverability & Sitemap >=2 Inlinks');
+{
+  const rootDir = path.join(__dirname, '..');
+  const sitemapXml = fs.readFileSync(path.join(rootDir, 'sitemap.xml'), 'utf8');
+  const sitemapUrls = [...sitemapXml.matchAll(/<loc>https:\/\/ztds\.ai([^<]*)<\/loc>/g)].map(m => m[1]);
+
+  function walkHtml(d) {
+    let res = [];
+    for (const f of fs.readdirSync(d, { withFileTypes: true })) {
+      if (['.git', 'node_modules', '.vercel', 'public'].includes(f.name)) continue;
+      const p = path.join(d, f.name);
+      if (f.isDirectory()) res.push(...walkHtml(p));
+      else if (f.name.endsWith('.html') && !f.name.startsWith('404')) res.push(p);
+    }
+    return res;
+  }
+
+  const allHtmlFiles = walkHtml(rootDir).filter(
+    f => !f.endsWith('memo.html') && !f.endsWith('protocol-01.html') && !f.endsWith('protocol-02.html') && !f.endsWith('order-form.html')
+  );
+
+  for (const f of allHtmlFiles) {
+    const rel = path.relative(rootDir, f);
+    const html = fs.readFileSync(f, 'utf8');
+    assert(!html.includes('"@type": "SecurityService"'), `Invalid Schema.org type SecurityService in ${rel}`);
+    assert(!html.includes('"billingDuration"'), `Invalid Offer.billingDuration property in ${rel}`);
+    assert(!html.includes('"validFrom"'), `Invalid EducationalOccupationalCredential.validFrom property in ${rel}`);
+    const regex = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi;
+    let m;
+    while ((m = regex.exec(html)) !== null) {
+      const data = JSON.parse(m[1]);
+      const items = data['@graph'] || [data];
+      for (const node of items) {
+        const types = Array.isArray(node['@type']) ? node['@type'] : [node['@type']];
+        if (types.includes('TechArticle') || types.includes('ScholarlyArticle')) {
+          assert(types.includes('Article'), `TechArticle/ScholarlyArticle in ${rel} must include "Article" in @type array for AI Discoverability`);
+        }
+      }
+    }
+  }
+
+  for (const u of sitemapUrls) {
+    let inlinks = 0;
+    for (const f of allHtmlFiles) {
+      const relUrl = '/' + path.relative(rootDir, f).replace(/index\.html$/, '');
+      if (relUrl === u) continue;
+      const content = fs.readFileSync(f, 'utf8');
+      const re = new RegExp(`href=["'](?:https://ztds\\.ai)?${u.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:#[^"']*)?["']`, 'i');
+      if (re.test(content)) inlinks++;
+    }
+    assert(inlinks >= 2, `Sitemap URL ${u} has only ${inlinks} incoming internal links (requires >= 2 to prevent Ahrefs orphan/single-inlink warnings)`);
+  }
+  console.log(`    [PASS] All ${allHtmlFiles.length} HTML files and ${sitemapUrls.length} sitemap URLs verified (>= 2 inlinks, 0 invalid Schema.org properties).`);
+}
+
+console.log('\n[SUMMARY] ALL 7 SCHEMA & GEO KNOWLEDGE GRAPH TESTS PASSED.\n');
