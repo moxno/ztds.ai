@@ -12,6 +12,7 @@
 [![WAN Egress](https://img.shields.io/badge/Sensitive_WAN_Egress-0.00_Bytes-emerald.svg)](https://ztds.ai/scanner/)
 [![Smithery Badge](https://smithery.ai/badge/ilsimox/ztds-mcp)](https://smithery.ai/servers/ilsimox/ztds-mcp)
 [![MCPRush Grade A](https://img.shields.io/badge/MCPRush-Grade_A_Verified-10b981.svg)](https://mcprush.com/to/ztds-mcp?ref=badge)
+[![XERJ Corpus Hub contributor](https://hub.xerj.org/contributors/moxno/badge.svg)](https://hub.xerj.org/contributors/moxno)
 
 [![Ztds MCP server](https://mcprush.com/badge/ztds-mcp/card.svg)](https://mcprush.com/to/ztds-mcp?ref=badge)
 
