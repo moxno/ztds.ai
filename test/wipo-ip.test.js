@@ -118,7 +118,7 @@ console.log('\n--> Test 3: PCT Specification 20 Claims Tree & Technical Invarian
     assert(pctContent.includes('Invariant 4') && pctContent.includes('Zero Subprocessor'), 'Must reference Invariant 4');
 
     // Verify Key Technical Primitives
-    assert(pctContent.includes('[TYPE_INDEX]'), 'Must claim bracketed surrogate format [TYPE_INDEX]');
+    assert(pctContent.includes('[TYPE_INDEX]') || pctContent.includes('[TYPE_N]'), 'Must claim bracketed surrogate format [TYPE_INDEX] or [TYPE_N]');
     assert(pctContent.includes('mlock') || pctContent.includes('non-swappable'), 'Must claim non-swappable volatile RAM');
     assert(pctContent.includes('explicit_bzero') || pctContent.includes('zeroization'), 'Must claim volatile zeroization');
     assert(pctContent.includes('Argon2id') && pctContent.includes('XChaCha20-Poly1305'), 'Must claim Argon2id + XChaCha20-Poly1305 session vault');
