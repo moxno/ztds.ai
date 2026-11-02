@@ -31,6 +31,7 @@ const mirrorPairs = [
   ['.well-known/security.txt', 'public/.well-known/security.txt'],
   ['.well-known/mcp.json', 'public/.well-known/mcp.json'],
   ['.well-known/agent.json', 'public/.well-known/agent.json'],
+  ['.well-known/agent-card.json', 'public/.well-known/agent-card.json'],
   ['.well-known/ai-plugin.json', 'public/.well-known/ai-plugin.json'],
   ['ciso/memo/index.html', 'ciso/memo.html'],
   ['ietf/draft-sibiryakov-ztds-protocol-01/index.html', 'ietf/draft-sibiryakov-ztds-protocol-01.html'],
