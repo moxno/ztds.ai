@@ -132,7 +132,7 @@ const PAGES = [
       ['Collection and export', 'Operational records contain direct identifiers that the dataset does not need.', 'Tokenize identifiers at export time so the dataset carries surrogates only.'],
       ['Preparation and annotation', 'Annotators and tools see personal data unnecessarily.', 'Annotation proceeds on tokenized text; the mapping stays with the data controller.'],
       ['Fine-tuning and evaluation', 'External services receive records for training or testing.', 'The external service receives tokens, not original values (Invariants 1 and 4).'],
-      ['Inference-time inputs', 'Live prompts to a high-risk system include personal data.', 'Tokenization before egress reduces what the system provider can retain.']
+      ['Inference-time inputs (outside Article 10 scope)', 'Live prompts to a deployed system include personal data. Article 10 addresses training, validation, and testing data, not live inputs.', 'Tokenization before egress reduces what a provider can retain, under GDPR rather than Article 10.']
     ],
     apply: [
       'Use the four invariants as the sanitization contract for dataset work:',
@@ -142,6 +142,7 @@ const PAGES = [
     limits: [
       'Article 10 duties rest on the provider of the high-risk system. A tool does not transfer or discharge them.',
       'Sanitization does not address representativeness, bias examination, or error assessment of datasets.',
+      'Article 10(5) allows providers to process special categories of personal data under safeguards where needed for bias detection and correction. Removing identifiers can conflict with that purpose, so choose the sanitization profile per dataset.',
       'Whether a given system is high-risk is a legal classification that requires its own analysis.',
       'This page is not a conformity assessment and carries no authority from EU institutions.'
     ],
@@ -213,7 +214,7 @@ const PAGES = [
     lead: 'The HIPAA Safe Harbor method in 45 CFR 164.514(b)(2) treats health information as de-identified when 18 listed identifier categories are removed and the covered entity has no actual knowledge that the remainder could identify a person. This page explains how that applies when clinical text is prepared for a language model.',
     summary: [
       'Safe Harbor is a rule-based method. It lists identifier categories of the individual and of relatives, employers, and household members that must be removed, including names, geographic subdivisions smaller than a state, date elements other than year, contact numbers, and record numbers.',
-      'Section 164.514(c) allows a covered entity to assign a code to permit re-identification, provided the code is not derived from information about the individual and is not disclosed. Random per-session surrogates held only in local memory fit that constraint; surrogates derived from the original values would not.'
+      'Section 164.514(c) allows a covered entity to assign a code to permit re-identification, provided the code is not derived from or related to information about the individual, is not otherwise capable of being translated to identify the individual, and the covered entity does not disclose the mechanism for re-identification. Random per-session surrogates whose mapping is held only in local memory fit that constraint; surrogates derived from the original values would not.'
     ],
     mapTitle: 'Identifier Handling in Clinical Text',
     mapHeaders: ['Identifier category', 'Typical form in prompts', 'Required handling'],
@@ -241,7 +242,7 @@ const PAGES = [
     ],
     faq: [
       { q: 'What does the HIPAA Safe Harbor method require?', a: 'Under 45 CFR 164.514(b)(2), the covered entity removes 18 listed categories of identifiers and has no actual knowledge that the remaining information could identify an individual. If both hold, the information is treated as de-identified.' },
-      { q: 'Can reversible surrogates be used under Safe Harbor?', a: 'A code that permits re-identification is allowed under 164.514(c) if it is not derived from information about the individual and is not disclosed. Random session surrogates stored only on the covered entity side meet that design constraint.' },
+      { q: 'Can reversible surrogates be used under Safe Harbor?', a: 'A code that permits re-identification is allowed under 164.514(c) if it is not derived from or related to information about the individual and the covered entity does not disclose the mechanism for re-identification. Random session surrogates whose mapping stays only on the covered entity side meet that design constraint.' },
       { q: 'Is Safe Harbor enough for free-text clinical notes?', a: 'Not always. Free text can carry identifying details beyond the listed categories. Where residual risk remains, the expert determination method or additional review is the appropriate route.' }
     ],
     related: [REL_COMP, REL_STD, REL_SCAN]
