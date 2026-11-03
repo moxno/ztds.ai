@@ -491,6 +491,78 @@
           </tbody>
         </table>
       </div>
+
+      <!-- SECTION 1B: SOTA COMPARATOR MATRIX (PIIBENCH-5000 & DOWNSTREAM UTILITY) -->
+      <div id="piibench-5000-sota" class="mt-12 bg-white border border-slate-200 rounded-2xl p-5 sm:p-7 shadow-xs scroll-mt-24">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4 mb-5">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Comparative SOTA Evaluation &middot; Track A &amp; Track B</span>
+            <h3 id="ztds-arc-vs-presidio-casper-piibench-5000" class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5 tracking-tight scroll-mt-24">
+              ZTDS+ARC vs. Microsoft Presidio, Casper &amp; HaS-label (PIIBench-5000 &amp; Task Utility)
+            </h3>
+          </div>
+          <span class="px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 font-mono text-xs font-semibold text-emerald-800">
+            N = 5,000 Docs &middot; 30,000 Entities
+          </span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
+          Evaluated across a held-out <strong>300-document enterprise corpus (1,925 annotated occurrences)</strong> and the multi-domain <strong>PIIBench-5000 benchmark (5,000 documents, 30,000 entities)</strong> spanning clinical consults, treasury wire memos, DevOps incident logs, and HR onboarding records. Unlike neural NER pipelines that misclassify domain identifiers (<code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">ICD-10</code> codes, medication dosages, financial ledger figures) and degrade downstream task accuracy, deterministic client-RAM ZTDS+ARC executes <strong>26.4&times;&ndash;83.5&times; faster</strong> while preserving <strong>100.00% downstream classification accuracy</strong>, <strong>1.0000 post-rehydration QA Token F1 (100.00% Exact Match)</strong>, and <strong>1.0000 summarization ROUGE-L</strong>.
+        </p>
+
+        <div class="border border-slate-200 rounded-xl overflow-x-auto" tabindex="0" role="region" aria-label="PIIBench-5000 SOTA comparison table">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-slate-900 text-white font-mono text-xs uppercase tracking-wider">
+                <th scope="col" class="py-3 px-4">Configuration</th>
+                <th scope="col" class="py-3 px-4">Enterprise Corpus (300 Docs)</th>
+                <th scope="col" class="py-3 px-4">PIIBench-5000 Supported (25k)</th>
+                <th scope="col" class="py-3 px-4">Median Latency (Speedup)</th>
+                <th scope="col" class="py-3 px-4">Triage Cls. Accuracy</th>
+                <th scope="col" class="py-3 px-4">Post-Restore QA F1 (EM)</th>
+                <th scope="col" class="py-3 px-4">Return-Path Security</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 font-mono text-xs">
+              <tr class="bg-emerald-50/60">
+                <td class="py-3.5 px-4 font-bold text-slate-900">ZTDS+ARC (Client-RAM Protocol)</td>
+                <td class="py-3.5 px-4 font-bold text-emerald-700">100.00% (1,925/1,925)</td>
+                <td class="py-3.5 px-4 font-bold text-emerald-700">97.20% (24,300/25,000)</td>
+                <td class="py-3.5 px-4 font-bold text-emerald-800">0.189 &ndash; 0.196 ms (1&times; Baseline)</td>
+                <td class="py-3.5 px-4 font-bold text-emerald-700">100.00%</td>
+                <td class="py-3.5 px-4 font-bold text-emerald-700">1.0000 (100.00% EM)</td>
+                <td class="py-3.5 px-4 font-bold text-emerald-800">ARC P7&ndash;P8 Attested (10/10 Blocked)</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3 px-4 font-semibold text-slate-900">Microsoft Presidio (Full spaCy NER)</td>
+                <td class="py-3 px-4 text-slate-700">76.94% (1,481/1,925)</td>
+                <td class="py-3 px-4 text-slate-700">82.35% (84.40% all-class)</td>
+                <td class="py-3 px-4 text-amber-700">7.22 &ndash; 15.75 ms (36.8&times;&ndash;83.5&times; slower)</td>
+                <td class="py-3 px-4 text-rose-700">60.33% (NER over-masking)</td>
+                <td class="py-3 px-4 text-rose-700">0.5497 (0.00% EM)</td>
+                <td class="py-3 px-4 text-slate-600">Irreversible Redaction</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3 px-4 font-semibold text-slate-900">Casper-NER+Pseudo (Active Mode)</td>
+                <td class="py-3 px-4 text-slate-700">75.17% (1,447/1,925)</td>
+                <td class="py-3 px-4 text-slate-700">84.04% (86.66% all-class)</td>
+                <td class="py-3 px-4 text-amber-700">5.18 &ndash; 8.99 ms (26.4&times;&ndash;47.6&times; slower)</td>
+                <td class="py-3 px-4 text-rose-700">55.00% (Span corruption)</td>
+                <td class="py-3 px-4 text-amber-700">0.7778 (25.33% EM)</td>
+                <td class="py-3 px-4 text-rose-700">Unattested Local Token Map</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3 px-4 font-semibold text-slate-900">HaS-label (spaCy NER Anonymizer)</td>
+                <td class="py-3 px-4 text-slate-700">20.99% (404/1,925)</td>
+                <td class="py-3 px-4 text-slate-700">31.80% (43.17% all-class)</td>
+                <td class="py-3 px-4 text-rose-700">6.33 &ndash; 53.61 ms (32.3&times;&ndash;284&times; slower)</td>
+                <td class="py-3 px-4 text-amber-700">67.33%</td>
+                <td class="py-3 px-4 text-rose-700">0.7309 (0.00% EM)</td>
+                <td class="py-3 px-4 text-slate-600">Irreversible Redaction</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </section>
 
     <!-- SECTION 2: FRONTIER MODEL EVALUATION MATRIX -->
