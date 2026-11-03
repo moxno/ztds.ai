@@ -132,7 +132,7 @@ const PAGES = [
       ['Collection and export', 'Operational records contain direct identifiers that the dataset does not need.', 'Tokenize identifiers at export time so the dataset carries surrogates only.'],
       ['Preparation and annotation', 'Annotators and tools see personal data unnecessarily.', 'Annotation proceeds on tokenized text; the mapping stays with the data controller.'],
       ['Fine-tuning and evaluation', 'External services receive records for training or testing.', 'The external service receives tokens, not original values (Invariants 1 and 4). Special-category data processed for bias detection under Article 10(5) must not be transmitted to or accessed by other parties, so keep that processing local.'],
-      ['Inference-time inputs (outside Article 10 scope)', 'Live prompts to a deployed system include personal data. Article 10 addresses training, validation, and testing data, not live inputs.', 'Tokenization before egress reduces what a provider can retain, under GDPR rather than Article 10.']
+      ['Inference-time inputs (not an Article 10 data set)', 'Live prompts to a deployed system include personal data. Article 10 addresses training, validation, and testing data sets. For input data, the Act separately requires a deployer that controls it to ensure it is relevant and sufficiently representative (Article 26(4)), which is not a privacy requirement.', 'Tokenization before egress reduces what a provider can retain. That is a GDPR matter, not an Article 10 or Article 26(4) requirement.']
     ],
     apply: [
       'Use the four invariants as the sanitization contract for dataset work:',
