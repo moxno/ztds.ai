@@ -123,7 +123,7 @@ const PAGES = [
     h1: 'EU AI Act Article 10 Data Governance: <span class="text-emerald-400">What Sanitization Contributes</span>',
     lead: 'Article 10 of the EU AI Act sets data and data governance requirements for high-risk AI systems that use training, validation, and testing datasets. Sanitizing personal data before it enters a dataset or a model pipeline is one practical way to support those practices. It does not replace the provider obligations.',
     summary: [
-      'Article 10 requires providers of high-risk AI systems to apply appropriate data governance and management practices to the datasets they use, including attention to data collection, preparation operations, and examination for suitability.',
+      'Article 10 requires providers of high-risk AI systems to apply appropriate data governance and management practices to the datasets they use, including attention to data collection processes and the origin of data, data-preparation operations such as annotation, labelling, cleaning, and aggregation, an assessment of the availability, quantity, and suitability of the data sets, and examination for possible biases. These duties apply to training, validation, and testing data sets where a high-risk system is developed using techniques that train AI models; for systems that do not train models, they apply to the testing data sets.',
       'Where datasets are assembled from operational records, removing direct identifiers before the data reaches annotation tools, fine-tuning jobs, or external model services reduces the personal data in scope. ZTDS provides that step as a deterministic, reversible, client-side operation.'
     ],
     mapTitle: 'Dataset Lifecycle Mapping',
@@ -131,7 +131,7 @@ const PAGES = [
     mapRows: [
       ['Collection and export', 'Operational records contain direct identifiers that the dataset does not need.', 'Tokenize identifiers at export time so the dataset carries surrogates only.'],
       ['Preparation and annotation', 'Annotators and tools see personal data unnecessarily.', 'Annotation proceeds on tokenized text; the mapping stays with the data controller.'],
-      ['Fine-tuning and evaluation', 'External services receive records for training or testing.', 'The external service receives tokens, not original values (Invariants 1 and 4).'],
+      ['Fine-tuning and evaluation', 'External services receive records for training or testing.', 'The external service receives tokens, not original values (Invariants 1 and 4). Special-category data processed for bias detection under Article 10(5) must not be transmitted to or accessed by other parties, so keep that processing local.'],
       ['Inference-time inputs (outside Article 10 scope)', 'Live prompts to a deployed system include personal data. Article 10 addresses training, validation, and testing data, not live inputs.', 'Tokenization before egress reduces what a provider can retain, under GDPR rather than Article 10.']
     ],
     apply: [
@@ -142,7 +142,7 @@ const PAGES = [
     limits: [
       'Article 10 duties rest on the provider of the high-risk system. A tool does not transfer or discharge them.',
       'Sanitization does not address representativeness, bias examination, or error assessment of datasets.',
-      'Article 10(5) allows providers to process special categories of personal data under safeguards where needed for bias detection and correction. Removing identifiers can conflict with that purpose, so choose the sanitization profile per dataset.',
+      'Article 10(5) allows providers to exceptionally process special categories of personal data where strictly necessary for bias detection and correction, only if the purpose cannot be met with synthetic or anonymised data and subject to safeguards that include pseudonymisation and a ban on transmission to other parties. Removing identifiers can conflict with that purpose, so choose the sanitization profile per dataset.',
       'Whether a given system is high-risk is a legal classification that requires its own analysis.',
       'This page is not a conformity assessment and carries no authority from EU institutions.'
     ],
@@ -166,7 +166,7 @@ const PAGES = [
     h1: 'GDPR Articles 25 and 32 for AI Prompts: <span class="text-emerald-400">Pseudonymization Before Egress</span>',
     lead: 'When staff or agents send personal data to an AI provider, GDPR obligations on minimization, data protection by design, and security of processing apply to the controller. Replacing identifiers with surrogates in client memory before transmission is a technical measure that supports those obligations. It does not turn personal data into anonymous data.',
     summary: [
-      'Article 5(1)(c) requires data minimisation. Article 25 requires data protection by design and by default. Article 32 requires appropriate technical and organisational measures and names pseudonymisation as an example.',
+      'Article 5(1)(c) requires data minimisation. Article 25 requires data protection by design and by default and names pseudonymisation as an example of an appropriate measure. Article 32 requires appropriate technical and organisational measures and names pseudonymisation as an example.',
       'ZTDS tokenizes identifiers in client memory so the provider receives surrogates. Because the controller can reverse the mapping, the result is pseudonymised data, which Recital 26 says remains personal data when additional information exists. The benefit is a smaller disclosure to the provider and a stronger Article 32 posture, not an exemption.'
     ],
     mapTitle: 'Article-Level Mapping',
@@ -214,13 +214,13 @@ const PAGES = [
     lead: 'The HIPAA Safe Harbor method in 45 CFR 164.514(b)(2) treats health information as de-identified when 18 listed identifier categories are removed and the covered entity has no actual knowledge that the remainder could identify a person. This page explains how that applies when clinical text is prepared for a language model.',
     summary: [
       'Safe Harbor is a rule-based method. It lists identifier categories of the individual and of relatives, employers, and household members that must be removed, including names, geographic subdivisions smaller than a state, date elements other than year, contact numbers, and record numbers.',
-      'Section 164.514(c) allows a covered entity to assign a code to permit re-identification, provided the code is not derived from or related to information about the individual, is not otherwise capable of being translated to identify the individual, and the covered entity does not disclose the mechanism for re-identification. Random per-session surrogates whose mapping is held only in local memory fit that constraint; surrogates derived from the original values would not.'
+      'Section 164.514(c) allows a covered entity to assign a code to permit re-identification, provided the code is not derived from or related to information about the individual and is not otherwise capable of being translated to identify the individual, and the covered entity does not use or disclose the code for any other purpose and does not disclose the mechanism for re-identification. Random per-session surrogates whose mapping is held only in local memory fit that constraint; surrogates derived from the original values would not.'
     ],
     mapTitle: 'Identifier Handling in Clinical Text',
     mapHeaders: ['Identifier category', 'Typical form in prompts', 'Required handling'],
     mapRows: [
       ['Names', 'Patient, relative, and clinician names in notes.', 'Replace with a surrogate such as [NAME_1].'],
-      ['Dates', 'Admission, discharge, and birth dates.', 'Remove or generalize to year only, per the rule.'],
+      ['Dates', 'Admission, discharge, and birth dates.', 'Remove all date elements except year. Ages over 89, and any year indicating such an age, must be removed or aggregated into a single category of 90 or older.'],
       ['Contact and record numbers', 'Telephone, email, medical record and account numbers.', 'Replace with typed surrogates.'],
       ['Geographic data', 'Street addresses, small-area locations.', 'Remove below the state level except as the rule permits.'],
       ['Free-text context', 'Narrative details that could single out a person.', 'Specialized profiles reduce risk; residual review remains required.']
@@ -242,7 +242,7 @@ const PAGES = [
     ],
     faq: [
       { q: 'What does the HIPAA Safe Harbor method require?', a: 'Under 45 CFR 164.514(b)(2), the covered entity removes 18 listed categories of identifiers and has no actual knowledge that the remaining information could identify an individual. If both hold, the information is treated as de-identified.' },
-      { q: 'Can reversible surrogates be used under Safe Harbor?', a: 'A code that permits re-identification is allowed under 164.514(c) if it is not derived from or related to information about the individual and the covered entity does not disclose the mechanism for re-identification. Random session surrogates whose mapping stays only on the covered entity side meet that design constraint.' },
+      { q: 'Can reversible surrogates be used under Safe Harbor?', a: 'A code that permits re-identification is allowed under 164.514(c) if it is not derived from or related to information about the individual, is not otherwise capable of being translated to identify the individual, the code is not used or disclosed for other purposes, and the covered entity does not disclose the mechanism for re-identification. Random session surrogates whose mapping stays only on the covered entity side meet that design constraint.' },
       { q: 'Is Safe Harbor enough for free-text clinical notes?', a: 'Not always. Free text can carry identifying details beyond the listed categories. Where residual risk remains, the expert determination method or additional review is the appropriate route.' }
     ],
     related: [REL_COMP, REL_STD, REL_SCAN]
