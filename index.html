@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zero-Trust Data Sanitization (ZTDS) Open Standard | ZTDS.ai</title>
-  <meta name="description" content="Open standard for in-memory zero-trust data sanitization in AI &amp; RAG workflows. Eliminate credential leaks with sub-millisecond local tokenization.">
+  <title>ZTDS™: Client-Side AI Data Sanitization &amp; PII Standard | ZTDS.ai</title>
+  <meta name="description" content="ZTDS™ (Zero-Trust Data Sanitization) is the open IETF standard and RFC v1.0 protocol for client-side PII redaction, zero data egress, and AI DLP compliance.">
   <meta name="keywords" content="Zero Trust Data Sanitization, ZTDS, Model Context Protocol, MCP privacy, Cursor IDE data leak, Claude Desktop MCP, in-memory PII de-identification, GDPR Article 28 processor path elimination, GDPR Article 17 vector database, LangChain privacy, ztds-mcp, ztds-audit">
   <link rel="canonical" href="https://ztds.ai/">
   <link rel="alternate" hreflang="en" href="https://ztds.ai/">
@@ -28,16 +28,16 @@
   <meta property="og:site_name" content="ZTDS.ai">
   <meta property="og:locale" content="en_US">
   <meta property="og:url" content="https://ztds.ai/">
-  <meta property="og:title" content="Zero-Trust Data Sanitization (ZTDS) Open Standard | ZTDS.ai">
-  <meta property="og:description" content="Open standard for in-memory zero-trust data sanitization in AI &amp; RAG workflows. Eliminate credential leaks with sub-millisecond local tokenization.">
+  <meta property="og:title" content="ZTDS™: Client-Side AI Data Sanitization &amp; PII Standard | ZTDS.ai">
+  <meta property="og:description" content="ZTDS™ (Zero-Trust Data Sanitization) is the open IETF standard and RFC v1.0 protocol for client-side PII redaction, zero data egress, and AI DLP compliance.">
   <meta property="og:image" content="https://ztds.ai/assets/img/og/og-default.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Zero-Trust Data Sanitization (ZTDS) Open Standard | ZTDS.ai">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Zero-Trust Data Sanitization (ZTDS) Open Standard | ZTDS.ai">
-  <meta name="twitter:description" content="Open standard for in-memory zero-trust data sanitization in AI &amp; RAG workflows. Eliminate credential leaks with sub-millisecond local tokenization.">
+  <meta name="twitter:title" content="ZTDS™: Client-Side AI Data Sanitization &amp; PII Standard | ZTDS.ai">
+  <meta name="twitter:description" content="ZTDS™ (Zero-Trust Data Sanitization) is the open IETF standard and RFC v1.0 protocol for client-side PII redaction, zero data egress, and AI DLP compliance.">
   <meta name="twitter:image" content="https://ztds.ai/assets/img/og/og-default.png">
   <meta name="twitter:image:alt" content="Zero-Trust Data Sanitization (ZTDS) Open Standard | ZTDS.ai">
 
@@ -2217,7 +2217,9 @@ response = llm.invoke(<span class="text-emerald-300">"Customer Jane Doe wire IBA
           <div class="font-bold text-xs uppercase tracking-wider text-slate-900 font-mono mb-4">RFC Specification</div>
           <ul class="space-y-2.5 text-xs">
             <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
-            <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track (draft-02)</a></li>
+            <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track Hub</a></li>
+            <li><a href="/ietf/draft-sibiryakov-ztds-protocol-02/" class="hover:text-slate-900 transition-colors">IETF Draft-02 Protocol Spec</a></li>
+            <li><a href="/ietf/draft-sibiryakov-ztds-protocol-01/" class="hover:text-slate-900 transition-colors">IETF Draft-01 Archival Spec</a></li>
             <li><a href="/benchmarks/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">AI Safety &amp; Latency Benchmarks &rarr;</a></li>
             <li><a href="/whitepaper/" class="hover:text-slate-900 transition-colors">Research Whitepaper (DOIs)</a></li>
             <li><a href="/evidentiary-sovereignty/" class="hover:text-slate-900 transition-colors">Evidentiary Sovereignty</a></li>
@@ -2235,6 +2237,8 @@ response = llm.invoke(<span class="text-emerald-300">"Customer Jane Doe wire IBA
           <ul class="space-y-2.5 text-xs">
             <li><a href="/sdk/" class="hover:text-slate-900 transition-colors">Developer SDK Docs</a></li>
             <li><a href="/mcp/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Model Context Protocol (MCP) &rarr;</a></li>
+            <li><a href="/blueprints/" class="hover:text-slate-900 transition-colors">AI, RAG &amp; LangChain Blueprints</a></li>
+            <li><a href="/compliance/" class="hover:text-slate-900 transition-colors">GDPR, HIPAA &amp; NIST Compliance</a></li>
             <li><a href="/inspector/" class="hover:text-slate-900 transition-colors">Interactive Pipeline Simulator</a></li>
             <li><a href="/scanner/" class="hover:text-slate-900 transition-colors">Perimeter Network Scanner</a></li>
             <li><a href="/verify/" class="hover:text-slate-900 transition-colors">Ed25519 Certificate Validator</a></li>
@@ -2264,13 +2268,35 @@ response = llm.invoke(<span class="text-emerald-300">"Customer Jane Doe wire IBA
           <ul class="space-y-2.5 text-xs">
             <li><a href="/registry/" class="hover:text-slate-900 transition-colors">Verified Products Directory</a></li>
             <li><a href="/companies/" class="hover:text-slate-900 transition-colors">Corporate Adopter Pool</a></li>
+            <li><a href="/companies/privacyscrubber/" class="hover:text-slate-900 transition-colors">PrivacyScrubber Reference Engine</a></li>
+            <li><a href="/companies/brandmeweb/" class="hover:text-slate-900 transition-colors">BrandMeWeb R&amp;D Studio</a></li>
+            <li><a href="/companies/learningcenterusa/" class="hover:text-slate-900 transition-colors">LearningCenterUsa Voice AI</a></li>
             <li><a href="/fellows/" class="hover:text-slate-900 transition-colors">Global Fellows &amp; Experts</a></li>
+            <li><a href="/fellows/ilya-sibiryakov/" class="hover:text-slate-900 transition-colors">Ilya Sibiryakov (Chief Architect)</a></li>
+            <li><a href="/fellows/cliford-fanyuy/" class="hover:text-slate-900 transition-colors">Cliford Fanyuy (Academic Fellow)</a></li>
             <li><a href="/case-studies/" class="hover:text-slate-900 transition-colors">Enterprise Case Studies</a></li>
             <li><a href="/agency/" class="hover:text-slate-900 transition-colors">Enterprise Advisory &amp; Retainer</a></li>
             <li><a href="/apply/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">Apply for Verification &rarr;</a></li>
-            <li class="pt-2 text-xs text-slate-400 leading-tight">GitOps automated attestation.</li>
           </ul>
         </div>
+      </div>
+
+      <!-- Sector Reference Blueprints Index -->
+      <div class="mt-6 pb-6 border-b border-slate-100 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500">
+        <span class="font-bold uppercase tracking-wider text-slate-700 font-mono">Sector Reference Blueprints:</span>
+        <a href="/companies/apex-health-ai/" class="hover:text-slate-900 transition-colors">Healthcare HIPAA (Apex)</a>
+        <span>&middot;</span>
+        <a href="/companies/lex-veritas-legal/" class="hover:text-slate-900 transition-colors">Legal M&amp;A (Lex Veritas)</a>
+        <span>&middot;</span>
+        <a href="/companies/aegis-fintech/" class="hover:text-slate-900 transition-colors">Banking PCI-DSS (Aegis)</a>
+        <span>&middot;</span>
+        <a href="/companies/cloudscale-saas/" class="hover:text-slate-900 transition-colors">B2B SaaS (CloudScale)</a>
+        <span>&middot;</span>
+        <a href="/companies/valkyrie-defense/" class="hover:text-slate-900 transition-colors">Defense ITAR (Valkyrie)</a>
+        <span>&middot;</span>
+        <a href="/companies/cybershield-siem/" class="hover:text-slate-900 transition-colors">SecOps SIEM (CyberShield)</a>
+        <span>&middot;</span>
+        <a href="/companies/talenthub-hr/" class="hover:text-slate-900 transition-colors">PeopleOps HR (TalentHub)</a>
       </div>
 
       <!-- Legal Conformance Notice Card -->
