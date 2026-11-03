@@ -928,9 +928,12 @@ module.exports = async (req, res) => {
     });
   }
 
-  // Extract domain and optional industry profile from query or body
-  let domainParam = req.query && req.query.domain;
-  let requestedProfile = req.query && req.query.profile;
+  // Extract domain and optional industry profile from URL searchParams or body (avoid req.query getter to prevent DEP0169 url.parse warning on Node 24)
+  const queryDesc = Object.getOwnPropertyDescriptor(req, 'query');
+  const plainQuery = (queryDesc && 'value' in queryDesc && queryDesc.value) ? queryDesc.value : {};
+  const searchParams = new URL(req.url || '/', 'https://ztds.ai').searchParams;
+  let domainParam = searchParams.get('domain') || plainQuery.domain;
+  let requestedProfile = searchParams.get('profile') || plainQuery.profile;
   if (!domainParam && req.body) {
     if (typeof req.body === 'string') {
       try {

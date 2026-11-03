@@ -2,8 +2,13 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = (req, res) => {
-  const query = req.query || {};
-  let slug = query.slug || query.id || 'default';
+  const queryDesc = Object.getOwnPropertyDescriptor(req, 'query');
+  const plainQuery = (queryDesc && 'value' in queryDesc && queryDesc.value) ? queryDesc.value : {};
+  const parsedUrl = new URL(req.url || '/', 'https://ztds.ai');
+  const urlQuery = Object.fromEntries(parsedUrl.searchParams);
+  const query = Object.assign({}, plainQuery, urlQuery);
+  const pathSlugMatch = parsedUrl.pathname.match(/^\/badge\/([^/]+)$/i);
+  let slug = query.slug || query.id || (pathSlugMatch && pathSlugMatch[1]) || 'default';
   slug = String(slug).replace(/\.svg$/i, '').trim().toLowerCase();
 
   let isVerified = false;
