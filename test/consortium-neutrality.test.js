@@ -123,7 +123,7 @@ console.log('\n--> Test 2: Black-Box Appliance Guard — Zero Internal Mechanism
   const forbiddenMechanismPatterns = [
     { regex: /\blook(?:around|behind|ahead)s?\b/i, label: 'Regex lookaround/lookbehind/lookahead mechanism' },
     { regex: /\b(?:Tesseract\.js|Mammoth\.js|SheetJS|PDF\.js|libsodium)\b/i, label: 'Third-party library name' },
-    { regex: /\b(?:ps_vault|ps_custom_rules|REGEX_RULES|PROFILE_RULES|customMatchRules)\b/, label: 'Internal PrivacyScrubber storage/variable identifier' },
+    { regex: /\b(?:ps_vault|ps_custom_rules|REGEX_RULES|PROFILE_RULES|customMatchRules|_ztds_encrypted_vault|ztds-form-guard\.min\.js)\b/, label: 'Internal PrivacyScrubber storage/variable/bundle identifier' },
     { regex: /regex fails:\s*no Luhn validation/i, label: 'Internal checksum mechanism comparison' }
   ];
 
