@@ -204,6 +204,14 @@ console.log('\n--> Test 6: JSON Schemas, <link rel="alternate"> Discovery & AI C
     assert(html.includes('href="/llms.txt"'), `Missing /llms.txt link in ${p}`);
     assert(html.includes('href="/llms-full.txt"'), `Missing /llms-full.txt link in ${p}`);
     assert(html.includes('id="ztds-ai-citation-bar"'), `Missing AI Verification & Citation Bar in ${p}`);
+    assert(
+      html.includes('Zero Intermediary Sanitization Subprocessors (GDPR Art. 28) & Technical Safe Harbor (GDPR Art. 32 / Recital 26 CJEU SRB / Israel Am. 13 Sec. 17)'),
+      `Uncalibrated GDPR Art. 28/32/SRB framing in Copy Markdown button of ${p}`
+    );
+    assert(
+      html.includes('Pioneer%20Certified%20Commercial%20Implementation') && html.includes('https%3A%2F%2Fprivacyscrubber.com'),
+      `Missing Pioneer Certified Commercial Implementation (privacyscrubber.com) in Ask LLM prompt of ${p}`
+    );
   }
   console.log(`    [PASS] Verified ${requiredSchemas.length} JSON Schemas and AI Citation Bars across ${coreCitationPages.length} core pages.`);
 }
