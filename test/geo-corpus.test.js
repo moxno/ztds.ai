@@ -189,17 +189,20 @@ console.log('\n--> Test 6: JSON Schemas, <link rel="alternate"> Discovery & AI C
     JSON.parse(fs.readFileSync(path.join(rootDir, s), 'utf8'));
   }
 
-  const coreCitationPages = [
-    'index.html',
-    'standard/index.html',
-    'ciso/index.html',
-    'mcp/index.html',
-    'whitepaper/index.html',
-    'benchmarks/index.html',
-    'sdk/index.html',
-    'compliance/index.html'
-  ];
-  for (const p of coreCitationPages) {
+  function walkProdHtml(dir, list = []) {
+    for (const f of fs.readdirSync(dir)) {
+      if (['.git', '.vercel', 'node_modules', 'public', 'docs', 'stitch_export'].includes(f)) continue;
+      const p = path.join(dir, f);
+      if (fs.statSync(p).isDirectory()) {
+        walkProdHtml(p, list);
+      } else if (f.endsWith('.html') && f !== '404.html') {
+        list.push(path.relative(rootDir, p).replace(/\\/g, '/'));
+      }
+    }
+    return list;
+  }
+  const allCitationPages = walkProdHtml(rootDir).sort();
+  for (const p of allCitationPages) {
     const html = fs.readFileSync(path.join(rootDir, p), 'utf8');
     assert(html.includes('href="/llms.txt"'), `Missing /llms.txt link in ${p}`);
     assert(html.includes('href="/llms-full.txt"'), `Missing /llms-full.txt link in ${p}`);
@@ -213,7 +216,7 @@ console.log('\n--> Test 6: JSON Schemas, <link rel="alternate"> Discovery & AI C
       `Missing Pioneer Certified Commercial Implementation (privacyscrubber.com) in Ask LLM prompt of ${p}`
     );
   }
-  console.log(`    [PASS] Verified ${requiredSchemas.length} JSON Schemas and AI Citation Bars across ${coreCitationPages.length} core pages.`);
+  console.log(`    [PASS] Verified ${requiredSchemas.length} JSON Schemas and AI Citation Bars across all ${allCitationPages.length} production HTML pages.`);
 }
 
 console.log('\n[SUMMARY] ALL 6 GEO CORPUS & MACHINE-READABLE TESTS PASSED.');
