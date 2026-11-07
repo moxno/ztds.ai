@@ -116,7 +116,7 @@ const PAGES = [
     tag: 'EU AI Act',
     blurb: 'Describes how pre-ingestion sanitization supports Article 10 data governance practices.',
     title: 'EU AI Act Article 10 Data Governance: PII Sanitization Role',
-    desc: 'How sanitizing personal data before dataset assembly and model ingestion supports EU AI Act Article 10 data governance practices, and where the duty remains yours.',
+    desc: 'How sanitizing personal data before dataset assembly and model ingestion supports EU AI Act Article 10 data governance, and where obligations remain.',
     keywords: 'EU AI Act Article 10, data governance, high-risk AI systems, training data personal data, data minimization, PII sanitization, ZTDS',
     headline: 'EU AI Act Article 10 data governance and the role of pre-ingestion PII sanitization',
     badge: 'EU AI ACT · ARTICLE 10 · DATA GOVERNANCE',
@@ -159,7 +159,7 @@ const PAGES = [
     tag: 'GDPR',
     blurb: 'Explains data protection by design and security of processing for prompts sent to AI providers.',
     title: 'GDPR Articles 25 and 32 for AI Prompts: Pseudonymization',
-    desc: 'How client-side pseudonymization of prompts supports GDPR Article 25 data protection by design and Article 32 security, and why Recital 26 limits what it proves.',
+    desc: 'How client-side pseudonymization of AI prompts supports GDPR Article 25 data protection by design and Article 32 security under Recital 26 boundaries.',
     keywords: 'GDPR Article 25, GDPR Article 32, AI prompts personal data, pseudonymisation, Recital 26, data minimisation, data protection by design, ZTDS',
     headline: 'GDPR Articles 25 and 32 applied to prompts sent to AI providers through client-side pseudonymization',
     badge: 'GDPR · ARTICLE 25 · ARTICLE 32 · RECITAL 26',
@@ -390,7 +390,7 @@ const PAGES = [
 
 const HUB = {
   title: 'ZTDS Framework Mappings: OWASP, NIST, EU AI Act, GDPR, HIPAA',
-  desc: 'Technical-control mappings from the ZTDS client-side sanitization standard to OWASP LLM02, NIST AI RMF, EU AI Act Article 10, GDPR, HIPAA, MCP, and RAG pipelines.',
+  desc: 'Technical control mappings from the ZTDS client-side sanitization standard to OWASP LLM02, NIST AI RMF, EU AI Act Art. 10, GDPR, HIPAA, MCP, and RAG.',
   keywords: 'ZTDS framework mappings, OWASP LLM02, NIST AI RMF, EU AI Act Article 10, GDPR Article 32, HIPAA Safe Harbor, MCP security, RAG privacy',
   headline: 'ZTDS Framework Mappings: how a client-side sanitization control maps to published security and privacy frameworks',
   h1: 'ZTDS Framework Mappings: <span class="text-emerald-400">One Control, Many Frameworks</span>',
