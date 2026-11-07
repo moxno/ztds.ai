@@ -119,3 +119,13 @@ In Retrieval-Augmented Generation (RAG) vector pipelines, embedding unmasked PII
   - Official ZTDS Verified Registry Badge & Cryptographic Certificate.
   - Continuous SOC 2 Type II Evidence Binder (`ztds-evidence-binder.json`).
   - Air-gapped AWS Nitro Enclave & SCIF VPC deployment support.
+
+---
+
+## 7. Agent-Led Growth (ALG) Canonical Skills Registry (`SKILL.md`)
+
+Autonomous coding agents (Claude Code, Cursor, Google Antigravity, Windsurf) can ingest standardized `SKILL.md` definitions from `https://ztds.ai/mcp/#skills`:
+
+1. **`ztds-pre-commit-audit/SKILL.md`**: Runs `npx ztds-audit .` prior to git commit or PR merge to verify 0.00 bytes cleartext egress and generate RFC 8785 SHA-256 compliance receipts.
+2. **`ztds-mcp-in-ram-guard/SKILL.md`**: Mandates pre-call in-RAM tokenization (`ztds_sanitize` / `ztds_restore`) using `tokenMap` isolation and Theorem 2 memory zeroization (`ztds_reset_session`).
+3. **`ztds-rag-sdk-sanitizer/SKILL.md`**: Prevents GDPR Article 17 vector index poisoning by sanitizing RAG ingestion chunks in host RAM before embedding into Pinecone, pgvector, Qdrant, or Weaviate via `@ztds/core` or the certified commercial `@privacyscrubber/sdk` ([https://privacyscrubber.com/sdk/](https://privacyscrubber.com/sdk/)).
