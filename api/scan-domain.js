@@ -15,7 +15,9 @@
 const dns = require('dns').promises;
 const https = require('https');
 const http = require('http');
+const crypto = require('crypto');
 const { URL } = require('url');
+const { mintCertificate } = require('../lib/certificate-manager');
 
 // Anti-SSRF: Disallowed IPv4 CIDRs & Special IP ranges
 const DISALLOWED_IPV4_RANGES = [
@@ -560,6 +562,9 @@ function analyzePerimeterSurface(headers, html) {
     }
   }
 
+  // 5. Detect active ZTDS Web Form Guard (Plane 6 WordPress / JS Enclave)
+  findings.ztdsGuardActive = /ztds-form-guard|ZTDS_CONFIG|_ztds_vault_payload|ztds-trust-badge|privacyscrubber-ztds-guard/i.test(htmlContent);
+
   return findings;
 }
 
@@ -1011,6 +1016,36 @@ module.exports = async (req, res) => {
     const surfaceFindings = analyzePerimeterSurface(pageRes.headers, pageRes.body);
     const evaluation = evaluateZtdsConformance(surfaceFindings, normalized.hostname, requestedProfile, detectedProfileInfo);
 
+    // 5. Issue Level 1 Domain Conformance Certificate if ZTDS Web Form Guard is active (or mint=1 requested by plugin)
+    let domainCertificate = null;
+    const mintRequested = searchParams.get('mint') === '1' || plainQuery.mint === '1';
+    if (surfaceFindings.ztdsGuardActive || mintRequested) {
+      try {
+        const auditHash = 'sha256:' + crypto.createHash('sha256').update(`${normalized.hostname}:ztds-plane6-guard:v1`).digest('hex');
+        const minted = mintCertificate({
+          applicant: normalized.hostname,
+          product: `${normalized.hostname} — ZTDS Plane 6 Web Form Guard`,
+          category: 'Protected Web Form Intake (Plane 6)',
+          repository: normalized.origin,
+          auditHash,
+          level: 'Level 1: Verified Web Form Intake (Plane 6 Domain Guard)',
+          scannedFilesCount: 1
+        });
+        domainCertificate = {
+          detected: Boolean(surfaceFindings.ztdsGuardActive),
+          certificate_id: minted.certificate_id,
+          level: minted.payload.level,
+          token: minted.token,
+          audit_hash: auditHash,
+          issued_at: minted.payload.issued_at,
+          expires_at: minted.payload.expires_at,
+          verify_url: `https://ztds.ai/verify/?domain=${encodeURIComponent(normalized.hostname)}`
+        };
+      } catch (_) {
+        // Non-fatal fallback if signing key unavailable
+      }
+    }
+
     return res.status(200).json({
       status: 'success',
       domain: normalized.hostname,
@@ -1022,7 +1057,8 @@ module.exports = async (req, res) => {
         primaryResolvedIp: dnsCheck.primaryIp
       },
       findings: surfaceFindings,
-      evaluation
+      evaluation,
+      domainCertificate
     });
   } catch (err) {
     // Graceful fallback response if target domain is offline, blocking scrapers, or times out
