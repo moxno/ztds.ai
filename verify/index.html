@@ -329,34 +329,34 @@
       <!-- Trust Pillars Grid -->
       <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-left">
         <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-          <div class="text-xs font-mono text-slate-400 uppercase font-bold tracking-wider">Algorithm</div>
+          <div class="text-xs font-mono text-slate-600 uppercase font-bold tracking-wider">Algorithm</div>
           <div class="text-xs font-bold text-slate-800 font-mono mt-0.5">Ed25519 (RFC 8032)</div>
         </div>
         <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-          <div class="text-xs font-mono text-slate-400 uppercase font-bold tracking-wider">Data Privacy</div>
-          <div class="text-xs font-bold text-emerald-600 font-mono mt-0.5">0.00 Bytes Egress</div>
+          <div class="text-xs font-mono text-slate-600 uppercase font-bold tracking-wider">Data Privacy</div>
+          <div class="text-xs font-bold text-emerald-700 font-mono mt-0.5">0.00 Bytes Egress</div>
         </div>
         <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-          <div class="text-xs font-mono text-slate-400 uppercase font-bold tracking-wider">Canonicalization</div>
+          <div class="text-xs font-mono text-slate-600 uppercase font-bold tracking-wider">Canonicalization</div>
           <div class="text-xs font-bold text-slate-800 font-mono mt-0.5">RFC 8785 JSON</div>
         </div>
         <div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-          <div class="text-xs font-mono text-slate-400 uppercase font-bold tracking-wider">SubtleCrypto</div>
+          <div class="text-xs font-mono text-slate-600 uppercase font-bold tracking-wider">SubtleCrypto</div>
           <div class="text-xs font-bold text-slate-800 font-mono mt-0.5">Web Crypto Native</div>
         </div>
       </div>
     </div>
 
     <!-- Dynamic Target Entity Accreditation Banner (Shown when ?target=... is in URL) -->
-    <div id="targetEntityBanner" class="hidden mb-8 p-5 sm:p-6 rounded-2xl bg-white border border-emerald-300 shadow-sm transition-all">
+    <div id="targetEntityBanner" class="hidden mb-8 p-5 sm:p-6 rounded-2xl bg-white border border-emerald-300 shadow-sm transition-all" role="region" aria-label="Verified Entity Certificate Summary">
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div class="space-y-1.5">
           <div class="flex flex-wrap items-center gap-2">
-            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true"></span>
             <span id="targetEntitySector" class="text-xs font-mono font-bold text-emerald-800 uppercase tracking-wider bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
               Official Accredited Entity
             </span>
-            <span id="targetEntityTier" class="text-xs font-mono text-slate-500 font-semibold">
+            <span id="targetEntityTier" class="text-xs font-mono text-slate-600 font-semibold">
               Corporate Member
             </span>
           </div>
@@ -364,10 +364,13 @@
             Entity Name
           </h2>
           <p id="targetEntityDesc" class="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl"></p>
+          <div id="targetEntityHumanAssurance" class="hidden mt-2.5 p-3 rounded-xl bg-emerald-50/80 border border-emerald-200 text-xs text-emerald-950 leading-relaxed max-w-2xl">
+            <strong class="font-bold text-emerald-900">What this means for visitors:</strong> Personal details entered into forms on this website (names, emails, phone numbers) are masked directly inside your browser before sending &mdash; preventing raw data leaks to third-party trackers, email relays, or external AI systems.
+          </div>
         </div>
         <div class="flex flex-wrap items-center gap-2.5 shrink-0">
           <button id="bannerDownloadCertPdf" type="button" class="btn-navy text-xs py-2 px-3.5 whitespace-nowrap inline-flex items-center gap-1.5 font-semibold shadow-sm cursor-pointer">
-            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             <span>Official A4 Certificate (PDF)</span>
           </button>
           <a id="targetEntityProfileLink" href="/companies/" class="btn-trust text-xs py-2 px-4 whitespace-nowrap inline-flex items-center gap-1.5 font-semibold">
@@ -2121,7 +2124,16 @@
         const elTier = document.getElementById("targetEntityTier");
         const elName = document.getElementById("targetEntityName");
         const elDesc = document.getElementById("targetEntityDesc");
+        const elHuman = document.getElementById("targetEntityHumanAssurance");
         const elLink = document.getElementById("targetEntityProfileLink");
+
+        if (elHuman) {
+          if (type === "domain") {
+            elHuman.classList.remove("hidden");
+          } else {
+            elHuman.classList.add("hidden");
+          }
+        }
 
         if (elSector) {
           elSector.textContent = entity.sector || entity.industry || entity.category || (type === "domain" ? "Plane 6 Protected Web Intake" : "Official Accredited Entity");
