@@ -22,6 +22,8 @@ const mirrorPairs = [
   ['assets/img/favicon-192.png', 'public/assets/img/favicon-192.png'],
   ['assets/img/apple-touch-icon.png', 'public/assets/img/apple-touch-icon.png'],
   ['assets/img/logo-512.png', 'public/assets/img/logo-512.png'],
+  ['assets/img/ilya-sibiryakov.jpg', 'public/assets/img/ilya-sibiryakov.jpg'],
+  ['assets/img/cliford-fanyuy.jpg', 'public/assets/img/cliford-fanyuy.jpg'],
   ['site.webmanifest', 'public/site.webmanifest'],
   ['og-image.png', 'public/og-image.png'],
   ['mcp_config.json', 'public/mcp_config.json'],
