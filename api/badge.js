@@ -8,8 +8,8 @@ module.exports = (req, res) => {
   const urlQuery = Object.fromEntries(parsedUrl.searchParams);
   const query = Object.assign({}, plainQuery, urlQuery);
   const pathSlugMatch = parsedUrl.pathname.match(/^\/badge\/([^/]+)$/i);
-  let slug = query.slug || query.id || (pathSlugMatch && pathSlugMatch[1]) || 'default';
-  slug = String(slug).replace(/\.svg$/i, '').trim().toLowerCase();
+  let slug = query.slug || query.domain || query.id || (pathSlugMatch && pathSlugMatch[1]) || 'default';
+  slug = String(slug).replace(/^https?:\/\//i, '').replace(/\/.*$/, '').replace(/\.svg$/i, '').trim().toLowerCase();
 
   let isVerified = false;
   let labelRight = 'SELF-ATTESTED';
@@ -59,6 +59,23 @@ module.exports = (req, res) => {
         isVerified = true;
         labelRight = 'FELLOW';
         colorRight = '#0284c7'; // Sky blue / Blue
+      }
+    }
+
+    const domainsPath = path.join(__dirname, '../data/domains.json');
+    if (!isVerified && fs.existsSync(domainsPath)) {
+      const domainsData = JSON.parse(fs.readFileSync(domainsPath, 'utf8'));
+      const cleanHost = slug.replace(/^www\./, '');
+      const dom = (domainsData.domains || []).find(d => {
+        const dHost = String(d.domain || '').toLowerCase().replace(/^www\./, '');
+        const dSlug = String(d.slug || '').toLowerCase();
+        const dId = String(d.id || '').toLowerCase();
+        return cleanHost === dHost || slug === dSlug || slug === dId || slug === `${dId}-ztds`;
+      });
+      if (dom) {
+        isVerified = true;
+        labelRight = 'VERIFIED';
+        colorRight = '#059669'; // Emerald
       }
     }
   } catch (err) {

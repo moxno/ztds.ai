@@ -103,6 +103,8 @@
           return `// worker.js — Cloudflare Zero-Trust Reverse Proxy for ${domain}\n// Profile: ${profName} (${statute})\nimport { ZTDSClient } from '@privacyscrubber/sdk';\n\nconst ztds = new ZTDSClient({\n  profiles: [${profArrayLiteral}],\n  zeroEgress: true\n});\n\nexport default {\n  async fetch(request, env) {\n    // In-RAM de-identification of ${targetEntities[0] || 'PII'}\n    return fetch(request);\n  }\n};`;
         case 'python':
           return `# main.py — FastAPI In-Memory Zero-Trust Enclave for ${domain}\n# Profile: ${profName} (${statute})\nfrom fastapi import FastAPI\nfrom privacyscrubber import ZTDSClient\n\nztds = ZTDSClient(profiles=[${profArrayLiteral}], zero_egress=True)\n\n@app.post("/api/ai")\nasync def secure_chat(req: ChatRequest):\n    safe, token_map = ztds.sanitize(req.prompt)\n    return {"reply": ztds.restore(await call_llm(safe), token_map)}`;
+        case 'wordpress':
+          return `# Official WordPress.org Plugin: privacyscrubber-ztds-guard\n# Target Domain: ${domain} | Sector: ${profName} (${statute})\n# Directory: https://wordpress.org/plugins/privacyscrubber-ztds-guard/\n\nwp plugin install privacyscrubber-ztds-guard --activate\n# Masks ${targetEntities[0] || 'PII'} in visitor browser RAM (<0.40 ms) before form POST; Zero-PII MySQL + #ztds_seal staff delivery.`;
         case 'client':
         default:
           return `<!-- In-RAM Client Enclave for ${domain} (${profName}) -->\n<script type="module">\nimport { ZTDSClient } from 'https://cdn.jsdelivr.net/npm/@privacyscrubber/sdk/dist/ztds.esm.js';\n\nconst ztds = new ZTDSClient({ profiles: [${profArrayLiteral}] });\n// In-RAM local sanitization of ${targetEntities[0] || 'PII'}\n<\/script>`;

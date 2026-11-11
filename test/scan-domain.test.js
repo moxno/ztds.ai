@@ -169,6 +169,7 @@ async function runTests() {
     assert.ok(ev.blueprints.cloudflare && ev.blueprints.cloudflare.codeSnippet.includes('worker'));
     assert.ok(ev.blueprints.python && ev.blueprints.python.codeSnippet.includes('FastAPI'));
     assert.ok(ev.blueprints.client && ev.blueprints.client.codeSnippet.includes('script'));
+    assert.ok(ev.blueprints.wordpress && ev.blueprints.wordpress.codeSnippet.includes('privacyscrubber-ztds-guard'));
     assert.ok(ev.dagComparison.legacy && ev.dagComparison.ztds);
 
     // Industry Taxonomy Check
@@ -249,6 +250,21 @@ async function runTests() {
     assert.strictEqual(lastStatusCode, 429);
     assert.strictEqual(lastRes.headers['retry-after'], '60');
     assert.strictEqual(lastRes.headers['x-ratelimit-remaining'], '0');
+  });
+
+  // 13. Plane 6 WordPress Detection & Active ZTDS Guard Invariant Scoring
+  await test('WordPress detection & active ZTDS Form Guard elevate Invariants 2 & 3 to VERIFIED and recommend wordpress blueprint', async () => {
+    const { analyzePerimeterSurface, evaluateZtdsConformance } = scanDomainHandler;
+    const wpHtml = '<html><head><link rel="stylesheet" href="/wp-content/themes/theme/style.css"></head><body><form data-ztds-form-seal="1"><textarea name="msg"></textarea></form></body></html>';
+    const findings = analyzePerimeterSurface({}, wpHtml);
+    assert.strictEqual(findings.ztdsGuardActive, true);
+    assert.ok(findings.frameworks.some(f => f.name === 'WordPress'));
+
+    const ev = evaluateZtdsConformance(findings, 'barrelswood.com');
+    assert.strictEqual(ev.recommendedVector, 'wordpress');
+    assert.strictEqual(ev.invariantStatus.invariant2.status, 'VERIFIED');
+    assert.strictEqual(ev.invariantStatus.invariant3.status, 'VERIFIED');
+    assert.strictEqual(ev.riskScore, 100);
   });
 
   console.log(`\n[TEST SUMMARY] ${passed} passed, ${failed} failed.`);

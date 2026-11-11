@@ -165,6 +165,24 @@ const xssRes = testBadgeRequest({ slug: 'my-app', label: '</text><script>alert(1
 assert.strictEqual(xssRes.status, 200);
 assert(!xssRes.output.includes('<script') && !xssRes.output.includes('<SCRIPT'), 'Must strip XML/SVG script tags from label');
 
+// 7f: Level 1 Protected Web Domain Lookup (data/domains.json)
+const domainRes1 = testBadgeRequest({ slug: 'barrelswood.com' });
+assert.strictEqual(domainRes1.status, 200);
+assert(domainRes1.output.includes('VERIFIED') && domainRes1.output.includes('fill="#059669"'), 'Verified domain barrelswood.com must render Emerald VERIFIED badge');
+
+const domainRes2 = testBadgeRequest({ slug: 'barrelswood-com-ztds' });
+assert.strictEqual(domainRes2.status, 200);
+assert(domainRes2.output.includes('VERIFIED') && domainRes2.output.includes('fill="#059669"'), 'Certificate badge slug barrelswood-com-ztds must render Emerald VERIFIED badge');
+
+const domainRes3 = testBadgeRequest({ domain: 'https://www.barrelswood.com/contact-us/' });
+assert.strictEqual(domainRes3.status, 200);
+assert(domainRes3.output.includes('VERIFIED') && domainRes3.output.includes('fill="#059669"'), '?domain= query param must normalize and resolve verified Level 1 domain');
+
+// 7g: Shared Navigation Modal/Drawer Scroll-Lock & Escape Guard (nav.js)
+const navJs = fs.readFileSync(path.join(__dirname, '../nav.js'), 'utf8');
+assert(navJs.includes('function getOpenDialogs()'), 'nav.js must define getOpenDialogs() to exclude closed #mobile-drawer');
+assert(!navJs.includes("querySelectorAll('[role=\"dialog\"]:not(.hidden)')"), 'nav.js must not match closed #mobile-drawer via [role="dialog"]:not(.hidden)');
+
 console.log('    [PASS] Dynamic API endpoint passed all theme, tier, custom label, and XSS sanitization validations.');
 
 // --> Test 8: Mobile Touch Target & Ergonomics

@@ -10,6 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let lastDrawerTrigger = null;
 
+  function getOpenDialogs() {
+    return Array.from(document.querySelectorAll('[role="dialog"]')).filter((el) => {
+      if (el.id === 'mobile-drawer') return el.classList.contains('active');
+      return !el.classList.contains('hidden');
+    });
+  }
+
   if (toggleBtn && drawer && backdrop) {
     if (!drawer.getAttribute('role')) drawer.setAttribute('role', 'dialog');
     if (!drawer.getAttribute('aria-modal')) drawer.setAttribute('aria-modal', 'true');
@@ -29,8 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
       backdrop.classList.remove('active');
       toggleBtn.setAttribute('aria-expanded', 'false');
       
-      const openModals = document.querySelectorAll('[role="dialog"]:not(.hidden)');
-      if (openModals.length === 0) {
+      if (getOpenDialogs().length === 0) {
         document.body.style.overflow = '';
       }
       
@@ -117,8 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
       modalEl.classList.add('hidden');
       modalEl.classList.remove('flex');
 
-      const openModals = document.querySelectorAll('[role="dialog"]:not(.hidden)');
-      if (openModals.length === 0) {
+      if (getOpenDialogs().length === 0) {
         document.body.style.overflow = '';
       }
 
@@ -153,8 +158,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Global keydown handler for open dialogs
   document.addEventListener('keydown', (e) => {
-    const openDialog = document.querySelector('[role="dialog"]:not(.hidden)');
-    if (openDialog && openDialog.id !== 'mobile-drawer') {
+    const openDialogs = getOpenDialogs().filter((el) => el.id !== 'mobile-drawer');
+    const openDialog = openDialogs[openDialogs.length - 1];
+    if (openDialog) {
       if (e.key === 'Escape') {
         window.ztdsModal.close(openDialog);
       } else if (e.key === 'Tab') {
@@ -497,28 +503,30 @@ document.addEventListener('DOMContentLoaded', () => {
       { title: 'CISO Procurement & Legal Defense Pack', cat: 'CISO & GRC', url: '/ciso/', kw: 'sig lite caiq vsaq vendor risk dpo' },
       { title: '1-Page CISO Safe Harbor Memorandum', cat: 'CISO & GRC', url: '/ciso/memo/', kw: 'gdpr art 28 32 amendment 13 dpa elimination pdf' },
       { title: 'Global Regulatory Compliance Matrix', cat: 'CISO & GRC', url: '/compliance/', kw: 'gdpr hipaa eu ai act pci dss ccpa' },
+      { title: 'Regulatory & Security Framework Mappings', cat: 'CISO & GRC', url: '/frameworks/', kw: 'owasp llm02 nist ai rmf eu ai act gdpr art 25 32 hipaa mcp rag' },
       { title: 'AICPA SOC 2 Type II & Trust Center', cat: 'CISO & GRC', url: '/soc2/', kw: 'soc2 evidence binder controls audit' },
       { title: 'CISO Breach Liability & ROI Calculator', cat: 'CISO & GRC', url: '/roi/', kw: 'calculator savings breach fine cost' },
       { title: 'Enterprise Order Form (Schedule A)', cat: 'CISO & GRC', url: '/docs/legal/order-form/', kw: 'contract msa po invoice procurement' },
       { title: 'Executive CISO Pitch Deck', cat: 'CISO & GRC', url: '/deck/', kw: 'slides presentation briefing board' },
-      { title: 'Developer SDK & Offline Licensing', cat: 'Developers', url: '/sdk/', kw: 'npm pip typescript python wasm ed25519 trial' },
+      { title: 'Developer SDK & 6 Execution Surfaces', cat: 'Developers', url: '/sdk/', kw: 'npm pip typescript python wasm ed25519 trial wordpress form guard' },
       { title: 'Model Context Protocol (MCP) Hub', cat: 'Developers', url: '/mcp/', kw: 'claude desktop cursor windsurf stdio agent' },
-      { title: 'Live Domain Perimeter Scanner', cat: 'Tools', url: '/scanner/', kw: 'audit egress network inspector airplane mode' },
+      { title: 'Live Domain Perimeter Scanner', cat: 'Tools', url: '/scanner/', kw: 'audit egress network inspector airplane mode wordpress' },
       { title: 'Interactive In-RAM DAG Inspector', cat: 'Tools', url: '/inspector/', kw: 'playground tokenize surrogate detokenize' },
-      { title: 'Ed25519 Certificate Validator', cat: 'Tools', url: '/verify/', kw: 'cryptographic signature receipt verify' },
+      { title: 'Ed25519 Certificate & Domain Validator', cat: 'Tools', url: '/verify/', kw: 'cryptographic signature receipt verify domain seal wordpress' },
       { title: 'ZTDS Verified SVG Badge Generator', cat: 'Tools', url: '/badge/', kw: 'embed seal shield markdown html' },
-      { title: 'Verified Implementations Registry', cat: 'Ecosystem', url: '/registry/', kw: 'certified software privacyscrubber directory' },
-      { title: 'Corporate Adopters & Members', cat: 'Ecosystem', url: '/companies/', kw: 'enterprise adopters brandmeweb case studies' },
+      { title: 'Verified Implementations Registry (15)', cat: 'Ecosystem', url: '/registry/', kw: 'certified software privacyscrubber directory wordpress plugin' },
+      { title: 'Corporate Adopters & Members (10)', cat: 'Ecosystem', url: '/companies/', kw: 'enterprise adopters brandmeweb learningcenterusa case studies' },
       { title: 'Accredited Research Fellows & WGs', cat: 'Ecosystem', url: '/fellows/', kw: 'ilya sibiryakov cliford fanyuy working groups' },
-      { title: 'Enterprise Architecture Case Studies', cat: 'Ecosystem', url: '/case-studies/', kw: 'healthcare fintech legal defense deployments' },
+      { title: 'Enterprise Architecture Case Studies (10)', cat: 'Ecosystem', url: '/case-studies/', kw: 'healthcare fintech legal defense voice deployments' },
       { title: 'Certification Authority & CAB', cat: 'Ecosystem', url: '/certification/', kw: 'conformity assessment accreditation tracks' },
-      { title: 'Apply for ZTDS Accreditation', cat: 'Ecosystem', url: '/apply/', kw: 'gitops pr submit claim badge' },
+      { title: 'Apply for ZTDS Accreditation', cat: 'Ecosystem', url: '/apply/', kw: 'gitops pr submit claim badge wordpress domain seal' },
       { title: 'Consortium Governance & Charter', cat: 'Governance', url: '/governance/', kw: 'bylaws working groups voting steering' },
       { title: 'Security Policy & CVD (PGP)', cat: 'Governance', url: '/security/', kw: 'vulnerability disclosure security.txt' },
       { title: 'Standards, RAND-Z Patent Policy & Terms', cat: 'Governance', url: '/terms/', kw: 'cc-by-4.0 apache 2.0 trademark covenant' },
       { title: 'Zero-Telemetry Privacy Policy', cat: 'Governance', url: '/privacy/', kw: 'zero cookies zero analytics gdpr' },
       { title: 'BrandMeWeb — Corporate Member & GEO Case Study', cat: 'Case Study', url: '/companies/brandmeweb/', kw: 'brandmeweb agency geo seo langchain' },
-      { title: 'PrivacyScrubber — Pioneer Reference Implementation', cat: 'Case Study', url: '/companies/privacyscrubber/', kw: 'privacyscrubber wasm chrome extension sdk mcp' },
+      { title: 'PrivacyScrubber — Pioneer Reference Implementation', cat: 'Case Study', url: '/companies/privacyscrubber/', kw: 'privacyscrubber wasm chrome extension sdk mcp wordpress' },
+      { title: 'LearningCenterUsa.net — PSTN Voice & Transcript Enclave', cat: 'Case Study', url: '/companies/learningcenterusa/', kw: 'voice telephony pstn bipa cal penal code 632 call center' },
       { title: 'Apex Health Systems — HIPAA Clinical Blueprint', cat: 'Case Study', url: '/companies/apex-health-ai/', kw: 'hipaa safe harbor ehr epic cerner phi' },
       { title: 'Lex Veritas Global LLP — FRE 502 Legal Blueprint', cat: 'Case Study', url: '/companies/lex-veritas-legal/', kw: 'fre 502 attorney client privilege m&a legal' },
       { title: 'Aegis Financial Technologies — PCI-DSS FinTech Blueprint', cat: 'Case Study', url: '/companies/aegis-fintech/', kw: 'pci dss swift iban banking fintech' },
@@ -732,8 +740,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey) {
         const tag = (e.target && e.target.tagName) ? e.target.tagName.toUpperCase() : '';
         if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT' && !(e.target && e.target.isContentEditable)) {
-          const openDialog = document.querySelector('[role="dialog"]:not(.hidden)');
-          if (!openDialog) {
+          if (getOpenDialogs().length === 0) {
             e.preventDefault();
             openCmdPalette();
           }
@@ -785,7 +792,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /**
  * Universal Zero-Failure Clipboard Copier
- * Seamlessly handles HTTPS navigator.clipboard and fallback document.execCommand
+ * Reliably handles HTTPS navigator.clipboard and fallback document.execCommand
  */
 window.ztdsCopy = function(text, onSuccess, onError) {
   if (navigator.clipboard && window.isSecureContext) {

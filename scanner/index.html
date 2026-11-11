@@ -2887,6 +2887,22 @@ Public Verification: https://ztds.ai/verify/`;
             </div>
           </div>
 
+          ${data.domainCertificate ? `
+          <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-950 flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+                <span class="font-mono text-xs font-bold uppercase tracking-wider text-emerald-800">Active ZTDS Plane 6 Web Form Guard Verified</span>
+              </div>
+              <p class="text-xs text-emerald-900 mt-1">
+                Certificate <code class="font-mono font-bold">${escapeM0(data.domainCertificate.certificate_id || 'ZTDS-CERT-LEVEL1')}</code> &middot; Client-RAM form tokenization active before HTTP POST.
+              </p>
+            </div>
+            <a href="/verify/?domain=${encodeURIComponent(currentDomain)}" class="btn-trust text-xs py-2 px-3.5 shrink-0 font-bold">
+              Verify Level 1 Seal &rarr;
+            </a>
+          </div>` : ''}
+
           <!-- 3-Column Assessment Cards (Level 1) -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
             <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
@@ -3007,6 +3023,7 @@ Public Verification: https://ztds.ai/verify/`;
                 <button type="button" class="m0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-colors ${ev.recommendedVector === 'cloudflare' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="cloudflare">Cloudflare Worker</button>
                 <button type="button" class="m0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-colors ${ev.recommendedVector === 'python' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="python">Python FastAPI</button>
                 <button type="button" class="m0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-colors ${ev.recommendedVector === 'client' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="client">Client WASM</button>
+                <button type="button" class="m0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-colors ${ev.recommendedVector === 'wordpress' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="wordpress">WordPress Guard</button>
               </div>
             </div>
 
@@ -3149,6 +3166,9 @@ Public Verification: https://ztds.ai/verify/`;
             }
             if (ev.blueprints?.client) {
               ev.blueprints.client.codeSnippet = ZTDSScanner.generateFrameworkSnippet('client', currentDomain, targetProf, profKey);
+            }
+            if (ev.blueprints?.wordpress) {
+              ev.blueprints.wordpress.codeSnippet = ZTDSScanner.generateFrameworkSnippet('wordpress', currentDomain, targetProf, profKey);
             }
 
             const activeTab = document.querySelector('.m0-tab-btn.bg-emerald-600')?.getAttribute('data-vector') || ev.recommendedVector;

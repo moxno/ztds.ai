@@ -563,7 +563,7 @@ function analyzePerimeterSurface(headers, html) {
   }
 
   // 5. Detect active ZTDS Web Form Guard (Plane 6 WordPress / JS Enclave)
-  findings.ztdsGuardActive = /ztds-form-guard|ZTDS_CONFIG|_ztds_vault_payload|ztds-trust-badge|privacyscrubber-ztds-guard/i.test(htmlContent);
+  findings.ztdsGuardActive = /ztds-form-guard|ZTDS_CONFIG|_ztds_vault_payload|ztds-trust-badge|privacyscrubber-ztds-guard|data-ztds-form-seal|ztds_seal/i.test(htmlContent);
 
   return findings;
 }
@@ -615,12 +615,17 @@ function evaluateZtdsConformance(findings, domain, requestedProfile = null, dete
   }
 
   const hasHighRiskInputs = findings.sensorySurfaces.some(s => s.risk === 'High');
-  if (hasHighRiskInputs) {
+  if (findings.ztdsGuardActive) {
+    invariantStatus.invariant2.status = 'VERIFIED';
+    invariantStatus.invariant2.details = 'Active ZTDS Plane 6 Web Form Guard detected. Sensory inputs are tokenized in browser RAM (<0.4ms) prior to dispatch.';
+    invariantStatus.invariant3.status = 'VERIFIED';
+    invariantStatus.invariant3.details = 'Zero server-side cleartext persistence enforced via client-side volatile tokenization.';
+  } else if (hasHighRiskInputs) {
     score -= 20;
     invariantStatus.invariant2.details = `${findings.sensorySurfaces.length} sensory surface(s) detected. In-memory tokenization required to prevent unmasked PII/PHI serialization.`;
   }
 
-  if (findings.thirdPartySinks.length > 0) {
+  if (findings.thirdPartySinks.length > 0 && !findings.ztdsGuardActive) {
     score -= Math.min(25, findings.thirdPartySinks.length * 8);
     invariantStatus.invariant4.details = `${findings.thirdPartySinks.length} third-party subprocessor(s) active on domain. Implementing ZTDS at input stage eliminates data controller liability.`;
   }
@@ -631,7 +636,10 @@ function evaluateZtdsConformance(findings, domain, requestedProfile = null, dete
   let recommendedVector = 'nextjs';
   let primaryFramework = 'Next.js 14+ Edge';
 
-  if (findings.frameworks.some(f => f.name === 'Next.js')) {
+  if (findings.frameworks.some(f => f.name === 'WordPress') || findings.ztdsGuardActive) {
+    recommendedVector = 'wordpress';
+    primaryFramework = 'WordPress ZTDS Form Guard';
+  } else if (findings.frameworks.some(f => f.name === 'Next.js')) {
     recommendedVector = 'nextjs';
     primaryFramework = 'Next.js 14+ Edge';
   } else if (findings.cloudEdge.some(c => c.name === 'Cloudflare')) {
@@ -804,6 +812,26 @@ async def secure_chat(req: ChatRequest):
     console.log('Restored locally in client RAM:', cleanOutput);
   });
 <\/script>`
+    },
+    wordpress: {
+      id: 'wordpress',
+      name: 'WordPress Form Guard',
+      filename: 'wp-cli / wp-admin',
+      runtime: 'WordPress 6.0+ Browser RAM Guard',
+      installCommand: 'wp plugin install privacyscrubber-ztds-guard --activate',
+      latencyImpact: '< 0.40 ms in browser RAM',
+      invariants: ['Invariant 1 (0.00 B Cleartext DB)', 'Invariant 2 (Bijective Tokens)', 'Invariant 4 (DPA-Free)'],
+      codeSnippet: `# Official WordPress.org Plugin: privacyscrubber-ztds-guard
+# Target Domain: ${domain} | Sector: ${profileConfig.name} (${profileConfig.statute})
+# Directory: https://wordpress.org/plugins/privacyscrubber-ztds-guard/
+
+# 1. Install & activate via WP-CLI (or WP Admin -> Plugins -> Add New):
+wp plugin install privacyscrubber-ztds-guard --activate
+
+# 2. Configure active industry profile (${profileConfig.id}) & Zero-PII MySQL mode:
+#    - Masks ${profileConfig.targetEntities[0]} in visitor browser RAM (<0.40 ms) before POST
+#    - Contact Form 7, Elementor Forms, WPForms, Gravity Forms & WooCommerce receive safe tokens
+#    - Authorized staff open 1-Tap #ztds_seal lead cards locally in browser memory`
     }
   };
 
@@ -994,6 +1022,21 @@ module.exports = async (req, res) => {
     });
   }
 
+  // Pre-lookup verified Level 1 Protected Domains registry (data/domains.json)
+  let registeredDomainRecord = null;
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const domainsPath = path.join(__dirname, '../data/domains.json');
+    if (fs.existsSync(domainsPath)) {
+      const domainsJson = JSON.parse(fs.readFileSync(domainsPath, 'utf8'));
+      const cleanTarget = normalized.hostname.replace(/^www\./, '');
+      registeredDomainRecord = (domainsJson.domains || []).find(
+        d => String(d.domain || '').toLowerCase().replace(/^www\./, '') === cleanTarget
+      ) || null;
+    }
+  } catch (_) {}
+
   // 3. Perform Passive Edge Inspection
   try {
     let pageRes = await fetchPageContent(normalized.origin, 3200);
@@ -1014,12 +1057,27 @@ module.exports = async (req, res) => {
     // 4. Detect Industry Profile & Surface Findings
     const detectedProfileInfo = detectIndustryProfile(normalized.hostname, pageRes.body, pageRes.headers);
     const surfaceFindings = analyzePerimeterSurface(pageRes.headers, pageRes.body);
+    if (registeredDomainRecord) {
+      surfaceFindings.ztdsGuardActive = true;
+    }
+
     const evaluation = evaluateZtdsConformance(surfaceFindings, normalized.hostname, requestedProfile, detectedProfileInfo);
 
     // 5. Issue Level 1 Domain Conformance Certificate if ZTDS Web Form Guard is active (or mint=1 requested by plugin)
     let domainCertificate = null;
     const mintRequested = searchParams.get('mint') === '1' || plainQuery.mint === '1';
-    if (surfaceFindings.ztdsGuardActive || mintRequested) {
+    if (registeredDomainRecord && registeredDomainRecord.certificate) {
+      domainCertificate = {
+        detected: true,
+        certificate_id: registeredDomainRecord.certificate.id,
+        level: registeredDomainRecord.certificate.level,
+        token: registeredDomainRecord.certificate.token,
+        audit_hash: registeredDomainRecord.audit_hash,
+        issued_at: registeredDomainRecord.certificate.issued_at,
+        expires_at: registeredDomainRecord.certificate.expires_at,
+        verify_url: registeredDomainRecord.certificate.verify_url || `https://ztds.ai/verify/?domain=${encodeURIComponent(normalized.hostname)}`
+      };
+    } else if (surfaceFindings.ztdsGuardActive || mintRequested) {
       try {
         const auditHash = 'sha256:' + crypto.createHash('sha256').update(`${normalized.hostname}:ztds-plane6-guard:v1`).digest('hex');
         const minted = mintCertificate({
@@ -1083,17 +1141,29 @@ module.exports = async (req, res) => {
         cspAnalysis: { hasCsp: false, connectSrc: [], allowsExternalLlm: false }
       },
       evaluation: evaluateZtdsConformance({
-        frameworks: [{ name: 'Cloudflare / Edge', type: 'Web Platform' }],
+        frameworks: registeredDomainRecord ? [{ name: 'WordPress', type: 'CMS Engine' }] : [{ name: 'Cloudflare / Edge', type: 'Web Platform' }],
         cloudEdge: [{ name: 'Protected Host' }],
         sensorySurfaces: [{ type: 'Interactive Input', risk: 'High' }],
         thirdPartySinks: [{ vendor: 'Analytics' }],
-        directLlmEgress: []
-      }, normalized.hostname, requestedProfile, detectedProfileInfo)
+        directLlmEgress: [],
+        ztdsGuardActive: Boolean(registeredDomainRecord)
+      }, normalized.hostname, requestedProfile, detectedProfileInfo),
+      domainCertificate: registeredDomainRecord && registeredDomainRecord.certificate ? {
+        detected: true,
+        certificate_id: registeredDomainRecord.certificate.id,
+        level: registeredDomainRecord.certificate.level,
+        token: registeredDomainRecord.certificate.token,
+        audit_hash: registeredDomainRecord.audit_hash,
+        issued_at: registeredDomainRecord.certificate.issued_at,
+        expires_at: registeredDomainRecord.certificate.expires_at,
+        verify_url: registeredDomainRecord.certificate.verify_url || `https://ztds.ai/verify/?domain=${encodeURIComponent(normalized.hostname)}`
+      } : null
     });
   }
 };
 
 module.exports.INDUSTRY_PROFILES = INDUSTRY_PROFILES;
 module.exports.detectIndustryProfile = detectIndustryProfile;
+module.exports.analyzePerimeterSurface = analyzePerimeterSurface;
 module.exports.evaluateZtdsConformance = evaluateZtdsConformance;
 

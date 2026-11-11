@@ -25,24 +25,26 @@
   "skills": [
     {
       "id": "ztds_protocol_verification",
-      "name": "ZTDS RFC v1.0 Conformance & Certificate Verification",
-      "description": "Verify Ed25519 conformance certificates, audit receipts (audit-receipt.v1.json), and 4 foundational ZTDS invariants across certified implementations.",
-      "tags": ["ztds", "ietf", "rfc", "conformance", "verification", "ed25519", "zero-trust"],
+      "name": "ZTDS RFC v1.0 Conformance, Certificate & Domain Seal Verification",
+      "description": "Verify Ed25519 conformance certificates, Level 1 Protected Web Domain seals (/verify/?domain=...), audit receipts (audit-receipt.v1.json), and 4 foundational ZTDS invariants across 15 certified implementations and 6 execution surfaces.",
+      "tags": ["ztds", "ietf", "rfc", "conformance", "verification", "ed25519", "zero-trust", "wordpress"],
       "examples": [
         "Verify ZTDS conformance certificate ZTDS-CERT-2026-PRIVACYSCRUBBER-WEB-D02DC6",
-        "Check the 4 foundational invariants of ZTDS RFC v1.0"
+        "Verify Level 1 Protected Web Domain seal at https://ztds.ai/verify/?domain=barrelswood.com",
+        "Check the 4 foundational invariants of ZTDS RFC v1.0 and OWASP/NIST/GDPR mappings at https://ztds.ai/frameworks/"
       ],
       "inputModes": ["text/plain"],
       "outputModes": ["application/json"]
     },
     {
       "id": "ztds_reference_local_sanitization",
-      "name": "Reference Local RAM Sanitization & CLI Leakage Audit",
-      "description": "Sanitize unstructured prompts locally in volatile RAM via npx -y ztds-mcp or audit repositories via npx ztds-audit.",
-      "tags": ["mcp", "cli", "pii", "sanitization", "local-ram", "audit"],
+      "name": "Reference Local RAM Sanitization, CLI Leakage Audit & Web Form Guard",
+      "description": "Sanitize unstructured prompts locally in volatile RAM via npx -y ztds-mcp, protect WordPress web forms via privacyscrubber-ztds-guard, or audit repositories via npx ztds-audit.",
+      "tags": ["mcp", "cli", "pii", "sanitization", "local-ram", "audit", "wordpress"],
       "examples": [
         "Run npx ztds-audit on a repository to generate a SHA-256 compliance receipt",
-        "Configure ztds-mcp in Claude Desktop or Cursor"
+        "Configure ztds-mcp in Claude Desktop or Cursor",
+        "Install privacyscrubber-ztds-guard on WordPress for client-RAM web form tokenization"
       ],
       "inputModes": ["text/plain"],
       "outputModes": ["text/plain", "application/json"]

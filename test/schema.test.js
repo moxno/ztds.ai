@@ -9,46 +9,16 @@ const assert = require('assert');
 
 console.log('[TEST] Starting ZTDS Schema.org & GEO Knowledge Graph Verification Suite...\n');
 
-const prodPages = [
-  'index.html',
-  'standard/index.html',
-  'ciso/index.html',
+const sitemapRawForList = fs.readFileSync(path.join(__dirname, '..', 'sitemap.xml'), 'utf8');
+const sitemapRelPages = [...sitemapRawForList.matchAll(/<loc>https:\/\/ztds\.ai([^<]*)<\/loc>/g)].map(m =>
+  m[1] === '/' ? 'index.html' : path.join(m[1].slice(1), 'index.html')
+);
+const prodPages = Array.from(new Set([
+  ...sitemapRelPages,
   'ciso/memo.html',
-  'ciso/memo/index.html',
-  'sdk/index.html',
-  'whitepaper/index.html',
-  'scanner/index.html',
-  'registry/index.html',
-  'companies/index.html',
-  'fellows/index.html',
-  'governance/index.html',
-  'badge/index.html',
-  'verify/index.html',
-  'certification/index.html',
-  'apply/index.html',
-  'roi/index.html',
-  'security/index.html',
-  'privacy/index.html',
-  'terms/index.html',
-  'inspector/index.html',
-  'soc2/index.html',
-  'deck/index.html',
-  'agency/index.html',
-  'fellows/ilya-sibiryakov/index.html',
-  'fellows/cliford-fanyuy/index.html',
-  'companies/brandmeweb/index.html',
-  'case-studies/index.html',
-  'evidentiary-sovereignty/index.html',
-  'mcp/index.html',
-  'benchmarks/index.html',
-  'blueprints/index.html',
-  'compliance/index.html',
-  'ietf/index.html',
-  'ietf/draft-sibiryakov-ztds-protocol-01/index.html',
-  'ietf/draft-sibiryakov-ztds-protocol-02/index.html',
   '404.html',
   'docs/legal/order-form.html'
-];
+]));
 
 let totalChecks = 0;
 

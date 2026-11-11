@@ -2788,6 +2788,17 @@ response = llm.invoke(<span class="text-emerald-300">"Customer Jane Doe wire IBA
             </div>
           </div>
 
+          ${data.domainCertificate ? `
+          <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-950 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mt-3">
+            <div class="text-xs">
+              <span class="font-mono font-bold text-emerald-800 uppercase">Active ZTDS Plane 6 Domain Guard:</span>
+              <code class="font-mono font-semibold ml-1">${escape(data.domainCertificate.certificate_id || 'ZTDS-CERT-LEVEL1')}</code>
+            </div>
+            <a href="/verify/?domain=${encodeURIComponent(currentDomain)}" class="text-xs font-mono font-bold text-emerald-800 hover:underline shrink-0">
+              Verify Level 1 Seal &rarr;
+            </a>
+          </div>` : ''}
+
           <!-- Score & Regulatory Metrics Grid (Level 1) -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 my-4">
             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
@@ -2905,6 +2916,7 @@ response = llm.invoke(<span class="text-emerald-300">"Customer Jane Doe wire IBA
                 <button type="button" class="hero-tab-btn px-2.5 py-1 rounded transition-colors ${ev.recommendedVector === 'cloudflare' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="cloudflare">Cloudflare</button>
                 <button type="button" class="hero-tab-btn px-2.5 py-1 rounded transition-colors ${ev.recommendedVector === 'python' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="python">Python</button>
                 <button type="button" class="hero-tab-btn px-2.5 py-1 rounded transition-colors ${ev.recommendedVector === 'client' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="client">Client JS</button>
+                <button type="button" class="hero-tab-btn px-2.5 py-1 rounded transition-colors ${ev.recommendedVector === 'wordpress' ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}" data-vector="wordpress">WordPress</button>
               </div>
             </div>
 
@@ -3028,6 +3040,9 @@ response = llm.invoke(<span class="text-emerald-300">"Customer Jane Doe wire IBA
             }
             if (ev.blueprints?.client) {
               ev.blueprints.client.codeSnippet = ZTDSScanner.generateFrameworkSnippet('client', currentDomain, targetProf, profKey);
+            }
+            if (ev.blueprints?.wordpress) {
+              ev.blueprints.wordpress.codeSnippet = ZTDSScanner.generateFrameworkSnippet('wordpress', currentDomain, targetProf, profKey);
             }
 
             const activeTab = document.querySelector('.hero-tab-btn.bg-emerald-600')?.getAttribute('data-vector') || ev.recommendedVector;
