@@ -374,7 +374,7 @@
               Certified Implementation Preset
             </label>
             <span class="text-xs font-mono text-emerald-700 font-semibold bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
-              13 Verified Solutions
+              15 Verified Solutions
             </span>
           </div>
           <select 
@@ -384,13 +384,16 @@
           >
             <option value="privacyscrubber-web" selected>PrivacyScrubber Web Platform (privacyscrubber-web)</option>
             <option value="privacyscrubber-extension">PrivacyScrubber Chrome Extension (privacyscrubber-extension)</option>
+            <option value="privacyscrubber-wp-guard">PrivacyScrubber WordPress ZTDS Guard (privacyscrubber-wp-guard)</option>
             <option value="privacyscrubber-mcp">PrivacyScrubber MCP Server (privacyscrubber-mcp)</option>
             <option value="privacyscrubber-sdk">PrivacyScrubber Headless SDK (privacyscrubber-sdk)</option>
+            <option value="learningcenterusa">LearningCenterUsa Voice Enclave (learningcenterusa)</option>
             <option value="ztds-core">ZTDS Core Reference Engine (@ztds/core)</option>
             <option value="ztds-python">ZTDS Python Reference Engine (ztds)</option>
             <option value="ztds-mcp">ZTDS Reference MCP Server (ztds-mcp)</option>
             <option value="langchain-ztds">LangChain Privacy Callback (langchain-ztds)</option>
             <option value="llamaindex-ztds">LlamaIndex Air-Gap Sanitizer (llamaindex-ztds)</option>
+            <option value="crewai-ztds">CrewAI Autonomous Privacy Agent (crewai-ztds)</option>
             <option value="ollama-ztds-filter">Ollama Local Privacy Filter (ollama-ztds-filter)</option>
             <option value="envoy-ztds-wasm">Envoy WASM HTTP Filter (envoy-ztds-wasm)</option>
             <option value="fastmcp-ztds">FastMCP Stdio Gateway (fastmcp-ztds)</option>
@@ -590,7 +593,7 @@
     <!-- Quick Presets -->
     <div class="mb-4">
       <div class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Pioneer Reference Implementations</div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-sans">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-xs font-sans">
         <button type="button" class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-web">
           <div class="text-slate-900 font-bold mb-1">Web Platform</div>
           <div class="text-slate-400 font-mono text-xs">privacyscrubber-web</div>
@@ -598,6 +601,10 @@
         <button type="button" class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-extension">
           <div class="text-slate-900 font-bold mb-1">Chrome Extension</div>
           <div class="text-slate-400 font-mono text-xs">privacyscrubber-extension</div>
+        </button>
+        <button type="button" class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-wp-guard">
+          <div class="text-slate-900 font-bold mb-1">WordPress Guard</div>
+          <div class="text-slate-400 font-mono text-xs">privacyscrubber-wp-guard</div>
         </button>
         <button type="button" class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="privacyscrubber-mcp">
           <div class="text-slate-900 font-bold mb-1">MCP Gateway</div>
@@ -610,7 +617,7 @@
       </div>
     </div>
 
-    <div class="mb-12">
+    <div class="mb-6">
       <div class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Canonical Connectors &amp; Gateways</div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-sans">
         <button type="button" class="preset-slug ztds-card p-4 bg-white text-left transition-all hover:border-emerald-300 touch-target" data-slug="langchain-ztds">
@@ -630,6 +637,19 @@
           <div class="text-slate-400 font-mono text-xs">envoy-ztds-wasm</div>
         </button>
       </div>
+    </div>
+
+    <!-- WordPress Level 1 Domain Seal Callout -->
+    <div class="mb-12 p-5 rounded-2xl bg-emerald-50/70 border border-emerald-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="space-y-1 text-xs">
+        <div class="font-mono font-bold uppercase tracking-wider text-emerald-800">WordPress &amp; Web Form Domain Seals (Level 1)</div>
+        <p class="text-slate-700 leading-relaxed max-w-3xl">
+          Running <a href="https://wordpress.org/plugins/privacyscrubber-ztds-guard/" target="_blank" rel="noopener" class="font-bold text-emerald-800 underline">PrivacyScrubber ZTDS Guard</a> on WordPress? Enable the opt-in verification badge in plugin settings to render an inline SVG seal beneath your forms linking directly to <code class="font-mono text-slate-900">https://ztds.ai/verify/?domain=your-domain.com</code>.
+        </p>
+      </div>
+      <a href="/verify/?domain=barrelswood.com" class="btn-trust text-xs py-2 px-4 shrink-0 whitespace-nowrap font-semibold">
+        View Live Domain Seal &rarr;
+      </a>
     </div>
 
     <!-- Section 2: Enterprise Conformance Seals (B2B Trust Stamps) -->
@@ -967,13 +987,16 @@
       const KNOWN_VERIFIED_SLUGS = [
         'privacyscrubber-web',
         'privacyscrubber-extension',
+        'privacyscrubber-wp-guard',
         'privacyscrubber-mcp',
         'privacyscrubber-sdk',
+        'learningcenterusa',
         'ztds-core',
         'ztds-python',
         'ztds-mcp',
         'langchain-ztds',
         'llamaindex-ztds',
+        'crewai-ztds',
         'ollama-ztds-filter',
         'envoy-ztds-wasm',
         'fastmcp-ztds'

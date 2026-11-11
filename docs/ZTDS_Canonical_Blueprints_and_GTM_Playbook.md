@@ -339,7 +339,7 @@ run();
 ---
 
 ### Blueprint 10: Chrome MV3 Content Script / DOM Textarea Interceptor
-Seamlessly integrates into any web-based LLM UI (ChatGPT, Claude, Perplexity), replacing text before DOM submit.
+Hooks directly into any web-based LLM UI (ChatGPT, Claude, Perplexity), replacing text before DOM submit.
 
 ```javascript
 // content-script-ztds.js

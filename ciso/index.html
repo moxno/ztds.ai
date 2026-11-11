@@ -1153,7 +1153,7 @@
 
           </div>
 
-          <!-- Deep Dive & Sharing CTA -->
+          <!-- Actuarial Memo & Sharing CTA -->
           <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 pt-4">
             <div class="text-xs text-slate-600 leading-tight">
               Ready to generate a board-level actuarial memo with full sensitivity sliders?
@@ -1700,7 +1700,7 @@
               </div>
               <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
                 <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
-                "Calling Google Cloud DLP means your application makes two serial cloud API calls for every prompt: first to Google DLP to inspect, and then to your model provider. That adds 200–500ms of lag per interaction. Furthermore, Google Cloud charges per gigabyte of inspected payload, creating unpredictable cloud bills on large RAG contexts. Finally, destructive redaction like [REDACTED] destroys the grammatical context the model needs. ZTDS executes in-memory in <1.2ms, performs context-preserving reversible tokenization, and incurs zero marginal cloud API costs."
+                "Calling Google Cloud DLP means your application makes two serial cloud API calls for every prompt: first to Google DLP to inspect, and then to your model provider. That adds 200–500ms of lag per interaction. Google Cloud also charges per gigabyte of inspected payload, creating unpredictable cloud bills on large RAG contexts, while destructive redaction like [REDACTED] strips the grammatical context the model needs. ZTDS executes in-memory in &lt;1.2ms, performs context-preserving reversible tokenization, and incurs zero marginal cloud API costs."
               </div>
             </div>
 
@@ -1768,7 +1768,7 @@
               </div>
               <div class="text-xs text-slate-700 leading-relaxed pl-4 border-l-2 border-emerald-500 response-text">
                 <strong class="text-emerald-800 block mb-0.5">Your Response:</strong>
-                "Hard blocking kills AI adoption and incentivizes shadow AI on personal devices. If support reps cannot paste customer tickets into AI for triage, support velocity collapses. ZTDS allows users to proceed seamlessly: it substitutes sensitive values with synthetic tokens (e.g. <code>[ACCOUNT_NUM_1]</code>), allows the LLM to complete its analysis, and seamlessly de-tokenizes the output on device. Zero data risk, zero business friction."
+                "Hard blocking kills AI adoption and incentivizes shadow AI on personal devices. If support reps cannot paste customer tickets into AI for triage, support velocity collapses. ZTDS allows users to proceed without interruption: it substitutes sensitive values with synthetic tokens (e.g. <code>[ACCOUNT_NUM_1]</code>), allows the LLM to complete its analysis, and automatically de-tokenizes the output on device. Zero data risk, zero business friction."
               </div>
             </div>
 
@@ -2458,7 +2458,7 @@ SUBJECT: Architectural & Statutory Grounds for Technical Safe Harbor and Elimina
 ## 1. Executive Summary & Core Principle
 Software conforming to the Zero-Trust Data Sanitization (ZTDS RFC v1.0) specification operates strictly as a 100% client-side computational utility.
 Because conforming software executes de-identification strictly within volatile client RAM before outbound network transmission, exactly zero (0.00) bytes of cleartext sensitive data are transmitted to or processed by external vendor servers.
-Consequently, ZTDS-conforming architectures eliminate the third-party Data Processor relationship under GDPR Article 28 and BAA burdens under HIPAA for the utility itself. Furthermore, by stripping direct identifiers and reducing contextual entropy in client RAM, conforming deployments establish an objective technical safe harbor under GDPR Article 32 and Israel PPL Amendment 13 Section 17, mitigating regulatory penalty ceilings.
+Consequently, ZTDS-conforming architectures eliminate the third-party Data Processor relationship under GDPR Article 28 and BAA burdens under HIPAA for the utility itself. By stripping direct identifiers and reducing contextual entropy in client RAM, conforming deployments also establish an objective Technical Safe Harbor under GDPR Article 32 and Israel PPL Amendment 13 Section 17, minimizing statutory risk exposure.
 
 ## 2. The 4 Non-Negotiable Invariants (RFC v1.0)
 - Invariant 1 (Zero External Egress): ΔEgress(S) ≡ 0.00 bytes across public sockets S_WAN.

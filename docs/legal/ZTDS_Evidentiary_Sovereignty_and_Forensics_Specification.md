@@ -19,7 +19,7 @@ Yet, with the rapid enterprise adoption of Generative Artificial Intelligence (G
 2. Organizations rely upon corporate **Data Processing Agreements (DPAs)** and administrative settings (such as "do not train on customer data") as substitute security perimeters.
 3. In doing so, organizations surrender **Evidentiary Sovereignty**—physically transmitting unadjudicated suspect identifiers, proprietary cluster tags, and investigative working hypotheses into multi-tenant remote memory outside local jurisdictional custody.
 
-This specification formalizes the **ZTDS Evidentiary Sovereignty Profile (`ZTDS-FORENSIC`)**, establishing mathematical and operational requirements that enable investigators to leverage the full reasoning and topological intelligence of leading language models while guaranteeing absolute zero data egress ($\Delta Egress \equiv 0.00\text{ B}$) and providing a cryptographically verifiable **Chain-of-Custody Docket Receipt**.
+This specification formalizes the **ZTDS Evidentiary Sovereignty Profile (`ZTDS-FORENSIC`)**, establishing mathematical and operational requirements that enable investigators to use the full reasoning and topological intelligence of leading language models while guaranteeing absolute zero data egress ($\Delta Egress \equiv 0.00\text{ B}$) and providing a cryptographically verifiable **Chain-of-Custody Docket Receipt**.
 
 ---
 
