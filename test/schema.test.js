@@ -218,9 +218,22 @@ for (const page of prodPages) {
 }
 console.log(`    [PASS] All ${appEntitiesChecked} SoftwareApplication/WebApplication entities and ${prodPages.length} page graphs verified.`);
 
-// Test 6: 100% Visible DOM <-> JSON-LD FAQPage Question Parity & Case Studies ItemList
-console.log('--> Test 6: 100% Visible DOM <-> JSON-LD FAQPage Question Parity & Case Studies ItemList');
+// Test 6: 100% Visible DOM <-> JSON-LD FAQPage Question Parity & Directory Hub ItemList Parity
+console.log('--> Test 6: 100% Visible DOM <-> JSON-LD FAQPage Question Parity & Directory Hub ItemList Parity');
+const regRaw = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'registry.json'), 'utf8'));
+const compRaw = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'companies.json'), 'utf8'));
+const felRaw = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'fellows.json'), 'utf8'));
+const regItems = Array.isArray(regRaw) ? regRaw : (regRaw.entities || regRaw.products || regRaw.registry || []);
+const compItems = Array.isArray(compRaw) ? compRaw : (compRaw.companies || []);
+const felItems = Array.isArray(felRaw) ? felRaw : (felRaw.fellows || []);
+const expectedHubItemLists = {
+  'registry/index.html': regItems.length,
+  'companies/index.html': compItems.length,
+  'fellows/index.html': felItems.length,
+  'case-studies/index.html': compItems.filter(c => c.case_study || c.case_study_url || c.caseStudy).length
+};
 let faqQuestionsVerified = 0;
+let hubItemListsVerified = 0;
 for (const page of prodPages) {
   const fullPath = path.join(__dirname, '..', page);
   const html = fs.readFileSync(fullPath, 'utf8');
@@ -243,13 +256,19 @@ for (const page of prodPages) {
           faqQuestionsVerified++;
         }
       }
-      if (page === 'case-studies/index.html' && types.includes('ItemList')) {
-        assert(node.numberOfItems === 9 && Array.isArray(node.itemListElement) && node.itemListElement.length === 9, 'case-studies/index.html ItemList must contain all 9 enterprise case studies');
+      if (expectedHubItemLists[page] !== undefined && types.includes('ItemList')) {
+        const expectedCount = expectedHubItemLists[page];
+        assert(
+          node.numberOfItems === expectedCount && Array.isArray(node.itemListElement) && node.itemListElement.length === expectedCount,
+          `${page} ItemList must match SSOT data count (${expectedCount}), got numberOfItems=${node.numberOfItems}, length=${node.itemListElement && node.itemListElement.length}`
+        );
+        hubItemListsVerified++;
       }
     }
   }
 }
-console.log(`    [PASS] All ${faqQuestionsVerified} FAQPage JSON-LD questions verified against visible DOM markup.`);
+assert.strictEqual(hubItemListsVerified, 4, `Expected all 4 directory hub ItemLists to be verified, got ${hubItemListsVerified}`);
+console.log(`    [PASS] All ${faqQuestionsVerified} FAQPage JSON-LD questions and ${hubItemListsVerified} Directory Hub ItemLists verified against SSOT.`);
 
 // Test 7: Ahrefs Schema.org & Inlink Guard (Zero Orphan/Single-Inlink & AI Discoverability)
 console.log('--> Test 7: Schema.org Strict Type Guard, Article AI Discoverability & Sitemap >=2 Inlinks');

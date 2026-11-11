@@ -404,9 +404,13 @@ for (const pg of PAGES) {
 for (const sm of ['sitemap.xml']) {
   const p = path.join(ROOT, sm);
   let xml = fs.readFileSync(p, 'utf8');
-  const urls = ['/frameworks/', ...PAGES.map((x) => `/frameworks/${x.slug}/`)];
-  for (const u of urls) {
+  const entries = [
+    { u: '/frameworks/', t: HUB.title },
+    ...PAGES.map((x) => ({ u: `/frameworks/${x.slug}/`, t: x.title }))
+  ];
+  for (const { u, t } of entries) {
     if (xml.includes(`<loc>https://ztds.ai${u}</loc>`)) continue;
+    const xmlTitle = String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const entry = `  <url>
     <loc>https://ztds.ai${u}</loc>
     <lastmod>${TODAY}</lastmod>
@@ -414,7 +418,7 @@ for (const sm of ['sitemap.xml']) {
     <priority>${u === '/frameworks/' ? '0.8' : '0.7'}</priority>
     <image:image>
       <image:loc>${OG}</image:loc>
-      <image:title>ZTDS Framework Mappings</image:title>
+      <image:title>${xmlTitle}</image:title>
     </image:image>
   </url>
 `;

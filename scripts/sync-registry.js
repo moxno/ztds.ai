@@ -435,6 +435,32 @@ function syncRegistry(options = { checkOnly: false }) {
         }
       }
     }
+
+    // 4. Verify Schema.org JSON-LD ItemList Parity across all 4 directory hubs
+    const itemListTargets = [
+      { file: 'registry/index.html', expected: entities.length },
+      { file: 'fellows/index.html', expected: felCount },
+      { file: 'companies/index.html', expected: compCount },
+      { file: 'case-studies/index.html', expected: csCount }
+    ];
+    for (const target of itemListTargets) {
+      const hubRaw = readFile(target.file);
+      if (!hubRaw) continue;
+      const ldMatches = [...hubRaw.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi)];
+      for (const m of ldMatches) {
+        try {
+          const parsed = JSON.parse(m[1]);
+          const graph = parsed['@graph'] || [parsed];
+          const itemList = graph.find(node => node['@type'] === 'ItemList');
+          if (itemList && Array.isArray(itemList.itemListElement)) {
+            if (itemList.itemListElement.length !== target.expected || (itemList.numberOfItems !== undefined && itemList.numberOfItems !== target.expected)) {
+              console.error(`  [DRIFT] Schema.org ItemList in ${target.file} has ${itemList.itemListElement.length} items (numberOfItems=${itemList.numberOfItems}), expected ${target.expected}.`);
+              driftCount++;
+            }
+          }
+        } catch (_) {}
+      }
+    }
   }
 
   // Phase 4: Machine-Readable Knowledge Corpora (llms.txt & llms-full.txt)
