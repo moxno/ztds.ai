@@ -94,4 +94,21 @@ if (fs.existsSync(compLogoDir)) {
   }
 }
 
+// Synchronize docs/legal/*.{md,txt} <-> public/docs/legal/*.{md,txt}
+const legalDir = path.join(rootDir, 'docs/legal');
+const pubLegalDir = path.join(rootDir, 'public/docs/legal');
+if (fs.existsSync(legalDir) && fs.existsSync(pubLegalDir)) {
+  for (const file of fs.readdirSync(legalDir)) {
+    if (!file.endsWith('.md') && !file.endsWith('.txt')) continue;
+    const src = path.join(legalDir, file);
+    const dst = path.join(pubLegalDir, file);
+    if (!fs.statSync(src).isFile()) continue;
+    const srcBuf = fs.readFileSync(src);
+    if (!fs.existsSync(dst) || !srcBuf.equals(fs.readFileSync(dst))) {
+      fs.writeFileSync(dst, srcBuf);
+      syncedCount++;
+    }
+  }
+}
+
 console.log(`[ZTDS Build] Mirror sync complete (${mirrorPairs.length} canonical pairs verified, ${syncedCount} updated).`);

@@ -120,7 +120,7 @@
           "name": "Who is authorized to display the official ZTDS Verified and Sovereign seals?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Software builders, corporate adopters, and research fellows listed in data/registry.json, data/companies.json, or data/fellows.json with a valid Ed25519 conformance certificate are authorized to embed official ZTDS seals across their documentation and web properties."
+            "text": "Software builders, corporate adopters, research fellows, and protected web domains listed in data/registry.json, data/companies.json, data/fellows.json, or data/domains.json with a valid Ed25519 conformance certificate are authorized to embed official ZTDS seals across their documentation and web properties."
           }
         }
       ],
@@ -237,6 +237,7 @@
       <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
       <a href="/blueprints/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">10 AI &amp; RAG Blueprints</a>
       <a href="/compliance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Global Regulatory Compliance Matrix</a>
+      <a href="/frameworks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Framework Mappings (OWASP, NIST, EU AI Act)</a>
       <a href="/benchmarks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">AI Safety &amp; Latency Benchmarks</a>
       <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper (DOIs)</a>
       <a href="/evidentiary-sovereignty/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Evidentiary Sovereignty</a>
@@ -424,7 +425,7 @@
             <span class="text-xs sm:text-sm text-slate-400 font-mono py-2 hidden sm:inline">.svg</span>
           </div>
           <p class="text-xs text-slate-500 mt-2">
-            Slug resolves dynamically against <a href="/registry/" class="text-emerald-700 font-medium underline">data/registry.json</a>. Verified entities display an active emerald verification seal.
+            Slug or domain resolves dynamically against <a href="/registry/" class="text-emerald-700 font-medium underline">data/registry.json</a>, <a href="/companies/" class="text-emerald-700 font-medium underline">companies</a>, <a href="/fellows/" class="text-emerald-700 font-medium underline">fellows</a>, and <a href="/verify/" class="text-emerald-700 font-medium underline">domains</a>. Verified entities display an active emerald verification seal.
           </p>
         </div>
 
@@ -545,7 +546,7 @@
                 <svg class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                 Download Badge (.svg)
               </button>
-              <a href="/apply/?track=product" class="btn-trust text-xs py-2.5 px-4 shadow-sm touch-target min-h-[44px]">
+              <a id="btnApplyAccreditation" href="/apply/?track=product" class="btn-trust text-xs py-2.5 px-4 shadow-sm touch-target min-h-[44px]">
                 Submit Slug for Accreditation &rarr;
               </a>
             </div>
@@ -793,7 +794,7 @@
               <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
             </summary>
             <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
-              Software builders, corporate adopters, and research fellows listed in data/registry.json, data/companies.json, or data/fellows.json with a valid Ed25519 conformance certificate are authorized to embed official ZTDS seals across their documentation and web properties.
+              Software builders, corporate adopters, research fellows, and protected web domains listed in data/registry.json, data/companies.json, data/fellows.json, or data/domains.json with a valid Ed25519 conformance certificate are authorized to embed official ZTDS seals across their documentation and web properties.
             </div>
           </details>
         </div>
@@ -999,10 +1000,24 @@
         'crewai-ztds',
         'ollama-ztds-filter',
         'envoy-ztds-wasm',
-        'fastmcp-ztds'
+        'fastmcp-ztds',
+        'ilya-sibiryakov',
+        'cliford-fanyuy',
+        'wg1-crypto',
+        'wg2-grc',
+        'wg3-systems',
+        'wg4-profiles',
+        'barrelswood.com',
+        'barrelswood-com',
+        'barrelswood-com-ztds'
       ];
 
       const registeredSlugs = new Set(KNOWN_VERIFIED_SLUGS);
+      const domainTargetMap = new Map([
+        ['barrelswood.com', 'barrelswood.com'],
+        ['barrelswood-com', 'barrelswood.com'],
+        ['barrelswood-com-ztds', 'barrelswood.com']
+      ]);
 
       // DOM Elements
       const slugInput = document.getElementById('slugInput');
@@ -1012,6 +1027,7 @@
       const registryStatusPill = document.getElementById('registryStatusPill');
       const badgePreviewContainer = document.getElementById('badgePreviewContainer');
       const badgePreviewLink = document.getElementById('badgePreviewLink');
+      const btnApplyAccreditation = document.getElementById('btnApplyAccreditation');
       const badgeSvgMount = document.getElementById('badgeSvgMount');
       const badgePreviewHelper = document.getElementById('badgePreviewHelper');
       const codeMd = document.getElementById('codeMd');
@@ -1032,12 +1048,14 @@
       let currentZoom = 1;
       let currentSvgXml = '';
 
-      // Attempt to load dynamic registry and corporate adopters
+      // Attempt to load dynamic registry, corporate adopters, fellows, and protected web domains
       Promise.all([
         fetch('/data/registry.json').then(r => r.json()).catch(() => ({ entities: [] })),
-        fetch('/data/companies.json').then(r => r.json()).catch(() => ({ companies: [] }))
+        fetch('/data/companies.json').then(r => r.json()).catch(() => ({ companies: [] })),
+        fetch('/data/fellows.json').then(r => r.json()).catch(() => ({ fellows: [] })),
+        fetch('/data/domains.json').then(r => r.json()).catch(() => ({ domains: [] }))
       ])
-        .then(([regData, compData]) => {
+        .then(([regData, compData, fellowData, domData]) => {
           if (regData && Array.isArray(regData.entities)) {
             regData.entities.forEach(e => {
               if (e.slug) registeredSlugs.add(e.slug.toLowerCase());
@@ -1048,6 +1066,32 @@
             compData.companies.forEach(c => {
               if (c.slug) registeredSlugs.add(c.slug.toLowerCase());
               if (c.id) registeredSlugs.add(c.id.toLowerCase());
+            });
+          }
+          if (fellowData && Array.isArray(fellowData.fellows)) {
+            fellowData.fellows.forEach(f => {
+              if (f.slug) registeredSlugs.add(f.slug.toLowerCase());
+              if (f.id) registeredSlugs.add(f.id.toLowerCase());
+            });
+          }
+          if (domData && Array.isArray(domData.domains)) {
+            domData.domains.forEach(d => {
+              const canonicalDom = String(d.domain || d.slug || '').toLowerCase();
+              if (d.domain) {
+                registeredSlugs.add(d.domain.toLowerCase());
+                domainTargetMap.set(d.domain.toLowerCase(), canonicalDom);
+              }
+              if (d.slug) {
+                registeredSlugs.add(d.slug.toLowerCase());
+                domainTargetMap.set(d.slug.toLowerCase(), canonicalDom);
+              }
+              if (d.id) {
+                const idLower = d.id.toLowerCase();
+                registeredSlugs.add(idLower);
+                registeredSlugs.add(idLower + '-ztds');
+                domainTargetMap.set(idLower, canonicalDom);
+                domainTargetMap.set(idLower + '-ztds', canonicalDom);
+              }
             });
           }
           updateBadge();
@@ -1140,9 +1184,14 @@
         }
 
         const verified = isSlugVerified(activeSlug);
+        const isDomain = domainTargetMap.has(activeSlug) || activeSlug.includes('.');
+        const canonicalDomain = domainTargetMap.get(activeSlug) || activeSlug;
         
         // Update Registry Status Pill
-        if (verified) {
+        if (verified && isDomain) {
+          registryStatusPill.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200';
+          registryStatusPill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> VERIFIED PROTECTED DOMAIN';
+        } else if (verified) {
           registryStatusPill.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200';
           registryStatusPill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> VERIFIED REGISTRY ENTITY';
         } else {
@@ -1188,7 +1237,17 @@
           remoteUrl += `?${queryParams.join('&')}`;
         }
 
-        const verifyUrl = `https://ztds.ai/verify/?target=${encodeURIComponent(activeSlug)}`;
+        const verifyUrl = isDomain
+          ? `https://ztds.ai/verify/?domain=${encodeURIComponent(canonicalDomain)}`
+          : `https://ztds.ai/verify/?target=${encodeURIComponent(activeSlug)}`;
+        if (badgePreviewLink) {
+          badgePreviewLink.href = verifyUrl;
+        }
+        if (btnApplyAccreditation) {
+          btnApplyAccreditation.href = isDomain
+            ? `/apply/?track=company&domain=${encodeURIComponent(canonicalDomain)}`
+            : `/apply/?track=product&slug=${encodeURIComponent(activeSlug)}`;
+        }
         codeMd.textContent = `[![ZTDS ${effectiveLabel}](${remoteUrl})](${verifyUrl})`;
         codeHtml.textContent = `<a href="${verifyUrl}"><img src="${remoteUrl}" alt="ZTDS ${effectiveLabel}" width="168" height="22" decoding="async"></a>`;
         codeSvg.textContent = currentSvgXml;
@@ -1402,15 +1461,25 @@
         });
       });
 
-      // Hydrate from URL query parameters (?slug=, ?tier=, ?theme=, ?label=)
+      // Hydrate from URL query parameters (?slug=, ?domain=, ?tier=, ?theme=, ?label=)
       try {
         const params = new URLSearchParams(window.location.search);
+        const qDomain = params.get('domain');
         const qSlug = params.get('slug') || params.get('entity');
         const qTier = params.get('tier');
         const qTheme = params.get('theme') || params.get('style');
         const qLabel = params.get('label');
-        if (qSlug) {
-          slugInput.value = qSlug.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+        if (qDomain) {
+          const cleanDom = qDomain
+            .trim()
+            .toLowerCase()
+            .replace(/^https?:\/\//i, '')
+            .replace(/^www\./i, '')
+            .split('/')[0]
+            .replace(/[^a-z0-9.-]/g, '');
+          if (cleanDom) slugInput.value = cleanDom;
+        } else if (qSlug) {
+          slugInput.value = qSlug.trim().toLowerCase().replace(/[^a-z0-9.-]/g, '');
         }
         if (qTier) {
           const matchTier = Array.from(tierBtns).find(b => (b.getAttribute('data-tier') || '').toLowerCase() === qTier.trim().toLowerCase());

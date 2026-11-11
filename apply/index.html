@@ -252,6 +252,7 @@
       <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
       <a href="/blueprints/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">10 AI &amp; RAG Blueprints</a>
       <a href="/compliance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Global Regulatory Compliance Matrix</a>
+      <a href="/frameworks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Framework Mappings (OWASP, NIST, EU AI Act)</a>
       <a href="/benchmarks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">AI Safety &amp; Latency Benchmarks</a>
       <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper (DOIs)</a>
       <a href="/evidentiary-sovereignty/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Evidentiary Sovereignty</a>
@@ -1822,10 +1823,21 @@
       appUrlInput.addEventListener('input', updateBadgeAndSnippets);
       if (appProfileSelect) appProfileSelect.addEventListener('change', updateBadgeAndSnippets);
 
-      // Check URL search parameters
+      // Check URL search parameters (?track=, ?domain=, ?profile=, ?hash=, ?company=, ?industry=, ?slug=, ?name=, ?url=)
       const urlParams = new URLSearchParams(window.location.search);
       const rawInitialTrack = urlParams.get('track');
-      const initialTrack = rawInitialTrack === 'case-study' ? 'company' : rawInitialTrack;
+      const qDomain = (urlParams.get('domain') || '').trim().replace(/^https?:\/\//i, '').replace(/^www\./i, '').split('/')[0];
+      const qUrl = (urlParams.get('url') || '').trim();
+      const qCompany = (urlParams.get('company') || urlParams.get('org') || '').trim();
+      const qName = (urlParams.get('name') || urlParams.get('slug') || '').trim();
+      const qProfile = (urlParams.get('profile') || '').trim().toLowerCase();
+      const qIndustry = (urlParams.get('industry') || '').trim().toLowerCase();
+      const qHash = (urlParams.get('hash') || '').trim();
+
+      const initialTrack = rawInitialTrack === 'case-study'
+        ? 'company'
+        : (rawInitialTrack || (qCompany ? 'company' : null));
+
       if (initialTrack && ['product', 'company', 'fellow'].includes(initialTrack)) {
         setTrack(initialTrack);
         if (rawInitialTrack === 'case-study') {
@@ -1833,10 +1845,73 @@
           if (companyScopeEl && !companyScopeEl.value) {
             companyScopeEl.value = 'Enterprise Case Study & Field Validation Report';
           }
-          goToStep(2);
         }
-      } else {
-        updateBadgeAndSnippets();
+      }
+
+      if (qUrl && appUrlInput && !appUrlInput.value) {
+        appUrlInput.value = /^https?:\/\//i.test(qUrl) ? qUrl : 'https://' + qUrl;
+      } else if (qDomain && appUrlInput && !appUrlInput.value) {
+        appUrlInput.value = 'https://' + qDomain;
+      }
+
+      if ((qCompany || qName) && appNameInput && !appNameInput.value) {
+        appNameInput.value = qCompany || qName;
+      } else if (qDomain && appNameInput && !appNameInput.value) {
+        const hostBase = qDomain.split('.')[0] || '';
+        if (hostBase) {
+          appNameInput.value = hostBase.charAt(0).toUpperCase() + hostBase.slice(1);
+        }
+      }
+
+      if (qProfile && appProfileSelect) {
+        const profileAliases = {
+          hipaa: 'medical',
+          healthcare: 'medical',
+          fintech: 'finance',
+          banking: 'finance',
+          saas: 'dev',
+          defense: 'government',
+          siem: 'security',
+          secops: 'security'
+        };
+        const mappedProfile = profileAliases[qProfile] || qProfile;
+        const optMatch = Array.from(appProfileSelect.options).find(o => o.value.toLowerCase() === mappedProfile);
+        if (optMatch) appProfileSelect.value = optMatch.value;
+      }
+
+      if (qIndustry) {
+        const companyIndustryEl = document.getElementById('companyIndustry');
+        if (companyIndustryEl) {
+          const industryAliases = {
+            healthcare: 'Healthcare & Hospital EHR',
+            hipaa: 'Healthcare & Hospital EHR',
+            medical: 'Healthcare & Hospital EHR',
+            finance: 'Commercial Banking & FinTech',
+            fintech: 'Commercial Banking & FinTech',
+            banking: 'Commercial Banking & FinTech',
+            legal: 'Corporate Law & LegalTech',
+            saas: 'B2B Enterprise SaaS',
+            agency: 'Digital Agency & GEO Marketing',
+            defense: 'Sovereign & Defense Tech',
+            sovereign: 'Sovereign & Defense Tech',
+            voice: 'B2B Enterprise SaaS'
+          };
+          const targetLabel = industryAliases[qIndustry] || qIndustry;
+          const indOpt = Array.from(companyIndustryEl.options).find(
+            o => o.value.toLowerCase() === targetLabel.toLowerCase() || o.value.toLowerCase().includes(qIndustry)
+          );
+          if (indOpt) companyIndustryEl.value = indOpt.value;
+        }
+      }
+
+      if (qHash && auditHashInput && !auditHashInput.value) {
+        auditHashInput.value = qHash.startsWith('sha256:') ? qHash : 'sha256:' + qHash;
+      }
+
+      updateBadgeAndSnippets();
+
+      if (rawInitialTrack === 'case-study' || qDomain || qCompany || qName || qHash) {
+        updateWizardStepsUI(2);
       }
 
       // Sync track selection to URL via history.replaceState

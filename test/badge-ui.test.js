@@ -205,4 +205,14 @@ assert(badgeHtml.includes('BrandMeWeb'), 'Must contain BrandMeWeb');
 assert(!badgeHtml.includes('Brand Me Web'), 'Must not contain Brand Me Web with spaces');
 console.log('    [PASS] Strict single-word BrandMeWeb spelling verified.');
 
-console.log('\n[SUMMARY] ALL 10 INTERACTIVE TRUST BADGE GENERATOR TESTS PASSED WITH 100% SUCCESS.\n');
+// --> Test 11: Multi-Registry Client Hydration (Fellows & Domains + Dot-Preserving Deep Links)
+console.log('\n--> Test 11: Multi-Registry Client Hydration & Domain Deep-Linking');
+assert(badgeHtml.includes("fetch('/data/fellows.json')"), 'badge/index.html must fetch /data/fellows.json');
+assert(badgeHtml.includes("fetch('/data/domains.json')"), 'badge/index.html must fetch /data/domains.json');
+assert(badgeHtml.includes("params.get('domain')"), 'badge/index.html must support ?domain= query param');
+assert(badgeHtml.includes('replace(/[^a-z0-9.-]/g'), 'badge/index.html must preserve dots in domain slugs');
+assert(badgeHtml.includes('https://ztds.ai/verify/?domain='), 'badge/index.html must link domain badges to /verify/?domain=');
+assert(badgeHtml.includes('badgePreviewLink.href = verifyUrl'), 'badge/index.html must sync live preview link href');
+console.log('    [PASS] Fellows/Domains fetch, dot-preserving URL hydration, and domain verify routing verified.');
+
+console.log('\n[SUMMARY] ALL 11 INTERACTIVE TRUST BADGE GENERATOR TESTS PASSED WITH 100% SUCCESS.\n');

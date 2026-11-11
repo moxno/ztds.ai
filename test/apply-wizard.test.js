@@ -140,7 +140,14 @@ console.log('--> Test 6: Client-Side Script Engine & Controller Functions');
   // Premature submit prevention
   assert(html.includes('currentStep !== 3'), 'Must guard against premature submit on Enter in steps 1 & 2');
 
-  console.log('    [PASS] Script engine controller functions and event bindings verified.');
+  // Cross-page deep-link query-param hydration (?domain=, ?profile=, ?hash=, ?company=, ?industry=, ?slug=)
+  assert(html.includes("urlParams.get('domain')"), 'Must hydrate ?domain= from Scanner and Homepage links');
+  assert(html.includes("urlParams.get('profile')"), 'Must hydrate ?profile= from Scanner and Homepage links');
+  assert(html.includes("urlParams.get('hash')"), 'Must hydrate ?hash= from Scanner CLI receipts');
+  assert(html.includes("urlParams.get('company')"), 'Must hydrate ?company= from Companies Hub links');
+  assert(html.includes("urlParams.get('industry')"), 'Must hydrate ?industry= from Companies Hub links');
+
+  console.log('    [PASS] Script engine controller functions, event bindings, and deep-link hydration verified.');
 }
 
 // Test 7: Mobile Ergonomics & Touch Target Sizing

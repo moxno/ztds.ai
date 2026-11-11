@@ -76,4 +76,28 @@ assert.strictEqual(schema.itemListElement[0].item, 'https://ztds.ai/');
 assert.strictEqual(schema.itemListElement[1].item, 'https://ztds.ai/404.html');
 console.log('    [PASS] Schema.org BreadcrumbList validated.');
 
-console.log('\n[SUMMARY] ALL 7 404 NOT FOUND TESTS PASSED WITH 100% CONFORMANCE.\n');
+// Test 8: Smart Closest-Route Recovery & Global Mobile Drawer Parity
+console.log('--> Test 8: Smart Closest-Route Recovery & Global Mobile Drawer Parity');
+assert(html.includes("url: '/frameworks/'"), '404.html routeRules must recover /frameworks/ routes');
+assert(html.includes("url: '/sdk/#5-physical-execution-surfaces'"), '404.html routeRules must recover WordPress / Surface 06 routes');
+assert(html.includes("url: '/companies/learningcenterusa/'"), '404.html routeRules must recover LearningCenterUsa Voice BIPA routes');
+
+function walkHtml(dir, out = []) {
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (['.git', 'node_modules', 'public', '.vercel', 'packages', 'stitch_export'].includes(e.name)) continue;
+    const p = path.join(dir, e.name);
+    if (e.isDirectory()) walkHtml(p, out);
+    else if (e.name.endsWith('.html') && !p.includes('ietf/draft-')) out.push(p);
+  }
+  return out;
+}
+for (const file of walkHtml(path.join(__dirname, '..'))) {
+  const pageHtml = fs.readFileSync(file, 'utf8');
+  const drawerMatch = pageHtml.match(/<aside id="mobile-drawer"[\s\S]*?<\/aside>/);
+  if (drawerMatch) {
+    assert(drawerMatch[0].includes('href="/frameworks/"'), `Mobile drawer in ${path.relative(path.join(__dirname, '..'), file)} must include /frameworks/ link`);
+  }
+}
+console.log('    [PASS] Smart recovery rules and 100% #mobile-drawer /frameworks/ parity verified.');
+
+console.log('\n[SUMMARY] ALL 8 404 NOT FOUND TESTS PASSED WITH 100% CONFORMANCE.\n');

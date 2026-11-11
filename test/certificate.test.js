@@ -153,7 +153,19 @@ console.log('--> Test 4: CLI Execution of bin/ztds-verify.js');
   assert(fileOut.includes(cert.certificate_id), 'CLI must accept certificate file');
   fs.unlinkSync(tmpFile);
 
-  console.log('    [PASS] CLI verifier passed in text, JSON, and file modes.');
+  // Verify slug + --strict mode (matching verify/index.html FAQ promise)
+  const slugJsonOut = execSync('node bin/ztds-verify.js privacyscrubber-web --strict --json', { encoding: 'utf8' });
+  const slugJsonResult = JSON.parse(slugJsonOut);
+  assert.strictEqual(slugJsonResult.valid, true, 'CLI must resolve registry slug with --strict');
+  assert(slugJsonResult.certificate_id.includes('PRIVACYSCRUBBER-WEB'), 'CLI must return matching certificate ID for slug');
+
+  // Verify Level 1 protected domain + URL normalization in CLI
+  const domainJsonOut = execSync('node bin/ztds-verify.js "https://www.barrelswood.com/contact-us/" --strict --json', { encoding: 'utf8' });
+  const domainJsonResult = JSON.parse(domainJsonOut);
+  assert.strictEqual(domainJsonResult.valid, true, 'CLI must resolve Level 1 protected domain from URL with --strict');
+  assert(domainJsonResult.certificate_id.includes('BARRELSWOOD-COM-ZTDS'), 'CLI must return BarrelsWood Level 1 certificate ID');
+
+  console.log('    [PASS] CLI verifier passed in text, JSON, file, slug (--strict), and domain modes.');
 }
 
 // Test 5: Integration with bin/ztds-audit.js --cert

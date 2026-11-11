@@ -37,7 +37,7 @@ THIS AIR-GAPPED ENTERPRISE END USER LICENSE AGREEMENT ("EULA") IS A LEGAL AGREEM
 3.1. **Prohibition of Competitive Commercialization:** Licensee agrees that the Software contains trade secrets and proprietary algorithmic heuristics of substantial economic value. Licensee shall not:
 (a) Package, white-label, or offer the Software as a standalone commercial PII/PHI de-identification service, managed API, or SaaS product competing with Licensor;
 (b) Decompile, disassemble, or reverse engineer the compiled WebAssembly bytecodes or binary executables;
-(c) Extract, scrape, or harvest the 25 specialized industry entity taxonomies or regex pattern banks to train external machine learning classifiers or build competing regex engines; or
+(c) Extract, scrape, or harvest the 30 specialized industry entity taxonomies or deterministic detection rulesets to train external machine learning classifiers or build competing sanitization engines; or
 (d) Distribute, share, or publish the offline license keys or binary tarballs to any unauthorized third party.
 
 3.2. **Source Code Access (When Applicable):** If an applicable Order Form explicitly grants source code inspection rights, Licensee agrees that source code access is granted strictly under a confidential, internal-audit-only license. Licensee may compile the code internally but may not create derivative commercial products or transfer the code outside the authorized development team.
