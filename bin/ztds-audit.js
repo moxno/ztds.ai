@@ -421,8 +421,8 @@ if (findings.length === 0) {
     console.log('     \x1b[36mnpm install @privacyscrubber/sdk\x1b[0m');
     console.log('  2. For Cursor & Claude Code IDE workflows, run local air-gapped MCP stdio proxy:');
     console.log('     \x1b[36mnpx @privacyscrubber/mcp-server\x1b[0m');
-    console.log('  3. Open reference core (universal baseline regex):');
-    console.log('     \x1b[36mnpm install @ztds/core\x1b[0m');
+    console.log('  3. Open reference MCP & Python core (universal baseline):');
+    console.log('     \x1b[36mnpx ztds-mcp   # or: pip install ztds\x1b[0m');
     console.log('  4. View certified solutions in the consortium registry: \x1b[33mhttps://ztds.ai/registry/\x1b[0m\n');
     process.exit(1);
   } else {

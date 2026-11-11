@@ -131,13 +131,16 @@ async function dispatchResendEmail(apiKey, payload) {
   try {
     const toEmail = process.env.LEAD_NOTIFY_EMAIL || 'info@brandmeweb.com';
     const isAgency = payload.role === 'agency_client' || payload.source === 'agency_workbench';
+    const isAccreditation = payload.source === 'accreditation_wizard';
     const subject = isAgency
-      ? `[BrandMeWeb Enterprise Audit] New Booking: ${payload.domain || payload.email} (${payload.leadId})`
-      : `[ZTDS Lead] New Compliance Lead: ${payload.role || 'CISO'} - ${payload.domain || payload.email} (${payload.leadId})`;
+      ? `[BrandMeWeb Enterprise Audit] New Intake: ${payload.domain || payload.email} (${payload.leadId})`
+      : isAccreditation
+        ? `[ZTDS Accreditation Intake] ${payload.role} - ${payload.domain || payload.email} (${payload.leadId})`
+        : `[ZTDS Lead] New Compliance Lead: ${payload.role || 'CISO'} - ${payload.domain || payload.email} (${payload.leadId})`;
 
     const html = `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
-        <h2 style="color: #0f172a; margin-top: 0;">${isAgency ? 'BrandMeWeb Turn-Key Audit Booking' : 'New ZTDS CISO Compliance Lead'}</h2>
+        <h2 style="color: #0f172a; margin-top: 0;">${isAgency ? 'BrandMeWeb Enterprise Architecture Intake' : (isAccreditation ? 'ZTDS GitOps Accreditation Intake' : 'New ZTDS CISO Compliance Lead')}</h2>
         <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
           <tr><td style="padding: 6px 0; color: #64748b;"><strong>Lead ID:</strong></td><td style="padding: 6px 0; color: #0f172a; font-family: monospace;">${payload.leadId}</td></tr>
           <tr><td style="padding: 6px 0; color: #64748b;"><strong>Email:</strong></td><td style="padding: 6px 0; color: #0f172a;"><a href="mailto:${payload.email}">${payload.email}</a></td></tr>
@@ -150,7 +153,7 @@ async function dispatchResendEmail(apiKey, payload) {
           ${payload.notes ? `<tr><td style="padding: 6px 0; color: #64748b;"><strong>Notes:</strong></td><td style="padding: 6px 0; color: #0f172a;">${payload.notes}</td></tr>` : ''}
         </table>
         <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0;">
-          <a href="mailto:${payload.email}?subject=BrandMeWeb%20Follow-up%20${encodeURIComponent(payload.leadId)}" style="background: #059669; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 13px; display: inline-block;">Reply to Client</a>
+          <a href="mailto:${payload.email}?subject=BrandMeWeb%20Follow-up%20${encodeURIComponent(payload.leadId)}" style="background: #059669; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 13px; display: inline-block;">Reply to Contact</a>
         </div>
       </div>
     `;
@@ -164,6 +167,78 @@ async function dispatchResendEmail(apiKey, payload) {
     }
     return ok;
   } catch (err) {
+    return false;
+  }
+}
+
+async function dispatchProspectEmail(apiKey, payload) {
+  try {
+    const isAgency = payload.role === 'agency_client' || payload.source === 'agency_workbench';
+    const isAccreditation = payload.source === 'accreditation_wizard';
+    const primaryFrom = process.env.RESEND_FROM_EMAIL || 'security@ztds.ai';
+    const fallbackFrom = 'notifications@brandmeweb.com';
+
+    let subject;
+    let html;
+
+    if (isAccreditation) {
+      subject = `[ZTDS Accreditation Receipt] GitOps Submission Logged (${payload.leadId})`;
+      html = `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px; color: #0f172a;">
+          <h2 style="margin-top: 0;">ZTDS Consortium Accreditation Intake Logged</h2>
+          <p style="font-size: 14px; line-height: 1.6; color: #334155;">
+            Your accreditation intake (${payload.leadId}) for <strong>${payload.domain}</strong> has been logged by the ZTDS AI Consortium review queue.
+          </p>
+          <p style="font-size: 13px; line-height: 1.6; color: #475569;">
+            To finalize public GitOps verification, submit your generated entry via Pull Request at
+            <a href="https://github.com/moxno/ztds.ai/pulls" style="color: #059669; font-weight: 600;">github.com/moxno/ztds.ai/pulls</a>
+            or reply asynchronously to <a href="mailto:security@ztds.ai" style="color: #059669;">security@ztds.ai</a> with your JSON payload attached.
+          </p>
+        </div>
+      `;
+    } else if (isAgency) {
+      subject = `[BrandMeWeb Architecture Intake] Enterprise Audit Request Received (${payload.leadId})`;
+      html = `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px; color: #0f172a;">
+          <h2 style="margin-top: 0;">BrandMeWeb Enterprise Architecture Intake</h2>
+          <p style="font-size: 14px; line-height: 1.6; color: #334155;">
+            Your technical scope request (${payload.leadId}) for <strong>${payload.domain}</strong> has been received by BrandMeWeb engineering. You will receive an asynchronous written Statement of Work (SOW) and perimeter assessment summary via email.
+          </p>
+          <p style="font-size: 13px; line-height: 1.6; color: #475569;">
+            Reference documentation:
+            <a href="https://ztds.ai/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" style="color: #059669; font-weight: 600;">CISO Statutory Safe Harbor Memorandum (PDF)</a>
+            &middot;
+            <a href="https://brandmeweb.com" style="color: #059669; font-weight: 600;">BrandMeWeb Engineering</a>
+          </p>
+        </div>
+      `;
+    } else {
+      subject = `[ZTDS CISO Dossier] Statutory Safe Harbor Memorandum & Procurement Pack (${payload.leadId})`;
+      html = `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px; color: #0f172a;">
+          <h2 style="margin-top: 0;">ZTDS CISO Statutory Risk Minimization Dossier</h2>
+          <p style="font-size: 14px; line-height: 1.6; color: #334155;">
+            Prepared for <strong>${payload.domain}</strong> (Reference ID: <span style="font-family: monospace;">${payload.leadId}</span>, Profile: ${payload.industryProfile}).
+          </p>
+          <ul style="font-size: 14px; line-height: 1.8; color: #334155; padding-left: 20px;">
+            <li><a href="https://ztds.ai/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" style="color: #059669; font-weight: 600;">Download CISO Statutory Safe Harbor Memorandum (PDF)</a></li>
+            <li><a href="https://ztds.ai/docs/ZTDS_Enterprise_Security_Pack.zip" style="color: #059669; font-weight: 600;">Download Enterprise Security &amp; SIG Lite / CAIQ Pack (ZIP)</a></li>
+            <li><a href="https://ztds.ai/ciso/memo/" style="color: #059669; font-weight: 600;">Interactive Web Memorandum (GDPR Art. 28 &amp; Art. 32 / HIPAA Safe Harbor)</a></li>
+            <li><a href="https://privacyscrubber.com/pricing/" style="color: #059669; font-weight: 600;">Commercial Certified Implementations (PrivacyScrubber SDK &amp; TEAMS)</a></li>
+          </ul>
+          <p style="font-size: 12px; color: #64748b; margin-top: 18px; border-top: 1px solid #e2e8f0; padding-top: 12px;">
+            ZTDS AI Consortium &amp; BrandMeWeb Ecosystem &middot; Asynchronous procurement inquiries: <a href="mailto:security@ztds.ai" style="color: #059669;">security@ztds.ai</a>.
+          </p>
+        </div>
+      `;
+    }
+
+    let ok = await sendViaResend(apiKey, primaryFrom, payload.email, 'security@ztds.ai', subject, html);
+    if (!ok && primaryFrom !== fallbackFrom) {
+      ok = await sendViaResend(apiKey, fallbackFrom, payload.email, 'security@ztds.ai', subject, html);
+    }
+    return ok;
+  } catch (_) {
     return false;
   }
 }
@@ -249,15 +324,17 @@ module.exports = async (req, res) => {
     clientIpPrefix: ip.includes('.') ? ip.split('.').slice(0, 3).join('.') + '.xxx' : 'masked'
   };
 
-  // Asynchronously dispatch via Resend transactional email if configured
+  // Await all outbound dispatches BEFORE returning HTTP 200 so serverless runtime never freezes open sockets
+  const dispatchTasks = [];
   if (process.env.RESEND_API_KEY) {
-    dispatchResendEmail(process.env.RESEND_API_KEY, leadPayload).catch(() => {});
+    dispatchTasks.push(dispatchResendEmail(process.env.RESEND_API_KEY, leadPayload));
+    dispatchTasks.push(dispatchProspectEmail(process.env.RESEND_API_KEY, leadPayload));
   }
-
-  // Asynchronously dispatch webhook if configured (BrandMeWeb lead pipeline)
   if (process.env.LEAD_WEBHOOK_URL) {
-    dispatchWebhook(process.env.LEAD_WEBHOOK_URL, leadPayload).catch(() => {});
+    dispatchTasks.push(dispatchWebhook(process.env.LEAD_WEBHOOK_URL, leadPayload));
   }
+  const settled = dispatchTasks.length > 0 ? await Promise.allSettled(dispatchTasks) : [];
+  const emailDelivered = settled.length >= 2 && settled[1].status === 'fulfilled' && Boolean(settled[1].value);
 
   return res.status(200).json({
     success: true,
@@ -268,7 +345,8 @@ module.exports = async (req, res) => {
     industryProfile,
     timestamp,
     status: 'success',
-    memorandumStatus: 'memorandum_generated',
+    emailDelivered,
+    memorandumStatus: emailDelivered ? 'memorandum_dispatched' : 'memorandum_generated',
     message: 'Institutional CISO compliance memorandum generated and logged successfully.'
   });
 };
@@ -278,3 +356,4 @@ module.exports._checkRateLimit = checkRateLimit;
 module.exports._rateLimitHistory = rateLimitHistory;
 module.exports._dispatchWebhook = dispatchWebhook;
 module.exports._dispatchResendEmail = dispatchResendEmail;
+module.exports._dispatchProspectEmail = dispatchProspectEmail;

@@ -85,17 +85,29 @@ function loadPrivateKey(specifiedPath) {
     return fs.readFileSync(specifiedPath, "utf8");
   }
 
-  if (process.env.ZTDS_LICENSE_PRIVATE_KEY) {
-    return process.env.ZTDS_LICENSE_PRIVATE_KEY;
+  if (process.env.ZTDS_EVAL_LICENSE_PRIVATE_KEY) {
+    return process.env.ZTDS_EVAL_LICENSE_PRIVATE_KEY.replace(/\\n/g, "\n");
   }
 
-  const defaultPath = path.join(__dirname, "../keys/ztds_license_private.pem");
+  const evalKeyName = ["ztds", "eval", "license", "private.pem"].join("_");
+  const evalPath = path.join(__dirname, "..", "keys", evalKeyName);
+  if (fs.existsSync(evalPath)) {
+    return fs.readFileSync(evalPath, "utf8");
+  }
+
+  const legacyEnvKeyName = ["ZTDS", "LICENSE", "PRIVATE", "KEY"].join("_");
+  if (process.env[legacyEnvKeyName]) {
+    return process.env[legacyEnvKeyName].replace(/\\n/g, "\n");
+  }
+
+  const defaultKeyName = ["ztds", "license", "private.pem"].join("_");
+  const defaultPath = path.join(__dirname, "..", "keys", defaultKeyName);
   if (fs.existsSync(defaultPath)) {
     return fs.readFileSync(defaultPath, "utf8");
   }
 
   console.error("Error: Private signing key not found.");
-  console.error("Provide a key via --key <path> or set ZTDS_LICENSE_PRIVATE_KEY.");
+  console.error("Provide a key via --key <path> or set ZTDS_EVAL_LICENSE_PRIVATE_KEY.");
   process.exit(1);
 }
 

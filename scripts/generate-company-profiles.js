@@ -230,13 +230,31 @@ function generateProfileHtml(company) {
             ${escapeHtml(monogram)}
           </div>`;
 
+  const isBlueprint = tier === 'Sandbox Blueprint';
+  const pageTitle = isBlueprint
+    ? `${escapeHtml(name)} — ZTDS Sandbox Reference Blueprint`
+    : `${escapeHtml(name)} — ZTDS ${escapeHtml(tier)} &amp; Case Study`;
+  const metaDesc = isBlueprint
+    ? `Composite Reference Simulation for ${escapeHtml(name)}. Illustrative ZTDS RFC v1.0 zero-egress SDK blueprint and compliance model (non-endorsement).`
+    : `Official ZTDS verification profile for ${escapeHtml(name)}. Verified zero-retention, client-side data sanitization and enterprise AI deployment.`;
+  const simulationBannerHtml = isBlueprint
+    ? `
+    <!-- Composite Reference Architecture Simulation Banner -->
+    <div class="mb-6 p-4 rounded-xl bg-amber-50 border border-amber-300 text-xs text-amber-950 leading-relaxed shadow-xs" role="note" aria-label="Composite Reference Architecture Simulation Notice">
+      <div class="font-mono font-bold uppercase tracking-wider text-amber-900 mb-1">Composite Reference Architecture Simulation &middot; Non-Endorsement Model</div>
+      <p>
+        <strong>${escapeHtml(name)}</strong> is an illustrative <strong>ZTDS RFC v1.0 Sandbox Blueprint</strong> modeling client-side zero-egress architecture for the <strong>${escapeHtml(industry)}</strong> sector. It represents a composite reference engineering simulation rather than a commercial customer testimonial or third-party corporate endorsement. For live production deployments, see <a href="/companies/brandmeweb/" class="underline font-semibold text-amber-900">BrandMeWeb</a>, <a href="/companies/privacyscrubber/" class="underline font-semibold text-amber-900">PrivacyScrubber</a>, and <a href="/companies/learningcenterusa/" class="underline font-semibold text-amber-900">LearningCenterUsa.net</a>.
+      </p>
+    </div>`
+    : '';
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${escapeHtml(name)} — ZTDS ${escapeHtml(tier)} &amp; Case Study</title>
-  <meta name="description" content="Official ZTDS verification profile for ${escapeHtml(name)}. Certified zero-retention, client-side data sanitization and enterprise AI case study.">
+  <title>${pageTitle}</title>
+  <meta name="description" content="${metaDesc}">
   <link rel="canonical" href="https://ztds.ai/companies/${slug}/">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#020617">
@@ -247,15 +265,16 @@ function generateProfileHtml(company) {
   <!-- Open Graph & Social Cards -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ztds.ai/companies/${slug}/">
-  <meta property="og:title" content="${escapeHtml(name)} — ZTDS ${escapeHtml(tier)} &amp; Case Study">
-  <meta property="og:description" content="Official ZTDS verification profile for ${escapeHtml(name)}. Certified zero-retention, client-side data sanitization and enterprise AI case study.">
+  <meta property="og:title" content="${pageTitle}">
+  <meta property="og:description" content="${metaDesc}">
   <meta property="og:image" content="https://ztds.ai/assets/img/og/og-registry.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="${escapeHtml(name)} — ZTDS ${escapeHtml(tier)} &amp; Case Study">
-  <meta name="twitter:description" content="Official ZTDS verification profile for ${escapeHtml(name)}. Certified zero-retention, client-side data sanitization and enterprise AI case study.">
+  <meta name="twitter:title" content="${pageTitle}">
+  <meta property="twitter:description" content="${metaDesc}">
+  <meta name="twitter:description" content="${metaDesc}">
   <meta name="twitter:image" content="https://ztds.ai/assets/img/og/og-registry.png">
 
   <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -270,8 +289,8 @@ function generateProfileHtml(company) {
         "@type": "ProfilePage",
         "@id": "https://ztds.ai/companies/${slug}/#profile",
         "url": "https://ztds.ai/companies/${slug}/",
-        "name": "${escapeHtml(name)} — ZTDS Verification Profile",
-        "description": "Official Zero-Trust Data Sanitization verification and corporate profile for ${escapeHtml(name)}.",
+        "name": "${pageTitle}",
+        "description": "${metaDesc}",
         "isPartOf": {
           "@type": "WebSite",
           "@id": "https://ztds.ai/#website",
@@ -450,6 +469,7 @@ function generateProfileHtml(company) {
       <span class="text-slate-300">/</span>
       <span class="text-emerald-700 font-semibold">${escapeHtml(name)}</span>
     </nav>
+${simulationBannerHtml}
 
     <!-- Header Section Card -->
     <div class="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-8 sm:p-10 mb-8 relative overflow-hidden">
@@ -757,7 +777,7 @@ function generateProfileHtml(company) {
             ALL SYSTEMS VERIFIED
           </span>
           <span>&middot;</span>
-          <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x4E9A2B1C</a>
+          <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x1ECD5BB7</a>
         </div>
       </div>
     </div>

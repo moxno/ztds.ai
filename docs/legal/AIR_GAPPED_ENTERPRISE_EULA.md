@@ -62,7 +62,7 @@ THIS AIR-GAPPED ENTERPRISE END USER LICENSE AGREEMENT ("EULA") IS A LEGAL AGREEM
 - Direct air-gapped optical/USB transfer media packages (where required); or
 - Customer-managed private container registry images.
 
-5.2. **Verification of Integrity:** Licensee shall verify the SHA-256 checksum and PGP signature (Key ID: `0x4E9A2B1C`) of all update packages prior to ingestion into air-gapped networks.
+5.2. **Verification of Integrity:** Licensee shall verify the SHA-256 checksum and PGP signature (Key ID: `0x1ECD5BB7`) of all update packages prior to ingestion into air-gapped networks.
 
 ---
 

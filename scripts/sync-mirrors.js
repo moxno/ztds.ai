@@ -31,6 +31,7 @@ const mirrorPairs = [
   ['server-card.json', 'public/server-card.json'],
   ['server-card.json', 'public/.well-known/mcp/server-card.json'],
   ['.well-known/security.txt', 'public/.well-known/security.txt'],
+  ['.well-known/pgp-key.txt', 'public/.well-known/pgp-key.txt'],
   ['.well-known/mcp.json', 'public/.well-known/mcp.json'],
   ['.well-known/agent.json', 'public/.well-known/agent.json'],
   ['.well-known/agent-card.json', 'public/.well-known/agent-card.json'],

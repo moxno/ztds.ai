@@ -129,18 +129,18 @@ async function runTests() {
   // ========================================================
   console.log("[TEST 4] Testing API Ed25519 minting and profile gating...");
 
-  const privKeyName = ["ztds", "license", "private.pem"].join("_");
+  const privKeyName = ["ztds", "eval", "license", "private.pem"].join("_");
   const exampleKeyName = ["ztds", "license", "private.pem.example"].join("_");
   const privPath = path.join(__dirname, "../keys", privKeyName);
   const examplePrivPath = path.join(__dirname, "../keys", exampleKeyName);
-  const pubPath = path.join(__dirname, "../keys/ztds_license_public.pem");
+  const pubPath = path.join(__dirname, "../keys/ztds_eval_license_public.pem");
 
   let privateKeyPem;
   let publicKeyPem;
 
-  if (process.env.ZTDS_CERT_PRIVATE_KEY) {
-    privateKeyPem = process.env.ZTDS_CERT_PRIVATE_KEY;
-    publicKeyPem = process.env.ZTDS_CERT_PUBLIC_KEY || crypto.createPublicKey(privateKeyPem).export({ type: "spki", format: "pem" });
+  if (process.env.ZTDS_EVAL_LICENSE_PRIVATE_KEY) {
+    privateKeyPem = process.env.ZTDS_EVAL_LICENSE_PRIVATE_KEY;
+    publicKeyPem = process.env.ZTDS_EVAL_LICENSE_PUBLIC_KEY || crypto.createPublicKey(privateKeyPem).export({ type: "spki", format: "pem" });
   } else if (fs.existsSync(privPath)) {
     privateKeyPem = fs.readFileSync(privPath, "utf8");
     publicKeyPem = fs.existsSync(pubPath)
@@ -155,8 +155,8 @@ async function runTests() {
     publicKeyPem = keypair.publicKey.export({ type: "spki", format: "pem" });
   }
 
-  process.env.ZTDS_CERT_PRIVATE_KEY = privateKeyPem;
-  process.env.ZTDS_CERT_PUBLIC_KEY = publicKeyPem;
+  process.env.ZTDS_EVAL_LICENSE_PRIVATE_KEY = privateKeyPem;
+  process.env.ZTDS_EVAL_LICENSE_PUBLIC_KEY = publicKeyPem;
 
   // Profile 1: Universal
   const tokenUniversal = mintToken({
@@ -278,6 +278,55 @@ async function runTests() {
   );
 
   console.log("  PASS: Zero-emoji, BrandMeWeb spelling, and repository confidentiality verified.");
+
+  // ========================================================
+  // Test 7: Public HTTP POST /api/mint-license Escalation Guard
+  // ========================================================
+  console.log("[TEST 7] Verifying public HTTP POST /api/mint-license blocks unauthenticated escalation...");
+  const mintHandler = require("../api/mint-license");
+  function callHttp(body) {
+    return new Promise((resolve) => {
+      const res = {
+        statusCode: 200,
+        headers: {},
+        setHeader(k, v) { this.headers[k] = v; },
+        status(c) { this.statusCode = c; return this; },
+        json(d) { resolve({ statusCode: this.statusCode, data: d }); return this; },
+        end() { resolve({ statusCode: this.statusCode, data: null }); return this; }
+      };
+      mintHandler({ method: "POST", headers: {}, socket: { remoteAddress: "test-runner" }, body }, res);
+    });
+  }
+
+  // 7a. Missing email rejected (400)
+  const missingEmailRes = await callHttp({ customerName: "Acme Corp", profile: "all" });
+  assert.strictEqual(missingEmailRes.statusCode, 400, "Missing corporate email must return 400");
+
+  // 7b. Consumer webmail rejected (400)
+  const gmailRes = await callHttp({ customerName: "Acme Corp", email: "user@gmail.com", profile: "all" });
+  assert.strictEqual(gmailRes.statusCode, 400, "Consumer webmail must return 400");
+
+  // 7c. Unauthenticated attempt to mint enterprise wildcard / 365 days is clamped to developer_eval + universal + 14d
+  const savedResend = process.env.RESEND_API_KEY;
+  delete process.env.RESEND_API_KEY;
+  const clampedRes = await callHttp({
+    customerName: "Acme Corp",
+    email: "security@acmecorp.io",
+    tier: "enterprise_airgapped",
+    profile: "all",
+    days: 365,
+    nodes: 99
+  });
+  if (savedResend) process.env.RESEND_API_KEY = savedResend;
+
+  assert.strictEqual(clampedRes.statusCode, 200, "Valid corporate email must return 200");
+  assert.strictEqual(clampedRes.data.tier, "developer_eval", "Public HTTP mint must hard-lock tier to developer_eval");
+  assert.strictEqual(clampedRes.data.profile, "universal", "Public HTTP mint must hard-lock profile to universal");
+  assert.deepStrictEqual(clampedRes.data.allowedProfiles, ["universal"], "Public HTTP mint must never grant wildcard [*]");
+  assert.strictEqual(clampedRes.data.specializedProfiles, false, "Public HTTP mint must set specialized_profiles=false");
+  assert.strictEqual(clampedRes.data.maxNodes, 2, "Public HTTP mint must cap nodes to 2");
+  assert.ok(!clampedRes.data.quickstart.docker.includes("agent-gateway"), "Docker snippet must not reference nonexistent agent-gateway image");
+  console.log("  PASS: Public HTTP mint escalation guard and valid Docker snippet verified.");
 
   console.log("\n[SUCCESS] All Trial Workbench verification tests passed with 100% compliance.");
 }

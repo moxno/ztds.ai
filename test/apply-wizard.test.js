@@ -193,4 +193,13 @@ console.log('--> Test 8: Strict Zero-Emoji & BrandMeWeb Single-Word Rule');
   console.log('    [PASS] 0 emojis and strict BrandMeWeb spelling verified.');
 }
 
-console.log('\n[SUCCESS] All 8 Apply Wizard tests passed successfully!\n');
+// Test 9: Live GitHub PR Target & Automated Lead-Capture Webhook Dispatch
+console.log('--> Test 9: Live GitHub PR Target & Automated Lead-Capture Webhook');
+{
+  assert(!html.includes('github.com/ztds-ai/'), 'Must NOT contain dead 404 github.com/ztds-ai/ org links');
+  assert(html.includes('https://github.com/moxno/ztds.ai/pulls'), 'Must point GitOps PR intake to live https://github.com/moxno/ztds.ai/pulls');
+  assert(html.includes("fetch('/api/lead-capture/'") && html.includes("source: 'accreditation_wizard'"), 'Must dispatch accreditation intake to /api/lead-capture/');
+  console.log('    [PASS] Live GitHub PR URL and serverless accreditation intake verified.');
+}
+
+console.log('\n[SUCCESS] All 9 Apply Wizard tests passed successfully!\n');

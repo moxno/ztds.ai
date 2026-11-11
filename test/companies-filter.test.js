@@ -173,4 +173,36 @@ console.log('--> Test 7: Brand Spelling SSOT ("BrandMeWeb" single word rule)');
   console.log('    [PASS] BrandMeWeb single word rule verified.');
 }
 
-console.log('\n[SUMMARY] ALL 7 COMPANIES SEARCH & FILTER TESTS PASSED WITH 100% SUCCESS.\n');
+// Test 8: Sandbox Blueprint Simulation Transparency & Non-Endorsement Ratchet
+console.log('--> Test 8: Sandbox Blueprint Simulation Transparency & Certificate Level');
+{
+  const { verifyCertificate } = require('../lib/certificate-manager');
+  const blueprints = companiesData.companies.filter(c => c.tier === 'Sandbox Blueprint');
+  assert.strictEqual(blueprints.length, 7, 'Must have exactly 7 Sandbox Blueprint entities');
+
+  blueprints.forEach(bp => {
+    assert.strictEqual(
+      bp.certificate.level,
+      'Reference Architecture Blueprint (Composite Simulation)',
+      `Blueprint "${bp.slug}" certificate level must explicitly identify Composite Simulation`
+    );
+    const verified = verifyCertificate(bp.certificate.token);
+    assert.strictEqual(verified.level, 'Reference Architecture Blueprint (Composite Simulation)');
+
+    const profilePath = path.join(ROOT, 'companies', bp.slug, 'index.html');
+    assert(fs.existsSync(profilePath), `Profile page for ${bp.slug} must exist`);
+    const profileHtml = fs.readFileSync(profilePath, 'utf8');
+    assert(
+      profileHtml.includes('Composite Reference Architecture Simulation'),
+      `Profile page for ${bp.slug} must display Composite Reference Architecture Simulation banner`
+    );
+    assert(
+      !profileHtml.includes('Official ZTDS verification profile for'),
+      `Profile page for ${bp.slug} must not claim Official ZTDS verification profile in meta description`
+    );
+  });
+
+  console.log('    [PASS] All 7 Sandbox Blueprint profiles & Ed25519 certificates enforce Composite Simulation transparency.');
+}
+
+console.log('\n[SUMMARY] ALL 8 COMPANIES SEARCH & FILTER TESTS PASSED WITH 100% SUCCESS.\n');

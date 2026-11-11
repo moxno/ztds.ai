@@ -180,4 +180,113 @@ console.log('--> Test 5: Module E — Subprocessor & Telemetry AST Elimination')
   console.log('    [PASS] Invariant 4 verified: zero third-party telemetry or analytics domains found in production binaries.');
 }
 
-console.log('\n[SUMMARY] ALL 5 THIRD-PARTY SECURITY AUDIT MODULES PASSED WITH 100% CONFORMANCE.\n');
+// Test 6: Module F — RFC 4880 OpenPGP Public Key Packet, CRC24 & Self-Signature Verification
+console.log('--> Test 6: Module F — RFC 4880 OpenPGP Key Integrity & Site-Wide Key ID Parity');
+{
+  function crc24(buf) {
+    let crc = 0xB704CE;
+    for (let i = 0; i < buf.length; i++) {
+      crc ^= buf[i] << 16;
+      for (let b = 0; b < 8; b++) {
+        crc <<= 1;
+        if (crc & 0x1000000) crc ^= 0x1864CFB;
+      }
+    }
+    return crc & 0xFFFFFF;
+  }
+
+  function parsePackets(buf) {
+    const out = [];
+    let off = 0;
+    while (off < buf.length) {
+      const hdr = buf[off++];
+      assert((hdr & 0xC0) === 0xC0, 'Expected RFC 4880 new-format packet header');
+      const tag = hdr & 0x3F;
+      let len;
+      const l1 = buf[off++];
+      if (l1 < 192) len = l1;
+      else if (l1 < 224) len = ((l1 - 192) << 8) + buf[off++] + 192;
+      else { assert.strictEqual(l1, 255); len = buf.readUInt32BE(off); off += 4; }
+      out.push({ tag, body: buf.slice(off, off + len) });
+      off += len;
+    }
+    return out;
+  }
+
+  const pgpPath = path.join(__dirname, '../.well-known/pgp-key.txt');
+  const secHtml = fs.readFileSync(path.join(__dirname, '../security/index.html'), 'utf8');
+  assert(fs.existsSync(pgpPath), '.well-known/pgp-key.txt must exist');
+
+  const armored = fs.readFileSync(pgpPath, 'utf8').trim();
+  const lines = armored.split(/\r?\n/);
+  assert.strictEqual(lines[0], '-----BEGIN PGP PUBLIC KEY BLOCK-----');
+  assert.strictEqual(lines[lines.length - 1], '-----END PGP PUBLIC KEY BLOCK-----');
+
+  const crcLine = lines[lines.length - 2];
+  assert(crcLine.startsWith('=') && crcLine.length === 5, 'Valid RFC 4880 CRC24 =xxxx footer required');
+  const blankIdx = lines.indexOf('');
+  const b64Payload = lines.slice(blankIdx + 1, lines.length - 2).join('');
+  const packetBytes = Buffer.from(b64Payload, 'base64');
+
+  const expectedCrc = crc24(packetBytes);
+  const expectedCrcB64 = '=' + Buffer.from([(expectedCrc >> 16) & 0xff, (expectedCrc >> 8) & 0xff, expectedCrc & 0xff]).toString('base64');
+  assert.strictEqual(crcLine, expectedCrcB64, 'OpenPGP Radix-64 CRC24 checksum must match binary packet stream');
+
+  const packets = parsePackets(packetBytes);
+  assert.strictEqual(packets.length, 3, 'Expected Tag 6 (PubKey) + Tag 13 (UserID) + Tag 2 (Signature)');
+  assert.strictEqual(packets[0].tag, 6);
+  assert.strictEqual(packets[1].tag, 13);
+  assert.strictEqual(packets[2].tag, 2);
+
+  // Verify v4 SHA-1 fingerprint & short Key ID
+  const pubBody = packets[0].body;
+  const fpHdr = Buffer.alloc(3);
+  fpHdr[0] = 0x99;
+  fpHdr.writeUInt16BE(pubBody.length, 1);
+  const fpHex = crypto.createHash('sha1').update(fpHdr).update(pubBody).digest('hex').toUpperCase();
+  const shortId = '0x' + fpHex.slice(32, 40);
+
+  assert.strictEqual(fpHex, '83A84584666B4569E81C27DCF7D43B761ECD5BB7');
+  assert.strictEqual(shortId, '0x1ECD5BB7');
+  assert.strictEqual(packets[1].body.toString('utf8'), 'ZTDS AI Consortium Security Team <security@ztds.ai>');
+
+  // Reconstruct RSA-4096 JWK public key from MPI(n), MPI(e) and cryptographically verify Tag 2 self-signature
+  let pOff = 6; // version(1) + time(4) + algo(1)
+  const nBits = pubBody.readUInt16BE(pOff); pOff += 2;
+  assert.strictEqual(nBits, 4096, 'Primary PGP key must be 4096-bit RSA');
+  const nLen = Math.ceil(nBits / 8);
+  const nBytes = pubBody.slice(pOff, pOff + nLen); pOff += nLen;
+  const eBits = pubBody.readUInt16BE(pOff); pOff += 2;
+  const eLen = Math.ceil(eBits / 8);
+  const eBytes = pubBody.slice(pOff, pOff + eLen);
+
+  const toB64u = (b) => b.toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const rsaPub = crypto.createPublicKey({ key: { kty: 'RSA', n: toB64u(nBytes), e: toB64u(eBytes) }, format: 'jwk' });
+
+  const sigBody = packets[2].body;
+  const hashedLen = sigBody.readUInt16BE(4);
+  const sigHashedSection = sigBody.slice(0, 6 + hashedLen);
+  const unhashedLen = sigBody.readUInt16BE(6 + hashedLen);
+  const sigMpiOffset = 6 + hashedLen + 2 + unhashedLen + 2; // skip left16
+  const sigBits = sigBody.readUInt16BE(sigMpiOffset);
+  const sigRaw = sigBody.slice(sigMpiOffset + 2, sigMpiOffset + 2 + Math.ceil(sigBits / 8));
+  const paddedSig = sigRaw.length < 512 ? Buffer.concat([Buffer.alloc(512 - sigRaw.length), sigRaw]) : sigRaw;
+
+  const uidPrefix = Buffer.alloc(5);
+  uidPrefix[0] = 0xB4;
+  uidPrefix.writeUInt32BE(packets[1].body.length, 1);
+  const trailer = Buffer.alloc(6);
+  trailer[0] = 0x04; trailer[1] = 0xFF;
+  trailer.writeUInt32BE(sigHashedSection.length, 2);
+
+  const signedData = Buffer.concat([fpHdr, pubBody, uidPrefix, packets[1].body, sigHashedSection, trailer]);
+  assert.strictEqual(crypto.verify('sha256', signedData, rsaPub, paddedSig), true, 'OpenPGP v4 RSA-4096 self-signature must verify cleanly');
+
+  assert(secHtml.includes('83A8 4584 666B 4569 E81C 27DC F7D4 3B76 1ECD 5BB7'), 'security/index.html must display real PGP fingerprint');
+  assert(secHtml.includes('=kzbm'), 'security/index.html #pgp-key-block must include RFC 4880 CRC24 checksum');
+  assert(!secHtml.includes('0x4E9A2B1C'), 'Stale placeholder Key ID must be eliminated');
+
+  console.log('    [PASS] RFC 4880 RSA-4096 PGP key packets, CRC24 checksum, and SHA-256 self-signature verified.');
+}
+
+console.log('\n[SUMMARY] ALL 6 THIRD-PARTY SECURITY AUDIT MODULES PASSED WITH 100% CONFORMANCE.\n');

@@ -38,16 +38,16 @@ function mintTestToken(payload, privateKeyPem) {
 async function runTests() {
   console.log("[TEST] Starting ZTDS Offline Licensing Verification Suite...");
 
-  const privPath = path.join(__dirname, "../keys/ztds_license_private.pem");
+  const privPath = path.join(__dirname, "../keys/ztds_eval_license_private.pem");
   const examplePrivPath = path.join(__dirname, "../keys/ztds_license_private.pem.example");
-  const pubPath = path.join(__dirname, "../keys/ztds_license_public.pem");
+  const pubPath = path.join(__dirname, "../keys/ztds_eval_license_public.pem");
 
   let privateKeyPem;
   let publicKeyPem;
 
-  if (process.env.ZTDS_LICENSE_PRIVATE_KEY) {
-    privateKeyPem = process.env.ZTDS_LICENSE_PRIVATE_KEY;
-    publicKeyPem = process.env.ZTDS_LICENSE_PUBLIC_KEY || crypto.createPublicKey(privateKeyPem).export({ type: "spki", format: "pem" });
+  if (process.env.ZTDS_EVAL_LICENSE_PRIVATE_KEY) {
+    privateKeyPem = process.env.ZTDS_EVAL_LICENSE_PRIVATE_KEY;
+    publicKeyPem = process.env.ZTDS_EVAL_LICENSE_PUBLIC_KEY || crypto.createPublicKey(privateKeyPem).export({ type: "spki", format: "pem" });
   } else if (fs.existsSync(privPath)) {
     privateKeyPem = fs.readFileSync(privPath, "utf8");
     publicKeyPem = fs.existsSync(pubPath)
@@ -185,9 +185,36 @@ async function runTests() {
   console.log(`    [PERF] 1,000 verifications in ${elapsedMs.toFixed(2)}ms (avg ${avgUs.toFixed(1)} μs per verification).`);
   assert.ok(avgUs < 1000, "Verification latency must be under 1,000 μs (<1.0ms sub-millisecond SLA).");
 
+  // Test 7: Cryptographic Key Separation (CERT key vs LIC key)
+  console.log("--> Test 7: Cryptographic Key Separation (CERT vs LIC)");
+  const { CONSORTIUM_CERT_PUBLIC_KEY, verifyCertificate, CertificateTamperedError } = require("../lib/certificate-manager");
+  const { DEFAULT_PUBLIC_KEY } = require("../lib/license-validator");
+  assert.notStrictEqual(
+    CONSORTIUM_CERT_PUBLIC_KEY.trim(),
+    DEFAULT_PUBLIC_KEY.trim(),
+    "Consortium Certificate public key and License public key MUST be cryptographically distinct"
+  );
+  // Forged ZTDS-CERT-v1 signed with eval license private key MUST fail verifyCertificate()
+  const forgedCertPayload = {
+    certificate_id: "ZTDS-CERT-FORGED-0001",
+    standard: "ZTDS RFC v1.0",
+    issued_at: now.toISOString(),
+    expires_at: future.toISOString(),
+    subject: { applicant: "Attacker", product: "Fake", audit_hash: "sha256:0000" }
+  };
+  const forgedBytes = Buffer.from(JSON.stringify(canonicalizeJson(forgedCertPayload)), "utf8");
+  const forgedSig = crypto.sign(null, forgedBytes, privateKeyPem);
+  const forgedCertToken = `ZTDS-CERT-v1.${base64urlEncode(forgedBytes)}.${base64urlEncode(forgedSig)}`;
+  assert.throws(
+    () => verifyCertificate(forgedCertToken),
+    CertificateTamperedError,
+    "Eval license private key must NEVER be able to forge a valid ZTDS-CERT-v1 certificate"
+  );
+  console.log("    [PASS] Key separation verified: LIC key cannot forge ZTDS-CERT-v1 certificates.");
+
   // Summary
   console.log("------------------------------------------------------------");
-  console.log("[SUMMARY] ALL 6 TESTS PASSED WITH 100% INVARIANT CONFORMANCE.");
+  console.log("[SUMMARY] ALL 7 TESTS PASSED WITH 100% INVARIANT CONFORMANCE.");
 }
 
 runTests().catch(err => {

@@ -31,6 +31,7 @@ const prodPages = [
   'security/index.html',
   'privacy/index.html',
   'terms/index.html',
+  'accessibility/index.html',
   'inspector/index.html',
   'soc2/index.html',
   'deck/index.html',

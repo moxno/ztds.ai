@@ -215,7 +215,11 @@ async function runTests() {
 
     const result = await handler._dispatchResendEmail('re_mock_test_key', mockPayload);
     assert.strictEqual(typeof result, 'boolean', 'Dispatch must resolve to boolean without throwing');
-    console.log('    [PASS] Resend email dispatch verified and resilient');
+
+    assert.strictEqual(typeof handler._dispatchProspectEmail, 'function', 'Prospect memorandum dispatcher must be exported');
+    const prospectResult = await handler._dispatchProspectEmail('re_mock_test_key', mockPayload);
+    assert.strictEqual(typeof prospectResult, 'boolean', 'Prospect dispatch must resolve to boolean without throwing');
+    console.log('    [PASS] Resend internal + prospect email dispatch verified and awaited');
   }
 
   console.log('\n[SUMMARY] ALL 8 LEAD CAPTURE TESTS PASSED WITH 100% CONFORMANCE.\n');

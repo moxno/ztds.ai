@@ -267,6 +267,19 @@ async function runTests() {
     assert.strictEqual(ev.riskScore, 100);
   });
 
+  // 14. Anti-Forgery Regression: ?mint=1 MUST NEVER issue ZTDS-CERT-v1 to unverified third-party domains
+  await test('Anti-Forgery: ?mint=1 on unverified public domain returns domainCertificate === null', async () => {
+    const { req, res } = createMockReqRes({
+      method: 'GET',
+      query: { domain: 'google.com', mint: '1' }
+    });
+    req.headers['x-forwarded-for'] = '198.51.100.88';
+    await scanDomainHandler(req, res);
+    assert.strictEqual(res.statusCode, 200);
+    assert.strictEqual(res.data.findings.ztdsGuardActive, false);
+    assert.strictEqual(res.data.domainCertificate, null, '?mint=1 must never forge a ZTDS-CERT-v1 certificate for unverified domains');
+  });
+
   console.log(`\n[TEST SUMMARY] ${passed} passed, ${failed} failed.`);
 
   if (failed > 0) {

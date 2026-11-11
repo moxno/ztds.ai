@@ -66,6 +66,10 @@
       "destination": "/public/.well-known/security.txt"
     },
     {
+      "source": "/.well-known/pgp-key.txt",
+      "destination": "/public/.well-known/pgp-key.txt"
+    },
+    {
       "source": "/.well-known/mcp.json",
       "destination": "/public/.well-known/mcp.json"
     },
@@ -255,7 +259,7 @@
       ]
     },
     {
-      "source": "/.well-known/security.txt",
+      "source": "/.well-known/(security\\.txt|pgp-key\\.txt)",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
         { "key": "Content-Type", "value": "text/plain; charset=utf-8" },

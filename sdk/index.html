@@ -1600,19 +1600,19 @@ static_resources:
 
         <!-- Work Email -->
         <div class="md:col-span-4 space-y-1.5">
-          <label for="trialWorkbenchEmail" class="block text-xs font-semibold text-slate-300 font-mono">Work Email (Optional for Receipt)</label>
-          <input type="email" id="trialWorkbenchEmail" placeholder="developer@company.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-base sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-sans">
+          <label for="trialWorkbenchEmail" class="block text-xs font-semibold text-slate-300 font-mono">Corporate Work Email * (Token Dispatch)</label>
+          <input type="email" id="trialWorkbenchEmail" required placeholder="engineer@company.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-base sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-sans">
         </div>
 
         <!-- Evaluation Vertical / Regulatory Profile -->
         <div class="md:col-span-4 space-y-1.5">
-          <label for="trialWorkbenchProfile" class="block text-xs font-semibold text-slate-300 font-mono">Evaluation Vertical / Profile *</label>
+          <label for="trialWorkbenchProfile" class="block text-xs font-semibold text-slate-300 font-mono">Target Vertical Interest *</label>
           <select id="trialWorkbenchProfile" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-base sm:text-xs text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-sans">
-            <option value="universal" selected>Universal PII / Sensitive Tokens (Standard)</option>
-            <option value="fintech">Financial Services / PCI-DSS v4 &amp; IBAN</option>
-            <option value="healthcare">Healthcare / HIPAA Safe Harbor PHI</option>
-            <option value="legal">Legal Workflows / FRE 502 &amp; Privilege</option>
-            <option value="all">All Vertical Regulatory Profiles (Enterprise Wildcard [*])</option>
+            <option value="universal" selected>Universal PII / Sensitive Tokens (14-Day Eval Included)</option>
+            <option value="fintech">Financial Services / PCI-DSS v4 &amp; IBAN (Commercial Scope)</option>
+            <option value="healthcare">Healthcare / HIPAA Safe Harbor PHI (Commercial Scope)</option>
+            <option value="legal">Legal Workflows / FRE 502 &amp; Privilege (Commercial Scope)</option>
+            <option value="all">All Vertical Regulatory Profiles (Enterprise Scope)</option>
           </select>
         </div>
 
@@ -1639,8 +1639,13 @@ static_resources:
         <div class="md:col-span-4 flex items-end">
           <button type="button" id="btnMintWorkbench" class="btn-trust w-full py-2.5 px-4 text-xs font-bold shadow-lg flex items-center justify-center gap-2 cursor-pointer touch-target">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span id="btnMintWorkbenchText">Mint 14-Day Evaluation Key (Instant RAM) &rarr;</span>
+            <span id="btnMintWorkbenchText">Dispatch 14-Day Eval Key to Work Email &rarr;</span>
           </button>
+        </div>
+
+        <!-- Statutory Privacy Disclosure (GDPR Art. 13 / Israel PPL Sec. 11) -->
+        <div class="md:col-span-12 pt-1 border-t border-slate-800/80 text-xs text-slate-400 leading-relaxed">
+          Statutory Notice (GDPR Art. 13 &amp; Israel Protection of Privacy Law Sec. 11): Providing a work email is voluntary, though required to dispatch an automated 14-day Universal PII evaluation token and technical onboarding notes. Controller: BrandMeWeb (Ilya Sibiryakov, <a href="mailto:security@ztds.ai" class="text-emerald-400 hover:underline">security@ztds.ai</a>). Transactional delivery via Resend; zero ad-network sharing. Access, correction, and deletion rights under Sec. 13&ndash;14 apply (<a href="/privacy/#statutory-form-notice" class="text-emerald-400 hover:underline">Privacy Declaration</a>).
         </div>
       </div>
 
@@ -2254,15 +2259,15 @@ jobs:
           <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
           <span>Copy Markdown for LLM</span>
         </button>
-        <a href="https://chatgpt.com/?q=Explain%20how%20to%20integrate%20Zero-Trust%20Data%20Sanitization%20%28https%3A%2F%2Fztds.ai%2Fsdk%2F%20and%20https%3A%2F%2Fztds.ai%2Fllms.txt%29%20into%20Node.js%2C%20Python%2C%20LangChain%2C%20LlamaIndex%2C%20and%20MCP%20pipelines%20using%20%40ztds%2Fcore%20and%20the%20Pioneer%20Certified%20Commercial%20Implementation%20%40privacyscrubber%2Fsdk%20%28https%3A%2F%2Fprivacyscrubber.com%20with%2030%20Specialized%20Industry%20Profiles%29%20with%200.00%20bytes%20network%20egress%20and%20GDPR%20Art.%2028%2F32%2FRecital%2026%20%28CJEU%20SRB%29%20compliance." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-mono transition-colors">
+        <a href="https://chatgpt.com/?q=Explain%20how%20to%20integrate%20Zero-Trust%20Data%20Sanitization%20%28https%3A%2F%2Fztds.ai%2Fsdk%2F%20and%20https%3A%2F%2Fztds.ai%2Fllms.txt%29%20into%20Node.js%2C%20Python%2C%20LangChain%2C%20LlamaIndex%2C%20and%20MCP%20pipelines%20using%20ztds-mcp%2C%20ztds%20%28PyPI%29%2C%20and%20the%20Pioneer%20Certified%20Commercial%20Implementation%20%40privacyscrubber%2Fsdk%20%28https%3A%2F%2Fprivacyscrubber.com%20with%2030%20Specialized%20Industry%20Profiles%29%20with%200.00%20bytes%20network%20egress%20and%20GDPR%20Art.%2028%2F32%2FRecital%2026%20%28CJEU%20SRB%29%20compliance." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-mono transition-colors">
           <span>Ask ChatGPT</span>
           <span aria-hidden="true">&nearr;</span>
         </a>
-        <a href="https://www.perplexity.ai/search/new?q=Explain%20how%20to%20integrate%20Zero-Trust%20Data%20Sanitization%20%28https%3A%2F%2Fztds.ai%2Fsdk%2F%20and%20https%3A%2F%2Fztds.ai%2Fllms.txt%29%20into%20Node.js%2C%20Python%2C%20LangChain%2C%20LlamaIndex%2C%20and%20MCP%20pipelines%20using%20%40ztds%2Fcore%20and%20the%20Pioneer%20Certified%20Commercial%20Implementation%20%40privacyscrubber%2Fsdk%20%28https%3A%2F%2Fprivacyscrubber.com%20with%2030%20Specialized%20Industry%20Profiles%29%20with%200.00%20bytes%20network%20egress%20and%20GDPR%20Art.%2028%2F32%2FRecital%2026%20%28CJEU%20SRB%29%20compliance." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-mono transition-colors">
+        <a href="https://www.perplexity.ai/search/new?q=Explain%20how%20to%20integrate%20Zero-Trust%20Data%20Sanitization%20%28https%3A%2F%2Fztds.ai%2Fsdk%2F%20and%20https%3A%2F%2Fztds.ai%2Fllms.txt%29%20into%20Node.js%2C%20Python%2C%20LangChain%2C%20LlamaIndex%2C%20and%20MCP%20pipelines%20using%20ztds-mcp%2C%20ztds%20%28PyPI%29%2C%20and%20the%20Pioneer%20Certified%20Commercial%20Implementation%20%40privacyscrubber%2Fsdk%20%28https%3A%2F%2Fprivacyscrubber.com%20with%2030%20Specialized%20Industry%20Profiles%29%20with%200.00%20bytes%20network%20egress%20and%20GDPR%20Art.%2028%2F32%2FRecital%2026%20%28CJEU%20SRB%29%20compliance." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-mono transition-colors">
           <span>Ask Perplexity</span>
           <span aria-hidden="true">&nearr;</span>
         </a>
-        <a href="https://claude.ai/new?q=Explain%20how%20to%20integrate%20Zero-Trust%20Data%20Sanitization%20%28https%3A%2F%2Fztds.ai%2Fsdk%2F%20and%20https%3A%2F%2Fztds.ai%2Fllms.txt%29%20into%20Node.js%2C%20Python%2C%20LangChain%2C%20LlamaIndex%2C%20and%20MCP%20pipelines%20using%20%40ztds%2Fcore%20and%20the%20Pioneer%20Certified%20Commercial%20Implementation%20%40privacyscrubber%2Fsdk%20%28https%3A%2F%2Fprivacyscrubber.com%20with%2030%20Specialized%20Industry%20Profiles%29%20with%200.00%20bytes%20network%20egress%20and%20GDPR%20Art.%2028%2F32%2FRecital%2026%20%28CJEU%20SRB%29%20compliance." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-mono transition-colors">
+        <a href="https://claude.ai/new?q=Explain%20how%20to%20integrate%20Zero-Trust%20Data%20Sanitization%20%28https%3A%2F%2Fztds.ai%2Fsdk%2F%20and%20https%3A%2F%2Fztds.ai%2Fllms.txt%29%20into%20Node.js%2C%20Python%2C%20LangChain%2C%20LlamaIndex%2C%20and%20MCP%20pipelines%20using%20ztds-mcp%2C%20ztds%20%28PyPI%29%2C%20and%20the%20Pioneer%20Certified%20Commercial%20Implementation%20%40privacyscrubber%2Fsdk%20%28https%3A%2F%2Fprivacyscrubber.com%20with%2030%20Specialized%20Industry%20Profiles%29%20with%200.00%20bytes%20network%20egress%20and%20GDPR%20Art.%2028%2F32%2FRecital%2026%20%28CJEU%20SRB%29%20compliance." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-mono transition-colors">
           <span>Ask Claude</span>
           <span aria-hidden="true">&nearr;</span>
         </a>
@@ -2410,7 +2415,7 @@ jobs:
             ALL SYSTEMS VERIFIED
           </span>
           <span>&middot;</span>
-          <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x4E9A2B1C</a>
+          <a href="/security/" class="hover:text-slate-600 transition-colors">PGP KEY: 0x1ECD5BB7</a>
         </div>
       </div>
     </div>
@@ -2437,10 +2442,10 @@ jobs:
           pip: 'pip install privacyscrubber'
         },
         oss: {
-          npm: 'npm install @ztds/core',
-          pnpm: 'pnpm add @ztds/core',
-          yarn: 'yarn add @ztds/core',
-          pip: 'pip install ztds-core'
+          npm: 'npx ztds-audit && npx ztds-mcp',
+          pnpm: 'pnpm dlx ztds-audit',
+          yarn: 'npx ztds-audit',
+          pip: 'pip install ztds'
         }
       };
 
@@ -2667,16 +2672,28 @@ jobs:
       const resValidity = document.getElementById('resValidity');
       const resProfiles = document.getElementById('resProfiles');
 
-      const SAMPLE_ENT_TOKEN = 'ZTDS-LIC-v1.eyJjdXN0b21lcl9uYW1lIjoiQWNtZSBHbG9iYWwgSGVhbHRoIiwiZXhwaXJlc19hdCI6IjIwMjctMDktMTVUMDA6MDA6MDAuMDAwWiIsImZlYXR1cmVzIjp7ImFsbG93ZWRfcHJvZmlsZXMiOlsiKiJdLCJldmlkZW5jZV9iaW5kZXIiOnRydWUsInNwZWNpYWxpemVkX3Byb2ZpbGVzIjp0cnVlLCJ1bml2ZXJzYWxfcGlpIjp0cnVlfSwiZ3JhY2VfcGVyaW9kX2RheXMiOjYwLCJpc3N1ZWRfYXQiOiIyMDI2LTA5LTE1VDAwOjAwOjAwLjAwMFoiLCJsaWNlbnNlX2lkIjoiWlREUy0yMDI2LUVOVC0wMDAxIiwibWF4X25vZGVzIjo1LCJ0aWVyIjoiZW50ZXJwcmlzZV9haXJnYXBwZWQifQ.t90wbefxc3Cx7Jncq5luLKvpz7SprYo6POLc-kRj6RsVeBTAXSXQ6sasIBprYksbW2UpOhe2sJjLJ_z144QrCw';
-      const SAMPLE_DEV_TOKEN = 'ZTDS-LIC-v1.eyJjdXN0b21lcl9uYW1lIjoiU3RhcnR1cCBBSSBMYWJzIiwiZXhwaXJlc19hdCI6IjIwMjctMDktMTZUMDA6MDA6MDAuMDAwWiIsImZlYXR1cmVzIjp7ImFsbG93ZWRfcHJvZmlsZXMiOltdLCJzcGVjaWFsaXplZF9wcm9maWxlcyI6ZmFsc2UsInVuaXZlcnNhbF9waWkiOnRydWV9LCJncmFjZV9wZXJpb2RfZGF5cyI6MzAsImlzc3VlZF9hdCI6IjIwMjYtMDktMTZUMDA6MDA6MDAuMDAwWiIsImxpY2Vuc2VfaWQiOiJaVERTLTIwMjYtREVWLTAwMDIiLCJtYXhfbm9kZXMiOjIsInRpZXIiOiJkZXZlbG9wZXJfcHJvIn0.nuG1mZScGYdbITAuT6D2KzX3Y5epsssFBbmk4YluorYRJJ0C1HXOPiJq7MRxmYS0wwzoABjGG6Y8AZeNUHmgDw';
+      const LICENSE_SPKI_B64 = 'MCowBQYDK2VwAyEA4aQfaGa+ZbbAGWDjKBblHpO71vEqQaDsUG8FPhtYBJU=';
+      const SAMPLE_ENT_TOKEN = 'ZTDS-LIC-v1.eyJjdXN0b21lcl9uYW1lIjoiQWNtZSBHbG9iYWwgSGVhbHRoIiwiZXhwaXJlc19hdCI6IjIwMjgtMDktMTVUMDA6MDA6MDAuMDAwWiIsImZlYXR1cmVzIjp7ImFsbG93ZWRfcHJvZmlsZXMiOlsiKiJdLCJldmlkZW5jZV9iaW5kZXIiOnRydWUsInNwZWNpYWxpemVkX3Byb2ZpbGVzIjp0cnVlLCJ1bml2ZXJzYWxfcGlpIjp0cnVlfSwiZ3JhY2VfcGVyaW9kX2RheXMiOjYwLCJpc3N1ZWRfYXQiOiIyMDI2LTA5LTE1VDAwOjAwOjAwLjAwMFoiLCJsaWNlbnNlX2lkIjoiWlREUy0yMDI2LUVOVC0wMDAxIiwibWF4X25vZGVzIjo1LCJ0aWVyIjoiZW50ZXJwcmlzZV9haXJnYXBwZWQifQ.pYZlq_Vn0B6DPHord9GUiocE5sPzuVkw6yI6vqskXVHr43qrujJREaBsa2VusgX1CyGzVoM4eYWDprM5VCVTBA';
+      const SAMPLE_DEV_TOKEN = 'ZTDS-LIC-v1.eyJjdXN0b21lcl9uYW1lIjoiU3RhcnR1cCBBSSBMYWJzIiwiZXhwaXJlc19hdCI6IjIwMjgtMDktMTZUMDA6MDA6MDAuMDAwWiIsImZlYXR1cmVzIjp7ImFsbG93ZWRfcHJvZmlsZXMiOlsidW5pdmVyc2FsIl0sInNwZWNpYWxpemVkX3Byb2ZpbGVzIjpmYWxzZSwidW5pdmVyc2FsX3BpaSI6dHJ1ZX0sImdyYWNlX3BlcmlvZF9kYXlzIjowLCJpc3N1ZWRfYXQiOiIyMDI2LTA5LTE2VDAwOjAwOjAwLjAwMFoiLCJsaWNlbnNlX2lkIjoiWlREUy0yMDI2LUVWQUwtMDAwMiIsIm1heF9ub2RlcyI6MiwidGllciI6ImRldmVsb3Blcl9ldmFsIn0.jpkhNbUz8O917wM5ofoC6XVfnPrHmr_AWF9JK8hx6ihUe8gCX-7NcoH6DFC1YUP-3WhD8pppXXX8iUUqmoEdDw';
 
-      function parseBase64Url(str) {
+      function base64UrlToBytes(str) {
         let base64 = str.replace(/-/g, '+').replace(/_/g, '/');
         while (base64.length % 4) base64 += '=';
-        return decodeURIComponent(escape(window.atob(base64)));
+        const bin = window.atob(base64);
+        const out = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+        return out;
       }
 
-      function executeLicenseCheck() {
+      function canonicalizeJsonBrowser(obj) {
+        if (obj === null || typeof obj !== 'object') return obj;
+        if (Array.isArray(obj)) return obj.map(canonicalizeJsonBrowser);
+        const sorted = {};
+        Object.keys(obj).sort().forEach(k => { sorted[k] = canonicalizeJsonBrowser(obj[k]); });
+        return sorted;
+      }
+
+      async function executeLicenseCheck() {
         const token = (licenseTokenInput.value || '').trim();
         if (!token) return;
 
@@ -2697,14 +2714,45 @@ jobs:
         }
 
         try {
-          const payloadJson = parseBase64Url(parts[1]);
+          const payloadBytes = base64UrlToBytes(parts[1]);
+          const sigBytes = base64UrlToBytes(parts[2]);
+          const payloadJson = new TextDecoder().decode(payloadBytes);
           const payload = JSON.parse(payloadJson);
+          const canonicalBytes = new TextEncoder().encode(JSON.stringify(canonicalizeJsonBrowser(payload)));
+
+          let sigValid = false;
+          if (window.crypto && window.crypto.subtle) {
+            const spkiBytes = base64UrlToBytes(LICENSE_SPKI_B64);
+            const pubKey = await window.crypto.subtle.importKey('spki', spkiBytes.buffer, { name: 'Ed25519' }, false, ['verify']);
+            sigValid = await window.crypto.subtle.verify('Ed25519', pubKey, sigBytes.buffer, canonicalBytes.buffer);
+          }
+
           const t1 = performance.now();
           const latencyUs = Math.max(80, Math.round((t1 - t0) * 1000));
-
           licenseResultContainer.classList.remove('hidden');
-          licenseStatusBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
-          licenseStatusBadge.textContent = 'PASS: VALID ED25519 CRYPTOGRAPHIC SIGNATURE';
+
+          if (!sigValid) {
+            licenseStatusBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30';
+            licenseStatusBadge.textContent = 'FAIL: INVALID ED25519 SIGNATURE (TAMPERED OR UNTRUSTED KEY)';
+            resLicenseId.textContent = 'TAMPERED';
+            resCustomer.textContent = 'REJECTED';
+            resTier.textContent = 'UNAUTHORIZED';
+            resMaxNodes.textContent = '0';
+            resValidity.textContent = 'Cryptographic signature verification failed';
+            resProfiles.textContent = 'None';
+            licenseVerifyMetric.textContent = `Verification Latency: ${latencyUs} μs (WebCrypto Ed25519)`;
+            return;
+          }
+
+          const expMs = payload.expires_at ? Date.parse(payload.expires_at) : 0;
+          const graceMs = ((payload.grace_period_days || 0) * 86400000);
+          if (expMs && Date.now() > expMs + graceMs) {
+            licenseStatusBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30';
+            licenseStatusBadge.textContent = 'FAIL: LICENSE EXPIRED PAST GRACE WINDOW';
+          } else {
+            licenseStatusBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+            licenseStatusBadge.textContent = 'PASS: VALID ED25519 CRYPTOGRAPHIC SIGNATURE';
+          }
 
           resLicenseId.textContent = payload.license_id || 'ZTDS-CUSTOM';
           resCustomer.textContent = payload.customer_name || 'Enterprise Customer';
@@ -2712,15 +2760,15 @@ jobs:
           resMaxNodes.textContent = `${payload.max_nodes || 1} Microservice Nodes`;
 
           const expDate = payload.expires_at ? payload.expires_at.split('T')[0] : 'PERPETUAL';
-          resValidity.textContent = `Valid through ${expDate} · ${payload.grace_period_days || 30}-day AP Grace Active`;
+          resValidity.textContent = `Valid through ${expDate} · ${payload.grace_period_days ?? 0}-day Grace Window`;
 
           if (payload.features && payload.features.specialized_profiles) {
             resProfiles.textContent = 'Wildcard [*] · All 30 Regulatory Profiles (HIPAA, PCI-DSS, Legal, Telecom, Energy)';
           } else {
-            resProfiles.textContent = 'Universal PII Regex Rules (Baseline)';
+            resProfiles.textContent = 'Universal PII Baseline (14-Day Eval / Standard)';
           }
 
-          licenseVerifyMetric.textContent = `Verification Latency: ${latencyUs} μs (In-Memory)`;
+          licenseVerifyMetric.textContent = `Verification Latency: ${latencyUs} μs (WebCrypto Ed25519)`;
         } catch (err) {
           licenseResultContainer.classList.remove('hidden');
           licenseStatusBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30';
@@ -3088,10 +3136,19 @@ jobs:
             return;
           }
 
+          if (!email || !email.includes('@') || !email.split('@')[1]?.includes('.')) {
+            if (trialMintStatus) {
+              trialMintStatus.classList.remove('hidden');
+              trialMintStatus.textContent = 'Please enter a valid corporate work email address (e.g., engineer@company.com) to receive your signed 14-day evaluation key.';
+            }
+            trialEmailInput?.focus();
+            return;
+          }
+
           if (trialMintStatus) trialMintStatus.classList.add('hidden');
           const originalBtnHtml = btnMintWorkbench.innerHTML;
           btnMintWorkbench.disabled = true;
-          if (btnMintWorkbenchText) btnMintWorkbenchText.textContent = 'Minting Ed25519 Token in Local RAM...';
+          if (btnMintWorkbenchText) btnMintWorkbenchText.textContent = 'Dispatching Signed Ed25519 Key...';
 
           try {
             const res = await fetch('/api/mint-license/', {
@@ -3100,14 +3157,14 @@ jobs:
               body: JSON.stringify({
                 customerName: company,
                 email: email,
-                tier: 'developer_pro',
+                tier: 'developer_eval',
                 days: 14,
                 profile: profile
               })
             });
 
             const data = await res.json();
-            if (res.ok && data.token) {
+            if (res.ok && (data.token || data.deliveryMode === 'email_dispatched')) {
               currentWorkbenchData = data;
               currentWorkbenchSnippets = data.quickstart;
 
@@ -3117,7 +3174,11 @@ jobs:
               if (workbenchExpiresAt) workbenchExpiresAt.textContent = 'Valid through ' + (data.expiresAt ? data.expiresAt.split('T')[0] : '14 days');
               if (workbenchMaxNodes) workbenchMaxNodes.textContent = `${data.maxNodes || 2} Microservice Nodes`;
               if (workbenchProfileBadge) workbenchProfileBadge.textContent = PROFILE_LABELS[data.profile] || data.profile;
-              if (workbenchTokenDisplay) workbenchTokenDisplay.textContent = data.token;
+              if (workbenchTokenDisplay) {
+                workbenchTokenDisplay.textContent = data.token
+                  ? data.token
+                  : `DISPATCHED TO VERIFIED INBOX (${data.emailSentTo || email}) — License ID ${data.licenseId} (Universal PII 14-Day Eval). Check your work inbox for the signed ZTDS-LIC-v1 token.`;
+              }
 
               updateWorkbenchSnippetTab(currentWorkbenchTarget);
 
@@ -3185,12 +3246,12 @@ jobs:
       // Verify in Local RAM Decoder
       if (btnVerifyWorkbenchDecoder) {
         btnVerifyWorkbenchDecoder.addEventListener('click', () => {
-          if (!currentWorkbenchData || !currentWorkbenchData.token) return;
+          const tokenToTest = (currentWorkbenchData && currentWorkbenchData.token) ? currentWorkbenchData.token : SAMPLE_DEV_TOKEN;
           const inputDecoder = document.getElementById('licenseTokenInput');
           const btnDecode = document.getElementById('btnDecodeLicense');
           const decoderSection = document.getElementById('offlineLicenseTester');
           if (inputDecoder) {
-            inputDecoder.value = currentWorkbenchData.token;
+            inputDecoder.value = tokenToTest;
           }
           if (btnDecode) {
             btnDecode.click();
@@ -3236,10 +3297,15 @@ jobs:
             document.getElementById('trialCompany')?.focus();
             return;
           }
+          if (!email || !email.includes('@') || !email.split('@')[1]?.includes('.')) {
+            alert('Please provide a valid corporate work email address to receive your signed 14-day evaluation key.');
+            document.getElementById('trialEmail')?.focus();
+            return;
+          }
 
           const originalText = btnMintTrial.innerHTML;
           btnMintTrial.disabled = true;
-          btnMintTrial.innerHTML = '<span class="pulse-dot mr-1"></span> Minting Ed25519 Token in Local RAM...';
+          btnMintTrial.innerHTML = '<span class="pulse-dot mr-1"></span> Dispatching Signed Ed25519 Key...';
 
           try {
             const res = await fetch('/api/mint-license/', {
@@ -3248,24 +3314,25 @@ jobs:
               body: JSON.stringify({
                 customerName: company,
                 email: email,
-                tier: 'developer_pro',
+                tier: 'developer_eval',
                 days: 14
               })
             });
 
             const data = await res.json();
-            if (res.ok && data.token) {
+            if (res.ok && (data.token || data.deliveryMode === 'email_dispatched')) {
               const resultBox = document.getElementById('trialResultBox');
               const licenseIdEl = document.getElementById('trialLicenseId');
               const expiryEl = document.getElementById('trialExpiryDate');
               const tokenDisplay = document.getElementById('trialTokenDisplay');
               const quickstartCmd = document.getElementById('trialQuickstartCmd');
+              const displayedToken = data.token || `Dispatched to ${data.emailSentTo || email} (check work inbox)`;
 
               if (resultBox) resultBox.classList.remove('hidden');
               if (licenseIdEl) licenseIdEl.textContent = data.licenseId;
               if (expiryEl) expiryEl.textContent = `Valid through ${data.expiresAt.split('T')[0]}`;
-              if (tokenDisplay) tokenDisplay.textContent = data.token;
-              if (quickstartCmd) quickstartCmd.textContent = `export ZTDS_LICENSE="${data.token}"`;
+              if (tokenDisplay) tokenDisplay.textContent = displayedToken;
+              if (quickstartCmd) quickstartCmd.textContent = data.token ? `export ZTDS_LICENSE="${data.token}"` : 'export ZTDS_LICENSE="<PASTE_TOKEN_FROM_WORK_EMAIL>"';
 
               const copyBtn = document.getElementById('btnCopyTrialToken');
               if (copyBtn) {
@@ -3416,9 +3483,12 @@ jobs:
               <input type="text" id="trialCompany" placeholder="e.g. Acme Dev Team" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
             </div>
             <div>
-              <label for="trialEmail" class="block text-xs font-semibold text-slate-700 mb-1">Work Email (Optional for Token Delivery)</label>
-              <input type="email" id="trialEmail" placeholder="developer@example.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+              <label for="trialEmail" class="block text-xs font-semibold text-slate-700 mb-1">Corporate Work Email * (Token Dispatch)</label>
+              <input type="email" id="trialEmail" required placeholder="engineer@company.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
             </div>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Statutory Notice (GDPR Art. 13 &amp; Israel PPL Sec. 11): Work email is required to dispatch your 14-day evaluation token via Resend. Controller: BrandMeWeb (<a href="mailto:security@ztds.ai" class="text-emerald-700 hover:underline">security@ztds.ai</a>). Sec. 13&ndash;14 access/deletion rights apply (<a href="/privacy/#statutory-form-notice" class="text-emerald-700 hover:underline">Privacy Declaration</a>).
+            </p>
           </div>
 
           <button type="button" id="btnMintTrialLicense" class="btn-navy w-full py-2.5 text-xs font-bold shadow-sm flex items-center justify-center gap-2 cursor-pointer">

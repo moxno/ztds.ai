@@ -110,7 +110,7 @@ async function verifyDnsSafety(hostname) {
         return { safe: false, ssrf: true, ip: rec.address, reason: 'Restricted private/internal IPv6 address' };
       }
     }
-    return { safe: true, primaryIp: records[0].address };
+    return { safe: true, primaryIp: records[0].address, primaryFamily: records[0].family || 4 };
   } catch (err) {
     if (err.code === 'ENOTFOUND' || err.code === 'EAI_AGAIN') {
       return { safe: false, notFound: true, reason: `Domain does not exist or cannot be resolved: ${hostname}` };
@@ -119,7 +119,7 @@ async function verifyDnsSafety(hostname) {
   }
 }
 
-function fetchPageContent(targetUrl, timeoutMs = 3500) {
+function fetchPageContent(targetUrl, timeoutMs = 3500, pinnedDns = null) {
   return new Promise((resolve, reject) => {
     let parsedUrl;
     try {
@@ -131,8 +131,9 @@ function fetchPageContent(targetUrl, timeoutMs = 3500) {
     const client = parsedUrl.protocol === 'http:' ? http : https;
     const reqOptions = {
       hostname: parsedUrl.hostname,
+      servername: parsedUrl.hostname,
       port: parsedUrl.port || (parsedUrl.protocol === 'http:' ? 80 : 443),
-      path: parsedUrl.pathname || '/',
+      path: (parsedUrl.pathname || '/') + (parsedUrl.search || ''),
       method: 'GET',
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 (compatible; ZTDS-Audit-Bot/1.0; +https://ztds.ai/standard/)',
@@ -142,6 +143,20 @@ function fetchPageContent(targetUrl, timeoutMs = 3500) {
       },
       timeout: timeoutMs
     };
+
+    // Pin socket connection to the exact IP validated by verifyDnsSafety to prevent DNS rebinding TOCTOU
+    if (pinnedDns && pinnedDns.primaryIp) {
+      const fam = pinnedDns.primaryFamily || (pinnedDns.primaryIp.includes(':') ? 6 : 4);
+      reqOptions.lookup = (_host, opts, cb) => {
+        if (typeof opts === 'function') {
+          return opts(null, pinnedDns.primaryIp, fam);
+        }
+        if (opts && opts.all) {
+          return cb(null, [{ address: pinnedDns.primaryIp, family: fam }]);
+        }
+        return cb(null, pinnedDns.primaryIp, fam);
+      };
+    }
 
     const req = client.request(reqOptions, (res) => {
       // Handle redirects up to 1 hop
@@ -1037,9 +1052,9 @@ module.exports = async (req, res) => {
     }
   } catch (_) {}
 
-  // 3. Perform Passive Edge Inspection
+  // 3. Perform Passive Edge Inspection (with pinned DNS lookup to prevent TOCTOU rebinding)
   try {
-    let pageRes = await fetchPageContent(normalized.origin, 3200);
+    let pageRes = await fetchPageContent(normalized.origin, 3200, dnsCheck);
 
     // Follow 1 redirect if necessary
     if (pageRes.isRedirect && pageRes.location) {
@@ -1047,7 +1062,7 @@ module.exports = async (req, res) => {
       if (redirectNorm) {
         const redirectDnsCheck = await verifyDnsSafety(redirectNorm.hostname);
         if (redirectDnsCheck.safe) {
-          pageRes = await fetchPageContent(redirectNorm.origin, 2500);
+          pageRes = await fetchPageContent(redirectNorm.origin, 2500, redirectDnsCheck);
         }
       }
     }
@@ -1063,9 +1078,9 @@ module.exports = async (req, res) => {
 
     const evaluation = evaluateZtdsConformance(surfaceFindings, normalized.hostname, requestedProfile, detectedProfileInfo);
 
-    // 5. Issue Level 1 Domain Conformance Certificate if ZTDS Web Form Guard is active (or mint=1 requested by plugin)
+    // 5. Issue Level 1 Domain Conformance Certificate STRICTLY when ZTDS Web Form Guard is verified active
+    // Security invariant: unverified external domains MUST NEVER receive a ZTDS-CERT-v1 token via ?mint=1
     let domainCertificate = null;
-    const mintRequested = searchParams.get('mint') === '1' || plainQuery.mint === '1';
     if (registeredDomainRecord && registeredDomainRecord.certificate) {
       domainCertificate = {
         detected: true,
@@ -1077,7 +1092,7 @@ module.exports = async (req, res) => {
         expires_at: registeredDomainRecord.certificate.expires_at,
         verify_url: registeredDomainRecord.certificate.verify_url || `https://ztds.ai/verify/?domain=${encodeURIComponent(normalized.hostname)}`
       };
-    } else if (surfaceFindings.ztdsGuardActive || mintRequested) {
+    } else if (surfaceFindings.ztdsGuardActive === true) {
       try {
         const auditHash = 'sha256:' + crypto.createHash('sha256').update(`${normalized.hostname}:ztds-plane6-guard:v1`).digest('hex');
         const minted = mintCertificate({

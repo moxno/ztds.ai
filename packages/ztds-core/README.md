@@ -19,10 +19,13 @@ ZTDS is an open industry standard. To preserve vendor neutrality while deliverin
 
 ---
 
-## 📦 Quickstart
+## Quickstart
 
 ```bash
-npm install @ztds/core
+# Clone the reference workspace or install published ZTDS reference tools:
+git clone https://github.com/moxno/ztds.ai.git
+npx ztds-audit
+pip install ztds
 ```
 
 ### Basic In-Memory Masking & De-Tokenization
