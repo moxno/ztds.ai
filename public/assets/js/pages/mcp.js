@@ -191,9 +191,14 @@
           document.querySelectorAll('.client-tab-btn').forEach(b => {
             b.classList.remove('active', 'bg-slate-900', 'text-white');
             b.classList.add('text-slate-600');
+            b.setAttribute('aria-selected', 'false');
           });
           btn.classList.add('active', 'bg-slate-900', 'text-white');
           btn.classList.remove('text-slate-600');
+          btn.setAttribute('aria-selected', 'true');
+          if (typeof btn.scrollIntoView === 'function') {
+            btn.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+          }
           updateConfig();
         });
       });
@@ -352,6 +357,12 @@
         return { sanitized, localMap, count: Object.keys(localMap).length };
       }
 
+      function classifyTokenStyle(tok) {
+        if (/SECRET|KEY|DB_URL/i.test(tok)) return 'token-secret';
+        if (/IBAN|SSN|IP_ADDR|ROUTING/i.test(tok)) return 'token-id';
+        return 'token-email';
+      }
+
       function buildMaskedFragment(text) {
         const frag = document.createDocumentFragment();
         const str = String(text || '');
@@ -363,7 +374,7 @@
             frag.appendChild(document.createTextNode(str.slice(lastIndex, match.index)));
           }
           const span = document.createElement('span');
-          span.className = 'entity-token inline-block px-1.5 py-0.5 rounded border font-mono font-bold text-xs shadow-xs bg-emerald-950/90 text-emerald-300 border-emerald-500/50';
+          span.className = 'entity-token ' + classifyTokenStyle(match[0]);
           span.textContent = match[0];
           frag.appendChild(span);
           lastIndex = match.index + match[0].length;

@@ -457,6 +457,16 @@ async function ingestDocument(patientDoc: string) {
     }
 
     // Build DOM Fragment for Token Visualization (Zero innerHTML)
+    function classifyTokenStyle(tok) {
+      if (/SECRET|KEY|AWS|GHP|JWT|PASS|ETH|BTC|TOKEN/i.test(tok) && !/EMAIL|IBAN|SSN|IP|PHONE|MRN|DOB|PERSON/i.test(tok)) {
+        return 'token-secret';
+      }
+      if (/IBAN|CARD|SSN|IP|MRN|UUID|FIN/i.test(tok)) {
+        return 'token-id';
+      }
+      return 'token-email';
+    }
+
     function buildHighlightedTokensFragment(sanitizedText) {
       const frag = document.createDocumentFragment();
       const str = String(sanitizedText || '');
@@ -468,7 +478,7 @@ async function ingestDocument(patientDoc: string) {
           frag.appendChild(document.createTextNode(str.slice(lastIndex, match.index)));
         }
         const span = document.createElement('span');
-        span.className = 'entity-token inline-block px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-500/50 text-emerald-300 font-bold text-xs shadow-xs';
+        span.className = 'entity-token ' + classifyTokenStyle(match[0]);
         span.textContent = match[0];
         frag.appendChild(span);
         lastIndex = match.index + match[0].length;

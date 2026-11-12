@@ -115,6 +115,12 @@
         return { sanitized, localMap, count: Object.keys(localMap).length };
       }
 
+      function classifyTokenStyle(tok) {
+        if (/SECRET|KEY|ETH|SLOT|MNEMONIC/i.test(tok)) return 'token-secret';
+        if (/IBAN|SSN|GOV|IP|DEAL|POLICY|ADJUSTER/i.test(tok)) return 'token-id';
+        return 'token-email';
+      }
+
       function buildHighlightedFragment(text) {
         const frag = document.createDocumentFragment();
         const str = String(text || '');
@@ -126,7 +132,7 @@
             frag.appendChild(document.createTextNode(str.slice(lastIndex, match.index)));
           }
           const span = document.createElement('span');
-          span.className = 'entity-token inline-block px-1.5 py-0.5 rounded border text-xs font-mono font-bold shadow-xs bg-emerald-950/90 text-emerald-300 border-emerald-500/40';
+          span.className = 'entity-token ' + classifyTokenStyle(match[0]);
           span.textContent = match[0];
           frag.appendChild(span);
           lastIndex = match.index + match[0].length;

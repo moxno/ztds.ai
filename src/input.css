@@ -104,6 +104,89 @@ main p {
   overflow: clip;
 }
 
+@property --fade-start {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --fade-end {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes reveal-fade-start {
+  to {
+    --fade-start: var(--fade-size);
+  }
+}
+
+@keyframes hide-fade-end {
+  from {
+    --fade-end: var(--fade-size);
+  }
+}
+
+.flex-balance {
+  flex-wrap: wrap;
+  flex-wrap: balance;
+}
+
+.tablist-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: inline proximity;
+  scroll-padding-inline: 1.75rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  .tablist-scroll {
+    --fade-size: 1.75rem;
+    --fade-dir: right;
+    --fade-start-pos: 0;
+    --fade-end-pos: 100%;
+    mask:
+      linear-gradient(black, black) no-clip subtract,
+      linear-gradient(to var(--fade-dir), black, transparent) var(--fade-start-pos) 0 / var(--fade-start) 100% no-repeat no-clip,
+      linear-gradient(to var(--fade-dir), transparent, black) var(--fade-end-pos) 0 / var(--fade-end) 100% no-repeat no-clip;
+    animation: reveal-fade-start linear both, hide-fade-end linear both;
+    animation-timeline: scroll(self inline);
+    animation-range: 0 var(--fade-size), calc(100% - var(--fade-size)) 100%;
+  }
+
+  .tablist-scroll:dir(rtl) {
+    --fade-dir: left;
+    --fade-start-pos: 100%;
+    --fade-end-pos: 0;
+  }
+}
+
+.tablist-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.tablist-scroll > [role="tab"],
+.tablist-scroll > a,
+.tablist-scroll > button {
+  flex: none;
+  scroll-snap-align: start;
+}
+
+.tablist-scroll > [role="tab"] {
+  position: relative;
+}
+
+.tablist-scroll > [role="tab"][aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset: auto 0.5rem 2px;
+  border-block-end: 2px solid #10b981;
+}
+
 /* ==========================================================================
    Component Primitives (@layer components so Tailwind utilities can specialize)
    ========================================================================== */

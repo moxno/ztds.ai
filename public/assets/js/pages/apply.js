@@ -179,14 +179,14 @@
         if (stepIndicator1) {
           const num1 = stepIndicator1.querySelector('.step-num');
           if (step === 1) {
-            stepIndicator1.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 text-emerald-950 cursor-pointer transition-all shadow-xs touch-target min-h-[44px]';
+            stepIndicator1.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 text-emerald-950 cursor-pointer transition-all shadow-xs flex flex-col items-center sm:items-start justify-center min-h-[44px]';
             stepIndicator1.setAttribute('aria-current', 'step');
             if (num1) {
               num1.className = 'step-num w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0';
               num1.textContent = '1';
             }
           } else {
-            stepIndicator1.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border border-emerald-500 bg-white text-emerald-950 cursor-pointer transition-all touch-target min-h-[44px]';
+            stepIndicator1.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border border-emerald-500 bg-white text-emerald-950 cursor-pointer transition-all flex flex-col items-center sm:items-start justify-center min-h-[44px]';
             stepIndicator1.removeAttribute('aria-current');
             if (num1) {
               num1.className = 'step-num w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0 font-mono';
@@ -198,21 +198,21 @@
         if (stepIndicator2) {
           const num2 = stepIndicator2.querySelector('.step-num');
           if (step === 2) {
-            stepIndicator2.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 text-emerald-950 cursor-pointer transition-all shadow-xs touch-target min-h-[44px]';
+            stepIndicator2.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 text-emerald-950 cursor-pointer transition-all shadow-xs flex flex-col items-center sm:items-start justify-center min-h-[44px]';
             stepIndicator2.setAttribute('aria-current', 'step');
             if (num2) {
               num2.className = 'step-num w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0';
               num2.textContent = '2';
             }
           } else if (step > 2) {
-            stepIndicator2.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border border-emerald-500 bg-white text-emerald-950 cursor-pointer transition-all touch-target min-h-[44px]';
+            stepIndicator2.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border border-emerald-500 bg-white text-emerald-950 cursor-pointer transition-all flex flex-col items-center sm:items-start justify-center min-h-[44px]';
             stepIndicator2.removeAttribute('aria-current');
             if (num2) {
               num2.className = 'step-num w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0 font-mono';
               num2.textContent = '\u2713';
             }
           } else {
-            stepIndicator2.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white text-slate-600 cursor-pointer transition-all opacity-80 hover:opacity-100 touch-target min-h-[44px]';
+            stepIndicator2.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white text-slate-600 cursor-pointer transition-all opacity-80 hover:opacity-100 flex flex-col items-center sm:items-start justify-center min-h-[44px]';
             stepIndicator2.removeAttribute('aria-current');
             if (num2) {
               num2.className = 'step-num w-6 h-6 rounded-full bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0';
@@ -224,14 +224,14 @@
         if (stepIndicator3) {
           const num3 = stepIndicator3.querySelector('.step-num');
           if (step === 3) {
-            stepIndicator3.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 text-emerald-950 cursor-pointer transition-all shadow-xs touch-target min-h-[44px]';
+            stepIndicator3.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 text-emerald-950 cursor-pointer transition-all shadow-xs flex flex-col items-center sm:items-start justify-center min-h-[44px]';
             stepIndicator3.setAttribute('aria-current', 'step');
             if (num3) {
               num3.className = 'step-num w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0';
               num3.textContent = '3';
             }
           } else {
-            stepIndicator3.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white text-slate-600 cursor-pointer transition-all opacity-80 hover:opacity-100 touch-target min-h-[44px]';
+            stepIndicator3.className = 'step-indicator p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white text-slate-600 cursor-pointer transition-all opacity-80 hover:opacity-100 flex flex-col items-center sm:items-start justify-center min-h-[44px]';
             stepIndicator3.removeAttribute('aria-current');
             if (num3) {
               num3.className = 'step-num w-6 h-6 rounded-full bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0';
@@ -407,17 +407,17 @@
           const actionLabel = card.querySelector('.font-sans');
           if (isSelected) {
             if (track === 'product') {
-              card.className = 'track-card ztds-card p-5 bg-white border-2 border-emerald-600 ring-2 ring-emerald-500/20 rounded-xl flex flex-col justify-between cursor-pointer shadow-md text-left transition-all';
+              card.className = 'track-card ztds-card p-3.5 bg-white border-2 border-emerald-600 ring-2 ring-emerald-500/20 rounded-xl flex flex-col justify-between cursor-pointer shadow-md text-left transition-all';
               if (actionLabel) { actionLabel.textContent = 'Active Track \u2192'; actionLabel.className = 'text-emerald-700 font-semibold font-sans'; }
             } else if (track === 'company') {
-              card.className = 'track-card ztds-card p-5 bg-white border-2 border-blue-600 ring-2 ring-blue-500/20 rounded-xl flex flex-col justify-between cursor-pointer shadow-md text-left transition-all';
+              card.className = 'track-card ztds-card p-3.5 bg-white border-2 border-blue-600 ring-2 ring-blue-500/20 rounded-xl flex flex-col justify-between cursor-pointer shadow-md text-left transition-all';
               if (actionLabel) { actionLabel.textContent = 'Active Track \u2192'; actionLabel.className = 'text-blue-700 font-semibold font-sans'; }
             } else {
-              card.className = 'track-card ztds-card p-5 bg-white border-2 border-purple-600 ring-2 ring-purple-500/20 rounded-xl flex flex-col justify-between cursor-pointer shadow-md text-left transition-all';
+              card.className = 'track-card ztds-card p-3.5 bg-white border-2 border-purple-600 ring-2 ring-purple-500/20 rounded-xl flex flex-col justify-between cursor-pointer shadow-md text-left transition-all';
               if (actionLabel) { actionLabel.textContent = 'Active Track \u2192'; actionLabel.className = 'text-purple-700 font-semibold font-sans'; }
             }
           } else {
-            card.className = 'track-card ztds-card p-5 bg-white border border-slate-200 rounded-xl flex flex-col justify-between cursor-pointer hover:border-slate-300 hover:shadow-sm text-left opacity-90 hover:opacity-100 transition-all';
+            card.className = 'track-card ztds-card p-3.5 bg-white border border-slate-200 rounded-xl flex flex-col justify-between cursor-pointer hover:border-slate-300 hover:shadow-sm text-left opacity-90 hover:opacity-100 transition-all';
             if (actionLabel) {
               actionLabel.textContent = 'Select Track \u2192';
               actionLabel.className = (cardTrack === 'company' ? 'text-blue-700' : (cardTrack === 'fellow' ? 'text-purple-700' : 'text-emerald-700')) + ' font-semibold font-sans';

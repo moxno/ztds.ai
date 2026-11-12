@@ -36,14 +36,17 @@
       const btnEmptyReset = document.getElementById('btnEmptyCompanyReset');
       const totalCompaniesCount = 9;
 
-      function setActiveCompanyTab(category) {
+      function setActiveCompanyTab(category, shouldScroll) {
         filterBtns.forEach(btn => {
           const isMatch = btn.getAttribute('data-filter') === category;
           if (isMatch) {
-            btn.className = 'filter-btn active px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all';
+            btn.className = 'filter-btn active px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all whitespace-nowrap';
             btn.setAttribute('aria-selected', 'true');
+            if (shouldScroll && typeof btn.scrollIntoView === 'function') {
+              btn.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+            }
           } else {
-            btn.className = 'filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all';
+            btn.className = 'filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap';
             btn.setAttribute('aria-selected', 'false');
           }
         });
@@ -121,7 +124,7 @@
       filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           const filter = btn.getAttribute('data-filter') || 'all';
-          setActiveCompanyTab(filter);
+          setActiveCompanyTab(filter, true);
           if (filter !== 'all') {
             history.replaceState(null, '', '#' + filter);
           } else if (window.location.hash) {

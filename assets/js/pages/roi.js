@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
 - **Calculated ROI Multiple:** ${roiMultipleStr}
 - **Unmitigated Risk Exposure:** ${totalExposureStr}
 - **Subprocessor Chain DPA Overhead Elimination:** ${dpaSavingsStr} / yr
-- **ZTDS Invariant Architecture Cost (Flat TCO):** ${fmtCur.format(tco)} / yr
+- **Estimated Infrastructure Deployment TCO (Annual Benchmark):** ${fmtCur.format(tco)}
 
 ---
 
@@ -320,8 +320,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ---
 
-## 4. Statutory Exemption & Legal Grounds for Defense
-- **EU GDPR Recital 26 & Article 28 Exemption:** Principles of data protection do not apply to anonymous information. By enforcing Invariant 1 (Zero-Egress) client-side in RAM prior to network serialization, external LLM APIs receive only syntactic surrogate tokens. Downstream model vendors are excluded from GDPR Article 28 subprocessor chains, eliminating statutory 4% turnover penalty exposure.
+## 4. Statutory Safe Harbor & Technical Grounds for Defense
+- **EU GDPR Article 32 Safe Harbor & Article 28 Subprocessor Scope Exclusion:** By enforcing Invariant 1 (Zero-Egress) client-side in RAM prior to network serialization, external LLM APIs receive only syntactic surrogate tokens. Downstream model vendors are excluded from intermediary sanitization subprocessor chains under GDPR Article 28 while documenting proactive technical due diligence under GDPR Article 32 and Israel Amendment 13 Sec. 17.
 - **EU AI Act Article 10 & 50:** Mathematical zero-entropy leakage ($I(X; T) = 0.00\\text{ bits}$) satisfies mandatory transparency and data governance obligations for high-risk AI workflows.
 - **US HIPAA Safe Harbor (45 CFR § 164.514(b)):** Local workstation RAM sanitization strips all 18 statutory PHI identifiers before transit, eliminating mandatory Business Associate Agreement (BAA) requirements.
 - **US Federal Rule of Evidence 502(b):** In-memory deterministic pseudonymization proves reasonable precautions against inadvertent disclosure, preserving attorney-client privilege during AI contract review and M&A discovery.
