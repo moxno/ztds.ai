@@ -136,10 +136,7 @@
         "height": 630
       },
       "publisher": {
-        "@type": "Organization",
-        "@id": "https://ztds.ai/#organization",
-        "name": "ZTDS AI Consortium",
-        "url": "https://ztds.ai"
+        "@id": "https://ztds.ai/#organization"
       }
     }
   ]
@@ -318,7 +315,7 @@
         </button>
 
         <!-- PDF Export Button -->
-        <button type="button" onclick="window.print()" aria-label="Print or Save as PDF" class="touch-target px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-300 hover:text-white transition flex items-center gap-1.5" title="Print / Save as PDF">
+        <button type="button" data-ztds-print="true" aria-label="Print or Save as PDF" class="touch-target px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-300 hover:text-white transition flex items-center gap-1.5" title="Print / Save as PDF">
           <svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
           <span class="hidden md:inline">Export PDF</span>
         </button>
@@ -1123,173 +1120,8 @@
 
   </div>
 
-  <script>
-    (function() {
-      const slides = document.querySelectorAll('.slide');
-      const totalSlides = slides.length;
-      let currentIndex = 0;
-
-      const currentNumEl = document.getElementById('current-slide-num');
-      const totalNumEl = document.getElementById('total-slides-num');
-      const prevBtn = document.getElementById('prev-btn');
-      const nextBtn = document.getElementById('next-btn');
-      const notesDrawer = document.getElementById('notes-drawer');
-      const toggleNotesBtn = document.getElementById('toggle-notes-btn');
-      const closeNotesBtn = document.getElementById('close-notes-btn');
-      const notesContentEl = document.getElementById('notes-content');
-      const notesSlideTitle = document.getElementById('notes-slide-title');
-      const fullscreenBtn = document.getElementById('fullscreen-btn');
-
-      totalNumEl.textContent = totalSlides < 10 ? '0' + totalSlides : totalSlides;
-
-      // Speaker Notes Data mapped by slide index
-      const speakerNotes = [
-        // Slide 1
-        `<p><strong>Opening Track:</strong> "Thank you for taking this executive briefing. As CISOs, your teams are facing intense pressure to adopt Generative AI and RAG yesterday. But current solutions force you into a false choice: block productivity, or send cleartext company prompts to third-party cloud DLP vendors.</p>
-        <p>ZTDS introduces deterministic, client-side zero-trust sanitization in host volatile RAM. Zero bytes leave your environment. Let's inspect the math."</p>`,
-
-        // Slide 2
-        `<p><strong>Core Argument:</strong> "Highlight the 4 statutory chokepoints. Focus heavily on <em>Vector Database Poisoning</em>. In traditional RAG, when PII is embedded into high-dimensional vector space, you cannot delete it under GDPR Art. 17 without rebuilding the entire index at catastrophic cost.</p>
-        <p>ZTDS strips PII into surrogate tokens before vector embedding, permanently immunizing the vector database."</p>`,
-
-        // Slide 3
-        `<p><strong>Cloud DLP Critique:</strong> "Attack the 400ms latency tax. In multi-agent systems with 10-15 reasoning hops, cloud DLP adds 6+ seconds of lag. Also point out the Vendor Trust Paradox: why send your data to another SaaS vendor to protect it from OpenAI? You are simply doubling your breach surface."</p>`,
-
-        // Slide 4
-        `<p><strong>The 4 Invariants:</strong> "ZTDS is an open RFC v1.0 standard with academic DOIs on Zenodo and OSF. Emphasize Invariant 1 (0.00 bytes cleartext egress) and Invariant 2 (deterministic, reversible tokenization). The mapping table stays in client volatile RAM; zero persistent storage."</p>`,
-
-        // Slide 5
-        `<p><strong>Architecture Walkthrough:</strong> "Walk through the diagram: Ingest -> In-RAM Tokenizer (<1.8ms) -> Upstream LLM (receives synthetic tokens) -> Local De-pseudonymizer -> Output. Offer the 5-minute Airplane Mode Audit right on the call: disconnect Wi-Fi and show zero dropped packets."</p>`,
-
-        // Slide 6
-        `<p><strong>Zero-DPA Legal Defense:</strong> "This is how you get General Counsel approval in 48 hours instead of 6 months. Cite the EDPB doctrine: local computational transformation in RAM is not third-party processing. No DPA is required. Hand them our 1-page memo and SOC 2 binder for Drata/Vanta."</p>`,
-
-        // Slide 7
-        `<p><strong>Air-Gapped & Cryptography:</strong> "For defense, SCIF, or sovereign banking VPCs: zero telemetry, zero call-home sockets. Verification uses 256-bit Ed25519 asymmetric signatures taking only 111.8 microseconds. Include mention of the 60-day automatic grace period to protect against PO delays."</p>`,
-
-        // Slide 8
-        `<p><strong>30 Profiles Moat:</strong> "Explain why generic open-source matching fails: high false positive rates and lack of sector-specific syntax verification. The 30 enterprise profiles cover HIPAA clinical data, SWIFT/IBAN, M&A deal codenames, cloud secrets (AWS, Kubernetes, JWT), automotive CAN/telematics, and telecom CDR/IMSI."</p>`,
-
-        // Slide 9
-        `<p><strong>Commercial ROI:</strong> "Compare Enterprise Air-Gapped deployment against $150k+ cloud DLP and $350k+ custom in-house build. Pitch Net 30 terms, 5 cluster nodes, full 30 profiles, and 4-hour SLA via PrivacyScrubber.com. Emphasize it pays for itself in legal hours alone."</p>`,
-
-        // Slide 10
-        `<p><strong>Closing Call-to-Action:</strong> "Propose the 14-day Air-Gapped Sandbox Pilot in their staging VPC. Zero technical risk, zero upfront commitment. We deliver the evaluation token and 1-page CISO memo within 2 hours. Ask who from engineering will lead the sandbox test."</p>`
-      ];
-
-      function showSlide(index) {
-        if (index < 0) index = 0;
-        if (index >= totalSlides) index = totalSlides - 1;
-        currentIndex = index;
-
-        slides.forEach((slide, i) => {
-          if (i === currentIndex) {
-            slide.classList.add('active');
-          } else {
-            slide.classList.remove('active');
-          }
-        });
-
-        const formattedNum = (currentIndex + 1) < 10 ? '0' + (currentIndex + 1) : (currentIndex + 1);
-        currentNumEl.textContent = formattedNum;
-
-        // Update speaker notes
-        const activeSlide = slides[currentIndex];
-        notesSlideTitle.textContent = activeSlide.getAttribute('data-title') || '';
-        notesContentEl.innerHTML = speakerNotes[currentIndex] || '<p>No speaker notes recorded for this slide.</p>';
-
-        // Update Hash
-        history.replaceState(null, null, '#' + (currentIndex + 1));
-      }
-
-      function nextSlide() {
-        if (currentIndex < totalSlides - 1) {
-          showSlide(currentIndex + 1);
-        }
-      }
-
-      function prevSlide() {
-        if (currentIndex > 0) {
-          showSlide(currentIndex - 1);
-        }
-      }
-
-      function toggleNotes() {
-        notesDrawer.classList.toggle('open');
-      }
-
-      function toggleFullscreen() {
-        if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen().catch(() => {});
-        } else {
-          if (document.exitFullscreen) {
-            document.exitFullscreen();
-          }
-        }
-      }
-
-      // Event Listeners
-      nextBtn.addEventListener('click', nextSlide);
-      prevBtn.addEventListener('click', prevSlide);
-      toggleNotesBtn.addEventListener('click', toggleNotes);
-      closeNotesBtn.addEventListener('click', () => notesDrawer.classList.remove('open'));
-      fullscreenBtn.addEventListener('click', toggleFullscreen);
-
-      document.addEventListener('keydown', (e) => {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-
-        switch(e.key) {
-          case 'ArrowRight':
-          case ' ':
-          case 'PageDown':
-          case 'Enter':
-            e.preventDefault();
-            nextSlide();
-            break;
-          case 'ArrowLeft':
-          case 'PageUp':
-          case 'Backspace':
-            e.preventDefault();
-            prevSlide();
-            break;
-          case 'Home':
-            e.preventDefault();
-            showSlide(0);
-            break;
-          case 'End':
-            e.preventDefault();
-            showSlide(totalSlides - 1);
-            break;
-          case 'n':
-          case 'N':
-            toggleNotes();
-            break;
-          case 'f':
-          case 'F':
-            toggleFullscreen();
-            break;
-          case 'Escape':
-            notesDrawer.classList.remove('open');
-            break;
-        }
-      });
-
-      // Handle direct hash or query navigation e.g. /deck/#5 or /deck/?slide=5
-      function handleHash() {
-        const params = new URLSearchParams(window.location.search);
-        const hash = window.location.hash.replace('#', '') || params.get('slide') || '';
-        const slideNum = parseInt(hash, 10);
-        if (!isNaN(slideNum) && slideNum >= 1 && slideNum <= totalSlides) {
-          showSlide(slideNum - 1);
-        } else {
-          showSlide(0);
-        }
-      }
-
-      window.addEventListener('hashchange', handleHash);
-      handleHash();
-    })();
-  </script>
+  
   <script src="/nav.js" defer></script>
+  <script src="/assets/js/pages/deck.js" defer></script>
 </body>
 </html>

@@ -11,11 +11,14 @@ const assert = require('assert');
 console.log('\n[TEST] Starting 404 Not Found Page Verification Suite...\n');
 
 const notFoundPath = path.join(__dirname, '../404.html');
+const notFoundJsPath = path.join(__dirname, '../assets/js/pages/404.js');
 
 // Test 1: Existence and HTML5 DOCTYPE
 console.log('--> Test 1: File Existence & HTML5 Structure');
 assert(fs.existsSync(notFoundPath), '404.html must exist in workspace root');
+assert(fs.existsSync(notFoundJsPath), 'assets/js/pages/404.js must exist');
 const html = fs.readFileSync(notFoundPath, 'utf8');
+const notFoundJs = fs.readFileSync(notFoundJsPath, 'utf8');
 
 assert(html.includes('<!DOCTYPE html>'), '404.html must contain HTML5 DOCTYPE');
 assert(html.includes('<title>404: Route Sanitized in Volatile RAM — ZTDS.ai</title>'), 'Title must reflect zero-trust RAM sanitization');
@@ -60,8 +63,9 @@ console.log('    [PASS] All recovery navigation paths verified.');
 
 // Test 6: XSS Protection in Dynamic Path Reflection
 console.log('--> Test 6: XSS Protection in Path Reflection Script');
-assert(html.includes('displayPath.textContent = rawPath'), 'Script must use textContent for path reflection (never innerHTML)');
-assert(!html.includes('displayPath.innerHTML = rawPath'), 'Script must NEVER use innerHTML for path reflection');
+assert(html.includes('/assets/js/pages/404.js'), '404.html must load external /assets/js/pages/404.js');
+assert(notFoundJs.includes('displayPath.textContent = rawPath'), 'Script must use textContent for path reflection (never innerHTML)');
+assert(!notFoundJs.includes('displayPath.innerHTML = rawPath'), 'Script must NEVER use innerHTML for path reflection');
 console.log('    [PASS] textContent-based XSS neutralization verified.');
 
 // Test 7: Schema.org BreadcrumbList Validation
@@ -78,9 +82,9 @@ console.log('    [PASS] Schema.org BreadcrumbList validated.');
 
 // Test 8: Smart Closest-Route Recovery & Global Mobile Drawer Parity
 console.log('--> Test 8: Smart Closest-Route Recovery & Global Mobile Drawer Parity');
-assert(html.includes("url: '/frameworks/'"), '404.html routeRules must recover /frameworks/ routes');
-assert(html.includes("url: '/sdk/#5-physical-execution-surfaces'"), '404.html routeRules must recover WordPress / Surface 06 routes');
-assert(html.includes("url: '/companies/learningcenterusa/'"), '404.html routeRules must recover LearningCenterUsa Voice BIPA routes');
+assert(notFoundJs.includes("url: '/frameworks/'"), '404.js routeRules must recover /frameworks/ routes');
+assert(notFoundJs.includes("url: '/sdk/#5-physical-execution-surfaces'"), '404.js routeRules must recover WordPress / Surface 06 routes');
+assert(notFoundJs.includes("url: '/companies/learningcenterusa/'"), '404.js routeRules must recover LearningCenterUsa Voice BIPA routes');
 
 function walkHtml(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {

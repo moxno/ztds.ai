@@ -21,10 +21,14 @@ console.log('[TEST] Starting ZTDS In-Browser Scanner & In-RAM Sanitizer Conforma
 
 const ROOT = path.resolve(__dirname, '..');
 const scannerHtmlPath = path.join(ROOT, 'scanner/index.html');
+const scannerJsPath = path.join(ROOT, 'assets/js/pages/scanner.js');
 
 assert(fs.existsSync(scannerHtmlPath), 'scanner/index.html must exist');
+assert(fs.existsSync(scannerJsPath), 'assets/js/pages/scanner.js must exist');
 
 const html = fs.readFileSync(scannerHtmlPath, 'utf8');
+const scannerJs = fs.readFileSync(scannerJsPath, 'utf8');
+const bundle = html + '\n' + scannerJs;
 
 // Test 1: DOM Elements & Interactive Controls for Mode 1
 console.log('--> Test 1: Mode 1 Workbench DOM Elements & Interactive Controls');
@@ -63,11 +67,11 @@ console.log('--> Test 1: Mode 1 Workbench DOM Elements & Interactive Controls');
 // Test 2: In-RAM Sanitizer Engine & Entity Category Coverage
 console.log('--> Test 2: In-RAM Sanitizer Engine & Entity Category Coverage');
 {
-  assert(html.includes('async function sanitizeInRAM('), 'Must define sanitizeInRAM function');
-  assert(html.includes('function restoreCleartextInRAM('), 'Must define restoreCleartextInRAM function');
-  assert(html.includes('function renderHighlightedTokens('), 'Must define renderHighlightedTokens function');
-  assert(html.includes('function renderEntityPills('), 'Must define renderEntityPills function');
-  assert(html.includes('function computeSha256('), 'Must define computeSha256 function');
+  assert(scannerJs.includes('async function sanitizeInRAM('), 'Must define sanitizeInRAM function');
+  assert(scannerJs.includes('function restoreCleartextInRAM('), 'Must define restoreCleartextInRAM function');
+  assert(scannerJs.includes('function buildHighlightedTokensFragment('), 'Must define Trusted-Types-safe buildHighlightedTokensFragment function');
+  assert(scannerJs.includes('function renderEntityPills('), 'Must define renderEntityPills function');
+  assert(scannerJs.includes('function computeSha256('), 'Must define computeSha256 function');
 
   // Verify comprehensive entity categories in sanitizeInRAM
   const expectedPrefixes = [
@@ -94,7 +98,7 @@ console.log('--> Test 2: In-RAM Sanitizer Engine & Entity Category Coverage');
   ];
 
   expectedPrefixes.forEach(prefix => {
-    assert(html.includes(`'${prefix}'`) || html.includes(`"${prefix}"`), `Must support entity prefix: ${prefix}`);
+    assert(scannerJs.includes(`'${prefix}'`) || scannerJs.includes(`"${prefix}"`), `Must support entity prefix: ${prefix}`);
   });
 
   console.log(`    [PASS] Verified ${expectedPrefixes.length} sensitive entity detection categories.`);
@@ -103,16 +107,16 @@ console.log('--> Test 2: In-RAM Sanitizer Engine & Entity Category Coverage');
 // Test 3: RFC v1.0 Invariant 2: Deterministic Coreference Preservation
 console.log('--> Test 3: RFC v1.0 Invariant 2: Deterministic Coreference Preservation');
 {
-  assert(html.includes('clearToToken[cleartext]'), 'Must maintain clearToToken lookup table for coreference');
-  assert(html.includes('return clearToToken[cleartext];'), 'Must return existing surrogate token on repeat mentions');
+  assert(scannerJs.includes('clearToToken[cleartext]'), 'Must maintain clearToToken lookup table for coreference');
+  assert(scannerJs.includes('return clearToToken[cleartext];'), 'Must return existing surrogate token on repeat mentions');
 
   // Extract sanitizeInRAM function code and evaluate in isolated context
-  const scriptContent = html.match(/<script>([\s\S]*?)<\/script>/)[1];
+  const scriptContent = scannerJs;
   
   // Create an evaluation context to test coreference logic directly
   const testCoreferenceCode = `
     let performance = { now: () => 100 };
-    ${scriptContent.slice(scriptContent.indexOf('// In-RAM Sanitizer Engine with Bijective Mapping and Coreference Preservation'), scriptContent.indexOf('// Format HTML Tokens'))}
+    ${scriptContent.slice(scriptContent.indexOf('// In-RAM Sanitizer Engine with Bijective Mapping and Coreference Preservation'), scriptContent.indexOf('// Build DOM Fragment for Token Visualization'))}
     
     (async () => {
       const sample = "Email svance@mercyhealth.org was sent. Re-confirming with svance@mercyhealth.org. Also SSN 123-45-6789 and repeated SSN 123-45-6789.";
@@ -141,7 +145,7 @@ console.log('--> Test 3: RFC v1.0 Invariant 2: Deterministic Coreference Preserv
 // Test 4: Bijective Lossless Round-Trip (Invariant 2 Reversibility)
 console.log('--> Test 4: RFC v1.0 Invariant 2: Bijective Lossless Round-Trip');
 {
-  const scriptContent = html.match(/<script>([\s\S]*?)<\/script>/)[1];
+  const scriptContent = scannerJs;
   const testRoundtripCode = `
     let performance = { now: () => 100 };
     ${scriptContent.slice(scriptContent.indexOf('// In-RAM Sanitizer Engine with Bijective Mapping and Coreference Preservation'), scriptContent.indexOf('// Execute Verification Cycle'))}
@@ -165,13 +169,13 @@ console.log('--> Test 4: RFC v1.0 Invariant 2: Bijective Lossless Round-Trip');
 // Test 5: Cryptographic SHA-256 Audit Receipt Schema
 console.log('--> Test 5: Cryptographic SHA-256 Audit Receipt Schema');
 {
-  assert(html.includes('https://ztds.ai/schemas/audit-receipt.v1.json'), 'Receipt must reference canonical ZTDS schema');
-  assert(html.includes('ZTDS RFC v1.0 (IETF draft-sibiryakov-ztds-protocol)'), 'Receipt must cite ZTDS RFC v1.0');
-  assert(html.includes('invariant_1_zero_egress'), 'Receipt must certify Invariant 1');
-  assert(html.includes('invariant_2_deterministic_tokenization'), 'Receipt must certify Invariant 2');
-  assert(html.includes('invariant_3_memory_isolation'), 'Receipt must certify Invariant 3');
-  assert(html.includes('invariant_4_subprocessor_exclusion'), 'Receipt must certify Invariant 4');
-  assert(html.includes('VERIFIED_COMPLIANT_ZERO_EGRESS'), 'Receipt must set VERIFIED_COMPLIANT_ZERO_EGRESS status');
+  assert(scannerJs.includes('https://ztds.ai/schemas/audit-receipt.v1.json'), 'Receipt must reference canonical ZTDS schema');
+  assert(scannerJs.includes('ZTDS RFC v1.0 (IETF draft-sibiryakov-ztds-protocol)'), 'Receipt must cite ZTDS RFC v1.0');
+  assert(scannerJs.includes('invariant_1_zero_egress'), 'Receipt must certify Invariant 1');
+  assert(scannerJs.includes('invariant_2_deterministic_tokenization'), 'Receipt must certify Invariant 2');
+  assert(scannerJs.includes('invariant_3_memory_isolation'), 'Receipt must certify Invariant 3');
+  assert(scannerJs.includes('invariant_4_subprocessor_exclusion'), 'Receipt must certify Invariant 4');
+  assert(scannerJs.includes('VERIFIED_COMPLIANT_ZERO_EGRESS'), 'Receipt must set VERIFIED_COMPLIANT_ZERO_EGRESS status');
 
   console.log('    [PASS] Cryptographic SHA-256 audit receipt schema and 4-invariant attestation verified.');
 }
@@ -179,12 +183,12 @@ console.log('--> Test 5: Cryptographic SHA-256 Audit Receipt Schema');
 // Test 6: Real-Time Debouncing, Clipboard Paste & Copy Feedback
 console.log('--> Test 6: Real-Time Debouncing, Clipboard Paste & Copy Feedback');
 {
-  assert(html.includes('debounceTimer = setTimeout('), 'Must debounce real-time typing input');
-  assert(html.includes('inputText.addEventListener(\'paste\''), 'Must handle paste event immediately');
-  assert(html.includes('navigator.clipboard.readText'), 'Must support navigator.clipboard.readText on paste button');
-  assert(html.includes('btnCopySanitized.addEventListener'), 'Must bind copy sanitized text button');
-  assert(html.includes('btnCopyTokenMap.addEventListener'), 'Must bind copy token map button');
-  assert(html.includes('Copied!'), 'Must provide visual Copied! feedback on copy buttons');
+  assert(scannerJs.includes('debounceTimer = setTimeout('), 'Must debounce real-time typing input');
+  assert(scannerJs.includes('inputText.addEventListener(\'paste\''), 'Must handle paste event immediately');
+  assert(scannerJs.includes('navigator.clipboard.readText'), 'Must support navigator.clipboard.readText on paste button');
+  assert(scannerJs.includes('btnCopySanitized.addEventListener'), 'Must bind copy sanitized text button');
+  assert(scannerJs.includes('btnCopyTokenMap.addEventListener'), 'Must bind copy token map button');
+  assert(scannerJs.includes('Copied!'), 'Must provide visual Copied! feedback on copy buttons');
 
   console.log('    [PASS] Real-time debounced input, paste listener, and clipboard copy feedback verified.');
 }
@@ -195,17 +199,17 @@ console.log('--> Test 7: Strict Zero-Emoji Conformance');
   const emojiRegex = /[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u;
   const selfContent = fs.readFileSync(__filename, 'utf8');
   assert(!emojiRegex.test(selfContent), 'Test suite must not contain any emoji characters');
-  assert(!emojiRegex.test(html), 'scanner/index.html must not contain any emoji characters');
+  assert(!emojiRegex.test(bundle), 'scanner HTML/JS must not contain any emoji characters');
 
-  console.log('    [PASS] Zero emojis verified across test suite and scanner HTML.');
+  console.log('    [PASS] Zero emojis verified across test suite and scanner HTML/JS.');
 }
 
 // Test 8: Brand Spelling SSOT ("BrandMeWeb" single word rule)
 console.log('--> Test 8: Brand Spelling SSOT ("BrandMeWeb" single word rule)');
 {
   const invalidBrandPattern = /\bBrand\s+Me\s+Web\b/i;
-  assert(!invalidBrandPattern.test(html), 'scanner/index.html must never spell "Brand Me Web" with spaces');
-  assert(html.includes('BrandMeWeb'), 'scanner/index.html must reference BrandMeWeb');
+  assert(!invalidBrandPattern.test(bundle), 'scanner HTML/JS must never spell "Brand Me Web" with spaces');
+  assert(bundle.includes('BrandMeWeb'), 'scanner/index.html must reference BrandMeWeb');
 
   console.log('    [PASS] BrandMeWeb single word rule verified.');
 }
@@ -213,12 +217,12 @@ console.log('--> Test 8: Brand Spelling SSOT ("BrandMeWeb" single word rule)');
 // Test 9: Egress Leak Emulation Presets & Attack Vectors
 console.log('--> Test 9: Egress Leak Emulation Presets & Attack Vectors');
 {
-  assert(html.includes('LEAK_PRESET_SCENARIOS'), 'Must define LEAK_PRESET_SCENARIOS object');
-  assert(html.includes('api.openai.com:443'), 'Must simulate Frontier LLM API egress target');
-  assert(html.includes('google-analytics.com:443'), 'Must simulate analytics telemetry tracker target');
-  assert(html.includes('collector.cloud-logging.internal:80'), 'Must simulate unencrypted HTTP egress target');
-  assert(html.includes('function simulateLeakAttempt('), 'Must define simulateLeakAttempt function');
-  assert(html.includes('BLOCKED: Invariant 1 Policy Applied (0.00 B Leaked)'), 'Must enforce Invariant 1 policy status');
+  assert(scannerJs.includes('LEAK_PRESET_SCENARIOS'), 'Must define LEAK_PRESET_SCENARIOS object');
+  assert(scannerJs.includes('api.openai.com:443'), 'Must simulate Frontier LLM API egress target');
+  assert(scannerJs.includes('google-analytics.com:443'), 'Must simulate analytics telemetry tracker target');
+  assert(scannerJs.includes('collector.cloud-logging.internal:80'), 'Must simulate unencrypted HTTP egress target');
+  assert(scannerJs.includes('function simulateLeakAttempt('), 'Must define simulateLeakAttempt function');
+  assert(scannerJs.includes('BLOCKED: Invariant 1 Policy Applied (0.00 B Leaked)'), 'Must enforce Invariant 1 policy status');
 
   console.log('    [PASS] Egress leak emulation presets and attack vector interception verified.');
 }
@@ -226,14 +230,14 @@ console.log('--> Test 9: Egress Leak Emulation Presets & Attack Vectors');
 // Test 10: CISO Executive Compliance Audit Report Exporter & Printable Modal
 console.log('--> Test 10: CISO Executive Compliance Audit Report Exporter & Printable Modal');
 {
-  assert(html.includes('function openCisoAuditReportModal('), 'Must define openCisoAuditReportModal function');
-  assert(html.includes('function closeCisoAuditReportModal('), 'Must define closeCisoAuditReportModal function');
-  assert(html.includes('reportTimestampDisplay'), 'Report modal must render timestamp');
-  assert(html.includes('reportReceiptIdDisplay'), 'Report modal must render receipt ID');
-  assert(html.includes('reportMasterSha256'), 'Report modal must render SHA-256 digest');
-  assert(html.includes('reportDeltaEgress'), 'Report modal must render delta egress proof');
-  assert(html.includes('reportMemoryIsolation'), 'Report modal must render memory isolation status');
-  assert(html.includes('reportPacketTableBody'), 'Report modal must render intercepted packet evidence table');
+  assert(scannerJs.includes('function openCisoAuditReportModal('), 'Must define openCisoAuditReportModal function');
+  assert(scannerJs.includes('function closeCisoAuditReportModal('), 'Must define closeCisoAuditReportModal function');
+  assert(bundle.includes('reportTimestampDisplay'), 'Report modal must render timestamp');
+  assert(bundle.includes('reportReceiptIdDisplay'), 'Report modal must render receipt ID');
+  assert(bundle.includes('reportMasterSha256'), 'Report modal must render SHA-256 digest');
+  assert(bundle.includes('reportDeltaEgress'), 'Report modal must render delta egress proof');
+  assert(bundle.includes('reportMemoryIsolation'), 'Report modal must render memory isolation status');
+  assert(bundle.includes('reportPacketTableBody'), 'Report modal must render intercepted packet evidence table');
   assert(html.includes('@media print'), 'Must include print stylesheet rules for clean CISO PDF output');
 
   console.log('    [PASS] CISO executive compliance audit report exporter and print styles verified.');

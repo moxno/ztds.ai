@@ -20,12 +20,15 @@ console.log('[TEST] Starting ZTDS Registry Interactive Search & Category Filter 
 
 const ROOT = path.resolve(__dirname, '..');
 const registryHtmlPath = path.join(ROOT, 'registry/index.html');
+const registryJsPath = path.join(ROOT, 'assets/js/pages/registry.js');
 const registryJsonPath = path.join(ROOT, 'data/registry.json');
 
 assert(fs.existsSync(registryHtmlPath), 'registry/index.html must exist');
+assert(fs.existsSync(registryJsPath), 'assets/js/pages/registry.js must exist');
 assert(fs.existsSync(registryJsonPath), 'data/registry.json must exist');
 
 const html = fs.readFileSync(registryHtmlPath, 'utf8');
+const registryJs = fs.readFileSync(registryJsPath, 'utf8');
 const registryData = JSON.parse(fs.readFileSync(registryJsonPath, 'utf8'));
 
 // Test 1: DOM Elements & Filter Tabs Integrity
@@ -111,11 +114,12 @@ console.log('--> Test 4: Zero Duplicate Certificates or Tokens');
 // Test 5: Client-Side Controller Functions & Hash Deep-Linking
 console.log('--> Test 5: JavaScript Controller Functions & Event Listeners');
 {
-  assert(html.includes('function filterCards()'), 'Must define filterCards() function');
-  assert(html.includes('function setActiveTab('), 'Must define setActiveTab() function');
-  assert(html.includes('function resetAllFilters()'), 'Must define resetAllFilters() function');
-  assert(html.includes('history.replaceState'), 'Must support URL hash deep-linking');
-  assert(html.includes('e.key === \'Escape\''), 'Must support Escape key to clear search');
+  assert(html.includes('/assets/js/pages/registry.js'), 'registry/index.html must load external /assets/js/pages/registry.js');
+  assert(registryJs.includes('function filterCards()'), 'Must define filterCards() function');
+  assert(registryJs.includes('function setActiveTab('), 'Must define setActiveTab() function');
+  assert(registryJs.includes('function resetAllFilters()'), 'Must define resetAllFilters() function');
+  assert(registryJs.includes('history.replaceState'), 'Must support URL hash deep-linking');
+  assert(registryJs.includes('e.key === \'Escape\''), 'Must support Escape key to clear search');
 
   console.log('    [PASS] JavaScript reactive controller, hash deep-linking, and keyboard handlers verified.');
 }
@@ -126,7 +130,7 @@ console.log('--> Test 6: Strict Zero-Emoji Conformance');
   const emojiRegex = /[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u;
   const selfContent = fs.readFileSync(__filename, 'utf8');
   assert(!emojiRegex.test(selfContent), 'Test suite must not contain any emoji characters');
-  assert(!emojiRegex.test(html), 'registry/index.html must not contain any emoji characters');
+  assert(!emojiRegex.test(html + '\n' + registryJs), 'registry HTML/JS must not contain any emoji characters');
 
   console.log('    [PASS] Zero emojis verified across test suite and registry HTML.');
 }

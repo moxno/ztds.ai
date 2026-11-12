@@ -16,6 +16,8 @@ const ignoredDirs = new Set([
   'node_modules',
   '.git',
   '.agents',
+  '.agent',
+  'public',
   'stitch_export',
   'tmp',
   '.gemini',
@@ -27,8 +29,9 @@ function findHtmlFiles(dir, fileList = []) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   for (const entry of entries) {
     if (entry.isDirectory()) {
-      if (!ignoredDirs.has(entry.name)) {
-        findHtmlFiles(path.join(dir, entry.name), fileList);
+      const fullSub = path.join(dir, entry.name);
+      if (!ignoredDirs.has(entry.name) && !fullSub.endsWith(path.join('docs', 'legal', 'internal'))) {
+        findHtmlFiles(fullSub, fileList);
       }
     } else if (entry.isFile() && entry.name.endsWith('.html')) {
       const relPath = path.relative(rootDir, path.join(dir, entry.name));
@@ -130,6 +133,40 @@ for (const relPath of allPages) {
       if (/id=["'][^"']*["']/i.test(attrs)) return match;
       return `<main id="main-content"${attrs}>`;
     });
+    changed = true;
+  }
+
+  // 5. Remove stacked top announcement/status bar <div> above standard sticky <header> (single-row header rule)
+  if (content.includes('id="desktop-nav"')) {
+    const stackedBarRegex = /(<a\s+href="#main-content"[^>]*>[\s\S]*?<\/a>)\s*(?:<!--\s*Top[^-]*-->\s*)?<div\s+class="bg-slate-900[^"]*"[^>]*>[\s\S]*?<\/div>\s*(?=(?:<!--[^-]*-->\s*)?<header\b)/i;
+    // Safely remove top bar between skip-link and Institutional Top Header / <header>
+    const headerIdx = content.indexOf('<header');
+    const skipMatch = content.match(/<a\s+href="#main-content"[^>]*>[\s\S]*?<\/a>/i);
+    if (headerIdx > -1 && skipMatch) {
+      const afterSkipIdx = skipMatch.index + skipMatch[0].length;
+      if (afterSkipIdx < headerIdx) {
+        const between = content.slice(afterSkipIdx, headerIdx);
+        if (/<div\b/i.test(between)) {
+          const commentKeep = between.match(/<!--\s*Institutional Top Header\s*-->\s*$/i);
+          content = content.slice(0, afterSkipIdx) + '\n\n  ' + (commentKeep ? commentKeep[0] : '') + content.slice(headerIdx);
+          changed = true;
+        }
+      }
+    }
+
+    // 6. Enforce .ztds-sticky-header on standard sticky <header>
+    const stickyHeaderRe = /<header\s+class="([^"]*\bsticky\b[^"]*)"/i;
+    const shMatch = content.match(stickyHeaderRe);
+    if (shMatch && !shMatch[1].split(/\s+/).includes('ztds-sticky-header')) {
+      content = content.replace(stickyHeaderRe, `<header class="ztds-sticky-header ${shMatch[1]}"`);
+      changed = true;
+    }
+  }
+
+  // 7. Prune redundant archival draft-01 footer link to concentrate PageRank on active /ietf/ hub
+  const draft01FooterRe = /^[ \t]*<li><a\s+href="\/ietf\/draft-sibiryakov-ztds-protocol-01\/"[^>]*>IETF Draft-01 Archival Spec<\/a><\/li>\r?\n/gm;
+  if (draft01FooterRe.test(content)) {
+    content = content.replace(draft01FooterRe, '');
     changed = true;
   }
 

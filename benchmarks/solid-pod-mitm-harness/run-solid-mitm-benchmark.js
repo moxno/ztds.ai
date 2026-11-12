@@ -364,8 +364,8 @@ function inspectEntityExposure(payloadText, sensitiveEntities) {
     exposedCount: exposed.length,
     protectedCount: protectedEntities.length,
     exposedBytes,
-    exposureRatePct: Number(((exposed.length / sensitiveEntities.length) * 100).toFixed(2)),
-    leakagePreventionRatePct: Number(((protectedEntities.length / sensitiveEntities.length) * 100).toFixed(2)),
+    exposureRatePct: sensitiveEntities.length > 0 ? Number(((exposed.length / sensitiveEntities.length) * 100).toFixed(2)) : 0,
+    leakagePreventionRatePct: sensitiveEntities.length > 0 ? Number(((protectedEntities.length / sensitiveEntities.length) * 100).toFixed(2)) : 0,
     exposedList: exposed
   };
 }

@@ -236,7 +236,7 @@
 
 
   <!-- Institutional Top Header -->
-  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+  <header class="ztds-sticky-header sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
       
       <!-- Brand & Status -->
@@ -1265,7 +1265,6 @@
             <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
             <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track Hub</a></li>
             <li><a href="/ietf/draft-sibiryakov-ztds-protocol-02/" class="hover:text-slate-900 transition-colors">IETF Draft-02 Protocol Spec</a></li>
-            <li><a href="/ietf/draft-sibiryakov-ztds-protocol-01/" class="hover:text-slate-900 transition-colors">IETF Draft-01 Archival Spec</a></li>
             <li><a href="/benchmarks/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">AI Safety &amp; Latency Benchmarks &rarr;</a></li>
             <li><a href="/whitepaper/" class="hover:text-slate-900 transition-colors">Research Whitepaper (DOIs)</a></li>
             <li><a href="/evidentiary-sovereignty/" class="hover:text-slate-900 transition-colors">Evidentiary Sovereignty</a></li>
@@ -1378,24 +1377,6 @@
 
   <!-- Scripts -->
   <script src="/nav.js" defer></script>
-  <script>
-    document.getElementById('btnCopyBibtex').addEventListener('click', () => {
-      const bibtex = `@techreport{sibiryakov2026ztds,
-  title={Zero-Trust Data Sanitization (ZTDS) Specification v1.0},
-  author={Sibiryakov, Ilya},
-  year={2026},
-  institution={ZTDS AI Consortium},
-  doi={10.5281/zenodo.22058770},
-  url={https://ztds.ai/standard/}
-}`;
-      window.ztdsCopy(bibtex, () => {
-        const btn = document.getElementById('btnCopyBibtex');
-        btn.innerHTML = '<span>Copied BibTeX!</span><span class="text-emerald-600 font-bold">&check;</span>';
-        setTimeout(() => {
-          btn.innerHTML = '<span>Copy BibTeX Entry</span><span class="text-xs text-slate-400 font-mono">&darr;</span>';
-        }, 2000);
-      });
-    });
-  </script>
+  <script src="/assets/js/pages/standard.js" defer></script>
 </body>
 </html>

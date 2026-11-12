@@ -21,6 +21,7 @@ const { canonicalizeJson } = require('../lib/license-validator');
 console.log('[TEST] Starting ZTDS Certificate Validator UI & Cryptographic Test Suite...\n');
 
 const VERIFY_HTML_PATH = path.join(__dirname, '..', 'verify', 'index.html');
+const VERIFY_JS_PATH = path.join(__dirname, '..', 'assets', 'js', 'pages', 'verify.js');
 
 // Test 1: File Existence & HTML5 Document Structure
 console.log('--> Test 1: File Existence & HTML5 Document Structure');
@@ -149,11 +150,13 @@ console.log('\n--> Test 3: Essential DOM IDs & Interactive Workbench Controls');
 
   // Verify mobile touch target ergonomics
   assert(html.includes('touch-target') || html.includes('min-h-[44px]'), 'Buttons must follow mobile touch target guidelines');
+  assert(html.includes('/assets/js/pages/verify.js'), 'verify/index.html must load external /assets/js/pages/verify.js');
 
-  // Verify dynamic badge generator functions
-  assert(html.includes('generateVerifiedBadgeSvg'), 'Script must include generateVerifiedBadgeSvg');
-  assert(html.includes('downloadFile'), 'Script must include downloadFile helper');
-  assert(html.includes('updateDiagnostics'), 'Script must include real-time updateDiagnostics');
+  // Verify dynamic badge generator functions in external CSP-safe script
+  const verifyJs = fs.readFileSync(VERIFY_JS_PATH, 'utf8');
+  assert(verifyJs.includes('generateVerifiedBadgeSvg'), 'Script must include generateVerifiedBadgeSvg');
+  assert(verifyJs.includes('downloadFile'), 'Script must include downloadFile helper');
+  assert(verifyJs.includes('updateDiagnostics'), 'Script must include real-time updateDiagnostics');
 
   console.log(`    [PASS] All ${requiredIds.length} required DOM IDs, invariant cards, and interactive helpers verified.`);
 }
@@ -161,10 +164,10 @@ console.log('\n--> Test 3: Essential DOM IDs & Interactive Workbench Controls');
 // Test 4: Embedded Sample Tokens Cryptographic Conformance
 console.log('\n--> Test 4: Embedded Sample Tokens Cryptographic Conformance');
 {
-  const html = fs.readFileSync(VERIFY_HTML_PATH, 'utf8');
+  const verifyJs = fs.readFileSync(VERIFY_JS_PATH, 'utf8');
 
-  // Extract SAMPLES object from script block
-  const samplesMatch = html.match(/const\s+SAMPLES\s*=\s*\{([\s\S]*?)\};/);
+  // Extract SAMPLES object from script module
+  const samplesMatch = verifyJs.match(/const\s+SAMPLES\s*=\s*\{([\s\S]*?)\};/);
   assert(samplesMatch, 'SAMPLES definition must be present in client script');
 
   const validTokenMatch = samplesMatch[1].match(/valid:\s*"(ZTDS-CERT-v1\.[^"]+)"/);
@@ -206,14 +209,14 @@ console.log('\n--> Test 4: Embedded Sample Tokens Cryptographic Conformance');
 // Test 5: SubtleCrypto & SPKI Key Match
 console.log('\n--> Test 5: SubtleCrypto & SPKI Key Match');
 {
-  const html = fs.readFileSync(VERIFY_HTML_PATH, 'utf8');
+  const verifyJs = fs.readFileSync(VERIFY_JS_PATH, 'utf8');
   assert(
-    html.includes('DEFAULT_SPKI_B64 = "MCowBQYDK2VwAyEAg3N98ZgL4Uqbu0PmqvG8KN8vUicYkgKfUNVgwlLObr4="'),
+    verifyJs.includes('DEFAULT_SPKI_B64 = "MCowBQYDK2VwAyEAg3N98ZgL4Uqbu0PmqvG8KN8vUicYkgKfUNVgwlLObr4="'),
     'Client SPKI key must match ZTDS AI Consortium Ed25519 root key'
   );
-  assert(html.includes('window.crypto.subtle.importKey'), 'Must use SubtleCrypto importKey for Ed25519');
-  assert(html.includes('window.crypto.subtle.verify'), 'Must use SubtleCrypto verify for Ed25519');
-  assert(html.includes('canonicalizeJson'), 'Must implement RFC 8785 JSON canonicalization');
+  assert(verifyJs.includes('window.crypto.subtle.importKey'), 'Must use SubtleCrypto importKey for Ed25519');
+  assert(verifyJs.includes('window.crypto.subtle.verify'), 'Must use SubtleCrypto verify for Ed25519');
+  assert(verifyJs.includes('canonicalizeJson'), 'Must implement RFC 8785 JSON canonicalization');
 
   console.log('    [PASS] SPKI root key matches and SubtleCrypto primitives verified.');
 }
@@ -221,7 +224,7 @@ console.log('\n--> Test 5: SubtleCrypto & SPKI Key Match');
 // Test 6: Zero-Emoji & BrandMeWeb Spelling SSOT
 console.log('\n--> Test 6: Zero-Emoji Compliance & BrandMeWeb Spelling SSOT');
 {
-  const html = fs.readFileSync(VERIFY_HTML_PATH, 'utf8');
+  const html = fs.readFileSync(VERIFY_HTML_PATH, 'utf8') + '\n' + fs.readFileSync(VERIFY_JS_PATH, 'utf8');
 
   // Zero Emoji check
   const emojiRegex = /[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u;

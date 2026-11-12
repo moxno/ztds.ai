@@ -284,10 +284,10 @@ for (const relPath of fellowPages) {
     `Missing Specs Grid in ${relPath}`
   );
 
-  // Verify Badge section with interactive copy buttons (ztdsCopy)
+  // Verify Badge section with interactive CSP-safe copy buttons (data-ztds-copy / ztdsCopy)
   assert(
-    html.includes('ztdsCopy'),
-    `Missing ztdsCopy button triggers in ${relPath}`
+    html.includes('data-ztds-copy') || html.includes('ztdsCopy'),
+    `Missing data-ztds-copy / ztdsCopy button triggers in ${relPath}`
   );
   assert(
     html.includes('Copy Markdown') && html.includes('Copy HTML'),

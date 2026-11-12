@@ -89,19 +89,21 @@ const requiredIds = [
 for (const id of requiredIds) {
   assert(agencyHtml.includes(`id="${id}"`), `DOM element #${id} must be present in agency/index.html`);
 }
-assert(agencyHtml.includes('/api/lead-capture/'), 'Workbench must submit lead to /api/lead-capture/');
+const agencyJs = fs.readFileSync(path.join(__dirname, '../assets/js/pages/agency.js'), 'utf8');
+assert(agencyHtml.includes('/assets/js/pages/agency.js'), 'agency/index.html must load external /assets/js/pages/agency.js');
+assert(agencyJs.includes('/api/lead-capture/'), 'Workbench must submit lead to /api/lead-capture/');
 console.log('    [PASS] All 19 Proposal & SOW Workbench DOM IDs and lead dispatch verified.');
 
 // Test 5: Scanner & Homepage Cross-Link Integration
 console.log('--> Test 5: Scanner Cross-Link & Parameter Routing Integration');
-const scannerHtml = fs.readFileSync(scannerHtmlPath, 'utf8');
-const indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
+const scannerBundle = fs.readFileSync(scannerHtmlPath, 'utf8') + '\n' + fs.readFileSync(path.join(__dirname, '../assets/js/pages/scanner.js'), 'utf8');
+const indexBundle = fs.readFileSync(indexHtmlPath, 'utf8') + '\n' + fs.readFileSync(path.join(__dirname, '../assets/js/home-workbench.js'), 'utf8');
 
-assert(scannerHtml.includes('id="m0AgencyPackageLink"'), 'scanner/index.html must include #m0AgencyPackageLink');
-assert(scannerHtml.includes('/agency/?domain='), 'scanner/index.html link must route to /agency/?domain=');
+assert(scannerBundle.includes('id="m0AgencyPackageLink"') || scannerBundle.includes("id = 'm0AgencyPackageLink'"), 'scanner bundle must set #m0AgencyPackageLink');
+assert(scannerBundle.includes('/agency/?domain='), 'scanner bundle link must route to /agency/?domain=');
 
-assert(indexHtml.includes('id="heroAgencyPackageLink"'), 'index.html must include #heroAgencyPackageLink');
-assert(indexHtml.includes('/agency/?domain='), 'index.html link must route to /agency/?domain=');
+assert(indexBundle.includes('id="heroAgencyPackageLink"') || indexBundle.includes("id = 'heroAgencyPackageLink'"), 'index bundle must set #heroAgencyPackageLink');
+assert(indexBundle.includes('/agency/?domain='), 'index bundle link must route to /agency/?domain=');
 console.log('    [PASS] Scanner and homepage banner bridges confirmed with parameter routing.');
 
 // Test 6: Companies Catalog & Sitemap & Knowledge Corpus Coverage

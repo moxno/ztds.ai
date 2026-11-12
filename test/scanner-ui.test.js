@@ -10,14 +10,18 @@ const assert = require('assert');
 console.log('[TEST] Starting ZTDS Scanner UI & Progressive Disclosure Verification Suite...\n');
 
 const scannerPath = path.join(__dirname, '..', 'scanner', 'index.html');
+const scannerJsPath = path.join(__dirname, '..', 'assets', 'js', 'pages', 'scanner.js');
 const indexPath = path.join(__dirname, '..', 'index.html');
 const homeWorkbenchPath = path.join(__dirname, '..', 'assets', 'js', 'home-workbench.js');
 
 assert(fs.existsSync(scannerPath), 'scanner/index.html does not exist');
+assert(fs.existsSync(scannerJsPath), 'assets/js/pages/scanner.js does not exist');
 assert(fs.existsSync(indexPath), 'index.html does not exist');
 assert(fs.existsSync(homeWorkbenchPath), 'assets/js/home-workbench.js does not exist');
 
 const scannerHtml = fs.readFileSync(scannerPath, 'utf8');
+const scannerJs = fs.readFileSync(scannerJsPath, 'utf8');
+const scannerBundle = scannerHtml + '\n' + scannerJs;
 const indexHtml = fs.readFileSync(indexPath, 'utf8');
 const homeWorkbenchJs = fs.readFileSync(homeWorkbenchPath, 'utf8');
 
@@ -53,10 +57,11 @@ console.log('    [PASS] All 5 Core Auditor section anchors verified.');
 
 // Test 3: JavaScript Progressive Disclosure Controller & Hash Router
 console.log('--> Test 3: Progressive Disclosure Controller & Hash Router');
-assert(scannerHtml.includes('function setAuditorMode('), 'Missing setAuditorMode function');
-assert(scannerHtml.includes('HASH_ALIAS_MAP'), 'Missing HASH_ALIAS_MAP for deep-link anchors');
-assert(scannerHtml.includes('window.addEventListener(\'hashchange\''), 'Missing hashchange listener');
-assert(scannerHtml.includes('setAuditorMode(\'mode1-socket-interceptor\', true)'), 'Airplane demo must transition to Mode 1 Socket Interceptor');
+assert(scannerHtml.includes('/assets/js/pages/scanner.js'), 'scanner/index.html must load external /assets/js/pages/scanner.js');
+assert(scannerJs.includes('function setAuditorMode('), 'Missing setAuditorMode function');
+assert(scannerJs.includes('HASH_ALIAS_MAP'), 'Missing HASH_ALIAS_MAP for deep-link anchors');
+assert(scannerJs.includes('window.addEventListener(\'hashchange\''), 'Missing hashchange listener');
+assert(scannerJs.includes('setAuditorMode(\'mode1-socket-interceptor\', true)'), 'Airplane demo must transition to Mode 1 Socket Interceptor');
 console.log('    [PASS] Tab switching controller, deep-linking, and airplane bridge verified.');
 
 // Test 4: Dynamic DAG Flow, CSP-Strict External Workbench & Trusted Types Zero-Sink Invariant
@@ -69,12 +74,13 @@ const inlineExecScripts = (indexHtml.match(/<script\b[^>]*>/gi) || []).filter(
 assert.strictEqual(inlineExecScripts.length, 0, 'index.html must contain zero inline executable <script> tags');
 assert(!/\bon[a-z]+\s*=/i.test(indexHtml), 'index.html must contain zero inline event handler attributes');
 assert(!/\.innerHTML\s*=/.test(homeWorkbenchJs), 'home-workbench.js must contain zero .innerHTML assignments for Trusted Types enforcement');
+assert(!/\.innerHTML\s*=/.test(scannerJs), 'scanner.js must contain zero .innerHTML assignments for Trusted Types enforcement');
 assert(indexLandingBundle.includes('ev.dagComparison'), 'Landing workbench missing ev.dagComparison rendering');
 assert(indexLandingBundle.includes('dag.legacy.title'), 'Landing workbench missing dag.legacy.title');
 assert(indexLandingBundle.includes('dag.ztds.title'), 'Landing workbench missing dag.ztds.title');
-assert(scannerHtml.includes('ev.dagComparison'), 'scanner/index.html missing ev.dagComparison rendering');
-assert(scannerHtml.includes('dag.legacy.title'), 'scanner/index.html missing dag.legacy.title');
-assert(scannerHtml.includes('dag.ztds.title'), 'scanner/index.html missing dag.ztds.title');
+assert(scannerBundle.includes('ev.dagComparison'), 'scanner bundle missing ev.dagComparison rendering');
+assert(scannerBundle.includes('dag.legacy.title'), 'scanner bundle missing dag.legacy.title');
+assert(scannerBundle.includes('dag.ztds.title'), 'scanner bundle missing dag.ztds.title');
 console.log('    [PASS] Dynamic DAG flows, strict CSP externalization, and Trusted Types zero-sink invariants validated.');
 
 console.log('\n[SUMMARY] ALL 4 SCANNER UI & PROGRESSIVE DISCLOSURE TESTS PASSED.\n');

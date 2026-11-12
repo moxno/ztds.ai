@@ -343,7 +343,7 @@ function generateProfileHtml(company) {
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Institutional Top Header -->
-  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+  <header class="ztds-sticky-header sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
       
       <!-- Brand & Status -->

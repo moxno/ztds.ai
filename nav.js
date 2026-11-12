@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!parent) return;
       // Skip if parent or grandparent already has a dedicated copy button
       const container = parent.parentElement || parent;
-      if (container.querySelector('button[onclick*="Copy" i], button[onclick*="copy" i], button[class*="copy" i], button[id*="copy" i]')) {
+      if (container.querySelector('button[data-ztds-copy], button[data-ztds-copy-target], button[class*="copy" i], button[id*="copy" i]')) {
         return;
       }
       const rawText = (pre.innerText || pre.textContent || '').trim();
@@ -836,6 +836,65 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   } catch (_) {}
 
+  // Global UX 8b: Declarative CSP-Safe Action Attributes ([data-ztds-print], [data-ztds-copy], [data-ztds-copy-target], [data-ztds-scroll-to])
+  try {
+    document.querySelectorAll('[data-ztds-print]').forEach((btn) => {
+      if (btn.dataset.ztdsPrintBound === 'true') return;
+      btn.dataset.ztdsPrintBound = 'true';
+      btn.addEventListener('click', () => window.print());
+    });
+
+    document.querySelectorAll('[data-ztds-copy]').forEach((btn) => {
+      if (btn.dataset.ztdsCopyBound === 'true') return;
+      btn.dataset.ztdsCopyBound = 'true';
+      btn.addEventListener('click', () => {
+        const text = btn.getAttribute('data-ztds-copy') || '';
+        if (!text) return;
+        const origText = btn.getAttribute('data-ztds-reset-label') || btn.textContent;
+        const copiedLabel = btn.getAttribute('data-ztds-copied-label') || 'Copied!';
+        window.ztdsCopy(text, () => {
+          btn.textContent = copiedLabel;
+          setTimeout(() => { btn.textContent = origText; }, 2000);
+        });
+      });
+    });
+
+    document.querySelectorAll('[data-ztds-copy-target]').forEach((btn) => {
+      if (btn.dataset.ztdsCopyTargetBound === 'true') return;
+      btn.dataset.ztdsCopyTargetBound = 'true';
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-ztds-copy-target') || '';
+        const targetEl = targetId ? document.getElementById(targetId) : null;
+        const text = targetEl ? (targetEl.textContent || '') : '';
+        if (!text) return;
+        const origText = btn.getAttribute('data-ztds-reset-label') || btn.textContent;
+        const copiedLabel = btn.getAttribute('data-ztds-copied-label') || 'Copied!';
+        window.ztdsCopy(text, () => {
+          btn.textContent = copiedLabel;
+          setTimeout(() => { btn.textContent = origText; }, 2000);
+        });
+      });
+    });
+
+    document.querySelectorAll('[data-ztds-scroll-to]').forEach((el) => {
+      if (el.dataset.ztdsScrollBound === 'true') return;
+      el.dataset.ztdsScrollBound = 'true';
+      el.addEventListener('click', (e) => {
+        const clickSelector = el.getAttribute('data-ztds-click-selector');
+        if (clickSelector) {
+          const triggerTarget = document.querySelector(clickSelector);
+          if (triggerTarget && typeof triggerTarget.click === 'function') triggerTarget.click();
+        }
+        const targetId = el.getAttribute('data-ztds-scroll-to');
+        const targetEl = targetId ? document.getElementById(targetId) : null;
+        if (targetEl && typeof targetEl.scrollIntoView === 'function') {
+          if (el.getAttribute('data-ztds-prevent-default') === 'true') e.preventDefault();
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  } catch (_) {}
+
   // Global UX 9: Sticky Header Scroll-State Fallback for browsers without CSS scroll-state queries
   try {
     const stickyHeader = document.querySelector('.ztds-sticky-header');
@@ -846,15 +905,18 @@ document.addEventListener('DOMContentLoaded', () => {
       window.addEventListener('scroll', () => {
         if (!headerTicking) {
           window.requestAnimationFrame(() => {
-            const currentY = window.scrollY;
-            if (stickyHeader.matches(':focus-within') || currentY < 80) {
-              stickyHeader.classList.remove('is-hidden');
-            } else if (currentY > lastScrollY + 8) {
-              stickyHeader.classList.add('is-hidden');
-            } else if (currentY < lastScrollY - 8) {
-              stickyHeader.classList.remove('is-hidden');
+            const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+            const currentY = Math.max(0, Math.min(window.scrollY, maxScroll));
+            if (currentY !== lastScrollY) {
+              if (stickyHeader.matches(':focus-within') || currentY <= stickyHeader.offsetHeight) {
+                stickyHeader.classList.remove('is-hidden');
+              } else if (currentY > lastScrollY + 6) {
+                stickyHeader.classList.add('is-hidden');
+              } else if (currentY < lastScrollY - 6) {
+                stickyHeader.classList.remove('is-hidden');
+              }
+              lastScrollY = currentY;
             }
-            lastScrollY = currentY;
             headerTicking = false;
           });
           headerTicking = true;
@@ -863,6 +925,121 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   } catch (_) {}
 });
+
+/**
+ * Trusted-Types-Safe ZTDS Official SVG Badge DOM Builder (Zero innerHTML / Zero DOMParser HTML sink)
+ */
+window.ztdsCreateBadgeSvg = function(label, color, textColor, leftText) {
+  const ns = 'http://www.w3.org/2000/svg';
+  const fillRight = color || '#059669';
+  const txtRightColor = textColor || '#ffffff';
+  const leftLabel = String(leftText || 'ZTDS').trim();
+  const labelRight = String(label || 'VERIFIED').trim().toUpperCase();
+  const wLeft = Math.max(58, Math.round(leftLabel.length * 6.8 + 30));
+  const wRight = Math.max(64, Math.round(labelRight.length * 6.8 + 16));
+  const totalWidth = wLeft + wRight;
+  const textXRight = wLeft + Math.round(wRight / 2);
+  const clipId = 'ztdsBadgeClip_' + Math.random().toString(36).slice(2, 8);
+
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('width', String(totalWidth));
+  svg.setAttribute('height', '22');
+  svg.setAttribute('viewBox', '0 0 ' + totalWidth + ' 22');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', leftLabel + ' ' + labelRight);
+
+  const defs = document.createElementNS(ns, 'defs');
+  const clipPath = document.createElementNS(ns, 'clipPath');
+  clipPath.setAttribute('id', clipId);
+  const clipRect = document.createElementNS(ns, 'rect');
+  clipRect.setAttribute('width', String(totalWidth));
+  clipRect.setAttribute('height', '22');
+  clipRect.setAttribute('rx', '4');
+  clipPath.appendChild(clipRect);
+  defs.appendChild(clipPath);
+  svg.appendChild(defs);
+
+  const gMain = document.createElementNS(ns, 'g');
+  gMain.setAttribute('clip-path', 'url(#' + clipId + ')');
+
+  const rLeft = document.createElementNS(ns, 'rect');
+  rLeft.setAttribute('width', String(wLeft));
+  rLeft.setAttribute('height', '22');
+  rLeft.setAttribute('fill', '#0f172a');
+  gMain.appendChild(rLeft);
+
+  const rRight = document.createElementNS(ns, 'rect');
+  rRight.setAttribute('x', String(wLeft));
+  rRight.setAttribute('width', String(wRight));
+  rRight.setAttribute('height', '22');
+  rRight.setAttribute('fill', fillRight);
+  gMain.appendChild(rRight);
+
+  const rBorder = document.createElementNS(ns, 'rect');
+  rBorder.setAttribute('width', String(totalWidth));
+  rBorder.setAttribute('height', '22');
+  rBorder.setAttribute('stroke', '#0f172a');
+  rBorder.setAttribute('stroke-width', '1');
+  rBorder.setAttribute('fill', 'none');
+  gMain.appendChild(rBorder);
+
+  const gIcon = document.createElementNS(ns, 'g');
+  gIcon.setAttribute('transform', 'translate(6, 4)');
+  const p1 = document.createElementNS(ns, 'path');
+  p1.setAttribute('d', 'M5.5 1.5C2.5 1.5 1 3.5 1 7C1 10.5 2.5 12.5 5.5 12.5V9.5C3.5 9.5 3.2 8 3.2 7C3.2 6 3.5 4.5 5.5 4.5V1.5Z');
+  p1.setAttribute('fill', '#020617');
+  p1.setAttribute('stroke', '#10b981');
+  p1.setAttribute('stroke-width', '0.8');
+  const p2 = document.createElementNS(ns, 'path');
+  p2.setAttribute('d', 'M8.5 1.5C11.5 1.5 13 3.5 13 7C13 10.5 11.5 12.5 8.5 12.5V9.5C10.5 9.5 10.8 8 10.8 7C10.8 6 10.5 4.5 8.5 4.5V1.5Z');
+  p2.setAttribute('fill', '#020617');
+  p2.setAttribute('stroke', '#10b981');
+  p2.setAttribute('stroke-width', '0.8');
+  const p3 = document.createElementNS(ns, 'path');
+  p3.setAttribute('d', 'M7 3L9.5 7L7 11L4.5 7Z');
+  p3.setAttribute('fill', '#10b981');
+  const c1 = document.createElementNS(ns, 'circle');
+  c1.setAttribute('cx', '7');
+  c1.setAttribute('cy', '7');
+  c1.setAttribute('r', '1');
+  c1.setAttribute('fill', '#38bdf8');
+  gIcon.append(p1, p2, p3, c1);
+  gMain.appendChild(gIcon);
+
+  const tLeft = document.createElementNS(ns, 'text');
+  tLeft.setAttribute('x', '24');
+  tLeft.setAttribute('y', '15');
+  tLeft.setAttribute('font-family', "-apple-system, BlinkMacSystemFont, 'Inter', Roboto, sans-serif");
+  tLeft.setAttribute('font-size', '10');
+  tLeft.setAttribute('font-weight', '700');
+  tLeft.setAttribute('fill', '#f8fafc');
+  tLeft.setAttribute('letter-spacing', '0.5');
+  tLeft.textContent = leftLabel;
+  gMain.appendChild(tLeft);
+
+  const tRight = document.createElementNS(ns, 'text');
+  tRight.setAttribute('x', String(textXRight));
+  tRight.setAttribute('y', '15');
+  tRight.setAttribute('text-anchor', 'middle');
+  tRight.setAttribute('font-family', "-apple-system, BlinkMacSystemFont, 'Inter', Roboto, sans-serif");
+  tRight.setAttribute('font-size', '9');
+  tRight.setAttribute('font-weight', '700');
+  tRight.setAttribute('fill', txtRightColor);
+  tRight.setAttribute('letter-spacing', '0.6');
+  tRight.textContent = labelRight;
+  gMain.appendChild(tRight);
+
+  svg.appendChild(gMain);
+  return svg;
+};
+
+window.ztdsMountBadgeSvg = function(mountEl, label, color, textColor, leftText) {
+  if (!mountEl) return null;
+  const svg = window.ztdsCreateBadgeSvg(label, color, textColor, leftText);
+  mountEl.replaceChildren(svg);
+  return svg;
+};
 
 /**
  * Universal Zero-Failure Clipboard Copier

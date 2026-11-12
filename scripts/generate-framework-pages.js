@@ -34,23 +34,11 @@ const bodyOpen = shell.match(/<body[^>]*>/)[0];
 let chrome = slice('<!-- Skip to main content -->', '<main id="main-content"');
 chrome = chrome.replace(
   /<!-- Top Institutional Status Bar -->[\s\S]*?<!-- Institutional Top Header -->/,
-  `<!-- Top Institutional Status Bar -->
-  <div class="bg-slate-900 text-slate-300 border-b border-slate-800 text-xs py-2 px-4">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-      <div class="flex items-center gap-2">
-        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
-        <span class="font-mono font-semibold text-white">ZTDS FRAMEWORK MAPPINGS v1.0</span>
-        <span class="hidden sm:inline text-slate-400">&middot; Defense-in-Depth &amp; Statutory Risk Minimization</span>
-      </div>
-      <div class="flex items-center gap-4 font-mono text-xs">
-        <a href="/frameworks/" class="text-emerald-400 hover:text-emerald-300 underline underline-offset-2">All Framework Mappings</a>
-        <a href="/compliance/" class="text-slate-300 hover:text-white">Compliance Matrix &rarr;</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Institutional Top Header -->`
+  '<!-- Institutional Top Header -->'
 );
+if (!chrome.includes('ztds-sticky-header')) {
+  throw new Error('compliance/index.html header must include ztds-sticky-header');
+}
 chrome = chrome
   .replace('class="block px-3 py-2 rounded-lg text-emerald-700 font-semibold bg-emerald-50/70">Global Regulatory Compliance Matrix</a>',
     'class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Global Regulatory Compliance Matrix</a>\n      <a href="/frameworks/" class="block px-3 py-2 rounded-lg text-emerald-700 font-semibold bg-emerald-50/70">Framework Mappings (OWASP, NIST, EU AI Act)</a>')

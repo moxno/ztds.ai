@@ -22,9 +22,12 @@ console.log('[TEST] Starting ZTDS CISO ROI & Actuarial Calculator Suite...\n');
 
 const ROOT = path.resolve(__dirname, '..');
 const roiHtmlPath = path.join(ROOT, 'roi/index.html');
+const roiJsPath = path.join(ROOT, 'assets/js/pages/roi.js');
 
 assert(fs.existsSync(roiHtmlPath), 'roi/index.html must exist');
+assert(fs.existsSync(roiJsPath), 'assets/js/pages/roi.js must exist');
 const html = fs.readFileSync(roiHtmlPath, 'utf8');
+const roiJs = fs.readFileSync(roiJsPath, 'utf8');
 
 // Test 1: DOM Elements, Inputs & Quick-Step Steppers Integrity
 console.log('--> Test 1: Sliders, Inputs & Quick-Step Steppers Integrity');
@@ -81,10 +84,11 @@ console.log('--> Test 2: Industry Presets & Attributes Integrity');
   assert(html.includes('id="presetLegal"'), 'Must have #presetLegal button');
   assert(html.includes('id="presetEnterprise"'), 'Must have #presetEnterprise button');
 
-  // Verify preset configuration object exists in JS
-  assert(html.includes('const presetConfigs = {'), 'Must define presetConfigs map in JavaScript');
-  assert(html.includes('setActivePresetButton('), 'Must define setActivePresetButton function');
-  assert(html.includes('applyPreset('), 'Must define applyPreset function');
+  // Verify preset configuration object exists in external CSP-safe JS
+  assert(html.includes('/assets/js/pages/roi.js'), 'roi/index.html must load external /assets/js/pages/roi.js');
+  assert(roiJs.includes('const presetConfigs = {'), 'Must define presetConfigs map in JavaScript');
+  assert(roiJs.includes('setActivePresetButton('), 'Must define setActivePresetButton function');
+  assert(roiJs.includes('applyPreset('), 'Must define applyPreset function');
 
   console.log('    [PASS] Industry presets and active state controllers verified.');
 }
@@ -119,8 +123,8 @@ console.log('--> Test 4: Live Preview Modal DOM & Controller Integrity');
   assert(html.includes('id="memoModalRegimeBadge"'), 'Must have #memoModalRegimeBadge');
 
   // Verify modal controller functions
-  assert(html.includes('function openMemoPreview('), 'Must define openMemoPreview function');
-  assert(html.includes('function closeMemoPreview('), 'Must define closeMemoPreview function');
+  assert(roiJs.includes('function openMemoPreview('), 'Must define openMemoPreview function');
+  assert(roiJs.includes('function closeMemoPreview('), 'Must define closeMemoPreview function');
 
   console.log('    [PASS] Live Preview Modal and toolbar buttons verified.');
 }
@@ -173,16 +177,16 @@ console.log('--> Test 5: Actuarial Math Engine Simulation');
 // Test 6: JSON Export Structure & Schema Integrity
 console.log('--> Test 6: JSON Export Schema & Content Validation');
 {
-  assert(html.includes('function generateReportJson('), 'Must define generateReportJson function');
-  assert(html.includes('$schema: "https://ztds.ai/schemas/ciso-risk-assessment-v1.json"'), 'Must define JSON schema URL');
-  assert(html.includes('standard: "ZTDS RFC v1.0"'), 'Must cite ZTDS RFC v1.0');
-  assert(html.includes('specification_doi: "10.5281/zenodo.22058770"'), 'Must cite specification DOI');
-  assert(html.includes('memo_reference_id:'), 'Must generate unique memo reference ID');
-  assert(html.includes('classification: "PRIVILEGED WORK PRODUCT // RESTRICTED"'), 'Must carry classification');
-  assert(html.includes('actuarial_decomposition:'), 'Must include actuarial_decomposition block');
-  assert(html.includes('subprocessor_overhead_breakdown:'), 'Must include subprocessor_overhead_breakdown block');
-  assert(html.includes('statutory_defenses:'), 'Must include statutory_defenses block');
-  assert(html.includes('architectural_invariants:'), 'Must include architectural_invariants block');
+  assert(roiJs.includes('function generateReportJson('), 'Must define generateReportJson function');
+  assert(roiJs.includes('$schema: "https://ztds.ai/schemas/ciso-risk-assessment-v1.json"'), 'Must define JSON schema URL');
+  assert(roiJs.includes('standard: "ZTDS RFC v1.0"'), 'Must cite ZTDS RFC v1.0');
+  assert(roiJs.includes('specification_doi: "10.5281/zenodo.22058770"'), 'Must cite specification DOI');
+  assert(roiJs.includes('memo_reference_id:'), 'Must generate unique memo reference ID');
+  assert(roiJs.includes('classification: "PRIVILEGED WORK PRODUCT // RESTRICTED"'), 'Must carry classification');
+  assert(roiJs.includes('actuarial_decomposition:'), 'Must include actuarial_decomposition block');
+  assert(roiJs.includes('subprocessor_overhead_breakdown:'), 'Must include subprocessor_overhead_breakdown block');
+  assert(roiJs.includes('statutory_defenses:'), 'Must include statutory_defenses block');
+  assert(roiJs.includes('architectural_invariants:'), 'Must include architectural_invariants block');
 
   console.log('    [PASS] JSON report generator structure verified.');
 }
@@ -190,14 +194,14 @@ console.log('--> Test 6: JSON Export Schema & Content Validation');
 // Test 7: Shareable Scenario URL Generator & Deep-Linking
 console.log('--> Test 7: Shareable Scenario URL & Query Parser');
 {
-  assert(html.includes('function buildScenarioUrl('), 'Must define buildScenarioUrl function');
-  assert(html.includes('function shareScenario('), 'Must define shareScenario function');
-  assert(html.includes('function loadScenarioFromUrl('), 'Must define loadScenarioFromUrl function');
+  assert(roiJs.includes('function buildScenarioUrl('), 'Must define buildScenarioUrl function');
+  assert(roiJs.includes('function shareScenario('), 'Must define shareScenario function');
+  assert(roiJs.includes('function loadScenarioFromUrl('), 'Must define loadScenarioFromUrl function');
 
   // Verify parameters handled in URL state
   ['calls', 'ratio', 'records', 'vendors', 'regime', 'industry', 'revenue', 'tier'].forEach(param => {
-    assert(html.includes(`url.searchParams.set('${param}'`), `buildScenarioUrl must serialize "${param}"`);
-    assert(html.includes(`params.has('${param}')`), `loadScenarioFromUrl must parse "${param}"`);
+    assert(roiJs.includes(`url.searchParams.set('${param}'`), `buildScenarioUrl must serialize "${param}"`);
+    assert(roiJs.includes(`params.has('${param}')`), `loadScenarioFromUrl must parse "${param}"`);
   });
 
   console.log('    [PASS] URL scenario serialization and deep-linking parser verified.');
@@ -207,7 +211,7 @@ console.log('--> Test 7: Shareable Scenario URL & Query Parser');
 console.log('--> Test 8: Zero-Emoji & Brand Naming Invariants');
 {
   const emojiRegex = /[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F1E6}-\u{1F1FF}]/u;
-  assert(!emojiRegex.test(html), 'roi/index.html must contain ZERO emojis');
+  assert(!emojiRegex.test(html + '\n' + roiJs), 'roi HTML/JS must contain ZERO emojis');
 
   // Verify BrandMeWeb spelling
   const brandMeWebMatches = (html.match(/BrandMeWeb/g) || []).length;

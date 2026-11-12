@@ -137,12 +137,12 @@
 
       const legacyFlowHtml = (dag.legacy.flow || []).map((step, idx, arr) => `
         <span class="px-1.5 py-0.5 rounded text-xs font-mono shrink-0 ${idx === 2 ? 'bg-rose-100 text-rose-900 font-bold border border-rose-300' : 'bg-slate-100 text-slate-700 border border-slate-200'}">${escape(step)}</span>
-        ${idx < arr.length - 1 ? '<span class="text-rose-400 font-bold text-xs shrink-0">&rarr;</span>' : ''}
+        ${idx < arr.length - 1 ? '<span class="text-rose-400 font-bold text-xs shrink-0">\u2192</span>' : ''}
       `).join('');
 
       const ztdsFlowHtml = (dag.ztds.flow || []).map((step, idx, arr) => `
         <span class="px-1.5 py-0.5 rounded text-xs font-mono shrink-0 ${idx === 1 ? 'bg-emerald-100 text-emerald-900 font-bold border border-emerald-300' : idx === 0 ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 border border-slate-200'}">${escape(step)}</span>
-        ${idx < arr.length - 1 ? '<span class="text-emerald-500 font-bold text-xs shrink-0">&rarr;</span>' : ''}
+        ${idx < arr.length - 1 ? '<span class="text-emerald-500 font-bold text-xs shrink-0">\u2192</span>' : ''}
       `).join('');
 
       return `
@@ -186,6 +186,75 @@
           </div>
         </div>
       `;
+    },
+
+    /**
+     * Trusted-Types-Safe DOM Element builder for Before vs After DAG comparison (zero innerHTML).
+     */
+    buildDagElement(dagComparison, sinksCount = 0, statute = 'GDPR Recital 26') {
+      const dag = dagComparison || {
+        legacy: {
+          title: 'Legacy Cloud Proxy Route (Vulnerable)',
+          flow: ['User Device', 'Unencrypted WAN Socket', 'Third-Party SaaS Proxy (+450ms)', 'Cloud LLM API'],
+          subprocessorsCount: sinksCount + 2,
+          dpaRequired: true,
+          latencyOverhead: '+450ms WAN Latency',
+          honeypotRisk: 'Unmasked customer tokens reside in third-party cloud RAM and remote log stores.'
+        },
+        ztds: {
+          title: 'ZTDS In-RAM Enclave Route (Verified)',
+          flow: ['User Device RAM', `<0.8ms In-Memory Enclave (${statute})`, 'Safe Surrogate Tokens Only', 'Cloud LLM API'],
+          subprocessorsCount: 0,
+          dpaRequired: false,
+          latencyOverhead: '< 0.8ms In-RAM',
+          honeypotRisk: 'Zero (0.00 B raw data ever leaves device)'
+        }
+      };
+
+      const mk = (tag, cls, txt) => {
+        const el = document.createElement(tag);
+        if (cls) el.className = cls;
+        if (txt !== undefined) el.textContent = txt;
+        return el;
+      };
+
+      const grid = mk('div', 'grid grid-cols-1 md:grid-cols-2 gap-3 pt-1');
+
+      const legCard = mk('div', 'p-3.5 rounded-xl bg-rose-50/60 border border-rose-200 text-rose-950');
+      const legHead = mk('div', 'font-bold text-xs mb-2 flex items-center justify-between');
+      const legTitleWrap = mk('span', 'flex items-center gap-1.5');
+      legTitleWrap.append(mk('span', 'w-2 h-2 rounded-full bg-rose-500'), mk('span', '', dag.legacy?.title || 'Legacy Cloud Proxy Route'));
+      legHead.append(legTitleWrap, mk('span', 'text-xs text-rose-700 font-bold px-1.5 py-0.5 rounded bg-rose-100 border border-rose-200', dag.legacy?.latencyOverhead || '+450ms WAN'));
+
+      const legFlow = mk('div', 'p-2 bg-white border border-rose-200 rounded-lg mb-2.5 flex items-center gap-1 overflow-x-auto');
+      (dag.legacy?.flow || []).forEach((step, idx, arr) => {
+        legFlow.appendChild(mk('span', 'px-1.5 py-0.5 rounded text-xs font-mono shrink-0 ' + (idx === 2 ? 'bg-rose-100 text-rose-900 font-bold border border-rose-300' : 'bg-slate-100 text-slate-700 border border-slate-200'), step));
+        if (idx < arr.length - 1) legFlow.appendChild(mk('span', 'text-rose-400 font-bold text-xs shrink-0', '\u2192'));
+      });
+
+      const legMeta = mk('div', 'flex items-center justify-between text-xs font-bold text-rose-800 mb-1');
+      legMeta.append(mk('span', '', 'Subprocessors: +' + String(dag.legacy?.subprocessorsCount || 3) + ' Entities'), mk('span', '', 'DPA: Mandatory (Art. 28)'));
+      legCard.append(legHead, legFlow, legMeta, mk('p', 'text-xs text-slate-600 font-sans leading-relaxed', 'Honeypot risk: ' + (dag.legacy?.honeypotRisk || 'Unmasked customer tokens reside in third-party cloud RAM and remote log stores.')));
+
+      const ztdsCard = mk('div', 'p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-300 text-emerald-950 shadow-xs');
+      const ztdsHead = mk('div', 'font-bold text-xs mb-2 flex items-center justify-between');
+      const ztdsTitleWrap = mk('span', 'flex items-center gap-1.5');
+      ztdsTitleWrap.append(mk('span', 'w-2 h-2 rounded-full bg-emerald-500'), mk('span', '', dag.ztds?.title || 'ZTDS In-RAM Enclave Route'));
+      ztdsHead.append(ztdsTitleWrap, mk('span', 'text-xs text-emerald-700 font-bold px-1.5 py-0.5 rounded bg-emerald-100 border border-emerald-200', dag.ztds?.latencyOverhead || '< 0.8ms In-RAM'));
+
+      const ztdsFlow = mk('div', 'p-2 bg-white border border-emerald-200 rounded-lg mb-2.5 flex items-center gap-1 overflow-x-auto shadow-xs');
+      (dag.ztds?.flow || []).forEach((step, idx, arr) => {
+        const pillCls = idx === 1 ? 'bg-emerald-100 text-emerald-900 font-bold border border-emerald-300' : idx === 0 ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 border border-slate-200';
+        ztdsFlow.appendChild(mk('span', 'px-1.5 py-0.5 rounded text-xs font-mono shrink-0 ' + pillCls, step));
+        if (idx < arr.length - 1) ztdsFlow.appendChild(mk('span', 'text-emerald-500 font-bold text-xs shrink-0', '\u2192'));
+      });
+
+      const ztdsMeta = mk('div', 'flex items-center justify-between text-xs font-bold text-emerald-800 mb-1');
+      ztdsMeta.append(mk('span', '', 'Subprocessors: 0 (Disapplied)'), mk('span', '', 'DPA: Exempt (Recital 26)'));
+      ztdsCard.append(ztdsHead, ztdsFlow, ztdsMeta, mk('p', 'text-xs text-slate-600 font-sans leading-relaxed', 'Lossless attention: Bijective cryptographic tokens preserve full LLM reasoning without sending cleartext data off-device.'));
+
+      grid.append(legCard, ztdsCard);
+      return grid;
     },
 
     /**

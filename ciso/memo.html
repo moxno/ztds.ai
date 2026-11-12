@@ -134,10 +134,7 @@
         "height": 630
       },
       "publisher": {
-        "@type": "Organization",
-        "@id": "https://ztds.ai/#organization",
-        "name": "ZTDS AI Consortium",
-        "url": "https://ztds.ai"
+        "@id": "https://ztds.ai/#organization"
       }
     }
   ]
@@ -201,6 +198,7 @@
   </style>
 </head>
 <body class="text-slate-900 leading-normal antialiased">
+  <!-- Skip to main content -->
   <a href="#main-content" class="skip-link no-print">Skip to main content</a>
 
   <!-- Screen Action Bar (Hidden on Print) -->
@@ -220,7 +218,7 @@
       </nav>
       <div class="flex items-center gap-3 shrink-0">
         <span class="text-xs text-slate-400 font-mono hidden sm:inline">8.5 &times; 11&quot; Print Layout</span>
-        <button type="button" onclick="window.print()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5">
+        <button type="button" data-ztds-print="true" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5">
           <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
           </svg>
@@ -414,28 +412,6 @@
   </main>
 
   <script src="/nav.js" defer></script>
-  <script>
-  (function() {
-    try {
-      const p = new URLSearchParams(window.location.search);
-      const org = (p.get('org') || p.get('company') || '').trim();
-      const domain = (p.get('domain') || '').trim();
-      if (org || domain) {
-        const toEl = document.getElementById('memoToRecipient');
-        if (toEl) {
-          toEl.textContent = 'Chief Information Security Officer · ';
-          const span = document.createElement('span');
-          span.className = 'text-emerald-800 font-bold';
-          span.textContent = org || domain;
-          toEl.appendChild(span);
-        }
-        const docIdEl = document.getElementById('memoDocId');
-        if (docIdEl && domain) {
-          docIdEl.textContent = `ZTDS-MEMO-${domain.toUpperCase().replace(/[^A-Z0-9]/g, '-')}`;
-        }
-      }
-    } catch(e) {}
-  })();
-  </script>
+  <script src="/assets/js/pages/ciso-memo.js" defer></script>
 </body>
 </html>

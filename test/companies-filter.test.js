@@ -21,12 +21,15 @@ console.log('[TEST] Starting ZTDS Companies Interactive Search & Filter Suite...
 
 const ROOT = path.resolve(__dirname, '..');
 const companiesHtmlPath = path.join(ROOT, 'companies/index.html');
+const companiesJsPath = path.join(ROOT, 'assets/js/pages/companies.js');
 const companiesJsonPath = path.join(ROOT, 'data/companies.json');
 
 assert(fs.existsSync(companiesHtmlPath), 'companies/index.html must exist');
+assert(fs.existsSync(companiesJsPath), 'assets/js/pages/companies.js must exist');
 assert(fs.existsSync(companiesJsonPath), 'data/companies.json must exist');
 
 const html = fs.readFileSync(companiesHtmlPath, 'utf8');
+const companiesJs = fs.readFileSync(companiesJsPath, 'utf8');
 const companiesData = JSON.parse(fs.readFileSync(companiesJsonPath, 'utf8'));
 
 // Test 1: DOM Elements & Industry Filter Tabs Integrity
@@ -143,11 +146,12 @@ console.log('--> Test 4: Zero Duplicate IDs or Slugs');
 // Test 5: Client-Side Controller Functions & Hash Deep-Linking
 console.log('--> Test 5: JavaScript Controller Functions & Event Listeners');
 {
-  assert(html.includes('function filterCompanies()'), 'Must define filterCompanies() function');
-  assert(html.includes('function setActiveCompanyTab('), 'Must define setActiveCompanyTab() function');
-  assert(html.includes('function resetAllCompanyFilters()'), 'Must define resetAllCompanyFilters() function');
-  assert(html.includes('history.replaceState'), 'Must support URL hash deep-linking');
-  assert(html.includes('e.key === \'Escape\''), 'Must support Escape key to clear search');
+  assert(html.includes('/assets/js/pages/companies.js'), 'companies/index.html must load external /assets/js/pages/companies.js');
+  assert(companiesJs.includes('function filterCompanies()'), 'Must define filterCompanies() function');
+  assert(companiesJs.includes('function setActiveCompanyTab('), 'Must define setActiveCompanyTab() function');
+  assert(companiesJs.includes('function resetAllCompanyFilters()'), 'Must define resetAllCompanyFilters() function');
+  assert(companiesJs.includes('history.replaceState'), 'Must support URL hash deep-linking');
+  assert(companiesJs.includes('e.key === \'Escape\''), 'Must support Escape key to clear search');
 
   console.log('    [PASS] JavaScript reactive controller, hash deep-linking, and keyboard handlers verified.');
 }
@@ -158,7 +162,7 @@ console.log('--> Test 6: Strict Zero-Emoji Conformance');
   const emojiRegex = /[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u;
   const selfContent = fs.readFileSync(__filename, 'utf8');
   assert(!emojiRegex.test(selfContent), 'Test suite must not contain any emoji characters');
-  assert(!emojiRegex.test(html), 'companies/index.html must not contain any emoji characters');
+  assert(!emojiRegex.test(html + '\n' + companiesJs), 'companies HTML/JS must not contain any emoji characters');
 
   console.log('    [PASS] Zero emojis verified across test suite and companies HTML.');
 }

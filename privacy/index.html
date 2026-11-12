@@ -149,7 +149,7 @@
 
 
   <!-- Institutional Top Header -->
-  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+  <header class="ztds-sticky-header sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
       
       <!-- Brand & Status -->
@@ -669,7 +669,6 @@
             <li><a href="/standard/" class="hover:text-slate-900 transition-colors">ZTDS RFC v1.0 Formal Spec</a></li>
             <li><a href="/ietf/" class="hover:text-slate-900 transition-colors">IETF Standards Track Hub</a></li>
             <li><a href="/ietf/draft-sibiryakov-ztds-protocol-02/" class="hover:text-slate-900 transition-colors">IETF Draft-02 Protocol Spec</a></li>
-            <li><a href="/ietf/draft-sibiryakov-ztds-protocol-01/" class="hover:text-slate-900 transition-colors">IETF Draft-01 Archival Spec</a></li>
             <li><a href="/benchmarks/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">AI Safety &amp; Latency Benchmarks &rarr;</a></li>
             <li><a href="/whitepaper/" class="hover:text-slate-900 transition-colors">Research Whitepaper (DOIs)</a></li>
             <li><a href="/evidentiary-sovereignty/" class="hover:text-slate-900 transition-colors">Evidentiary Sovereignty</a></li>
@@ -782,22 +781,6 @@
   </footer>
 
   <script src="/nav.js" defer></script>
-  <script>
-    document.getElementById('run-audit-btn').addEventListener('click', function() {
-      const btn = this;
-      btn.innerText = 'Auditing...';
-      setTimeout(() => {
-        const cookieLen = document.cookie.length;
-        const cookieEl = document.getElementById('cookie-status');
-        cookieEl.innerText = cookieLen === 0 ? '0 Bytes Detected' : cookieLen + ' Bytes Found';
-        
-        const storageKeys = Object.keys(localStorage).filter(k => !k.startsWith('ztds_test_'));
-        const storageEl = document.getElementById('storage-status');
-        storageEl.innerText = storageKeys.length === 0 ? '0 Tracking Keys' : storageKeys.length + ' Keys Stored';
-        
-        btn.innerText = 'Audit Re-verified';
-      }, 350);
-    });
-  </script>
+  <script src="/assets/js/pages/privacy.js" defer></script>
 </body>
 </html>

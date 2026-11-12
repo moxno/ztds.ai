@@ -22,9 +22,12 @@ console.log('[TEST] Starting ZTDS MCP Multi-Client Configurator Test Suite...\n'
 
 const ROOT = path.resolve(__dirname, '..');
 const mcpHtmlPath = path.join(ROOT, 'mcp/index.html');
+const mcpJsPath = path.join(ROOT, 'assets/js/pages/mcp.js');
 
 assert(fs.existsSync(mcpHtmlPath), 'mcp/index.html must exist');
+assert(fs.existsSync(mcpJsPath), 'assets/js/pages/mcp.js must exist');
 const html = fs.readFileSync(mcpHtmlPath, 'utf8');
+const mcpJs = fs.readFileSync(mcpJsPath, 'utf8');
 
 // Test 1: Configurator DOM IDs and Anchors
 console.log('--> Test 1: Configurator DOM IDs & Structural Anchors');
@@ -71,11 +74,12 @@ console.log('--> Test 4: Multi-OS Coverage & File Paths');
   assert(html.includes('data-os="windows"'), 'Must support Windows');
   assert(html.includes('data-os="linux"'), 'Must support Linux');
 
-  // Verify paths in JS
-  assert(html.includes('~/.cursor/mcp.json'), 'Must contain Cursor path');
-  assert(html.includes('claude_desktop_config.json'), 'Must contain Claude Desktop path');
-  assert(html.includes('~/.codeium/windsurf/mcp_config.json'), 'Must contain Windsurf path');
-  assert(html.includes('~/.config/zed/settings.json'), 'Must contain Zed path');
+  // Verify paths in external CSP-safe JS
+  assert(html.includes('/assets/js/pages/mcp.js'), 'mcp/index.html must load external /assets/js/pages/mcp.js');
+  assert(mcpJs.includes('~/.cursor/mcp.json'), 'Must contain Cursor path');
+  assert(mcpJs.includes('claude_desktop_config.json'), 'Must contain Claude Desktop path');
+  assert(mcpJs.includes('~/.codeium/windsurf/mcp_config.json'), 'Must contain Windsurf path');
+  assert(mcpJs.includes('~/.config/zed/settings.json'), 'Must contain Zed path');
   console.log('    [PASS] macOS, Windows, and Linux paths verified for all clients.');
 }
 

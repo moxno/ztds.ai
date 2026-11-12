@@ -21,12 +21,15 @@ console.log('[TEST] Starting ZTDS Fellows Interactive Search & Filter Suite...\n
 
 const ROOT = path.resolve(__dirname, '..');
 const fellowsHtmlPath = path.join(ROOT, 'fellows/index.html');
+const fellowsJsPath = path.join(ROOT, 'assets/js/pages/fellows.js');
 const fellowsJsonPath = path.join(ROOT, 'data/fellows.json');
 
 assert(fs.existsSync(fellowsHtmlPath), 'fellows/index.html must exist');
+assert(fs.existsSync(fellowsJsPath), 'assets/js/pages/fellows.js must exist');
 assert(fs.existsSync(fellowsJsonPath), 'data/fellows.json must exist');
 
 const html = fs.readFileSync(fellowsHtmlPath, 'utf8');
+const fellowsJs = fs.readFileSync(fellowsJsPath, 'utf8');
 const fellowsData = JSON.parse(fs.readFileSync(fellowsJsonPath, 'utf8'));
 
 // Test 1: DOM Elements & Track Filter Tabs Integrity
@@ -133,11 +136,12 @@ console.log('--> Test 4: Zero Duplicate IDs or Slugs');
 // Test 5: Client-Side Controller Functions & Hash Deep-Linking
 console.log('--> Test 5: JavaScript Controller Functions & Event Listeners');
 {
-  assert(html.includes('function filterFellows()'), 'Must define filterFellows() function');
-  assert(html.includes('function setActiveFellowTab('), 'Must define setActiveFellowTab() function');
-  assert(html.includes('function resetAllFellowFilters()'), 'Must define resetAllFellowFilters() function');
-  assert(html.includes('history.replaceState'), 'Must support URL hash deep-linking');
-  assert(html.includes('e.key === \'Escape\''), 'Must support Escape key to clear search');
+  assert(html.includes('/assets/js/pages/fellows.js'), 'fellows/index.html must load external /assets/js/pages/fellows.js');
+  assert(fellowsJs.includes('function filterFellows()'), 'Must define filterFellows() function');
+  assert(fellowsJs.includes('function setActiveFellowTab('), 'Must define setActiveFellowTab() function');
+  assert(fellowsJs.includes('function resetAllFellowFilters()'), 'Must define resetAllFellowFilters() function');
+  assert(fellowsJs.includes('history.replaceState'), 'Must support URL hash deep-linking');
+  assert(fellowsJs.includes('e.key === \'Escape\''), 'Must support Escape key to clear search');
 
   console.log('    [PASS] JavaScript reactive controller, hash deep-linking, and keyboard handlers verified.');
 }
@@ -148,7 +152,7 @@ console.log('--> Test 6: Strict Zero-Emoji Conformance');
   const emojiRegex = /[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u;
   const selfContent = fs.readFileSync(__filename, 'utf8');
   assert(!emojiRegex.test(selfContent), 'Test suite must not contain any emoji characters');
-  assert(!emojiRegex.test(html), 'fellows/index.html must not contain any emoji characters');
+  assert(!emojiRegex.test(html + '\n' + fellowsJs), 'fellows HTML/JS must not contain any emoji characters');
 
   console.log('    [PASS] Zero emojis verified across test suite and fellows HTML.');
 }

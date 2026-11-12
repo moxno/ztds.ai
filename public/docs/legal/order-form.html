@@ -130,10 +130,7 @@
         "height": 630
       },
       "publisher": {
-        "@type": "Organization",
-        "@id": "https://ztds.ai/#organization",
-        "name": "ZTDS AI Consortium",
-        "url": "https://ztds.ai"
+        "@id": "https://ztds.ai/#organization"
       }
     }
   ]
@@ -200,6 +197,7 @@
   </style>
 </head>
 <body class="text-xs leading-normal">
+  <!-- Skip to main content -->
   <a href="#main-content" class="skip-link no-print">Skip to main content</a>
 
   <!-- Screen Action Bar (Hidden on Print) -->
@@ -218,7 +216,7 @@
         <a href="/terms/" class="px-2.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 font-mono text-xs font-semibold transition-colors whitespace-nowrap">
           MSA &amp; Terms
         </a>
-        <button type="button" onclick="window.print()" class="px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold transition-colors shadow-sm whitespace-nowrap cursor-pointer">
+        <button type="button" data-ztds-print="true" class="px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold transition-colors shadow-sm whitespace-nowrap cursor-pointer">
           Print / Save PDF
         </button>
       </div>
@@ -443,110 +441,6 @@
   </main>
 
   <script src="/nav.js" defer></script>
-  <script>
-  (function() {
-    try {
-      const p = new URLSearchParams(window.location.search);
-      const entityEl = document.getElementById('orderCustomerEntity');
-      const signHeaderEl = document.getElementById('orderCustomerSignHeader');
-      const orderIdEl = document.getElementById('orderIdField');
-      const orderIdP2El = document.getElementById('orderIdHeaderPage2');
-      const dateEl = document.getElementById('orderDateField');
-
-      const todayStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-      if (dateEl && dateEl.textContent.indexOf('[Date') === 0) {
-        dateEl.textContent = todayStr;
-      }
-
-      const org = (p.get('org') || p.get('company') || '').trim();
-      if (org) {
-        if (entityEl) entityEl.textContent = org;
-        if (signHeaderEl) signHeaderEl.textContent = 'FOR CUSTOMER: ' + org.toUpperCase();
-        const code = org.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6) || 'CORP';
-        const generatedId = 'ZTDS-2026-OF-' + code;
-        if (orderIdEl) orderIdEl.textContent = generatedId;
-        if (orderIdP2El) orderIdP2El.textContent = 'ORDER ID: ' + generatedId;
-      }
-
-      if (entityEl && signHeaderEl) {
-        entityEl.addEventListener('input', function() {
-          const val = (entityEl.textContent || '').trim();
-          if (val && val.indexOf('[') !== 0) {
-            signHeaderEl.textContent = 'FOR CUSTOMER: ' + val.toUpperCase();
-          }
-        });
-      }
-
-      const fieldMap = {
-        jurisdiction: 'orderCustomerJurisdiction',
-        taxid: 'orderCustomerTaxId',
-        address: 'orderCustomerAddress',
-        contact: 'orderCustomerContact',
-        ap: 'orderCustomerApEmail'
-      };
-      Object.keys(fieldMap).forEach(function(k) {
-        const val = (p.get(k) || '').trim();
-        const el = document.getElementById(fieldMap[k]);
-        if (val && el) el.textContent = val;
-      });
-
-      const tierCards = document.querySelectorAll('.order-tier-card');
-      const summaryTitle = document.getElementById('orderSummaryTierTitle');
-      const summaryScope = document.getElementById('orderSummaryTierScope');
-
-      function selectTier(tierCode) {
-        const upper = String(tierCode || 'B').toUpperCase();
-        tierCards.forEach(function(card) {
-          const isMatch = card.getAttribute('data-tier') === upper;
-          const check = card.querySelector('.order-tier-check');
-          if (isMatch) {
-            card.className = 'order-tier-card p-3 rounded-lg border-2 border-emerald-600 bg-emerald-50/40 flex items-start gap-3 relative cursor-pointer transition-colors';
-            if (check) {
-              check.className = 'order-tier-check w-4 h-4 rounded border-2 border-emerald-600 mt-0.5 shrink-0 flex items-center justify-center font-bold text-xs text-emerald-800';
-              check.textContent = '\u2713';
-            }
-            if (summaryTitle) summaryTitle.textContent = card.getAttribute('data-title');
-            if (summaryScope) summaryScope.textContent = card.getAttribute('data-scope');
-          } else {
-            card.className = 'order-tier-card p-3 rounded-lg border border-slate-200 bg-white flex items-start gap-3 cursor-pointer transition-colors';
-            if (check) {
-              check.className = 'order-tier-check w-4 h-4 rounded border border-slate-400 mt-0.5 shrink-0 flex items-center justify-center font-bold text-xs text-emerald-800';
-              check.textContent = '';
-            }
-          }
-        });
-      }
-
-      tierCards.forEach(function(card) {
-        card.addEventListener('click', function() {
-          const t = card.getAttribute('data-tier');
-          selectTier(t);
-          if (window.history && window.history.replaceState && t) {
-            const np = new URLSearchParams(window.location.search);
-            np.set('tier', t);
-            window.history.replaceState(null, '', window.location.pathname + '?' + np.toString() + window.location.hash);
-          }
-        });
-        card.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            const t = card.getAttribute('data-tier');
-            selectTier(t);
-            if (window.history && window.history.replaceState && t) {
-              const np = new URLSearchParams(window.location.search);
-              np.set('tier', t);
-              window.history.replaceState(null, '', window.location.pathname + '?' + np.toString() + window.location.hash);
-            }
-          }
-        });
-      });
-
-      const paramTier = (p.get('tier') || '').trim();
-      if (paramTier && ['A', 'B', 'C'].indexOf(paramTier.toUpperCase()) !== -1) {
-        selectTier(paramTier);
-      }
-    } catch (e) {}
-  })();
-  </script>
+  <script src="/assets/js/pages/order-form.js" defer></script>
 </body>
 </html>

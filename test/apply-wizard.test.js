@@ -22,9 +22,13 @@ console.log('[TEST] Starting ZTDS Apply 3-Step Wizard Test Suite...\n');
 
 const ROOT = path.resolve(__dirname, '..');
 const applyHtmlPath = path.join(ROOT, 'apply/index.html');
+const applyJsPath = path.join(ROOT, 'assets/js/pages/apply.js');
 
 assert(fs.existsSync(applyHtmlPath), 'apply/index.html must exist');
+assert(fs.existsSync(applyJsPath), 'assets/js/pages/apply.js must exist');
 const html = fs.readFileSync(applyHtmlPath, 'utf8');
+const applyJs = fs.readFileSync(applyJsPath, 'utf8');
+const bundle = html + '\n' + applyJs;
 
 // Test 1: 3-Step Wizard Navigation & Step Indicators
 console.log('--> Test 1: 3-Step Wizard Navigation & Step Indicators');
@@ -123,29 +127,30 @@ console.log('--> Test 5: Validation Feedback & Error Containers');
 // Test 6: Client-Side Script Engine & Controller Functions
 console.log('--> Test 6: Client-Side Script Engine & Controller Functions');
 {
-  assert(html.includes('function updateWizardStepsUI('), 'Must define updateWizardStepsUI');
-  assert(html.includes('function validateStep2('), 'Must define validateStep2');
-  assert(html.includes('function goToStep('), 'Must define goToStep');
-  assert(html.includes('function setTrack('), 'Must define setTrack');
-  assert(html.includes('function scrollToWizardForm('), 'Must define scrollToWizardForm');
-  assert(html.includes('btnStep1Continue.addEventListener'), 'Must bind btnStep1Continue');
-  assert(html.includes('btnStep2Continue.addEventListener'), 'Must bind btnStep2Continue');
-  assert(html.includes('btnStep2Back.addEventListener'), 'Must bind btnStep2Back');
-  assert(html.includes('btnStep3Back.addEventListener'), 'Must bind btnStep3Back');
-  assert(html.includes('stepIndicator1.addEventListener'), 'Must bind stepIndicator1');
+  assert(html.includes('/assets/js/pages/apply.js'), 'apply/index.html must load external /assets/js/pages/apply.js');
+  assert(applyJs.includes('function updateWizardStepsUI('), 'Must define updateWizardStepsUI');
+  assert(applyJs.includes('function validateStep2('), 'Must define validateStep2');
+  assert(applyJs.includes('function goToStep('), 'Must define goToStep');
+  assert(applyJs.includes('function setTrack('), 'Must define setTrack');
+  assert(applyJs.includes('function scrollToWizardForm('), 'Must define scrollToWizardForm');
+  assert(applyJs.includes('btnStep1Continue.addEventListener'), 'Must bind btnStep1Continue');
+  assert(applyJs.includes('btnStep2Continue.addEventListener'), 'Must bind btnStep2Continue');
+  assert(applyJs.includes('btnStep2Back.addEventListener'), 'Must bind btnStep2Back');
+  assert(applyJs.includes('btnStep3Back.addEventListener'), 'Must bind btnStep3Back');
+  assert(applyJs.includes('stepIndicator1.addEventListener'), 'Must bind stepIndicator1');
 
   // Email regex verification
-  assert(html.includes('@'), 'Must include email validation regex');
+  assert(applyJs.includes('@'), 'Must include email validation regex');
 
   // Premature submit prevention
-  assert(html.includes('currentStep !== 3'), 'Must guard against premature submit on Enter in steps 1 & 2');
+  assert(applyJs.includes('currentStep !== 3'), 'Must guard against premature submit on Enter in steps 1 & 2');
 
   // Cross-page deep-link query-param hydration (?domain=, ?profile=, ?hash=, ?company=, ?industry=, ?slug=)
-  assert(html.includes("urlParams.get('domain')"), 'Must hydrate ?domain= from Scanner and Homepage links');
-  assert(html.includes("urlParams.get('profile')"), 'Must hydrate ?profile= from Scanner and Homepage links');
-  assert(html.includes("urlParams.get('hash')"), 'Must hydrate ?hash= from Scanner CLI receipts');
-  assert(html.includes("urlParams.get('company')"), 'Must hydrate ?company= from Companies Hub links');
-  assert(html.includes("urlParams.get('industry')"), 'Must hydrate ?industry= from Companies Hub links');
+  assert(applyJs.includes("urlParams.get('domain')"), 'Must hydrate ?domain= from Scanner and Homepage links');
+  assert(applyJs.includes("urlParams.get('profile')"), 'Must hydrate ?profile= from Scanner and Homepage links');
+  assert(applyJs.includes("urlParams.get('hash')"), 'Must hydrate ?hash= from Scanner CLI receipts');
+  assert(applyJs.includes("urlParams.get('company')"), 'Must hydrate ?company= from Companies Hub links');
+  assert(applyJs.includes("urlParams.get('industry')"), 'Must hydrate ?industry= from Companies Hub links');
 
   console.log('    [PASS] Script engine controller functions, event bindings, and deep-link hydration verified.');
 }
@@ -196,9 +201,9 @@ console.log('--> Test 8: Strict Zero-Emoji & BrandMeWeb Single-Word Rule');
 // Test 9: Live GitHub PR Target & Automated Lead-Capture Webhook Dispatch
 console.log('--> Test 9: Live GitHub PR Target & Automated Lead-Capture Webhook');
 {
-  assert(!html.includes('github.com/ztds-ai/'), 'Must NOT contain dead 404 github.com/ztds-ai/ org links');
-  assert(html.includes('https://github.com/moxno/ztds.ai/pulls'), 'Must point GitOps PR intake to live https://github.com/moxno/ztds.ai/pulls');
-  assert(html.includes("fetch('/api/lead-capture/'") && html.includes("source: 'accreditation_wizard'"), 'Must dispatch accreditation intake to /api/lead-capture/');
+  assert(!bundle.includes('github.com/ztds-ai/'), 'Must NOT contain dead 404 github.com/ztds-ai/ org links');
+  assert(bundle.includes('https://github.com/moxno/ztds.ai/pulls'), 'Must point GitOps PR intake to live https://github.com/moxno/ztds.ai/pulls');
+  assert(applyJs.includes("fetch('/api/lead-capture/'") && applyJs.includes("source: 'accreditation_wizard'"), 'Must dispatch accreditation intake to /api/lead-capture/');
   console.log('    [PASS] Live GitHub PR URL and serverless accreditation intake verified.');
 }
 

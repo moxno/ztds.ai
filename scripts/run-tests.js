@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * ZTDS.ai — Parallel Verification Suite Orchestrator
- * Executes all 39 repository verification and test suites concurrently across CPU cores.
+ * Executes all 40 repository verification and test suites concurrently across CPU cores.
  */
 
 'use strict';
@@ -51,7 +51,8 @@ const TASKS = [
   ['test/ciso-page.test.js'],
   ['test/apply-wizard.test.js'],
   ['test/badge-ui.test.js'],
-  ['test/trial-workbench.test.js']
+  ['test/trial-workbench.test.js'],
+  ['test/sitewide-hardening.test.js']
 ];
 
 function runNodeTask(args) {

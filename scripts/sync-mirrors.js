@@ -63,6 +63,23 @@ for (const [srcRel, dstRel] of mirrorPairs) {
   }
 }
 
+// Synchronize assets/js/pages/*.js <-> public/assets/js/pages/*.js
+const pagesJsDir = path.join(rootDir, 'assets/js/pages');
+const pubPagesJsDir = path.join(rootDir, 'public/assets/js/pages');
+if (fs.existsSync(pagesJsDir)) {
+  fs.mkdirSync(pubPagesJsDir, { recursive: true });
+  for (const file of fs.readdirSync(pagesJsDir)) {
+    if (!file.endsWith('.js')) continue;
+    const src = path.join(pagesJsDir, file);
+    const dst = path.join(pubPagesJsDir, file);
+    const srcBuf = fs.readFileSync(src);
+    if (!fs.existsSync(dst) || !srcBuf.equals(fs.readFileSync(dst))) {
+      fs.writeFileSync(dst, srcBuf);
+      syncedCount++;
+    }
+  }
+}
+
 // Synchronize badge/*.svg <-> public/badge/*.svg
 const badgeDir = path.join(rootDir, 'badge');
 const pubBadgeDir = path.join(rootDir, 'public/badge');

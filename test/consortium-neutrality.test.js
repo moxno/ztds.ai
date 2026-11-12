@@ -40,7 +40,21 @@ function collectHtmlFiles(dir, list = []) {
   return list;
 }
 
+function collectJsFiles(dir, list = []) {
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      collectJsFiles(fullPath, list);
+    } else if (entry.isFile() && entry.name.endsWith('.js')) {
+      list.push(path.relative(ROOT, fullPath));
+    }
+  }
+  return list;
+}
+
 const PUBLIC_HTML_FILES = collectHtmlFiles(ROOT);
+const CLIENT_JS_FILES = ['nav.js', ...collectJsFiles(path.join(ROOT, 'assets/js'))];
 
 const CLI_AND_API_FILES = [
   'bin/ztds-audit.js',
@@ -74,6 +88,7 @@ const LEGAL_AND_CORPUS_FILES = [
 
 const ALL_SURFACES = [
   ...PUBLIC_HTML_FILES,
+  ...CLIENT_JS_FILES,
   ...CLI_AND_API_FILES,
   ...LEGAL_AND_CORPUS_FILES
 ];
@@ -200,11 +215,11 @@ console.log('\n--> Test 4: Institutional Handoff Routing & Permanent Rule Integr
 {
   const sdkHtml = fs.readFileSync(path.join(ROOT, 'sdk/index.html'), 'utf8');
   const securityHtml = fs.readFileSync(path.join(ROOT, 'security/index.html'), 'utf8');
-  const agencyHtml = fs.readFileSync(path.join(ROOT, 'agency/index.html'), 'utf8');
+  const agencyBundle = fs.readFileSync(path.join(ROOT, 'agency/index.html'), 'utf8') + '\n' + fs.readFileSync(path.join(ROOT, 'assets/js/pages/agency.js'), 'utf8');
 
   assert(sdkHtml.includes('https://privacyscrubber.com/pricing'), 'sdk/index.html must route commercial licensing to privacyscrubber.com/pricing');
   assert(securityHtml.includes('Vulnerability Severity &amp; Recognition Matrix'), 'security/index.html must display non-monetary Vulnerability Severity & Recognition Matrix');
-  assert(agencyHtml.includes('Phase 1: Initial Snapshot Audit') && agencyHtml.includes('Phase 2: Ongoing Governance Retainer'), 'agency/index.html must display scope-based two-phase structure');
+  assert(agencyBundle.includes('Phase 1: Initial Snapshot Audit') && agencyBundle.includes('Phase 2: Ongoing Governance Retainer'), 'agency page/module must display scope-based two-phase structure');
 
   console.log('    [PASS] Institutional handoff routing and recognition matrices verified.');
 }
