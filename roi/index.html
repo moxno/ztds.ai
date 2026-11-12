@@ -9,7 +9,7 @@
   <link rel="alternate" hreflang="en" href="https://ztds.ai/roi/">
   <link rel="alternate" hreflang="x-default" href="https://ztds.ai/roi/">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="theme-color" content="#020617">
+  <meta name="theme-color" content="#f8fafc">
   <link rel="alternate" type="text/plain" href="/llms.txt" title="ZTDS LLM Knowledge Base">
   <link rel="alternate" type="text/plain" href="/llms-full.txt" title="ZTDS Full Normative LLM Compendium">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -200,7 +200,7 @@
   </header>
 
   <!-- Mobile Slide-Over Drawer -->
-  <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"></div>
+  <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop" aria-hidden="true"></div>
   <aside id="mobile-drawer" class="mobile-nav-drawer drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
     <div class="flex items-center justify-between pb-5 border-b border-slate-200">
       <div class="flex items-center gap-2.5">
@@ -340,28 +340,28 @@
       
       <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
         <span>CISO Actuarial Risk</span>
-        <span class="text-emerald-700"> &amp; Zero&#8209;Trust ROI Calculator</span>
+        <span class="hero-display-line block text-emerald-700 mt-0.5 font-extrabold tracking-tight">&amp; Zero&#8209;Trust ROI Calculator</span>
       </h1>
       <p class="text-sm sm:text-base text-slate-600 mt-1.5 max-w-4xl leading-relaxed">
         Quantify organizational financial exposure from unmitigated PII/PHI in LLM prompts and model logs. Model direct savings from eliminating intermediary sanitization subprocessors (GDPR Art. 28), reducing statutory fine exposure (GDPR Art. 32 / EU AI Act), and enforcing in&#8209;RAM Zero&#8209;Trust Data Sanitization.
       </p>
 
       <!-- One-Click Industry Presets -->
-      <div class="mt-4 flex flex-wrap flex-balance items-center gap-2 no-print" id="presetContainer">
+      <div class="mt-4 flex flex-wrap flex-balance items-center gap-2 no-print" id="presetContainer" role="group" aria-label="Industry Risk Presets">
         <span class="text-xs text-slate-500 font-medium mr-1">Industry Presets:</span>
-        <button type="button" id="presetSaas" data-preset="saas" class="preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer">
+        <button type="button" id="presetSaas" data-preset="saas" aria-pressed="true" class="preset-btn px-3 py-1.5 rounded-lg bg-slate-900 text-white border border-slate-900 text-xs font-semibold shadow-sm transition-all cursor-pointer">
           EU Enterprise SaaS (GDPR 4%)
         </button>
-        <button type="button" id="presetFintech" data-preset="fintech" class="preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer">
+        <button type="button" id="presetFintech" data-preset="fintech" aria-pressed="false" class="preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer">
           Regulated FinTech (PCI-DSS &middot; GLBA)
         </button>
-        <button type="button" id="presetHealth" data-preset="health" class="preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer">
+        <button type="button" id="presetHealth" data-preset="health" aria-pressed="false" class="preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer">
           Healthcare EHR (HIPAA Safe Harbor)
         </button>
-        <button type="button" id="presetLegal" data-preset="legal" class="preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer">
+        <button type="button" id="presetLegal" data-preset="legal" aria-pressed="false" class="preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer">
           Corporate Legal &amp; M&amp;A (FRE 502)
         </button>
-        <button type="button" id="presetEnterprise" data-preset="enterprise" class="preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer">
+        <button type="button" id="presetEnterprise" data-preset="enterprise" aria-pressed="false" class="preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer">
           Global Multi-Cloud Enterprise (EU + US)
         </button>
       </div>
@@ -393,11 +393,11 @@
             </div>
             <div class="flex flex-wrap items-center gap-1.5 mt-2">
               <span class="text-xs text-slate-400 font-mono">Quick Set:</span>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputCalls" data-val="100000">100K</button>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputCalls" data-val="500000">500K</button>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputCalls" data-val="1000000">1M</button>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputCalls" data-val="2500000">2.5M</button>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputCalls" data-val="5000000">5M</button>
+              <button type="button" aria-pressed="false" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputCalls" data-val="100000">100K</button>
+              <button type="button" aria-pressed="true" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-emerald-100 border border-emerald-300 text-emerald-900 font-bold transition-colors cursor-pointer" data-target="inputCalls" data-val="500000">500K</button>
+              <button type="button" aria-pressed="false" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputCalls" data-val="1000000">1M</button>
+              <button type="button" aria-pressed="false" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputCalls" data-val="2500000">2.5M</button>
+              <button type="button" aria-pressed="false" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputCalls" data-val="5000000">5M</button>
             </div>
           </div>
 
@@ -415,10 +415,10 @@
             </div>
             <div class="flex flex-wrap items-center gap-1.5 mt-2">
               <span class="text-xs text-slate-400 font-mono">Quick Set:</span>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRatio" data-val="10">10%</button>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRatio" data-val="25">25%</button>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRatio" data-val="50">50%</button>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRatio" data-val="75">75%</button>
+              <button type="button" aria-pressed="false" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRatio" data-val="10">10%</button>
+              <button type="button" aria-pressed="true" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-emerald-100 border border-emerald-300 text-emerald-900 font-bold transition-colors cursor-pointer" data-target="inputRatio" data-val="25">25%</button>
+              <button type="button" aria-pressed="false" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRatio" data-val="50">50%</button>
+              <button type="button" aria-pressed="false" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRatio" data-val="75">75%</button>
             </div>
           </div>
 
@@ -436,10 +436,10 @@
             </div>
             <div class="flex flex-wrap items-center gap-1.5 mt-2">
               <span class="text-xs text-slate-400 font-mono">Quick Set:</span>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRecords" data-val="1">1 record</button>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRecords" data-val="3">3 typical</button>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRecords" data-val="5">5 batch</button>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRecords" data-val="10">10 table</button>
+              <button type="button" aria-pressed="false" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRecords" data-val="1">1 record</button>
+              <button type="button" aria-pressed="true" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-emerald-100 border border-emerald-300 text-emerald-900 font-bold transition-colors cursor-pointer" data-target="inputRecords" data-val="3">3 typical</button>
+              <button type="button" aria-pressed="false" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRecords" data-val="5">5 batch</button>
+              <button type="button" aria-pressed="false" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputRecords" data-val="10">10 table</button>
             </div>
           </div>
 
@@ -455,11 +455,11 @@
             </p>
             <div class="flex flex-wrap items-center gap-1.5 mt-2">
               <span class="text-xs text-slate-400 font-mono">Quick Set:</span>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputVendors" data-val="1">1 provider</button>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputVendors" data-val="2">2 dual</button>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputVendors" data-val="3">3 typical</button>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputVendors" data-val="5">5 multi</button>
-              <button type="button" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputVendors" data-val="8">8 global</button>
+              <button type="button" aria-pressed="false" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputVendors" data-val="1">1 provider</button>
+              <button type="button" aria-pressed="false" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputVendors" data-val="2">2 dual</button>
+              <button type="button" aria-pressed="true" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-emerald-100 border border-emerald-300 text-emerald-900 font-bold transition-colors cursor-pointer" data-target="inputVendors" data-val="3">3 typical</button>
+              <button type="button" aria-pressed="false" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputVendors" data-val="5">5 multi</button>
+              <button type="button" aria-pressed="false" class="quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer" data-target="inputVendors" data-val="8">8 global</button>
             </div>
           </div>
         </div>
@@ -591,7 +591,7 @@
           <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm">
             <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
               <span>Subprocessor Chain Overhead</span>
-              <span class="font-mono text-blue-700 font-bold text-xs">GDPR ART. 28</span>
+              <span class="font-mono text-emerald-700 font-bold text-xs">GDPR ART. 28</span>
             </div>
             <div class="text-2xl font-bold text-slate-900 font-mono mt-2" id="dispVendorOverhead">$75,000</div>
             <p class="text-xs text-slate-500 mt-1 leading-relaxed">
@@ -650,7 +650,7 @@
         <div class="ztds-card p-6 bg-white border border-slate-200 shadow-sm space-y-4">
           <div class="flex items-center justify-between border-b border-slate-100 pb-3">
             <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-blue-600 inline-block"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block"></span>
               <span class="font-bold text-xs text-slate-900 uppercase font-mono tracking-wider">Subprocessor Chain Elimination Breakdown</span>
             </div>
             <span class="text-xs font-mono text-slate-500 font-semibold" id="dispVendorsCountBadge">3 Connected LLM Providers</span>
@@ -744,7 +744,7 @@
 
         <!-- Collapsible Actuarial Methodology & Computational Formulas -->
         <div class="ztds-card p-5 bg-white border border-slate-200 shadow-sm rounded-xl no-print space-y-3">
-          <button type="button" id="toggleMethodologyBtn" class="w-full flex items-center justify-between text-left focus:outline-none cursor-pointer">
+          <button type="button" id="toggleMethodologyBtn" aria-expanded="false" aria-controls="methodologyContent" class="w-full flex items-center justify-between text-left rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 cursor-pointer">
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block"></span>
               <span class="font-bold text-xs text-slate-900 uppercase font-mono tracking-wider">Actuarial Methodology &amp; Mathematical Formulas</span>

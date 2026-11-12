@@ -1175,7 +1175,8 @@ module.exports = async (req, res) => {
         sensorySurfaces: [{ type: 'Web Input / Chat Interface', count: 1, risk: 'High', description: 'Standard interactive web input surface.' }],
         thirdPartySinks: [{ vendor: 'Standard Web Analytics', category: 'Analytics Telemetry', subprocessorImpact: 'GDPR Subprocessor (Requires DPA)' }],
         directLlmEgress: [],
-        cspAnalysis: { hasCsp: false, connectSrc: [], allowsExternalLlm: false }
+        cspAnalysis: { hasCsp: false, connectSrc: [], allowsExternalLlm: false },
+        ztdsGuardActive: Boolean(registeredDomainRecord)
       },
       evaluation: evaluateZtdsConformance({
         frameworks: registeredDomainRecord ? [{ name: 'WordPress', type: 'CMS Engine' }] : [{ name: 'Cloudflare / Edge', type: 'Web Platform' }],

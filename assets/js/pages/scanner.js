@@ -739,9 +739,11 @@ async function ingestDocument(patientDoc: string) {
       ['btnLeakPresetLlm', 'btnLeakPresetAnalytics', 'btnLeakPresetHttp'].forEach(id => {
         const btn = document.getElementById(id);
         if (btn) {
-          if ((id === 'btnLeakPresetLlm' && key === 'llm') ||
-              (id === 'btnLeakPresetAnalytics' && key === 'analytics') ||
-              (id === 'btnLeakPresetHttp' && key === 'http')) {
+          const isMatch = (id === 'btnLeakPresetLlm' && key === 'llm') ||
+                          (id === 'btnLeakPresetAnalytics' && key === 'analytics') ||
+                          (id === 'btnLeakPresetHttp' && key === 'http');
+          btn.setAttribute('aria-pressed', String(isMatch));
+          if (isMatch) {
             btn.classList.add('ring-2', 'ring-rose-500', 'bg-rose-950/60');
             btn.classList.remove('bg-slate-900');
           } else {
@@ -1320,7 +1322,7 @@ fi`
         btnToggleAirplane.setAttribute('aria-checked', String(isAirplaneActive));
 
         if (isAirplaneActive) {
-          btnToggleAirplane.className = "relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-sky-600";
+          btnToggleAirplane.className = "relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 bg-sky-600";
           toggleAirplaneDot.className = "pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5";
           airplaneStatusLabel.innerText = "AIR-GAP ACTIVE";
           airplaneStatusLabel.className = "text-xs font-mono text-sky-400 font-bold";
@@ -1330,7 +1332,7 @@ fi`
           metricSocketBoundary.innerText = "SCIF Enclave";
           appendPacketLog("OFFLINE EVENT", "Kernel Air-Gap", "WAN NIC Disabled (Airplane Mode)", "0.00 Bytes", "ISOLATION ACTIVE", true);
         } else {
-          btnToggleAirplane.className = "relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-slate-700";
+          btnToggleAirplane.className = "relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 bg-slate-700";
           toggleAirplaneDot.className = "pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0";
           airplaneStatusLabel.innerText = "ONLINE";
           airplaneStatusLabel.className = "text-xs font-mono text-slate-400 font-bold";
@@ -1343,8 +1345,24 @@ fi`
       });
 
       // Presets
+      const scanPresetMap = [
+        ['health', 'scanPresetHealth'],
+        ['finance', 'scanPresetFinance'],
+        ['devops', 'scanPresetDevOps'],
+        ['legal', 'scanPresetLegal'],
+        ['saas', 'scanPresetSaas']
+      ];
       function loadPreset(key) {
         if (!PRESETS[key]) return;
+        scanPresetMap.forEach(([k, id]) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const active = k === key;
+          el.setAttribute('aria-pressed', String(active));
+          el.className = active
+            ? 'scan-preset-btn px-2.5 py-1.5 rounded-lg bg-emerald-950/70 border border-emerald-500/60 text-xs font-semibold text-emerald-300 transition-colors cursor-pointer'
+            : 'scan-preset-btn px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-medium text-slate-200 transition-colors cursor-pointer';
+        });
         inputText.value = PRESETS[key];
         const byteLen = new TextEncoder().encode(inputText.value).length;
         inputLength.innerText = `${inputText.value.length} chars (${byteLen} B)`;
@@ -1357,32 +1375,49 @@ fi`
       document.getElementById('scanPresetLegal').addEventListener('click', () => loadPreset('legal'));
       document.getElementById('scanPresetSaas').addEventListener('click', () => loadPreset('saas'));
 
-      // Output Tabs
-      tabBtnSurrogates.addEventListener('click', () => {
-        tabBtnSurrogates.className = "text-xs font-mono font-bold px-2.5 py-1 rounded bg-slate-800 text-emerald-400 border border-slate-700";
-        tabBtnRoundtrip.className = "text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors";
-        tabBtnTokenMap.className = "text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors";
-        tabPanelSurrogates.classList.remove('hidden');
-        tabPanelRoundtrip.classList.add('hidden');
-        tabPanelTokenMap.classList.add('hidden');
-      });
-
-      tabBtnRoundtrip.addEventListener('click', () => {
-        tabBtnRoundtrip.className = "text-xs font-mono font-bold px-2.5 py-1 rounded bg-slate-800 text-emerald-400 border border-slate-700";
-        tabBtnSurrogates.className = "text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors";
-        tabBtnTokenMap.className = "text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors";
-        tabPanelRoundtrip.classList.remove('hidden');
-        tabPanelSurrogates.classList.add('hidden');
-        tabPanelTokenMap.classList.add('hidden');
-      });
-
-      tabBtnTokenMap.addEventListener('click', () => {
-        tabBtnTokenMap.className = "text-xs font-mono font-bold px-2.5 py-1 rounded bg-slate-800 text-emerald-400 border border-slate-700";
-        tabBtnSurrogates.className = "text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors";
-        tabBtnRoundtrip.className = "text-xs font-mono font-medium px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 transition-colors";
-        tabPanelTokenMap.classList.remove('hidden');
-        tabPanelSurrogates.classList.add('hidden');
-        tabPanelRoundtrip.classList.add('hidden');
+      // Accessible Output Tabs (WAI-ARIA tablist + roving tabindex + Arrow/Home/End keys)
+      const outputTabs = [
+        { btn: tabBtnSurrogates, panel: tabPanelSurrogates },
+        { btn: tabBtnRoundtrip, panel: tabPanelRoundtrip },
+        { btn: tabBtnTokenMap, panel: tabPanelTokenMap }
+      ];
+      function activateScannerOutputTab(selectedBtn, moveFocus) {
+        outputTabs.forEach(({ btn, panel }) => {
+          const isSelected = btn === selectedBtn;
+          btn.setAttribute('aria-selected', String(isSelected));
+          btn.tabIndex = isSelected ? 0 : -1;
+          btn.className = isSelected
+            ? "text-xs font-mono font-semibold px-2 py-1 rounded bg-slate-800 text-emerald-400 border border-slate-700 transition-colors cursor-pointer"
+            : "text-xs font-mono font-semibold px-2 py-1 rounded text-slate-400 hover:text-slate-200 border border-transparent transition-colors cursor-pointer";
+          panel.hidden = !isSelected;
+          panel.classList.toggle('hidden', !isSelected);
+          panel.classList.toggle('block', isSelected);
+          if (isSelected && !panel.querySelector('button, a[href], input, select, textarea')) {
+            panel.setAttribute('tabindex', '0');
+          } else {
+            panel.removeAttribute('tabindex');
+          }
+        });
+        if (typeof selectedBtn.scrollIntoView === 'function') {
+          selectedBtn.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+        }
+        if (moveFocus) {
+          selectedBtn.focus();
+        }
+      }
+      outputTabs.forEach(({ btn }, idx) => {
+        btn.addEventListener('click', () => activateScannerOutputTab(btn, false));
+        btn.addEventListener('keydown', (e) => {
+          let nextIdx = -1;
+          if (e.key === 'ArrowRight') nextIdx = (idx + 1) % outputTabs.length;
+          else if (e.key === 'ArrowLeft') nextIdx = (idx - 1 + outputTabs.length) % outputTabs.length;
+          else if (e.key === 'Home') nextIdx = 0;
+          else if (e.key === 'End') nextIdx = outputTabs.length - 1;
+          if (nextIdx >= 0) {
+            e.preventDefault();
+            activateScannerOutputTab(outputTabs[nextIdx].btn, true);
+          }
+        });
       });
 
       // Clear Packet Log
@@ -1918,9 +1953,11 @@ Public Verification: https://ztds.ai/verify/`;
           ['client', 'Client WASM'],
           ['wordpress', 'WordPress Guard']
         ].forEach(([vec, lbl]) => {
-          const b = mk('button', `m0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-colors ${ev.recommendedVector === vec ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}`, lbl);
+          const isRec = ev.recommendedVector === vec;
+          const b = mk('button', `m0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-colors ${isRec ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}`, lbl);
           b.type = 'button';
           b.setAttribute('data-vector', vec);
+          b.setAttribute('aria-pressed', String(isRec));
           fwTabs.appendChild(b);
         });
         vdTop.append(vdTopLeft, fwTabs);
@@ -2083,7 +2120,9 @@ Public Verification: https://ztds.ai/verify/`;
             if (!targetBp) return;
 
             document.querySelectorAll('.m0-tab-btn').forEach(b => {
-              b.className = b.getAttribute('data-vector') === vec
+              const isAct = b.getAttribute('data-vector') === vec;
+              b.setAttribute('aria-pressed', String(isAct));
+              b.className = isAct
                 ? 'm0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white transition-colors'
                 : 'm0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors';
             });

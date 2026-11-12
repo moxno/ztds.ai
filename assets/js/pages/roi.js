@@ -480,7 +480,9 @@ Generated via ZTDS CISO Actuarial Engine: https://ztds.ai/roi/
         currentActivePreset = activeKey;
         document.querySelectorAll('.preset-btn').forEach(btn => {
           const key = btn.getAttribute('data-preset');
-          if (key === activeKey) {
+          const isActive = key === activeKey;
+          btn.setAttribute('aria-pressed', String(isActive));
+          if (isActive) {
             btn.className = 'preset-btn px-3 py-1.5 rounded-lg bg-slate-900 text-white border border-slate-900 text-xs font-semibold shadow-sm transition-all cursor-pointer';
           } else {
             btn.className = 'preset-btn px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all cursor-pointer';
@@ -508,7 +510,9 @@ Generated via ZTDS CISO Actuarial Engine: https://ztds.ai/roi/
           const targetId = btn.getAttribute('data-target');
           const val = btn.getAttribute('data-val');
           const targetEl = document.getElementById(targetId);
-          if (targetEl && String(targetEl.value) === String(val)) {
+          const isMatched = Boolean(targetEl && String(targetEl.value) === String(val));
+          btn.setAttribute('aria-pressed', String(isMatched));
+          if (isMatched) {
             btn.className = 'quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-emerald-100 border border-emerald-300 text-emerald-900 font-bold transition-colors cursor-pointer';
           } else {
             btn.className = 'quick-step-btn px-2 py-0.5 rounded text-xs font-mono bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer';
@@ -732,6 +736,7 @@ Generated via ZTDS CISO Actuarial Engine: https://ztds.ai/roi/
       if (toggleMethodologyBtn && methodologyContent && toggleMethodologyIcon) {
         toggleMethodologyBtn.addEventListener('click', () => {
           const isHidden = methodologyContent.classList.contains('hidden');
+          toggleMethodologyBtn.setAttribute('aria-expanded', String(isHidden));
           if (isHidden) {
             methodologyContent.classList.remove('hidden');
             toggleMethodologyIcon.textContent = '- Hide Formulas';

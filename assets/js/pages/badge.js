@@ -305,6 +305,7 @@
       themeBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           themeBtns.forEach(b => {
+            b.setAttribute('aria-pressed', String(b === btn));
             b.classList.remove('active', 'bg-slate-900', 'border-slate-900', 'text-white');
             b.classList.add('bg-white', 'border-slate-200', 'text-slate-700');
           });
@@ -319,6 +320,7 @@
       tierBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           tierBtns.forEach(b => {
+            b.setAttribute('aria-pressed', String(b === btn));
             b.classList.remove('active', 'bg-emerald-50', 'border-emerald-500', 'text-emerald-800', 'shadow-sm');
             b.classList.add('bg-white', 'border-slate-200', 'text-slate-700');
           });
@@ -333,6 +335,7 @@
       canvasBgBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           canvasBgBtns.forEach(b => {
+            b.setAttribute('aria-pressed', String(b === btn));
             b.classList.remove('active', 'bg-white', 'text-slate-900', 'shadow-sm');
             b.classList.add('text-slate-600');
           });
@@ -360,6 +363,7 @@
       canvasZoomBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           canvasZoomBtns.forEach(b => {
+            b.setAttribute('aria-pressed', String(b === btn));
             b.classList.remove('active', 'bg-white', 'text-slate-900', 'shadow-sm');
             b.classList.add('text-slate-600');
           });

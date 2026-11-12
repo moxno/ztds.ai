@@ -91,15 +91,12 @@ for (const relPath of allPages) {
   }
 
   // 2. Sync Mobile Backdrop and Drawer classes + A11y Attributes
-  const backdropRegex = /<div id="mobile-backdrop" class="([^"]*)"/i;
+  const backdropRegex = /<div id="mobile-backdrop"[^>]*>/i;
   const backdropMatch = content.match(backdropRegex);
   if (backdropMatch) {
-    const classList = backdropMatch[1].trim().split(/\s+/);
-    if (!classList.includes('mobile-nav-backdrop') || !classList.includes('drawer-backdrop')) {
-      content = content.replace(
-        backdropRegex,
-        '<div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"'
-      );
+    const expectedBackdrop = '<div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop" aria-hidden="true">';
+    if (backdropMatch[0] !== expectedBackdrop) {
+      content = content.replace(backdropRegex, expectedBackdrop);
       changed = true;
       drawerUpdated++;
     }
@@ -117,7 +114,7 @@ for (const relPath of allPages) {
   }
 
   // 3. Sync Skip-to-Main-Content Accessible Link
-  if (content.includes('<header') && content.includes('<main') && !content.includes('class="skip-link"')) {
+  if (content.includes('<header') && content.includes('<main') && !/class=["'][^"']*\bskip-link\b/i.test(content)) {
     const bodyMatch = content.match(/(<body[^>]*>)/i);
     if (bodyMatch) {
       const skipLinkTag = '\n  <!-- Skip to main content -->\n  <a href="#main-content" class="skip-link">Skip to main content</a>\n';
@@ -176,6 +173,15 @@ for (const relPath of allPages) {
     content = content.replace(dupFrameworksDrawerRe, '$1');
     changed = true;
     drawerUpdated++;
+  }
+
+  // 9. Align browser <meta name="theme-color"> to #f8fafc on all light-header institutional pages
+  if (content.includes('id="desktop-nav"')) {
+    const themeColorRe = /<meta\s+name=["']theme-color["']\s+content=["'](?:#020617|#0f172a)["']\s*\/?>/i;
+    if (themeColorRe.test(content)) {
+      content = content.replace(themeColorRe, '<meta name="theme-color" content="#f8fafc">');
+      changed = true;
+    }
   }
 
   if (changed) {

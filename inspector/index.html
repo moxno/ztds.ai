@@ -9,7 +9,7 @@
   <link rel="alternate" hreflang="en" href="https://ztds.ai/inspector/">
   <link rel="alternate" hreflang="x-default" href="https://ztds.ai/inspector/">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="theme-color" content="#020617">
+  <meta name="theme-color" content="#f8fafc">
   <link rel="alternate" type="text/plain" href="/llms.txt" title="ZTDS LLM Knowledge Base">
   <link rel="alternate" type="text/plain" href="/llms-full.txt" title="ZTDS Full Normative LLM Compendium">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -200,7 +200,7 @@
   </header>
 
   <!-- Mobile Slide-Over Drawer -->
-  <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"></div>
+  <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop" aria-hidden="true"></div>
   <aside id="mobile-drawer" class="mobile-nav-drawer drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
     <div class="flex items-center justify-between pb-5 border-b border-slate-200">
       <div class="flex items-center gap-2.5">
@@ -284,15 +284,15 @@
       </div>
 
       <!-- Presets Selector (7 enterprise-grade Profiles) -->
-      <div class="flex flex-wrap flex-balance items-center gap-1.5 shrink-0">
+      <div class="flex flex-wrap flex-balance items-center gap-1.5 shrink-0" role="group" aria-label="Sanitization Profiles">
         <span class="text-xs text-slate-500 font-mono font-medium">Profiles:</span>
-        <button type="button" id="presetHealth" class="preset-btn px-2.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-300 text-xs font-semibold shadow-xs transition-all cursor-pointer">Healthcare PHI</button>
-        <button type="button" id="presetFinance" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-xs transition-all cursor-pointer">Banking SWIFT</button>
-        <button type="button" id="presetDevOps" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-xs transition-all cursor-pointer">Cloud Secrets</button>
-        <button type="button" id="presetLegal" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-xs transition-all cursor-pointer">M&amp;A Legal</button>
-        <button type="button" id="presetHR" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-xs transition-all cursor-pointer">HR Payroll</button>
-        <button type="button" id="presetCrypto" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-xs transition-all cursor-pointer">Crypto Web3</button>
-        <button type="button" id="presetInsurance" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-xs transition-all cursor-pointer">Insurance Policy</button>
+        <button type="button" id="presetHealth" aria-pressed="true" class="preset-btn px-2.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-300 text-xs font-semibold shadow-xs transition-all cursor-pointer">Healthcare PHI</button>
+        <button type="button" id="presetFinance" aria-pressed="false" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-xs transition-all cursor-pointer">Banking SWIFT</button>
+        <button type="button" id="presetDevOps" aria-pressed="false" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-xs transition-all cursor-pointer">Cloud Secrets</button>
+        <button type="button" id="presetLegal" aria-pressed="false" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-xs transition-all cursor-pointer">M&amp;A Legal</button>
+        <button type="button" id="presetHR" aria-pressed="false" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-xs transition-all cursor-pointer">HR Payroll</button>
+        <button type="button" id="presetCrypto" aria-pressed="false" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-xs transition-all cursor-pointer">Crypto Web3</button>
+        <button type="button" id="presetInsurance" aria-pressed="false" class="preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-xs transition-all cursor-pointer">Insurance Policy</button>
       </div>
     </div>
 
@@ -317,12 +317,12 @@
       <div class="ztds-card p-3.5 bg-white border border-slate-200 rounded-xl transition-all duration-300" id="dagNode2">
         <div class="flex items-center justify-between text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1.5">
           <span class="font-mono">Stage 02</span>
-          <span id="node2Badge" class="text-sky-800 bg-sky-50 px-2 py-0.5 rounded border border-sky-200 font-mono font-bold text-xs">Deterministic</span>
+          <span id="node2Badge" class="text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200 font-mono font-bold text-xs">Deterministic</span>
         </div>
         <div class="text-sm font-bold text-slate-900">2. Ephemeral Tokenizer</div>
         <p class="text-xs text-slate-500 mt-0.5 leading-snug">1-to-1 reversible mapping; I(X; T) = 0.00 bits mutual information.</p>
         <div class="text-xs text-slate-700 mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between font-mono">
-          <span id="statTokensMasked" class="text-sky-700 font-semibold">5 tokens</span>
+          <span id="statTokensMasked" class="text-emerald-700 font-semibold">5 tokens</span>
           <span class="text-slate-500">0 Collisions</span>
         </div>
       </div>
@@ -345,12 +345,12 @@
       <div class="ztds-card p-3.5 bg-white border border-slate-200 rounded-xl transition-all duration-300" id="dagNode4">
         <div class="flex items-center justify-between text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1.5">
           <span class="font-mono">Stage 04</span>
-          <span id="node4Badge" class="text-purple-800 bg-purple-50 px-2 py-0.5 rounded border border-purple-200 font-mono font-bold text-xs">Zero-Subprocessor</span>
+          <span id="node4Badge" class="text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 font-mono font-bold text-xs">Zero-Subprocessor</span>
         </div>
         <div class="text-sm font-bold text-slate-900">4. Loopback Reveal</div>
         <p class="text-xs text-slate-500 mt-0.5 leading-snug">Client&#8209;side stream restoration; GDPR Art. 32 Safe Harbor &middot; 0 Subprocessors.</p>
         <div class="text-xs text-slate-700 mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between font-mono">
-          <span class="text-purple-700 font-semibold">100% Reversible</span>
+          <span class="text-emerald-700 font-semibold">100% Reversible</span>
           <span class="text-slate-500">Auto-Zeroize</span>
         </div>
       </div>

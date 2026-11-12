@@ -371,4 +371,106 @@ console.log('--> Test 6: Zero External <img> Pings, Zero Orphan <label> Elements
   console.log(`    [PASS] All ${HTML_FILES.length} HTML pages contain 0 external <img> pings and 0 orphan <label> elements.`);
 }
 
-console.log('\n[SUMMARY] ALL 6 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
+// Test 7: Wave 3 Screen-1 DOM Order, Skip-Link Deduplication, Light Theme-Color, Sitemap/GEO/CmdK 55/55 Parity & WAI-ARIA Widgets
+console.log('--> Test 7: Screen-1 Main-Before-Aside Order, Single Skip-Link, Theme-Color #f8fafc, 55/55 Sitemap Parity & WAI-ARIA Widgets');
+{
+  const duplicateSkipLinks = [];
+  const unhiddenBackdrops = [];
+  const themeColorViolations = [];
+
+  for (const relPath of HTML_FILES) {
+    const html = fs.readFileSync(path.join(ROOT, relPath), 'utf8');
+
+    if (/<main\b/i.test(html)) {
+      const skipCount = (html.match(/<a\b[^>]*\bclass=["'][^"']*\bskip-link\b[^"']*["'][^>]*>/gi) || []).length;
+      if (skipCount !== 1) {
+        duplicateSkipLinks.push(`${relPath}: found ${skipCount} .skip-link anchors`);
+      }
+    }
+
+    const backdropMatch = html.match(/<div\b[^>]*\bid=["']mobile-backdrop["'][^>]*>/i);
+    if (backdropMatch && !/\baria-hidden=["']true["']/i.test(backdropMatch[0])) {
+      unhiddenBackdrops.push(relPath);
+    }
+
+    if (!SPECIALIZED_LAYOUT_PAGES.has(relPath)) {
+      const tcMatch = html.match(/<meta\b[^>]*\bname=["']theme-color["'][^>]*\bcontent=["']([^"']+)["']/i) ||
+                      html.match(/<meta\b[^>]*\bcontent=["']([^"']+)["'][^>]*\bname=["']theme-color["']/i);
+      if (!tcMatch || tcMatch[1].toLowerCase() !== '#f8fafc') {
+        themeColorViolations.push(`${relPath}: theme-color=${tcMatch ? tcMatch[1] : 'missing'}`);
+      }
+    }
+  }
+
+  assert.strictEqual(
+    duplicateSkipLinks.length,
+    0,
+    `Pages with <main> must contain exactly 1 .skip-link:\n${duplicateSkipLinks.join('\n')}`
+  );
+  assert.strictEqual(
+    unhiddenBackdrops.length,
+    0,
+    `#mobile-backdrop must carry aria-hidden="true":\n${unhiddenBackdrops.join('\n')}`
+  );
+  assert.strictEqual(
+    themeColorViolations.length,
+    0,
+    `Light-chrome pages must set <meta name="theme-color" content="#f8fafc">:\n${themeColorViolations.join('\n')}`
+  );
+
+  // Verify webmanifest theme_color + background_color parity
+  for (const manifestRel of ['site.webmanifest', 'public/site.webmanifest']) {
+    const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, manifestRel), 'utf8'));
+    assert.strictEqual(manifest.theme_color, '#f8fafc', `${manifestRel} theme_color must be #f8fafc`);
+    assert.strictEqual(manifest.background_color, '#f8fafc', `${manifestRel} background_color must be #f8fafc`);
+  }
+
+  // Verify Screen-1 DOM order (<main id="main-content"> precedes <aside) on long-form RFC & Whitepaper treatises
+  for (const treatiseRel of ['standard/index.html', 'whitepaper/index.html']) {
+    const html = fs.readFileSync(path.join(ROOT, treatiseRel), 'utf8');
+    const mainIdx = html.search(/<main\b[^>]*\bid=["']main-content["']/i);
+    const asideIdx = html.indexOf('<aside aria-label=');
+    assert(mainIdx !== -1 && asideIdx !== -1, `Missing <main> or TOC <aside> in ${treatiseRel}`);
+    assert(
+      mainIdx < asideIdx,
+      `${treatiseRel} must place <main id="main-content"> before <aside> so mobile Screen 1 shows <h1> first and DOM focus order matches visual order`
+    );
+  }
+
+  // Verify 100% parity (55/55 routes) across sitemap.xml, llms.txt, and nav.js SITE_INDEX
+  const sitemapXml = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
+  const sitemapUrls = [...sitemapXml.matchAll(/<loc>(https:\/\/ztds\.ai[^<]+)<\/loc>/g)].map(m => m[1]);
+  assert(sitemapUrls.length >= 55, `Expected >= 55 URLs in sitemap.xml, found ${sitemapUrls.length}`);
+
+  const llmsTxt = fs.readFileSync(path.join(ROOT, 'llms.txt'), 'utf8');
+  const navCode = fs.readFileSync(path.join(ROOT, 'nav.js'), 'utf8');
+
+  const missingInLlms = sitemapUrls.filter(u => !llmsTxt.includes(u));
+  assert.strictEqual(
+    missingInLlms.length,
+    0,
+    `Every sitemap.xml route must be indexed in llms.txt; missing:\n${missingInLlms.join('\n')}`
+  );
+
+  const missingInCmdK = sitemapUrls
+    .map(u => new URL(u).pathname)
+    .filter(pathname => !navCode.includes(`url: '${pathname}'`));
+  assert.strictEqual(
+    missingInCmdK.length,
+    0,
+    `Every sitemap.xml pathname must be discoverable in nav.js SITE_INDEX (Cmd+K); missing:\n${missingInCmdK.join('\n')}`
+  );
+
+  // Verify WAI-ARIA Combobox, centralized polite clipboard live region, and Scanner tablist semantics
+  assert(navCode.includes("input.setAttribute('role', 'combobox')"), 'nav.js Cmd+K input must expose role="combobox"');
+  assert(navCode.includes('aria-activedescendant'), 'nav.js Cmd+K input must sync aria-activedescendant');
+  assert(navCode.includes('ztds-copy-announcer') && navCode.includes("region.setAttribute('role', 'status')"), 'nav.js ztdsCopy must announce via centralized role="status" live region');
+
+  const scannerHtml = fs.readFileSync(path.join(ROOT, 'scanner/index.html'), 'utf8');
+  assert(scannerHtml.includes('role="tablist"') && scannerHtml.includes('role="tab"') && scannerHtml.includes('role="tabpanel"'), 'scanner/index.html output switcher must implement WAI-ARIA tablist/tab/tabpanel');
+  assert(!/<button\b[^>]*role="tab"[^>]*aria-controls=/i.test(scannerHtml), 'role="tab" buttons must omit unused aria-controls');
+
+  console.log(`    [PASS] Screen-1 main-before-aside order, single skip-links, #f8fafc theme-color, ${sitemapUrls.length}/${sitemapUrls.length} Sitemap/llms.txt/Cmd+K parity, and WAI-ARIA widgets verified.`);
+}
+
+console.log('\n[SUMMARY] ALL 7 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');

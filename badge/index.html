@@ -9,7 +9,7 @@
   <link rel="alternate" hreflang="en" href="https://ztds.ai/badge/">
   <link rel="alternate" hreflang="x-default" href="https://ztds.ai/badge/">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="theme-color" content="#020617">
+  <meta name="theme-color" content="#f8fafc">
   <link rel="alternate" type="text/plain" href="/llms.txt" title="ZTDS LLM Knowledge Base">
   <link rel="alternate" type="text/plain" href="/llms-full.txt" title="ZTDS Full Normative LLM Compendium">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -200,7 +200,7 @@
   </header>
 
   <!-- Mobile Slide-Over Drawer -->
-  <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop"></div>
+  <div id="mobile-backdrop" class="mobile-nav-backdrop drawer-backdrop" aria-hidden="true"></div>
   <aside id="mobile-drawer" class="mobile-nav-drawer drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
     <div class="flex items-center justify-between pb-5 border-b border-slate-200">
       <div class="flex items-center gap-2.5">
@@ -293,17 +293,17 @@
             <div class="flex flex-wrap items-center gap-2">
               <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Canvas Background:</span>
               <div class="inline-flex rounded-lg border border-slate-200 p-0.5 bg-slate-100" id="canvasBgSwitcher" role="group" aria-label="Canvas Background">
-                <button type="button" class="canvas-bg-btn px-2.5 py-1 text-xs font-semibold rounded-md transition-all active bg-white text-slate-900 shadow-sm touch-target min-h-[34px]" data-bg="light">Light BG</button>
-                <button type="button" class="canvas-bg-btn px-2.5 py-1 text-xs font-semibold rounded-md transition-all text-slate-600 hover:text-slate-900 touch-target min-h-[34px]" data-bg="dark">Dark BG</button>
-                <button type="button" class="canvas-bg-btn px-2.5 py-1 text-xs font-semibold rounded-md transition-all text-slate-600 hover:text-slate-900 touch-target min-h-[34px]" data-bg="grid">Grid Pattern</button>
+                <button type="button" aria-pressed="true" class="canvas-bg-btn px-2.5 py-1 text-xs font-semibold rounded-md transition-all active bg-white text-slate-900 shadow-sm touch-target min-h-[34px]" data-bg="light">Light BG</button>
+                <button type="button" aria-pressed="false" class="canvas-bg-btn px-2.5 py-1 text-xs font-semibold rounded-md transition-all text-slate-600 hover:text-slate-900 touch-target min-h-[34px]" data-bg="dark">Dark BG</button>
+                <button type="button" aria-pressed="false" class="canvas-bg-btn px-2.5 py-1 text-xs font-semibold rounded-md transition-all text-slate-600 hover:text-slate-900 touch-target min-h-[34px]" data-bg="grid">Grid Pattern</button>
               </div>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Retina Zoom:</span>
               <div class="inline-flex rounded-lg border border-slate-200 p-0.5 bg-slate-100" id="canvasZoomSwitcher" role="group" aria-label="Preview Zoom">
-                <button type="button" class="canvas-zoom-btn px-2.5 py-1 text-xs font-mono font-semibold rounded-md transition-all active bg-white text-slate-900 shadow-sm touch-target min-h-[34px]" data-zoom="1">1x</button>
-                <button type="button" class="canvas-zoom-btn px-2.5 py-1 text-xs font-mono font-semibold rounded-md transition-all text-slate-600 hover:text-slate-900 touch-target min-h-[34px]" data-zoom="1.5">1.5x</button>
-                <button type="button" class="canvas-zoom-btn px-2.5 py-1 text-xs font-mono font-semibold rounded-md transition-all text-slate-600 hover:text-slate-900 touch-target min-h-[34px]" data-zoom="2">2x</button>
+                <button type="button" aria-pressed="true" class="canvas-zoom-btn px-2.5 py-1 text-xs font-mono font-semibold rounded-md transition-all active bg-white text-slate-900 shadow-sm touch-target min-h-[34px]" data-zoom="1">1x</button>
+                <button type="button" aria-pressed="false" class="canvas-zoom-btn px-2.5 py-1 text-xs font-mono font-semibold rounded-md transition-all text-slate-600 hover:text-slate-900 touch-target min-h-[34px]" data-zoom="1.5">1.5x</button>
+                <button type="button" aria-pressed="false" class="canvas-zoom-btn px-2.5 py-1 text-xs font-mono font-semibold rounded-md transition-all text-slate-600 hover:text-slate-900 touch-target min-h-[34px]" data-zoom="2">2x</button>
               </div>
             </div>
           </div>
@@ -401,11 +401,11 @@
             <span class="text-xs font-mono text-slate-500">SVG Text &amp; Vector Contrast</span>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="themeSelector" role="group" aria-labelledby="labelBadgeVisualTheme">
-            <button type="button" id="themeDarkBtn" class="theme-btn active flex items-center justify-center gap-2.5 p-2.5 rounded-xl border font-bold text-xs transition-all bg-slate-900 border-slate-900 text-white shadow-sm touch-target min-h-[44px]" data-theme="dark">
+            <button type="button" id="themeDarkBtn" aria-pressed="true" class="theme-btn active flex items-center justify-center gap-2.5 p-2.5 rounded-xl border font-bold text-xs transition-all bg-slate-900 border-slate-900 text-white shadow-sm touch-target min-h-[44px]" data-theme="dark">
               <span class="w-3.5 h-3.5 rounded-full bg-slate-950 border border-slate-700 inline-block shrink-0"></span>
               <span>Dark Badge <span class="font-normal text-slate-300">(For Dark Readmes &amp; Docs)</span></span>
             </button>
-            <button type="button" id="themeLightBtn" class="theme-btn flex items-center justify-center gap-2.5 p-2.5 rounded-xl border font-bold text-xs transition-all bg-white border-slate-200 text-slate-700 hover:border-slate-300 shadow-sm touch-target min-h-[44px]" data-theme="light">
+            <button type="button" id="themeLightBtn" aria-pressed="false" class="theme-btn flex items-center justify-center gap-2.5 p-2.5 rounded-xl border font-bold text-xs transition-all bg-white border-slate-200 text-slate-700 hover:border-slate-300 shadow-sm touch-target min-h-[44px]" data-theme="light">
               <span class="w-3.5 h-3.5 rounded-full bg-slate-100 border border-slate-300 inline-block shrink-0"></span>
               <span>Light Badge <span class="font-normal text-slate-500">(High Contrast for White BG)</span></span>
             </button>
@@ -418,23 +418,23 @@
             Conformance Tier &amp; Invariant Profile
           </span>
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 text-xs font-mono" id="tierSelector" role="group" aria-labelledby="labelConformanceTier">
-            <button type="button" class="tier-btn active px-3 py-2 rounded-lg border text-center font-bold transition-all bg-emerald-50 border-emerald-500 text-emerald-800 shadow-sm touch-target min-h-[44px]" data-tier="VERIFIED">
+            <button type="button" aria-pressed="true" class="tier-btn active px-3 py-2 rounded-lg border text-center font-bold transition-all bg-emerald-50 border-emerald-500 text-emerald-800 shadow-sm touch-target min-h-[44px]" data-tier="VERIFIED">
               VERIFIED
               <span class="block text-xs font-sans font-normal text-slate-500 mt-0.5">RFC Invariant 1</span>
             </button>
-            <button type="button" class="tier-btn px-3 py-2 rounded-lg border text-center font-bold transition-all bg-white border-slate-200 text-slate-700 hover:border-slate-300 touch-target min-h-[44px]" data-tier="SOVEREIGN">
+            <button type="button" aria-pressed="false" class="tier-btn px-3 py-2 rounded-lg border text-center font-bold transition-all bg-white border-slate-200 text-slate-700 hover:border-slate-300 touch-target min-h-[44px]" data-tier="SOVEREIGN">
               SOVEREIGN
               <span class="block text-xs font-sans font-normal text-slate-500 mt-0.5">RFC Invariant 3</span>
             </button>
-            <button type="button" class="tier-btn px-3 py-2 rounded-lg border text-center font-bold transition-all bg-white border-slate-200 text-slate-700 hover:border-slate-300 touch-target min-h-[44px]" data-tier="DPA EXEMPT">
+            <button type="button" aria-pressed="false" class="tier-btn px-3 py-2 rounded-lg border text-center font-bold transition-all bg-white border-slate-200 text-slate-700 hover:border-slate-300 touch-target min-h-[44px]" data-tier="DPA EXEMPT">
               ZERO SUBPROCESSORS
               <span class="block text-xs font-sans font-normal text-slate-500 mt-0.5">RFC Invariant 4</span>
             </button>
-            <button type="button" class="tier-btn px-3 py-2 rounded-lg border text-center font-bold transition-all bg-white border-slate-200 text-slate-700 hover:border-slate-300 touch-target min-h-[44px]" data-tier="AIR-GAPPED">
+            <button type="button" aria-pressed="false" class="tier-btn px-3 py-2 rounded-lg border text-center font-bold transition-all bg-white border-slate-200 text-slate-700 hover:border-slate-300 touch-target min-h-[44px]" data-tier="AIR-GAPPED">
               AIR-GAPPED
               <span class="block text-xs font-sans font-normal text-slate-500 mt-0.5">Hardware Isolated</span>
             </button>
-            <button type="button" class="tier-btn px-3 py-2 rounded-lg border text-center font-bold transition-all bg-white border-slate-200 text-slate-700 hover:border-slate-300 touch-target min-h-[44px]" data-tier="SELF-ATTESTED">
+            <button type="button" aria-pressed="false" class="tier-btn px-3 py-2 rounded-lg border text-center font-bold transition-all bg-white border-slate-200 text-slate-700 hover:border-slate-300 touch-target min-h-[44px]" data-tier="SELF-ATTESTED">
               SELF-ATTESTED
               <span class="block text-xs font-sans font-normal text-slate-500 mt-0.5">Pre-Attested</span>
             </button>

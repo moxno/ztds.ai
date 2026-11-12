@@ -301,9 +301,12 @@
       // Preset Switchers
       function setPreset(key, btnEl) {
         document.querySelectorAll('.preset-btn').forEach(b => {
-          b.className = 'preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-sm transition-all';
+          const isSelected = b === btnEl;
+          b.setAttribute('aria-pressed', String(isSelected));
+          b.className = isSelected
+            ? 'preset-btn px-2.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-300 text-xs font-semibold shadow-xs transition-all cursor-pointer'
+            : 'preset-btn px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700 shadow-xs transition-all cursor-pointer';
         });
-        btnEl.className = 'preset-btn px-2.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-300 text-xs font-semibold shadow-sm transition-all';
         inputArea.value = PRESETS[key];
         executePipeline(true);
       }

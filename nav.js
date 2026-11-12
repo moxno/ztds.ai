@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (toggleBtn && drawer && backdrop) {
+    backdrop.setAttribute('aria-hidden', 'true');
     if (!drawer.getAttribute('role')) drawer.setAttribute('role', 'dialog');
     if (!drawer.getAttribute('aria-modal')) drawer.setAttribute('aria-modal', 'true');
     if (!drawer.getAttribute('aria-label')) drawer.setAttribute('aria-label', 'Mobile Navigation');
@@ -498,8 +499,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Global UX 6: Accessible Command Palette (Cmd+K / Ctrl+K) + Header Trigger
   try {
     const SITE_INDEX = [
+      { title: 'ZTDS.ai — Open Standard & Interactive Playground', cat: 'Home', url: '/', kw: 'home overview playground zero trust data sanitization' },
       { title: 'Official RFC v1.0 Specification', cat: 'Standard', url: '/standard/', kw: 'rfc 8821 invariants math proofs normative' },
       { title: 'IETF Standards Track Hub (draft-02)', cat: 'Standard', url: '/ietf/', kw: 'ietf internet draft datatracker protocol' },
+      { title: 'IETF Draft-02 Full Specification Text', cat: 'Standard', url: '/ietf/draft-sibiryakov-ztds-protocol-02/', kw: 'draft-sibiryakov-ztds-protocol-02 ietf normative' },
+      { title: 'IETF Draft-01 Historical Archive', cat: 'Standard', url: '/ietf/draft-sibiryakov-ztds-protocol-01/', kw: 'draft-sibiryakov-ztds-protocol-01 ietf archive' },
       { title: 'Academic Whitepaper & DOIs', cat: 'Standard', url: '/whitepaper/', kw: 'zenodo osf ssrn doi peer reviewed treatise' },
       { title: '10 Canonical AI & RAG Blueprints', cat: 'Standard', url: '/blueprints/', kw: 'langchain llamaindex crewai pinecone envoy nitro' },
       { title: 'AI Safety & Latency Benchmarks', cat: 'Standard', url: '/benchmarks/', kw: 'latency throughput memory overhead wasm' },
@@ -508,6 +512,14 @@ document.addEventListener('DOMContentLoaded', () => {
       { title: '1-Page CISO Safe Harbor Memorandum', cat: 'CISO & GRC', url: '/ciso/memo/', kw: 'gdpr art 28 32 amendment 13 dpa elimination pdf' },
       { title: 'Global Regulatory Compliance Matrix', cat: 'CISO & GRC', url: '/compliance/', kw: 'gdpr hipaa eu ai act pci dss ccpa' },
       { title: 'Regulatory & Security Framework Mappings', cat: 'CISO & GRC', url: '/frameworks/', kw: 'owasp llm02 nist ai rmf eu ai act gdpr art 25 32 hipaa mcp rag' },
+      { title: 'OWASP Top 10 for LLM: LLM02 Sensitive Information Disclosure', cat: 'Framework', url: '/frameworks/owasp-llm02-sensitive-information-disclosure/', kw: 'owasp llm02 prompt leakage sensitive data disclosure' },
+      { title: 'NIST AI RMF Generative AI Profile (NIST AI 600-1)', cat: 'Framework', url: '/frameworks/nist-ai-rmf-generative-ai-profile-pii/', kw: 'nist ai rmf 600-1 generative ai pii govern map measure manage' },
+      { title: 'EU AI Act Article 10 Data Governance & Sanitization', cat: 'Framework', url: '/frameworks/eu-ai-act-article-10-data-governance/', kw: 'eu ai act article 10 high risk data governance privacy' },
+      { title: 'GDPR Articles 25 & 32 Technical Safe Harbor for AI Prompts', cat: 'Framework', url: '/frameworks/gdpr-article-25-32-ai-prompts/', kw: 'gdpr article 25 32 privacy by design safe harbor prompts' },
+      { title: 'HIPAA Safe Harbor (45 CFR 164.514) for LLM Prompts', cat: 'Framework', url: '/frameworks/hipaa-safe-harbor-llm-prompts/', kw: 'hipaa safe harbor 18 identifiers phi healthcare llm ehr' },
+      { title: 'MCP Stdio Local PII Sanitization Architecture', cat: 'Framework', url: '/frameworks/mcp-stdio-pii-sanitization/', kw: 'model context protocol mcp stdio claude cursor local sanitization' },
+      { title: 'RAG Pipeline In-Memory PII Sanitization & Right to Erasure', cat: 'Framework', url: '/frameworks/rag-pipeline-pii-sanitization/', kw: 'rag vector database pinecone qdrant gdpr article 17 erasure' },
+      { title: 'Client-Side In-RAM Sanitization vs. Cloud Proxy DLP', cat: 'Framework', url: '/frameworks/client-side-sanitization-vs-proxy-dlp/', kw: 'cloud dlp proxy vs client ram latency subprocessor comparison' },
       { title: 'AICPA SOC 2 Type II & Trust Center', cat: 'CISO & GRC', url: '/soc2/', kw: 'soc2 evidence binder controls audit' },
       { title: 'CISO Breach Liability & ROI Calculator', cat: 'CISO & GRC', url: '/roi/', kw: 'calculator savings breach fine cost' },
       { title: 'Enterprise Order Form (Schedule A)', cat: 'CISO & GRC', url: '/docs/legal/order-form/', kw: 'contract msa po invoice procurement' },
@@ -524,10 +536,12 @@ document.addEventListener('DOMContentLoaded', () => {
       { title: 'Enterprise Architecture Case Studies (10)', cat: 'Ecosystem', url: '/case-studies/', kw: 'healthcare fintech legal defense voice deployments' },
       { title: 'Certification Authority & CAB', cat: 'Ecosystem', url: '/certification/', kw: 'conformity assessment accreditation tracks' },
       { title: 'Apply for ZTDS Accreditation', cat: 'Ecosystem', url: '/apply/', kw: 'gitops pr submit claim badge wordpress domain seal' },
+      { title: 'BrandMeWeb Enterprise AI Safety & GEO Audit', cat: 'Ecosystem', url: '/agency/', kw: 'brandmeweb enterprise audit implementation retainer geo' },
       { title: 'Consortium Governance & Charter', cat: 'Governance', url: '/governance/', kw: 'bylaws working groups voting steering' },
       { title: 'Security Policy & CVD (PGP)', cat: 'Governance', url: '/security/', kw: 'vulnerability disclosure security.txt' },
       { title: 'Standards, RAND-Z Patent Policy & Terms', cat: 'Governance', url: '/terms/', kw: 'cc-by-4.0 apache 2.0 trademark covenant' },
       { title: 'Zero-Telemetry Privacy Policy', cat: 'Governance', url: '/privacy/', kw: 'zero cookies zero analytics gdpr' },
+      { title: 'Accessibility Statement (WCAG 2.1 AA & IS 5568)', cat: 'Governance', url: '/accessibility/', kw: 'accessibility wcag 2.1 2.2 aa is 5568 keyboard screen reader' },
       { title: 'BrandMeWeb — Corporate Member & GEO Case Study', cat: 'Case Study', url: '/companies/brandmeweb/', kw: 'brandmeweb agency geo seo langchain' },
       { title: 'PrivacyScrubber — Pioneer Reference Implementation', cat: 'Case Study', url: '/companies/privacyscrubber/', kw: 'privacyscrubber wasm chrome extension sdk mcp wordpress' },
       { title: 'LearningCenterUsa.net — PSTN Voice & Transcript Enclave', cat: 'Case Study', url: '/companies/learningcenterusa/', kw: 'voice telephony pstn bipa cal penal code 632 call center' },
@@ -566,6 +580,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const input = document.createElement('input');
       input.type = 'search';
       input.id = 'ztds-cmd-input';
+      input.setAttribute('role', 'combobox');
+      input.setAttribute('aria-autocomplete', 'list');
+      input.setAttribute('aria-expanded', 'true');
+      input.setAttribute('aria-controls', 'ztds-cmd-list');
       input.setAttribute('aria-label', 'Search pages, sections, and tools');
       input.placeholder = 'Jump to specification, CISO memo, SDK, scanner, or section...';
       input.className = 'w-full bg-transparent text-slate-900 placeholder-slate-400 text-sm focus:outline-none font-sans';
@@ -583,6 +601,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const list = document.createElement('div');
       list.id = 'ztds-cmd-list';
       list.setAttribute('role', 'listbox');
+      list.setAttribute('aria-label', 'Search results');
       list.className = 'max-h-80 overflow-y-auto divide-y divide-slate-100 p-1.5';
 
       const footer = document.createElement('div');
@@ -604,9 +623,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === modal) window.ztdsModal.close(modal);
       });
 
-      // Collect current page h2, h3, and FAQ details sections dynamically
+      // Collect current page h2, h3, and FAQ details sections dynamically (excluding mobile-only .no-print TOCs)
       const pageSections = [];
-      document.querySelectorAll('main h2[id], main h3[id], main details[id] > summary').forEach((el) => {
+      document.querySelectorAll('main h2[id], main h3[id], main details[id]:not(.no-print) > summary').forEach((el) => {
         const isSummary = el.tagName === 'SUMMARY';
         const idOwner = isSummary ? el.parentElement : el;
         const cleanTitle = (el.textContent || '').replace(/#$/, '').replace(/Copied$/, '').trim();
@@ -638,14 +657,16 @@ document.addEventListener('DOMContentLoaded', () => {
         activeIdx = 0;
         list.textContent = '';
         if (filtered.length === 0) {
+          input.removeAttribute('aria-activedescendant');
           const empty = document.createElement('div');
           empty.className = 'py-8 px-4 text-center text-xs font-mono text-slate-500';
-          empty.textContent = 'No matching route found. Try "rfc", "memo", "sdk", "mcp", or "scanner".';
+          empty.textContent = 'No matching route found. Try "rfc", "memo", "sdk", "mcp", "owasp", or "scanner".';
           list.appendChild(empty);
           return;
         }
         filtered.forEach((item, idx) => {
           const a = document.createElement('a');
+          a.id = 'ztds-cmd-opt-' + idx;
           a.href = item.url;
           a.setAttribute('role', 'option');
           a.setAttribute('aria-selected', idx === activeIdx ? 'true' : 'false');
@@ -670,6 +691,7 @@ document.addEventListener('DOMContentLoaded', () => {
           });
           list.appendChild(a);
         });
+        input.setAttribute('aria-activedescendant', 'ztds-cmd-opt-' + activeIdx);
       }
 
       function updateActiveHighlight() {
@@ -683,11 +705,21 @@ document.addEventListener('DOMContentLoaded', () => {
             el.scrollIntoView({ block: 'nearest' });
           }
         });
+        if (opts.length > 0) {
+          input.setAttribute('aria-activedescendant', 'ztds-cmd-opt-' + activeIdx);
+        } else {
+          input.removeAttribute('aria-activedescendant');
+        }
       }
 
       input.addEventListener('input', () => renderList(input.value));
       input.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowDown') {
+        if (e.key === 'Escape' && input.value.trim().length > 0) {
+          e.preventDefault();
+          e.stopPropagation();
+          input.value = '';
+          renderList('');
+        } else if (e.key === 'ArrowDown') {
           e.preventDefault();
           if (filtered.length > 0) {
             activeIdx = (activeIdx + 1) % filtered.length;
@@ -1061,13 +1093,46 @@ window.ztdsMountBadgeSvg = function(mountEl, label, color, textColor, leftText) 
 };
 
 /**
- * Universal Zero-Failure Clipboard Copier
- * Reliably handles HTTPS navigator.clipboard and fallback document.execCommand
+ * Universal Zero-Failure Clipboard Copier with Centralized Screen-Reader Announcer
+ * Reliably handles HTTPS navigator.clipboard, fallback document.execCommand, and VoiceOver repeat-announcement deduplication.
  */
+let ztdsLastCopyAnnouncement = '';
+let ztdsCopyAnnounceTimer = null;
+
+function ztdsAnnounceCopyOutcome(ok) {
+  try {
+    if (!document.body) return;
+    let region = document.getElementById('ztds-copy-announcer');
+    if (!region) {
+      region = document.createElement('span');
+      region.id = 'ztds-copy-announcer';
+      region.setAttribute('role', 'status');
+      region.className = 'ztds-sr-only';
+      document.body.appendChild(region);
+    }
+    clearTimeout(ztdsCopyAnnounceTimer);
+    let message = ok ? 'Copied to clipboard' : 'Copy failed';
+    if (message === ztdsLastCopyAnnouncement) {
+      message += '\u00A0';
+    }
+    ztdsLastCopyAnnouncement = message;
+    region.textContent = '';
+    requestAnimationFrame(() => {
+      region.textContent = message;
+    });
+    ztdsCopyAnnounceTimer = setTimeout(() => {
+      region.textContent = '';
+    }, 2000);
+  } catch (_) {}
+}
+
 window.ztdsCopy = function(text, onSuccess, onError) {
   if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(text)
-      .then(() => { if (onSuccess) onSuccess(); })
+      .then(() => {
+        ztdsAnnounceCopyOutcome(true);
+        if (onSuccess) onSuccess();
+      })
       .catch(() => fallbackCopy(text, onSuccess, onError));
   } else {
     fallbackCopy(text, onSuccess, onError);
@@ -1088,11 +1153,14 @@ function fallbackCopy(text, onSuccess, onError) {
     const successful = document.execCommand('copy');
     document.body.removeChild(textArea);
     if (successful) {
+      ztdsAnnounceCopyOutcome(true);
       if (onSuccess) onSuccess();
-    } else if (onError) {
-      onError();
+    } else {
+      ztdsAnnounceCopyOutcome(false);
+      if (onError) onError();
     }
   } catch (err) {
+    ztdsAnnounceCopyOutcome(false);
     if (onError) onError(err);
   }
 }
