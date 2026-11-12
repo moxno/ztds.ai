@@ -90,6 +90,20 @@ h1, h2, h3 {
   text-wrap: balance;
 }
 
+.hero-lead,
+main p {
+  text-wrap: pretty;
+}
+
+.hero-display-line {
+  font-size: clamp(1.3rem, 0.9rem + 1.65vw, 2.25rem);
+  line-height: 1.18;
+}
+
+.workbench-console {
+  overflow: clip;
+}
+
 /* ==========================================================================
    Component Primitives (@layer components so Tailwind utilities can specialize)
    ========================================================================== */
@@ -356,7 +370,7 @@ h1, h2, h3 {
     border-left-color: var(--accent-amber);
   }
 
-  /* Entity Token Badges — Unified Institutional Emerald & Graphite System */
+  /* Entity Token Badges — High-Contrast Semantic 3-Tone Hierarchy */
   .entity-token {
     font-family: var(--font-mono);
     font-size: 0.775rem;
@@ -370,19 +384,44 @@ h1, h2, h3 {
   }
 
   .entity-token.token-name,
-  .entity-token.token-email,
-  .entity-token.token-phone,
-  .entity-token.token-id,
-  .entity-token.token-secret {
+  .entity-token.token-email {
     background-color: #ecfdf5;
     color: #065f46;
     border: 1px solid #a7f3d0;
   }
 
-  :is(.bg-slate-900, .bg-slate-950, .code-container) .entity-token {
-    background-color: rgba(16, 185, 129, 0.14);
+  .entity-token.token-phone,
+  .entity-token.token-id {
+    background-color: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+  }
+
+  .entity-token.token-secret {
+    background-color: #fffbeb;
+    color: #92400e;
+    border: 1px solid #fde68a;
+  }
+
+  :is(.bg-slate-900, .bg-slate-950, .code-container) .entity-token,
+  :is(.bg-slate-900, .bg-slate-950, .code-container) .entity-token.token-name,
+  :is(.bg-slate-900, .bg-slate-950, .code-container) .entity-token.token-email {
+    background-color: rgba(16, 185, 129, 0.18);
     color: #6ee7b7;
-    border-color: rgba(16, 185, 129, 0.4);
+    border-color: rgba(16, 185, 129, 0.45);
+  }
+
+  :is(.bg-slate-900, .bg-slate-950, .code-container) .entity-token.token-phone,
+  :is(.bg-slate-900, .bg-slate-950, .code-container) .entity-token.token-id {
+    background-color: rgba(56, 189, 248, 0.16);
+    color: #7dd3fc;
+    border-color: rgba(56, 189, 248, 0.42);
+  }
+
+  :is(.bg-slate-900, .bg-slate-950, .code-container) .entity-token.token-secret {
+    background-color: rgba(251, 191, 36, 0.16);
+    color: #fcd34d;
+    border-color: rgba(251, 191, 36, 0.45);
   }
 }
 
@@ -440,6 +479,15 @@ h1, h2, h3 {
 
 :is(.bg-slate-900, .bg-slate-950, .bg-slate-800, .bg-slate-800\/80, .bg-slate-900\/50, .bg-slate-900\/80, .bg-slate-900\/90, .bg-emerald-950, .bg-blue-950, .code-container, .code-header, .slide-stage) .text-slate-500 {
   color: #94a3b8;
+}
+
+/* Ensure white report cards nested inside dark consoles preserve dark slate legibility */
+:is(.bg-white, .bg-slate-50) .text-slate-400 {
+  color: #526077;
+}
+
+:is(.bg-white, .bg-slate-50) .text-slate-500 {
+  color: #475569;
 }
 
 /* Visible Keyboard Focus Indicators (WCAG 2.2 AA Focus Appearance) */

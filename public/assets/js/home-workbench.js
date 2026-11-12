@@ -81,11 +81,16 @@
       tabScan.setAttribute('aria-selected', isRam ? 'false' : 'true');
 
       tabRam.className = isRam
-        ? 'px-3.5 py-2 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white shadow-xs transition-colors cursor-pointer'
-        : 'px-3.5 py-2 rounded-lg text-xs font-mono font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer';
+        ? 'px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white shadow-xs transition-colors cursor-pointer inline-flex items-center gap-1.5'
+        : 'px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer inline-flex items-center gap-1.5';
       tabScan.className = !isRam
-        ? 'px-3.5 py-2 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white shadow-xs transition-colors cursor-pointer'
-        : 'px-3.5 py-2 rounded-lg text-xs font-mono font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer';
+        ? 'px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white shadow-xs transition-colors cursor-pointer inline-flex items-center gap-1.5'
+        : 'px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer inline-flex items-center gap-1.5';
+
+      const ramDot = tabRam.querySelector('span');
+      const scanDot = tabScan.querySelector('span');
+      if (ramDot) ramDot.className = isRam ? 'w-1.5 h-1.5 rounded-full bg-white' : 'w-1.5 h-1.5 rounded-full bg-slate-500';
+      if (scanDot) scanDot.className = !isRam ? 'w-1.5 h-1.5 rounded-full bg-white' : 'w-1.5 h-1.5 rounded-full bg-slate-500';
     }
 
     if (tabRam && tabScan) {
@@ -118,7 +123,7 @@
       { type: 'IBAN', regex: /\b[A-Z]{2}\d{2}[A-Z0-9]{11,30}\b/g, cls: 'token-id' },
       { type: 'EMAIL', regex: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, cls: 'token-email' },
       { type: 'SSN', regex: /\b\d{3}-\d{2}-\d{4}\b/g, cls: 'token-id' },
-      { type: 'IP', regex: /\b(?:10|172\.(?:1[6-9]|2\d|3[01])|192\.168)\.\d{1,3}\.\d{1,3}\b/g, cls: 'token-id' },
+      { type: 'IP', regex: /\b(?:10\.\d{1,3}|172\.(?:1[6-9]|2\d|3[01])|192\.168)\.\d{1,3}\.\d{1,3}\b/g, cls: 'token-id' },
       { type: 'PHONE', regex: /\+\d{1,3}[-. (]*\d{3}[-. )]*\d{3}[-. ]*\d{4}\b/g, cls: 'token-phone' },
       { type: 'NAME', regex: /\b(?:Dr\.|Mr\.|Mrs\.|Patient|beneficiary)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\b/g, cls: 'token-name' }
     ];
@@ -211,8 +216,8 @@
           document.querySelectorAll('.home-preset-chip').forEach((chip) => {
             const active = chip.id === id;
             chip.className = active
-              ? 'home-preset-chip px-2.5 py-1 rounded-md text-xs font-mono font-semibold bg-slate-900 text-white border border-slate-900 cursor-pointer transition-colors'
-              : 'home-preset-chip px-2.5 py-1 rounded-md text-xs font-mono font-medium bg-white text-slate-600 hover:text-slate-900 border border-slate-200 cursor-pointer transition-colors';
+              ? 'home-preset-chip px-2.5 py-1 rounded-md text-xs font-mono font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 cursor-pointer transition-colors'
+              : 'home-preset-chip px-2.5 py-1 rounded-md text-xs font-mono font-medium bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 border border-slate-700 cursor-pointer transition-colors';
           });
           inputArea.value = PRESETS[key];
           sanitizeInRam(inputArea.value);
@@ -279,11 +284,14 @@
         airplaneBtn.addEventListener('click', () => {
           isAirplaneMode = !isAirplaneMode;
           airplaneBtn.setAttribute('aria-pressed', isAirplaneMode ? 'true' : 'false');
+          airplaneBtn.className = isAirplaneMode
+            ? 'inline-flex items-center gap-2 px-3 py-1 rounded-lg border border-emerald-500/50 bg-emerald-500/15 text-xs font-mono font-semibold text-emerald-300 transition-colors cursor-pointer self-start sm:self-auto'
+            : 'inline-flex items-center gap-2 px-3 py-1 rounded-lg border border-amber-500/40 bg-slate-800 hover:bg-slate-700 text-xs font-mono font-semibold text-amber-300 transition-colors cursor-pointer self-start sm:self-auto';
           if (airplaneNotice) airplaneNotice.classList.toggle('hidden', !isAirplaneMode);
           if (airplaneDot) {
             airplaneDot.className = isAirplaneMode
-              ? 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse'
-              : 'w-2 h-2 rounded-full bg-slate-400';
+              ? 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse'
+              : 'w-2 h-2 rounded-full bg-amber-400';
           }
           if (airplaneBtnText) {
             airplaneBtnText.textContent = isAirplaneMode ? 'Airplane Mode: Verified' : 'Verify in Airplane Mode';
@@ -336,14 +344,14 @@
       stepEl.textContent = '';
 
       if (isComplete) {
-        stepEl.className = 'flex items-center gap-2 text-emerald-700 font-semibold';
-        stepEl.appendChild(el('span', { className: 'text-emerald-600 font-bold', textContent: '\u2713' }));
+        stepEl.className = 'flex items-center gap-2 text-emerald-400 font-semibold';
+        stepEl.appendChild(el('span', { className: 'text-emerald-400 font-bold', textContent: '\u2713' }));
       } else if (isActive) {
-        stepEl.className = 'flex items-center gap-2 text-slate-800 font-semibold';
-        stepEl.appendChild(el('span', { className: 'w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping' }));
+        stepEl.className = 'flex items-center gap-2 text-white font-semibold';
+        stepEl.appendChild(el('span', { className: 'w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping' }));
       } else {
         stepEl.className = 'flex items-center gap-2 text-slate-400';
-        stepEl.appendChild(el('span', { className: 'text-slate-300', textContent: '\u2022' }));
+        stepEl.appendChild(el('span', { className: 'text-slate-500', textContent: '\u2022' }));
       }
       stepEl.appendChild(document.createTextNode(' ' + cleanLabel));
     }

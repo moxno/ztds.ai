@@ -329,181 +329,174 @@
   <main id="main-content" class="flex-grow">
 
     <!-- =================================================================== -->
-    <!-- ACT 1: HERO + INTERACTIVE IN-RAM WORKBENCH (1-1-1-2 NOISE DISCIPLINE) -->
+    <!-- ACT 1: CENTERED HERO + HIGH-CONTRAST IN-RAM CONSOLE (100% SCREEN 1) -->
     <!-- =================================================================== -->
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-14 sm:pb-20">
-      <div class="max-w-4xl">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 text-xs font-mono font-semibold text-slate-700 mb-5">
-          <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
-          <span>ZTDS&trade; RFC v1.0 &middot; IETF draft-sibiryakov-ztds-protocol-02</span>
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 sm:pt-6 pb-12 sm:pb-16">
+      <div class="text-center max-w-5xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-mono font-semibold text-emerald-800 mb-3 shadow-xs">
+          <span class="pulse-dot shrink-0"></span>
+          <span>RFC v1.0 <span class="hidden sm:inline">SPECIFICATION &middot; IETF draft-sibiryakov-ztds-protocol-02</span><span class="sm:hidden">&middot; IETF draft-02</span> &middot; OPEN CONSORTIUM</span>
         </div>
 
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.12]">
-          Client-Side AI Data Sanitization &amp; Reversible PII Tokenization
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.14]">
+          <span class="text-slate-900">ZTDS<sup class="text-emerald-700 font-bold text-sm sm:text-lg ml-0.5">&trade;</sup></span>
+          <span class="text-slate-500 font-medium text-lg sm:text-2xl lg:text-[1.65rem] block sm:inline">(Zero&#8209;Trust Data Sanitization)</span>
+          <span class="hero-display-line block text-emerald-700 mt-1.5 font-extrabold tracking-tight">Open Standard for Client&#8209;Side AI Data Sanitization</span>
         </h1>
 
-        <p class="mt-4 text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed">
-          Tokenize customer PII, clinical PHI, financial IBANs, and API secrets inside volatile host RAM (<code class="font-mono text-sm text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded">&lt; 0.8 ms</code>) before prompts reach OpenAI, Anthropic, MCP servers, or RAG vector stores &mdash; with <strong>0.00 bytes</strong> of cleartext network egress.
+        <p class="hero-lead mt-2.5 sm:mt-3 text-sm sm:text-base lg:text-[1.04rem] text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          <strong class="text-slate-900 font-semibold">Airplane&#8209;Mode Privacy for AI.</strong> Reversible PII, PHI, IBAN, and API secret tokenization in volatile host RAM (<code class="font-mono text-xs sm:text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded font-semibold">&lt; 0.8 ms</code>) before prompts reach OpenAI, Anthropic, MCP servers, or RAG vector stores &mdash; verified at <strong class="text-slate-900 font-semibold">0.00 bytes</strong> cleartext egress.
         </p>
-
-        <div class="mt-6 flex flex-wrap items-center gap-3">
-          <a href="/sdk/#trial" class="btn-trust py-2.5 px-5 text-sm font-semibold">
-            Deploy MCP &amp; SDK Guard &rarr;
-          </a>
-          <a href="/ciso/" class="btn-outline bg-white py-2.5 px-5 text-sm font-semibold">
-            CISO Safe Harbor Pack &rarr;
-          </a>
-        </div>
       </div>
 
-      <!-- Interactive Proof-of-Execution Workbench -->
-      <div class="mt-9 rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden">
-        <!-- Workbench Top Mode Bar -->
-        <div class="px-4 sm:px-6 py-3 bg-slate-50 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div class="inline-flex p-1 rounded-xl bg-slate-200/70 border border-slate-200" role="tablist" aria-label="Zero-Trust Verification Modes">
-            <button id="tabWorkbenchRam" type="button" role="tab" aria-selected="true" aria-controls="paneWorkbenchRam" class="px-3.5 py-2 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white shadow-xs transition-colors cursor-pointer">
-              1. Live In-RAM Tokenization
+      <!-- High-Contrast Dark Proof-of-Execution Console (100% Visible Above the Fold) -->
+      <div class="workbench-console mt-5 sm:mt-6 rounded-2xl bg-slate-900 text-white border border-slate-800 shadow-xl">
+        <!-- Console Top Mode Bar -->
+        <div class="px-4 sm:px-5 py-2.5 bg-slate-950 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+          <div class="inline-flex flex-wrap p-1 rounded-xl bg-slate-900 border border-slate-800 gap-1" role="tablist" aria-label="Zero-Trust Verification Modes">
+            <button id="tabWorkbenchRam" type="button" role="tab" aria-selected="true" aria-controls="paneWorkbenchRam" class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white shadow-xs transition-colors cursor-pointer inline-flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+              <span>1. Live In-RAM Tokenization</span>
             </button>
-            <button id="tabWorkbenchScan" type="button" role="tab" aria-selected="false" aria-controls="paneWorkbenchScan" class="px-3.5 py-2 rounded-lg text-xs font-mono font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer">
-              2. Perimeter &amp; CLI Audit
+            <button id="tabWorkbenchScan" type="button" role="tab" aria-selected="false" aria-controls="paneWorkbenchScan" class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer inline-flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+              <span>2. Public Domain &amp; CLI Audit</span>
             </button>
           </div>
 
-          <div class="flex items-center gap-3 text-xs font-mono text-slate-600">
-            <span class="inline-flex items-center gap-1.5 font-semibold text-emerald-800">
-              <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
-              <span>0 Outbound Sockets &middot; 0.00 B Egress</span>
-            </span>
+          <div class="flex items-center gap-2 text-xs font-mono text-emerald-400 font-semibold">
+            <span class="pulse-dot"></span>
+            <span>LIVE IN-RAM &middot; 0 Sockets &middot; 0.00 B Egress</span>
           </div>
         </div>
 
         <!-- PANE 1: LIVE IN-RAM TOKENIZATION (ACTIVE BY DEFAULT) -->
-        <div id="paneWorkbenchRam" role="tabpanel" aria-labelledby="tabWorkbenchRam" class="p-4 sm:p-6">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-4">
-            <div class="flex items-center gap-2 flex-wrap">
-              <span class="text-xs font-mono font-semibold text-slate-500 uppercase">Payload:</span>
-              <button id="homePresetMcp" type="button" class="home-preset-chip px-2.5 py-1 rounded-md text-xs font-mono font-semibold bg-slate-900 text-white border border-slate-900 cursor-pointer transition-colors">
+        <div id="paneWorkbenchRam" role="tabpanel" aria-labelledby="tabWorkbenchRam" class="p-4 sm:p-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-3">
+            <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+              <span class="text-xs font-mono font-semibold text-slate-400 uppercase">Sample Payload:</span>
+              <button id="homePresetMcp" type="button" class="home-preset-chip px-2.5 py-1 rounded-md text-xs font-mono font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 cursor-pointer transition-colors">
                 MCP IDE Prompt
               </button>
-              <button id="homePresetHealth" type="button" class="home-preset-chip px-2.5 py-1 rounded-md text-xs font-mono font-medium bg-white text-slate-600 hover:text-slate-900 border border-slate-200 cursor-pointer transition-colors">
+              <button id="homePresetHealth" type="button" class="home-preset-chip px-2.5 py-1 rounded-md text-xs font-mono font-medium bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 border border-slate-700 cursor-pointer transition-colors">
                 Healthcare PHI
               </button>
-              <button id="homePresetFinance" type="button" class="home-preset-chip px-2.5 py-1 rounded-md text-xs font-mono font-medium bg-white text-slate-600 hover:text-slate-900 border border-slate-200 cursor-pointer transition-colors">
+              <button id="homePresetFinance" type="button" class="home-preset-chip px-2.5 py-1 rounded-md text-xs font-mono font-medium bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 border border-slate-700 cursor-pointer transition-colors">
                 FinTech IBAN
               </button>
             </div>
 
-            <button id="homeBtnAirplaneMode" type="button" aria-pressed="false" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-mono font-semibold text-slate-700 transition-colors cursor-pointer self-start sm:self-auto">
-              <span id="airplaneDot" class="w-2 h-2 rounded-full bg-slate-400"></span>
+            <button id="homeBtnAirplaneMode" type="button" aria-pressed="false" class="inline-flex items-center gap-2 px-3 py-1 rounded-lg border border-amber-500/40 bg-slate-800 hover:bg-slate-700 text-xs font-mono font-semibold text-amber-300 transition-colors cursor-pointer self-start sm:self-auto">
+              <span id="airplaneDot" class="w-2 h-2 rounded-full bg-amber-400"></span>
               <span id="airplaneBtnText">Verify in Airplane Mode</span>
             </button>
           </div>
 
-          <div id="airplaneNotice" class="hidden mb-4 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-950 font-mono">
+          <div id="airplaneNotice" class="hidden mb-3 p-2.5 rounded-xl bg-emerald-950 border border-emerald-700 text-xs text-emerald-200 font-mono">
             Airplane Mode Protocol Active: Disconnect Wi-Fi/Ethernet and edit the prompt below. Tokenization and round-trip restoration run 100% in browser volatile memory with zero network calls.
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-3.5">
             <!-- Left: Raw Host Input -->
-            <div class="flex flex-col">
-              <div class="flex items-center justify-between mb-1.5 text-xs font-mono">
-                <label for="homeInputArea" class="font-bold text-slate-700 uppercase">Host Cleartext Input (Stays Local)</label>
-                <span id="homeInputCharCount" class="text-slate-500">0 entities tokenized</span>
+            <div class="flex flex-col min-w-0 bg-slate-950/60 border border-slate-800 rounded-xl p-3">
+              <div class="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mb-1.5 text-xs font-mono">
+                <label for="homeInputArea" class="font-bold text-slate-200 uppercase">1. Host Cleartext (Local RAM)</label>
+                <span id="homeInputCharCount" class="text-slate-400 shrink-0">0 entities tokenized</span>
               </div>
-              <textarea id="homeInputArea" rows="5" class="w-full flex-grow rounded-xl border border-slate-300 bg-white p-3.5 text-sm font-mono text-slate-900 leading-relaxed focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700" spellcheck="false"></textarea>
+              <textarea id="homeInputArea" rows="4" class="w-full flex-grow rounded-lg border border-slate-700 bg-slate-900 p-3 text-xs sm:text-sm font-mono text-slate-100 leading-relaxed focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" spellcheck="false"></textarea>
             </div>
 
             <!-- Right: Sanitized Surrogate Output -->
-            <div class="flex flex-col">
-              <div class="flex items-center justify-between mb-1.5 text-xs font-mono">
-                <span class="font-bold text-slate-700 uppercase">Sanitized LLM / MCP Payload</span>
-                <div class="flex items-center gap-3">
-                  <span id="homeLatencyMetric" class="text-emerald-700 font-bold">&lt; 0.30 ms</span>
-                  <button id="homeBtnCopySanitized" type="button" class="text-slate-600 hover:text-slate-900 underline cursor-pointer">Copy Safe Payload</button>
+            <div class="flex flex-col min-w-0 bg-slate-950/60 border border-slate-800 rounded-xl p-3">
+              <div class="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mb-1.5 text-xs font-mono">
+                <span class="font-bold text-emerald-400 uppercase">2. Sanitized Egress (Sent to LLM)</span>
+                <div class="flex items-center gap-3 shrink-0">
+                  <span id="homeLatencyMetric" class="text-emerald-400 font-bold">&lt; 0.30 ms</span>
+                  <button id="homeBtnCopySanitized" type="button" class="text-slate-300 hover:text-white underline cursor-pointer">Copy Safe Payload</button>
                 </div>
               </div>
-              <div id="homeOutputArea" aria-live="polite" class="w-full flex-grow min-h-[132px] rounded-xl bg-slate-950 border border-slate-800 p-3.5 text-sm font-mono text-slate-100 leading-relaxed whitespace-pre-wrap break-words"></div>
+              <div id="homeOutputArea" aria-live="polite" class="w-full flex-grow min-h-[104px] rounded-lg bg-slate-950 border border-emerald-500/30 p-3 text-xs sm:text-sm font-mono text-slate-100 leading-relaxed whitespace-pre-wrap break-words"></div>
             </div>
           </div>
 
-          <!-- Workbench Action Controls -->
-          <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <!-- Workbench Action Controls (100% Visible Without Scrolling) -->
+          <div class="mt-3.5 pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3">
             <div class="flex flex-wrap items-center gap-2.5">
-              <button id="homeBtnSanitize" type="button" class="px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-mono font-semibold transition-colors cursor-pointer">
-                Sanitize in RAM
+              <button id="homeBtnSanitize" type="button" class="btn-trust py-2 px-4 text-xs font-mono font-bold shadow-sm cursor-pointer">
+                Execute In-RAM Masking &rarr;
               </button>
-              <button id="homeBtnSimulate" type="button" class="px-3.5 py-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-900 text-xs font-mono font-semibold transition-colors cursor-pointer">
-                Simulate LLM Round-Trip &amp; Restore
+              <button id="homeBtnSimulate" type="button" class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white text-xs font-mono font-semibold transition-colors cursor-pointer">
+                Simulate LLM Round-Trip &amp; Restore &darr;
               </button>
-              <button id="homeBtnReset" type="button" class="px-3 py-2 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-slate-600 text-xs font-mono font-medium transition-colors cursor-pointer">
+              <button id="homeBtnReset" type="button" class="px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white text-xs font-mono font-medium transition-colors cursor-pointer">
                 Flush RAM
               </button>
             </div>
 
-            <a href="/inspector/" class="text-xs font-mono font-semibold text-slate-600 hover:text-slate-900 underline underline-offset-2">
+            <a href="/inspector/" class="text-xs font-mono font-semibold text-emerald-400 hover:text-emerald-300 underline underline-offset-2">
               Open Full Pipeline Inspector &rarr;
             </a>
           </div>
 
           <!-- Bijective Round-Trip Restoration Proof -->
-          <div id="homeSimulationBox" class="hidden mt-4 p-4 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+          <div id="homeSimulationBox" class="hidden mt-3.5 p-3.5 rounded-xl bg-slate-950 border border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs font-mono">
             <div>
-              <div class="font-bold text-slate-700 uppercase mb-1">1. Cloud LLM Sees Only Surrogate Tokens</div>
-              <p id="homeRawLlmReply" class="p-3 rounded-lg bg-white border border-slate-200 text-slate-700 leading-relaxed"></p>
+              <div class="font-bold text-slate-300 uppercase mb-1.5">A. Cloud LLM Stream (Safe Tokens Only)</div>
+              <p id="homeRawLlmReply" class="p-3 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 leading-relaxed"></p>
             </div>
             <div>
-              <div class="font-bold text-emerald-800 uppercase mb-1">2. Restored Locally in Host RAM</div>
-              <p id="homeRevealedReply" class="p-3 rounded-lg bg-emerald-50/60 border border-emerald-200 text-slate-900 font-medium leading-relaxed"></p>
+              <div class="font-bold text-emerald-400 uppercase mb-1.5">B. Restored Locally in Host RAM</div>
+              <p id="homeRevealedReply" class="p-3 rounded-lg bg-emerald-950/60 border border-emerald-700/60 text-white font-sans font-medium leading-relaxed"></p>
             </div>
           </div>
         </div>
 
         <!-- PANE 2: DOMAIN PERIMETER SCANNER & CLI LINTER -->
-        <div id="paneWorkbenchScan" role="tabpanel" aria-labelledby="tabWorkbenchScan" class="hidden p-4 sm:p-6 space-y-5">
+        <div id="paneWorkbenchScan" role="tabpanel" aria-labelledby="tabWorkbenchScan" class="hidden p-4 sm:p-5 space-y-4">
           <div>
-            <label for="heroDomainInput" class="block text-xs font-mono font-bold text-slate-700 uppercase mb-2">
+            <label for="heroDomainInput" class="block text-xs font-mono font-bold text-emerald-400 uppercase mb-2">
               Audit Public Domain AI &amp; Subprocessor Exposure (GDPR Art. 28 / CSP / Telemetry Sinks)
             </label>
             <form id="heroScanForm" class="flex flex-col sm:flex-row gap-2.5">
-              <input id="heroDomainInput" type="text" inputmode="url" autocomplete="off" placeholder="Enter corporate domain (e.g., stripe.com or yourcompany.com)" class="flex-grow px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-base sm:text-sm font-mono focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700">
+              <input id="heroDomainInput" type="text" inputmode="url" autocomplete="off" placeholder="Enter corporate domain (e.g., stripe.com or yourcompany.com)" class="flex-grow px-4 py-2.5 rounded-xl border-2 border-slate-700 bg-white text-slate-900 placeholder:text-slate-400 text-base sm:text-sm font-mono focus:outline-none focus:border-emerald-500">
               <button id="heroScanSubmitBtn" type="submit" class="btn-trust py-2.5 px-5 text-xs font-mono font-bold whitespace-nowrap flex items-center justify-center gap-2 cursor-pointer">
                 <span id="heroScanBtnText">Audit Perimeter &rarr;</span>
                 <span id="heroScanSpinner" class="hidden w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
               </button>
             </form>
 
-            <div class="mt-2.5 flex items-center gap-2 flex-wrap text-xs font-mono text-slate-500">
+            <div class="mt-2.5 flex items-center gap-2 flex-wrap text-xs font-mono text-slate-400">
               <span>Quick benchmarks:</span>
-              <button type="button" class="hero-preset-btn px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer" data-domain="openai.com">openai.com</button>
-              <button type="button" class="hero-preset-btn px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer" data-domain="stripe.com">stripe.com</button>
-              <button type="button" class="hero-preset-btn px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer" data-domain="vercel.com">vercel.com</button>
-              <button type="button" class="hero-preset-btn px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer" data-domain="privacyscrubber.com">privacyscrubber.com</button>
+              <button type="button" class="hero-preset-btn px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 cursor-pointer transition-colors" data-domain="openai.com">openai.com</button>
+              <button type="button" class="hero-preset-btn px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 cursor-pointer transition-colors" data-domain="stripe.com">stripe.com</button>
+              <button type="button" class="hero-preset-btn px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 cursor-pointer transition-colors" data-domain="vercel.com">vercel.com</button>
+              <button type="button" class="hero-preset-btn px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 cursor-pointer transition-colors" data-domain="privacyscrubber.com">privacyscrubber.com</button>
             </div>
           </div>
 
-          <div id="heroScanProgress" class="hidden p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono space-y-2">
-            <div class="flex items-center justify-between text-slate-700 font-bold pb-1.5 border-b border-slate-200">
+          <div id="heroScanProgress" class="hidden p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono space-y-2">
+            <div class="flex items-center justify-between text-emerald-400 font-bold pb-1.5 border-b border-slate-800">
               <span>Passive Edge Perimeter Inspection</span>
-              <span id="heroScanTickerTimer">0.0s</span>
+              <span id="heroScanTickerTimer" class="text-slate-300">0.0s</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-              <div id="heroStepDns" class="flex items-center gap-2 text-slate-500">&bull; Anti-SSRF DNS &amp; TLS Boundary</div>
+              <div id="heroStepDns" class="flex items-center gap-2 text-slate-300">&bull; Anti-SSRF DNS &amp; TLS Boundary</div>
               <div id="heroStepHeaders" class="flex items-center gap-2 text-slate-400">&bull; CSP, Frame &amp; Isolation Headers</div>
               <div id="heroStepSinks" class="flex items-center gap-2 text-slate-400">&bull; Third-Party Telemetry &amp; AI Sinks</div>
               <div id="heroStepSynthesize" class="flex items-center gap-2 text-slate-400">&bull; CISO Safe Harbor Synthesis</div>
             </div>
           </div>
 
-          <div id="heroScanResult" class="hidden pt-2"></div>
+          <div id="heroScanResult" class="hidden p-4 sm:p-5 rounded-xl bg-white text-slate-900 border border-slate-200 shadow-lg"></div>
 
           <!-- Air-Gapped Local Codebase Linter Strip -->
           <div class="p-3.5 rounded-xl bg-slate-950 text-slate-200 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
-            <div class="truncate">
+            <div class="min-w-0 truncate">
               <span class="text-slate-400 mr-2">Offline AST Codebase Linter:</span>
               <code class="text-emerald-400 font-semibold">npx ztds-audit --dir ./src --strict</code>
             </div>
             <div class="flex items-center gap-3 shrink-0">
-              <button id="btnCopyHeroAuditCli" type="button" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white font-semibold cursor-pointer">
+              <button id="btnCopyHeroAuditCli" type="button" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-semibold cursor-pointer">
                 Copy CLI
               </button>
               <a href="/scanner/" class="text-emerald-400 hover:underline">5-Mode Scanner &rarr;</a>
@@ -512,8 +505,21 @@
         </div>
       </div>
 
+      <!-- Targeted Action Paths & Institutional Proof Strip -->
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <a href="/sdk/#trial" class="btn-trust py-2.5 px-5 text-sm font-semibold shadow-sm">
+          Deploy MCP &amp; SDK Guard &rarr;
+        </a>
+        <a href="/verify/?target=privacyscrubber-web" class="btn-navy py-2.5 px-5 text-sm font-semibold shadow-sm">
+          Verify Conformance &amp; A4 PDF &rarr;
+        </a>
+        <a href="/ciso/" class="btn-outline bg-white py-2.5 px-5 text-sm font-semibold">
+          CISO Safe Harbor Pack &rarr;
+        </a>
+      </div>
+
       <!-- Institutional Proof Strip (4 Calm Anchors, Zero Clutter) -->
-      <div class="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-3 text-xs font-mono">
+      <div class="mt-5 grid grid-cols-2 lg:grid-cols-4 gap-3 text-xs font-mono">
         <a href="/ietf/" class="p-3 rounded-xl bg-white border border-slate-200 hover:border-slate-300 transition-colors">
           <div class="text-slate-500 uppercase">IETF Internet-Draft</div>
           <div class="text-slate-900 font-bold mt-0.5">draft-sibiryakov-ztds-02 &rarr;</div>
