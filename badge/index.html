@@ -432,12 +432,12 @@
         <!-- Badge Visual Theme Switcher -->
         <div>
           <div class="flex items-center justify-between mb-2">
-            <label class="block text-xs font-bold text-slate-900 uppercase tracking-wider">
+            <span id="labelBadgeVisualTheme" class="block text-xs font-bold text-slate-900 uppercase tracking-wider">
               Badge Visual Theme
-            </label>
+            </span>
             <span class="text-xs font-mono text-slate-500">SVG Text &amp; Vector Contrast</span>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="themeSelector">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="themeSelector" role="group" aria-labelledby="labelBadgeVisualTheme">
             <button type="button" id="themeDarkBtn" class="theme-btn active flex items-center justify-center gap-2.5 p-3 rounded-xl border font-bold text-xs transition-all bg-slate-900 border-slate-900 text-white shadow-sm touch-target min-h-[44px]" data-theme="dark">
               <span class="w-3.5 h-3.5 rounded-full bg-slate-950 border border-slate-700 inline-block shrink-0"></span>
               <span>Dark Badge <span class="font-normal text-slate-300">(For Dark Readmes &amp; Docs)</span></span>
@@ -451,10 +451,10 @@
 
         <!-- Conformance Tier Selector -->
         <div>
-          <label class="block text-xs font-bold text-slate-900 mb-2 uppercase tracking-wider">
+          <span id="labelConformanceTier" class="block text-xs font-bold text-slate-900 mb-2 uppercase tracking-wider">
             Conformance Tier &amp; Invariant Profile
-          </label>
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 text-xs font-mono" id="tierSelector">
+          </span>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 text-xs font-mono" id="tierSelector" role="group" aria-labelledby="labelConformanceTier">
             <button type="button" class="tier-btn active px-3 py-2.5 rounded-lg border text-center font-bold transition-all bg-emerald-50 border-emerald-500 text-emerald-800 shadow-sm touch-target min-h-[44px]" data-tier="VERIFIED">
               VERIFIED
               <span class="block text-xs font-sans font-normal text-slate-500 mt-0.5">RFC Invariant 1</span>

@@ -326,4 +326,49 @@ console.log('--> Test 5: Site-Wide Enforced CSP, Trusted Types & CORP Precedence
   console.log('    [PASS] vercel.json enforces site-wide strict CSP, Trusted Types (\'none\'), COOP, and CORP precedence.');
 }
 
-console.log('\n[SUMMARY] ALL 5 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
+// Test 6: Zero External <img> Pings / ORB Leaks, Zero Orphan <label> Elements & Scoped URL Params
+console.log('--> Test 6: Zero External <img> Pings, Zero Orphan <label> Elements & Scoped URLSearchParams');
+{
+  const externalImgs = [];
+  const orphanLabels = [];
+
+  for (const relPath of HTML_FILES) {
+    const html = fs.readFileSync(path.join(ROOT, relPath), 'utf8');
+
+    const imgMatches = html.match(/<img\b[^>]*\bsrc=["']https?:\/\/[^"']+["'][^>]*>/gi) || [];
+    for (const m of imgMatches) {
+      externalImgs.push(`${relPath}: ${m}`);
+    }
+
+    const labelRe = /<label\b([^>]*)>([\s\S]*?)<\/label>/gi;
+    let lm;
+    while ((lm = labelRe.exec(html)) !== null) {
+      const attrs = lm[1];
+      const inner = lm[2];
+      if (!/\bfor\s*=/.test(attrs) && !/<(?:input|select|textarea)\b/i.test(inner)) {
+        orphanLabels.push(`${relPath}: ${lm[0].replace(/\s+/g, ' ').slice(0, 100)}`);
+      }
+    }
+  }
+
+  assert.strictEqual(
+    externalImgs.length,
+    0,
+    `External <img src="https://..."> causes third-party IP leakage and ORB/CORB failures:\n${externalImgs.join('\n')}`
+  );
+  assert.strictEqual(
+    orphanLabels.length,
+    0,
+    `Orphan <label> tags without for= or nested form controls trigger Chrome DevTools a11y issues:\n${orphanLabels.join('\n')}`
+  );
+
+  const sdkJs = fs.readFileSync(path.join(ROOT, 'assets/js/pages/sdk.js'), 'utf8');
+  assert(
+    sdkJs.includes('const urlParams = new URLSearchParams(window.location.search);'),
+    'assets/js/pages/sdk.js must declare urlParams before reading preset deep-link parameters'
+  );
+
+  console.log(`    [PASS] All ${HTML_FILES.length} HTML pages contain 0 external <img> pings and 0 orphan <label> elements.`);
+}
+
+console.log('\n[SUMMARY] ALL 6 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');

@@ -841,6 +841,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Deep-link preset parameter handling (supports both ?preset=...#trial and legacy #trial?preset=...)
+      const urlParams = new URLSearchParams(window.location.search);
       let presetParam = urlParams.get('preset');
       if (!presetParam && window.location.hash && window.location.hash.includes('?')) {
         try {

@@ -256,14 +256,24 @@ function generateProfileHtml(company) {
   <title>${pageTitle}</title>
   <meta name="description" content="${metaDesc}">
   <link rel="canonical" href="https://ztds.ai/companies/${slug}/">
+  <link rel="alternate" hreflang="en" href="https://ztds.ai/companies/${slug}/">
+  <link rel="alternate" hreflang="x-default" href="https://ztds.ai/companies/${slug}/">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#020617">
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="ZTDS LLM Knowledge Base">
+  <link rel="alternate" type="text/plain" href="/llms-full.txt" title="ZTDS Full Normative LLM Compendium">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon-96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
 
   <!-- Open Graph & Social Cards -->
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ZTDS.ai">
+  <meta property="og:locale" content="en_US">
   <meta property="og:url" content="https://ztds.ai/companies/${slug}/">
   <meta property="og:title" content="${pageTitle}">
   <meta property="og:description" content="${metaDesc}">
@@ -271,11 +281,12 @@ function generateProfileHtml(company) {
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="${pageTitle}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${pageTitle}">
-  <meta property="twitter:description" content="${metaDesc}">
   <meta name="twitter:description" content="${metaDesc}">
   <meta name="twitter:image" content="https://ztds.ai/assets/img/og/og-registry.png">
+  <meta name="twitter:image:alt" content="${pageTitle}">
 
   <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -327,6 +338,7 @@ function generateProfileHtml(company) {
       },
       {
         "@type": "BreadcrumbList",
+        "@id": "https://ztds.ai/companies/${slug}/#breadcrumb",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "ZTDS.ai", "item": "https://ztds.ai/" },
           { "@type": "ListItem", "position": 2, "name": "Corporate Adopters", "item": "https://ztds.ai/companies/" },
@@ -424,6 +436,7 @@ function generateProfileHtml(company) {
       <a href="/mcp/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Model Context Protocol (MCP)</a>
       <a href="/blueprints/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">10 AI &amp; RAG Blueprints</a>
       <a href="/compliance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Global Regulatory Compliance Matrix</a>
+      <a href="/frameworks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Framework Mappings (OWASP, NIST, EU AI Act)</a>
       <a href="/benchmarks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">AI Safety &amp; Latency Benchmarks</a>
       <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper (DOIs)</a>
       <a href="/evidentiary-sovereignty/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Evidentiary Sovereignty</a>
@@ -638,7 +651,7 @@ ${simulationBannerHtml}
             Display the official ZTDS Verified Badge on your corporate website, documentation, or security portal.
           </p>
 
-          <label class="block text-xs font-mono text-slate-600 mb-1.5 font-semibold">Embed HTML Code</label>
+          <span class="block text-xs font-mono text-slate-600 mb-1.5 font-semibold">Embed HTML Code</span>
           <div class="relative">
             <pre class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs font-mono text-slate-700 overflow-x-auto leading-relaxed"><code>&lt;a href="https://ztds.ai/companies/${slug}/" target="_blank" rel="noopener" title="ZTDS Verified Corporate Member"&gt;
   &lt;img src="https://ztds.ai/badge/${slug}.svg" alt="ZTDS Verified" width="138" height="22" /&gt;
@@ -705,7 +718,9 @@ ${simulationBannerHtml}
             <li><a href="/ciso/" class="hover:text-slate-900 transition-colors">CISO Procurement &amp; Safe Harbor Pack</a></li>
             <li><a href="/ciso/memo/" class="hover:text-slate-900 transition-colors">1-Page CISO Executive Memo</a></li>
             <li><a href="/roi/" class="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">CISO Risk &amp; ROI Calculator &rarr;</a></li>
+            <li><a href="/frameworks/" class="hover:text-slate-900 transition-colors">Framework Mappings (OWASP, NIST, EU AI Act)</a></li>
             <li><a href="/llms.txt" class="hover:text-slate-900 transition-colors">llms.txt Standard Corpus</a></li>
+            <li><a href="/llms-full.txt" class="hover:text-slate-900 transition-colors">llms-full.txt Compendium</a></li>
           </ul>
         </div>
 
@@ -783,7 +798,7 @@ ${simulationBannerHtml}
     </div>
   </footer>
 
-  <script src="/nav.js"></script>
+  <script src="/nav.js" defer></script>
 </body>
 </html>
 `;
