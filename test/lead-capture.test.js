@@ -117,9 +117,9 @@ async function runTests() {
     console.log('    [PASS] Non-POST request rejected with 405 Method Not Allowed');
   }
 
-  // Test 5: Preflight OPTIONS request
+  // Test 5: Preflight OPTIONS request & Ecosystem Origin Allowlist + Fetch Metadata Guard
   {
-    console.log('--> Test 5: CORS OPTIONS Preflight');
+    console.log('--> Test 5: Strict CORS Origin Allowlist & Fetch Metadata Guard');
     const req = {
       method: 'OPTIONS',
       headers: {}
@@ -128,8 +128,25 @@ async function runTests() {
     await handler(req, res);
 
     assert.strictEqual(res._status, 204, 'Expected HTTP 204 for OPTIONS preflight');
-    assert.strictEqual(res._headers['access-control-allow-origin'], '*');
-    console.log('    [PASS] OPTIONS preflight returns 204 No Content with CORS');
+    assert.strictEqual(res._headers['access-control-allow-origin'], 'https://ztds.ai');
+
+    const reqPartner = {
+      method: 'OPTIONS',
+      headers: { origin: 'https://privacyscrubber.com' }
+    };
+    const resPartner = createMockRes();
+    await handler(reqPartner, resPartner);
+    assert.strictEqual(resPartner._headers['access-control-allow-origin'], 'https://privacyscrubber.com');
+
+    const reqCrossSite = {
+      method: 'POST',
+      headers: { origin: 'https://evil.example', 'sec-fetch-site': 'cross-site' },
+      body: { email: 'ciso@acme.io', domain: 'acme.io' }
+    };
+    const resCrossSite = createMockRes();
+    await handler(reqCrossSite, resCrossSite);
+    assert.strictEqual(resCrossSite._status, 403, 'Untrusted cross-site POST must return 403 Forbidden');
+    console.log('    [PASS] Strict ecosystem CORS allowlist and Sec-Fetch-Site 403 block verified');
   }
 
   // Test 6: Rate Limiting Enforcement (10 max per IP)

@@ -15,13 +15,14 @@ const assert = require('assert');
 const scanDomainHandler = require('../api/scan-domain');
 
 // Mock request and response helpers
-function createMockReqRes({ method = 'POST', query = {}, body = null }) {
+function createMockReqRes({ method = 'POST', query = {}, body = null, headers = {} }) {
   const req = {
     method,
     query,
     body,
     headers: {
-      'content-type': 'application/json'
+      'content-type': 'application/json',
+      ...headers
     }
   };
 
@@ -125,13 +126,21 @@ async function runTests() {
     assert.ok(res.data.error.includes('Domain not found'));
   });
 
-  // 7. Options CORS Preflight Check
-  await test('OPTIONS preflight returns 204 No Content with CORS headers', async () => {
+  // 7. Options CORS Preflight & Fetch Metadata Guard Check
+  await test('OPTIONS preflight returns 204 with strict origin CORS and blocks cross-site POST', async () => {
     const { req, res } = createMockReqRes({ method: 'OPTIONS' });
     await scanDomainHandler(req, res);
     assert.strictEqual(res.statusCode, 204);
-    assert.strictEqual(res.headers['access-control-allow-origin'], '*');
+    assert.strictEqual(res.headers['access-control-allow-origin'], 'https://ztds.ai');
     assert.strictEqual(res.headers['access-control-allow-methods'], 'GET, POST, OPTIONS');
+
+    const cross = createMockReqRes({
+      method: 'POST',
+      headers: { origin: 'https://evil.example', 'sec-fetch-site': 'cross-site' },
+      body: { domain: 'google.com' }
+    });
+    await scanDomainHandler(cross.req, cross.res);
+    assert.strictEqual(cross.res.statusCode, 403);
   });
 
   // 8. Schema and Conformance Structure Check

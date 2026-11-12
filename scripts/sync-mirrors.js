@@ -11,6 +11,7 @@ const rootDir = path.resolve(__dirname, '..');
 
 const mirrorPairs = [
   ['assets/js/scanner-engine.js', 'public/assets/js/scanner-engine.js'],
+  ['assets/js/home-workbench.js', 'public/assets/js/home-workbench.js'],
   ['sitemap.xml', 'public/sitemap.xml'],
   ['llms.txt', 'public/llms.txt'],
   ['llms-full.txt', 'public/llms-full.txt'],

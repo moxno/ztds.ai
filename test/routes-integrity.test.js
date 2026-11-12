@@ -377,6 +377,7 @@ console.log('    [PASS] ' + typoFiles.length + ' pages: no text below 12px, no f
 console.log('--> Test 9: Root vs. public/ Mirror Parity & Deployable Route Resolution Invariant');
 const mirrorPairs = [
   ['assets/js/scanner-engine.js', 'public/assets/js/scanner-engine.js'],
+  ['assets/js/home-workbench.js', 'public/assets/js/home-workbench.js'],
   ['sitemap.xml', 'public/sitemap.xml'],
   ['llms.txt', 'public/llms.txt'],
   ['llms-full.txt', 'public/llms-full.txt'],

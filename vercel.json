@@ -242,18 +242,30 @@
   ],
   "headers": [
     {
-      "source": "/(styles\\.css|nav\\.js|app\\.js|favicon\\.svg|favicon\\.ico|apple-touch-icon\\.png|site\\.webmanifest|plugin\\.json|mcp_config\\.json|server-card\\.json)",
+      "source": "/(styles\\.css|nav\\.js|app\\.js|assets/js/.*|favicon\\.svg|favicon\\.ico|apple-touch-icon\\.png|site\\.webmanifest|plugin\\.json|mcp_config\\.json|server-card\\.json)",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "cross-origin" },
         { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800" }
       ]
     },
     {
-      "source": "/api/(.*)",
+      "source": "/api/badge(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, OPTIONS" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "cross-origin" },
+        { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800" },
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    },
+    {
+      "source": "/api/(lead-capture|mint-license|scan-domain)(.*)",
+      "headers": [
         { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization, X-Requested-With" },
+        { "key": "Vary", "value": "Origin, Sec-Fetch-Dest, Sec-Fetch-Mode, Sec-Fetch-Site" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "same-origin" },
         { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate, proxy-revalidate" },
         { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]
@@ -262,6 +274,7 @@
       "source": "/.well-known/(security\\.txt|pgp-key\\.txt)",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "cross-origin" },
         { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
@@ -270,6 +283,7 @@
       "source": "/.well-known/(mcp\\.json|mcp/server-card\\.json|agent\\.json|agent-card\\.json|ai-plugin\\.json)",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "cross-origin" },
         { "key": "Content-Type", "value": "application/json; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=3600" }
       ]
@@ -278,6 +292,7 @@
       "source": "/badge/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "cross-origin" },
         { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800" }
       ]
     },
@@ -285,6 +300,7 @@
       "source": "/(assets/img/.*|og-image\\.png)",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "cross-origin" },
         { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800" }
       ]
     },
@@ -292,6 +308,7 @@
       "source": "/assets/fonts/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "cross-origin" },
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     },
@@ -299,6 +316,7 @@
       "source": "/llms(.*).txt",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "cross-origin" },
         { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=86400" }
       ]
@@ -307,6 +325,7 @@
       "source": "/robots.txt",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "cross-origin" },
         { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
@@ -315,6 +334,7 @@
       "source": "/sitemap.xml",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "cross-origin" },
         { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
@@ -323,6 +343,7 @@
       "source": "/schemas/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "cross-origin" },
         { "key": "Content-Type", "value": "application/schema+json; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
@@ -331,12 +352,20 @@
       "source": "/(.*)",
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "X-Frame-Options", "value": "DENY" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; frame-src 'none'; font-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" },
+        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin-allow-popups" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; font-src 'self' data:; object-src 'none'; base-uri 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'" },
         { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), interest-cohort=(), focus-without-user-activation=()" },
         { "key": "Link", "value": "<https://ztds.ai/llms.txt>; rel=\"alternate\"; type=\"text/plain\"; title=\"ZTDS LLM Knowledge Base\", <https://ztds.ai/llms-full.txt>; rel=\"alternate\"; type=\"text/plain\"; title=\"ZTDS Full Normative LLM Compendium\", <https://ztds.ai/.well-known/mcp.json>; rel=\"service-desc\"; type=\"application/json\"; title=\"ZTDS MCP Server Manifest\", <https://ztds.ai/.well-known/agent.json>; rel=\"service-meta\"; type=\"application/json\"; title=\"ZTDS Google A2A Agent Card\", <https://ztds.ai/.well-known/agent-card.json>; rel=\"service-meta\"; type=\"application/json\"; title=\"ZTDS A2A v1.0 Agent Card\"" }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        { "key": "Cross-Origin-Resource-Policy", "value": "same-origin" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'report-sample'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; font-src 'self' data:; object-src 'none'; base-uri 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; require-trusted-types-for 'script'; trusted-types 'none'" }
       ]
     }
   ]

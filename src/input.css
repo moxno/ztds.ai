@@ -46,12 +46,17 @@
 }
 
 html {
+  container-type: scroll-state;
   scroll-behavior: smooth;
   background-color: var(--bg-canvas);
   color: var(--text-body);
   overflow-x: hidden;
   overflow-x: clip;
   max-width: 100%;
+}
+
+:target {
+  scroll-margin-top: 4.5rem;
 }
 
 body {
@@ -351,38 +356,33 @@ h1, h2, h3 {
     border-left-color: var(--accent-amber);
   }
 
-  /* Entity Token Badges */
+  /* Entity Token Badges — Unified Institutional Emerald & Graphite System */
   .entity-token {
     font-family: var(--font-mono);
     font-size: 0.775rem;
-    padding: 2px 6px;
+    padding: 1px 6px;
     border-radius: 4px;
     font-weight: 600;
     display: inline-block;
-  }
-
-  .entity-token.token-name {
-    background-color: #fef3c7;
-    color: #92400e;
-    border: 1px solid #fde68a;
-  }
-
-  .entity-token.token-email {
-    background-color: #d1fae5;
+    background-color: #ecfdf5;
     color: #065f46;
     border: 1px solid #a7f3d0;
   }
 
-  .entity-token.token-phone {
-    background-color: #dbeafe;
-    color: #1e40af;
-    border: 1px solid #bfdbfe;
+  .entity-token.token-name,
+  .entity-token.token-email,
+  .entity-token.token-phone,
+  .entity-token.token-id,
+  .entity-token.token-secret {
+    background-color: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
   }
 
-  .entity-token.token-id {
-    background-color: #ede9fe;
-    color: #5b21b6;
-    border: 1px solid #ddd6fe;
+  :is(.bg-slate-900, .bg-slate-950, .code-container) .entity-token {
+    background-color: rgba(16, 185, 129, 0.14);
+    color: #6ee7b7;
+    border-color: rgba(16, 185, 129, 0.4);
   }
 }
 
@@ -834,9 +834,35 @@ h1, h2, h3 {
 }
 
 @media screen {
+  .ztds-deferred-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto none auto 480px;
+  }
+
   body > footer {
     content-visibility: auto;
-    contain-intrinsic-size: auto 480px;
+    contain-intrinsic-size: auto none auto 480px;
   }
 }
+
+/* Compact Sticky Header Auto-Hide on Downward Scroll (Noise Reduction) */
+.ztds-sticky-header {
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+@container scroll-state((scrolled: bottom) and (scrollable: top)) {
+  .ztds-sticky-header {
+    transform: translateY(-100%);
+  }
+}
+
+.ztds-sticky-header:focus-within {
+  transform: none;
+}
+
+.ztds-sticky-header.is-hidden:not(:focus-within) {
+  transform: translateY(-100%);
+}
+
 

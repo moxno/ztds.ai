@@ -411,7 +411,7 @@ https://ztds.ai &middot; Patents Pending &middot; TM #182655957 &middot; CC BY 4
             closeModal();
           } finally {
             if (submitBtn) submitBtn.disabled = false;
-            if (submitText) submitText.innerHTML = 'Generate &amp; Download Official Memorandum &rarr;';
+            if (submitText) submitText.textContent = 'Generate & Download Official Memorandum \u2192';
             if (spinner) spinner.classList.add('hidden');
           }
         });

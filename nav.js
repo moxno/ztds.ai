@@ -208,7 +208,19 @@ document.addEventListener('DOMContentLoaded', () => {
       backBtn.setAttribute('aria-label', 'Scroll to top');
       backBtn.setAttribute('title', 'Scroll to top');
       backBtn.className = 'no-print fixed bottom-5 right-5 z-40 w-11 h-11 rounded-full bg-slate-900/90 text-white border border-slate-700 shadow-lg flex items-center justify-center transition-all duration-200 opacity-0 pointer-events-none translate-y-2 hover:bg-emerald-600 hover:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer';
-      backBtn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>';
+      const backSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      backSvg.setAttribute('class', 'w-5 h-5');
+      backSvg.setAttribute('fill', 'none');
+      backSvg.setAttribute('stroke', 'currentColor');
+      backSvg.setAttribute('stroke-width', '2.2');
+      backSvg.setAttribute('viewBox', '0 0 24 24');
+      backSvg.setAttribute('aria-hidden', 'true');
+      const backPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      backPath.setAttribute('stroke-linecap', 'round');
+      backPath.setAttribute('stroke-linejoin', 'round');
+      backPath.setAttribute('d', 'M5 15l7-7 7 7');
+      backSvg.appendChild(backPath);
+      backBtn.appendChild(backSvg);
       backBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
@@ -583,7 +595,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const footer = document.createElement('div');
       footer.className = 'px-4 py-2 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs font-mono text-slate-500';
-      footer.innerHTML = '<span>&uarr;&darr; to navigate &middot; Enter to open</span><span>ZTDS.ai Quick Jump</span>';
+      const footerLeft = document.createElement('span');
+      footerLeft.textContent = '\u2191\u2193 to navigate \u00b7 Enter to open';
+      const footerRight = document.createElement('span');
+      footerRight.textContent = 'ZTDS.ai Quick Jump';
+      footer.appendChild(footerLeft);
+      footer.appendChild(footerRight);
 
       panel.appendChild(topBar);
       panel.appendChild(list);
@@ -723,7 +740,23 @@ document.addEventListener('DOMContentLoaded', () => {
       cmdBtn.setAttribute('aria-label', 'Quick Jump Search (Command+K)');
       cmdBtn.setAttribute('title', 'Quick Jump Search (⌘K / Ctrl+K)');
       cmdBtn.className = 'no-print inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-600 hover:text-slate-900 font-mono text-xs font-medium transition-colors cursor-pointer';
-      cmdBtn.innerHTML = '<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span class="hidden sm:inline">&#8984;K</span>';
+      const cmdSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      cmdSvg.setAttribute('class', 'w-3.5 h-3.5 text-slate-500');
+      cmdSvg.setAttribute('fill', 'none');
+      cmdSvg.setAttribute('stroke', 'currentColor');
+      cmdSvg.setAttribute('stroke-width', '2');
+      cmdSvg.setAttribute('viewBox', '0 0 24 24');
+      cmdSvg.setAttribute('aria-hidden', 'true');
+      const cmdPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      cmdPath.setAttribute('stroke-linecap', 'round');
+      cmdPath.setAttribute('stroke-linejoin', 'round');
+      cmdPath.setAttribute('d', 'M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z');
+      cmdSvg.appendChild(cmdPath);
+      const cmdKbd = document.createElement('span');
+      cmdKbd.className = 'hidden sm:inline';
+      cmdKbd.textContent = '\u2318K';
+      cmdBtn.appendChild(cmdSvg);
+      cmdBtn.appendChild(cmdKbd);
       cmdBtn.addEventListener('click', openCmdPalette);
       actionContainer.insertBefore(cmdBtn, actionContainer.firstChild);
     }
@@ -787,6 +820,55 @@ document.addEventListener('DOMContentLoaded', () => {
       wrapper.parentNode.insertBefore(bar, wrapper);
       bar.appendChild(btn);
     });
+  } catch (_) {}
+
+  // Global UX 8: CSP-Safe AI Citation Bar Copy Button ([data-ztds-copy-llm])
+  try {
+    document.querySelectorAll('[data-ztds-copy-llm]').forEach((btn) => {
+      if (btn.dataset.llmCopyBound === 'true') return;
+      btn.dataset.llmCopyBound = 'true';
+      btn.addEventListener('click', () => {
+        const raw = btn.getAttribute('data-ztds-copy-llm') || '';
+        if (!raw) return;
+        const labelEl = btn.querySelector('[data-ztds-copy-label]') || btn;
+        const origText = labelEl.textContent;
+        window.ztdsCopy(raw, () => {
+          labelEl.textContent = 'Copied LLM Context';
+          labelEl.classList.add('text-emerald-300', 'font-bold');
+          setTimeout(() => {
+            labelEl.textContent = origText;
+            labelEl.classList.remove('font-bold');
+          }, 2000);
+        });
+      });
+    });
+  } catch (_) {}
+
+  // Global UX 9: Sticky Header Scroll-State Fallback for browsers without CSS scroll-state queries
+  try {
+    const stickyHeader = document.querySelector('.ztds-sticky-header');
+    const supportsScrollState = typeof CSS !== 'undefined' && typeof CSS.supports === 'function' && CSS.supports('container-type', 'scroll-state');
+    if (stickyHeader && !supportsScrollState) {
+      let lastScrollY = window.scrollY;
+      let headerTicking = false;
+      window.addEventListener('scroll', () => {
+        if (!headerTicking) {
+          window.requestAnimationFrame(() => {
+            const currentY = window.scrollY;
+            if (stickyHeader.matches(':focus-within') || currentY < 80) {
+              stickyHeader.classList.remove('is-hidden');
+            } else if (currentY > lastScrollY + 8) {
+              stickyHeader.classList.add('is-hidden');
+            } else if (currentY < lastScrollY - 8) {
+              stickyHeader.classList.remove('is-hidden');
+            }
+            lastScrollY = currentY;
+            headerTicking = false;
+          });
+          headerTicking = true;
+        }
+      }, { passive: true });
+    }
   } catch (_) {}
 });
 

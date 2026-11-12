@@ -243,9 +243,23 @@ async function dispatchProspectEmail(apiKey, payload) {
   }
 }
 
+const ALLOWED_ORIGINS = new Set([
+  'https://ztds.ai',
+  'https://www.ztds.ai',
+  'https://privacyscrubber.com',
+  'https://www.privacyscrubber.com',
+  'https://brandmeweb.com',
+  'https://www.brandmeweb.com'
+]);
+
 module.exports = async (req, res) => {
-  // Edge CORS & Cache control
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const reqHeaders = (req && req.headers) || {};
+  const rawOrigin = String(reqHeaders.origin || '').trim();
+  const allowedOrigin = ALLOWED_ORIGINS.has(rawOrigin) ? rawOrigin : 'https://ztds.ai';
+
+  // Edge CORS, Fetch Metadata & Cache control
+  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+  res.setHeader('Vary', 'Origin, Sec-Fetch-Dest, Sec-Fetch-Mode, Sec-Fetch-Site');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With');
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
@@ -258,6 +272,14 @@ module.exports = async (req, res) => {
     return res.status(405).json({
       error: 'Method Not Allowed',
       message: 'Only POST requests are supported for lead capture.'
+    });
+  }
+
+  const fetchSite = String(reqHeaders['sec-fetch-site'] || '').toLowerCase();
+  if (fetchSite === 'cross-site' && !ALLOWED_ORIGINS.has(rawOrigin)) {
+    return res.status(403).json({
+      error: 'Forbidden',
+      message: 'Cross-site request rejected by Fetch Metadata policy.'
     });
   }
 

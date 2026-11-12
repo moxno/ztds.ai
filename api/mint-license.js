@@ -376,8 +376,22 @@ stringData:
   };
 }
 
+const ALLOWED_ORIGINS = new Set([
+  'https://ztds.ai',
+  'https://www.ztds.ai',
+  'https://privacyscrubber.com',
+  'https://www.privacyscrubber.com',
+  'https://brandmeweb.com',
+  'https://www.brandmeweb.com'
+]);
+
 module.exports = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const reqHeaders = (req && req.headers) || {};
+  const rawOrigin = String(reqHeaders.origin || '').trim();
+  const allowedOrigin = ALLOWED_ORIGINS.has(rawOrigin) ? rawOrigin : 'https://ztds.ai';
+
+  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+  res.setHeader('Vary', 'Origin, Sec-Fetch-Dest, Sec-Fetch-Mode, Sec-Fetch-Site');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Cache-Control', 'no-store');
@@ -388,6 +402,11 @@ module.exports = async (req, res) => {
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed', message: 'Use POST' });
+  }
+
+  const fetchSite = String(reqHeaders['sec-fetch-site'] || '').toLowerCase();
+  if (fetchSite === 'cross-site' && !ALLOWED_ORIGINS.has(rawOrigin)) {
+    return res.status(403).json({ error: 'Forbidden', message: 'Cross-site request rejected by Fetch Metadata policy.' });
   }
 
   const forwarded = req.headers && (req.headers['x-forwarded-for'] || req.headers['x-real-ip']);

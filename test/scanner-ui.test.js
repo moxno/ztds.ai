@@ -11,12 +11,15 @@ console.log('[TEST] Starting ZTDS Scanner UI & Progressive Disclosure Verificati
 
 const scannerPath = path.join(__dirname, '..', 'scanner', 'index.html');
 const indexPath = path.join(__dirname, '..', 'index.html');
+const homeWorkbenchPath = path.join(__dirname, '..', 'assets', 'js', 'home-workbench.js');
 
 assert(fs.existsSync(scannerPath), 'scanner/index.html does not exist');
 assert(fs.existsSync(indexPath), 'index.html does not exist');
+assert(fs.existsSync(homeWorkbenchPath), 'assets/js/home-workbench.js does not exist');
 
 const scannerHtml = fs.readFileSync(scannerPath, 'utf8');
 const indexHtml = fs.readFileSync(indexPath, 'utf8');
+const homeWorkbenchJs = fs.readFileSync(homeWorkbenchPath, 'utf8');
 
 // Test 1: Auditor Mode Navigation Bar & Tab Buttons
 console.log('--> Test 1: Auditor Mode Navigation Bar & Tab Elements');
@@ -56,14 +59,22 @@ assert(scannerHtml.includes('window.addEventListener(\'hashchange\''), 'Missing 
 assert(scannerHtml.includes('setAuditorMode(\'mode1-socket-interceptor\', true)'), 'Airplane demo must transition to Mode 1 Socket Interceptor');
 console.log('    [PASS] Tab switching controller, deep-linking, and airplane bridge verified.');
 
-// Test 4: Dynamic DAG Flow & Progressive Disclosure Accordions
-console.log('--> Test 4: Dynamic DAG Flow & Accordion Rendering');
-assert(indexHtml.includes('ev.dagComparison'), 'index.html missing ev.dagComparison rendering');
-assert(indexHtml.includes('dag.legacy.title'), 'index.html missing dag.legacy.title');
-assert(indexHtml.includes('dag.ztds.title'), 'index.html missing dag.ztds.title');
+// Test 4: Dynamic DAG Flow, CSP-Strict External Workbench & Trusted Types Zero-Sink Invariant
+console.log('--> Test 4: Dynamic DAG Flow, CSP-Strict External Workbench & Zero-Sink Rendering');
+const indexLandingBundle = indexHtml + '\n' + homeWorkbenchJs;
+assert(indexHtml.includes('/assets/js/home-workbench.js'), 'index.html must load external /assets/js/home-workbench.js');
+const inlineExecScripts = (indexHtml.match(/<script\b[^>]*>/gi) || []).filter(
+  tag => !/\bsrc=/i.test(tag) && !/application\/ld\+json/i.test(tag)
+);
+assert.strictEqual(inlineExecScripts.length, 0, 'index.html must contain zero inline executable <script> tags');
+assert(!/\bon[a-z]+\s*=/i.test(indexHtml), 'index.html must contain zero inline event handler attributes');
+assert(!/\.innerHTML\s*=/.test(homeWorkbenchJs), 'home-workbench.js must contain zero .innerHTML assignments for Trusted Types enforcement');
+assert(indexLandingBundle.includes('ev.dagComparison'), 'Landing workbench missing ev.dagComparison rendering');
+assert(indexLandingBundle.includes('dag.legacy.title'), 'Landing workbench missing dag.legacy.title');
+assert(indexLandingBundle.includes('dag.ztds.title'), 'Landing workbench missing dag.ztds.title');
 assert(scannerHtml.includes('ev.dagComparison'), 'scanner/index.html missing ev.dagComparison rendering');
 assert(scannerHtml.includes('dag.legacy.title'), 'scanner/index.html missing dag.legacy.title');
 assert(scannerHtml.includes('dag.ztds.title'), 'scanner/index.html missing dag.ztds.title');
-console.log('    [PASS] Dynamic DAG flows and progressive disclosure accordions validated across landing and scanner pages.');
+console.log('    [PASS] Dynamic DAG flows, strict CSP externalization, and Trusted Types zero-sink invariants validated.');
 
 console.log('\n[SUMMARY] ALL 4 SCANNER UI & PROGRESSIVE DISCLOSURE TESTS PASSED.\n');

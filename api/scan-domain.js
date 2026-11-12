@@ -949,14 +949,36 @@ function checkRateLimit(ip) {
   return { limited: false, remaining: RATE_LIMIT_MAX_REQUESTS - validTimestamps.length };
 }
 
+const ALLOWED_ORIGINS = new Set([
+  'https://ztds.ai',
+  'https://www.ztds.ai',
+  'https://privacyscrubber.com',
+  'https://www.privacyscrubber.com',
+  'https://brandmeweb.com',
+  'https://www.brandmeweb.com'
+]);
+
 module.exports = async (req, res) => {
-  // CORS Headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const reqHeaders = (req && req.headers) || {};
+  const rawOrigin = String(reqHeaders.origin || '').trim();
+  const allowedOrigin = ALLOWED_ORIGINS.has(rawOrigin) ? rawOrigin : 'https://ztds.ai';
+
+  // CORS & Fetch Metadata Headers
+  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+  res.setHeader('Vary', 'Origin, Sec-Fetch-Dest, Sec-Fetch-Mode, Sec-Fetch-Site');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
     return res.status(204).end();
+  }
+
+  const fetchSite = String(reqHeaders['sec-fetch-site'] || '').toLowerCase();
+  if (req.method === 'POST' && fetchSite === 'cross-site' && !ALLOWED_ORIGINS.has(rawOrigin)) {
+    return res.status(403).json({
+      error: 'Forbidden',
+      details: 'Cross-site POST scan request rejected by Fetch Metadata policy.'
+    });
   }
 
   // S-3 Rate Limiting Check
