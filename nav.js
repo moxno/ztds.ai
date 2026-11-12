@@ -359,43 +359,35 @@ document.addEventListener('DOMContentLoaded', () => {
     expandDetailsForHash();
     window.addEventListener('hashchange', expandDetailsForHash);
 
-    // 1-Click # deep-link copy on FAQ <details id="..."> > <summary>
-    document.querySelectorAll('main details[id] > summary').forEach((summary) => {
-      if (summary.dataset.ztdsFaqCopyInit) return;
-      const detailsEl = summary.parentElement;
-      if (!detailsEl || !detailsEl.id) return;
-      summary.dataset.ztdsFaqCopyInit = '1';
-      summary.classList.add('group');
+    // 1-Click # deep-link copy inside expanded <details id="..."> body (never inside <summary>, preserving HTML5/ARIA a11y)
+    document.querySelectorAll('main details[id]').forEach((detailsEl) => {
+      if (detailsEl.dataset.ztdsFaqCopyInit || !detailsEl.id) return;
+      detailsEl.dataset.ztdsFaqCopyInit = '1';
 
+      const copyRow = document.createElement('div');
+      copyRow.className = 'no-print mt-2.5 flex justify-end';
       const copyBtn = document.createElement('button');
       copyBtn.type = 'button';
-      copyBtn.setAttribute('aria-label', 'Copy direct link to FAQ question');
-      copyBtn.setAttribute('title', 'Copy direct link to FAQ');
-      copyBtn.className = 'no-print ml-2 px-1.5 py-0.5 rounded text-xs font-mono text-slate-400 hover:text-emerald-700 hover:bg-emerald-50 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity cursor-pointer shrink-0';
-      copyBtn.textContent = '#';
+      copyBtn.setAttribute('aria-label', 'Copy direct link to section');
+      copyBtn.className = 'px-2 py-0.5 rounded text-xs font-mono text-slate-400 hover:text-emerald-700 hover:bg-emerald-50 transition-colors cursor-pointer';
+      copyBtn.textContent = 'Copy link #';
       copyBtn.addEventListener('click', (e) => {
-        e.preventDefault();
         e.stopPropagation();
         const url = window.location.origin + window.location.pathname + '#' + detailsEl.id;
         if (history.replaceState) {
           try { history.replaceState(null, '', '#' + detailsEl.id); } catch (_) {}
         }
         window.ztdsCopy(url, () => {
-          copyBtn.textContent = 'Copied';
-          copyBtn.classList.add('opacity-100', 'text-emerald-700', 'bg-emerald-50');
+          copyBtn.textContent = 'Copied #';
+          copyBtn.classList.add('text-emerald-700', 'bg-emerald-50');
           setTimeout(() => {
-            copyBtn.textContent = '#';
+            copyBtn.textContent = 'Copy link #';
             copyBtn.classList.remove('text-emerald-700', 'bg-emerald-50');
           }, 1600);
         });
       });
-
-      const firstSpan = summary.querySelector('span');
-      if (firstSpan && firstSpan !== summary.lastElementChild) {
-        firstSpan.appendChild(copyBtn);
-      } else {
-        summary.appendChild(copyBtn);
-      }
+      copyRow.appendChild(copyBtn);
+      detailsEl.appendChild(copyRow);
     });
 
     // Inject Expand All / Collapse All bar above FAQ groups with >= 3 <details> items
