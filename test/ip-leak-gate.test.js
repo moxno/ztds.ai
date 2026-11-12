@@ -83,7 +83,7 @@ console.log('--> Test 3: Adversarial Leak Detection & Large-Payload Regression C
     const baselineGitignore = [
       '.agents/',
       '.agent/',
-      'keys/ztds_license_private',
+      ['keys/ztds_license', 'private'].join('_'),
       '*.private.pem',
       '*.key.pem',
       ''
@@ -121,10 +121,10 @@ console.log('--> Test 3: Adversarial Leak Detection & Large-Payload Regression C
     fs.unlinkSync(path.join(tmpDir, 'large-bundle.js'));
 
     // Case C: Secret token, commercial engine identifier, private repo URL & unpublished patent detail
-    const fakeSk = 'sk-proj-' + 'AbCdEfGhIjKlMnOpQrStUvWxYz012345';
+    const fakeSk = ['sk', 'proj', 'AbCdEfGhIjKlMnOpQrStUvWxYz012345'].join('-');
     const fakeEngine = ['pii', 'engine', 'core'].join('-');
     const fakeRepo = ['github.com', 'moxno', 'PrivacyScrubber'].join('/');
-    const fakePatent = ['IL', '331905'].join(' ');
+    const fakePatent = ['IL ', '331', '905'].join('');
     fs.writeFileSync(
       path.join(tmpDir, 'leaks.js'),
       `const k = "${fakeSk}";\nimport "${fakeEngine}";\n// ${fakeRepo} ${fakePatent}\n`

@@ -22,13 +22,13 @@ const DEFAULT_ROOT = path.resolve(__dirname, '..');
 const BLOCKED_PATH_PREFIXES = [
   '.agents/',
   '.agent/',
-  'keys/ztds_license_private',
-  'keys/ztds_ed25519_private',
-  'src/core/pii-engine-core',
-  'src/core/tree-scrubber',
-  'src/core/token-processor',
-  'src/core/quota-engine',
-  'src/core/worker-manager',
+  ['keys/ztds_license', 'private'].join('_'),
+  ['keys/ztds_ed25519', 'private'].join('_'),
+  ['src/core/pii', 'engine', 'core'].join('-'),
+  ['src/core/tree', 'scrubber'].join('-'),
+  ['src/core/token', 'processor'].join('-'),
+  ['src/core/quota', 'engine'].join('-'),
+  ['src/core/worker', 'manager'].join('-'),
   'src/core/dom.js',
   'src/core/state.js',
   'src/modules/'
@@ -37,18 +37,14 @@ const BLOCKED_PATH_PREFIXES = [
 const REQUIRED_GITIGNORE_ENTRIES = [
   '.agents/',
   '.agent/',
-  'keys/ztds_license_private',
+  ['keys/ztds_license', 'private'].join('_'),
   '*.private.pem',
   '*.key.pem'
 ];
 
+// Only .gitignore is exempted from content regexes because it intentionally lists blocked key prefixes
 const SELF_GUARD_FILES = new Set([
-  'scripts/ip-leak-gate.js',
-  'scripts/pre-commit',
-  '.github/workflows/ip-guard.yml',
-  '.gitignore',
-  'test/ip-leak-gate.test.js',
-  'test/consortium-neutrality.test.js'
+  '.gitignore'
 ]);
 
 const SYNTHETIC_FIXTURE_PREFIXES = [
@@ -73,13 +69,45 @@ const LARGE_FILE_EXEMPT_EXTENSIONS = new Set([
   '.svg', '.html', '.css', '.json'
 ]);
 
-// Build sensitive marker patterns dynamically so this file stays clean even under naive external grep
+// Build sensitive marker patterns from split fragments so zero raw restricted substrings exist in git index
 const PEM_PHRASE = ['PRIVATE', 'KEY'].join(' ');
 const NOTEBOOK_ID = ['2d2138bf', '851b', '4911', '95d6', '94b17729c8a4'].join('-');
-const PATENT_NUM = ['IL', '331905'].join('\\s*');
-const PATENT_DATE = ['14', '09', '2026'].join('\\/');
+const NOTEBOOK_LABEL = [['Note', 'bookLM'].join(''), '[^\\n]{0,40}', ['Note', 'book'].join(''), '[^\\n]{0,20}', 'ID'].join('');
+const PAT_NUM = ['331', '905'].join('');
+const PAT_FILING = ['14', '09', '2026'].join('\\/');
+const PAT_FILING_EN = ['September 14,', ' 2026'].join('');
+const PAT_DEADLINE = ['14', '09', '2027'].join('\\/');
+const TM_FILING = ['20', '09', '2026'].join('\\/');
+const TM_DEADLINE = ['20', '03', '2027'].join('\\/');
 const WIPO_DAS = ['B1', '7B'].join('');
+const ORDER_ID = ['942', '21'].join('');
+const ATTORNEY_DOM = ['levy', 'patent'].join('');
 const PRIVATE_REPO = ['github\\.com', 'moxno', 'PrivacyScrubber'].join('\\/');
+const PRIVATE_REPO_B64 = ['bW94bm8v', 'UHJpdmFjeVNjcnViYmVy'].join('');
+const MRR_TARGET = ['40,000', ' ILS'].join('');
+const GTM_JARGON = ['anti', 'cannibalization'].join('-');
+
+const ENGINE_IDENTIFIERS = [
+  ['pii', 'engine', 'core'].join('-'),
+  ['piiEngine', 'Core'].join(''),
+  ['tree', 'scrubber'].join('-'),
+  ['tree', 'Scrubber'].join(''),
+  ['quota', 'engine'].join('-'),
+  ['quota', 'Engine'].join(''),
+  ['worker', 'manager'].join('-'),
+  ['worker', 'Manager'].join(''),
+  ['HIPAA_PHI', 'PATTERNS'].join('_'),
+  ['IBAN', 'PATTERNS'].join('_'),
+  ['FRE_502', 'PATTERNS'].join('_'),
+  ['CLOUD_SECRET', 'PATTERNS'].join('_'),
+  ['session', 'Map'].join(''),
+  ['FUZZY_RECOVERY', 'REGEX'].join('_')
+];
+
+const ENGINE_ASSIGNMENTS = [
+  ['PROFILE', 'RULES'].join('_'),
+  ['industry', 'Profiles'].join('')
+];
 
 const SECRET_RULES = [
   {
@@ -90,32 +118,32 @@ const SECRET_RULES = [
   {
     id: 'API_KEY_SK',
     desc: 'Live/synthetic sk-* secret key literal',
-    regex: /\bsk-[a-zA-Z0-9_-]{20,}\b/
+    regex: new RegExp('\\b' + ['sk', '[a-zA-Z0-9_-]{20,}'].join('-') + '\\b')
   },
   {
     id: 'STRIPE_SECRET_KEY',
     desc: 'Stripe secret key literal',
-    regex: /\bsk_(?:live|test)_[a-zA-Z0-9]+\b/
+    regex: new RegExp('\\b' + ['sk', '(?:live|test)', '[a-zA-Z0-9]+'].join('_') + '\\b')
   },
   {
     id: 'GITHUB_PAT',
     desc: 'GitHub personal access token literal',
-    regex: /\bghp_[a-zA-Z0-9]{36}\b/
+    regex: new RegExp('\\b' + ['ghp', '[a-zA-Z0-9]{36}'].join('_') + '\\b')
   },
   {
     id: 'GOOGLE_API_KEY',
     desc: 'Google Cloud / Firebase API key literal',
-    regex: /\bAIza[0-9A-Za-z_-]{35}\b/
+    regex: new RegExp('\\b' + ['AI', 'za[0-9A-Za-z_-]{35}'].join('') + '\\b')
   },
   {
     id: 'AWS_ACCESS_KEY',
     desc: 'AWS IAM access key ID literal',
-    regex: /\bAKIA(?![0-9A-Z]*EXAMPLE\b)[0-9A-Z]{16}\b/
+    regex: new RegExp('\\b' + ['AK', 'IA(?![0-9A-Z]*EXAMPLE\\b)[0-9A-Z]{16}'].join('') + '\\b')
   },
   {
     id: 'PADDLE_SECRET_KEY',
     desc: 'Paddle API secret key literal',
-    regex: /\bpaddle(?:secret|_live|_test)_[a-zA-Z0-9]+\b/i
+    regex: new RegExp('\\b' + ['paddle', '(?:secret|_live|_test)_[a-zA-Z0-9]+'].join('') + '\\b', 'i')
   },
   {
     id: 'HARDCODED_ENV_SECRET',
@@ -127,27 +155,39 @@ const SECRET_RULES = [
 const COMMERCIAL_IP_RULES = [
   {
     id: 'COMMERCIAL_ENGINE_ID',
-    desc: 'PrivacyScrubber closed-source engine identifier',
-    regex: /\b(?:pii-engine-core|piiEngineCore|tree-scrubber|treeScrubber|quota-engine|quotaEngine|worker-manager|workerManager|HIPAA_PHI_PATTERNS|IBAN_PATTERNS|FRE_502_PATTERNS|CLOUD_SECRET_PATTERNS)\b|(?:PROFILE_RULES|industryProfiles)\s*=/
+    desc: 'Closed-source commercial engine or internal state identifier',
+    regex: new RegExp(`\\b(?:${ENGINE_IDENTIFIERS.join('|')})\\b|(?:${ENGINE_ASSIGNMENTS.join('|')})\\s*=`)
   },
   {
     id: 'NOTEBOOKLM_INTERNAL_ID',
-    desc: 'Internal NotebookLM grounding notebook identifier',
-    regex: new RegExp(`NotebookLM[^\\n]{0,40}Notebook[^\\n]{0,20}ID|${NOTEBOOK_ID}`, 'i')
+    desc: 'Internal grounding notebook UUID or header',
+    regex: new RegExp(`${NOTEBOOK_LABEL}|${NOTEBOOK_ID}`, 'i')
   },
   {
     id: 'PRIVATE_REPO_URL',
-    desc: 'Confidential private repository URL',
-    regex: new RegExp(PRIVATE_REPO, 'i')
+    desc: 'Confidential private repository URL or encoded slug',
+    regex: new RegExp(`${PRIVATE_REPO}|${PRIVATE_REPO_B64}`, 'i')
   },
   {
     id: 'UNPUBLISHED_PATENT_DETAIL',
-    desc: 'Unpublished patent application number, filing date, or WIPO DAS access code',
-    regex: new RegExp(`\\b${PATENT_NUM}\\b|\\b${PATENT_DATE}\\b|\\b${WIPO_DAS}\\b`)
+    desc: 'Unpublished patent/trademark identifier, filing date, WIPO DAS code, or counsel domain',
+    regex: new RegExp(`${PAT_NUM}|${PAT_FILING}|${PAT_FILING_EN}|${PAT_DEADLINE}|${TM_FILING}|${TM_DEADLINE}|\\b${WIPO_DAS}\\b|\\b${ORDER_ID}\\b|${ATTORNEY_DOM}`, 'i')
+  },
+  {
+    id: 'INTERNAL_GTM_LEAK',
+    desc: 'Internal MRR target or internal strategy jargon',
+    regex: new RegExp(`${MRR_TARGET}|\\b${GTM_JARGON}\\b`, 'i')
+  },
+  {
+    id: 'ZERO_HEBREW_RATCHET',
+    desc: 'Non-English Hebrew character in consortium repository',
+    regex: /[\u0590-\u05FF]/
   }
 ];
 
-const PRIVATE_KEY_FILENAME_REGEX = /\b(?:ztds_license_private|ztds_ed25519_private)\b/;
+const PRIVATE_KEY_FILENAME_REGEX = new RegExp(
+  `\\b(?:${[['ztds_license', 'private'].join('_'), ['ztds_ed25519', 'private'].join('_')].join('|')})\\b`
+);
 
 function normalizeRelPath(relPath) {
   return relPath.split(path.sep).join('/').replace(/^\.\//, '');
