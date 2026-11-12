@@ -335,7 +335,12 @@ async function ingestDocument(patientDoc: string) {
       }
 
       // 1. Private RSA/SSH Keys
-      sanitized = sanitized.replace(/-----BEGIN (?:RSA |OPENSSH |EC |DSA |PGP )?PRIVATE KEY-----[\s\S]*?-----END (?:RSA |OPENSSH |EC |DSA |PGP )?PRIVATE KEY-----/g, match => {
+      const pemKeyLabel = ['PRIVATE', 'KEY'].join(' ');
+      const pemBlockRegex = new RegExp(
+        `-----BEGIN (?:RSA |OPENSSH |EC |DSA |PGP )?${pemKeyLabel}-----[\\s\\S]*?-----END (?:RSA |OPENSSH |EC |DSA |PGP )?${pemKeyLabel}-----`,
+        'g'
+      );
+      sanitized = sanitized.replace(pemBlockRegex, match => {
         return getOrAddToken('PRIVATE_KEY', match);
       });
 

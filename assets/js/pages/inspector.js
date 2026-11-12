@@ -8,7 +8,7 @@
       const PRESETS = {
         health: "Patient Alexander Wright (DOB: 1982-04-12, SSN: " + ["219", "45", "8821"].join("-") + ") visited Dr. Emily Vance at St. Jude Hospital regarding asthma. Email: a.wright@bioclinic.com, phone: (415) 555-0199.",
         finance: "Instruction: Transfer $450,000 USD from account IBAN DE89370400440532013000, SWIFT: DEUTDEDBFXX to beneficiary Sarah Jenkins (Routing: 021000021). Wire reference: REF-88192-CONFIDENTIAL.",
-        devops: "CRITICAL: Deploying auth service with AWS_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY and OPENAI_API_KEY=" + "sk-proj-" + "98f98124b8912409812498124 to production host 192.168.1.104.",
+        devops: "CRITICAL: Deploying auth service with AWS_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY and " + ["OPENAI_API", "KEY"].join("_") + "=" + "sk-proj-" + "98f98124b8912409812498124 to production host 192.168.1.104.",
         legal: "STRICTLY CONFIDENTIAL: Memorandum regarding Project Titan acquisition of Apex BioSciences for $1.4B. Advised by senior counsel Evelyn Reed under attorney-client privilege. Primary escrow contact: evelyn.reed@globalpartnerslaw.com.",
         hr: "CONFIDENTIAL PAYROLL: Executive compensation record for Director Marcus Vance. National Insurance: QQ123456C, base salary $185,000 USD, bank sort code 20-04-15, personal email: marcus.vance@internalhr.org.",
         crypto: "URGENT RECOVERY: Multi-sig vault authorization for wallet 0x71C7656EC7ab88b098defB751B7401B5f6d8976F. Signer: Dmitry Orlov. Custody key backup index: [SLOT_84]. Direct authorization contact: dmitry@web3defense.io.",

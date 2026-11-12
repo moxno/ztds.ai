@@ -130,4 +130,17 @@ if (fs.existsSync(legalDir) && fs.existsSync(pubLegalDir)) {
   }
 }
 
+// Synchronize scripts/pre-commit <-> .git/hooks/pre-commit so local Git hooks never drift
+const preCommitSrc = path.join(rootDir, 'scripts/pre-commit');
+const gitHooksDir = path.join(rootDir, '.git/hooks');
+if (fs.existsSync(preCommitSrc) && fs.existsSync(gitHooksDir)) {
+  const preCommitDst = path.join(gitHooksDir, 'pre-commit');
+  const srcBuf = fs.readFileSync(preCommitSrc);
+  if (!fs.existsSync(preCommitDst) || !srcBuf.equals(fs.readFileSync(preCommitDst))) {
+    fs.writeFileSync(preCommitDst, srcBuf, { mode: 0o755 });
+    syncedCount++;
+  }
+  fs.chmodSync(preCommitDst, 0o755);
+}
+
 console.log(`[ZTDS Build] Mirror sync complete (${mirrorPairs.length} canonical pairs verified, ${syncedCount} updated).`);

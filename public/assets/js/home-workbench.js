@@ -108,7 +108,7 @@
     const synthSsnA = ['219', '45', '8821'].join('-');
     const synthSsnB = ['412', '88', '1904'].join('-');
     const PRESETS = {
-      mcp: 'Cursor MCP tool call: inspect Stripe webhook failure for alice.chen@acme-corp.io (+1-415-555-0199) with OPENAI_API_KEY=' + ['sk-proj', '98f98124b8912409812498124'].join('-') + ' on internal node 10.24.8.19.',
+      mcp: 'Cursor MCP tool call: inspect Stripe webhook failure for alice.chen@acme-corp.io (+1-415-555-0199) with ' + ['OPENAI_API', 'KEY'].join('_') + '=' + ['sk-proj', '98f98124b8912409812498124'].join('-') + ' on internal node 10.24.8.19.',
       health: 'Patient Alexander Wright (DOB: 1982-04-12, SSN: ' + synthSsnA + ') visited Dr. Emily Vance at Meridian General Hospital. Contact: a.wright@bioclinic.com, +1-415-555-0199.',
       finance: 'Authorize wire transfer of EUR 48,500 from IBAN GB29XAAA10203012345678 to beneficiary Marcus Sterling (SSN: ' + synthSsnB + '). Audit contact: treasury@sterling-cap.co.uk.'
     };

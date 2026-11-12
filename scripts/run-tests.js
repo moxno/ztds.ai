@@ -52,7 +52,8 @@ const TASKS = [
   ['test/apply-wizard.test.js'],
   ['test/badge-ui.test.js'],
   ['test/trial-workbench.test.js'],
-  ['test/sitewide-hardening.test.js']
+  ['test/sitewide-hardening.test.js'],
+  ['test/ip-leak-gate.test.js']
 ];
 
 function runNodeTask(args) {
