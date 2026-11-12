@@ -8,7 +8,7 @@
   <meta name="keywords" content="AI DLP comparison, proxy DLP vs client-side, cloud DLP AI prompts, shadow AI, PII redaction architecture, zero egress, ZTDS">
   <meta name="author" content="Ilya Sibiryakov">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="theme-color" content="#020617">
+  <meta name="theme-color" content="#f8fafc">
   <link rel="canonical" href="https://ztds.ai/frameworks/client-side-sanitization-vs-proxy-dlp/">
   <link rel="alternate" hreflang="en" href="https://ztds.ai/frameworks/client-side-sanitization-vs-proxy-dlp/">
   <link rel="alternate" hreflang="x-default" href="https://ztds.ai/frameworks/client-side-sanitization-vs-proxy-dlp/">
@@ -256,7 +256,6 @@
       <a href="/blueprints/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">10 AI &amp; RAG Blueprints</a>
       <a href="/compliance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Global Regulatory Compliance Matrix</a>
       <a href="/frameworks/" class="block px-3 py-2 rounded-lg text-emerald-700 font-semibold bg-emerald-50/70">Framework Mappings (OWASP, NIST, EU AI Act)</a>
-      <a href="/frameworks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Framework Mappings (OWASP, NIST, EU AI Act)</a>
       <a href="/benchmarks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">AI Safety &amp; Latency Benchmarks</a>
       <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper (DOIs)</a>
       <a href="/evidentiary-sovereignty/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Evidentiary Sovereignty</a>
@@ -292,28 +291,28 @@
   </aside>
 
   <main id="main-content" class="flex-grow">
-    <section class="relative bg-slate-900 text-white py-14 lg:py-20 border-b border-slate-800 overflow-hidden">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <nav aria-label="Breadcrumb" class="mb-6">
-          <ol class="flex flex-wrap items-center gap-2 text-xs font-mono text-slate-300">
-            <li><a href="/" class="hover:text-white transition-colors">ZTDS.ai</a></li><li aria-hidden="true">/</li>
-            <li><a href="/frameworks/" class="hover:text-white transition-colors">Framework Mappings</a></li><li aria-hidden="true">/</li>
-            <li class="text-emerald-400 font-semibold" aria-current="page">Client-Side Sanitization vs Proxy DLP</li>
+    <section class="relative bg-white border-b border-slate-200 py-6 sm:py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+          <nav aria-label="Breadcrumb" class="no-print mb-3">
+          <ol class="flex flex-wrap items-center gap-1.5 text-xs font-mono text-slate-500">
+            <li><a href="/" class="hover:text-slate-900 transition-colors">ZTDS.ai</a></li><li aria-hidden="true" class="text-slate-300">/</li>
+            <li><a href="/frameworks/" class="hover:text-slate-900 transition-colors">Framework Mappings</a></li><li aria-hidden="true" class="text-slate-300">/</li>
+            <li class="text-emerald-700 font-semibold" aria-current="page">Client-Side Sanitization vs Proxy DLP</li>
           </ol>
         </nav>
-        <div class="max-w-4xl">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/90 border border-emerald-700/70 text-emerald-300 text-xs font-mono mb-4">
-            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-semibold mb-3">
+            <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
             ARCHITECTURE COMPARISON · AI DLP
           </div>
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight mb-5">Client-Side AI Sanitization vs Proxy DLP: <span class="text-emerald-400">Where The Data Path Differs</span></h1>
-          <p class="text-slate-300 text-base sm:text-lg leading-relaxed">Organizations controlling AI data exposure generally choose among three placements: a network or cloud proxy that inspects traffic, a provider-side filter, or a sanitization step inside the client. The choice changes who sees the raw data, what new parties are introduced, and how the control fails.</p>
+          <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight mb-3">Client-Side AI Sanitization vs Proxy DLP: <span class="block text-emerald-700 hero-display-line mt-0.5">Where The Data Path Differs</span></h1>
+          <p class="hero-lead text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">Organizations controlling AI data exposure generally choose among three placements: a network or cloud proxy that inspects traffic, a provider-side filter, or a sanitization step inside the client. The choice changes who sees the raw data, what new parties are introduced, and how the control fails.</p>
         </div>
       </div>
     </section>
-    <section class="py-12 border-b border-slate-200 bg-white">
+    <section class="py-7 sm:py-9 border-b border-slate-200 bg-white">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="summary" class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 scroll-mt-24">Summary</h2>
+        <h2 id="summary" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">Summary</h2>
         <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">A network proxy or cloud redaction service must receive the raw content to inspect it. That adds a processing party and a data path that carries cleartext. A client-side step removes identifiers before any outbound call, so no additional party receives the raw values.</p>
         <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">Neither placement is universally better. Proxies give central visibility and policy for managed traffic. Client-side sanitization gives a smaller disclosure boundary and works where traffic cannot be inspected. Many programs use both.</p>
         <div class="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 leading-relaxed">
@@ -321,9 +320,9 @@
         </div>
       </div>
     </section>
-    <section class="py-12 border-b border-slate-200 bg-[#f8fafc]">
+    <section class="py-7 sm:py-9 border-b border-slate-200 bg-[#f8fafc]">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="control-mapping" class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 scroll-mt-24">Placement Comparison</h2>
+        <h2 id="control-mapping" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">Placement Comparison</h2>
         <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" tabindex="0" role="region" aria-label="Control mapping table">
         <table class="min-w-full">
           <thead class="bg-slate-50"><tr><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Dimension</th><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Network or cloud proxy</th><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Client-side sanitization</th></tr></thead>
@@ -339,22 +338,22 @@
       </div>
       </div>
     </section>
-    <section class="py-12 border-b border-slate-200 bg-white">
+    <section class="py-7 sm:py-9 border-b border-slate-200 bg-white">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="how-ztds-applies" class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 scroll-mt-24">How ZTDS Applies</h2>
+        <h2 id="how-ztds-applies" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">How ZTDS Applies</h2>
         <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">A pragmatic pairing:</p>
         <ul class="list-disc pl-6 space-y-2 text-sm sm:text-base text-slate-700 leading-relaxed mb-4"><li>Use client-side sanitization to shrink what leaves endpoints and agent runtimes.</li><li>Use network controls to detect and block channels that bypass the client step.</li><li>Compare outcomes with the same test corpus and the perimeter scanner so the decision rests on measured leakage.</li></ul>
       </div>
     </section>
-    <section class="py-12 border-b border-slate-200 bg-[#f8fafc]">
+    <section class="py-7 sm:py-9 border-b border-slate-200 bg-[#f8fafc]">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="limits" class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 scroll-mt-24">What This Control Does Not Cover</h2>
+        <h2 id="limits" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">What This Control Does Not Cover</h2>
         <ul class="list-disc pl-6 space-y-2 text-sm sm:text-base text-slate-700 leading-relaxed mb-4"><li>Client-side sanitization does not replace network monitoring, endpoint management, or access control.</li><li>Its protection depends on the step actually running in every client that handles the data.</li><li>Proxy products vary widely; the comparison above describes architectural placement, not specific vendors.</li></ul>
       </div>
     </section>
-    <section class="py-12 border-b border-slate-200 bg-[#f8fafc]">
+    <section class="py-7 sm:py-9 border-b border-slate-200 bg-[#f8fafc]">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="frequently-asked-questions" class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 scroll-mt-24">Frequently Asked Questions</h2>
+        <h2 id="frequently-asked-questions" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">Frequently Asked Questions</h2>
         <details id="faq-1" class="group rounded-xl border border-slate-200 bg-white p-4 mb-3">
           <summary class="cursor-pointer text-sm sm:text-base font-semibold text-slate-900">Is client-side sanitization a replacement for a DLP proxy?</summary>
           <p class="mt-3 text-sm text-slate-700 leading-relaxed">No. They address different placements. A proxy gives central visibility for managed traffic, while client-side sanitization shrinks the data that leaves the endpoint. Many programs combine them.</p>
@@ -369,15 +368,14 @@
         </details>
       </div>
     </section>
-    <section class="py-12 border-b border-slate-200 bg-white">
+    <section class="py-7 sm:py-9 border-b border-slate-200 bg-white">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="related-resources" class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 scroll-mt-24">Related Specifications and Tools</h2>
+        <h2 id="related-resources" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">Related Specifications and Tools</h2>
         <ul class="list-disc pl-6 space-y-2 text-sm sm:text-base text-slate-700 leading-relaxed"><li><a href="/scanner/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">Perimeter Scanner</a> &mdash; Browser-based egress audit with local receipts.</li><li><a href="/ciso/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">CISO Procurement Pack</a> &mdash; Vendor-questionnaire and safe harbor material.</li><li><a href="/compliance/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">Global Regulatory Compliance Matrix</a> &mdash; Cross-framework statutory mapping.</li><li><a href="/frameworks/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">Framework Mappings Hub</a> &mdash; All framework mappings in one index.</li><li><a href="/frameworks/owasp-llm02-sensitive-information-disclosure/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">OWASP LLM02 Sensitive Information Disclosure</a> &mdash; Maps pre-egress tokenization to OWASP LLM02:2025 and states what it does not cover.</li><li><a href="/frameworks/nist-ai-rmf-generative-ai-profile-pii/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">NIST AI RMF Generative AI Profile</a> &mdash; Places ZTDS across GOVERN, MAP, MEASURE, and MANAGE for generative AI data privacy risk.</li><li><a href="/frameworks/eu-ai-act-article-10-data-governance/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">EU AI Act Article 10 Data Governance</a> &mdash; Describes how pre-ingestion sanitization supports Article 10 data governance practices.</li><li><a href="/frameworks/gdpr-article-25-32-ai-prompts/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">GDPR Articles 25 and 32 for AI Prompts</a> &mdash; Explains data protection by design and security of processing for prompts sent to AI providers.</li><li><a href="/frameworks/hipaa-safe-harbor-llm-prompts/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">HIPAA Safe Harbor for LLM Prompts</a> &mdash; Shows how 18-identifier removal applies to clinical text sent to language models.</li><li><a href="/frameworks/mcp-stdio-pii-sanitization/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">MCP stdio PII Sanitization</a> &mdash; Describes a local gateway that sanitizes JSON-RPC traffic over the MCP stdio transport.</li><li><a href="/frameworks/rag-pipeline-pii-sanitization/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">RAG Pipeline PII Sanitization</a> &mdash; Places sanitization at ingestion, retrieval, and prompt assembly stages of a RAG pipeline.</li></ul>
       </div>
     </section>
   </main>
-
-    <!-- AI Verification, Citation & LLM Context Ingestion Bar -->
+  <!-- AI Verification, Citation & LLM Context Ingestion Bar -->
   <aside id="ztds-ai-citation-bar" aria-label="AI Verification and Citation Tools" class="bg-slate-900 border-t border-slate-800 text-slate-300 py-6 px-4 sm:px-6 lg:px-8 no-print">
     <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
       <div class="space-y-1">

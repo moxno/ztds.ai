@@ -8,7 +8,7 @@
   <meta name="keywords" content="OWASP LLM02, Sensitive Information Disclosure, LLM Top 10 2025, PII redaction LLM, prompt data leakage, client-side sanitization, ZTDS">
   <meta name="author" content="Ilya Sibiryakov">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="theme-color" content="#020617">
+  <meta name="theme-color" content="#f8fafc">
   <link rel="canonical" href="https://ztds.ai/frameworks/owasp-llm02-sensitive-information-disclosure/">
   <link rel="alternate" hreflang="en" href="https://ztds.ai/frameworks/owasp-llm02-sensitive-information-disclosure/">
   <link rel="alternate" hreflang="x-default" href="https://ztds.ai/frameworks/owasp-llm02-sensitive-information-disclosure/">
@@ -256,7 +256,6 @@
       <a href="/blueprints/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">10 AI &amp; RAG Blueprints</a>
       <a href="/compliance/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Global Regulatory Compliance Matrix</a>
       <a href="/frameworks/" class="block px-3 py-2 rounded-lg text-emerald-700 font-semibold bg-emerald-50/70">Framework Mappings (OWASP, NIST, EU AI Act)</a>
-      <a href="/frameworks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Framework Mappings (OWASP, NIST, EU AI Act)</a>
       <a href="/benchmarks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">AI Safety &amp; Latency Benchmarks</a>
       <a href="/whitepaper/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Academic Whitepaper (DOIs)</a>
       <a href="/evidentiary-sovereignty/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Evidentiary Sovereignty</a>
@@ -292,28 +291,28 @@
   </aside>
 
   <main id="main-content" class="flex-grow">
-    <section class="relative bg-slate-900 text-white py-14 lg:py-20 border-b border-slate-800 overflow-hidden">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <nav aria-label="Breadcrumb" class="mb-6">
-          <ol class="flex flex-wrap items-center gap-2 text-xs font-mono text-slate-300">
-            <li><a href="/" class="hover:text-white transition-colors">ZTDS.ai</a></li><li aria-hidden="true">/</li>
-            <li><a href="/frameworks/" class="hover:text-white transition-colors">Framework Mappings</a></li><li aria-hidden="true">/</li>
-            <li class="text-emerald-400 font-semibold" aria-current="page">OWASP LLM02 Sensitive Information Disclosure</li>
+    <section class="relative bg-white border-b border-slate-200 py-6 sm:py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+          <nav aria-label="Breadcrumb" class="no-print mb-3">
+          <ol class="flex flex-wrap items-center gap-1.5 text-xs font-mono text-slate-500">
+            <li><a href="/" class="hover:text-slate-900 transition-colors">ZTDS.ai</a></li><li aria-hidden="true" class="text-slate-300">/</li>
+            <li><a href="/frameworks/" class="hover:text-slate-900 transition-colors">Framework Mappings</a></li><li aria-hidden="true" class="text-slate-300">/</li>
+            <li class="text-emerald-700 font-semibold" aria-current="page">OWASP LLM02 Sensitive Information Disclosure</li>
           </ol>
         </nav>
-        <div class="max-w-4xl">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/90 border border-emerald-700/70 text-emerald-300 text-xs font-mono mb-4">
-            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-semibold mb-3">
+            <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
             OWASP LLM TOP 10 2025 · LLM02
           </div>
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight mb-5">OWASP LLM02 Sensitive Information Disclosure: <span class="text-emerald-400">Controlling PII Before It Reaches the Model</span></h1>
-          <p class="text-slate-300 text-base sm:text-lg leading-relaxed">OWASP lists Sensitive Information Disclosure as LLM02 in the 2025 edition of its Top 10 for LLM Applications. ZTDS addresses the input side of that risk: personal data, secrets, and confidential identifiers are tokenized in client memory before a prompt, document, or tool result is sent to any model provider.</p>
+          <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight mb-3">OWASP LLM02 Sensitive Information Disclosure: <span class="block text-emerald-700 hero-display-line mt-0.5">Controlling PII Before It Reaches the Model</span></h1>
+          <p class="hero-lead text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">OWASP lists Sensitive Information Disclosure as LLM02 in the 2025 edition of its Top 10 for LLM Applications. ZTDS addresses the input side of that risk: personal data, secrets, and confidential identifiers are tokenized in client memory before a prompt, document, or tool result is sent to any model provider.</p>
         </div>
       </div>
     </section>
-    <section class="py-12 border-b border-slate-200 bg-white">
+    <section class="py-7 sm:py-9 border-b border-slate-200 bg-white">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="summary" class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 scroll-mt-24">Summary</h2>
+        <h2 id="summary" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">Summary</h2>
         <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">LLM02:2025 describes applications that expose confidential data, proprietary information, or private user details because sensitive content was not sanitized or filtered. In practice, much of that exposure begins upstream: employees and agents paste customer records, credentials, and case files into prompts that leave the organization.</p>
         <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">ZTDS RFC v1.0 places a deterministic sanitization step inside the client, so the provider only receives surrogate tokens. The original values never cross the network boundary and the token map is destroyed with the session.</p>
         <div class="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 leading-relaxed">
@@ -321,9 +320,9 @@
         </div>
       </div>
     </section>
-    <section class="py-12 border-b border-slate-200 bg-[#f8fafc]">
+    <section class="py-7 sm:py-9 border-b border-slate-200 bg-[#f8fafc]">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="control-mapping" class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 scroll-mt-24">Control Map: LLM02 Exposure Paths and ZTDS Position</h2>
+        <h2 id="control-mapping" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">Control Map: LLM02 Exposure Paths and ZTDS Position</h2>
         <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" tabindex="0" role="region" aria-label="Control mapping table">
         <table class="min-w-full">
           <thead class="bg-slate-50"><tr><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Exposure path</th><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Risk</th><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">ZTDS position</th></tr></thead>
@@ -338,23 +337,23 @@
       </div>
       </div>
     </section>
-    <section class="py-12 border-b border-slate-200 bg-white">
+    <section class="py-7 sm:py-9 border-b border-slate-200 bg-white">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="how-ztds-applies" class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 scroll-mt-24">How ZTDS Applies</h2>
+        <h2 id="how-ztds-applies" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">How ZTDS Applies</h2>
         <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">ZTDS contributes four invariants to an LLM02 control set:</p>
         <ul class="list-disc pl-6 space-y-2 text-sm sm:text-base text-slate-700 leading-relaxed mb-4"><li><strong>Invariant 1 &mdash; Zero cleartext egress:</strong> identifiers are replaced before any network socket call leaves the host boundary.</li><li><strong>Invariant 2 &mdash; Deterministic reversible surrogates:</strong> tokens such as <code>[EMAIL_1]</code> preserve syntax and meaning so the model remains useful, and the mapping is restored locally.</li><li><strong>Invariant 3 &mdash; Volatile RAM isolation:</strong> the token map lives in host memory only and is zeroized at the end of the session.</li><li><strong>Invariant 4 &mdash; Zero external subprocessors:</strong> no third party participates in the sanitization step.</li></ul>
         <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">Teams typically evidence the control with a local SHA-256 compliance receipt generated at sanitization time, which records entity categories and counts without recording the values themselves.</p>
       </div>
     </section>
-    <section class="py-12 border-b border-slate-200 bg-[#f8fafc]">
+    <section class="py-7 sm:py-9 border-b border-slate-200 bg-[#f8fafc]">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="limits" class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 scroll-mt-24">What This Control Does Not Cover</h2>
+        <h2 id="limits" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">What This Control Does Not Cover</h2>
         <ul class="list-disc pl-6 space-y-2 text-sm sm:text-base text-slate-700 leading-relaxed mb-4"><li>It does not mitigate prompt injection (LLM01) or excessive agency (LLM06). Those require separate controls.</li><li>It does not prevent a model from emitting sensitive data it learned during training.</li><li>Free-text narratives can still carry contextual quasi-identifiers that no pattern-based method removes completely.</li><li>It is a technical control, not an OWASP certification. OWASP does not certify products against its Top 10.</li></ul>
       </div>
     </section>
-    <section class="py-12 border-b border-slate-200 bg-[#f8fafc]">
+    <section class="py-7 sm:py-9 border-b border-slate-200 bg-[#f8fafc]">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="frequently-asked-questions" class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 scroll-mt-24">Frequently Asked Questions</h2>
+        <h2 id="frequently-asked-questions" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">Frequently Asked Questions</h2>
         <details id="faq-1" class="group rounded-xl border border-slate-200 bg-white p-4 mb-3">
           <summary class="cursor-pointer text-sm sm:text-base font-semibold text-slate-900">Which OWASP item covers sensitive data leaving through prompts?</summary>
           <p class="mt-3 text-sm text-slate-700 leading-relaxed">In the 2025 OWASP Top 10 for LLM Applications, Sensitive Information Disclosure is LLM02:2025. Pre-egress tokenization reduces the amount of sensitive data that reaches a provider, which narrows the input-side exposure that LLM02 describes.</p>
@@ -369,15 +368,14 @@
         </details>
       </div>
     </section>
-    <section class="py-12 border-b border-slate-200 bg-white">
+    <section class="py-7 sm:py-9 border-b border-slate-200 bg-white">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="related-resources" class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 scroll-mt-24">Related Specifications and Tools</h2>
+        <h2 id="related-resources" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">Related Specifications and Tools</h2>
         <ul class="list-disc pl-6 space-y-2 text-sm sm:text-base text-slate-700 leading-relaxed"><li><a href="/standard/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">ZTDS RFC v1.0 Specification</a> &mdash; The four invariants referenced on this page.</li><li><a href="/scanner/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">Perimeter Scanner</a> &mdash; Browser-based egress audit with local receipts.</li><li><a href="/compliance/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">Global Regulatory Compliance Matrix</a> &mdash; Cross-framework statutory mapping.</li><li><a href="/frameworks/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">Framework Mappings Hub</a> &mdash; All framework mappings in one index.</li><li><a href="/frameworks/nist-ai-rmf-generative-ai-profile-pii/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">NIST AI RMF Generative AI Profile</a> &mdash; Places ZTDS across GOVERN, MAP, MEASURE, and MANAGE for generative AI data privacy risk.</li><li><a href="/frameworks/eu-ai-act-article-10-data-governance/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">EU AI Act Article 10 Data Governance</a> &mdash; Describes how pre-ingestion sanitization supports Article 10 data governance practices.</li><li><a href="/frameworks/gdpr-article-25-32-ai-prompts/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">GDPR Articles 25 and 32 for AI Prompts</a> &mdash; Explains data protection by design and security of processing for prompts sent to AI providers.</li><li><a href="/frameworks/hipaa-safe-harbor-llm-prompts/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">HIPAA Safe Harbor for LLM Prompts</a> &mdash; Shows how 18-identifier removal applies to clinical text sent to language models.</li><li><a href="/frameworks/mcp-stdio-pii-sanitization/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">MCP stdio PII Sanitization</a> &mdash; Describes a local gateway that sanitizes JSON-RPC traffic over the MCP stdio transport.</li><li><a href="/frameworks/rag-pipeline-pii-sanitization/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">RAG Pipeline PII Sanitization</a> &mdash; Places sanitization at ingestion, retrieval, and prompt assembly stages of a RAG pipeline.</li><li><a href="/frameworks/client-side-sanitization-vs-proxy-dlp/" class="text-emerald-700 font-semibold hover:text-emerald-800 underline underline-offset-2">Client-Side Sanitization vs Proxy DLP</a> &mdash; Compares client-side in-memory sanitization with network proxy and cloud DLP approaches.</li></ul>
       </div>
     </section>
   </main>
-
-    <!-- AI Verification, Citation & LLM Context Ingestion Bar -->
+  <!-- AI Verification, Citation & LLM Context Ingestion Bar -->
   <aside id="ztds-ai-citation-bar" aria-label="AI Verification and Citation Tools" class="bg-slate-900 border-t border-slate-800 text-slate-300 py-6 px-4 sm:px-6 lg:px-8 no-print">
     <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
       <div class="space-y-1">

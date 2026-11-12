@@ -166,10 +166,10 @@
           const isMatch = (b.getAttribute('data-domain') || 'ALL').toLowerCase() === initDomain.toLowerCase();
           if (isMatch) {
             activeDomain = b.getAttribute('data-domain') || 'ALL';
-            b.className = 'bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors';
+            b.className = 'bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors';
             b.setAttribute('aria-selected', 'true');
           } else {
-            b.className = 'bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors';
+            b.className = 'bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors';
             b.setAttribute('aria-selected', 'false');
           }
         });
@@ -204,11 +204,14 @@
         btn.addEventListener('click', () => {
           activeDomain = btn.getAttribute('data-domain') || 'ALL';
           domainBtns.forEach(b => {
-            b.className = 'bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors';
+            b.className = 'bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors';
             b.setAttribute('aria-selected', 'false');
           });
-          btn.className = 'bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors';
+          btn.className = 'bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors';
           btn.setAttribute('aria-selected', 'true');
+          if (typeof btn.scrollIntoView === 'function') {
+            btn.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+          }
           renderScenarios();
           syncBenchUrl();
         });

@@ -32,7 +32,7 @@ const PAGES = [
     keywords: 'OWASP LLM02, Sensitive Information Disclosure, LLM Top 10 2025, PII redaction LLM, prompt data leakage, client-side sanitization, ZTDS',
     headline: 'OWASP LLM02:2025 Sensitive Information Disclosure mapped to ZTDS pre-egress sanitization',
     badge: 'OWASP LLM TOP 10 2025 · LLM02',
-    h1: 'OWASP LLM02 Sensitive Information Disclosure: <span class="text-emerald-400">Controlling PII Before It Reaches the Model</span>',
+    h1: 'OWASP LLM02 Sensitive Information Disclosure: <span class="block text-emerald-700 hero-display-line mt-0.5">Controlling PII Before It Reaches the Model</span>',
     lead: 'OWASP lists Sensitive Information Disclosure as LLM02 in the 2025 edition of its Top 10 for LLM Applications. ZTDS addresses the input side of that risk: personal data, secrets, and confidential identifiers are tokenized in client memory before a prompt, document, or tool result is sent to any model provider.',
     summary: [
       'LLM02:2025 describes applications that expose confidential data, proprietary information, or private user details because sensitive content was not sanitized or filtered. In practice, much of that exposure begins upstream: employees and agents paste customer records, credentials, and case files into prompts that leave the organization.',
@@ -75,7 +75,7 @@ const PAGES = [
     keywords: 'NIST AI RMF, NIST AI 600-1, Generative AI Profile, GOVERN MAP MEASURE MANAGE, AI data privacy risk, PII sanitization, ZTDS',
     headline: 'NIST AI RMF Generative AI Profile (AI 600-1) data privacy risk mapped to ZTDS',
     badge: 'NIST AI RMF · AI 600-1 GENERATIVE AI PROFILE',
-    h1: 'NIST AI RMF Generative AI Profile: <span class="text-emerald-400">Where PII Sanitization Fits</span>',
+    h1: 'NIST AI RMF Generative AI Profile: <span class="block text-emerald-700 hero-display-line mt-0.5">Where PII Sanitization Fits</span>',
     lead: 'NIST published AI 600-1, the Generative Artificial Intelligence Profile, in July 2024 as a companion to the AI Risk Management Framework. It lists data privacy among its generative AI risk categories. This page shows where a client-side sanitization control supports each of the four AI RMF functions.',
     summary: [
       'The AI RMF is voluntary. It organizes risk work into GOVERN, MAP, MEASURE, and MANAGE, and the Generative AI Profile applies those functions to risks that are new or amplified by generative systems, including data privacy.',
@@ -120,7 +120,7 @@ const PAGES = [
     keywords: 'EU AI Act Article 10, data governance, high-risk AI systems, training data personal data, data minimization, PII sanitization, ZTDS',
     headline: 'EU AI Act Article 10 data governance and the role of pre-ingestion PII sanitization',
     badge: 'EU AI ACT · ARTICLE 10 · DATA GOVERNANCE',
-    h1: 'EU AI Act Article 10 Data Governance: <span class="text-emerald-400">What Sanitization Contributes</span>',
+    h1: 'EU AI Act Article 10 Data Governance: <span class="block text-emerald-700 hero-display-line mt-0.5">What Sanitization Contributes</span>',
     lead: 'Article 10 of the EU AI Act sets data and data governance requirements for high-risk AI systems that use training, validation, and testing datasets. Sanitizing personal data before it enters a dataset or a model pipeline is one practical way to support those practices. It does not replace the provider obligations.',
     summary: [
       'Article 10 requires providers of high-risk AI systems to apply appropriate data governance and management practices to the datasets they use, including attention to data collection processes and the origin of data, data-preparation operations such as annotation, labelling, cleaning, and aggregation, an assessment of the availability, quantity, and suitability of the data sets, and examination for possible biases. These duties apply to training, validation, and testing data sets where a high-risk system is developed using techniques that train AI models; for systems that do not train models, they apply to the testing data sets.',
@@ -163,7 +163,7 @@ const PAGES = [
     keywords: 'GDPR Article 25, GDPR Article 32, AI prompts personal data, pseudonymisation, Recital 26, data minimisation, data protection by design, ZTDS',
     headline: 'GDPR Articles 25 and 32 applied to prompts sent to AI providers through client-side pseudonymization',
     badge: 'GDPR · ARTICLE 25 · ARTICLE 32 · RECITAL 26',
-    h1: 'GDPR Articles 25 and 32 for AI Prompts: <span class="text-emerald-400">Pseudonymization Before Egress</span>',
+    h1: 'GDPR Articles 25 and 32 for AI Prompts: <span class="block text-emerald-700 hero-display-line mt-0.5">Pseudonymization Before Egress</span>',
     lead: 'When staff or agents send personal data to an AI provider, GDPR obligations on minimization, data protection by design, and security of processing apply to the controller. Replacing identifiers with surrogates in client memory before transmission is a technical measure that supports those obligations. It does not turn personal data into anonymous data.',
     summary: [
       'Article 5(1)(c) requires data minimisation. Article 25 requires data protection by design and by default and names pseudonymisation as an example of an appropriate measure. Article 32 requires appropriate technical and organisational measures and names pseudonymisation as an example.',
@@ -210,7 +210,7 @@ const PAGES = [
     keywords: 'HIPAA Safe Harbor, 45 CFR 164.514, 18 identifiers, LLM clinical text, PHI de-identification, re-identification code, covered entity AI, ZTDS',
     headline: 'HIPAA Safe Harbor de-identification applied to clinical text sent to language models',
     badge: 'HIPAA · 45 CFR 164.514(b)(2) · SAFE HARBOR',
-    h1: 'HIPAA Safe Harbor for LLM Prompts: <span class="text-emerald-400">Removing the 18 Identifiers Before Egress</span>',
+    h1: 'HIPAA Safe Harbor for LLM Prompts: <span class="block text-emerald-700 hero-display-line mt-0.5">Removing the 18 Identifiers Before Egress</span>',
     lead: 'The HIPAA Safe Harbor method in 45 CFR 164.514(b)(2) treats health information as de-identified when 18 listed identifier categories are removed and the covered entity has no actual knowledge that the remainder could identify a person. This page explains how that applies when clinical text is prepared for a language model.',
     summary: [
       'Safe Harbor is a rule-based method. It lists identifier categories of the individual and of relatives, employers, and household members that must be removed, including names, geographic subdivisions smaller than a state, date elements other than year, contact numbers, and record numbers.',
@@ -257,7 +257,7 @@ const PAGES = [
     keywords: 'MCP security, Model Context Protocol, stdio transport, JSON-RPC, MCP PII leakage, MCP gateway, agent tool output, ZTDS',
     headline: 'Sanitizing Model Context Protocol stdio traffic with a local in-memory gateway',
     badge: 'MODEL CONTEXT PROTOCOL · STDIO · JSON-RPC',
-    h1: 'MCP Server Security: <span class="text-emerald-400">PII Sanitization on the stdio Transport</span>',
+    h1: 'MCP Server Security: <span class="block text-emerald-700 hero-display-line mt-0.5">PII Sanitization on the stdio Transport</span>',
     lead: 'The Model Context Protocol uses JSON-RPC 2.0 messages. Its stdio transport has the client launch the server as a subprocess and exchange newline-delimited messages over standard input and output. That local boundary is a natural place to sanitize traffic before it reaches a model.',
     summary: [
       'With stdio, the MCP client starts the server as a child process and writes JSON-RPC messages to its stdin while reading responses from its stdout. The server may write logs to stderr. Nothing other than valid MCP messages may be written to stdin or stdout.',
@@ -303,7 +303,7 @@ const PAGES = [
     keywords: 'RAG PII sanitization, retrieval augmented generation privacy, vector database PII, embedding leakage, prompt assembly, LangChain privacy, ZTDS',
     headline: 'PII sanitization stages in a retrieval-augmented generation pipeline',
     badge: 'RAG · VECTOR STORES · PROMPT ASSEMBLY',
-    h1: 'RAG Pipeline PII Sanitization: <span class="text-emerald-400">Three Places To Intervene</span>',
+    h1: 'RAG Pipeline PII Sanitization: <span class="block text-emerald-700 hero-display-line mt-0.5">Three Places To Intervene</span>',
     lead: 'A retrieval-augmented generation pipeline moves personal data through ingestion, embedding, storage, retrieval, and prompt assembly before any model sees it. Each stage is an opportunity to exclude identifiers. This page lists where a deterministic sanitization step reduces exposure and where it does not.',
     summary: [
       'Source documents often contain identifiers that the retrieval task does not need. If they are embedded as-is, the vector store becomes a second copy of sensitive data, and retrieved chunks carry those identifiers into every prompt.',
@@ -350,7 +350,7 @@ const PAGES = [
     keywords: 'AI DLP comparison, proxy DLP vs client-side, cloud DLP AI prompts, shadow AI, PII redaction architecture, zero egress, ZTDS',
     headline: 'Client-side in-memory sanitization compared with network proxy and cloud DLP for AI traffic',
     badge: 'ARCHITECTURE COMPARISON · AI DLP',
-    h1: 'Client-Side AI Sanitization vs Proxy DLP: <span class="text-emerald-400">Where The Data Path Differs</span>',
+    h1: 'Client-Side AI Sanitization vs Proxy DLP: <span class="block text-emerald-700 hero-display-line mt-0.5">Where The Data Path Differs</span>',
     lead: 'Organizations controlling AI data exposure generally choose among three placements: a network or cloud proxy that inspects traffic, a provider-side filter, or a sanitization step inside the client. The choice changes who sees the raw data, what new parties are introduced, and how the control fails.',
     summary: [
       'A network proxy or cloud redaction service must receive the raw content to inspect it. That adds a processing party and a data path that carries cleartext. A client-side step removes identifiers before any outbound call, so no additional party receives the raw values.',
@@ -393,7 +393,7 @@ const HUB = {
   desc: 'Technical control mappings from the ZTDS client-side sanitization standard to OWASP LLM02, NIST AI RMF, EU AI Act Art. 10, GDPR, HIPAA, MCP, and RAG.',
   keywords: 'ZTDS framework mappings, OWASP LLM02, NIST AI RMF, EU AI Act Article 10, GDPR Article 32, HIPAA Safe Harbor, MCP security, RAG privacy',
   headline: 'ZTDS Framework Mappings: how a client-side sanitization control maps to published security and privacy frameworks',
-  h1: 'ZTDS Framework Mappings: <span class="text-emerald-400">One Control, Many Frameworks</span>',
+  h1: 'ZTDS Framework Mappings: <span class="block text-emerald-700 hero-display-line mt-0.5">One Control, Many Frameworks</span>',
   lead: 'Each page maps the ZTDS RFC v1.0 client-side sanitization control to one framework or architecture topic, states what the control contributes, and lists what it does not cover. The mappings are written for security, privacy, and engineering teams that need to justify the control to auditors.',
   method: [
     'Every mapping follows the same structure: a summary, a control-mapping table, how ZTDS applies, and an explicit list of limits. The four ZTDS invariants are the common vocabulary:',

@@ -7,9 +7,13 @@
       function applyRegionFilter(region, updateUrl) {
         filterBtns.forEach(function (b) {
           var isMatch = b.getAttribute('data-reg-filter') === region;
+          b.setAttribute('aria-selected', isMatch ? 'true' : 'false');
           b.className = isMatch
-            ? 'reg-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900 text-white font-semibold cursor-pointer transition-all'
-            : 'reg-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-all';
+            ? 'reg-filter-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900 text-white font-semibold cursor-pointer transition-all'
+            : 'reg-filter-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-all';
+          if (isMatch && updateUrl && typeof b.scrollIntoView === 'function') {
+            b.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+          }
         });
         cards.forEach(function (card) {
           if (region === 'all' || card.getAttribute('data-region') === region) {

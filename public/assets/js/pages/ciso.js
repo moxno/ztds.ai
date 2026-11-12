@@ -259,9 +259,14 @@ ${licenseContent}`;
           tabBtns.forEach(b => {
             b.classList.remove('active', 'bg-slate-900', 'text-white', 'border-slate-900');
             b.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
+            b.setAttribute('aria-selected', 'false');
           });
           matchedBtn.classList.add('active', 'bg-slate-900', 'text-white', 'border-slate-900');
           matchedBtn.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
+          matchedBtn.setAttribute('aria-selected', 'true');
+          if (typeof matchedBtn.scrollIntoView === 'function') {
+            matchedBtn.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+          }
 
           const targetId = matchedBtn.getAttribute('data-target');
           panes.forEach(pane => {
@@ -435,9 +440,14 @@ ${licenseContent}`;
           tabBtns.forEach(b => {
             b.classList.remove('active', 'bg-white', 'text-slate-900', 'shadow-sm', 'border', 'border-slate-200', 'font-bold');
             b.classList.add('text-slate-600', 'font-medium');
+            b.setAttribute('aria-selected', 'false');
           });
           btn.classList.add('active', 'bg-white', 'text-slate-900', 'shadow-sm', 'border', 'border-slate-200', 'font-bold');
           btn.classList.remove('text-slate-600', 'font-medium');
+          btn.setAttribute('aria-selected', 'true');
+          if (typeof btn.scrollIntoView === 'function') {
+            btn.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+          }
 
           const targetId = btn.getAttribute('data-target');
           views.forEach(v => {

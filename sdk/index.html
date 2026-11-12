@@ -1411,11 +1411,11 @@ static_resources:
             <h3 id="1-click-client-configuration" class="text-sm font-bold text-slate-900 font-sans scroll-mt-24">1-Click Client Configuration</h3>
             <p class="text-xs text-slate-500 mt-0.5">Select your AI development environment to copy the exact air-gapped stdio connector snippet:</p>
           </div>
-          <div class="flex flex-wrap items-center gap-1.5 p-1 bg-white border border-slate-200 rounded-lg text-xs" id="mcpClientTabs" role="tablist">
-            <button type="button" class="mcp-client-btn px-2.5 py-1 rounded-md bg-slate-900 text-white font-bold shadow-xs text-xs touch-target" data-client="cursor" role="tab" aria-selected="true">Cursor IDE</button>
-            <button type="button" class="mcp-client-btn px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-semibold text-xs touch-target" data-client="desktop" role="tab" aria-selected="false">Claude Desktop</button>
-            <button type="button" class="mcp-client-btn px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-semibold text-xs touch-target" data-client="cli" role="tab" aria-selected="false">Claude Code CLI</button>
-            <button type="button" class="mcp-client-btn px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-semibold text-xs touch-target" data-client="zed" role="tab" aria-selected="false">Zed / VS Code</button>
+          <div class="tablist-scroll items-center gap-1.5 p-1 bg-white border border-slate-200 rounded-lg text-xs max-w-full" id="mcpClientTabs" role="tablist" aria-label="MCP Client Configuration">
+            <button type="button" class="mcp-client-btn whitespace-nowrap px-2.5 py-1 rounded-md bg-slate-900 text-white font-bold shadow-xs text-xs touch-target" data-client="cursor" role="tab" aria-selected="true">Cursor IDE</button>
+            <button type="button" class="mcp-client-btn whitespace-nowrap px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-semibold text-xs touch-target" data-client="desktop" role="tab" aria-selected="false">Claude Desktop</button>
+            <button type="button" class="mcp-client-btn whitespace-nowrap px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-semibold text-xs touch-target" data-client="cli" role="tab" aria-selected="false">Claude Code CLI</button>
+            <button type="button" class="mcp-client-btn whitespace-nowrap px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-semibold text-xs touch-target" data-client="zed" role="tab" aria-selected="false">Zed / VS Code</button>
           </div>
         </div>
 
@@ -1669,11 +1669,11 @@ static_resources:
         <!-- Multiplatform Quickstart Snippets -->
         <div class="rounded-xl border border-slate-800 bg-slate-950 overflow-hidden font-mono text-xs">
           <div class="flex flex-wrap items-center justify-between px-4 py-2.5 bg-slate-900 border-b border-slate-800 gap-2">
-            <div class="flex flex-wrap items-center gap-1.5" role="tablist" aria-label="Quickstart Target">
-              <button type="button" role="tab" aria-selected="true" id="tabSnippetMcp" class="snippet-tab-btn active px-2.5 py-1 rounded text-xs bg-slate-800 text-emerald-400 font-bold transition-colors cursor-pointer" data-target="mcp">Cursor &amp; Claude MCP</button>
-              <button type="button" role="tab" aria-selected="false" id="tabSnippetNode" class="snippet-tab-btn px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="node">Node.js / TS SDK</button>
-              <button type="button" role="tab" aria-selected="false" id="tabSnippetPython" class="snippet-tab-btn px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="python">Python RAG</button>
-              <button type="button" role="tab" aria-selected="false" id="tabSnippetDocker" class="snippet-tab-btn px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="docker">Docker / K8s Env</button>
+            <div class="tablist-scroll items-center gap-1.5 max-w-full" role="tablist" aria-label="Quickstart Target">
+              <button type="button" role="tab" aria-selected="true" id="tabSnippetMcp" class="snippet-tab-btn active whitespace-nowrap px-2.5 py-1 rounded text-xs bg-slate-800 text-emerald-400 font-bold transition-colors cursor-pointer" data-target="mcp">Cursor &amp; Claude MCP</button>
+              <button type="button" role="tab" aria-selected="false" id="tabSnippetNode" class="snippet-tab-btn whitespace-nowrap px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="node">Node.js / TS SDK</button>
+              <button type="button" role="tab" aria-selected="false" id="tabSnippetPython" class="snippet-tab-btn whitespace-nowrap px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="python">Python RAG</button>
+              <button type="button" role="tab" aria-selected="false" id="tabSnippetDocker" class="snippet-tab-btn whitespace-nowrap px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="docker">Docker / K8s Env</button>
             </div>
             <button type="button" id="btnCopyWorkbenchSnippet" class="text-slate-300 hover:text-emerald-300 text-xs font-sans font-semibold transition-colors flex items-center gap-1 cursor-pointer">
               <span>Copy Snippet</span>
@@ -2405,14 +2405,14 @@ jobs:
       </div>
 
       <!-- Mode Switcher Tabs -->
-      <div class="flex flex-wrap border-b border-slate-200 bg-white px-5 sm:px-6 gap-2 pt-3" role="tablist" aria-label="Licensing Mode">
-        <button type="button" role="tab" aria-selected="true" id="tabCheckoutBuy" class="checkout-tab-btn active pb-3 px-3 text-xs font-bold border-b-2 border-emerald-600 text-emerald-700 transition-colors">
+      <div class="tablist-scroll border-b border-slate-200 bg-white px-5 sm:px-6 gap-2 pt-3 max-w-full" role="tablist" aria-label="Licensing Mode">
+        <button type="button" role="tab" aria-selected="true" id="tabCheckoutBuy" class="checkout-tab-btn active whitespace-nowrap pb-3 px-3 text-xs font-bold border-b-2 border-emerald-600 text-emerald-700 transition-colors">
           Commercial License (PrivacyScrubber)
         </button>
-        <button type="button" role="tab" aria-selected="false" id="tabCheckoutTrial" class="checkout-tab-btn pb-3 px-3 text-xs font-semibold text-slate-500 border-b-2 border-transparent hover:text-slate-800 transition-colors">
+        <button type="button" role="tab" aria-selected="false" id="tabCheckoutTrial" class="checkout-tab-btn whitespace-nowrap pb-3 px-3 text-xs font-semibold text-slate-500 border-b-2 border-transparent hover:text-slate-800 transition-colors">
           Instant 14-Day Evaluation Key
         </button>
-        <button type="button" role="tab" aria-selected="false" id="tabCheckoutInvoice" class="checkout-tab-btn pb-3 px-3 text-xs font-semibold text-slate-500 border-b-2 border-transparent hover:text-slate-800 transition-colors">
+        <button type="button" role="tab" aria-selected="false" id="tabCheckoutInvoice" class="checkout-tab-btn whitespace-nowrap pb-3 px-3 text-xs font-semibold text-slate-500 border-b-2 border-transparent hover:text-slate-800 transition-colors">
           Enterprise Wire / PO
         </button>
       </div>

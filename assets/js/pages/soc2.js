@@ -10,9 +10,14 @@
         filterBtns.forEach(b => {
           b.classList.remove("bg-slate-900", "text-white");
           b.classList.add("bg-white", "border", "border-slate-200", "text-slate-600");
+          b.setAttribute("aria-selected", "false");
         });
         btn.classList.add("bg-slate-900", "text-white");
         btn.classList.remove("bg-white", "border", "border-slate-200", "text-slate-600");
+        btn.setAttribute("aria-selected", "true");
+        if (typeof btn.scrollIntoView === "function") {
+          btn.scrollIntoView({ block: "nearest", inline: "nearest", container: "nearest" });
+        }
 
         const filter = btn.getAttribute("data-filter");
         controlRows.forEach(row => {

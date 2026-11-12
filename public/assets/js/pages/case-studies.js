@@ -29,8 +29,11 @@
           const isCurrent = (b.getAttribute('data-filter') || 'all') === activeIndustry;
           b.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
           b.className = isCurrent
-            ? 'cs-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all'
-            : 'cs-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all';
+            ? 'cs-filter-btn whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all'
+            : 'cs-filter-btn whitespace-nowrap px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all';
+          if (isCurrent && syncHistory && typeof b.scrollIntoView === 'function') {
+            b.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+          }
         });
 
         if (resultsCount) {

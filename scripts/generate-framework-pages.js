@@ -41,7 +41,9 @@ if (!chrome.includes('ztds-sticky-header')) {
 }
 chrome = chrome
   .replace('class="block px-3 py-2 rounded-lg text-emerald-700 font-semibold bg-emerald-50/70">Global Regulatory Compliance Matrix</a>',
-    'class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Global Regulatory Compliance Matrix</a>\n      <a href="/frameworks/" class="block px-3 py-2 rounded-lg text-emerald-700 font-semibold bg-emerald-50/70">Framework Mappings (OWASP, NIST, EU AI Act)</a>')
+    'class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Global Regulatory Compliance Matrix</a>')
+  .replace('<a href="/frameworks/" class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Framework Mappings (OWASP, NIST, EU AI Act)</a>',
+    '<a href="/frameworks/" class="block px-3 py-2 rounded-lg text-emerald-700 font-semibold bg-emerald-50/70">Framework Mappings (OWASP, NIST, EU AI Act)</a>')
   .replace(/<div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50[\s\S]*?<\/div>\s*<\/div>\s*<!-- Navigation Links/,
     `<div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 font-medium">
           <span class="pulse-dot"></span>
@@ -70,7 +72,7 @@ function headBlock({ url, title, desc, keywords, jsonLd }) {
   <meta name="keywords" content="${esc(keywords)}">
   <meta name="author" content="Ilya Sibiryakov">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="theme-color" content="#020617">
+  <meta name="theme-color" content="#f8fafc">
   <link rel="canonical" href="${url}">
   <link rel="alternate" hreflang="en" href="${url}">
   <link rel="alternate" hreflang="x-default" href="${url}">
@@ -178,12 +180,12 @@ function breadcrumbHtml(items) {
   const lis = items
     .map((it, i) =>
       i === items.length - 1
-        ? `<li class="text-emerald-400 font-semibold" aria-current="page">${esc(it.name)}</li>`
-        : `<li><a href="${it.url}" class="hover:text-white transition-colors">${esc(it.name)}</a></li><li aria-hidden="true">/</li>`
+        ? `<li class="text-emerald-700 font-semibold" aria-current="page">${esc(it.name)}</li>`
+        : `<li><a href="${it.url}" class="hover:text-slate-900 transition-colors">${esc(it.name)}</a></li><li aria-hidden="true" class="text-slate-300">/</li>`
     )
     .join('\n            ');
-  return `<nav aria-label="Breadcrumb" class="mb-6">
-          <ol class="flex flex-wrap items-center gap-2 text-xs font-mono text-slate-300">
+  return `<nav aria-label="Breadcrumb" class="no-print mb-3">
+          <ol class="flex flex-wrap items-center gap-1.5 text-xs font-mono text-slate-500">
             ${lis}
           </ol>
         </nav>`;
@@ -191,16 +193,16 @@ function breadcrumbHtml(items) {
 
 function hero({ crumbs, badge, h1, lead }) {
   return `<main id="main-content" class="flex-grow">
-    <section class="relative bg-slate-900 text-white py-14 lg:py-20 border-b border-slate-800 overflow-hidden">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        ${breadcrumbHtml(crumbs)}
-        <div class="max-w-4xl">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/90 border border-emerald-700/70 text-emerald-300 text-xs font-mono mb-4">
-            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+    <section class="relative bg-white border-b border-slate-200 py-6 sm:py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+          ${breadcrumbHtml(crumbs)}
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-semibold mb-3">
+            <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
             ${esc(badge)}
           </div>
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight mb-5">${h1}</h1>
-          <p class="text-slate-300 text-base sm:text-lg leading-relaxed">${lead}</p>
+          <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight mb-3">${h1}</h1>
+          <p class="hero-lead text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">${lead}</p>
         </div>
       </div>
     </section>
@@ -208,9 +210,9 @@ function hero({ crumbs, badge, h1, lead }) {
 }
 
 function section(id, title, inner, alt) {
-  return `    <section class="py-12 border-b border-slate-200 ${alt ? 'bg-white' : 'bg-[#f8fafc]'}">
+  return `    <section class="py-7 sm:py-9 border-b border-slate-200 ${alt ? 'bg-white' : 'bg-[#f8fafc]'}">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="${id}" class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 scroll-mt-24">${esc(title)}</h2>
+        <h2 id="${id}" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">${esc(title)}</h2>
         ${inner}
       </div>
     </section>

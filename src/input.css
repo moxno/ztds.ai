@@ -996,4 +996,28 @@ main p {
   transform: translateY(-100%);
 }
 
+/* Sticky Table Column Headers & Form-Factor Hit-Target Sizing */
+main .overflow-x-auto {
+  max-inline-size: 100%;
+}
+
+main .overflow-x-auto > table > thead {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+}
+
+#ztds-cmd-trigger {
+  min-block-size: 36px;
+  min-inline-size: 36px;
+}
+
+@media (pointer: coarse) {
+  #ztds-cmd-trigger {
+    min-block-size: 44px;
+    min-inline-size: 44px;
+  }
+}
+
+
 

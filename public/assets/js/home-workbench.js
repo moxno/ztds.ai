@@ -81,16 +81,20 @@
       tabScan.setAttribute('aria-selected', isRam ? 'false' : 'true');
 
       tabRam.className = isRam
-        ? 'px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white shadow-xs transition-colors cursor-pointer inline-flex items-center gap-1.5'
-        : 'px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer inline-flex items-center gap-1.5';
+        ? 'whitespace-nowrap px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white shadow-xs transition-colors cursor-pointer inline-flex items-center gap-1.5'
+        : 'whitespace-nowrap px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer inline-flex items-center gap-1.5';
       tabScan.className = !isRam
-        ? 'px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white shadow-xs transition-colors cursor-pointer inline-flex items-center gap-1.5'
-        : 'px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer inline-flex items-center gap-1.5';
+        ? 'whitespace-nowrap px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white shadow-xs transition-colors cursor-pointer inline-flex items-center gap-1.5'
+        : 'whitespace-nowrap px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer inline-flex items-center gap-1.5';
 
       const ramDot = tabRam.querySelector('span');
       const scanDot = tabScan.querySelector('span');
-      if (ramDot) ramDot.className = isRam ? 'w-1.5 h-1.5 rounded-full bg-white' : 'w-1.5 h-1.5 rounded-full bg-slate-500';
-      if (scanDot) scanDot.className = !isRam ? 'w-1.5 h-1.5 rounded-full bg-white' : 'w-1.5 h-1.5 rounded-full bg-slate-500';
+      if (ramDot) ramDot.className = isRam ? 'w-1.5 h-1.5 rounded-full bg-white shrink-0' : 'w-1.5 h-1.5 rounded-full bg-slate-500 shrink-0';
+      if (scanDot) scanDot.className = !isRam ? 'w-1.5 h-1.5 rounded-full bg-white shrink-0' : 'w-1.5 h-1.5 rounded-full bg-slate-500 shrink-0';
+      const activeModeTab = isRam ? tabRam : tabScan;
+      if (typeof activeModeTab.scrollIntoView === 'function') {
+        activeModeTab.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+      }
     }
 
     if (tabRam && tabScan) {
@@ -758,9 +762,12 @@
           const active = b === btn;
           b.setAttribute('aria-selected', active ? 'true' : 'false');
           b.className = active
-            ? 'qs-tab-btn px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-emerald-400 transition-colors cursor-pointer'
-            : 'qs-tab-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-slate-200 transition-colors cursor-pointer';
+            ? 'qs-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-emerald-400 transition-colors cursor-pointer'
+            : 'qs-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-slate-200 transition-colors cursor-pointer';
         });
+        if (typeof btn.scrollIntoView === 'function') {
+          btn.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+        }
         qsPanes.forEach((pane) => {
           pane.classList.toggle('hidden', pane.id !== 'qs-pane-' + tab);
         });

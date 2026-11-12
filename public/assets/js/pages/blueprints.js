@@ -11,8 +11,11 @@
           const active = (b.getAttribute('data-cat') || 'ALL') === normalized;
           b.setAttribute('aria-selected', active ? 'true' : 'false');
           b.className = active
-            ? 'bp-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors'
-            : 'bp-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors';
+            ? 'bp-filter-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors'
+            : 'bp-filter-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors';
+          if (active && updateHistory && typeof b.scrollIntoView === 'function') {
+            b.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+          }
         });
         cards.forEach((card) => {
           if (normalized === 'ALL' || card.getAttribute('data-cat') === normalized) {

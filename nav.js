@@ -774,12 +774,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   } catch (_) {}
 
-  // Global UX 7: 1-Click Copy Table as Markdown for CISO/GRC & Engineering Matrices
+  // Global UX 7: Accessible Region Naming & 1-Click Copy Table as Markdown for CISO/GRC Matrices
   try {
     document.querySelectorAll('main .overflow-x-auto > table').forEach((table) => {
       const wrapper = table.parentElement;
       if (!wrapper || wrapper.dataset.tableCopyBound === 'true') return;
       wrapper.dataset.tableCopyBound = 'true';
+
+      if (!wrapper.hasAttribute('tabindex')) {
+        wrapper.setAttribute('tabindex', '0');
+      }
+      if (!wrapper.hasAttribute('role')) {
+        wrapper.setAttribute('role', 'region');
+      }
+      const existingLabel = wrapper.getAttribute('aria-label') || '';
+      if (!wrapper.hasAttribute('aria-labelledby') && (!existingLabel || existingLabel === 'Scrollable data table')) {
+        const captionWithId = table.querySelector('caption[id]');
+        const sectionEl = wrapper.closest('section, article, div');
+        const headingWithId = captionWithId || (sectionEl ? sectionEl.querySelector('h2[id], h3[id]') : null);
+        if (headingWithId && headingWithId.id) {
+          wrapper.setAttribute('aria-labelledby', headingWithId.id);
+          wrapper.removeAttribute('aria-label');
+        } else if (!existingLabel) {
+          wrapper.setAttribute('aria-label', 'Scrollable data table');
+        }
+      }
 
       const bar = document.createElement('div');
       bar.className = 'no-print flex justify-end mb-1.5';

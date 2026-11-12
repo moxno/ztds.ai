@@ -704,9 +704,14 @@
           toolBtns.forEach(b => {
             b.classList.remove('active', 'bg-emerald-500', 'text-slate-950');
             b.classList.add('text-slate-300');
+            b.setAttribute('aria-selected', 'false');
           });
           btn.classList.add('active', 'bg-emerald-500', 'text-slate-950');
           btn.classList.remove('text-slate-300');
+          btn.setAttribute('aria-selected', 'true');
+          if (typeof btn.scrollIntoView === 'function') {
+            btn.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+          }
 
           if (btnExecute) {
             const label = btnExecute.querySelector('span:first-child');
@@ -739,10 +744,12 @@
             if (activeTool === 'ztds_restore') {
               activeTool = 'ztds_sanitize';
               toolBtns.forEach(b => {
-                b.classList.toggle('active', b.getAttribute('data-tool') === 'ztds_sanitize');
-                b.classList.toggle('bg-emerald-500', b.getAttribute('data-tool') === 'ztds_sanitize');
-                b.classList.toggle('text-slate-950', b.getAttribute('data-tool') === 'ztds_sanitize');
-                b.classList.toggle('text-slate-300', b.getAttribute('data-tool') !== 'ztds_sanitize');
+                const isSan = b.getAttribute('data-tool') === 'ztds_sanitize';
+                b.classList.toggle('active', isSan);
+                b.classList.toggle('bg-emerald-500', isSan);
+                b.classList.toggle('text-slate-950', isSan);
+                b.classList.toggle('text-slate-300', !isSan);
+                b.setAttribute('aria-selected', isSan ? 'true' : 'false');
               });
               if (btnExecute) {
                 const label = btnExecute.querySelector('span:first-child');
@@ -762,9 +769,14 @@
           outTabs.forEach(t => {
             t.classList.remove('active', 'bg-slate-800', 'text-emerald-400');
             t.classList.add('text-slate-400');
+            t.setAttribute('aria-selected', 'false');
           });
           tab.classList.add('active', 'bg-slate-800', 'text-emerald-400');
           tab.classList.remove('text-slate-400');
+          tab.setAttribute('aria-selected', 'true');
+          if (typeof tab.scrollIntoView === 'function') {
+            tab.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+          }
 
           document.querySelectorAll('.sim-out-pane').forEach(p => p.classList.add('hidden'));
           if (activeOutTab === 'stdio' && document.getElementById('simPaneStdio')) document.getElementById('simPaneStdio').classList.remove('hidden');

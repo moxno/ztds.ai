@@ -170,6 +170,14 @@ for (const relPath of allPages) {
     changed = true;
   }
 
+  // 8. Deduplicate repeated /frameworks/ links inside #mobile-drawer
+  const dupFrameworksDrawerRe = /(<a\s+href="\/frameworks\/"[^>]*>Framework Mappings \(OWASP, NIST, EU AI Act\)<\/a>)\s*<a\s+href="\/frameworks\/"[^>]*>Framework Mappings \(OWASP, NIST, EU AI Act\)<\/a>/g;
+  if (dupFrameworksDrawerRe.test(content)) {
+    content = content.replace(dupFrameworksDrawerRe, '$1');
+    changed = true;
+    drawerUpdated++;
+  }
+
   if (changed) {
     fs.writeFileSync(fullPath, content, 'utf8');
   }

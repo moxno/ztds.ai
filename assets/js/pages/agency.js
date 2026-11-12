@@ -185,15 +185,21 @@ BrandMeWeb: Ilya Sibiryakov, Chief Architect (brandmeweb.com)`;
 
     // Tab Switching
     function setTab(activeTab) {
-      tabBtnProposal.className = activeTab === 'proposal' 
-        ? 'px-3 py-1.5 rounded-lg bg-slate-900 text-white font-bold transition-all'
-        : 'px-3 py-1.5 rounded-lg bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all font-medium';
-      tabBtnLlms.className = activeTab === 'llms' 
-        ? 'px-3 py-1.5 rounded-lg bg-slate-900 text-white font-bold transition-all'
-        : 'px-3 py-1.5 rounded-lg bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all font-medium';
-      tabBtnMemo.className = activeTab === 'memo' 
-        ? 'px-3 py-1.5 rounded-lg bg-slate-900 text-white font-bold transition-all'
-        : 'px-3 py-1.5 rounded-lg bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all font-medium';
+      const pairs = [
+        [tabBtnProposal, 'proposal'],
+        [tabBtnLlms, 'llms'],
+        [tabBtnMemo, 'memo']
+      ];
+      pairs.forEach(([b, key]) => {
+        const isAct = activeTab === key;
+        b.setAttribute('aria-selected', isAct ? 'true' : 'false');
+        b.className = isAct
+          ? 'whitespace-nowrap px-3 py-1.5 rounded-lg bg-slate-900 text-white font-bold transition-all'
+          : 'whitespace-nowrap px-3 py-1.5 rounded-lg bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all font-medium';
+        if (isAct && typeof b.scrollIntoView === 'function') {
+          b.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+        }
+      });
 
       tabContentProposal.classList.toggle('hidden', activeTab !== 'proposal');
       tabContentLlms.classList.toggle('hidden', activeTab !== 'llms');

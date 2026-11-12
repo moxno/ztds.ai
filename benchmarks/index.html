@@ -330,70 +330,71 @@
   <main id="main-content" class="flex-grow">
 
     <!-- HERO SECTION -->
-    <section class="relative bg-white border-b border-slate-200 py-12 lg:py-16">
+    <section class="relative bg-white border-b border-slate-200 py-6 sm:py-8">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto text-center">
-          <nav aria-label="Breadcrumb" class="no-print mb-3">
-          <ol class="flex flex-wrap items-center justify-center gap-1.5 text-xs font-mono text-slate-500"><li><a href="/" class="hover:text-slate-900 transition-colors">Home</a></li><li aria-hidden="true" class="text-slate-300">/</li><li class="text-emerald-700 font-semibold" aria-current="page">AI Safety &amp; Latency Benchmarks</li></ol>
-        </nav>
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-mono font-semibold text-emerald-800 mb-4">
+          <nav aria-label="Breadcrumb" class="no-print mb-2.5">
+            <ol class="flex flex-wrap items-center justify-center gap-1.5 text-xs font-mono text-slate-500"><li><a href="/" class="hover:text-slate-900 transition-colors">Home</a></li><li aria-hidden="true" class="text-slate-300">/</li><li class="text-emerald-700 font-semibold" aria-current="page">AI Safety &amp; Latency Benchmarks</li></ol>
+          </nav>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-mono font-semibold text-emerald-800 mb-3">
             <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
             <span>ZTDS CONSORTIUM WG-1 &amp; WG-4 &middot; OSF DOI: 10.17605/OSF.IO/5BYJF</span>
           </div>
 
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            AI Safety, Bijective Fidelity &amp; In-RAM Latency Benchmarks (2026)
+          <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            ZTDS&trade; AI Safety Benchmarks
+            <span class="block text-emerald-700 hero-display-line mt-0.5">Bijective Fidelity &amp; In&#8209;RAM Latency (2026)</span>
           </h1>
 
-          <p class="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
-            Empirical evaluation of the <strong>Zero-Trust Data Sanitization (ZTDS RFC v1.0)</strong> protocol across <strong>30 enterprise &amp; multimodal scenarios</strong> and <strong>6 frontier LLM families</strong>. Verify sub-millisecond volatile memory execution against legacy Cloud DLP proxies and heavy container NLP pipelines.
+          <p class="hero-lead mt-2.5 text-sm sm:text-base text-slate-600 leading-relaxed max-w-3xl mx-auto">
+            Empirical evaluation of <strong>ZTDS RFC v1.0</strong> across <strong>30 enterprise &amp; multimodal scenarios</strong> and <strong>6 frontier LLM families</strong>, comparing sub&#8209;millisecond volatile RAM execution against Cloud DLP proxies and container NLP pipelines.
           </p>
 
-          <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
-            <a href="#scenario-explorer" class="btn-trust text-xs sm:text-sm py-2.5 px-5 font-semibold shadow-sm">
+          <div class="mt-4 flex flex-wrap items-center justify-center gap-2.5">
+            <a href="#scenario-explorer" class="btn-trust text-xs py-2 px-4 font-semibold shadow-sm">
               Explore 30 Benchmark Scenarios &darr;
             </a>
-            <a href="#cli-runner" class="btn-navy text-xs sm:text-sm py-2.5 px-5 font-mono font-semibold shadow-sm">
+            <a href="#cli-runner" class="btn-navy text-xs py-2 px-4 font-mono font-semibold shadow-sm">
               npx ztds-bench --strict
             </a>
-            <a href="/benchmarks/ai-safety-benchmark.json" target="_blank" rel="noopener" class="btn-outline text-xs sm:text-sm py-2.5 px-4 font-mono font-semibold">
+            <a href="/benchmarks/ai-safety-benchmark.json" target="_blank" rel="noopener" class="btn-outline text-xs py-2 px-3.5 font-mono font-semibold">
               Download Dataset (.json) &rarr;
             </a>
           </div>
         </div>
 
         <!-- 4 Executive KPI Cards -->
-        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
+        <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-xs">
             <div class="text-xs font-mono uppercase tracking-wider text-slate-500 font-bold">Leakage Prevention Rate (LPR)</div>
-            <div class="text-3xl font-black text-emerald-700 font-mono mt-1">100.00%</div>
-            <div class="text-xs text-slate-600 mt-1">0.00 Bytes cleartext WAN egress across 118 sensitive entities in 30 scenarios</div>
+            <div class="text-2xl font-black text-emerald-700 font-mono mt-0.5">100.00%</div>
+            <div class="text-xs text-slate-600 mt-0.5">0.00 Bytes cleartext WAN egress across 118 entities in 30 scenarios</div>
           </div>
 
-          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-xs">
             <div class="text-xs font-mono uppercase tracking-wider text-slate-500 font-bold">Median In-RAM Latency (p50)</div>
-            <div class="text-3xl font-black text-slate-900 font-mono mt-1">42.8 &mu;s</div>
-            <div class="text-xs text-slate-600 mt-1">&lt; 0.3 ms p99 execution (5,600&times; faster than 240 ms Cloud DLP proxies)</div>
+            <div class="text-2xl font-black text-slate-900 font-mono mt-0.5">42.8 &mu;s</div>
+            <div class="text-xs text-slate-600 mt-0.5">&lt; 0.3 ms p99 execution (5,600&times; faster than 240 ms Cloud DLP proxies)</div>
           </div>
 
-          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-xs">
             <div class="text-xs font-mono uppercase tracking-wider text-slate-500 font-bold">Bijective Fidelity &amp; Context</div>
-            <div class="text-3xl font-black text-emerald-700 font-mono mt-1">100.00%</div>
-            <div class="text-xs text-slate-600 mt-1">Zero surrogate collisions (0.00% SCR) &amp; 100% local response restoration</div>
+            <div class="text-2xl font-black text-emerald-700 font-mono mt-0.5">100.00%</div>
+            <div class="text-xs text-slate-600 mt-0.5">Zero surrogate collisions (0.00% SCR) &amp; 100% local response restoration</div>
           </div>
 
-          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs">
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 shadow-xs">
             <div class="text-xs font-mono uppercase tracking-wider text-slate-500 font-bold">Frontier Models &amp; Sectors</div>
-            <div class="text-3xl font-black text-slate-900 font-mono mt-1">6 &times; 7</div>
-            <div class="text-xs text-slate-600 mt-1">GPT-4o, Claude 3.7, Gemini 2.0, o3, DeepSeek-V3 across 7 regulated verticals</div>
+            <div class="text-2xl font-black text-slate-900 font-mono mt-0.5">6 &times; 7</div>
+            <div class="text-xs text-slate-600 mt-0.5">GPT-4o, Claude 3.7, Gemini 2.0, o3, DeepSeek-V3 across 7 verticals</div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- SECTION 1: ARCHITECTURAL LATENCY & SUBPROCESSOR COMPARISON -->
-    <section class="py-12 lg:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl mb-8">
+    <section class="py-7 lg:py-9 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-5">
         <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Architectural Comparison</span>
         <h2 id="in-ram-ztds-protocol-vs-legacy-cloud-dlp-proxies-nlp-con" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 tracking-tight scroll-mt-24">
           In-RAM ZTDS Protocol vs. Legacy Cloud DLP Proxies &amp; NLP Containers
@@ -680,15 +681,15 @@
       </div>
 
       <!-- Domain Filter Pills -->
-      <div class="flex flex-wrap items-center gap-2 mb-6" id="benchDomainPills" role="tablist" aria-label="Filter scenarios by regulatory domain">
-        <button type="button" data-domain="ALL" role="tab" aria-selected="true" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors">All Scenarios (30)</button>
-        <button type="button" data-domain="Healthcare" role="tab" aria-selected="false" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Healthcare (HIPAA)</button>
-        <button type="button" data-domain="Financial" role="tab" aria-selected="false" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">FinTech (PCI/GLBA)</button>
-        <button type="button" data-domain="DevSecOps" role="tab" aria-selected="false" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">DevSecOps &amp; Secrets</button>
-        <button type="button" data-domain="Legal" role="tab" aria-selected="false" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Legal (FRE 502)</button>
-        <button type="button" data-domain="HR" role="tab" aria-selected="false" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">HR &amp; PeopleOps</button>
-        <button type="button" data-domain="Cyber" role="tab" aria-selected="false" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Cyber &amp; SIEM</button>
-        <button type="button" data-domain="Multimodal" role="tab" aria-selected="false" class="bench-domain-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Multimodal Vision (OCR)</button>
+      <div class="tablist-scroll items-center gap-2 pb-1 max-w-full mb-5" id="benchDomainPills" role="tablist" aria-label="Filter scenarios by regulatory domain">
+        <button type="button" data-domain="ALL" role="tab" aria-selected="true" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors">All Scenarios (30)</button>
+        <button type="button" data-domain="Healthcare" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Healthcare (HIPAA)</button>
+        <button type="button" data-domain="Financial" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">FinTech (PCI/GLBA)</button>
+        <button type="button" data-domain="DevSecOps" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">DevSecOps &amp; Secrets</button>
+        <button type="button" data-domain="Legal" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Legal (FRE 502)</button>
+        <button type="button" data-domain="HR" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">HR &amp; PeopleOps</button>
+        <button type="button" data-domain="Cyber" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Cyber &amp; SIEM</button>
+        <button type="button" data-domain="Multimodal" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Multimodal Vision (OCR)</button>
       </div>
 
       <!-- Status Bar -->

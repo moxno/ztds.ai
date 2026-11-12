@@ -198,11 +198,14 @@ document.addEventListener('DOMContentLoaded', () => {
       mcpClientBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           mcpClientBtns.forEach(b => {
-            b.className = 'mcp-client-btn px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-semibold text-xs touch-target';
+            b.className = 'mcp-client-btn whitespace-nowrap px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-semibold text-xs touch-target';
             b.setAttribute('aria-selected', 'false');
           });
-          btn.className = 'mcp-client-btn px-2.5 py-1 rounded-md bg-slate-900 text-white font-bold shadow-xs text-xs touch-target';
+          btn.className = 'mcp-client-btn whitespace-nowrap px-2.5 py-1 rounded-md bg-slate-900 text-white font-bold shadow-xs text-xs touch-target';
           btn.setAttribute('aria-selected', 'true');
+          if (typeof btn.scrollIntoView === 'function') {
+            btn.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+          }
 
           activeMcpClient = btn.getAttribute('data-client') || 'cursor';
           const cfg = mcpConfigs[activeMcpClient] || mcpConfigs.cursor;
@@ -449,30 +452,41 @@ document.addEventListener('DOMContentLoaded', () => {
           if (t) {
             t.classList.remove('border-emerald-600', 'text-emerald-700', 'font-bold');
             t.classList.add('border-transparent', 'text-slate-500', 'font-semibold');
+            t.setAttribute('aria-selected', 'false');
           }
         });
         panes.forEach(p => {
           if (p) p.classList.add('hidden');
         });
 
+        let activeCheckoutTab = null;
         if (tabKey === 'buy') {
           if (tabBuy) {
             tabBuy.classList.add('border-emerald-600', 'text-emerald-700', 'font-bold');
             tabBuy.classList.remove('border-transparent', 'text-slate-500', 'font-semibold');
+            tabBuy.setAttribute('aria-selected', 'true');
+            activeCheckoutTab = tabBuy;
           }
           if (paneBuy) paneBuy.classList.remove('hidden');
         } else if (tabKey === 'trial') {
           if (tabTrial) {
             tabTrial.classList.add('border-emerald-600', 'text-emerald-700', 'font-bold');
             tabTrial.classList.remove('border-transparent', 'text-slate-500', 'font-semibold');
+            tabTrial.setAttribute('aria-selected', 'true');
+            activeCheckoutTab = tabTrial;
           }
           if (paneTrial) paneTrial.classList.remove('hidden');
         } else if (tabKey === 'invoice') {
           if (tabInvoice) {
             tabInvoice.classList.add('border-emerald-600', 'text-emerald-700', 'font-bold');
             tabInvoice.classList.remove('border-transparent', 'text-slate-500', 'font-semibold');
+            tabInvoice.setAttribute('aria-selected', 'true');
+            activeCheckoutTab = tabInvoice;
           }
           if (paneInvoice) paneInvoice.classList.remove('hidden');
+        }
+        if (activeCheckoutTab && typeof activeCheckoutTab.scrollIntoView === 'function') {
+          activeCheckoutTab.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
         }
       }
 
@@ -654,10 +668,15 @@ document.addEventListener('DOMContentLoaded', () => {
       function updateWorkbenchSnippetTab(targetKey) {
         currentWorkbenchTarget = targetKey;
         snippetTabBtns.forEach(btn => {
-          if (btn.getAttribute('data-target') === targetKey) {
-            btn.className = 'snippet-tab-btn active px-2.5 py-1 rounded text-xs bg-slate-800 text-emerald-400 font-bold transition-colors cursor-pointer';
+          const isActive = btn.getAttribute('data-target') === targetKey;
+          btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          if (isActive) {
+            btn.className = 'snippet-tab-btn active whitespace-nowrap px-2.5 py-1 rounded text-xs bg-slate-800 text-emerald-400 font-bold transition-colors cursor-pointer';
+            if (typeof btn.scrollIntoView === 'function') {
+              btn.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+            }
           } else {
-            btn.className = 'snippet-tab-btn px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer';
+            btn.className = 'snippet-tab-btn whitespace-nowrap px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer';
           }
         });
 
