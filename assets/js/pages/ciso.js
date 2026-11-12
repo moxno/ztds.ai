@@ -518,9 +518,28 @@ ${licenseContent}`;
       const regimeSelect = document.getElementById('cisoRegimeSelect');
 
       if (callsSlider && vendorsSlider && regimeSelect) {
-        callsSlider.addEventListener('input', calculateCisoEstimator);
-        vendorsSlider.addEventListener('input', calculateCisoEstimator);
-        regimeSelect.addEventListener('change', calculateCisoEstimator);
+        const syncCisoPresetState = () => {
+          document.querySelectorAll('.ciso-preset-btn').forEach(b => {
+            const match = b.getAttribute('data-calls') === callsSlider.value &&
+                          b.getAttribute('data-vendors') === vendorsSlider.value &&
+                          b.getAttribute('data-regime') === regimeSelect.value;
+            b.classList.toggle('active', match);
+            b.classList.toggle('bg-slate-900', match);
+            b.classList.toggle('text-white', match);
+            b.classList.toggle('border-slate-900', match);
+            b.classList.toggle('shadow-sm', match);
+            b.classList.toggle('font-bold', match);
+            b.classList.toggle('bg-white', !match);
+            b.classList.toggle('text-slate-700', !match);
+            b.classList.toggle('border-slate-300', !match);
+            b.classList.toggle('font-semibold', !match);
+            b.setAttribute('aria-pressed', match ? 'true' : 'false');
+          });
+        };
+
+        callsSlider.addEventListener('input', () => { syncCisoPresetState(); calculateCisoEstimator(); });
+        vendorsSlider.addEventListener('input', () => { syncCisoPresetState(); calculateCisoEstimator(); });
+        regimeSelect.addEventListener('change', () => { syncCisoPresetState(); calculateCisoEstimator(); });
 
         // Stepper Buttons
         document.querySelectorAll('.ciso-step-btn').forEach(btn => {
@@ -530,6 +549,7 @@ ${licenseContent}`;
             const val = btn.getAttribute('data-val');
             if (targetEl && val) {
               targetEl.value = val;
+              syncCisoPresetState();
               calculateCisoEstimator();
             }
           });
@@ -538,13 +558,6 @@ ${licenseContent}`;
         // Preset Buttons
         document.querySelectorAll('.ciso-preset-btn').forEach(btn => {
           btn.addEventListener('click', () => {
-            document.querySelectorAll('.ciso-preset-btn').forEach(b => {
-              b.classList.remove('active', 'bg-slate-900', 'text-white', 'border-slate-900', 'shadow-sm', 'font-bold');
-              b.classList.add('bg-white', 'text-slate-700', 'border-slate-300', 'font-semibold');
-            });
-            btn.classList.add('active', 'bg-slate-900', 'text-white', 'border-slate-900', 'shadow-sm', 'font-bold');
-            btn.classList.remove('bg-white', 'text-slate-700', 'border-slate-300', 'font-semibold');
-
             const calls = btn.getAttribute('data-calls');
             const vendors = btn.getAttribute('data-vendors');
             const regime = btn.getAttribute('data-regime');
@@ -553,6 +566,7 @@ ${licenseContent}`;
             if (vendors) vendorsSlider.value = vendors;
             if (regime) regimeSelect.value = regime;
 
+            syncCisoPresetState();
             calculateCisoEstimator();
           });
         });

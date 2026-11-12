@@ -473,4 +473,131 @@ console.log('--> Test 7: Screen-1 Main-Before-Aside Order, Single Skip-Link, The
   console.log(`    [PASS] Screen-1 main-before-aside order, single skip-links, #f8fafc theme-color, ${sitemapUrls.length}/${sitemapUrls.length} Sitemap/llms.txt/Cmd+K parity, and WAI-ARIA widgets verified.`);
 }
 
-console.log('\n[SUMMARY] ALL 7 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
+// Test 8: Wave 4 Roving Tablist Navigation, Modal Inert Locking, IME-Safe Enter, Form Ergonomics & 100% Schema.org WebPage Parity
+console.log('--> Test 8: Roving Tablists, Modal Inert Locking, IME-Safe Enter, :user-invalid Sync, <search> & 100% WebPage Graph Parity');
+{
+  const WEBPAGE_TYPES = new Set([
+    'WebPage',
+    'CollectionPage',
+    'AboutPage',
+    'ProfilePage',
+    'ItemPage',
+    'ContactPage',
+    'CheckoutPage'
+  ]);
+
+  const missingAutocomplete = [];
+  const resizeNoneTextareas = [];
+  const tabAriaControls = [];
+  const modalDialogViolations = [];
+  const missingWebPageGraph = [];
+
+  for (const relPath of HTML_FILES) {
+    const html = fs.readFileSync(path.join(ROOT, relPath), 'utf8');
+
+    for (const m of html.matchAll(/<input\b[^>]*>/gi)) {
+      const tag = m[0];
+      const type = (tag.match(/\btype=["']([^"']+)["']/i) || [, 'text'])[1].toLowerCase();
+      if (['hidden', 'checkbox', 'radio', 'range', 'file', 'submit', 'button'].includes(type)) continue;
+      if (/\breadonly\b/i.test(tag)) continue;
+      if (!/\bautocomplete=/i.test(tag)) {
+        missingAutocomplete.push(`${relPath}: ${tag}`);
+      }
+    }
+
+    for (const m of html.matchAll(/<textarea\b[^>]*>/gi)) {
+      if (/\bresize-none\b/.test(m[0]) && !/field-sizing\s*:\s*content/i.test(m[0])) {
+        resizeNoneTextareas.push(`${relPath}: ${m[0]}`);
+      }
+    }
+
+    for (const m of html.matchAll(/<[^>]*\brole=["']tab["'][^>]*>/gi)) {
+      if (/\baria-controls=/i.test(m[0])) {
+        tabAriaControls.push(`${relPath}: ${m[0]}`);
+      }
+    }
+
+    for (const m of html.matchAll(/<div\b[^>]*\bid=["'][^"']*Modal[^"']*["'][^>]*>/gi)) {
+      const tag = m[0];
+      const id = (tag.match(/\bid=["']([^"']+)["']/i) || [, ''])[1];
+      if (!/^(?:procurementModal|caseStudyModal|badgeModal|fellowBadgeModal|cisoLeadModal|certModal|memoPreviewModal|modalCisoAuditReport|checkoutModal|modalCertificatePrint)$/.test(id)) {
+        continue;
+      }
+      if (!/\brole=["']dialog["']/i.test(tag) || !/\baria-modal=["']true["']/i.test(tag)) {
+        modalDialogViolations.push(`${relPath}: ${tag}`);
+      }
+    }
+
+    if (relPath !== '404.html') {
+      const ldBlocks = [...html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+      let hasWebPage = false;
+      for (const block of ldBlocks) {
+        const parsed = JSON.parse(block[1]);
+        const graph = Array.isArray(parsed['@graph']) ? parsed['@graph'] : [parsed];
+        if (graph.some((n) => (Array.isArray(n['@type']) ? n['@type'] : [n['@type']]).some((t) => WEBPAGE_TYPES.has(t)))) {
+          hasWebPage = true;
+        }
+      }
+      if (!hasWebPage) {
+        missingWebPageGraph.push(relPath);
+      }
+    }
+  }
+
+  assert.strictEqual(missingAutocomplete.length, 0, `Editable text-like <input> controls must specify autocomplete:\n${missingAutocomplete.join('\n')}`);
+  assert.strictEqual(resizeNoneTextareas.length, 0, `<textarea> controls must not disable resizing via resize-none:\n${resizeNoneTextareas.join('\n')}`);
+  assert.strictEqual(tabAriaControls.length, 0, `[role="tab"] controls must omit unused aria-controls:\n${tabAriaControls.join('\n')}`);
+  assert.strictEqual(modalDialogViolations.length, 0, `Custom modal overlays must carry role="dialog" and aria-modal="true":\n${modalDialogViolations.join('\n')}`);
+  assert.strictEqual(missingWebPageGraph.length, 0, `Every indexable route must define a WebPage node in Schema.org @graph:\n${missingWebPageGraph.join('\n')}`);
+
+  // Verify semantic <search> + type="search" across all 6 directory filter pages
+  for (const searchPage of [
+    'benchmarks/index.html',
+    'case-studies/index.html',
+    'ciso/index.html',
+    'companies/index.html',
+    'fellows/index.html',
+    'registry/index.html'
+  ]) {
+    const html = fs.readFileSync(path.join(ROOT, searchPage), 'utf8');
+    assert(/<search\b[\s\S]*?<input\b[^>]*\btype=["']search["']/i.test(html), `${searchPage} must wrap its filter <input type="search"> in a semantic <search> landmark`);
+  }
+
+  // Verify preset button groups expose role="group" + aria-pressed across all 4 interactive workbenches
+  for (const [presetPage, cls] of [
+    ['index.html', 'hero-preset-btn'],
+    ['ciso/index.html', 'ciso-preset-btn'],
+    ['mcp/index.html', 'sim-preset-btn'],
+    ['scanner/index.html', 'mode0-preset-btn']
+  ]) {
+    const html = fs.readFileSync(path.join(ROOT, presetPage), 'utf8');
+    assert(new RegExp(`role=["']group["'][\\s\\S]*?${cls}`).test(html), `${presetPage} must wrap .${cls} controls in a labeled role="group"`);
+    const btns = [...html.matchAll(new RegExp(`<button\\b[^>]*\\bclass=["'][^"']*\\b${cls}\\b[^"']*["'][^>]*>`, 'gi'))];
+    assert(btns.length >= 3, `Expected >= 3 .${cls} buttons in ${presetPage}`);
+    for (const b of btns) {
+      assert(/\baria-pressed=["'](?:true|false)["']/i.test(b[0]), `${presetPage} .${cls} missing aria-pressed: ${b[0]}`);
+    }
+  }
+
+  // Verify printable legal/memo top bars use <header> rather than complementary <aside> before <main>
+  for (const printPage of ['ciso/memo/index.html', 'ciso/memo.html', 'docs/legal/order-form/index.html', 'docs/legal/order-form.html']) {
+    const html = fs.readFileSync(path.join(ROOT, printPage), 'utf8');
+    const mainIdx = html.indexOf('<main');
+    assert(mainIdx !== -1 && !/<aside\b/i.test(html.slice(0, mainIdx)), `${printPage} must use <header> rather than <aside> before <main>`);
+  }
+
+  // Verify global nav.js + apply.js + input.css runtime invariants
+  const navJs = fs.readFileSync(path.join(ROOT, 'nav.js'), 'utf8');
+  const applyJs = fs.readFileSync(path.join(ROOT, 'assets/js/pages/apply.js'), 'utf8');
+  const inputCssNoComments = fs.readFileSync(path.join(ROOT, 'src/input.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+
+  assert(navJs.includes('function syncBackgroundInert()') && navJs.includes('child.inert = true'), 'nav.js must lock outside landmarks with inert when a custom dialog opens');
+  assert(navJs.includes("document.querySelectorAll('[role=\"tablist\"]')") && navJs.includes('tab.tabIndex = tab === selectedTab ? 0 : -1'), 'nav.js must bind roving tabIndex and arrow-key navigation across [role="tablist"] widgets');
+  assert(navJs.includes('e.isComposing || e.keyCode === 229') && applyJs.includes('e.isComposing || e.keyCode === 229'), 'Custom Enter keydown handlers in nav.js and apply.js must guard against active IME composition');
+  assert(navJs.includes("el.matches(':user-invalid')") && navJs.includes("el.setAttribute('aria-invalid', 'false')"), 'nav.js must synchronize aria-invalid with :user-invalid');
+  assert(inputCssNoComments.includes(':user-invalid') && !/(?:^|[^a-z-]):invalid\b/.test(inputCssNoComments), 'src/input.css must style validation errors via :user-invalid rather than raw :invalid');
+
+  console.log(`    [PASS] Roving tablists, modal inert locking, IME-safe Enter, :user-invalid sync, <search> landmarks, and ${HTML_FILES.length - 1}/${HTML_FILES.length - 1} Schema.org WebPage nodes verified.`);
+}
+
+console.log('\n[SUMMARY] ALL 8 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');

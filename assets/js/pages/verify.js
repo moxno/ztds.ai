@@ -737,12 +737,21 @@
           elVerifyUrl.textContent = certUrl;
         }
 
-        modal.classList.remove("hidden");
+        if (window.ztdsModal) {
+          window.ztdsModal.open(modal, '#btnPrintCertAction');
+        } else {
+          modal.classList.remove("hidden");
+        }
       }
 
       function closeCertificateModal() {
         const modal = document.getElementById("modalCertificatePrint");
-        if (modal) modal.classList.add("hidden");
+        if (!modal) return;
+        if (window.ztdsModal) {
+          window.ztdsModal.close(modal);
+        } else {
+          modal.classList.add("hidden");
+        }
       }
 
       const btnPrintCertAction = document.getElementById("btnPrintCertAction");

@@ -119,7 +119,38 @@
       }
     },
     {
-      "@type": ["Article", "TechArticle"],
+      "@type": "WebPage",
+      "@id": "https://ztds.ai/#webpage",
+      "url": "https://ztds.ai/",
+      "name": "Client-Side AI Data Sanitization & LLM PII Redaction | ZTDS&trade;",
+      "description": "Client-side AI data sanitization, MCP security, and reversible PII tokenization in host RAM (0.00 B egress). Open ZTDS™ RFC v1.0 & GDPR Art. 32 Safe Harbor.",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h1",
+          "main h2"
+        ]
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://ztds.ai/assets/img/og/og-default.png",
+        "width": 1200,
+        "height": 630
+      },
+      "dateModified": "2026-11-12T13:15:00+02:00",
+      "publisher": {
+        "@id": "https://ztds.ai/#organization"
+      }
+    },
+    {
+      "@type": [
+        "Article",
+        "TechArticle"
+      ],
       "@id": "https://ztds.ai/standard/#tech-article",
       "headline": "Client-Side AI Data Sanitization & Reversible PII Tokenization (ZTDS RFC v1.0)",
       "description": "Open IETF Internet-Draft and RFC v1.0 specification for sub-millisecond in-RAM PII tokenization, MCP security, and GDPR Article 32 technical safe harbor.",
@@ -354,11 +385,11 @@
         <!-- Console Top Mode Bar -->
         <div class="px-4 sm:px-5 py-2.5 bg-slate-950 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
           <div class="tablist-scroll p-1 rounded-xl bg-slate-900 border border-slate-800 gap-1 max-w-full" role="tablist" aria-label="Zero-Trust Verification Modes">
-            <button id="tabWorkbenchRam" type="button" role="tab" aria-selected="true" aria-controls="paneWorkbenchRam" class="whitespace-nowrap px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white shadow-xs transition-colors cursor-pointer inline-flex items-center gap-1.5">
+            <button id="tabWorkbenchRam" type="button" role="tab" aria-selected="true" class="whitespace-nowrap px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white shadow-xs transition-colors cursor-pointer inline-flex items-center gap-1.5">
               <span class="w-1.5 h-1.5 rounded-full bg-white shrink-0"></span>
               <span>1. Live In-RAM Tokenization</span>
             </button>
-            <button id="tabWorkbenchScan" type="button" role="tab" aria-selected="false" aria-controls="paneWorkbenchScan" class="whitespace-nowrap px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer inline-flex items-center gap-1.5">
+            <button id="tabWorkbenchScan" type="button" role="tab" aria-selected="false" class="whitespace-nowrap px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer inline-flex items-center gap-1.5">
               <span class="w-1.5 h-1.5 rounded-full bg-slate-500 shrink-0"></span>
               <span>2. Public Domain &amp; CLI Audit</span>
             </button>
@@ -458,19 +489,19 @@
               Audit Public Domain AI &amp; Subprocessor Exposure (GDPR Art. 28 / CSP / Telemetry Sinks)
             </label>
             <form id="heroScanForm" class="flex flex-col sm:flex-row gap-2.5">
-              <input id="heroDomainInput" type="text" inputmode="url" autocomplete="off" placeholder="Enter corporate domain (e.g., stripe.com or yourcompany.com)" class="flex-grow px-4 py-2.5 rounded-xl border-2 border-slate-700 bg-white text-slate-900 placeholder:text-slate-400 text-base sm:text-sm font-mono focus:outline-none focus:border-emerald-500">
+              <input id="heroDomainInput" type="text" inputmode="url" autocomplete="off" placeholder="Enter corporate domain (e.g., stripe.com or yourcompany.com)" class="flex-grow px-4 py-2.5 rounded-xl border-2 border-slate-700 bg-white text-slate-900 placeholder:text-slate-400 text-base sm:text-sm font-mono focus:outline-none focus:border-emerald-500" autocorrect="off" autocapitalize="none" spellcheck="false">
               <button id="heroScanSubmitBtn" type="submit" class="btn-trust py-2.5 px-5 text-xs font-mono font-bold whitespace-nowrap flex items-center justify-center gap-2 cursor-pointer">
                 <span id="heroScanBtnText">Audit Perimeter &rarr;</span>
                 <span id="heroScanSpinner" class="hidden w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
               </button>
             </form>
 
-            <div class="mt-2.5 flex items-center gap-2 flex-wrap text-xs font-mono text-slate-400">
+            <div class="mt-2.5 flex items-center gap-2 flex-wrap text-xs font-mono text-slate-400" role="group" aria-label="Sample benchmark domains">
               <span>Quick benchmarks:</span>
-              <button type="button" class="hero-preset-btn px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 cursor-pointer transition-colors" data-domain="openai.com">openai.com</button>
-              <button type="button" class="hero-preset-btn px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 cursor-pointer transition-colors" data-domain="stripe.com">stripe.com</button>
-              <button type="button" class="hero-preset-btn px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 cursor-pointer transition-colors" data-domain="vercel.com">vercel.com</button>
-              <button type="button" class="hero-preset-btn px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 cursor-pointer transition-colors" data-domain="privacyscrubber.com">privacyscrubber.com</button>
+              <button type="button" aria-pressed="false" class="hero-preset-btn px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 cursor-pointer transition-colors" data-domain="openai.com">openai.com</button>
+              <button type="button" aria-pressed="false" class="hero-preset-btn px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 cursor-pointer transition-colors" data-domain="stripe.com">stripe.com</button>
+              <button type="button" aria-pressed="false" class="hero-preset-btn px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 cursor-pointer transition-colors" data-domain="vercel.com">vercel.com</button>
+              <button type="button" aria-pressed="false" class="hero-preset-btn px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 cursor-pointer transition-colors" data-domain="privacyscrubber.com">privacyscrubber.com</button>
             </div>
           </div>
 

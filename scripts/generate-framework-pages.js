@@ -157,6 +157,23 @@ function breadcrumbNode(url, crumbs) {
   };
 }
 
+function webPageNode(url, name, description, isHub = false) {
+  return {
+    '@type': isHub ? ['WebPage', 'CollectionPage'] : 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name,
+    description,
+    inLanguage: 'en-US',
+    isPartOf: { '@id': 'https://ztds.ai/#website' },
+    publisher: { '@id': 'https://ztds.ai/#organization' },
+    breadcrumb: { '@id': `${url}#breadcrumb` },
+    speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', 'main h2'] },
+    primaryImageOfPage: { '@type': 'ImageObject', url: OG, width: 1200, height: 630 },
+    dateModified: TS
+  };
+}
+
 function articleNode(url, headline, description) {
   return {
     '@type': ['Article', 'TechArticle'],
@@ -172,7 +189,7 @@ function articleNode(url, headline, description) {
     publisher: { '@id': 'https://ztds.ai/#organization' },
     isPartOf: { '@id': 'https://ztds.ai/standard/#specification' },
     image: OG,
-    mainEntityOfPage: { '@type': 'WebPage', '@id': url }
+    mainEntityOfPage: { '@id': `${url}#webpage` }
   };
 }
 
@@ -297,7 +314,7 @@ for (const pg of PAGES) {
   ];
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@graph': [ORG, articleNode(url, pg.headline, pg.desc), breadcrumbNode(url, crumbs), pageNode(url, pg.faq)]
+    '@graph': [ORG, webPageNode(url, pg.headline, pg.desc, false), articleNode(url, pg.headline, pg.desc), breadcrumbNode(url, crumbs), pageNode(url, pg.faq)]
   };
   const siblings = PAGES.filter((p) => p.slug !== pg.slug)
     .map((p) => ({ name: p.crumb, url: `/frameworks/${p.slug}/`, note: p.blurb }));
@@ -355,7 +372,7 @@ for (const pg of PAGES) {
   };
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@graph': [ORG, articleNode(url, HUB.headline, HUB.desc), itemList, breadcrumbNode(url, crumbs), pageNode(url, HUB.faq)]
+    '@graph': [ORG, webPageNode(url, HUB.headline, HUB.desc, true), articleNode(url, HUB.headline, HUB.desc), itemList, breadcrumbNode(url, crumbs), pageNode(url, HUB.faq)]
   };
   const cards = PAGES.map(
     (p) => `<a href="/frameworks/${p.slug}/" class="block rounded-xl border border-slate-200 bg-white p-5 hover:border-emerald-400 hover:shadow-sm transition">

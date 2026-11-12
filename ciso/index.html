@@ -51,7 +51,41 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": ["Article", "TechArticle"],
+      "@type": "WebPage",
+      "@id": "https://ztds.ai/ciso/#webpage",
+      "url": "https://ztds.ai/ciso/",
+      "name": "Shadow AI Governance, CISO Safe Harbor & Zero-DPA Pack | ZTDS.ai",
+      "description": "Enterprise CISO procurement pack for Shadow AI governance, GDPR Art. 32 & HIPAA Safe Harbor compliance, and 90-day DPA bypass via client-side PII redaction.",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://ztds.ai/ciso/#breadcrumb"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h1",
+          "main h2"
+        ]
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://ztds.ai/assets/img/og/og-compliance.png",
+        "width": 1200,
+        "height": 630
+      },
+      "dateModified": "2026-10-27T00:00:00Z",
+      "publisher": {
+        "@id": "https://ztds.ai/#organization"
+      }
+    },
+    {
+      "@type": [
+        "Article",
+        "TechArticle"
+      ],
       "@id": "https://ztds.ai/ciso/#article",
       "headline": "CISO Procurement & Statutory Safe Harbor Pack — ZTDS.ai",
       "description": "1-Page CISO Data Protection Memorandum, GDPR Article 28 Zero-Processor Doctrine, Article 32 Statutory Safe Harbor, HIPAA, and SIG Lite questionnaire responses.",
@@ -1005,17 +1039,17 @@
         <div class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider mb-2.5">
           Select Standard Enterprise Architecture Preset:
         </div>
-        <div class="flex flex-wrap gap-2">
-          <button type="button" class="ciso-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors bg-white text-slate-700 border-slate-300 hover:bg-slate-100 cursor-pointer" data-calls="500000" data-vendors="3" data-regime="global">
+        <div class="flex flex-wrap gap-2" role="group" aria-label="Enterprise traffic presets">
+          <button type="button" aria-pressed="false" class="ciso-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors bg-white text-slate-700 border-slate-300 hover:bg-slate-100 cursor-pointer" data-calls="500000" data-vendors="3" data-regime="global">
             Mid-Market SaaS (500k Calls &middot; 3 Vendors)
           </button>
-          <button type="button" class="ciso-preset-btn active px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors bg-slate-900 text-white border-slate-900 cursor-pointer shadow-sm" data-calls="2000000" data-vendors="8" data-regime="eu">
+          <button type="button" aria-pressed="true" class="ciso-preset-btn active px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors bg-slate-900 text-white border-slate-900 cursor-pointer shadow-sm" data-calls="2000000" data-vendors="8" data-regime="eu">
             Regulated Enterprise (2M Calls &middot; 8 Vendors &middot; EU)
           </button>
-          <button type="button" class="ciso-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors bg-white text-slate-700 border-slate-300 hover:bg-slate-100 cursor-pointer" data-calls="1500000" data-vendors="6" data-regime="us_hipaa">
+          <button type="button" aria-pressed="false" class="ciso-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors bg-white text-slate-700 border-slate-300 hover:bg-slate-100 cursor-pointer" data-calls="1500000" data-vendors="6" data-regime="us_hipaa">
             US Healthcare (1.5M Calls &middot; 6 Vendors &middot; HIPAA)
           </button>
-          <button type="button" class="ciso-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors bg-white text-slate-700 border-slate-300 hover:bg-slate-100 cursor-pointer" data-calls="10000000" data-vendors="15" data-regime="us_fintech">
+          <button type="button" aria-pressed="false" class="ciso-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors bg-white text-slate-700 border-slate-300 hover:bg-slate-100 cursor-pointer" data-calls="10000000" data-vendors="15" data-regime="us_fintech">
             Global Financial (10M Calls &middot; 15 Vendors &middot; FinTech)
           </button>
         </div>
@@ -1401,13 +1435,14 @@
 
       <!-- Search & Competitor Filter Bar -->
       <div class="mb-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 no-print">
-        <div class="relative flex-1">
+        <search class="relative flex-1">
           <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           </div>
-          <input type="text" id="bcSearchInput" aria-label="Filter competitor battlecards" placeholder="Filter competitor battlecards by keyword (e.g. Purview, latency, GDPR, HIPAA, regex)..." class="w-full pl-9 pr-8 py-2 rounded-lg border border-slate-300 bg-white text-base sm:text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+          <label for="bcSearchInput" class="sr-only">Filter competitor battlecards</label>
+          <input type="search" id="bcSearchInput" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Filter competitor battlecards by keyword (e.g. Purview, latency, GDPR, HIPAA, regex)..." class="w-full pl-9 pr-8 py-2 rounded-lg border border-slate-300 bg-white text-base sm:text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
           <button type="button" id="bcSearchClear" aria-label="Clear search" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 font-mono text-xs cursor-pointer">&times;</button>
-        </div>
+        </search>
         <div id="bcSearchCount" class="text-xs font-mono text-slate-400 self-center whitespace-nowrap">
           Showing 7 comparison architectures
         </div>

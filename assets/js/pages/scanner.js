@@ -1633,21 +1633,38 @@ Public Verification: https://ztds.ai/verify/`;
       });
 
       // Preset click handlers
-      document.querySelectorAll('.mode0-preset-btn').forEach(btn => {
+      const m0PresetBtns = document.querySelectorAll('.mode0-preset-btn');
+      const syncM0PresetPressed = (activeDom) => {
+        const norm = String(activeDom || '').trim().toLowerCase();
+        m0PresetBtns.forEach(b => {
+          const isMatch = norm && (b.getAttribute('data-domain') || '').toLowerCase() === norm;
+          b.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+        });
+      };
+
+      m0PresetBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           const dom = btn.getAttribute('data-domain');
           if (dom) {
             m0Input.value = dom;
+            syncM0PresetPressed(dom);
             executeMode0Scan(dom);
           }
         });
       });
 
+      if (m0Input) {
+        m0Input.addEventListener('input', () => syncM0PresetPressed(m0Input.value));
+      }
+
       if (m0Form) {
         m0Form.addEventListener('submit', (e) => {
           e.preventDefault();
           const dom = m0Input.value.trim();
-          if (dom) executeMode0Scan(dom);
+          if (dom) {
+            syncM0PresetPressed(dom);
+            executeMode0Scan(dom);
+          }
         });
       }
 

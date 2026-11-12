@@ -719,20 +719,37 @@
     }
 
     if (form && domainInput) {
-      document.querySelectorAll('.hero-preset-btn').forEach((btn) => {
+      const heroPresetBtns = document.querySelectorAll('.hero-preset-btn');
+      const syncHeroPresetPressed = (activeDom) => {
+        const norm = String(activeDom || '').trim().toLowerCase();
+        heroPresetBtns.forEach((b) => {
+          const isMatch = norm && (b.getAttribute('data-domain') || '').toLowerCase() === norm;
+          b.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+        });
+      };
+
+      heroPresetBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
           const dom = btn.getAttribute('data-domain');
           if (dom) {
             domainInput.value = dom;
+            syncHeroPresetPressed(dom);
             runDomainScan(dom);
           }
         });
       });
 
+      domainInput.addEventListener('input', () => {
+        syncHeroPresetPressed(domainInput.value);
+      });
+
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         const dom = domainInput.value.trim();
-        if (dom) runDomainScan(dom);
+        if (dom) {
+          syncHeroPresetPressed(dom);
+          runDomainScan(dom);
+        }
       });
 
       // Support ?domain=... or ?scan=1 deep link

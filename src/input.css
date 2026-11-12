@@ -1033,5 +1033,25 @@ main .overflow-x-auto > table > thead {
   }
 }
 
+/* Non-Intrusive Validation Styling (:user-invalid only — never raw :invalid on page load) */
+form :is(input, select, textarea):not([type="range"]):not([type="hidden"]):not([readonly]):not([aria-hidden="true"]):user-invalid {
+  border-color: #e11d48;
+}
+
+form :is(input, select, textarea):not([type="range"]):not([type="hidden"]):not([readonly]):not([aria-hidden="true"]):user-invalid:focus-visible {
+  outline-color: #e11d48;
+  box-shadow: 0 0 0 2px rgba(225, 29, 72, 0.2);
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
+#bcSearchInput::-webkit-search-cancel-button {
+  display: none;
+}
+
+
+
 
 

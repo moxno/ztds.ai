@@ -17,6 +17,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function syncBackgroundInert() {
+    if (!document.body) return;
+    const openDialogs = getOpenDialogs();
+    const hasOpen = openDialogs.length > 0;
+    Array.from(document.body.children).forEach((child) => {
+      const tag = child.tagName;
+      if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'LINK' || tag === 'NOSCRIPT') return;
+      if (child.id === 'mobile-backdrop') return;
+      // Never mark centralized ARIA live regions inert so queued status messages remain announced
+      if (child.hasAttribute('aria-live') || child.getAttribute('role') === 'status' || child.getAttribute('role') === 'alert') {
+        return;
+      }
+      const containsOpenDialog = openDialogs.some((dlg) => dlg === child || child.contains(dlg));
+      if (hasOpen && !containsOpenDialog) {
+        child.inert = true;
+        child.dataset.ztdsInertManaged = '1';
+      } else if (child.dataset.ztdsInertManaged === '1') {
+        child.inert = false;
+        delete child.dataset.ztdsInertManaged;
+      }
+    });
+  }
+
   if (toggleBtn && drawer && backdrop) {
     backdrop.setAttribute('aria-hidden', 'true');
     if (!drawer.getAttribute('role')) drawer.setAttribute('role', 'dialog');
@@ -29,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
       backdrop.classList.add('active');
       toggleBtn.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
+      syncBackgroundInert();
       if (closeBtn) setTimeout(() => closeBtn.focus(), 50);
     }
 
@@ -40,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (getOpenDialogs().length === 0) {
         document.body.style.overflow = '';
       }
+      syncBackgroundInert();
       
       if (lastDrawerTrigger && typeof lastDrawerTrigger.focus === 'function') {
         try { lastDrawerTrigger.focus(); } catch (_) {}
@@ -105,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
       this.triggerMap.set(modalEl, document.activeElement);
       modalEl.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
+      syncBackgroundInert();
 
       let target = focusTarget;
       if (typeof target === 'string') {
@@ -127,6 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (getOpenDialogs().length === 0) {
         document.body.style.overflow = '';
       }
+      syncBackgroundInert();
 
       const prev = this.triggerMap.get(modalEl);
       if (prev && typeof prev.focus === 'function') {
@@ -585,6 +612,10 @@ document.addEventListener('DOMContentLoaded', () => {
       input.setAttribute('aria-expanded', 'true');
       input.setAttribute('aria-controls', 'ztds-cmd-list');
       input.setAttribute('aria-label', 'Search pages, sections, and tools');
+      input.setAttribute('autocomplete', 'off');
+      input.setAttribute('autocorrect', 'off');
+      input.setAttribute('autocapitalize', 'none');
+      input.setAttribute('spellcheck', 'false');
       input.placeholder = 'Jump to specification, CISO memo, SDK, scanner, or section...';
       input.className = 'w-full bg-transparent text-slate-900 placeholder-slate-400 text-sm focus:outline-none font-sans';
 
@@ -712,6 +743,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
+      let lastCmdCompositionEndAt = null;
+      input.addEventListener('compositionend', (ev) => {
+        lastCmdCompositionEndAt = ev.timeStamp;
+      });
       input.addEventListener('input', () => renderList(input.value));
       input.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && input.value.trim().length > 0) {
@@ -732,6 +767,8 @@ document.addEventListener('DOMContentLoaded', () => {
             updateActiveHighlight();
           }
         } else if (e.key === 'Enter') {
+          if (e.isComposing || e.keyCode === 229) return;
+          if (lastCmdCompositionEndAt !== null && Math.abs(e.timeStamp - lastCmdCompositionEndAt) < 50) return;
           if (filtered[activeIdx]) {
             e.preventDefault();
             const targetUrl = filtered[activeIdx].url;
@@ -974,6 +1011,181 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }, { passive: true });
     }
+  } catch (_) {}
+
+  // Global UX 9: Universal WAI-ARIA [role="tablist"] Roving Tabindex & Arrow-Key Navigation
+  try {
+    document.querySelectorAll('[role="tablist"]').forEach((tablist) => {
+      if (tablist.id === 'scannerOutputTablist' || tablist.dataset.ztdsTablistBound === '1') return;
+      tablist.dataset.ztdsTablistBound = '1';
+
+      const getTabs = () => Array.from(tablist.querySelectorAll('[role="tab"]'))
+        .filter((tab) => tab.closest('[role="tablist"]') === tablist);
+
+      let syncingTablist = false;
+      const syncTabIndexes = () => {
+        if (syncingTablist) return;
+        syncingTablist = true;
+        try {
+          const tabs = getTabs();
+          if (!tabs.length) return;
+          let selectedTab = tabs.find((t) => t.getAttribute('aria-selected') === 'true');
+          if (!selectedTab) {
+            selectedTab = tabs[0];
+            selectedTab.setAttribute('aria-selected', 'true');
+          }
+          tabs.forEach((tab) => {
+            tab.tabIndex = tab === selectedTab ? 0 : -1;
+          });
+        } finally {
+          syncingTablist = false;
+        }
+      };
+
+      syncTabIndexes();
+
+      if (typeof MutationObserver === 'function') {
+        const observer = new MutationObserver(() => syncTabIndexes());
+        observer.observe(tablist, { subtree: true, attributes: true, attributeFilter: ['aria-selected'] });
+      }
+
+      tablist.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' && e.key !== 'Home' && e.key !== 'End') return;
+        const currentTab = e.target && e.target.closest ? e.target.closest('[role="tab"]') : null;
+        if (!currentTab || currentTab.closest('[role="tablist"]') !== tablist) return;
+
+        const enabledTabs = getTabs().filter((t) => !t.disabled);
+        if (enabledTabs.length < 2) return;
+        const currentIdx = enabledTabs.indexOf(currentTab);
+        if (currentIdx === -1) return;
+
+        let nextIdx = currentIdx;
+        if (e.key === 'ArrowRight') nextIdx = (currentIdx + 1) % enabledTabs.length;
+        else if (e.key === 'ArrowLeft') nextIdx = (currentIdx - 1 + enabledTabs.length) % enabledTabs.length;
+        else if (e.key === 'Home') nextIdx = 0;
+        else if (e.key === 'End') nextIdx = enabledTabs.length - 1;
+
+        const nextTab = enabledTabs[nextIdx];
+        if (!nextTab) return;
+        e.preventDefault();
+        nextTab.click();
+        syncTabIndexes();
+        nextTab.focus();
+        if (typeof nextTab.scrollIntoView === 'function') {
+          nextTab.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+        }
+      });
+    });
+  } catch (_) {}
+
+  // Global UX 10: Sync aria-invalid with CSS :user-invalid on Interactive Form Controls
+  try {
+    const flaggedInvalid = new WeakSet();
+    const announcedInvalid = new WeakSet();
+    let formAnnounceTimer = null;
+    let formAnnouncedField = null;
+
+    const getFormAnnouncer = () => {
+      let el = document.getElementById('ztds-form-announcer');
+      if (!el && document.body) {
+        el = document.createElement('div');
+        el.id = 'ztds-form-announcer';
+        el.setAttribute('aria-live', 'polite');
+        el.className = 'ztds-sr-only';
+        document.body.appendChild(el);
+      }
+      return el;
+    };
+
+    const isEligibleFormControl = (el) => {
+      if (!el || !el.matches || !el.matches('input, select, textarea')) return false;
+      if (!el.form) return false;
+      if (el.readOnly || el.disabled) return false;
+      const type = (el.getAttribute('type') || '').toLowerCase();
+      if (type === 'hidden' || type === 'range' || type === 'submit' || type === 'button' || type === 'reset') {
+        return false;
+      }
+      if (el.getAttribute('aria-hidden') === 'true' || el.closest('[aria-hidden="true"]')) {
+        return false;
+      }
+      return true;
+    };
+
+    const linkFieldError = (el, shown) => {
+      const errorId = el.dataset ? el.dataset.error : '';
+      if (!errorId) return;
+      const ids = (el.getAttribute('aria-describedby') || '').split(/\s+/).filter((id) => id && id !== errorId);
+      if (shown) ids.push(errorId);
+      if (ids.length) el.setAttribute('aria-describedby', ids.join(' '));
+      else el.removeAttribute('aria-describedby');
+    };
+
+    const announceFieldError = (el) => {
+      const errorId = el.dataset ? el.dataset.error : '';
+      const errorEl = errorId ? document.getElementById(errorId) : null;
+      const message = errorEl ? (errorEl.textContent || '').replace(/\s+/g, ' ').trim() : (el.validationMessage || '');
+      if (!message) return;
+      const announcer = getFormAnnouncer();
+      if (!announcer) return;
+      const labelEl = el.labels && el.labels[0] ? el.labels[0] : null;
+      const labelPrefix = labelEl ? (labelEl.textContent || '').replace(/\s+/g, ' ').trim() + ': ' : '';
+      clearTimeout(formAnnounceTimer);
+      announcer.textContent = '';
+      formAnnouncedField = el;
+      formAnnounceTimer = setTimeout(() => {
+        announcer.textContent = labelPrefix + message;
+      }, 500);
+    };
+
+    const syncAriaInvalid = (el, shouldAnnounce = false) => {
+      if (!isEligibleFormControl(el)) return;
+      let isUserInvalid = false;
+      try {
+        isUserInvalid = el.matches(':user-invalid');
+      } catch (_) {
+        isUserInvalid = false;
+      }
+      if (isUserInvalid) {
+        if (shouldAnnounce && !announcedInvalid.has(el)) {
+          announceFieldError(el);
+          announcedInvalid.add(el);
+        }
+        el.setAttribute('aria-invalid', 'true');
+        linkFieldError(el, true);
+        flaggedInvalid.add(el);
+      } else if (flaggedInvalid.has(el) || el.getAttribute('aria-invalid') !== 'true') {
+        el.setAttribute('aria-invalid', 'false');
+        linkFieldError(el, false);
+        flaggedInvalid.delete(el);
+        announcedInvalid.delete(el);
+        if (formAnnouncedField === el) {
+          clearTimeout(formAnnounceTimer);
+          const announcer = document.getElementById('ztds-form-announcer');
+          if (announcer) announcer.textContent = '';
+        }
+      }
+    };
+
+    document.querySelectorAll('form :is(input, select, textarea)').forEach((el) => syncAriaInvalid(el, false));
+    document.addEventListener('blur', (e) => syncAriaInvalid(e.target, true), true);
+    document.addEventListener('input', (e) => {
+      if (e.target && e.target.hasAttribute && e.target.hasAttribute('aria-invalid')) {
+        syncAriaInvalid(e.target, false);
+      }
+    });
+    document.addEventListener('change', (e) => syncAriaInvalid(e.target, true), true);
+    document.addEventListener('invalid', (e) => {
+      if (e.target && typeof e.target === 'object') announcedInvalid.add(e.target);
+      syncAriaInvalid(e.target, false);
+    }, true);
+    document.addEventListener('reset', (e) => {
+      const form = e.target;
+      if (form && form.elements) {
+        setTimeout(() => {
+          Array.from(form.elements).forEach((el) => syncAriaInvalid(el, false));
+        }, 0);
+      }
+    }, true);
   } catch (_) {}
 });
 

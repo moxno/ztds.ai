@@ -49,7 +49,41 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": ["Article", "TechArticle"],
+      "@type": "WebPage",
+      "@id": "https://ztds.ai/mcp/#webpage",
+      "url": "https://ztds.ai/mcp/",
+      "name": "MCP Security & Zero-Egress PII Sanitization Standard | ZTDS.ai",
+      "description": "Model Context Protocol (MCP) security architecture for Claude Desktop, Cursor, and IDE agents. Enforce in-RAM PII redaction and secret scrubbing over stdio.",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://ztds.ai/mcp/#breadcrumb"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h1",
+          "main h2"
+        ]
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://ztds.ai/assets/img/og/og-mcp.png",
+        "width": 1200,
+        "height": 630
+      },
+      "dateModified": "2026-10-27T00:00:00Z",
+      "publisher": {
+        "@id": "https://ztds.ai/#organization"
+      }
+    },
+    {
+      "@type": [
+        "Article",
+        "TechArticle"
+      ],
       "@id": "https://ztds.ai/mcp/#article",
       "headline": "Model Context Protocol (MCP) In-RAM Security Architecture & Specification",
       "description": "Architectural standard, threat model analysis, and in-RAM execution profile for the Model Context Protocol (MCP), providing zero-egress credential protection for AI coding agents and desktop IDEs.",
@@ -943,11 +977,11 @@
             </div>
 
             <!-- Presets Buttons -->
-            <div class="flex items-center gap-2 shrink-0">
+            <div class="flex items-center gap-2 shrink-0" role="group" aria-label="Sample MCP payloads">
               <span class="text-xs font-mono text-slate-400 uppercase hidden sm:inline">Presets:</span>
-              <button type="button" class="sim-preset-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-mono transition-colors cursor-pointer" data-preset="api_key">API Keys</button>
-              <button type="button" class="sim-preset-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-mono transition-colors cursor-pointer" data-preset="pii">PII &amp; Billing</button>
-              <button type="button" class="sim-preset-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-mono transition-colors cursor-pointer" data-preset="database">Database</button>
+              <button type="button" aria-pressed="true" class="sim-preset-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-mono transition-colors cursor-pointer" data-preset="api_key">API Keys</button>
+              <button type="button" aria-pressed="false" class="sim-preset-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-mono transition-colors cursor-pointer" data-preset="pii">PII &amp; Billing</button>
+              <button type="button" aria-pressed="false" class="sim-preset-btn px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-mono transition-colors cursor-pointer" data-preset="database">Database</button>
             </div>
 
           </div>
@@ -970,7 +1004,7 @@
                 <div class="flex items-center justify-between gap-3 text-xs font-mono">
                   <div class="flex items-center gap-2">
                     <label for="simSessionInput" class="text-slate-400 text-xs">Session ID:</label>
-                    <input type="text" id="simSessionInput" value="sess_cursor_01" class="bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-200 text-base sm:text-xs font-mono w-36 focus:outline-none focus:border-emerald-500">
+                    <input type="text" id="simSessionInput" value="sess_cursor_01" class="bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-200 text-base sm:text-xs font-mono w-36 focus:outline-none focus:border-emerald-500" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
                   </div>
                   <span class="text-xs text-slate-400 font-sans hidden sm:inline">JSON-RPC 2.0 Mode</span>
                 </div>

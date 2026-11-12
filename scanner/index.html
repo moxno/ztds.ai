@@ -48,7 +48,41 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": ["Article", "TechArticle"],
+      "@type": "WebPage",
+      "@id": "https://ztds.ai/scanner/#webpage",
+      "url": "https://ztds.ai/scanner/",
+      "name": "AI DLP & MCP Security Scanner — Zero-Trust PII Audit | ZTDS.ai",
+      "description": "Free client-side AI DLP & Model Context Protocol (MCP) security scanner. Audit prompts, JSON-RPC payloads, and RAG pipelines for PII leakage in browser RAM.",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://ztds.ai/scanner/#breadcrumb"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h1",
+          "main h2"
+        ]
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://ztds.ai/assets/img/og/og-scanner.png",
+        "width": 1200,
+        "height": 630
+      },
+      "dateModified": "2026-10-27T00:00:00Z",
+      "publisher": {
+        "@id": "https://ztds.ai/#organization"
+      }
+    },
+    {
+      "@type": [
+        "Article",
+        "TechArticle"
+      ],
       "@id": "https://ztds.ai/scanner/#article",
       "headline": "ZTDS Perimeter Scanner & Network Socket Interceptor",
       "description": "Real-time zero-trust socket interceptor, Airplane Mode audit protocol, and in-browser code linter for Invariant 1 (Zero-Egress) verification.",
@@ -83,7 +117,10 @@
       }
     },
     {
-      "@type": ["SoftwareApplication", "Product"],
+      "@type": [
+        "SoftwareApplication",
+        "Product"
+      ],
       "@id": "https://ztds.ai/scanner/#app",
       "name": "ZTDS AI DLP & MCP Security Scanner",
       "description": "Zero-trust client-side PII egress scanner and static codebase linter (npx ztds-audit) for AI workflows and MCP servers.",
@@ -438,11 +475,11 @@
           </div>
 
           <!-- Quick Presets -->
-          <div class="flex flex-wrap items-center gap-2 shrink-0">
+          <div class="flex flex-wrap items-center gap-2 shrink-0" role="group" aria-label="Sample perimeter domains">
             <span class="text-xs text-slate-500 font-mono">Sample Perimeters:</span>
-            <button type="button" class="mode0-preset-btn px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-medium transition-colors cursor-pointer" data-domain="demo-saas.io">demo-saas.io</button>
-            <button type="button" class="mode0-preset-btn px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-medium transition-colors cursor-pointer" data-domain="ai-startup.dev">ai-startup.dev</button>
-            <button type="button" class="mode0-preset-btn px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-medium transition-colors cursor-pointer" data-domain="clinic-portal.health">clinic-portal.health</button>
+            <button type="button" aria-pressed="false" class="mode0-preset-btn px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-medium transition-colors cursor-pointer" data-domain="demo-saas.io">demo-saas.io</button>
+            <button type="button" aria-pressed="false" class="mode0-preset-btn px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-medium transition-colors cursor-pointer" data-domain="ai-startup.dev">ai-startup.dev</button>
+            <button type="button" aria-pressed="false" class="mode0-preset-btn px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-medium transition-colors cursor-pointer" data-domain="clinic-portal.health">clinic-portal.health</button>
           </div>
         </div>
 
@@ -452,7 +489,7 @@
             <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
             </svg>
-            <input id="mode0DomainInput" type="text" inputmode="url" aria-label="Enter domain to scan" placeholder="Enter corporate domain to audit (e.g. app.yourcompany.com)..." class="w-full text-base sm:text-sm font-mono font-medium text-slate-900 placeholder:text-slate-400 bg-transparent focus:outline-none" required autocomplete="off" spellcheck="false" />
+            <input id="mode0DomainInput" type="text" inputmode="url" aria-label="Enter domain to scan" placeholder="Enter corporate domain to audit (e.g. app.yourcompany.com)..." class="w-full text-base sm:text-sm font-mono font-medium text-slate-900 placeholder:text-slate-400 bg-transparent focus:outline-none" required autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="none" />
           </div>
           <button id="mode0ScanSubmitBtn" type="submit" class="btn-trust w-full sm:w-auto text-xs py-2.5 px-5 whitespace-nowrap shadow-sm flex items-center justify-center gap-2 shrink-0 font-mono font-bold cursor-pointer">
             <span id="mode0BtnText">Execute Perimeter Audit &rarr;</span>
@@ -554,7 +591,7 @@
                   <button id="btnResetScanner" type="button" class="text-xs font-mono text-slate-400 hover:text-slate-200 underline cursor-pointer">Clear</button>
                 </div>
               </div>
-              <textarea id="scannerInputText" rows="6" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-base sm:text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-500 resize-none leading-relaxed transition-colors" placeholder="Paste prompt with sensitive PII, PHI, or secrets..."></textarea>
+              <textarea id="scannerInputText" rows="6" autocorrect="off" autocapitalize="none" spellcheck="false" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-base sm:text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-500 resize-y leading-relaxed transition-colors" placeholder="Paste prompt with sensitive PII, PHI, or secrets..."></textarea>
 
               <!-- Live Entity Detection Pill Strip -->
               <div class="mt-3 flex flex-wrap items-center gap-1.5" id="scannerEntityPills">
@@ -806,7 +843,7 @@
                 </button>
               </div>
             </div>
-            <textarea id="linterCodeInput" rows="13" class="w-full bg-slate-900 text-slate-200 font-mono text-base sm:text-xs p-4 rounded-xl border border-slate-800 focus:outline-none focus:border-emerald-500 leading-relaxed resize-none"></textarea>
+            <textarea id="linterCodeInput" rows="13" autocorrect="off" autocapitalize="none" spellcheck="false" class="w-full bg-slate-900 text-slate-200 font-mono text-base sm:text-xs p-4 rounded-xl border border-slate-800 focus:outline-none focus:border-emerald-500 leading-relaxed resize-y"></textarea>
             
             <div class="flex items-center justify-between pt-2">
               <button id="btnRunCodeLinter" type="button" class="btn-trust text-xs py-2 px-4 shadow-sm font-semibold">

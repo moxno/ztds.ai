@@ -528,14 +528,22 @@ Generated via ZTDS CISO Actuarial Engine: https://ztds.ai/roi/
         if (memoModalRegimeBadge) {
           memoModalRegimeBadge.textContent = dispActiveRegimeCode ? dispActiveRegimeCode.textContent : 'GLOBAL MULTI-REGIME';
         }
-        memoPreviewModal.classList.remove('hidden');
-        document.body.classList.add('overflow-hidden');
+        if (window.ztdsModal) {
+          window.ztdsModal.open(memoPreviewModal);
+        } else {
+          memoPreviewModal.classList.remove('hidden');
+          document.body.classList.add('overflow-hidden');
+        }
       }
 
       function closeMemoPreview() {
         if (!memoPreviewModal) return;
-        memoPreviewModal.classList.add('hidden');
-        document.body.classList.remove('overflow-hidden');
+        if (window.ztdsModal) {
+          window.ztdsModal.close(memoPreviewModal);
+        } else {
+          memoPreviewModal.classList.add('hidden');
+          document.body.classList.remove('overflow-hidden');
+        }
       }
 
       if (btnPreviewMemo) btnPreviewMemo.addEventListener('click', openMemoPreview);

@@ -740,6 +740,7 @@
         btn.addEventListener('click', () => {
           const presetKey = btn.getAttribute('data-preset');
           if (PRESETS[presetKey] && payloadInput) {
+            presetBtns.forEach(b => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
             payloadInput.value = PRESETS[presetKey];
             if (activeTool === 'ztds_restore') {
               activeTool = 'ztds_sanitize';

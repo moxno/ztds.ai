@@ -48,6 +48,37 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebPage",
+      "@id": "https://ztds.ai/verify/#webpage",
+      "url": "https://ztds.ai/verify/",
+      "name": "Cryptographic Certificate Validator — ZTDS.ai",
+      "description": "Client-side Ed25519 cryptographic certificate validator. Verify ZTDS conformance tokens, 4 invariants, and SHA-256 build receipts in local browser RAM.",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@id": "https://ztds.ai/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://ztds.ai/verify/#breadcrumb"
+      },
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          "h1",
+          "main h2"
+        ]
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://ztds.ai/assets/img/og/og-default.png",
+        "width": 1200,
+        "height": 630
+      },
+      "dateModified": "2026-11-13T00:00:00Z",
+      "publisher": {
+        "@id": "https://ztds.ai/#organization"
+      }
+    },
+    {
       "@type": "WebApplication",
       "@id": "https://ztds.ai/verify/#app",
       "name": "ZTDS Cryptographic Certificate Validator",
@@ -413,8 +444,10 @@
             <textarea
               id="certInput"
               rows="4"
-              class="w-full bg-transparent p-1 text-base sm:text-xs font-mono text-slate-800 border-0 focus:ring-0 focus:outline-none resize-none leading-relaxed placeholder:text-slate-400"
+              class="w-full bg-transparent p-1 text-base sm:text-xs font-mono text-slate-800 border-0 focus:ring-0 focus:outline-none resize-y leading-relaxed placeholder:text-slate-400"
               placeholder="Paste 3-part ZTDS certificate token here:&#10;ZTDS-CERT-v1.{payload_b64url}.{sig_b64url}&#10;Or drop a .cert/.json file, or click a Preset Test Token below."
+              autocorrect="off"
+              autocapitalize="none"
               spellcheck="false"
             ></textarea>
 
@@ -1205,7 +1238,7 @@
   </footer>
 
   <!-- Official Printable Certificate Modal (A4 Print Engine) -->
-  <div id="modalCertificatePrint" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm transition-opacity">
+  <div id="modalCertificatePrint" role="dialog" aria-modal="true" aria-labelledby="certModalHeading" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm transition-opacity">
     <div class="max-w-4xl w-full bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[95vh]">
       <!-- Modal Top Action Bar (hidden on print) -->
       <div class="no-print flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50 shrink-0">
@@ -1260,7 +1293,7 @@
               <div class="inline-block px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-bold uppercase tracking-wider mb-2">
                 RFC 8032 Ed25519 Cryptographically Certified
               </div>
-              <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 tracking-tight">CERTIFICATE OF CONFORMANCE</h2>
+              <h2 id="certModalHeading" class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 tracking-tight">CERTIFICATE OF CONFORMANCE</h2>
               <p class="text-xs text-slate-600 max-w-xl mx-auto mt-1 leading-relaxed">
                 Zero-Trust Data Sanitization Protocol (ZTDS RFC v1.0 &middot; IETF Standards Track)
               </p>

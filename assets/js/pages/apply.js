@@ -604,10 +604,16 @@
         });
       });
 
-      // Prevent premature submit on Enter in Steps 1 & 2
+      // Prevent premature submit on Enter in Steps 1 & 2 (IME-safe)
       if (applyFormEl) {
+        let lastApplyCompositionEndAt = null;
+        applyFormEl.addEventListener('compositionend', (ev) => {
+          lastApplyCompositionEndAt = ev.timeStamp;
+        });
         applyFormEl.addEventListener('keydown', (e) => {
           if (e.key === 'Enter' && e.target.tagName === 'INPUT' && currentStep !== 3) {
+            if (e.isComposing || e.keyCode === 229) return;
+            if (lastApplyCompositionEndAt !== null && Math.abs(e.timeStamp - lastApplyCompositionEndAt) < 50) return;
             e.preventDefault();
             if (currentStep === 1) goToStep(2);
             else if (currentStep === 2) goToStep(3);
