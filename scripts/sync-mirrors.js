@@ -42,7 +42,8 @@ const mirrorPairs = [
   ['ietf/draft-sibiryakov-ztds-protocol-02/index.html', 'ietf/draft-sibiryakov-ztds-protocol-02.html'],
   ['docs/legal/order-form/index.html', 'docs/legal/order-form.html'],
   ['docs/legal/order-form/index.html', 'public/docs/legal/order-form/index.html'],
-  ['docs/legal/order-form/index.html', 'public/docs/legal/order-form.html']
+  ['docs/legal/order-form/index.html', 'public/docs/legal/order-form.html'],
+  ['docs/enterprise/ZTDS_Enterprise_Security_Pack.zip', 'public/docs/ZTDS_Enterprise_Security_Pack.zip']
 ];
 
 let syncedCount = 0;

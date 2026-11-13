@@ -224,7 +224,7 @@ function generateProfileHtml(company) {
   const hasSvgLogo = fs.existsSync(path.join(ROOT, 'assets', 'img', 'companies', `${slug}.svg`));
   const logoBoxHtml = hasSvgLogo
     ? `<div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center shadow-sm shrink-0 overflow-hidden">
-            <img src="/assets/img/companies/${slug}.svg" alt="${escapeHtml(name)} Logo" width="64" height="64" class="w-full h-full object-contain" decoding="async">
+            <img src="/assets/img/companies/${slug}.svg" alt="${escapeHtml(name)} Logo" width="64" height="64" class="w-full h-full object-contain" loading="eager" decoding="async">
           </div>`
     : `<div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center font-bold text-white text-2xl font-mono shadow-sm shrink-0">
             ${escapeHtml(monogram)}
@@ -637,7 +637,7 @@ ${simulationBannerHtml}
         <div class="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-6">
           <div class="text-xs font-mono text-slate-400 mb-2 font-bold">OFFICIAL TRUST BADGE</div>
           <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center mb-4">
-            <img src="/badge/${slug}.svg" alt="ZTDS Verified — ${escapeHtml(name)}" class="h-6 w-auto" width="138" height="22">
+            <img src="/badge/${slug}.svg" alt="ZTDS Verified — ${escapeHtml(name)}" class="h-6 w-auto" width="138" height="22" loading="lazy">
           </div>
           <p class="text-xs text-slate-500 leading-relaxed mb-4">
             Display the official ZTDS Verified Badge on your corporate website, documentation, or security portal.
@@ -741,6 +741,7 @@ ${simulationBannerHtml}
             <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
             <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
             <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/accessibility/" class="hover:text-slate-900 transition-colors">Accessibility Statement</a></li>
             <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
           </ul>
         </div>

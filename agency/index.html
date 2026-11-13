@@ -704,68 +704,71 @@
               <button type="button" role="tab" aria-selected="false" id="tabBtnMemo" class="whitespace-nowrap px-3 py-1.5 rounded-lg bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all font-medium">CISO Memo Bridge</button>
             </div>
 
-            <!-- Tab 1: Executive Proposal Markdown View -->
-            <div id="tabContentProposal" class="space-y-4">
-              <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
-                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-                  <div>
-                    <span class="text-xs font-mono uppercase text-slate-400 font-bold block">Artifact Preview</span>
-                    <strong id="proposalTitle" class="text-sm font-bold text-slate-900">BrandMeWeb Statement of Work &mdash; Acme Health Systems</strong>
+            <!-- Tab Panels Wrapper -->
+            <div id="agencyArtifactPanels">
+              <!-- Tab 1: Executive Proposal Markdown View -->
+              <div id="tabContentProposal" role="tabpanel" aria-labelledby="tabBtnProposal" class="space-y-4">
+                <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
+                  <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div>
+                      <span class="text-xs font-mono uppercase text-slate-400 font-bold block">Artifact Preview</span>
+                      <strong id="proposalTitle" class="text-sm font-bold text-slate-900">BrandMeWeb Statement of Work &mdash; Acme Health Systems</strong>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <button type="button" id="btnCopyProposal" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono transition-colors">
+                        Copy Markdown
+                      </button>
+                      <button type="button" id="btnPrintProposal" class="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-white text-xs font-mono transition-colors">
+                        Print / PDF
+                      </button>
+                    </div>
                   </div>
-                  <div class="flex items-center gap-2">
-                    <button type="button" id="btnCopyProposal" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-mono transition-colors">
-                      Copy Markdown
-                    </button>
-                    <button type="button" id="btnPrintProposal" class="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-white text-xs font-mono transition-colors">
-                      Print / PDF
-                    </button>
-                  </div>
-                </div>
 
-                <div id="proposalRendered" class="font-mono text-xs text-slate-800 bg-slate-50 p-4 rounded-lg border border-slate-200 whitespace-pre-wrap max-h-[460px] overflow-y-auto leading-relaxed">
+                  <div id="proposalRendered" class="font-mono text-xs text-slate-800 bg-slate-50 p-4 rounded-lg border border-slate-200 whitespace-pre-wrap max-h-[460px] overflow-y-auto leading-relaxed">
 <!-- Dynamically populated by JS -->
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <!-- Tab 2: Generated llms.txt View -->
-            <div id="tabContentLlms" class="space-y-4 hidden">
-              <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
-                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-                  <div>
-                    <span class="text-xs font-mono uppercase text-slate-400 font-bold block">GEO Corpus Artifact</span>
-                    <strong class="text-sm font-bold text-slate-900">Target File: <code class="text-emerald-700">/public/llms.txt</code></strong>
+              <!-- Tab 2: Generated llms.txt View -->
+              <div id="tabContentLlms" role="tabpanel" aria-labelledby="tabBtnLlms" hidden="until-found" class="space-y-4">
+                <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
+                  <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div>
+                      <span class="text-xs font-mono uppercase text-slate-400 font-bold block">GEO Corpus Artifact</span>
+                      <strong class="text-sm font-bold text-slate-900">Target File: <code class="text-emerald-700">/public/llms.txt</code></strong>
+                    </div>
+                    <button type="button" id="btnCopyLlms" class="px-2.5 py-1 rounded bg-slate-900 text-white text-xs font-mono hover:bg-slate-800 transition-colors">
+                      Copy llms.txt
+                    </button>
                   </div>
-                  <button type="button" id="btnCopyLlms" class="px-2.5 py-1 rounded bg-slate-900 text-white text-xs font-mono hover:bg-slate-800 transition-colors">
-                    Copy llms.txt
-                  </button>
-                </div>
 
-                <div id="llmsRendered" class="font-mono text-xs text-slate-800 bg-slate-50 p-4 rounded-lg border border-slate-200 whitespace-pre-wrap max-h-[460px] overflow-y-auto leading-relaxed">
+                  <div id="llmsRendered" class="font-mono text-xs text-slate-800 bg-slate-50 p-4 rounded-lg border border-slate-200 whitespace-pre-wrap max-h-[460px] overflow-y-auto leading-relaxed">
 <!-- Dynamically populated by JS -->
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <!-- Tab 3: CISO Memo Bridge View -->
-            <div id="tabContentMemo" class="space-y-4 hidden">
-              <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
-                <div class="pb-3 border-b border-slate-100">
-                  <span class="text-xs font-mono uppercase text-slate-400 font-bold block">Legal Exemption Bridge</span>
-                  <strong class="text-sm font-bold text-slate-900">Pre-Configured CISO Memorandum</strong>
-                </div>
-
-                <p class="text-xs text-slate-600 leading-relaxed">
-                  Clicking the button below opens the institutional 1-page CISO legal memorandum pre-filled with your organization name and regulatory statutory defense:
-                </p>
-
-                <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-200 space-y-3">
-                  <div class="text-xs text-emerald-900 font-medium">
-                    Pre-filled target: <strong id="memoTargetOrg" class="font-bold">Acme Health Systems</strong> (<span id="memoTargetDomain" class="font-mono">acme-health.org</span>)
+              <!-- Tab 3: CISO Memo Bridge View -->
+              <div id="tabContentMemo" role="tabpanel" aria-labelledby="tabBtnMemo" hidden="until-found" class="space-y-4">
+                <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
+                  <div class="pb-3 border-b border-slate-100">
+                    <span class="text-xs font-mono uppercase text-slate-400 font-bold block">Legal Exemption Bridge</span>
+                    <strong class="text-sm font-bold text-slate-900">Pre-Configured CISO Memorandum</strong>
                   </div>
-                  <a id="linkOpenCisoMemo" href="/ciso/memo/" target="_blank" rel="noopener" class="btn-trust inline-flex text-xs py-2 px-4 shadow-sm">
-                    Open Pre-Filled CISO Memo (HTML/Print) &rarr;
-                  </a>
+
+                  <p class="text-xs text-slate-600 leading-relaxed">
+                    Clicking the button below opens the institutional 1-page CISO legal memorandum pre-filled with your organization name and regulatory statutory defense:
+                  </p>
+
+                  <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-200 space-y-3">
+                    <div class="text-xs text-emerald-900 font-medium">
+                      Pre-filled target: <strong id="memoTargetOrg" class="font-bold">Acme Health Systems</strong> (<span id="memoTargetDomain" class="font-mono">acme-health.org</span>)
+                    </div>
+                    <a id="linkOpenCisoMemo" href="/ciso/memo/" target="_blank" rel="noopener" class="btn-trust inline-flex text-xs py-2 px-4 shadow-sm">
+                      Open Pre-Filled CISO Memo (HTML/Print) &rarr;
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1023,6 +1026,7 @@
             <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
             <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
             <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/accessibility/" class="hover:text-slate-900 transition-colors">Accessibility Statement</a></li>
             <li><a href="/docs/legal/order-form/" class="hover:text-slate-900 transition-colors">Enterprise Order Form (Schedule A)</a></li>
             <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
           </ul>

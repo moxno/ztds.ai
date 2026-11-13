@@ -528,18 +528,18 @@
         <div class="pt-3.5">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
             <span class="text-xs font-mono font-bold text-slate-700 uppercase tracking-wider shrink-0">Target AI Coding Client</span>
-            <div class="tablist-scroll items-center gap-1 p-1 bg-slate-50 border border-slate-200 rounded-lg text-xs max-w-full" role="tablist" aria-label="Target AI Coding Client">
-              <button type="button" role="tab" aria-selected="true" class="client-tab-btn active px-3 py-1.5 rounded bg-slate-900 text-white font-mono text-xs font-semibold cursor-pointer whitespace-nowrap" data-client="cursor">Cursor IDE</button>
-              <button type="button" role="tab" aria-selected="false" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer whitespace-nowrap" data-client="desktop">Claude Desktop</button>
-              <button type="button" role="tab" aria-selected="false" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer whitespace-nowrap" data-client="cli">Claude Code CLI</button>
-              <button type="button" role="tab" aria-selected="false" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer whitespace-nowrap" data-client="windsurf">Windsurf</button>
-              <button type="button" role="tab" aria-selected="false" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer whitespace-nowrap" data-client="zed">Zed Editor</button>
-              <button type="button" role="tab" aria-selected="false" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer whitespace-nowrap" data-client="antigravity">Antigravity</button>
+            <div class="tablist-scroll items-center gap-1 p-1 bg-slate-50 border border-slate-200 rounded-lg text-xs max-w-full" role="tablist" aria-label="Target AI Coding Client" data-tabpanel="mcpClientCodePanel">
+              <button id="mcp-tab-cursor-1" type="button" role="tab" aria-selected="true" class="client-tab-btn active px-3 py-1.5 rounded bg-slate-900 text-white font-mono text-xs font-semibold cursor-pointer whitespace-nowrap" data-client="cursor">Cursor IDE</button>
+              <button id="mcp-tab-desktop-2" type="button" role="tab" aria-selected="false" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer whitespace-nowrap" data-client="desktop">Claude Desktop</button>
+              <button id="mcp-tab-cli-3" type="button" role="tab" aria-selected="false" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer whitespace-nowrap" data-client="cli">Claude Code CLI</button>
+              <button id="mcp-tab-windsurf-4" type="button" role="tab" aria-selected="false" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer whitespace-nowrap" data-client="windsurf">Windsurf</button>
+              <button id="mcp-tab-zed-5" type="button" role="tab" aria-selected="false" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer whitespace-nowrap" data-client="zed">Zed Editor</button>
+              <button id="mcp-tab-antigravity-6" type="button" role="tab" aria-selected="false" class="client-tab-btn px-3 py-1.5 rounded text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold cursor-pointer whitespace-nowrap" data-client="antigravity">Antigravity</button>
             </div>
           </div>
 
           <!-- Code Display Container -->
-          <div class="code-container shadow-md rounded-xl overflow-hidden border border-slate-800 bg-slate-950">
+          <div id="mcpClientCodePanel" role="tabpanel" aria-labelledby="mcp-tab-cursor-1" class="code-container shadow-md rounded-xl overflow-hidden border border-slate-800 bg-slate-950">
             <!-- Dynamic Code Header -->
             <div class="code-header flex flex-wrap items-center justify-between gap-2 px-3.5 py-2.5 bg-slate-900 border-b border-slate-800">
               <div class="flex items-center gap-2">
@@ -634,8 +634,9 @@
             CISO Safe Harbor Memo &rarr;
           </a>
         </div>
-        <div class="p-5 overflow-x-auto" tabindex="0" role="region" aria-label="Scrollable data table">
+        <div class="p-5 overflow-x-auto" tabindex="0" role="region" aria-labelledby="mcp-table-caption-1">
           <table class="w-full text-left text-xs font-mono border-collapse">
+          <caption id="mcp-table-caption-1" class="ztds-sr-only">MCP Security Comparison: Standard Unprotected MCP Server vs. ZTDS In-RAM Hardened Gateway</caption>
             <thead>
               <tr class="border-b border-slate-200 text-slate-500 uppercase tracking-wider">
                 <th scope="col" class="py-3 px-4 font-semibold">Security Dimension</th>
@@ -968,12 +969,12 @@
           <div class="p-4 bg-slate-900/90 border-b border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
             
             <!-- Tool Tabs -->
-            <div class="tablist-scroll items-center gap-1.5 pb-1 md:pb-0 max-w-full" id="sim-tool-tabs" role="tablist" aria-label="MCP Tools">
-              <button type="button" role="tab" aria-selected="true" class="sim-tool-btn active whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-colors bg-emerald-500 text-slate-950 cursor-pointer" data-tool="ztds_sanitize">ztds_sanitize</button>
-              <button type="button" role="tab" aria-selected="false" class="sim-tool-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer" data-tool="ztds_restore">ztds_restore</button>
-              <button type="button" role="tab" aria-selected="false" class="sim-tool-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer" data-tool="ztds_audit">ztds_audit</button>
-              <button type="button" role="tab" aria-selected="false" class="sim-tool-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer" data-tool="ztds_reset_session">ztds_reset_session</button>
-              <button type="button" role="tab" aria-selected="false" class="sim-tool-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer" data-tool="ztds_status">ztds_status</button>
+            <div class="tablist-scroll items-center gap-1.5 pb-1 md:pb-0 max-w-full" id="sim-tool-tabs" data-tabpanel="mcpSimWorkbenchPanel" role="tablist" aria-label="MCP Tools">
+              <button id="mcp-tab-ztds-sanitize-7" type="button" role="tab" aria-selected="true" class="sim-tool-btn active whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-colors bg-emerald-500 text-slate-950 cursor-pointer" data-tool="ztds_sanitize">ztds_sanitize</button>
+              <button id="mcp-tab-ztds-restore-8" type="button" role="tab" aria-selected="false" class="sim-tool-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer" data-tool="ztds_restore">ztds_restore</button>
+              <button id="mcp-tab-ztds-audit-9" type="button" role="tab" aria-selected="false" class="sim-tool-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer" data-tool="ztds_audit">ztds_audit</button>
+              <button id="mcp-tab-ztds-reset-session-10" type="button" role="tab" aria-selected="false" class="sim-tool-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer" data-tool="ztds_reset_session">ztds_reset_session</button>
+              <button id="mcp-tab-ztds-status-11" type="button" role="tab" aria-selected="false" class="sim-tool-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer" data-tool="ztds_status">ztds_status</button>
             </div>
 
             <!-- Presets Buttons -->
@@ -987,7 +988,7 @@
           </div>
 
           <!-- Dual Column Workbench -->
-          <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-slate-800">
+          <div id="mcpSimWorkbenchPanel" role="tabpanel" aria-labelledby="mcp-tab-ztds-sanitize-7" class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-slate-800">
             
             <!-- Left: Input Pane -->
             <div class="p-5 flex flex-col justify-between space-y-4">
@@ -1023,9 +1024,9 @@
               <div class="space-y-3">
                 <div class="flex items-center justify-between border-b border-slate-800 pb-2">
                   <div class="tablist-scroll items-center gap-1 text-xs max-w-full" id="sim-output-tabs" role="tablist" aria-label="Simulator Output View">
-                    <button type="button" role="tab" aria-selected="true" class="sim-out-tab active whitespace-nowrap px-2.5 py-1 rounded bg-slate-800 text-emerald-400 font-mono text-xs font-semibold cursor-pointer" data-out="stdio">Stdio JSON-RPC</button>
-                    <button type="button" role="tab" aria-selected="false" class="sim-out-tab whitespace-nowrap px-2.5 py-1 rounded text-slate-400 hover:text-white font-mono text-xs font-semibold cursor-pointer" data-out="session">TokenMap</button>
-                    <button type="button" role="tab" aria-selected="false" class="sim-out-tab whitespace-nowrap px-2.5 py-1 rounded text-slate-400 hover:text-white font-mono text-xs font-semibold cursor-pointer" data-out="masked">Masked View</button>
+                    <button id="mcp-tab-stdio-12" type="button" role="tab" aria-selected="true" class="sim-out-tab active whitespace-nowrap px-2.5 py-1 rounded bg-slate-800 text-emerald-400 font-mono text-xs font-semibold cursor-pointer" data-out="stdio">Stdio JSON-RPC</button>
+                    <button id="mcp-tab-session-13" type="button" role="tab" aria-selected="false" class="sim-out-tab whitespace-nowrap px-2.5 py-1 rounded text-slate-400 hover:text-white font-mono text-xs font-semibold cursor-pointer" data-out="session">TokenMap</button>
+                    <button id="mcp-tab-masked-14" type="button" role="tab" aria-selected="false" class="sim-out-tab whitespace-nowrap px-2.5 py-1 rounded text-slate-400 hover:text-white font-mono text-xs font-semibold cursor-pointer" data-out="masked">Masked View</button>
                   </div>
                   <button type="button" id="btnCopySimOutput" class="text-slate-400 hover:text-emerald-400 text-xs font-mono flex items-center gap-1 cursor-pointer">
                     <span id="copySimBtnText">Copy Output</span>
@@ -1033,17 +1034,17 @@
                 </div>
 
                 <!-- Pane 1: Stdio JSON-RPC -->
-                <div id="simPaneStdio" class="sim-out-pane">
+                <div id="simPaneStdio" role="tabpanel" aria-labelledby="mcp-tab-stdio-12" class="sim-out-pane">
                   <pre id="simStdioDisplay" class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed h-[230px] overflow-y-auto whitespace-pre-wrap"></pre>
                 </div>
 
                 <!-- Pane 2: TokenMap -->
-                <div id="simPaneSession" class="sim-out-pane hidden">
+                <div id="simPaneSession" role="tabpanel" aria-labelledby="mcp-tab-session-13" class="sim-out-pane hidden">
                   <pre id="simSessionDisplay" class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 font-mono text-xs text-sky-300 overflow-x-auto leading-relaxed h-[230px] overflow-y-auto whitespace-pre-wrap"></pre>
                 </div>
 
                 <!-- Pane 3: Masked View -->
-                <div id="simPaneMasked" class="sim-out-pane hidden">
+                <div id="simPaneMasked" role="tabpanel" aria-labelledby="mcp-tab-masked-14" class="sim-out-pane hidden">
                   <div id="simMaskedDisplay" class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 font-mono text-xs text-slate-200 overflow-x-auto leading-relaxed h-[230px] overflow-y-auto whitespace-pre-wrap"></div>
                 </div>
               </div>
@@ -1404,6 +1405,53 @@ description: Prevent PII vector poisoning in RAG and ETL pipelines using ZTDS in
 
     </section>
 
+
+    <!-- Normative Control & Framework Deep-Dives -->
+    <section id="framework-control-guides" class="py-12 bg-white border-t border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold">Implementation &amp; Audit Guides</span>
+            <h2 id="normative-framework-control-mappings" class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1 tracking-tight scroll-mt-24">Normative Framework &amp; Pipeline Control Mappings</h2>
+          </div>
+          <a href="/frameworks/" class="text-xs font-mono font-semibold text-emerald-700 hover:text-emerald-800 underline underline-offset-2">View All 8 Control Mappings &rarr;</a>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+          <a href="/frameworks/owasp-llm02-sensitive-information-disclosure/" class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-emerald-50/50 hover:border-emerald-300 transition-colors">
+            <div class="font-mono font-bold text-emerald-800 mb-1">OWASP LLM02:2025</div>
+            <div class="font-semibold text-slate-900">Sensitive Information Disclosure</div>
+          </a>
+          <a href="/frameworks/nist-ai-rmf-generative-ai-profile-pii/" class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-emerald-50/50 hover:border-emerald-300 transition-colors">
+            <div class="font-mono font-bold text-emerald-800 mb-1">NIST AI 600-1</div>
+            <div class="font-semibold text-slate-900">Generative AI Profile PII Controls</div>
+          </a>
+          <a href="/frameworks/eu-ai-act-article-10-data-governance/" class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-emerald-50/50 hover:border-emerald-300 transition-colors">
+            <div class="font-mono font-bold text-emerald-800 mb-1">EU AI Act Art. 10</div>
+            <div class="font-semibold text-slate-900">Dataset &amp; Prompt Governance</div>
+          </a>
+          <a href="/frameworks/gdpr-article-25-32-ai-prompts/" class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-emerald-50/50 hover:border-emerald-300 transition-colors">
+            <div class="font-mono font-bold text-emerald-800 mb-1">GDPR Art. 25 &amp; 32</div>
+            <div class="font-semibold text-slate-900">Technical Safe Harbor for Prompts</div>
+          </a>
+          <a href="/frameworks/hipaa-safe-harbor-llm-prompts/" class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-emerald-50/50 hover:border-emerald-300 transition-colors">
+            <div class="font-mono font-bold text-emerald-800 mb-1">HIPAA 45 CFR 164.514</div>
+            <div class="font-semibold text-slate-900">Clinical PHI De-Identification</div>
+          </a>
+          <a href="/frameworks/mcp-stdio-pii-sanitization/" class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-emerald-50/50 hover:border-emerald-300 transition-colors">
+            <div class="font-mono font-bold text-emerald-800 mb-1">MCP Stdio Security</div>
+            <div class="font-semibold text-slate-900">Local IDE &amp; Tool-Loop Sanitization</div>
+          </a>
+          <a href="/frameworks/rag-pipeline-pii-sanitization/" class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-emerald-50/50 hover:border-emerald-300 transition-colors">
+            <div class="font-mono font-bold text-emerald-800 mb-1">RAG Vector Hygiene</div>
+            <div class="font-semibold text-slate-900">Pre-Embedding Surrogate Tokenization</div>
+          </a>
+          <a href="/frameworks/client-side-sanitization-vs-proxy-dlp/" class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-emerald-50/50 hover:border-emerald-300 transition-colors">
+            <div class="font-mono font-bold text-emerald-800 mb-1">Architecture Trade-Offs</div>
+            <div class="font-semibold text-slate-900">Client-Side RAM vs. Cloud Proxy DLP</div>
+          </a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- 5-Column Institutional Light Footer -->
@@ -1513,6 +1561,7 @@ description: Prevent PII vector poisoning in RAG and ETL pipelines using ZTDS in
             <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
             <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
             <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/accessibility/" class="hover:text-slate-900 transition-colors">Accessibility Statement</a></li>
             <li><a href="/docs/legal/order-form/" class="hover:text-slate-900 transition-colors">Enterprise Order Form (Schedule A)</a></li>
             <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
           </ul>

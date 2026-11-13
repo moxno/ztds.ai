@@ -625,8 +625,9 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
           <span>Statutory Compliance &amp; Safe Harbor Crosswalk (GDPR Art. 32 &amp; Art. 28)</span>
           <span class="text-xs font-mono text-emerald-700 font-semibold">Safe Harbor Certified</span>
         </div>
-        <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Scrollable data table">
+        <div class="overflow-x-auto" tabindex="0" role="region" aria-labelledby="sdk-table-caption-1">
           <table class="min-w-full text-xs text-left text-slate-600">
+          <caption id="sdk-table-caption-1" class="ztds-sr-only">Developer SDK Regulatory Provision and ZTDS Invariant Mapping</caption>
             <thead class="bg-slate-50 text-xs font-mono uppercase text-slate-500 border-b border-slate-200">
               <tr>
                 <th scope="col" class="p-2.5">Regulation</th>
@@ -1448,15 +1449,15 @@ static_resources:
             <h3 id="1-click-client-configuration" class="text-sm font-bold text-slate-900 font-sans scroll-mt-24">1-Click Client Configuration</h3>
             <p class="text-xs text-slate-500 mt-0.5">Select your AI development environment to copy the exact air-gapped stdio connector snippet:</p>
           </div>
-          <div class="tablist-scroll items-center gap-1.5 p-1 bg-white border border-slate-200 rounded-lg text-xs max-w-full" id="mcpClientTabs" role="tablist" aria-label="MCP Client Configuration">
-            <button type="button" class="mcp-client-btn whitespace-nowrap px-2.5 py-1 rounded-md bg-slate-900 text-white font-bold shadow-xs text-xs touch-target" data-client="cursor" role="tab" aria-selected="true">Cursor IDE</button>
-            <button type="button" class="mcp-client-btn whitespace-nowrap px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-semibold text-xs touch-target" data-client="desktop" role="tab" aria-selected="false">Claude Desktop</button>
-            <button type="button" class="mcp-client-btn whitespace-nowrap px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-semibold text-xs touch-target" data-client="cli" role="tab" aria-selected="false">Claude Code CLI</button>
-            <button type="button" class="mcp-client-btn whitespace-nowrap px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-semibold text-xs touch-target" data-client="zed" role="tab" aria-selected="false">Zed / VS Code</button>
+          <div class="tablist-scroll items-center gap-1.5 p-1 bg-white border border-slate-200 rounded-lg text-xs max-w-full" id="mcpClientTabs" data-tabpanel="sdkMcpClientPanel" role="tablist" aria-label="MCP Client Configuration">
+            <button id="sdk-tab-cursor-1" type="button" class="mcp-client-btn whitespace-nowrap px-2.5 py-1 rounded-md bg-slate-900 text-white font-bold shadow-xs text-xs touch-target" data-client="cursor" role="tab" aria-selected="true">Cursor IDE</button>
+            <button id="sdk-tab-desktop-2" type="button" class="mcp-client-btn whitespace-nowrap px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-semibold text-xs touch-target" data-client="desktop" role="tab" aria-selected="false">Claude Desktop</button>
+            <button id="sdk-tab-cli-3" type="button" class="mcp-client-btn whitespace-nowrap px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-semibold text-xs touch-target" data-client="cli" role="tab" aria-selected="false">Claude Code CLI</button>
+            <button id="sdk-tab-zed-4" type="button" class="mcp-client-btn whitespace-nowrap px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-semibold text-xs touch-target" data-client="zed" role="tab" aria-selected="false">Zed / VS Code</button>
           </div>
         </div>
 
-        <div class="relative">
+        <div id="sdkMcpClientPanel" role="tabpanel" aria-labelledby="sdk-tab-cursor-1" class="relative">
           <div class="flex items-center justify-between px-3 py-1.5 bg-slate-800 text-slate-400 font-mono text-xs rounded-t-lg border-b border-slate-700">
             <span id="mcpConfigFilePath">.cursor/mcp.json</span>
             <button type="button" id="copyMcpConfigBtn" class="text-emerald-400 hover:text-emerald-300 font-sans text-xs font-semibold px-2 py-0.5 rounded bg-slate-700 hover:bg-slate-600 transition-colors touch-target">
@@ -1502,8 +1503,9 @@ static_resources:
         <span class="text-xs font-mono text-slate-500">6 Supported Environments</span>
       </div>
 
-      <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Scrollable data table">
+      <div class="overflow-x-auto" tabindex="0" role="region" aria-labelledby="sdk-table-caption-2">
         <table class="min-w-full text-xs text-left border border-slate-200 rounded-xl overflow-hidden">
+          <caption id="sdk-table-caption-2" class="ztds-sr-only">AI Agent and RAG Framework Compatibility and Latency Matrix</caption>
           <thead class="bg-slate-100 text-slate-700 uppercase font-mono font-bold text-xs">
             <tr>
               <th scope="col" class="p-3 border-b">Framework / Tool</th>
@@ -1706,7 +1708,7 @@ static_resources:
         <!-- Multiplatform Quickstart Snippets -->
         <div class="rounded-xl border border-slate-800 bg-slate-950 overflow-hidden font-mono text-xs">
           <div class="flex flex-wrap items-center justify-between px-4 py-2.5 bg-slate-900 border-b border-slate-800 gap-2">
-            <div class="tablist-scroll items-center gap-1.5 max-w-full" role="tablist" aria-label="Quickstart Target">
+            <div class="tablist-scroll items-center gap-1.5 max-w-full" role="tablist" aria-label="Quickstart Target" data-tabpanel="workbenchSnippetPanel">
               <button type="button" role="tab" aria-selected="true" id="tabSnippetMcp" class="snippet-tab-btn active whitespace-nowrap px-2.5 py-1 rounded text-xs bg-slate-800 text-emerald-400 font-bold transition-colors cursor-pointer" data-target="mcp">Cursor &amp; Claude MCP</button>
               <button type="button" role="tab" aria-selected="false" id="tabSnippetNode" class="snippet-tab-btn whitespace-nowrap px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="node">Node.js / TS SDK</button>
               <button type="button" role="tab" aria-selected="false" id="tabSnippetPython" class="snippet-tab-btn whitespace-nowrap px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="python">Python RAG</button>
@@ -1716,7 +1718,7 @@ static_resources:
               <span>Copy Snippet</span>
             </button>
           </div>
-          <div class="p-4 overflow-x-auto leading-relaxed text-slate-200 bg-black/40">
+          <div id="workbenchSnippetPanel" role="tabpanel" aria-labelledby="tabSnippetMcp" class="p-4 overflow-x-auto leading-relaxed text-slate-200 bg-black/40">
             <pre id="workbenchSnippetPre"><code id="workbenchSnippetCode">// Quickstart snippet will render here</code></pre>
           </div>
         </div>
@@ -2348,6 +2350,7 @@ jobs:
             <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
             <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
             <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/accessibility/" class="hover:text-slate-900 transition-colors">Accessibility Statement</a></li>
             <li><a href="/docs/legal/order-form/" class="hover:text-slate-900 transition-colors">Enterprise Order Form (Schedule A)</a></li>
             <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
           </ul>
@@ -2458,7 +2461,7 @@ jobs:
       <div class="p-5 sm:p-6 overflow-y-auto space-y-5">
         
         <!-- PANE 1: Commercial Gateway Handoff -->
-        <div id="paneCheckoutBuy" class="space-y-4">
+        <div id="paneCheckoutBuy" role="tabpanel" aria-labelledby="tabCheckoutBuy" class="space-y-4">
           <!-- Plan / Tier Selector -->
           <div class="grid grid-cols-2 gap-2 text-xs">
             <button type="button" id="btnTierDeveloper" class="p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/50 text-left transition-all cursor-pointer">
@@ -2534,7 +2537,7 @@ jobs:
         </div>
 
         <!-- PANE 2: Instant 14-Day Evaluation Key -->
-        <div id="paneCheckoutTrial" class="space-y-4 hidden">
+        <div id="paneCheckoutTrial" role="tabpanel" aria-labelledby="tabCheckoutTrial" class="space-y-4 hidden">
           <p class="text-xs text-slate-600 leading-relaxed">
             Generate an authentic, cryptographically signed 14-day evaluation license token (<code class="font-mono text-emerald-700 bg-emerald-50 px-1 py-0.5 rounded">ZTDS-LIC-v1...</code>) immediately in local RAM. Zero credit card required.
           </p>
@@ -2583,7 +2586,7 @@ jobs:
         </div>
 
         <!-- PANE 3: Enterprise Wire / PO -->
-        <div id="paneCheckoutInvoice" class="space-y-4 hidden">
+        <div id="paneCheckoutInvoice" role="tabpanel" aria-labelledby="tabCheckoutInvoice" class="space-y-4 hidden">
           <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
             <h3 class="text-sm font-bold text-slate-900">Enterprise Air-Gapped License</h3>
             <p class="text-xs text-slate-600 leading-relaxed">

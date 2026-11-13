@@ -430,33 +430,34 @@
 
     <!-- AUDITOR MODE NAVIGATION TABS (SINGLE-ROW SCROLLABLE TABLIST) -->
     <div class="mb-5 max-w-4xl mx-auto sticky top-16 z-30 py-1.5 bg-slate-50/95 backdrop-blur-md" id="auditorModeTabsContainer">
-      <div class="tablist-scroll bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm items-center justify-between gap-1" role="tablist" aria-label="Scanner Modes">
-        <button type="button" role="tab" aria-selected="true" class="auditor-mode-tab lg:flex-1 py-2 px-3 rounded-xl text-xs font-mono font-semibold transition-all text-center flex items-center justify-center gap-1.5 bg-slate-900 text-white shadow-xs border border-slate-900 cursor-pointer whitespace-nowrap" data-mode="mode0-domain-scanner">
+      <div class="tablist-scroll bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm items-center justify-between gap-1" role="tablist" aria-label="Scanner Modes" data-tabpanel="scannerAuditorWorkspace">
+        <button id="scanner-tab-mode0-domain-scanner-1" type="button" role="tab" aria-selected="true" class="auditor-mode-tab lg:flex-1 py-2 px-3 rounded-xl text-xs font-mono font-semibold transition-all text-center flex items-center justify-center gap-1.5 bg-slate-900 text-white shadow-xs border border-slate-900 cursor-pointer whitespace-nowrap" data-mode="mode0-domain-scanner">
           <span class="auditor-mode-dot w-2 h-2 rounded-full bg-emerald-400"></span>
           <span>Domain Perimeter</span>
         </button>
-        <button type="button" role="tab" aria-selected="false" class="auditor-mode-tab lg:flex-1 py-2 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer whitespace-nowrap" data-mode="mode1-socket-interceptor">
+        <button id="scanner-tab-mode1-socket-interceptor-2" type="button" role="tab" aria-selected="false" class="auditor-mode-tab lg:flex-1 py-2 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer whitespace-nowrap" data-mode="mode1-socket-interceptor">
           <span class="auditor-mode-dot w-2 h-2 rounded-full bg-slate-300"></span>
           <span>Socket Interceptor</span>
         </button>
-        <button type="button" role="tab" aria-selected="false" class="auditor-mode-tab lg:flex-1 py-2 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer whitespace-nowrap" data-mode="mode2-static-linter">
+        <button id="scanner-tab-mode2-static-linter-3" type="button" role="tab" aria-selected="false" class="auditor-mode-tab lg:flex-1 py-2 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer whitespace-nowrap" data-mode="mode2-static-linter">
           <span class="auditor-mode-dot w-2 h-2 rounded-full bg-slate-300"></span>
           <span>AST Code Linter</span>
         </button>
-        <button type="button" role="tab" aria-selected="false" class="auditor-mode-tab lg:flex-1 py-2 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer whitespace-nowrap" data-mode="mode3-airplane-protocol">
+        <button id="scanner-tab-mode3-airplane-protocol-4" type="button" role="tab" aria-selected="false" class="auditor-mode-tab lg:flex-1 py-2 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer whitespace-nowrap" data-mode="mode3-airplane-protocol">
           <span class="auditor-mode-dot w-2 h-2 rounded-full bg-slate-300"></span>
           <span>Airplane Protocol</span>
         </button>
-        <button type="button" role="tab" aria-selected="false" class="auditor-mode-tab lg:flex-1 py-2 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer whitespace-nowrap" data-mode="mode4-cicd-workbench">
+        <button id="scanner-tab-mode4-cicd-workbench-5" type="button" role="tab" aria-selected="false" class="auditor-mode-tab lg:flex-1 py-2 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer whitespace-nowrap" data-mode="mode4-cicd-workbench">
           <span class="auditor-mode-dot w-2 h-2 rounded-full bg-slate-300"></span>
           <span>CLI &amp; CI/CD</span>
         </button>
-        <button type="button" role="tab" aria-selected="false" class="auditor-mode-tab py-2 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-900 shrink-0 cursor-pointer whitespace-nowrap" data-mode="all" title="View all scanner modes simultaneously">
+        <button id="scanner-tab-all-6" type="button" role="tab" aria-selected="false" class="auditor-mode-tab py-2 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-900 shrink-0 cursor-pointer whitespace-nowrap" data-mode="all" title="View all scanner modes simultaneously">
           <span>Unified View</span>
         </button>
       </div>
     </div>
 
+    <div id="scannerAuditorWorkspace" role="tabpanel" aria-labelledby="scanner-tab-mode0-domain-scanner-1">
     <!-- SECTION 0: LIVE DOMAIN PERIMETER & ARCHITECTURE AUDITOR (MODE 0) -->
     <section class="mb-12" id="mode0-domain-scanner">
       <div class="ztds-card p-5 sm:p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
@@ -771,8 +772,9 @@
           </div>
 
           <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden">
-            <div class="overflow-x-auto max-h-[160px] overflow-y-auto" tabindex="0" role="region" aria-label="Scrollable data table">
+            <div class="overflow-x-auto max-h-[160px] overflow-y-auto" tabindex="0" role="region" aria-labelledby="scanner-table-caption-1">
               <table class="w-full text-left font-mono text-xs">
+          <caption id="scanner-table-caption-1" class="ztds-sr-only">Live Browser Network Socket Egress Inspection Log</caption>
                 <thead class="bg-slate-900 text-slate-400 border-b border-slate-800 sticky top-0">
                   <tr>
                     <th scope="col" class="py-1.5 px-3">Time</th>
@@ -1058,8 +1060,8 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
 
       </div>
     </section>
+    </div>
 
-  
     <!-- DIRECT ANSWER FAQ SECTION (GEO & RAG CITATION OPTIMIZED) -->
     <section id="faq" class="py-12 lg:py-16 border-t border-slate-200 bg-slate-50/60">
       <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1220,6 +1222,7 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
             <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
             <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
             <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/accessibility/" class="hover:text-slate-900 transition-colors">Accessibility Statement</a></li>
             <li><a href="/docs/legal/order-form/" class="hover:text-slate-900 transition-colors">Enterprise Order Form (Schedule A)</a></li>
             <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
           </ul>
@@ -1402,8 +1405,9 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
             </h3>
             <span class="text-xs font-mono text-slate-400">IETF draft-sibiryakov-ztds-protocol</span>
           </div>
-          <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Scrollable data table">
+          <div class="overflow-x-auto" tabindex="0" role="region" aria-labelledby="scanner-table-caption-2">
             <table class="w-full text-left font-mono text-xs border border-slate-800">
+          <caption id="scanner-table-caption-2" class="ztds-sr-only">ZTDS RFC v1.0 Four Core Invariants Runtime Conformance Matrix</caption>
               <thead class="bg-slate-950 text-slate-400 border-b border-slate-800 text-xs uppercase">
                 <tr>
                   <th scope="col" class="py-2 px-3">Invariant Specification</th>
@@ -1484,8 +1488,9 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
             </h3>
             <span class="text-xs font-mono text-slate-400" id="reportInterceptedCount">0 Packets Monitored</span>
           </div>
-          <div class="overflow-x-auto max-h-48 border border-slate-800 rounded-lg" tabindex="0" role="region" aria-label="Scrollable data table">
+          <div class="overflow-x-auto max-h-48 border border-slate-800 rounded-lg" tabindex="0" role="region" aria-labelledby="scanner-table-caption-3">
             <table class="w-full text-left font-mono text-xs">
+          <caption id="scanner-table-caption-3" class="ztds-sr-only">Compliance Audit Report Network Socket Interception Evidence Log</caption>
               <thead class="bg-slate-950 text-slate-400 border-b border-slate-800 text-xs sticky top-0 uppercase">
                 <tr>
                   <th scope="col" class="py-1.5 px-3">Timestamp</th>

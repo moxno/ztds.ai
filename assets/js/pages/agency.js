@@ -201,14 +201,21 @@ BrandMeWeb: Ilya Sibiryakov, Chief Architect (brandmeweb.com)`;
         }
       });
 
-      tabContentProposal.classList.toggle('hidden', activeTab !== 'proposal');
-      tabContentLlms.classList.toggle('hidden', activeTab !== 'llms');
-      tabContentMemo.classList.toggle('hidden', activeTab !== 'memo');
+      tabContentProposal.classList.remove('hidden');
+      tabContentLlms.classList.remove('hidden');
+      tabContentMemo.classList.remove('hidden');
+      tabContentProposal.hidden = activeTab === 'proposal' ? false : 'until-found';
+      tabContentLlms.hidden = activeTab === 'llms' ? false : 'until-found';
+      tabContentMemo.hidden = activeTab === 'memo' ? false : 'until-found';
     }
 
     tabBtnProposal.addEventListener('click', () => setTab('proposal'));
     tabBtnLlms.addEventListener('click', () => setTab('llms'));
     tabBtnMemo.addEventListener('click', () => setTab('memo'));
+
+    tabContentProposal.addEventListener('beforematch', () => setTab('proposal'));
+    tabContentLlms.addEventListener('beforematch', () => setTab('llms'));
+    tabContentMemo.addEventListener('beforematch', () => setTab('memo'));
 
     // Recalculate listener
     btnRecalculate.addEventListener('click', synthesizeArtifacts);

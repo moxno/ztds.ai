@@ -772,29 +772,40 @@
     const qsBtns = document.querySelectorAll('.qs-tab-btn');
     const qsPanes = document.querySelectorAll('.qs-code-pane');
 
+    const activateQuickstartTab = (tab, scrollBtn = true) => {
+      qsBtns.forEach((b) => {
+        const active = b.getAttribute('data-tab') === tab;
+        b.setAttribute('aria-selected', active ? 'true' : 'false');
+        b.className = active
+          ? 'qs-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-emerald-400 transition-colors cursor-pointer'
+          : 'qs-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-slate-200 transition-colors cursor-pointer';
+        if (active && scrollBtn && typeof b.scrollIntoView === 'function') {
+          b.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+        }
+      });
+      qsPanes.forEach((pane) => {
+        pane.classList.remove('hidden');
+        pane.hidden = pane.id === 'qs-pane-' + tab ? false : 'until-found';
+      });
+    };
+
     qsBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
-        const tab = btn.getAttribute('data-tab');
-        qsBtns.forEach((b) => {
-          const active = b === btn;
-          b.setAttribute('aria-selected', active ? 'true' : 'false');
-          b.className = active
-            ? 'qs-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-emerald-400 transition-colors cursor-pointer'
-            : 'qs-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-slate-200 transition-colors cursor-pointer';
-        });
-        if (typeof btn.scrollIntoView === 'function') {
-          btn.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
-        }
-        qsPanes.forEach((pane) => {
-          pane.classList.toggle('hidden', pane.id !== 'qs-pane-' + tab);
-        });
+        activateQuickstartTab(btn.getAttribute('data-tab'));
+      });
+    });
+
+    qsPanes.forEach((pane) => {
+      pane.addEventListener('beforematch', () => {
+        const tab = pane.id.replace(/^qs-pane-/, '');
+        if (tab) activateQuickstartTab(tab);
       });
     });
 
     copyWithFeedback(
       document.getElementById('btnCopyQuickstart'),
       () => {
-        const activeCode = document.querySelector('.qs-code-pane:not(.hidden) code');
+        const activeCode = document.querySelector('.qs-code-pane:not([hidden]) code');
         return activeCode ? (activeCode.textContent || '') : '';
       },
       'Copy Snippet',

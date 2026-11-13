@@ -479,8 +479,9 @@
       </div>
 
       <!-- Comparison Table -->
-      <div class="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-x-auto" tabindex="0" role="region" aria-label="Scrollable data table">
+      <div class="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-x-auto" tabindex="0" role="region" aria-labelledby="benchmarks-table-caption-1">
         <table class="w-full text-left border-collapse text-xs sm:text-sm">
+          <caption id="benchmarks-table-caption-1" class="ztds-sr-only">ZTDS RFC v1.0 In-RAM Architecture vs. Local NLP Containers and Legacy Cloud DLP Proxies</caption>
           <thead>
             <tr class="bg-slate-900 text-white font-mono text-xs uppercase tracking-wider">
               <th scope="col" class="py-3.5 px-4">Evaluation Vector</th>
@@ -543,6 +544,7 @@
 
         <div class="border border-slate-200 rounded-xl overflow-x-auto" tabindex="0" role="region" aria-label="PIIBench-5000 SOTA comparison table">
           <table class="w-full text-left border-collapse text-xs sm:text-sm">
+          <caption id="benchmarks-table-caption-2" class="ztds-sr-only">PIIBench-5000 SOTA Entity Detection Accuracy and Latency Comparison</caption>
             <thead>
               <tr class="bg-slate-900 text-white font-mono text-xs uppercase tracking-wider">
                 <th scope="col" class="py-3 px-4">Configuration</th>
@@ -610,8 +612,9 @@
           </p>
         </div>
 
-        <div class="border border-slate-200 rounded-2xl shadow-xs overflow-x-auto" tabindex="0" role="region" aria-label="Scrollable data table">
+        <div class="border border-slate-200 rounded-2xl shadow-xs overflow-x-auto" tabindex="0" role="region" aria-labelledby="benchmarks-table-caption-3">
           <table class="w-full text-left border-collapse text-xs sm:text-sm">
+          <caption id="benchmarks-table-caption-3" class="ztds-sr-only">Frontier LLM Prompt Leakage Prevention Rate Across Evaluation Scenarios</caption>
             <thead>
               <tr class="bg-slate-900 text-white font-mono text-xs uppercase tracking-wider">
                 <th scope="col" class="py-3.5 px-4">Frontier LLM Family</th>
@@ -718,15 +721,15 @@
       </div>
 
       <!-- Domain Filter Pills -->
-      <div class="tablist-scroll items-center gap-2 pb-1 max-w-full mb-5" id="benchDomainPills" role="tablist" aria-label="Filter scenarios by regulatory domain">
-        <button type="button" data-domain="ALL" role="tab" aria-selected="true" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors">All Scenarios (30)</button>
-        <button type="button" data-domain="Healthcare" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Healthcare (HIPAA)</button>
-        <button type="button" data-domain="Financial" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">FinTech (PCI/GLBA)</button>
-        <button type="button" data-domain="DevSecOps" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">DevSecOps &amp; Secrets</button>
-        <button type="button" data-domain="Legal" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Legal (FRE 502)</button>
-        <button type="button" data-domain="HR" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">HR &amp; PeopleOps</button>
-        <button type="button" data-domain="Cyber" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Cyber &amp; SIEM</button>
-        <button type="button" data-domain="Multimodal" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Multimodal Vision (OCR)</button>
+      <div class="tablist-scroll items-center gap-2 pb-1 max-w-full mb-5" id="benchDomainPills" data-tabpanel="benchScenariosContainer" role="tablist" aria-label="Filter scenarios by regulatory domain">
+        <button id="benchmarks-tab-all-1" type="button" data-domain="ALL" role="tab" aria-selected="true" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-white cursor-pointer transition-colors">All Scenarios (30)</button>
+        <button id="benchmarks-tab-healthcare-2" type="button" data-domain="Healthcare" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Healthcare (HIPAA)</button>
+        <button id="benchmarks-tab-financial-3" type="button" data-domain="Financial" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">FinTech (PCI/GLBA)</button>
+        <button id="benchmarks-tab-devsecops-4" type="button" data-domain="DevSecOps" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">DevSecOps &amp; Secrets</button>
+        <button id="benchmarks-tab-legal-5" type="button" data-domain="Legal" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Legal (FRE 502)</button>
+        <button id="benchmarks-tab-hr-6" type="button" data-domain="HR" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">HR &amp; PeopleOps</button>
+        <button id="benchmarks-tab-cyber-7" type="button" data-domain="Cyber" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Cyber &amp; SIEM</button>
+        <button id="benchmarks-tab-multimodal-8" type="button" data-domain="Multimodal" role="tab" aria-selected="false" class="bench-domain-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors">Multimodal Vision (OCR)</button>
       </div>
 
       <!-- Status Bar -->
@@ -736,7 +739,7 @@
       </div>
 
       <!-- Scenarios Grid -->
-      <div id="benchScenariosContainer" class="space-y-4">
+      <div id="benchScenariosContainer" role="tabpanel" aria-labelledby="benchmarks-tab-all-1" class="space-y-4">
         <!-- Populated deterministically via inline JS + full JSON fetch -->
       </div>
     </section>
@@ -964,6 +967,7 @@
             <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
             <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
             <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/accessibility/" class="hover:text-slate-900 transition-colors">Accessibility Statement</a></li>
             <li><a href="/docs/legal/order-form/" class="hover:text-slate-900 transition-colors">Enterprise Order Form (Schedule A)</a></li>
             <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
           </ul>

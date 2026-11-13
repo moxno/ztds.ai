@@ -270,14 +270,23 @@ ${licenseContent}`;
 
           const targetId = matchedBtn.getAttribute('data-target');
           panes.forEach(pane => {
-            if (pane.id === targetId) {
-              pane.classList.remove('hidden');
-            } else {
-              pane.classList.add('hidden');
-            }
+            pane.classList.remove('hidden');
+            pane.hidden = pane.id === targetId ? false : 'until-found';
           });
         }
       }
+
+      // Sync Find-in-Page (hidden="until-found") beforematch events to tab selection
+      panes.forEach(pane => {
+        pane.addEventListener('beforematch', () => {
+          const btn = Array.from(tabBtns).find(b => b.getAttribute('data-target') === pane.id);
+          const slug = btn ? (btn.getAttribute('data-slug') || '') : '';
+          if (slug) {
+            history.replaceState(null, '', '#' + slug);
+            activateTab(slug);
+          }
+        });
+      });
 
       // Click on tabs
       tabBtns.forEach(btn => {

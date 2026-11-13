@@ -16,6 +16,8 @@
    ========================================================================== */
 
 :root {
+  color-scheme: light;
+  accent-color: var(--accent-trust);
   --bg-canvas: #f8fafc;
   --bg-surface: #ffffff;
   --bg-surface-subtle: #f1f5f9;
@@ -55,14 +57,17 @@ html {
   max-width: 100%;
 }
 
-:target {
-  scroll-margin-top: 4.5rem;
+:target,
+main details[id],
+main [id] {
+  scroll-margin-top: 5rem;
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: var(--font-sans);
+  accent-color: var(--accent-trust);
   background-color: var(--bg-canvas);
   background-image: 
     radial-gradient(ellipse 60% 30% at 50% -5%, rgba(5, 150, 105, 0.05), transparent 70%),
@@ -611,10 +616,53 @@ main p {
 @media (forced-colors: active) {
   .btn-trust,
   .btn-navy,
+  .btn-mint,
   .btn-outline,
   .btn-outline-dark,
   .ztds-card {
     border: 1px solid ButtonText;
+  }
+
+  .tablist-scroll {
+    mask: none;
+    animation: none;
+  }
+}
+
+/* Progressive <details> / ::details-content Slide Disclosure (Preserves Find-in-Page) */
+details::details-content {
+  interpolate-size: allow-keywords;
+  overflow: clip;
+  contain: layout;
+}
+
+details:not([open])::details-content {
+  block-size: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  details::details-content {
+    transition: block-size, content-visibility, display;
+    transition-duration: 0.22s;
+    transition-timing-function: ease-in-out;
+    transition-behavior: allow-discrete;
+  }
+}
+
+/* Fallback for older browsers without accent-color support */
+@supports not (accent-color: #047857) {
+  input[type="checkbox"]:checked,
+  input[type="radio"]:checked {
+    background-color: #047857;
+    border-color: #047857;
+  }
+
+  progress::-webkit-progress-value {
+    background-color: #047857;
+  }
+
+  progress::-moz-progress-bar {
+    background-color: #047857;
   }
 }
 
@@ -1010,15 +1058,46 @@ main p {
   transform: translateY(-100%);
 }
 
-/* Sticky Table Column Headers & Form-Factor Hit-Target Sizing */
+/* Sticky Table Column & Row Headers, Tabular Numerals & Form-Factor Hit-Target Sizing */
 main .overflow-x-auto {
+  inline-size: 100%;
   max-inline-size: 100%;
+}
+
+main .overflow-x-auto:has(> table) {
+  container-type: inline-size;
+}
+
+main table td,
+main table th,
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }
 
 main .overflow-x-auto > table > thead {
   position: sticky;
   inset-block-start: 0;
-  z-index: 1;
+  z-index: 2;
+}
+
+@container (width >= 640px) {
+  main .overflow-x-auto > table > tbody > tr > th[scope="row"] {
+    position: sticky;
+    inset-inline-start: 0;
+    z-index: 1;
+    background-color: var(--bg-surface);
+  }
+}
+
+@supports not (container-type: inline-size) {
+  @media (min-width: 768px) {
+    main .overflow-x-auto > table > tbody > tr > th[scope="row"] {
+      position: sticky;
+      inset-inline-start: 0;
+      z-index: 1;
+      background-color: var(--bg-surface);
+    }
+  }
 }
 
 #ztds-cmd-trigger {

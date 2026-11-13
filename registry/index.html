@@ -417,13 +417,13 @@
     </div>
 
     <!-- Category Filter Tabs (Single-Row Scrollable Tablist) -->
-    <div class="tablist-scroll lg:justify-center items-center gap-2 mb-4 pb-0.5" id="filterTabs" role="tablist" aria-label="Registry Categories">
-      <button type="button" role="tab" aria-selected="true" class="filter-btn active px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all whitespace-nowrap" data-filter="all">All Solutions (15)</button>
-      <button type="button" role="tab" aria-selected="false" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="mcp">MCP Servers (3)</button>
-      <button type="button" role="tab" aria-selected="false" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="rag">RAG &amp; Agent SDKs (3)</button>
-      <button type="button" role="tab" aria-selected="false" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="sdk">Core Engines &amp; SDK (3)</button>
-      <button type="button" role="tab" aria-selected="false" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="app">Apps &amp; Extensions (4)</button>
-      <button type="button" role="tab" aria-selected="false" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="proxy">Proxies &amp; Local LLM (2)</button>
+    <div class="tablist-scroll lg:justify-center items-center gap-2 mb-4 pb-0.5" id="filterTabs" data-tabpanel="registryGrid" role="tablist" aria-label="Registry Categories">
+      <button id="registry-tab-all-1" type="button" role="tab" aria-selected="true" class="filter-btn active px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all whitespace-nowrap" data-filter="all">All Solutions (15)</button>
+      <button id="registry-tab-mcp-2" type="button" role="tab" aria-selected="false" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="mcp">MCP Servers (3)</button>
+      <button id="registry-tab-rag-3" type="button" role="tab" aria-selected="false" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="rag">RAG &amp; Agent SDKs (3)</button>
+      <button id="registry-tab-sdk-4" type="button" role="tab" aria-selected="false" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="sdk">Core Engines &amp; SDK (3)</button>
+      <button id="registry-tab-app-5" type="button" role="tab" aria-selected="false" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="app">Apps &amp; Extensions (4)</button>
+      <button id="registry-tab-proxy-6" type="button" role="tab" aria-selected="false" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="proxy">Proxies &amp; Local LLM (2)</button>
     </div>
 
     <!-- Live Results Counter & Active Filter Indicators -->
@@ -443,7 +443,7 @@
     </div>
 
     <!-- Directory Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16" id="registryGrid">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16" id="registryGrid" role="tabpanel" aria-labelledby="registry-tab-all-1">
       
       <!-- Card 0: ZTDS Core Reference Engine (@ztds/core) -->
       <div class="ztds-card p-7 bg-white border-2 border-emerald-500/80 rounded-xl shadow-sm flex flex-col justify-between" data-category="sdk">
@@ -1677,6 +1677,7 @@
             <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
             <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
             <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/accessibility/" class="hover:text-slate-900 transition-colors">Accessibility Statement</a></li>
             <li><a href="/docs/legal/order-form/" class="hover:text-slate-900 transition-colors">Enterprise Order Form (Schedule A)</a></li>
             <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
           </ul>

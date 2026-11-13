@@ -1013,10 +1013,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   } catch (_) {}
 
-  // Global UX 9: Universal WAI-ARIA [role="tablist"] Roving Tabindex & Arrow-Key Navigation
+  // Global UX 9: Universal WAI-ARIA [role="tablist"] Roving Tabindex, Panel Sync & Arrow-Key Navigation
   try {
-    document.querySelectorAll('[role="tablist"]').forEach((tablist) => {
-      if (tablist.id === 'scannerOutputTablist' || tablist.dataset.ztdsTablistBound === '1') return;
+    let autoTabSeq = 0;
+    const FOCUSABLE_IN_PANEL = 'a[href], button:not(:disabled), input:not(:disabled):not([type="hidden"]), select:not(:disabled), textarea:not(:disabled), summary, [tabindex]:not([tabindex="-1"])';
+
+    const syncPanelTabIndex = (panel) => {
+      if (!panel) return;
+      const isHidden = Boolean(panel.hidden) || panel.classList.contains('hidden');
+      if (isHidden) {
+        panel.removeAttribute('tabindex');
+        return;
+      }
+      const hasFocusable = Boolean(panel.querySelector(FOCUSABLE_IN_PANEL));
+      if (!hasFocusable) {
+        panel.setAttribute('tabindex', '0');
+      } else if (panel.getAttribute('tabindex') === '0') {
+        panel.removeAttribute('tabindex');
+      }
+    };
+
+    const bindTablist = (tablist) => {
+      if (!tablist || tablist.id === 'scannerOutputTablist' || tablist.dataset.ztdsTablistBound === '1') return;
       tablist.dataset.ztdsTablistBound = '1';
 
       const getTabs = () => Array.from(tablist.querySelectorAll('[role="tab"]'))
@@ -1029,6 +1047,12 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
           const tabs = getTabs();
           if (!tabs.length) return;
+          tabs.forEach((tab) => {
+            if (!tab.id) {
+              autoTabSeq += 1;
+              tab.id = 'ztds-auto-tab-' + autoTabSeq;
+            }
+          });
           let selectedTab = tabs.find((t) => t.getAttribute('aria-selected') === 'true');
           if (!selectedTab) {
             selectedTab = tabs[0];
@@ -1037,6 +1061,23 @@ document.addEventListener('DOMContentLoaded', () => {
           tabs.forEach((tab) => {
             tab.tabIndex = tab === selectedTab ? 0 : -1;
           });
+
+          const sharedPanelId = tablist.dataset ? tablist.dataset.tabpanel : '';
+          const sharedPanel = sharedPanelId ? document.getElementById(sharedPanelId) : null;
+          if (sharedPanel && selectedTab.id) {
+            sharedPanel.setAttribute('aria-labelledby', selectedTab.id);
+            syncPanelTabIndex(sharedPanel);
+          }
+
+          const tabIdSet = new Set(tabs.map((t) => t.id).filter(Boolean));
+          if (tabIdSet.size) {
+            document.querySelectorAll('[role="tabpanel"]').forEach((panel) => {
+              const labelledBy = panel.getAttribute('aria-labelledby');
+              if (labelledBy && tabIdSet.has(labelledBy)) {
+                syncPanelTabIndex(panel);
+              }
+            });
+          }
         } finally {
           syncingTablist = false;
         }
@@ -1048,6 +1089,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const observer = new MutationObserver(() => syncTabIndexes());
         observer.observe(tablist, { subtree: true, attributes: true, attributeFilter: ['aria-selected'] });
       }
+
+      tablist.addEventListener('click', (e) => {
+        const clickedTab = e.target && e.target.closest ? e.target.closest('[role="tab"]') : null;
+        if (!clickedTab || clickedTab.closest('[role="tablist"]') !== tablist) return;
+        if (tablist.classList.contains('tablist-scroll') && typeof clickedTab.scrollIntoView === 'function') {
+          clickedTab.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+        }
+        requestAnimationFrame(() => syncTabIndexes());
+      });
 
       tablist.addEventListener('keydown', (e) => {
         if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' && e.key !== 'Home' && e.key !== 'End') return;
@@ -1075,7 +1125,44 @@ document.addEventListener('DOMContentLoaded', () => {
           nextTab.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
         }
       });
-    });
+    };
+
+    window.ztdsBindTablist = bindTablist;
+    document.querySelectorAll('[role="tablist"]').forEach(bindTablist);
+  } catch (_) {}
+
+  // Global UX 11: Auto-Expand Closed <details> Disclosures Targeted by URL Hash Deep-Links
+  try {
+    const revealDetailsForHash = () => {
+      const rawHash = window.location.hash ? window.location.hash.slice(1) : '';
+      if (!rawHash) return;
+      let targetId = rawHash;
+      try {
+        targetId = decodeURIComponent(rawHash);
+      } catch (_) {}
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      let opened = false;
+      if (target.tagName === 'DETAILS' && !target.open) {
+        target.open = true;
+        opened = true;
+      }
+      let ancestor = target.parentElement;
+      while (ancestor) {
+        if (ancestor.tagName === 'DETAILS' && !ancestor.open) {
+          ancestor.open = true;
+          opened = true;
+        }
+        ancestor = ancestor.parentElement;
+      }
+      if (opened && typeof target.scrollIntoView === 'function') {
+        requestAnimationFrame(() => {
+          target.scrollIntoView({ block: 'start' });
+        });
+      }
+    };
+    if (window.location.hash) revealDetailsForHash();
+    window.addEventListener('hashchange', revealDetailsForHash);
   } catch (_) {}
 
   // Global UX 10: Sync aria-invalid with CSS :user-invalid on Interactive Form Controls

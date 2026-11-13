@@ -587,6 +587,7 @@
 
         <div class="mt-8 overflow-x-auto rounded-2xl border border-slate-200" tabindex="0" role="region" aria-label="AI Data Sanitization Architecture Comparison">
           <table class="w-full text-left border-collapse text-xs sm:text-sm">
+          <caption id="index-table-caption-1" class="ztds-sr-only">AI Data Sanitization Architecture Comparison: Cloud Proxy vs. Local NLP vs. ZTDS In-RAM Protocol</caption>
             <thead>
               <tr class="bg-slate-50 border-b border-slate-200 font-mono text-xs uppercase text-slate-600">
                 <th scope="col" class="py-3.5 px-4 font-bold">Architecture</th>
@@ -700,18 +701,18 @@
         <div class="mt-6 rounded-2xl bg-slate-950 border border-slate-800 overflow-hidden">
           <div class="px-4 py-2.5 bg-slate-900 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
             <div class="tablist-scroll items-center gap-1 max-w-full" role="tablist" aria-label="Developer Quickstart Snippets">
-              <button type="button" role="tab" aria-selected="true" class="qs-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-emerald-400 transition-colors cursor-pointer" data-tab="node">Node.js / TypeScript</button>
-              <button type="button" role="tab" aria-selected="false" class="qs-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-tab="mcp">Cursor / Claude MCP</button>
-              <button type="button" role="tab" aria-selected="false" class="qs-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-tab="python">Python RAG</button>
-              <button type="button" role="tab" aria-selected="false" class="qs-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-tab="cicd">GitHub Actions CI</button>
+              <button id="qs-tab-node" type="button" role="tab" aria-selected="true" class="qs-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-800 text-emerald-400 transition-colors cursor-pointer" data-tab="node">Node.js / TypeScript</button>
+              <button id="qs-tab-mcp" type="button" role="tab" aria-selected="false" class="qs-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-tab="mcp">Cursor / Claude MCP</button>
+              <button id="qs-tab-python" type="button" role="tab" aria-selected="false" class="qs-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-tab="python">Python RAG</button>
+              <button id="qs-tab-cicd" type="button" role="tab" aria-selected="false" class="qs-tab-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-mono font-medium text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-tab="cicd">GitHub Actions CI</button>
             </div>
             <button id="btnCopyQuickstart" type="button" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono font-semibold text-slate-200 transition-colors cursor-pointer">
               Copy Snippet
             </button>
           </div>
 
-          <div id="qs-pane-node" class="qs-code-pane p-4 sm:p-5 overflow-x-auto">
-            <pre class="text-xs sm:text-sm font-mono text-slate-200 leading-relaxed"><code>// npm install @privacyscrubber/sdk
+          <div id="qs-pane-node" role="tabpanel" aria-labelledby="qs-tab-node" class="qs-code-pane">
+            <pre class="p-4 sm:p-5 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed"><code>// npm install @privacyscrubber/sdk
 import { ZTDSEngine } from '@privacyscrubber/sdk';
 
 const engine = new ZTDSEngine({ license: process.env.ZTDS_LICENSE });
@@ -721,8 +722,8 @@ const llmReply = await openai.responses.create({ model: 'gpt-4.1', input: safePr
 const finalOutput = engine.restore(llmReply.output_text, tokenMap); // Restored in host RAM</code></pre>
           </div>
 
-          <div id="qs-pane-mcp" class="qs-code-pane hidden p-4 sm:p-5 overflow-x-auto">
-            <pre class="text-xs sm:text-sm font-mono text-slate-200 leading-relaxed"><code>{
+          <div id="qs-pane-mcp" role="tabpanel" aria-labelledby="qs-tab-mcp" hidden="until-found" class="qs-code-pane">
+            <pre class="p-4 sm:p-5 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed"><code>{
   "mcpServers": {
     "privacyscrubber-ztds": {
       "command": "npx",
@@ -733,8 +734,8 @@ const finalOutput = engine.restore(llmReply.output_text, tokenMap); // Restored 
 }</code></pre>
           </div>
 
-          <div id="qs-pane-python" class="qs-code-pane hidden p-4 sm:p-5 overflow-x-auto">
-            <pre class="text-xs sm:text-sm font-mono text-slate-200 leading-relaxed"><code># pip install ztds
+          <div id="qs-pane-python" role="tabpanel" aria-labelledby="qs-tab-python" hidden="until-found" class="qs-code-pane">
+            <pre class="p-4 sm:p-5 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed"><code># pip install ztds
 from ztds import ZTDSEngine
 
 engine = ZTDSEngine(license=os.environ.get("ZTDS_LICENSE"))
@@ -742,8 +743,8 @@ sanitized = engine.sanitize("Patient Alice Wright (SSN 219-45-8821) lab summary"
 vector_store.upsert(embed(sanitized.text))  # Zero raw PII stored in dense embeddings</code></pre>
           </div>
 
-          <div id="qs-pane-cicd" class="qs-code-pane hidden p-4 sm:p-5 overflow-x-auto">
-            <pre class="text-xs sm:text-sm font-mono text-slate-200 leading-relaxed"><code># .github/workflows/ztds-audit.yml
+          <div id="qs-pane-cicd" role="tabpanel" aria-labelledby="qs-tab-cicd" hidden="until-found" class="qs-code-pane">
+            <pre class="p-4 sm:p-5 overflow-x-auto text-xs sm:text-sm font-mono text-slate-200 leading-relaxed"><code># .github/workflows/ztds-audit.yml
 - name: Enforce ZTDS RFC v1.0 Zero-Egress Invariants
   run: npx --yes ztds-audit@latest --dir ./src --strict --json &gt; ztds-receipt.json</code></pre>
           </div>

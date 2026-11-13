@@ -339,13 +339,13 @@
     </div>
 
     <!-- Working Group Filter Tabs (Single-Row Scrollable Tablist) -->
-    <div class="tablist-scroll lg:justify-center items-center gap-2 mb-5 pb-0.5" id="fellowFilterTabs" role="tablist" aria-label="Fellowship Tracks and Working Groups">
-      <button type="button" class="filter-btn active px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all whitespace-nowrap" data-filter="all" role="tab" aria-selected="true">All Council &amp; WGs (6)</button>
-      <button type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="governance" role="tab" aria-selected="false">Architecture &amp; Governance (1)</button>
-      <button type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="crypto" role="tab" aria-selected="false">WG-1 Cryptography (2)</button>
-      <button type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="grc" role="tab" aria-selected="false">WG-2 Legal &amp; GRC (1)</button>
-      <button type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="systems" role="tab" aria-selected="false">WG-3 Systems &amp; WASM (2)</button>
-      <button type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="profiles" role="tab" aria-selected="false">WG-4 Industry Taxonomy (1)</button>
+    <div class="tablist-scroll lg:justify-center items-center gap-2 mb-5 pb-0.5" id="fellowFilterTabs" data-tabpanel="fellowsGrid" role="tablist" aria-label="Fellowship Tracks and Working Groups">
+      <button id="fellows-tab-all-1" type="button" class="filter-btn active px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white shadow-sm cursor-pointer transition-all whitespace-nowrap" data-filter="all" role="tab" aria-selected="true">All Council &amp; WGs (6)</button>
+      <button id="fellows-tab-governance-2" type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="governance" role="tab" aria-selected="false">Architecture &amp; Governance (1)</button>
+      <button id="fellows-tab-crypto-3" type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="crypto" role="tab" aria-selected="false">WG-1 Cryptography (2)</button>
+      <button id="fellows-tab-grc-4" type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="grc" role="tab" aria-selected="false">WG-2 Legal &amp; GRC (1)</button>
+      <button id="fellows-tab-systems-5" type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all whitespace-nowrap" data-filter="systems" role="tab" aria-selected="false">WG-3 Systems &amp; WASM (2)</button>
+      <button id="fellows-tab-profiles-6" type="button" class="filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 cursor-pointer transition-all" data-filter="profiles" role="tab" aria-selected="false">WG-4 Industry Taxonomy (1)</button>
     </div>
 
     <!-- Live Results Counter & Active Filter Indicators -->
@@ -360,7 +360,7 @@
     </div>
 
     <!-- Fellows Directory Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16" id="fellowsGrid">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16" id="fellowsGrid" role="tabpanel" aria-labelledby="fellows-tab-all-1">
       
       <!-- Fellow 1: Ilya Sibiryakov -->
       <article class="ztds-card p-6 bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col justify-between" id="ilya-sibiryakov" data-track="governance" data-slug="ilya-sibiryakov">
@@ -1212,6 +1212,7 @@ gh pr create --title "feat(fellow): Nominate [Full Name]" --body "ZTDS Fellowshi
             <li><a href="/security/" class="hover:text-slate-900 transition-colors">Security &amp; CVD Policy</a></li>
             <li><a href="/privacy/" class="hover:text-slate-900 transition-colors">Zero-Telemetry Declaration</a></li>
             <li><a href="/terms/" class="hover:text-slate-900 transition-colors">Standards &amp; Patent Policy</a></li>
+            <li><a href="/accessibility/" class="hover:text-slate-900 transition-colors">Accessibility Statement</a></li>
             <li><a href="/docs/legal/order-form/" class="hover:text-slate-900 transition-colors">Enterprise Order Form (Schedule A)</a></li>
             <li><a href="/.well-known/security.txt" class="hover:text-slate-900 transition-colors">RFC 9116 security.txt</a></li>
           </ul>

@@ -600,4 +600,148 @@ console.log('--> Test 8: Roving Tablists, Modal Inert Locking, IME-Safe Enter, :
   console.log(`    [PASS] Roving tablists, modal inert locking, IME-safe Enter, :user-invalid sync, <search> landmarks, and ${HTML_FILES.length - 1}/${HTML_FILES.length - 1} Schema.org WebPage nodes verified.`);
 }
 
-console.log('\n[SUMMARY] ALL 8 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
+// Test 9: Wave 5 Tabpanel Wiring, Find-in-Page (hidden="until-found"), Table Captions, Image Loading & Internal Link Graph
+console.log('--> Test 9: Tabpanel Wiring, hidden="until-found" Find-in-Page, Table <caption>s, Image loading= & Link Graph Parity');
+{
+  const publicHrefLeaks = [];
+  const tabsMissingId = [];
+  const tabpanelsInvalidLabel = [];
+  const unlinkedTablists = [];
+  const untilFoundDisplayNone = [];
+  const uncaptionedTables = [];
+  const imgsMissingLoading = [];
+  const inboundCounts = new Map();
+
+  for (const relPath of HTML_FILES) {
+    const html = fs.readFileSync(path.join(ROOT, relPath), 'utf8');
+
+    // 1. Zero non-canonical href="/public/..." attributes
+    for (const m of html.matchAll(/\bhref=["'](\/public\/[^"']+)["']/gi)) {
+      publicHrefLeaks.push(`${relPath}: ${m[1]}`);
+    }
+
+    // 2. Collect internal link graph inbound counts (excluding self-links)
+    const selfRoute = '/' + relPath.replace(/(?:^|\/)index\.html$/, '').replace(/\.html$/, '');
+    const normalizedSelf = selfRoute === '/' ? '/' : selfRoute.replace(/\/?$/, '/');
+    const seenTargetsOnPage = new Set();
+    for (const m of html.matchAll(/<a\b[^>]*\bhref=["'](\/[^"'#?]*)["']/gi)) {
+      let target = m[1];
+      if (/\.[a-z0-9]{2,5}$/i.test(target)) continue;
+      target = target === '/' ? '/' : target.replace(/\/?$/, '/');
+      if (target !== normalizedSelf) {
+        seenTargetsOnPage.add(target);
+      }
+    }
+    for (const t of seenTargetsOnPage) {
+      inboundCounts.set(t, (inboundCounts.get(t) || 0) + 1);
+    }
+
+    // 3. Collect page IDs and validate [role="tab"], [role="tabpanel"], and [role="tablist"]
+    const pageIds = new Set([...html.matchAll(/\bid=["']([^"']+)["']/gi)].map((m) => m[1]));
+    const tabPanelLabelIds = new Set();
+
+    for (const m of html.matchAll(/<[^>]*\brole=["']tabpanel["'][^>]*>/gi)) {
+      const tag = m[0];
+      const labelledBy = (tag.match(/\baria-labelledby=["']([^"']+)["']/i) || [, ''])[1];
+      if (!labelledBy || !pageIds.has(labelledBy)) {
+        tabpanelsInvalidLabel.push(`${relPath}: ${tag}`);
+      } else {
+        tabPanelLabelIds.add(labelledBy);
+      }
+    }
+
+    for (const m of html.matchAll(/<div\b[^>]*\brole=["']tablist["'][^>]*>([\s\S]*?)<\/div>/gi)) {
+      const fullBlock = m[0];
+      const openTag = fullBlock.match(/^<div\b[^>]*>/i)[0];
+      const dataTabpanel = (openTag.match(/\bdata-tabpanel=["']([^"']+)["']/i) || [, ''])[1];
+      const tabTags = [...fullBlock.matchAll(/<button\b[^>]*\brole=["']tab["'][^>]*>/gi)].map((x) => x[0]);
+      const tabIds = [];
+      for (const tTag of tabTags) {
+        const tid = (tTag.match(/\bid=["']([^"']+)["']/i) || [, ''])[1];
+        if (!tid) {
+          tabsMissingId.push(`${relPath}: ${tTag}`);
+        } else {
+          tabIds.push(tid);
+        }
+      }
+      const hasDirectPanel = tabIds.some((id) => tabPanelLabelIds.has(id));
+      const hasSharedPanel = Boolean(dataTabpanel && pageIds.has(dataTabpanel));
+      if (!hasDirectPanel && !hasSharedPanel) {
+        unlinkedTablists.push(`${relPath}: ${openTag}`);
+      }
+    }
+
+    // 4. Elements with hidden="until-found" must never carry Tailwind .hidden (display: none)
+    for (const m of html.matchAll(/<[^>]*\bhidden=["']until-found["'][^>]*>/gi)) {
+      const cls = (m[0].match(/\bclass=["']([^"']+)["']/i) || [, ''])[1];
+      if (cls.split(/\s+/).includes('hidden')) {
+        untilFoundDisplayNone.push(`${relPath}: ${m[0]}`);
+      }
+    }
+
+    // 5. Every non-presentation <table> must include an accessible <caption>
+    for (const m of html.matchAll(/<table\b([^>]*)>([\s\S]*?)<\/table>/gi)) {
+      const attrs = m[1];
+      const inner = m[2];
+      if (/\brole=["']presentation["']/i.test(attrs)) continue;
+      if (!/<caption\b[^>]*>[\s\S]+?<\/caption>/i.test(inner)) {
+        uncaptionedTables.push(`${relPath}: <table${attrs}>`);
+      }
+    }
+
+    // 6. Every <img> (outside escaped code blocks) must declare loading="eager" or loading="lazy"
+    for (const m of html.matchAll(/<img\b[^>]*>/gi)) {
+      if (!/\bloading=["'](?:eager|lazy)["']/i.test(m[0])) {
+        imgsMissingLoading.push(`${relPath}: ${m[0]}`);
+      }
+    }
+  }
+
+  assert.strictEqual(publicHrefLeaks.length, 0, `Public HTML pages must use canonical /docs/... paths instead of /public/...:\n${publicHrefLeaks.join('\n')}`);
+  assert.strictEqual(tabsMissingId.length, 0, `Every [role="tab"] button must expose a deterministic id:\n${tabsMissingId.join('\n')}`);
+  assert.strictEqual(tabpanelsInvalidLabel.length, 0, `Every [role="tabpanel"] must reference a valid tab id via aria-labelledby:\n${tabpanelsInvalidLabel.join('\n')}`);
+  assert.strictEqual(unlinkedTablists.length, 0, `Every [role="tablist"] must wire to at least one [role="tabpanel"]:\n${unlinkedTablists.join('\n')}`);
+  assert.strictEqual(untilFoundDisplayNone.length, 0, `[hidden="until-found"] panels must omit .hidden (display: none):\n${untilFoundDisplayNone.join('\n')}`);
+  assert.strictEqual(uncaptionedTables.length, 0, `Every non-presentation <table> must include a <caption>:\n${uncaptionedTables.join('\n')}`);
+  assert.strictEqual(imgsMissingLoading.length, 0, `Every public <img> must explicitly declare loading="eager" or loading="lazy":\n${imgsMissingLoading.join('\n')}`);
+
+  // Verify hidden="until-found" + beforematch on multi-pane reference/code switchers
+  for (const [pageRel, jsRel] of [
+    ['index.html', 'assets/js/home-workbench.js'],
+    ['ciso/index.html', 'assets/js/pages/ciso.js'],
+    ['agency/index.html', 'assets/js/pages/agency.js']
+  ]) {
+    const html = fs.readFileSync(path.join(ROOT, pageRel), 'utf8');
+    const js = fs.readFileSync(path.join(ROOT, jsRel), 'utf8');
+    assert(/hidden=["']until-found["']/.test(html), `${pageRel} must render inactive multi-pane content with hidden="until-found"`);
+    assert(js.includes('beforematch') && js.includes("'until-found'"), `${jsRel} must synchronize tab state on beforematch`);
+  }
+
+  // Verify internal link graph coverage across all sitemap.xml routes
+  const sitemapXml = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
+  const sitemapPaths = [...sitemapXml.matchAll(/<loc>(https:\/\/ztds\.ai[^<]+)<\/loc>/g)].map((m) => {
+    const p = new URL(m[1]).pathname;
+    return p === '/' ? '/' : p.replace(/\/?$/, '/');
+  });
+  const lowInboundRoutes = sitemapPaths.filter((p) => (inboundCounts.get(p) || 0) < 3);
+  assert.strictEqual(lowInboundRoutes.length, 0, `Every sitemap.xml route must receive >= 3 internal links; low-inbound:\n${lowInboundRoutes.join('\n')}`);
+  assert((inboundCounts.get('/accessibility/') || 0) >= 50, `Expected >= 50 internal links to /accessibility/, found ${inboundCounts.get('/accessibility/') || 0}`);
+  for (const fwPath of sitemapPaths.filter((p) => p.startsWith('/frameworks/') && p !== '/frameworks/')) {
+    assert((inboundCounts.get(fwPath) || 0) >= 10, `Expected >= 10 internal links to ${fwPath}, found ${inboundCounts.get(fwPath) || 0}`);
+  }
+
+  // Verify CSS & JS Wave 5 runtime invariants
+  const inputCss = fs.readFileSync(path.join(ROOT, 'src/input.css'), 'utf8');
+  const navJs = fs.readFileSync(path.join(ROOT, 'nav.js'), 'utf8');
+  const scannerJs = fs.readFileSync(path.join(ROOT, 'assets/js/pages/scanner.js'), 'utf8');
+
+  assert(inputCss.includes('accent-color: var(--accent-trust)') && inputCss.includes('@supports not (accent-color: #047857)'), 'src/input.css must configure accent-color with @supports not fallback');
+  assert(inputCss.includes('details::details-content') && inputCss.includes('interpolate-size: allow-keywords') && inputCss.includes('transition-behavior: allow-discrete'), 'src/input.css must define progressive reduced-motion-safe ::details-content disclosure transitions');
+  assert(inputCss.includes('font-variant-numeric: tabular-nums') && inputCss.includes('@container (width >= 640px)'), 'src/input.css must enforce tabular-nums and container-queried sticky row headers on data tables');
+  assert(navJs.includes('window.ztdsBindTablist = bindTablist') && navJs.includes("panel.setAttribute('tabindex', '0')") && navJs.includes('revealDetailsForHash'), 'nav.js must expose ztdsBindTablist, sync focusable-empty tabpanel tabindex="0", and expand closed <details> on hash navigation');
+  assert(scannerJs.includes("tab.setAttribute('aria-selected', isSelected ? 'true' : 'false')") && scannerJs.includes('window.ztdsBindTablist(tabList)'), 'scanner.js must synchronize aria-selected on auditor-mode-tab and bind dynamic Mode 0 tablists');
+
+  console.log(`    [PASS] 22/22 tablists wired to tabpanels, hidden="until-found" + beforematch active, 100% table captions & img loading=, and link graph verified (${inboundCounts.get('/accessibility/')} links to /accessibility/).`);
+}
+
+console.log('\n[SUMMARY] ALL 9 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');

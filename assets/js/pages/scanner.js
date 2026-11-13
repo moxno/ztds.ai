@@ -1112,11 +1112,16 @@ async function ingestDocument(patientDoc: string) {
         const mode = tab.getAttribute('data-mode');
         const dot = tab.querySelector('.auditor-mode-dot');
         const isUnified = mode === 'all';
-        if (mode === targetMode) {
+        const isSelected = mode === targetMode;
+        tab.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+        if (isSelected) {
           tab.className = isUnified
             ? "auditor-mode-tab py-2.5 px-3 rounded-xl text-xs font-mono font-semibold transition-all text-center flex items-center justify-center gap-1.5 bg-slate-900 text-white shadow-xs border border-slate-900 shrink-0"
             : "auditor-mode-tab flex-1 min-w-[125px] py-2.5 px-3 rounded-xl text-xs font-mono font-semibold transition-all text-center flex items-center justify-center gap-1.5 bg-slate-900 text-white shadow-xs border border-slate-900";
           if (dot) dot.className = "auditor-mode-dot w-2 h-2 rounded-full bg-emerald-400";
+          if (typeof tab.scrollIntoView === 'function') {
+            tab.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
+          }
         } else {
           tab.className = isUnified
             ? "auditor-mode-tab py-2.5 px-3 rounded-xl text-xs font-mono font-medium transition-all text-center flex items-center justify-center gap-1.5 text-slate-500 hover:text-slate-900 shrink-0"
@@ -1891,8 +1896,9 @@ Public Verification: https://ztds.ai/verify/`;
 
         // Role Switcher
         const roleBar = mk('div', 'flex items-center justify-between border-b border-slate-200 mb-4 pb-3');
-        const tabList = mk('div', 'inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200 font-mono text-xs');
+        const tabList = mk('div', 'tablist-scroll inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200 font-mono text-xs');
         tabList.setAttribute('role', 'tablist');
+        tabList.setAttribute('aria-label', 'Blueprint Audience');
         const rBtnCiso = mk('button', 'px-3.5 py-1.5 rounded-lg font-bold transition-all bg-white text-slate-900 shadow-xs', 'Executive & CISO Brief');
         rBtnCiso.type = 'button'; rBtnCiso.id = 'btnM0RoleCiso'; rBtnCiso.setAttribute('role', 'tab'); rBtnCiso.setAttribute('aria-selected', 'true');
         const rBtnDev = mk('button', 'px-3.5 py-1.5 rounded-lg font-medium transition-all text-slate-600 hover:text-slate-900', 'Developer & Engineering Code');
@@ -1906,9 +1912,11 @@ Public Verification: https://ztds.ai/verify/`;
         // View A: CISO Decision Brief
         const viewCiso = mk('div', 'p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 text-white border border-emerald-900/50 shadow-xl mb-6');
         viewCiso.id = 'viewM0RoleCiso';
+        viewCiso.setAttribute('role', 'tabpanel');
+        viewCiso.setAttribute('aria-labelledby', 'btnM0RoleCiso');
         const vcTop = mk('div', 'flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800');
         const vcTopLeft = mk('div');
-        const vcCit = mk('p', 'text-xs text-slate-400 mt-0.5', ind.cisoCitation || 'Eliminates data processor liabilities under GDPR Article 28.');
+        const vcCit = mk('p', 'text-xs text-slate-400 mt-0.5', ind.cisoCitation || 'Excludes sanitization subprocessor scope under GDPR Article 28.');
         vcCit.id = 'm0CisoCitation';
         const vcExec = mk('div', 'text-xs text-emerald-200/90 mt-2.5 p-2.5 rounded-lg bg-emerald-950/50 border border-emerald-800/60 leading-relaxed font-sans', ev.cisoExecutiveSummary || 'Architectural audit confirms zero-trust In-RAM sanitization removes data processor obligations and guarantees 0.00 B cleartext WAN egress.');
         vcExec.id = 'm0CisoExecutiveSummary';
@@ -1932,7 +1940,7 @@ Public Verification: https://ztds.ai/verify/`;
         vcEnt.id = 'm0TargetEntities';
         vcG1.append(mk('span', 'text-xs text-slate-400 uppercase font-bold block mb-1', 'Protected Sector Entities'), vcEnt);
         const vcG2 = mk('div', 'p-3.5 rounded-xl bg-slate-900/90 border border-slate-800');
-        const vcReg = mk('span', 'text-slate-200', ind.regulatoryFocus || 'De-identification eliminates statutory obligations.');
+        const vcReg = mk('span', 'text-slate-200', ind.regulatoryFocus || 'Client-RAM de-identification establishes GDPR Art. 32 & Amendment 13 Sec. 17 technical safe harbor.');
         vcReg.id = 'm0RegulatoryFocus';
         vcG2.append(mk('span', 'text-xs text-slate-400 uppercase font-bold block mb-1', 'Regulatory Defense Basis'), vcReg);
         vcGrid.append(vcG1, vcG2);
@@ -1955,6 +1963,8 @@ Public Verification: https://ztds.ai/verify/`;
         // View B: Developer Workbench
         const viewDev = mk('div', 'hidden p-5 sm:p-6 rounded-2xl bg-slate-950 text-white border border-slate-800 shadow-xl mb-6');
         viewDev.id = 'viewM0RoleDev';
+        viewDev.setAttribute('role', 'tabpanel');
+        viewDev.setAttribute('aria-labelledby', 'btnM0RoleDev');
         const vdTop = mk('div', 'flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800 mb-4');
         const vdTopLeft = mk('div');
         vdTopLeft.append(
@@ -2040,6 +2050,9 @@ Public Verification: https://ztds.ai/verify/`;
         m0Frag.appendChild(detailsEl);
 
         m0Results.replaceChildren(m0Frag);
+        if (typeof window.ztdsBindTablist === 'function') {
+          window.ztdsBindTablist(tabList);
+        }
 
         // Role Switcher Handlers
         const btnM0RoleCiso = document.getElementById('btnM0RoleCiso');

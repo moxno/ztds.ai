@@ -238,7 +238,10 @@ function section(id, title, inner, alt) {
 
 const P = (t) => `<p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">${t}</p>`;
 
-function table(headers, rows) {
+let frameworkTableSeq = 0;
+function table(headers, rows, caption = 'Framework control mapping table') {
+  frameworkTableSeq += 1;
+  const capId = `framework-table-caption-${frameworkTableSeq}`;
   const th = headers.map((h) => `<th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">${esc(h)}</th>`).join('');
   const tr = rows
     .map(
@@ -252,8 +255,9 @@ function table(headers, rows) {
           .join('')}</tr>`
     )
     .join('\n          ');
-  return `<div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" tabindex="0" role="region" aria-label="Control mapping table">
+  return `<div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" tabindex="0" role="region" aria-labelledby="${capId}">
         <table class="min-w-full">
+          <caption id="${capId}" class="ztds-sr-only">${esc(caption)}</caption>
           <thead class="bg-slate-50"><tr>${th}</tr></thead>
           <tbody>
           ${tr}
