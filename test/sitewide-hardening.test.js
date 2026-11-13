@@ -815,12 +815,9 @@ console.log('--> Test 11: Perceptual Clarity, no-slop, Universal Hero Lead Brevi
 {
   const slopRegex = /\b(empower|empowering|empowers|paradigm|paradigms|delve|testament|tapestry|game-changer|cutting-edge|synergy)\b/i;
   const allStdPages = HTML_FILES.filter(
-    (rel) =>
-      rel !== '404.html' &&
-      !rel.startsWith('docs/') &&
-      !/^ietf\/draft-sibiryakov-ztds-protocol-0[12]/.test(rel)
+    (rel) => rel !== '404.html' && !/^ietf\/draft-sibiryakov-ztds-protocol-0[12]/.test(rel)
   );
-  assert(allStdPages.length >= 53, `Expected at least 53 standard HTML pages for Wave 3 checks (found ${allStdPages.length})`);
+  assert(allStdPages.length >= 54, `Expected at least 54 standard HTML pages for Wave 3/4 checks (found ${allStdPages.length})`);
 
   for (const rel of allStdPages) {
     const content = fs.readFileSync(path.join(ROOT, rel), 'utf8');
@@ -920,4 +917,103 @@ console.log('--> Test 11: Perceptual Clarity, no-slop, Universal Hero Lead Brevi
   console.log(`    [PASS] Zero no-slop & .hero-lead <= 32w across all ${allStdPages.length} pages, statutory safe harbor wording, bounded <main> prose, mobile 2x2 DAG, and >= 40px touch targets verified.`);
 }
 
-console.log('\n[SUMMARY] ALL 11 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
+// Test 12: Information Architecture, Contextual Silo Connectivity & Schema Breadcrumb/ItemList Guard
+console.log('--> Test 12: Information Architecture, Contextual Silo Connectivity & Schema Breadcrumb/ItemList Guard');
+{
+  const canonicalPages = HTML_FILES.filter(
+    (rel) =>
+      rel !== '404.html' &&
+      rel !== 'ciso/memo.html' &&
+      rel !== 'docs/legal/order-form.html' &&
+      rel !== 'ietf/draft-sibiryakov-ztds-protocol-01.html' &&
+      rel !== 'ietf/draft-sibiryakov-ztds-protocol-02.html'
+  );
+  const relToUrl = (rel) => {
+    if (rel === 'index.html') return 'https://ztds.ai/';
+    if (rel.endsWith('/index.html')) return 'https://ztds.ai/' + rel.slice(0, -'index.html'.length);
+    return 'https://ztds.ai/' + rel.replace(/\.html$/, '/');
+  };
+
+  const titleMap = new Map();
+  const hubPages = new Set([
+    'registry/index.html',
+    'companies/index.html',
+    'fellows/index.html',
+    'case-studies/index.html',
+    'blueprints/index.html',
+    'frameworks/index.html',
+    'compliance/index.html',
+    'ietf/index.html'
+  ]);
+  const expectedUrls = canonicalPages.map(relToUrl);
+  const mainInbound = new Map(expectedUrls.map((u) => [u, new Set()]));
+  const mainOutbound = new Map(expectedUrls.map((u) => [u, new Set()]));
+
+  for (const rel of canonicalPages) {
+    const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    const myUrl = relToUrl(rel);
+
+    const titleMatch = html.match(/<title>([^<]+)<\/title>/i);
+    assert(titleMatch, `${rel} must have <title>`);
+    const titleText = titleMatch[1].trim();
+    assert(
+      titleText.length >= 30 && titleText.length <= 68,
+      `${rel} <title> raw length must be 30..68 chars (found ${titleText.length}: "${titleText}")`
+    );
+    assert(!titleMap.has(titleText), `Duplicate <title> between ${rel} and ${titleMap.get(titleText)}: "${titleText}"`);
+    titleMap.set(titleText, rel);
+
+    const ldMatches = [...html.matchAll(/<script\s+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi)];
+    let hasItemList = false;
+    for (const m of ldMatches) {
+      const data = JSON.parse(m[1]);
+      const items = data['@graph'] ? data['@graph'] : (Array.isArray(data) ? data : [data]);
+      for (const item of items) {
+        const types = Array.isArray(item['@type']) ? item['@type'] : [item['@type']];
+        if (types.includes('BreadcrumbList')) {
+          const urls = (item.itemListElement || []).map((el) =>
+            typeof el.item === 'string' ? el.item : el.item && el.item['@id'] ? el.item['@id'] : ''
+          );
+          assert.strictEqual(
+            new Set(urls).size,
+            urls.length,
+            `${rel} JSON-LD BreadcrumbList must not contain duplicate URLs: ${JSON.stringify(urls)}`
+          );
+        }
+        if (types.includes('ItemList') && Array.isArray(item.itemListElement) && item.itemListElement.length > 0) {
+          hasItemList = true;
+        }
+      }
+    }
+    if (hubPages.has(rel)) {
+      assert(hasItemList, `Hub directory page ${rel} must expose a non-empty Schema.org ItemList`);
+    }
+
+    const mainMatch = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i);
+    const mainHtml = (mainMatch ? mainMatch[1] : '').replace(/<nav\b[^>]*aria-label="[Bb]readcrumb"[^>]*>[\s\S]*?<\/nav>/gi, '');
+    for (const hm of mainHtml.matchAll(/href="([^"#?]+)(?:[?#][^"]*)?"/gi)) {
+      const h = hm[1];
+      let target = null;
+      if (h.startsWith('https://ztds.ai')) target = h;
+      else if (h.startsWith('/')) target = 'https://ztds.ai' + h;
+      if (target) {
+        if (!target.endsWith('/') && !/\.[a-z0-9]+$/i.test(target)) target += '/';
+        if (mainInbound.has(target) && target !== myUrl) {
+          mainInbound.get(target).add(rel);
+          mainOutbound.get(myUrl).add(target);
+        }
+      }
+    }
+  }
+
+  for (const url of expectedUrls) {
+    const inCount = mainInbound.get(url).size;
+    const outCount = mainOutbound.get(url).size;
+    assert(inCount >= 2, `${url} must have >= 2 contextual <main> inbound links (found ${inCount})`);
+    assert(outCount >= 2, `${url} must have >= 2 contextual <main> outbound links (found ${outCount})`);
+  }
+
+  console.log(`    [PASS] Unique titles (30..68 chars), 8/8 hub ItemLists, zero duplicate BreadcrumbList URLs, and >= 2 contextual <main> inbound/outbound links verified across ${canonicalPages.length} pages.`);
+}
+
+console.log('\n[SUMMARY] ALL 12 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
