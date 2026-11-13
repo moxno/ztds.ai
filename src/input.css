@@ -453,6 +453,8 @@ main p {
     border-bottom: 1px solid #1e293b;
     padding: 8px 16px;
     display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
     align-items: center;
     justify-content: space-between;
     font-size: 0.75rem;
@@ -1270,7 +1272,53 @@ input[type="search"]::-webkit-search-cancel-button {
   #btnCopySha,
   .checkout-tab-btn,
   [data-ztds-print],
-  header.no-print a
+  header.no-print a,
+  #ztds-ai-citation-bar :is(button, a),
+  nav[aria-label="Page Sections"] a,
+  .btn-copy-bench,
+  .qs-tab-btn,
+  .btn-cert,
+  #btnSimulateDetokenize,
+  #tabBtnProposal,
+  #btnPrintProposal,
+  #btnCopyLlms,
+  #clearCustomLabelBtn,
+  #copyMemoBtn,
+  #downloadMdBtn,
+  #homeBtnSimulate,
+  #homeBtnReset,
+  #btnCopyHeroAuditCli,
+  #btnCopyQuickstart,
+  #btnSimulateBreach,
+  #btnCopyConfigPath,
+  #btnExecuteSim,
+  #btnCopySimOutput,
+  #toggleMethodologyBtn,
+  #btnResetScanner,
+  #tabBtnSurrogates,
+  #tabBtnRoundtrip,
+  #tabBtnTokenMap,
+  #btnClearPacketLog,
+  #tabCliQuickstart,
+  #btnCopyCliSnippet,
+  #copyInstallBtn,
+  #btnCopyActiveCode,
+  #btnCopyWorkbenchToken,
+  #btnCopyWorkbenchSnippet,
+  #btnIntervalAnnual,
+  #btnIntervalMonthly,
+  #btnCopyTrialToken,
+  #copyJsonBtn,
+  #btnCopyBibtex,
+  #btnCopyBibtexBlock,
+  #btnLoadValid,
+  #btnLoadTampered,
+  #btnLoadExpired,
+  #btnCopyReport,
+  #btnCopyJson,
+  #btnCopyBadgeMd,
+  #btnCopyBadgeHtml,
+  #btnCopyBadgeCode
 ) {
   min-block-size: 34px;
 }
@@ -1287,6 +1335,12 @@ nav[aria-label="Ecosystem Directory Switcher"] a,
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+#ztds-ai-citation-bar :is(button, a),
+nav[aria-label="Page Sections"] a {
+  display: inline-flex;
+  align-items: center;
 }
 
 @media (pointer: coarse), (max-width: 640px) {
@@ -1394,7 +1448,54 @@ nav[aria-label="Ecosystem Directory Switcher"] a,
     #btnCopySha,
     .checkout-tab-btn,
     [data-ztds-print],
-    header.no-print a
+    header.no-print a,
+    .btn-outline-dark,
+    #ztds-ai-citation-bar :is(button, a),
+    nav[aria-label="Page Sections"] a,
+    .btn-copy-bench,
+    .qs-tab-btn,
+    .btn-cert,
+    #btnSimulateDetokenize,
+    #tabBtnProposal,
+    #btnPrintProposal,
+    #btnCopyLlms,
+    #clearCustomLabelBtn,
+    #copyMemoBtn,
+    #downloadMdBtn,
+    #homeBtnSimulate,
+    #homeBtnReset,
+    #btnCopyHeroAuditCli,
+    #btnCopyQuickstart,
+    #btnSimulateBreach,
+    #btnCopyConfigPath,
+    #btnExecuteSim,
+    #btnCopySimOutput,
+    #toggleMethodologyBtn,
+    #btnResetScanner,
+    #tabBtnSurrogates,
+    #tabBtnRoundtrip,
+    #tabBtnTokenMap,
+    #btnClearPacketLog,
+    #tabCliQuickstart,
+    #btnCopyCliSnippet,
+    #copyInstallBtn,
+    #btnCopyActiveCode,
+    #btnCopyWorkbenchToken,
+    #btnCopyWorkbenchSnippet,
+    #btnIntervalAnnual,
+    #btnIntervalMonthly,
+    #btnCopyTrialToken,
+    #copyJsonBtn,
+    #btnCopyBibtex,
+    #btnCopyBibtexBlock,
+    #btnLoadValid,
+    #btnLoadTampered,
+    #btnLoadExpired,
+    #btnCopyReport,
+    #btnCopyJson,
+    #btnCopyBadgeMd,
+    #btnCopyBadgeHtml,
+    #btnCopyBadgeCode
   ) {
     min-block-size: 44px;
   }
@@ -1412,6 +1513,30 @@ nav[aria-label="Ecosystem Directory Switcher"] a,
 
   main details > summary:not(.flex) {
     padding-block: 0.625rem;
+  }
+
+  #mobile-rfc-toc a,
+  #mobile-treatise-toc a {
+    min-block-size: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  main select,
+  [role="dialog"] select,
+  main search.flex,
+  main search.flex input[type="search"],
+  main input:is([type="text"], [type="email"], [type="url"], [type="search"]):not(.border-none):not(.bg-transparent):not([aria-hidden="true"]):not([tabindex="-1"]),
+  [role="dialog"] input:is([type="text"], [type="email"], [type="url"], [type="search"]):not(.border-none):not(.bg-transparent):not([aria-hidden="true"]):not([tabindex="-1"]),
+  main label:has(> input[type="checkbox"]:not([aria-hidden="true"])) {
+    min-block-size: 44px;
+  }
+
+  #btnToggleAirplane::after {
+    content: "";
+    position: absolute;
+    inset-block: -10px;
+    inset-inline: 0;
   }
 }
 

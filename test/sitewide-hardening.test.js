@@ -1313,4 +1313,149 @@ console.log('[16/16] Verifying Wave 8 text-size-adjust, touch-action, <summary> 
   console.log('    [PASS] Wave 8 text-size-adjust, touch-action, <summary> 44px, scroll-shadow tables, modal dvh/padding & 320px token reflow verified.');
 }
 
-console.log('\n[SUMMARY] ALL 16 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
+// ============================================================================
+// 17. Universal 44px Completion, 24x44px Switch + Hit-Area, TOC/Select Sizing, .code-header Wrap & Virtual Keyboard Hints — Wave 9
+// ============================================================================
+console.log('[17/17] Verifying Wave 9 universal 44px button coverage, 24x44px switch hit-area, .code-header wrap & virtual keyboard hints...');
+{
+  const inputCss = fs.readFileSync(path.join(ROOT, 'src/input.css'), 'utf8');
+  assert(
+    /\.code-header\s*\{[\s\S]*flex-wrap:\s*wrap;/i.test(inputCss),
+    'src/input.css .code-header must enforce flex-wrap: wrap for 320px viewports'
+  );
+
+  const coarseMatches = [...inputCss.matchAll(/@media\s*\(pointer:\s*coarse\),\s*\(max-width:\s*640px\)\s*\{([\s\S]*?)\n\}/g)];
+  const coarseText = coarseMatches.map((m) => m[1]).join('\n');
+  for (const reqSel of [
+    '.btn-outline-dark',
+    '#ztds-ai-citation-bar :is(button, a)',
+    'nav[aria-label="Page Sections"] a',
+    '#mobile-rfc-toc a',
+    '#mobile-treatise-toc a',
+    'main select',
+    'main search.flex input[type="search"]',
+    'main label:has(> input[type="checkbox"]:not([aria-hidden="true"]))',
+    '#btnToggleAirplane::after',
+    '.btn-cert',
+    '.qs-tab-btn',
+    '.btn-copy-bench',
+    '#btnSimulateDetokenize',
+    '#btnExecuteSim',
+    '#btnIntervalAnnual',
+    '#btnIntervalMonthly',
+    '#btnLoadValid',
+    '#btnCopyBibtex',
+  ]) {
+    assert(coarseText.includes(reqSel), `src/input.css coarse/mobile rule missing Wave 9 selector: ${reqSel}`);
+  }
+
+  // Extract covered IDs/classes from the coarse min-block-size: 44px selector block
+  const coarseMinBlockMatch = inputCss.match(/@media\s*\(pointer:\s*coarse\),\s*\(max-width:\s*640px\)\s*\{\s*:is\(([\s\S]*?)\)\s*\{\s*min-block-size:\s*44px;/);
+  assert(coarseMinBlockMatch, 'src/input.css missing main :is(...) { min-block-size: 44px; } rule');
+  const coarseSelectors = coarseMinBlockMatch[1].split(',').map((s) => s.trim()).filter(Boolean);
+  const coveredIds = new Set(coarseSelectors.filter((s) => s.startsWith('#')).map((s) => s.slice(1)));
+  const coveredClasses = new Set([
+    'btn-trust',
+    'btn-navy',
+    'btn-outline',
+    'btn-outline-dark',
+    'btn-mint',
+    'touch-target',
+    ...coarseSelectors.filter((s) => s.startsWith('.')).map((s) => s.slice(1)),
+  ]);
+
+  function collectProdHtml(dir, out = []) {
+    for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (['node_modules', '.git', 'public', '.vercel', 'stitch_export', '.agent', '.agents'].includes(ent.name)) continue;
+      const p = path.join(dir, ent.name);
+      if (ent.isDirectory()) collectProdHtml(p, out);
+      else if (ent.name.endsWith('.html')) out.push(p);
+    }
+    return out.sort();
+  }
+
+  const prodHtmlFiles = collectProdHtml(ROOT);
+  const uncoveredButtons = [];
+  for (const absPath of prodHtmlFiles) {
+    const rel = path.relative(ROOT, absPath);
+    const txt = fs.readFileSync(absPath, 'utf8');
+    for (const m of txt.matchAll(/<button\b[^>]*>/gi)) {
+      const tag = m[0];
+      if (/\bdata-ztds-copy-llm=/i.test(tag)) continue;
+      const id = (tag.match(/\bid=["']([^"']+)["']/i) || [, ''])[1];
+      if (id === 'btnToggleAirplane' || id === 'ztds-cmd-trigger') continue;
+      const cls = (tag.match(/\bclass=["']([^"']+)["']/i) || [, ''])[1];
+      const classes = cls.split(/\s+/).filter(Boolean);
+      const hasClassCoverage = classes.some(
+        (c) =>
+          coveredClasses.has(c) ||
+          /^min-h-\[(?:4[4-9]|[5-9]\d|\d{3,})px\]$/.test(c) ||
+          /^(?:h-11|h-12|h-14|py-3|py-3\.5|py-4|p-3|p-4)$/.test(c)
+      );
+      const hasIdCoverage = Boolean(id && coveredIds.has(id));
+      const hasDataAttr = /(?:^|\s)data-ztds-copy(?:\s|=|>)|(?:^|\s)data-ztds-print(?:\s|=|>)/i.test(tag);
+      const hasInline44 = /min-height:\s*44px/i.test(tag);
+      if (!hasClassCoverage && !hasIdCoverage && !hasDataAttr && !hasInline44) {
+        uncoveredButtons.push(`${rel}: ${tag}`);
+      }
+    }
+  }
+  assert.strictEqual(
+    uncoveredButtons.length,
+    0,
+    `Every <button> across ${prodHtmlFiles.length} production HTML pages must have >= 44px coarse/mobile hit-area coverage:\n${uncoveredButtons.join('\n')}`
+  );
+
+  // Airplane mode switch (24x44px visual + ::after 44px hit-area)
+  const scannerHtml = fs.readFileSync(path.join(ROOT, 'scanner/index.html'), 'utf8');
+  const scannerPageJs = fs.readFileSync(path.join(ROOT, 'assets/js/pages/scanner.js'), 'utf8');
+  assert(
+    scannerHtml.includes('id="btnToggleAirplane"') &&
+      scannerHtml.includes('inline-flex h-[24px] w-11') &&
+      scannerHtml.includes('id="toggleAirplaneDot"') &&
+      scannerHtml.includes('inline-block h-5 w-5'),
+    'scanner/index.html #btnToggleAirplane must measure 24x44px (h-[24px] w-11) with h-5 w-5 thumb'
+  );
+  assert(
+    !scannerPageJs.includes('inline-flex h-5 w-10') &&
+      scannerPageJs.includes('inline-flex h-[24px] w-11') &&
+      scannerPageJs.includes('inline-block h-5 w-5'),
+    'assets/js/pages/scanner.js must keep #btnToggleAirplane at h-[24px] w-11 and #toggleAirplaneDot at h-5 w-5'
+  );
+
+  // Mobile virtual keyboard & identifier hints
+  const navJs = fs.readFileSync(path.join(ROOT, 'nav.js'), 'utf8');
+  assert(navJs.includes("input.setAttribute('enterkeyhint', 'go')"), 'nav.js #ztds-cmd-input must set enterkeyhint="go"');
+
+  for (const [rel, id, requiredAttrs] of [
+    ['registry/index.html', 'registrySearch', ['enterkeyhint="search"']],
+    ['companies/index.html', 'companySearch', ['enterkeyhint="search"']],
+    ['fellows/index.html', 'fellowSearch', ['enterkeyhint="search"']],
+    ['case-studies/index.html', 'caseStudySearch', ['enterkeyhint="search"']],
+    ['benchmarks/index.html', 'benchSearchInput', ['enterkeyhint="search"']],
+    ['ciso/index.html', 'bcSearchInput', ['enterkeyhint="search"']],
+    ['index.html', 'heroDomainInput', ['inputmode="url"', 'enterkeyhint="go"']],
+    ['scanner/index.html', 'mode0DomainInput', ['inputmode="url"', 'enterkeyhint="go"']],
+    ['index.html', 'cisoWorkEmail', ['inputmode="email"', 'enterkeyhint="send"', 'autocorrect="off"']],
+    ['scanner/index.html', 'cisoWorkEmail', ['inputmode="email"', 'enterkeyhint="send"', 'autocorrect="off"']],
+    ['sdk/index.html', 'trialWorkbenchEmail', ['inputmode="email"', 'enterkeyhint="send"']],
+    ['sdk/index.html', 'trialEmail', ['inputmode="email"', 'enterkeyhint="send"']],
+    ['sdk/index.html', 'checkoutEmail', ['inputmode="email"', 'enterkeyhint="next"']],
+    ['sdk/index.html', 'checkoutDomain', ['inputmode="url"', 'enterkeyhint="done"']],
+    ['index.html', 'homeInputArea', ['autocorrect="off"', 'autocapitalize="none"', 'spellcheck="false"']],
+    ['inspector/index.html', 'inputArea', ['autocorrect="off"', 'autocapitalize="none"', 'spellcheck="false"']],
+    ['mcp/index.html', 'simPayloadInput', ['autocorrect="off"', 'autocapitalize="none"', 'spellcheck="false"']],
+    ['sdk/index.html', 'licenseTokenInput', ['autocorrect="off"', 'autocapitalize="none"', 'spellcheck="false"']],
+  ]) {
+    const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    const tagMatch = html.match(new RegExp(`<(?:input|textarea)\\b[^>]*id="${id}"[^>]*>`, 'i'));
+    assert(tagMatch, `${rel} missing element #${id}`);
+    for (const attr of requiredAttrs) {
+      assert(tagMatch[0].includes(attr), `${rel} #${id} missing attribute ${attr}`);
+    }
+  }
+
+  console.log(`    [PASS] Universal 44px button coverage across ${prodHtmlFiles.length} pages, 24x44px switch + hit-area, .code-header wrap & virtual keyboard hints verified.`);
+}
+
+console.log('\n[SUMMARY] ALL 17 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');

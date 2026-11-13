@@ -616,6 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
       input.setAttribute('autocorrect', 'off');
       input.setAttribute('autocapitalize', 'none');
       input.setAttribute('spellcheck', 'false');
+      input.setAttribute('enterkeyhint', 'go');
       input.placeholder = 'Jump to specification, CISO memo, SDK, scanner, or section...';
       input.className = 'w-full bg-transparent text-slate-900 placeholder-slate-400 text-base sm:text-sm focus:outline-none font-sans';
 

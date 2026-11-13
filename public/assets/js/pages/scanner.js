@@ -1327,8 +1327,8 @@ fi`
         btnToggleAirplane.setAttribute('aria-checked', String(isAirplaneActive));
 
         if (isAirplaneActive) {
-          btnToggleAirplane.className = "relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 bg-sky-600";
-          toggleAirplaneDot.className = "pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5";
+          btnToggleAirplane.className = "relative inline-flex h-[24px] w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 bg-sky-600";
+          toggleAirplaneDot.className = "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5";
           airplaneStatusLabel.innerText = "AIR-GAP ACTIVE";
           airplaneStatusLabel.className = "text-xs font-mono text-sky-400 font-bold";
           airplaneActiveBanner.classList.remove('hidden');
@@ -1337,8 +1337,8 @@ fi`
           metricSocketBoundary.innerText = "SCIF Enclave";
           appendPacketLog("OFFLINE EVENT", "Kernel Air-Gap", "WAN NIC Disabled (Airplane Mode)", "0.00 Bytes", "ISOLATION ACTIVE", true);
         } else {
-          btnToggleAirplane.className = "relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 bg-slate-700";
-          toggleAirplaneDot.className = "pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0";
+          btnToggleAirplane.className = "relative inline-flex h-[24px] w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 bg-slate-700";
+          toggleAirplaneDot.className = "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0";
           airplaneStatusLabel.innerText = "ONLINE";
           airplaneStatusLabel.className = "text-xs font-mono text-slate-400 font-bold";
           airplaneActiveBanner.classList.add('hidden');

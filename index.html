@@ -435,7 +435,7 @@
                 <label for="homeInputArea" class="font-bold text-slate-200 uppercase">1. Host Cleartext (Local RAM)</label>
                 <span id="homeInputCharCount" class="text-slate-400 shrink-0">0 entities tokenized</span>
               </div>
-              <textarea id="homeInputArea" rows="4" class="w-full flex-grow rounded-lg border border-slate-700 bg-slate-900 p-3 text-base sm:text-sm font-mono text-slate-100 leading-relaxed focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" spellcheck="false"></textarea>
+              <textarea id="homeInputArea" rows="4" class="w-full flex-grow rounded-lg border border-slate-700 bg-slate-900 p-3 text-base sm:text-sm font-mono text-slate-100 leading-relaxed focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" autocorrect="off" autocapitalize="none" spellcheck="false"></textarea>
             </div>
 
             <!-- Right: Sanitized Surrogate Output -->
@@ -490,7 +490,7 @@
               Audit Public Domain AI &amp; Subprocessor Exposure (GDPR Art. 28, CSP &amp; Telemetry Sinks)
             </label>
             <form id="heroScanForm" class="flex flex-col sm:flex-row gap-2.5">
-              <input id="heroDomainInput" type="text" inputmode="url" autocomplete="off" placeholder="Enter corporate domain (e.g., stripe.com or yourcompany.com)" class="flex-grow px-4 py-2.5 rounded-xl border-2 border-slate-700 bg-white text-slate-900 placeholder:text-slate-400 text-base sm:text-sm font-mono focus:outline-none focus:border-emerald-500" autocorrect="off" autocapitalize="none" spellcheck="false">
+              <input id="heroDomainInput" type="text" inputmode="url" enterkeyhint="go" autocomplete="off" placeholder="Enter corporate domain (e.g., stripe.com or yourcompany.com)" class="flex-grow px-4 py-2.5 rounded-xl border-2 border-slate-700 bg-white text-slate-900 placeholder:text-slate-400 text-base sm:text-sm font-mono focus:outline-none focus:border-emerald-500" autocorrect="off" autocapitalize="none" spellcheck="false">
               <button id="heroScanSubmitBtn" type="submit" class="btn-trust py-2.5 px-5 text-xs font-mono font-bold whitespace-nowrap flex items-center justify-center gap-2 cursor-pointer">
                 <span id="heroScanBtnText">Audit Perimeter &rarr;</span>
                 <span id="heroScanSpinner" class="hidden w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
@@ -1126,7 +1126,7 @@ vector_store.upsert(embed(sanitized.text))  # Zero raw PII stored in dense embed
             <label for="cisoWorkEmail" class="block text-xs font-bold text-slate-700 uppercase tracking-wider font-mono mb-1.5">
               Work / Corporate Email <span class="text-rose-600">*</span>
             </label>
-            <input type="email" id="cisoWorkEmail" required placeholder="ciso@yourcompany.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-base sm:text-sm focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 font-sans shadow-xs transition-colors" autocomplete="email">
+            <input type="email" id="cisoWorkEmail" required placeholder="ciso@yourcompany.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-base sm:text-sm focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 font-sans shadow-xs transition-colors" inputmode="email" enterkeyhint="send" autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false">
             <span class="text-xs text-slate-500 mt-1.5 block leading-relaxed">Statutory Notice (GDPR Art. 13 &amp; Israel PPL Sec. 11): Submission is voluntary (non-submission prevents email dispatch of this memorandum). Controller: BrandMeWeb (Ilya Sibiryakov, <a href="mailto:security@ztds.ai" class="underline">security@ztds.ai</a>); processors: Vercel &amp; Resend. Statutory inspection/deletion rights (Secs. 13&ndash;14) detailed in our <a href="/privacy/#statutory-form-notice" class="underline">Privacy Declaration</a>.</span>
           </div>
 
