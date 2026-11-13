@@ -786,8 +786,8 @@ details:not([open])::details-content {
 .ztds-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: #059669;
   border: 2px solid #ffffff;
@@ -802,14 +802,28 @@ details:not([open])::details-content {
 }
 
 .ztds-slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: #059669;
   border: 2px solid #ffffff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: transform 0.1s ease, background 0.15s ease;
+}
+
+@media (pointer: coarse), (max-width: 640px) {
+  .ztds-slider {
+    min-block-size: 44px;
+    cursor: pointer;
+    touch-action: pan-y;
+  }
+
+  .ztds-slider::-webkit-slider-thumb,
+  .ztds-slider::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+  }
 }
 
 /* ==========================================================================
@@ -1062,6 +1076,8 @@ details:not([open])::details-content {
 main .overflow-x-auto {
   inline-size: 100%;
   max-inline-size: 100%;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
 }
 
 main .overflow-x-auto:has(> table) {
@@ -1175,9 +1191,56 @@ input[type="search"]::-webkit-search-cancel-button {
   #btnAirplaneToggle,
   #btnCopyOutput,
   #btnWipeRAM,
-  #closeBreachBox
+  #closeBreachBox,
+  .copy-objection-btn,
+  .modal-tab-btn,
+  .copy-clause-btn,
+  .recipe-tab-btn,
+  [data-ztds-copy],
+  #tabBtnLlms,
+  #tabBtnMemo,
+  #btnCopyProposal,
+  #btnClearCsFilters,
+  #btnClearCompanyFilters,
+  #btnClearFellowFilters,
+  #btnClearFilters,
+  #bcSearchClear,
+  #btnCloseProcurementModal,
+  #btnCloseProcurementModalBtn,
+  #btnCloseCisoLeadModal,
+  #btnBypassCisoLead,
+  #memoModalCloseBtnBottom,
+  #btnCloseCisoReportBottom,
+  #btnCloseCheckoutModal,
+  #btnCloseCertModal,
+  #btnPasteClipboard,
+  #btnCopySanitized,
+  #btnCopyTokenMap,
+  #linterPresetCompliant,
+  #linterPresetNitroEnclave,
+  #linterPresetDirect,
+  #linterPresetCloudProxy,
+  #linterPresetVectorLeak,
+  #btnAutoRemediateCode,
+  #tabCliHealthcare,
+  #tabCliGhAction,
+  #tabCliPreCommit,
+  #copyQuickstartBtn,
+  #mobile-menu-toggle,
+  #modalPrintMemo,
+  #modalDownloadJson,
+  #modalDownloadMemo,
+  #modalCopyMemo,
+  #btnPrintCertAction
 ) {
   min-block-size: 34px;
+}
+
+.mobile-nav-drawer a,
+#mobile-drawer a {
+  min-block-size: 44px;
+  display: flex;
+  align-items: center;
 }
 
 nav[aria-label="Ecosystem Directory Switcher"] a,
@@ -1232,9 +1295,56 @@ nav[aria-label="Ecosystem Directory Switcher"] a,
     #btnAirplaneToggle,
     #btnCopyOutput,
     #btnWipeRAM,
-    #closeBreachBox
+    #closeBreachBox,
+    .copy-objection-btn,
+    .modal-tab-btn,
+    .copy-clause-btn,
+    .recipe-tab-btn,
+    [data-ztds-copy],
+    #tabBtnLlms,
+    #tabBtnMemo,
+    #btnCopyProposal,
+    #btnClearCsFilters,
+    #btnClearCompanyFilters,
+    #btnClearFellowFilters,
+    #btnClearFilters,
+    #bcSearchClear,
+    #btnCloseProcurementModal,
+    #btnCloseProcurementModalBtn,
+    #btnCloseCisoLeadModal,
+    #btnBypassCisoLead,
+    #memoModalCloseBtnBottom,
+    #btnCloseCisoReportBottom,
+    #btnCloseCheckoutModal,
+    #btnCloseCertModal,
+    #btnPasteClipboard,
+    #btnCopySanitized,
+    #btnCopyTokenMap,
+    #linterPresetCompliant,
+    #linterPresetNitroEnclave,
+    #linterPresetDirect,
+    #linterPresetCloudProxy,
+    #linterPresetVectorLeak,
+    #btnAutoRemediateCode,
+    #tabCliHealthcare,
+    #tabCliGhAction,
+    #tabCliPreCommit,
+    #copyQuickstartBtn,
+    #mobile-menu-toggle,
+    #modalPrintMemo,
+    #modalDownloadJson,
+    #modalDownloadMemo,
+    #modalCopyMemo,
+    #btnPrintCertAction
   ) {
     min-block-size: 44px;
+  }
+
+  #btnCloseProcurementModal,
+  #btnCloseCisoLeadModal,
+  #btnCloseCheckoutModal,
+  #bcSearchClear {
+    min-inline-size: 44px;
   }
 }
 
@@ -1254,9 +1364,20 @@ nav[aria-label="breadcrumb"] {
   row-gap: 0.25rem;
 }
 
+@supports (min-height: 100dvh) {
+  .min-h-screen {
+    min-height: 100dvh;
+  }
+}
+
 @media (max-width: 640px) {
   main table:not(.ears) {
     max-inline-size: 100%;
+  }
+
+  main :not(pre) > code {
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   #notes-drawer,

@@ -1066,4 +1066,82 @@ console.log('[13/13] Verifying mobile viewport ergonomics, 44px touch targets & 
   console.log('    [PASS] iOS >= 16px input guard, 44px touch targets, breadcrumb flex-wrap, responsive grids, dvh drawer, and <pre> bounds verified.');
 }
 
-console.log('\n[SUMMARY] ALL 13 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
+// ============================================================================
+// 14. Universal 44px Touch Coverage, Dynamic Viewport Modals (dvh), Range Slider WCAG 2.5.8 & Mobile Drawer Ergonomics — Wave 6
+// ============================================================================
+console.log('[14/14] Verifying universal 44px touch coverage, dvh modals, >= 24px slider thumbs & mobile drawer bounds...');
+{
+  function collectCanonicalIndexHtml(dir, out = []) {
+    for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (['.git', 'node_modules', 'public', '.vercel', '.agent', '.agents'].includes(ent.name)) continue;
+      const full = path.join(dir, ent.name);
+      if (ent.isDirectory()) collectCanonicalIndexHtml(full, out);
+      else if (ent.name === 'index.html') out.push(full);
+    }
+    return out;
+  }
+
+  const canonicalFiles = collectCanonicalIndexHtml(ROOT);
+  const legacyModalVh = [];
+  for (const absPath of canonicalFiles) {
+    const html = fs.readFileSync(absPath, 'utf8');
+    if (/max-h-\[[0-9]+vh\]/.test(html)) {
+      legacyModalVh.push(path.relative(ROOT, absPath));
+    }
+  }
+  assert.strictEqual(
+    legacyModalVh.length,
+    0,
+    `Legacy max-h-[...vh] found instead of dvh on: ${legacyModalVh.join(', ')}`
+  );
+
+  const inputCss = fs.readFileSync(path.join(ROOT, 'src/input.css'), 'utf8');
+  assert(
+    /\.ztds-slider::-webkit-slider-thumb\s*\{[\s\S]*width:\s*24px;\s*height:\s*24px;/i.test(inputCss) &&
+      /\.ztds-slider::-moz-range-thumb\s*\{[\s\S]*width:\s*24px;\s*height:\s*24px;/i.test(inputCss),
+    'src/input.css must enforce >= 24px (WCAG 2.5.8) slider thumbs'
+  );
+  assert(
+    /\.mobile-nav-drawer a,\s*#mobile-drawer a\s*\{[\s\S]*min-block-size:\s*44px;/i.test(inputCss),
+    'src/input.css must enforce min-block-size: 44px on mobile navigation drawer links'
+  );
+  assert(
+    /@supports\s*\(min-height:\s*100dvh\)\s*\{\s*\.min-h-screen\s*\{\s*min-height:\s*100dvh;\s*\}\s*\}/i.test(inputCss),
+    'src/input.css must upgrade .min-h-screen to 100dvh via @supports'
+  );
+  assert(
+    /main \.overflow-x-auto\s*\{[\s\S]*overscroll-behavior-x:\s*contain;/i.test(inputCss),
+    'src/input.css must contain horizontal table scroll gestures via overscroll-behavior-x: contain'
+  );
+
+  const requiredSelectors = [
+    '.copy-objection-btn',
+    '.modal-tab-btn',
+    '.copy-clause-btn',
+    '.recipe-tab-btn',
+    '[data-ztds-copy]',
+    '#btnCloseCisoLeadModal',
+    '#btnCloseProcurementModal',
+    '#btnCloseCheckoutModal',
+    '#btnCloseCertModal',
+  ];
+  const coarseMatches = [...inputCss.matchAll(/@media\s*\(pointer:\s*coarse\),\s*\(max-width:\s*640px\)\s*\{([\s\S]*?)\n\}/g)];
+  const coarseBlockText = coarseMatches.map((m) => m[1]).join('\n');
+  assert(coarseMatches.length >= 2 && coarseBlockText.includes('min-block-size: 44px'), 'src/input.css missing @media (pointer: coarse), (max-width: 640px) 44px rules');
+  for (const sel of requiredSelectors) {
+    assert(coarseBlockText.includes(sel), `src/input.css 44px coarse/mobile block missing selector: ${sel}`);
+  }
+
+  for (const draftRel of [
+    'ietf/draft-sibiryakov-ztds-protocol-01/index.html',
+    'ietf/draft-sibiryakov-ztds-protocol-02/index.html',
+  ]) {
+    const draftHtml = fs.readFileSync(path.join(ROOT, draftRel), 'utf8');
+    const toggleMatch = draftHtml.match(/<button\b[^>]*id="mobile-menu-toggle"[^>]*>/i);
+    assert(toggleMatch && /min-height:\s*44px/i.test(toggleMatch[0]), `${draftRel} #mobile-menu-toggle must enforce min-height: 44px`);
+  }
+
+  console.log(`    [PASS] Zero legacy max-h-[...vh] across ${canonicalFiles.length} canonical pages, >= 24px/28px sliders, 44px drawer/modal controls, and 100dvh upgrade verified.`);
+}
+
+console.log('\n[SUMMARY] ALL 14 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
