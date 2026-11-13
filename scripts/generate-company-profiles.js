@@ -478,7 +478,7 @@ ${simulationBannerHtml}
 
     <!-- Header Section Card -->
     <div class="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-8 sm:p-10 mb-8 relative overflow-hidden">
-      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-slate-100">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-5 border-b border-slate-100">
         <div class="flex items-center gap-5">
           ${logoBoxHtml}
           <div>
@@ -488,7 +488,7 @@ ${simulationBannerHtml}
                 ${escapeHtml(tier)}
               </span>
             </div>
-            <p class="text-xs sm:text-sm text-slate-500 font-mono mt-1">
+            <p class="hero-lead text-xs sm:text-sm text-slate-500 font-mono mt-1">
               ${escapeHtml(industry)} &middot; Headquarters: ${escapeHtml(company.headquarters || 'International')}
             </p>
           </div>
@@ -502,7 +502,7 @@ ${simulationBannerHtml}
       </div>
 
       <!-- Verification Specs Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-6 text-xs font-mono">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 pt-4 text-xs font-mono">
         <div>
           <div class="text-slate-400 mb-1">CONFORMANCE STATUS</div>
           <div class="text-emerald-700 font-bold flex items-center gap-1.5">

@@ -330,44 +330,37 @@
         <a href="#questionnaires" class="btn-outline text-xs py-2 px-4">
           Pre-Filled SIG Lite / CAIQ
         </a>
-        <a href="#evidence-binder" class="btn-outline text-xs py-2 px-4">
-          Evidence Binder Architecture
-        </a>
-        <a href="/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" download="ZTDS_CISO_DPA_Exemption_Memo.pdf" class="btn-trust text-xs py-2 px-4 shadow-sm flex items-center gap-1.5 font-semibold">
-          <svg class="w-3.5 h-3.5 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <a href="/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" download="ZTDS_CISO_DPA_Exemption_Memo.pdf" class="btn-navy text-xs py-2 px-4 shadow-sm flex items-center gap-1.5 font-semibold">
+          <svg class="w-3.5 h-3.5 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           <span>Download CISO Memo (PDF)</span>
-        </a>
-        <a href="/docs/ZTDS_Enterprise_Security_Pack.zip" download="ZTDS_Enterprise_Security_Pack.zip" class="btn-navy text-xs py-2 px-4 shadow-sm flex items-center gap-1.5 font-semibold">
-          <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
-          <span>Security Pack (ZIP)</span>
         </a>
       </div>
     </div>
 
     <!-- Executive Metrics Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-8">
-      <div class="ztds-card p-4 bg-white border border-slate-200 rounded-xl shadow-xs">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5 mb-6">
+      <div class="ztds-card p-3 sm:p-3.5 bg-white border border-slate-200 rounded-xl shadow-xs">
         <div class="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold">Perimeter Egress</div>
-        <div class="text-2xl font-extrabold text-slate-900 font-mono mt-1">0.00 B</div>
-        <p class="text-xs text-slate-500 mt-1">Zero unmasked bytes leave local client execution environment prior to sanitization (Invariant 1).</p>
+        <div class="text-xl sm:text-2xl font-extrabold text-slate-900 font-mono mt-0.5">0.00 B</div>
+        <p class="text-xs text-slate-500 mt-1">Zero cleartext leaves client memory (Invariant 1).</p>
       </div>
 
-      <div class="ztds-card p-4 bg-white border border-slate-200 rounded-xl shadow-xs">
+      <div class="ztds-card p-3 sm:p-3.5 bg-white border border-slate-200 rounded-xl shadow-xs">
         <div class="text-xs font-mono uppercase tracking-wider text-emerald-600 font-semibold">Subprocessor Liability</div>
-        <div class="text-2xl font-extrabold text-emerald-700 font-mono mt-1">0 Chains</div>
-        <p class="text-xs text-slate-500 mt-1">No vendor servers touch PII. Software functions as local computational utility (GDPR Art. 28 Subprocessor Scope Exclusion).</p>
+        <div class="text-xl sm:text-2xl font-extrabold text-emerald-700 font-mono mt-0.5">0 Chains</div>
+        <p class="text-xs text-slate-500 mt-1">Local utility outside GDPR Art. 28 scope.</p>
       </div>
 
-      <div class="ztds-card p-4 bg-white border border-slate-200 rounded-xl shadow-xs">
+      <div class="ztds-card p-3 sm:p-3.5 bg-white border border-slate-200 rounded-xl shadow-xs">
         <div class="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold">Memory Scope</div>
-        <div class="text-2xl font-extrabold text-slate-900 font-mono mt-1">Volatile RAM</div>
-        <p class="text-xs text-slate-500 mt-1">Mapping tables reside strictly in transient memory. Zero persistence to disk, cookies, or cloud databases.</p>
+        <div class="text-xl sm:text-2xl font-extrabold text-slate-900 font-mono mt-0.5">Volatile RAM</div>
+        <p class="text-xs text-slate-500 mt-1">Transient token maps; zero disk persistence.</p>
       </div>
 
-      <div class="ztds-card p-4 bg-white border border-slate-200 rounded-xl shadow-xs">
+      <div class="ztds-card p-3 sm:p-3.5 bg-white border border-slate-200 rounded-xl shadow-xs">
         <div class="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold">Continuous Telemetry</div>
-        <div class="text-2xl font-extrabold text-slate-900 font-mono mt-1">SHA-256</div>
-        <p class="text-xs text-slate-500 mt-1">Deterministic cryptographic audit receipts generated via CLI for Drata, Vanta, and AuditBoard ingestion.</p>
+        <div class="text-xl sm:text-2xl font-extrabold text-slate-900 font-mono mt-0.5">SHA-256</div>
+        <p class="text-xs text-slate-500 mt-1">Audit receipts for Drata, Vanta, and AuditBoard.</p>
       </div>
     </div>
 
@@ -655,7 +648,7 @@
           <div class="p-6 rounded-xl bg-emerald-50/50 border border-emerald-200 space-y-4">
             <div class="flex items-center justify-between pb-3 border-b border-emerald-200">
               <span class="font-bold text-slate-900 text-sm">ZTDS Zero-Trust Data Plane</span>
-              <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-emerald-100 text-emerald-900 border border-emerald-300">Exempt from DPA Burden</span>
+              <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-emerald-100 text-emerald-900 border border-emerald-300">0 Utility Subprocessors</span>
             </div>
 
             <ul class="space-y-3 text-xs text-slate-700 leading-relaxed">
@@ -719,9 +712,9 @@
               <span class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">EU GDPR &middot; Article 28</span>
               <span class="text-xs font-mono text-slate-400">Zero-Subprocessor</span>
             </div>
-            <h3 id="dpa-subprocessor-chain-exemption" class="text-sm font-bold text-slate-900 mb-1.5 scroll-mt-24">DPA &amp; Subprocessor Chain Exemption</h3>
+            <h3 id="dpa-subprocessor-chain-exemption" class="text-sm font-bold text-slate-900 mb-1.5 scroll-mt-24">GDPR Art. 28 Utility Subprocessor Exclusion</h3>
             <p class="text-xs text-slate-600 leading-relaxed mb-4">
-              According to EDPB doctrine, software executing exclusively within client-controlled hardware/RAM without transmitting telemetry or cleartext back to the software developer does not constitute third-party data processing. Consequently, no Data Processing Agreement (DPA) or SCCs are statutorily required.
+              According to EDPB doctrine, software executing exclusively within client-controlled hardware/RAM without transmitting telemetry or cleartext back to the developer does not constitute third-party data processing. Consequently, no vendor DPA or SCCs are required for the local sanitization utility under GDPR Article 28.
             </p>
           </div>
           <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
@@ -993,7 +986,7 @@
   "compliance_frameworks": [
     "AICPA-TSC-2025-SOC2-TypeII",
     "ISO-IEC-27001-2022-A8.11",
-    "EU-GDPR-Art28-Exempt",
+    "EU-GDPR-Art28-Subprocessor-Exclusion",
     "EU-GDPR-Art17-Vector-Immunized",
     "US-HIPAA-Safe-Harbor-45CFR164.514"
   ],

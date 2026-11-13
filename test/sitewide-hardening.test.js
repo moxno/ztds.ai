@@ -811,73 +811,22 @@ console.log('--> Test 10: Certificate Anti-Forgery, Rate-Limit Spoofing, Constan
 }
 
 // Test 11: Perceptual Clarity, Responsive Ergonomics & Cognitive Noise Reduction Guard
-console.log('--> Test 11: Perceptual Clarity, no-slop, Hero Lead Brevity, CTA De-Cluttering & Touch Ergonomics');
+console.log('--> Test 11: Perceptual Clarity, no-slop, Universal Hero Lead Brevity, CTA De-Cluttering, Prose Bounds & Touch Ergonomics');
 {
   const slopRegex = /\b(empower|empowering|empowers|paradigm|paradigms|delve|testament|tapestry|game-changer|cutting-edge|synergy)\b/i;
-  const slopCheckedPages = [
-    'index.html',
-    'scanner/index.html',
-    'inspector/index.html',
-    'ciso/index.html',
-    'ciso/memo/index.html',
-    'ciso/memo.html',
-    'sdk/index.html',
-    'mcp/index.html',
-    'agency/index.html',
-    'roi/index.html',
-    'governance/index.html',
-    'compliance/index.html',
-    'accessibility/index.html',
-    'benchmarks/index.html',
-    'apply/index.html',
-    'deck/index.html',
-    'frameworks/index.html',
-    'frameworks/owasp-llm02-sensitive-information-disclosure/index.html',
-    'frameworks/nist-ai-rmf-generative-ai-profile-pii/index.html',
-    'frameworks/eu-ai-act-article-10-data-governance/index.html',
-    'frameworks/gdpr-article-25-32-ai-prompts/index.html',
-    'frameworks/hipaa-safe-harbor-llm-prompts/index.html',
-    'frameworks/mcp-stdio-pii-sanitization/index.html',
-    'frameworks/rag-pipeline-pii-sanitization/index.html',
-    'frameworks/client-side-sanitization-vs-proxy-dlp/index.html',
-    'standard/index.html',
-    'whitepaper/index.html',
-    'verify/index.html'
-  ];
+  const allStdPages = HTML_FILES.filter(
+    (rel) =>
+      rel !== '404.html' &&
+      !rel.startsWith('docs/') &&
+      !/^ietf\/draft-sibiryakov-ztds-protocol-0[12]/.test(rel)
+  );
+  assert(allStdPages.length >= 53, `Expected at least 53 standard HTML pages for Wave 3 checks (found ${allStdPages.length})`);
 
-  for (const rel of slopCheckedPages) {
+  for (const rel of allStdPages) {
     const content = fs.readFileSync(path.join(ROOT, rel), 'utf8');
-    const match = content.match(slopRegex);
-    assert(!match, `${rel} must not contain banned no-slop term "${match ? match[0] : ''}"`);
-  }
+    const slopMatch = content.match(slopRegex);
+    assert(!slopMatch, `${rel} must not contain banned no-slop term "${slopMatch ? slopMatch[0] : ''}"`);
 
-  const heroBriefPages = [
-    'index.html',
-    'scanner/index.html',
-    'inspector/index.html',
-    'ciso/index.html',
-    'sdk/index.html',
-    'agency/index.html',
-    'roi/index.html',
-    'governance/index.html',
-    'compliance/index.html',
-    'accessibility/index.html',
-    'benchmarks/index.html',
-    'standard/index.html',
-    'whitepaper/index.html',
-    'deck/index.html',
-    'frameworks/index.html',
-    'frameworks/owasp-llm02-sensitive-information-disclosure/index.html',
-    'frameworks/nist-ai-rmf-generative-ai-profile-pii/index.html',
-    'frameworks/eu-ai-act-article-10-data-governance/index.html',
-    'frameworks/gdpr-article-25-32-ai-prompts/index.html',
-    'frameworks/hipaa-safe-harbor-llm-prompts/index.html',
-    'frameworks/mcp-stdio-pii-sanitization/index.html',
-    'frameworks/rag-pipeline-pii-sanitization/index.html',
-    'frameworks/client-side-sanitization-vs-proxy-dlp/index.html'
-  ];
-  for (const rel of heroBriefPages) {
-    const content = fs.readFileSync(path.join(ROOT, rel), 'utf8');
     const leadMatch = content.match(/<p[^>]*class="[^"]*\bhero-lead\b[^"]*"[^>]*>([\s\S]*?)<\/p>/i);
     assert(leadMatch, `${rel} must declare a .hero-lead paragraph`);
     const plainText = leadMatch[1]
@@ -894,14 +843,46 @@ console.log('--> Test 11: Perceptual Clarity, no-slop, Hero Lead Brevity, CTA De
     'standard/index.html',
     'deck/index.html',
     'ciso/memo/index.html',
-    'ciso/memo.html'
+    'ciso/memo.html',
+    'soc2/index.html',
+    'companies/brandmeweb/index.html'
   ];
   for (const rel of statutoryClaimPages) {
     const content = fs.readFileSync(path.join(ROOT, rel), 'utf8');
     assert(
-      !/100%\s+DPA\s*(?:&amp;|&)\s*BAA\s+exempt(?:ion)?/i.test(content),
-      `${rel} must use Statutory Safe Harbor / Subprocessor Exclusion phrasing instead of overbroad "100% DPA & BAA exempt"`
+      !/100%\s+DPA\s*(?:&amp;|&)\s*BAA\s+exempt(?:ion)?/i.test(content) &&
+        !/Exempt\s+from\s+DPA/i.test(content) &&
+        !/DPA\s+Exemption\s+Under\s+GDPR/i.test(content),
+      `${rel} must use Statutory Safe Harbor / Subprocessor Exclusion phrasing instead of overbroad DPA exemption claims`
     );
+  }
+
+  const boundedProsePages = [
+    'index.html',
+    'ciso/index.html',
+    'compliance/index.html',
+    'sdk/index.html',
+    'privacy/index.html',
+    'terms/index.html',
+    'accessibility/index.html',
+    'benchmarks/index.html',
+    'whitepaper/index.html'
+  ];
+  for (const rel of boundedProsePages) {
+    const content = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    const mainMatch = content.match(/<main\b[\s\S]*?<\/main>/i);
+    assert(mainMatch, `${rel} must contain <main>`);
+    for (const pm of mainMatch[0].matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)) {
+      const pWords = pm[1]
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/&#8209;/g, '-')
+        .replace(/&[a-z0-9#]+;/gi, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .split(' ')
+        .filter(Boolean).length;
+      assert(pWords <= 70, `${rel} <main> contains paragraph exceeding 70 words (${pWords}w)`);
+    }
   }
 
   const inspectorHtml = fs.readFileSync(path.join(ROOT, 'inspector/index.html'), 'utf8');
@@ -928,11 +909,15 @@ console.log('--> Test 11: Perceptual Clarity, no-slop, Hero Lead Brevity, CTA De
       inputCss.includes('min-block-size: 40px') &&
       inputCss.includes('.preset-btn') &&
       inputCss.includes('.scan-preset-btn') &&
+      inputCss.includes('.filter-btn') &&
+      inputCss.includes('.cs-filter-btn') &&
+      inputCss.includes('.bp-filter-btn') &&
+      inputCss.includes('.cert-nav-pill') &&
       inputCss.includes('#btnWipeRAM'),
-    'src/input.css must enforce >= 40px ergonomic touch targets across primary workbench and inspector controls'
+    'src/input.css must enforce >= 40px ergonomic touch targets across primary workbench, filter, and inspector controls'
   );
 
-  console.log('    [PASS] Zero no-slop terms across 28 pages, 23 hero leads <= 32 words, statutory safe harbor wording, mobile 2x2 DAG, CISO hero CTA focus, and >= 40px touch targets verified.');
+  console.log(`    [PASS] Zero no-slop & .hero-lead <= 32w across all ${allStdPages.length} pages, statutory safe harbor wording, bounded <main> prose, mobile 2x2 DAG, and >= 40px touch targets verified.`);
 }
 
 console.log('\n[SUMMARY] ALL 11 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
