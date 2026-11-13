@@ -348,11 +348,11 @@
   <main id="main-content" class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7 w-full">
     
     <!-- Hero Header -->
-    <div class="mb-6 no-print">
-      <nav aria-label="Breadcrumb" class="no-print mb-2">
+    <div id="cisoHeroHeader" class="mb-5 no-print">
+      <nav aria-label="Breadcrumb" class="no-print mb-1.5">
         <ol class="flex flex-wrap items-center gap-1.5 text-xs font-mono text-slate-500"><li><a href="/" class="hover:text-slate-900 transition-colors">Home</a></li><li aria-hidden="true" class="text-slate-300">/</li><li class="text-emerald-700 font-semibold" aria-current="page">CISO Procurement &amp; Safe Harbor Pack</li></ol>
       </nav>
-      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-mono font-semibold text-emerald-800 mb-2.5 shadow-xs">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-mono font-semibold text-emerald-800 mb-2 shadow-xs">
         <span class="pulse-dot shrink-0"></span>
         <span>Executive Legal Memorandum &middot; Document ID: ZTDS&#8209;CISO&#8209;2026&#8209;V1</span>
       </div>
@@ -360,48 +360,38 @@
         <span>CISO Procurement</span>
         <span class="hero-display-line block text-emerald-700 mt-1 font-extrabold tracking-tight">&amp; Statutory Safe Harbor Pack</span>
       </h1>
-      <p class="mt-2.5 text-sm sm:text-base text-slate-600 leading-relaxed max-w-4xl">
-        Statutory legal justification, regulatory doctrine, and security questionnaire answers demonstrating how ZTDS zero&#8209;subprocessor architectures establish a technical safe harbor under GDPR Article 32 &amp; Israel Amendment 13 Sec. 17 while excluding intermediary sanitization subprocessors under GDPR Article 28.
+      <p class="hero-lead mt-2 text-sm sm:text-base text-slate-600 leading-relaxed max-w-3xl">
+        Statutory evidence and InfoSec questionnaire answers proving client&#8209;RAM sanitization establishes GDPR Art. 32 &amp; Israel Amendment 13 Sec. 17 Safe Harbor and GDPR Art. 28 subprocessor exclusion.
       </p>
 
-      <div class="mt-4 flex flex-wrap flex-balance items-center gap-2.5">
-        <a href="/sdk/?preset=all#trial" class="btn-trust text-xs py-2 px-3.5 shadow-sm flex items-center gap-2 font-semibold">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>Mint 14&#8209;Day Evaluation Key (Air&#8209;Gapped) &rarr;</span>
-        </a>
-        <button type="button" id="btnPreviewProcurement" class="btn-outline text-xs py-2 px-3.5 shadow-sm flex items-center gap-1.5 font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 cursor-pointer">
-          <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <!-- Focused 3-CTA Primary Hierarchy (No Button Overload) -->
+      <div class="mt-3.5 flex flex-wrap flex-balance items-center gap-2.5">
+        <button type="button" id="btnPreviewProcurement" class="btn-trust text-xs py-2 px-4 shadow-sm flex items-center gap-1.5 font-semibold cursor-pointer">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
           </svg>
           <span>Preview Safe Harbor Pack</span>
         </button>
-        <a href="/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" download="ZTDS_CISO_DPA_Exemption_Memo.pdf" class="btn-outline text-xs py-2 px-3.5 shadow-sm flex items-center gap-1.5 font-semibold text-slate-700 bg-white hover:bg-slate-50">
-          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <a href="/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" download="ZTDS_CISO_DPA_Exemption_Memo.pdf" class="btn-outline text-xs py-2 px-3.5 shadow-sm flex items-center gap-1.5 font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300">
+          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           <span>Download CISO Memo (PDF)</span>
         </a>
         <a href="/docs/ZTDS_Enterprise_Security_Pack.zip" download="ZTDS_Enterprise_Security_Pack.zip" class="btn-navy text-xs py-2 px-3.5 shadow-sm flex items-center gap-1.5 font-semibold">
-          <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+          <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
           <span>Download Security Pack (ZIP)</span>
         </a>
-        <a href="/docs/ZTDS_Enterprise_CISO_Pitch_Deck.pdf" download="ZTDS_Enterprise_CISO_Pitch_Deck.pdf" class="btn-outline text-xs py-2 px-3.5 shadow-sm flex items-center gap-1.5 font-semibold text-slate-700 bg-white hover:bg-slate-50">
-          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-          <span>Pitch Deck (PDF)</span>
-        </a>
-        <a href="/roi/" class="px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 shadow-sm flex items-center gap-1.5 transition-colors">
-          <span>ROI Calculator &rarr;</span>
-        </a>
-        <a href="/agency/" class="px-3.5 py-2 rounded-lg border border-slate-800 bg-slate-900 hover:bg-slate-800 text-emerald-400 text-xs font-semibold shadow-sm flex items-center gap-1.5 transition-colors">
-          <span>Accredited Partner Audit &rarr;</span>
-        </a>
-        <button type="button" id="copyMemoBtn" class="px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 shadow-sm flex items-center gap-1.5 transition-colors cursor-pointer">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-          <span>Copy Memo</span>
-        </button>
-        <button type="button" id="downloadMdBtn" class="px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-600 hover:text-slate-900 shadow-sm flex items-center gap-1.5 transition-colors cursor-pointer">
-          <span>Markdown (.md)</span>
-        </button>
-        <span id="copyToast" class="hidden text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-2 rounded-lg">Copied to clipboard!</span>
+      </div>
+
+      <!-- Quiet Secondary Quick-Links Strip -->
+      <div class="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono text-slate-500">
+        <a href="/sdk/?preset=all#trial" class="text-emerald-700 hover:text-emerald-800 font-semibold underline underline-offset-2">Mint 14&#8209;Day Evaluation Key &rarr;</a>
+        <span class="text-slate-300" aria-hidden="true">&middot;</span>
+        <a href="/docs/ZTDS_Enterprise_CISO_Pitch_Deck.pdf" download="ZTDS_Enterprise_CISO_Pitch_Deck.pdf" class="hover:text-slate-900 underline underline-offset-2">Pitch Deck (PDF)</a>
+        <span class="text-slate-300" aria-hidden="true">&middot;</span>
+        <a href="/roi/" class="hover:text-slate-900 underline underline-offset-2">ROI Calculator</a>
+        <span class="text-slate-300" aria-hidden="true">&middot;</span>
+        <a href="/agency/" class="hover:text-slate-900 underline underline-offset-2">Accredited Partner Audit</a>
       </div>
     </div>
 
@@ -428,6 +418,16 @@
           <div class="text-xs font-bold uppercase tracking-widest text-slate-400">Official Consortium Memorandum</div>
           <div class="text-2xl font-black text-slate-900 tracking-tight mt-1">ZTDS.ai AI Security Consortium</div>
           <div class="text-xs text-slate-500 font-mono mt-0.5">Canonical Standard RFC v1.0 &middot; BrandMeWeb Ecosystem</div>
+          <div class="mt-3 flex flex-wrap items-center gap-2 no-print">
+            <button type="button" id="copyMemoBtn" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-semibold text-slate-700 inline-flex items-center gap-1.5 transition-colors cursor-pointer">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              <span>Copy Memo</span>
+            </button>
+            <button type="button" id="downloadMdBtn" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-semibold text-slate-600 hover:text-slate-900 inline-flex items-center gap-1.5 transition-colors cursor-pointer">
+              <span>Markdown (.md)</span>
+            </button>
+            <span id="copyToast" class="hidden text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg">Copied to clipboard!</span>
+          </div>
         </div>
         <div class="text-left sm:text-right text-xs font-mono text-slate-500">
           <div>DOC ID: <strong class="text-slate-800">ZTDS-CISO-2026-V1</strong></div>

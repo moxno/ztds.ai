@@ -388,14 +388,14 @@
   </aside>
 
   <!-- Main Scanner Content -->
-  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7 w-full">
+  <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-6 sm:pt-5 sm:pb-8 w-full">
     
     <!-- Hero Header -->
-    <div class="mb-5 text-center max-w-4xl mx-auto">
-      <nav aria-label="Breadcrumb" class="no-print mb-2">
+    <div class="mb-3.5 text-center max-w-4xl mx-auto">
+      <nav aria-label="Breadcrumb" class="no-print mb-1.5">
         <ol class="flex flex-wrap items-center justify-center gap-1.5 text-xs font-mono text-slate-500"><li><a href="/" class="hover:text-slate-900 transition-colors">Home</a></li><li aria-hidden="true" class="text-slate-300">/</li><li class="text-emerald-700 font-semibold" aria-current="page">Perimeter Scanner</li></ol>
       </nav>
-      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-mono font-semibold text-emerald-800 mb-2.5 shadow-xs">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-mono font-semibold text-emerald-800 mb-2 shadow-xs">
         <span class="pulse-dot shrink-0"></span>
         <span>Automated Pre&#8209;Audit Tooling &middot; Invariant 1 Egress Verification</span>
       </div>
@@ -403,33 +403,24 @@
         <span>ZTDS<sup class="text-emerald-700 font-bold text-sm sm:text-lg ml-0.5">&trade;</sup> Perimeter Network Scanner</span>
         <span class="hero-display-line block text-emerald-700 mt-1 font-extrabold tracking-tight">&amp; Client&#8209;Side Data Sanitization Audit Tool</span>
       </h1>
-      <p class="mt-2.5 text-sm sm:text-base text-slate-600 leading-relaxed max-w-3xl mx-auto">
-        Empirical zero&#8209;trust verification for <strong>Shadow AI security</strong> and enterprise compliance. Audit external SaaS domains, monitor active browser sockets, run a live <strong>data sanitization audit tool</strong> against RFC v1.0 invariants, and mint cryptographic SHA&#8209;256 receipts.
+      <p class="hero-lead mt-2 text-sm sm:text-base text-slate-600 leading-relaxed max-w-3xl mx-auto">
+        Audit any domain&rsquo;s public AI perimeter, or test payloads in volatile browser RAM with live WebSocket/Fetch interception and Ed25519 receipts.
       </p>
 
-      <!-- Institutional Metrics Strip (Compact Single-Glance Telemetry) -->
-      <div class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-3xl mx-auto text-left">
-        <div class="p-2.5 bg-white border border-slate-200 rounded-xl shadow-xs">
-          <div class="text-xs font-mono uppercase text-slate-500 font-bold">WAN Egress</div>
-          <div class="text-emerald-700 font-mono font-extrabold text-sm sm:text-base">0.00 Bytes</div>
-        </div>
-        <div class="p-2.5 bg-white border border-slate-200 rounded-xl shadow-xs">
-          <div class="text-xs font-mono uppercase text-slate-500 font-bold">Socket Boundary</div>
-          <div id="metricSocketBoundary" class="text-slate-900 font-mono font-extrabold text-sm sm:text-base">Air-Gapped RAM</div>
-        </div>
-        <div class="p-2.5 bg-white border border-slate-200 rounded-xl shadow-xs">
-          <div class="text-xs font-mono uppercase text-slate-500 font-bold">In-RAM Latency</div>
-          <div id="metricRamLatency" class="text-emerald-700 font-mono font-extrabold text-sm sm:text-base">&lt; 0.20 ms</div>
-        </div>
-        <div class="p-2.5 bg-white border border-slate-200 rounded-xl shadow-xs">
-          <div class="text-xs font-mono uppercase text-slate-500 font-bold">Airplane Mode</div>
-          <div id="metricAirplaneState" class="text-sky-700 font-mono font-extrabold text-sm sm:text-base">100% Offline</div>
-        </div>
+      <!-- Compact Single-Row Live Telemetry Strip -->
+      <div class="mt-2.5 inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 shadow-xs text-xs font-mono text-slate-600">
+        <span class="inline-flex items-center gap-1.5"><span class="text-slate-400">WAN Egress:</span> <strong class="text-emerald-700 font-bold">0.00 Bytes</strong></span>
+        <span class="text-slate-300" aria-hidden="true">&middot;</span>
+        <span class="inline-flex items-center gap-1.5"><span class="text-slate-400">Socket:</span> <strong id="metricSocketBoundary" class="text-slate-900 font-bold">Air-Gapped RAM</strong></span>
+        <span class="text-slate-300" aria-hidden="true">&middot;</span>
+        <span class="inline-flex items-center gap-1.5"><span class="text-slate-400">Latency:</span> <strong id="metricRamLatency" class="text-emerald-700 font-bold">&lt; 0.20 ms</strong></span>
+        <span class="text-slate-300" aria-hidden="true">&middot;</span>
+        <span class="inline-flex items-center gap-1.5"><span class="text-slate-400">Airplane Mode:</span> <strong id="metricAirplaneState" class="text-sky-700 font-bold">100% Offline</strong></span>
       </div>
     </div>
 
     <!-- AUDITOR MODE NAVIGATION TABS (SINGLE-ROW SCROLLABLE TABLIST) -->
-    <div class="mb-5 max-w-4xl mx-auto sticky top-16 z-30 py-1.5 bg-slate-50/95 backdrop-blur-md" id="auditorModeTabsContainer">
+    <div class="mb-3.5 max-w-4xl mx-auto sticky top-16 z-30 py-1 bg-slate-50/95 backdrop-blur-md" id="auditorModeTabsContainer">
       <div class="tablist-scroll bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm items-center justify-between gap-1" role="tablist" aria-label="Scanner Modes" data-tabpanel="scannerAuditorWorkspace">
         <button id="scanner-tab-mode0-domain-scanner-1" type="button" role="tab" aria-selected="true" class="auditor-mode-tab lg:flex-1 py-2 px-3 rounded-xl text-xs font-mono font-semibold transition-all text-center flex items-center justify-center gap-1.5 bg-slate-900 text-white shadow-xs border border-slate-900 cursor-pointer whitespace-nowrap" data-mode="mode0-domain-scanner">
           <span class="auditor-mode-dot w-2 h-2 rounded-full bg-emerald-400"></span>
@@ -460,18 +451,18 @@
     <div id="scannerAuditorWorkspace" role="tabpanel" aria-labelledby="scanner-tab-mode0-domain-scanner-1">
     <!-- SECTION 0: LIVE DOMAIN PERIMETER & ARCHITECTURE AUDITOR (MODE 0) -->
     <section class="mb-12" id="mode0-domain-scanner">
-      <div class="ztds-card p-5 sm:p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
+      <div class="ztds-card p-4 sm:p-5 bg-white border border-slate-200 rounded-2xl shadow-sm">
         
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 mb-4 border-b border-slate-200 pb-3.5">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5 mb-3 border-b border-slate-200 pb-3">
           <div>
-            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-mono font-semibold mb-1.5">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span> MODE 0: LIVE DOMAIN PERIMETER &amp; ARCHITECTURE AUDITOR
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-mono font-semibold mb-1">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Mode 0 &middot; Live Domain Perimeter Auditor
             </div>
             <h2 id="one-scan-domain-perimeter-ztds-blueprint-generator" class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight scroll-mt-24">
               One&#8209;Scan Domain Perimeter &amp; ZTDS Blueprint Generator
             </h2>
             <p class="text-xs text-slate-600 mt-0.5 max-w-2xl">
-              Inspect any external web application, SaaS, or API endpoint to identify third&#8209;party data egress sinkholes and generate tailored ZTDS RFC v1.0 deployment blueprints in &lt; 1.5s.
+              Inspect CSP, HSTS, <code class="font-mono text-slate-800">security.txt</code>, and <code class="font-mono text-slate-800">/.well-known/ztds.json</code> for any domain &mdash; plus instant integration blueprints in &lt; 1.5s.
             </p>
           </div>
 

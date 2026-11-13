@@ -810,4 +810,74 @@ console.log('--> Test 10: Certificate Anti-Forgery, Rate-Limit Spoofing, Constan
   console.log('    [PASS] Certificate anti-forgery, rate-limit header spoofing block, timingSafeEqual auth, SSRF redirect guard, statutory copy, and artifact integrity verified.');
 }
 
-console.log('\n[SUMMARY] ALL 10 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
+// Test 11: Perceptual Clarity, Responsive Ergonomics & Cognitive Noise Reduction Guard
+console.log('--> Test 11: Perceptual Clarity, no-slop, Hero Lead Brevity, CTA De-Cluttering & Touch Ergonomics');
+{
+  const slopRegex = /\b(empower|empowering|empowers|paradigm|paradigms|delve|testament|tapestry|game-changer|cutting-edge|synergy)\b/i;
+  const slopCheckedPages = [
+    'index.html',
+    'scanner/index.html',
+    'ciso/index.html',
+    'sdk/index.html',
+    'mcp/index.html',
+    'agency/index.html',
+    'roi/index.html',
+    'governance/index.html',
+    'frameworks/index.html',
+    'standard/index.html',
+    'whitepaper/index.html',
+    'verify/index.html'
+  ];
+
+  for (const rel of slopCheckedPages) {
+    const content = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    const match = content.match(slopRegex);
+    assert(!match, `${rel} must not contain banned no-slop term "${match ? match[0] : ''}"`);
+  }
+
+  const heroBriefPages = [
+    'index.html',
+    'scanner/index.html',
+    'ciso/index.html',
+    'sdk/index.html',
+    'agency/index.html',
+    'roi/index.html',
+    'governance/index.html',
+    'frameworks/index.html'
+  ];
+  for (const rel of heroBriefPages) {
+    const content = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    const leadMatch = content.match(/<p[^>]*class="[^"]*\bhero-lead\b[^"]*"[^>]*>([\s\S]*?)<\/p>/i);
+    assert(leadMatch, `${rel} must declare a .hero-lead paragraph`);
+    const plainText = leadMatch[1]
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&#8209;/g, '-')
+      .replace(/&[a-z0-9#]+;/gi, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const wordCount = plainText.split(' ').filter(Boolean).length;
+    assert(wordCount <= 32, `${rel} .hero-lead must be <= 32 words for Screen-1 clarity (found ${wordCount})`);
+  }
+
+  const cisoHtml = fs.readFileSync(path.join(ROOT, 'ciso/index.html'), 'utf8');
+  const heroBlockMatch = cisoHtml.match(/<div id="cisoHeroHeader"[\s\S]*?<\/div>\s*<!-- Sticky Section Navigation Bar/);
+  assert(heroBlockMatch, 'ciso/index.html must wrap hero controls in #cisoHeroHeader');
+  const heroCtaCount = (heroBlockMatch[0].match(/\bclass="[^"]*\bbtn-(?:trust|outline|navy)\b/g) || []).length;
+  assert(heroCtaCount <= 4, `ciso/index.html hero must contain <= 4 CTA buttons to prevent overload (found ${heroCtaCount})`);
+
+  const sdkHtml = fs.readFileSync(path.join(ROOT, 'sdk/index.html'), 'utf8');
+  assert(
+    sdkHtml.includes('border-l-4 border-l-emerald-600') && sdkHtml.includes('Architecture Definition (RFC v1.0)'),
+    'sdk/index.html Architecture Definition card must use crisp light surface (border-l-emerald-600)'
+  );
+
+  const inputCss = fs.readFileSync(path.join(ROOT, 'src/input.css'), 'utf8');
+  assert(
+    inputCss.includes('@media (pointer: coarse), (max-width: 640px)') && inputCss.includes('min-block-size: 40px'),
+    'src/input.css must enforce >= 40px ergonomic touch targets on coarse/mobile viewports'
+  );
+
+  console.log('    [PASS] Zero no-slop terms across 12 pages, hero leads <= 32 words, CISO hero CTA focus, SDK card surface contrast, and coarse-pointer touch targets verified.');
+}
+
+console.log('\n[SUMMARY] ALL 11 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
