@@ -289,6 +289,32 @@ async function runTests() {
     assert.strictEqual(res.data.domainCertificate, null, '?mint=1 must never forge a ZTDS-CERT-v1 certificate for unverified domains');
   });
 
+  // 15. Anti-SSRF IPv6 Hex-Mapped & NAT64 Regression
+  await test('Anti-SSRF: rejects hex IPv4-mapped IPv6 (::ffff:7f00:1, ::ffff:a9fe:a9fe) and NAT64 (64:ff9b::1)', async () => {
+    const { isDisallowedIp } = scanDomainHandler;
+    assert.strictEqual(isDisallowedIp('::ffff:7f00:1'), true, 'Hex IPv4-mapped loopback must be blocked');
+    assert.strictEqual(isDisallowedIp('0:0:0:0:0:ffff:a9fe:a9fe'), true, 'Expanded IPv4-mapped metadata IP must be blocked');
+    assert.strictEqual(isDisallowedIp('64:ff9b::1'), true, 'NAT64 prefix must be blocked');
+    assert.strictEqual(isDisallowedIp('2001:db8::1'), true, 'Documentation IPv6 prefix must be blocked');
+    assert.strictEqual(isDisallowedIp('ff02::1'), true, 'Multicast IPv6 prefix must be blocked');
+    assert.strictEqual(isDisallowedIp('2606:4700:4700::1111'), false, 'Public IPv6 (1.1.1.1) must remain allowed');
+  });
+
+  // 16. Spoofed X-Forwarded-For Rate-Limit Bypass Regression
+  await test('Rate limiter rejects spoofed X-Forwarded-For: test-runner sentinel after 25 requests', async () => {
+    let lastStatusCode = 200;
+    for (let i = 0; i < 26; i++) {
+      const { req, res } = createMockReqRes({
+        method: 'POST',
+        headers: { 'x-forwarded-for': 'test-runner' },
+        body: {}
+      });
+      await scanDomainHandler(req, res);
+      lastStatusCode = res.statusCode;
+    }
+    assert.strictEqual(lastStatusCode, 429, 'Spoofed X-Forwarded-For: test-runner must NEVER bypass rate limiting');
+  });
+
   console.log(`\n[TEST SUMMARY] ${passed} passed, ${failed} failed.`);
 
   if (failed > 0) {

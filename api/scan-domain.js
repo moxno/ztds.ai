@@ -17,7 +17,6 @@ const https = require('https');
 const http = require('http');
 const crypto = require('crypto');
 const { URL } = require('url');
-const { mintCertificate } = require('../lib/certificate-manager');
 
 // Anti-SSRF: Disallowed IPv4 CIDRs & Special IP ranges
 const DISALLOWED_IPV4_RANGES = [
@@ -55,17 +54,47 @@ function isDisallowedIpv4(ipStr) {
 }
 
 function isDisallowedIpv6(ipStr) {
-  const norm = ipStr.toLowerCase();
-  if (norm === '::1' || norm === '::' || norm.startsWith('fe80:') || norm.startsWith('fc') || norm.startsWith('fd')) {
+  const norm = String(ipStr || '').toLowerCase().replace(/%[a-z0-9_.-]+$/i, '').replace(/^\[|\]$/g, '');
+  if (!norm) return true;
+  if (
+    norm === '::1' ||
+    norm === '::' ||
+    norm === '0:0:0:0:0:0:0:1' ||
+    norm === '0:0:0:0:0:0:0:0' ||
+    /^fe[89ab][0-9a-f]:/.test(norm) ||
+    norm.startsWith('fc') ||
+    norm.startsWith('fd') ||
+    norm.startsWith('ff') ||
+    norm.startsWith('64:ff9b:') ||
+    norm.startsWith('0064:ff9b:') ||
+    norm.startsWith('100::') ||
+    norm.startsWith('0100:') ||
+    norm.startsWith('2001:db8:') ||
+    norm.startsWith('2001:0db8:')
+  ) {
     return true;
   }
-  // Check IPv4-mapped IPv6 (::ffff:127.0.0.1)
-  if (norm.startsWith('::ffff:')) {
-    const parts = norm.split('::ffff:');
-    if (parts[1] && parts[1].includes('.')) {
-      return isDisallowedIpv4(parts[1]);
-    }
+  // Check IPv4-mapped IPv6 in dotted-quad (::ffff:127.0.0.1) or expanded form (0:0:0:0:0:ffff:127.0.0.1)
+  const dottedMapped = norm.match(/^(?:::ffff:|0:0:0:0:0:ffff:|::)(\d{1,3}(?:\.\d{1,3}){3})$/);
+  if (dottedMapped) {
+    return isDisallowedIpv4(dottedMapped[1]);
   }
+  // Check IPv4-mapped IPv6 in hex form (::ffff:7f00:1 or 0:0:0:0:0:ffff:a9fe:a9fe)
+  const hexMapped = norm.match(/^(?:::ffff:|0:0:0:0:0:ffff:)([0-9a-f]{1,4}):([0-9a-f]{1,4})$/);
+  if (hexMapped) {
+    const hi = parseInt(hexMapped[1], 16);
+    const lo = parseInt(hexMapped[2], 16);
+    const ipv4 = `${(hi >> 8) & 0xff}.${hi & 0xff}.${(lo >> 8) & 0xff}.${lo & 0xff}`;
+    return isDisallowedIpv4(ipv4);
+  }
+  return false;
+}
+
+function isDisallowedIp(ipStr) {
+  const s = String(ipStr || '').trim();
+  if (!s) return true;
+  if (s.includes(':')) return isDisallowedIpv6(s);
+  if (/^\d{1,3}(?:\.\d{1,3}){3}$/.test(s)) return isDisallowedIpv4(s);
   return false;
 }
 
@@ -229,7 +258,7 @@ const INDUSTRY_PROFILES = {
       'Prescription & DEA Numbers'
     ],
     dpaStatus: 'BAA-EXEMPT / DPA-EXEMPT (HIPAA Safe Harbor § 164.514)',
-    cisoCitation: 'Complies with HIPAA Privacy Rule § 164.514(b) by irreversibly de-identifying all 18 statutory PHI elements inside volatile RAM prior to external model egress, legally eliminating Business Associate Agreement (BAA) requirements for third-party LLM providers.',
+    cisoCitation: 'Complies with HIPAA Privacy Rule § 164.514(b) by irreversibly de-identifying all 18 statutory PHI elements inside volatile RAM prior to external model egress, supporting HIPAA Safe Harbor (§ 164.514(b)) de-identification prior to external model egress to minimize BAA subprocessor scope.',
     tierGuidance: 'Baseline Open Standard (Apache 2.0); 30 Specialized Industry Profiles via Certified Implementations (PrivacyScrubber.com)'
   },
   finance: {
@@ -319,7 +348,7 @@ const INDUSTRY_PROFILES = {
       'Free-Text Unstructured PII'
     ],
     dpaStatus: 'DPA-EXEMPT ELIGIBLE (GDPR Recital 26)',
-    cisoCitation: 'Eliminates data processor liabilities under GDPR Article 28 by sanitizing personal identifiers inside volatile RAM prior to egress, rendering recipient data anonymous under GDPR Recital 26.',
+    cisoCitation: 'Excludes sanitization subprocessor scope under GDPR Article 28 and establishes GDPR Article 32 technical safe harbor by sanitizing personal identifiers inside volatile RAM prior to egress, rendering recipient data anonymous under GDPR Recital 26.',
     tierGuidance: '100% Free Core Engine; Advanced Specialized Profiles on TEAMS & Developer tiers'
   }
 };
@@ -642,7 +671,7 @@ function evaluateZtdsConformance(findings, domain, requestedProfile = null, dete
 
   if (findings.thirdPartySinks.length > 0 && !findings.ztdsGuardActive) {
     score -= Math.min(25, findings.thirdPartySinks.length * 8);
-    invariantStatus.invariant4.details = `${findings.thirdPartySinks.length} third-party subprocessor(s) active on domain. Implementing ZTDS at input stage eliminates data controller liability.`;
+    invariantStatus.invariant4.details = `${findings.thirdPartySinks.length} third-party subprocessor(s) active on domain. Implementing ZTDS at input stage establishes GDPR Art. 32 technical safe harbor and excludes sanitization subprocessor scope under GDPR Art. 28.`;
   }
 
   score = Math.max(15, Math.min(100, score));
@@ -909,7 +938,7 @@ wp plugin install privacyscrubber-ztds-guard --activate
         honeypotRisk: 'Zero (0.00 B raw data ever leaves device)'
       }
     },
-    cisoExecutiveSummary: `Architectural audit for ${domain} (${profileConfig.name} sector) reveals ${findings.sensorySurfaces.length} sensory input surfaces and ${findings.thirdPartySinks.length} external third-party processors. Deploying ZTDS In-RAM sanitization at the ${primaryFramework} boundary satisfies ${profileConfig.statute}, eliminates GDPR Article 28 data processor obligations, and guarantees 0.00 B cleartext WAN egress.`
+    cisoExecutiveSummary: `Architectural audit for ${domain} (${profileConfig.name} sector) reveals ${findings.sensorySurfaces.length} sensory input surfaces and ${findings.thirdPartySinks.length} external third-party processors. Deploying ZTDS In-RAM sanitization at the ${primaryFramework} boundary supports ${profileConfig.statute}, excludes sanitization subprocessor scope under GDPR Article 28, establishes GDPR Article 32 technical safe harbor, and guarantees 0.00 B cleartext WAN egress.`
   };
 }
 
@@ -918,21 +947,22 @@ const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 25;
 const requestHistory = new Map();
 
-function checkRateLimit(ip) {
-  if (!ip || ip === 'test-runner') {
+function checkRateLimit(ip, fromHeader = true) {
+  if (!fromHeader && process.env.VERCEL_ENV !== 'production' && (!ip || ip === 'test-runner')) {
     return { limited: false, remaining: RATE_LIMIT_MAX_REQUESTS };
   }
+  const bucketKey = String(ip || 'unknown');
   const now = Date.now();
-  const timestamps = requestHistory.get(ip) || [];
+  const timestamps = requestHistory.get(bucketKey) || [];
   const validTimestamps = timestamps.filter(ts => now - ts < RATE_LIMIT_WINDOW_MS);
 
   if (validTimestamps.length >= RATE_LIMIT_MAX_REQUESTS) {
-    requestHistory.set(ip, validTimestamps);
+    requestHistory.set(bucketKey, validTimestamps);
     return { limited: true, remaining: 0 };
   }
 
   validTimestamps.push(now);
-  requestHistory.set(ip, validTimestamps);
+  requestHistory.set(bucketKey, validTimestamps);
 
   // Periodic garbage collection for memory hygiene
   if (requestHistory.size > 2000) {
@@ -981,10 +1011,13 @@ module.exports = async (req, res) => {
     });
   }
 
-  // S-3 Rate Limiting Check
-  const forwarded = req.headers && (req.headers['x-forwarded-for'] || req.headers['x-real-ip']);
-  const clientIp = forwarded ? forwarded.split(',')[0].trim() : (req.socket && req.socket.remoteAddress) || 'test-runner';
-  const { limited, remaining } = checkRateLimit(clientIp);
+  // S-3 Rate Limiting Check (never trust header-supplied 'test-runner' sentinel)
+  const rawForwarded = req.headers && (req.headers['x-forwarded-for'] || req.headers['x-real-ip']);
+  const headerIp = rawForwarded ? String(rawForwarded).split(',')[0].trim() : '';
+  const socketIp = (req.socket && req.socket.remoteAddress) || '';
+  const clientIp = headerIp || socketIp || 'test-runner';
+  const fromHeader = Boolean(headerIp);
+  const { limited, remaining } = checkRateLimit(clientIp, fromHeader);
 
   res.setHeader('X-RateLimit-Limit', String(RATE_LIMIT_MAX_REQUESTS));
   res.setHeader('X-RateLimit-Remaining', String(remaining));
@@ -1078,14 +1111,26 @@ module.exports = async (req, res) => {
   try {
     let pageRes = await fetchPageContent(normalized.origin, 3200, dnsCheck);
 
-    // Follow 1 redirect if necessary
+    // Follow 1 redirect if necessary (reject disallowed or invalid redirect targets to prevent SSRF bypass)
     if (pageRes.isRedirect && pageRes.location) {
       const redirectNorm = normalizeDomain(pageRes.location);
-      if (redirectNorm) {
+      if (!redirectNorm) {
+        return res.status(400).json({
+          error: 'Restricted redirect target (SSRF Protection)',
+          details: 'Target domain redirected to an invalid or disallowed destination.'
+        });
+      }
+      if (redirectNorm.hostname !== normalized.hostname) {
         const redirectDnsCheck = await verifyDnsSafety(redirectNorm.hostname);
-        if (redirectDnsCheck.safe) {
-          pageRes = await fetchPageContent(redirectNorm.origin, 2500, redirectDnsCheck);
+        if (!redirectDnsCheck.safe) {
+          return res.status(400).json({
+            error: 'Restricted redirect target (SSRF Protection)',
+            details: redirectDnsCheck.reason
+          });
         }
+        pageRes = await fetchPageContent(redirectNorm.origin, 2500, redirectDnsCheck);
+      } else {
+        pageRes = await fetchPageContent(redirectNorm.origin, 2500, dnsCheck);
       }
     }
 
@@ -1100,8 +1145,8 @@ module.exports = async (req, res) => {
 
     const evaluation = evaluateZtdsConformance(surfaceFindings, normalized.hostname, requestedProfile, detectedProfileInfo);
 
-    // 5. Issue Level 1 Domain Conformance Certificate STRICTLY when ZTDS Web Form Guard is verified active
-    // Security invariant: unverified external domains MUST NEVER receive a ZTDS-CERT-v1 token via ?mint=1
+    // 5. Return Level 1 Domain Conformance Certificate STRICTLY for accredited domains in data/domains.json
+    // Security invariant: unverified external domains MUST NEVER receive a ZTDS-CERT-v1 token
     let domainCertificate = null;
     if (registeredDomainRecord && registeredDomainRecord.certificate) {
       domainCertificate = {
@@ -1114,31 +1159,6 @@ module.exports = async (req, res) => {
         expires_at: registeredDomainRecord.certificate.expires_at,
         verify_url: registeredDomainRecord.certificate.verify_url || `https://ztds.ai/verify/?domain=${encodeURIComponent(normalized.hostname)}`
       };
-    } else if (surfaceFindings.ztdsGuardActive === true) {
-      try {
-        const auditHash = 'sha256:' + crypto.createHash('sha256').update(`${normalized.hostname}:ztds-plane6-guard:v1`).digest('hex');
-        const minted = mintCertificate({
-          applicant: normalized.hostname,
-          product: `${normalized.hostname} — ZTDS Plane 6 Web Form Guard`,
-          category: 'Protected Web Form Intake (Plane 6)',
-          repository: normalized.origin,
-          auditHash,
-          level: 'Level 1: Verified Web Form Intake (Plane 6 Domain Guard)',
-          scannedFilesCount: 1
-        });
-        domainCertificate = {
-          detected: Boolean(surfaceFindings.ztdsGuardActive),
-          certificate_id: minted.certificate_id,
-          level: minted.payload.level,
-          token: minted.token,
-          audit_hash: auditHash,
-          issued_at: minted.payload.issued_at,
-          expires_at: minted.payload.expires_at,
-          verify_url: `https://ztds.ai/verify/?domain=${encodeURIComponent(normalized.hostname)}`
-        };
-      } catch (_) {
-        // Non-fatal fallback if signing key unavailable
-      }
     }
 
     return res.status(200).json({
@@ -1204,4 +1224,7 @@ module.exports.INDUSTRY_PROFILES = INDUSTRY_PROFILES;
 module.exports.detectIndustryProfile = detectIndustryProfile;
 module.exports.analyzePerimeterSurface = analyzePerimeterSurface;
 module.exports.evaluateZtdsConformance = evaluateZtdsConformance;
+module.exports.isDisallowedIpv4 = isDisallowedIpv4;
+module.exports.isDisallowedIpv6 = isDisallowedIpv6;
+module.exports.isDisallowedIp = isDisallowedIp;
 

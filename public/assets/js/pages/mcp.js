@@ -630,7 +630,7 @@
                   type: "text",
                   text: JSON.stringify({
                     engine: "ztds-mcp",
-                    version: "1.1.1",
+                    version: "1.2.2",
                     protocol: "Model Context Protocol JSON-RPC 2.0 (stdio)",
                     license: "Apache-2.0 (Open Reference)",
                     clients_detected: [
@@ -656,7 +656,7 @@
             box.className = 'text-xs font-mono text-emerald-400 space-y-1.5';
             const l1 = document.createElement('div');
             l1.className = 'font-bold';
-            l1.textContent = 'ZTDS MCP Server v1.1.1 (Healthy)';
+            l1.textContent = 'ZTDS MCP Server v1.2.2 (Healthy)';
             const l2 = document.createElement('div');
             l2.textContent = 'Transport: OS stdio (stdin/stdout)';
             const l3 = document.createElement('div');

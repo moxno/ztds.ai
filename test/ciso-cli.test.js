@@ -59,7 +59,7 @@ console.log('\n--> Test 3: File Output Writing & Temp Cleanup');
 
   assert(fileContent.includes('**Target Organization:** Barclays Capital'), 'Must contain Barclays Capital');
   assert(fileContent.includes('PCI-DSS v4.0, GLBA'), 'Must cite fintech statutes');
-  assert(fileContent.includes('https://ztds.ai/docs/legal/order-form.html'), 'Must link to order form');
+  assert(fileContent.includes('https://ztds.ai/docs/legal/order-form/'), 'Must link to canonical order form URL');
 
   // Zero-Emoji check
   const emojiRegex = /[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u;

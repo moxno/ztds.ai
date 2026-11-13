@@ -68,22 +68,32 @@ function isCorporateEmail(email) {
   return { valid: true, domain };
 }
 
-function checkRateLimit(ip) {
-  if (!ip || ip === 'test-runner' || process.env.NODE_ENV === 'test') {
+function timingSafeCompare(a, b) {
+  const bufA = Buffer.from(String(a || ''), 'utf8');
+  const bufB = Buffer.from(String(b || ''), 'utf8');
+  if (bufA.length !== bufB.length) {
+    return false;
+  }
+  return crypto.timingSafeEqual(bufA, bufB);
+}
+
+function checkRateLimit(ip, fromHeader = true) {
+  if (!fromHeader && process.env.VERCEL_ENV !== 'production' && (!ip || ip === 'test-runner')) {
     return { limited: false };
   }
+  const bucketKey = String(ip || 'unknown');
   const now = Date.now();
   if (mintHistory.size > 5000) {
     mintHistory.clear();
   }
-  const timestamps = mintHistory.get(ip) || [];
+  const timestamps = mintHistory.get(bucketKey) || [];
   const valid = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW_MS);
   if (valid.length >= RATE_LIMIT_MAX_MINTS) {
-    mintHistory.set(ip, valid);
+    mintHistory.set(bucketKey, valid);
     return { limited: true };
   }
   valid.push(now);
-  mintHistory.set(ip, valid);
+  mintHistory.set(bucketKey, valid);
   return { limited: false };
 }
 
@@ -409,10 +419,13 @@ module.exports = async (req, res) => {
     return res.status(403).json({ error: 'Forbidden', message: 'Cross-site request rejected by Fetch Metadata policy.' });
   }
 
-  const forwarded = req.headers && (req.headers['x-forwarded-for'] || req.headers['x-real-ip']);
-  const clientIp = forwarded ? forwarded.split(',')[0].trim() : (req.socket && req.socket.remoteAddress) || 'test-runner';
+  const rawForwarded = req.headers && (req.headers['x-forwarded-for'] || req.headers['x-real-ip']);
+  const headerIp = rawForwarded ? String(rawForwarded).split(',')[0].trim() : '';
+  const socketIp = (req.socket && req.socket.remoteAddress) || '';
+  const clientIp = headerIp || socketIp || 'test-runner';
+  const fromHeader = Boolean(headerIp);
 
-  const { limited } = checkRateLimit(clientIp);
+  const { limited } = checkRateLimit(clientIp, fromHeader);
   if (limited) {
     res.setHeader('Retry-After', '3600');
     return res.status(429).json({
@@ -455,10 +468,10 @@ module.exports = async (req, res) => {
     });
   }
 
-  // Admin override requires exact server-side ZTDS_ADMIN_MINT_SECRET bearer header
+  // Admin override requires exact server-side ZTDS_ADMIN_MINT_SECRET bearer header (constant-time verification)
   const adminSecret = process.env.ZTDS_ADMIN_MINT_SECRET;
   const authHeader = (req.headers && req.headers.authorization) || '';
-  const isAuthorizedAdmin = Boolean(adminSecret && authHeader === `Bearer ${adminSecret}`);
+  const isAuthorizedAdmin = Boolean(adminSecret && timingSafeCompare(authHeader, `Bearer ${adminSecret}`));
 
   try {
     // Public self-serve HTTP endpoint is hard-locked to 14-day Universal PII evaluation scope
@@ -522,10 +535,10 @@ module.exports = async (req, res) => {
       maxNodes: result.maxNodes,
       quickstart: buildQuickstartSnippets(result.token)
     });
-  } catch (err) {
+  } catch (_) {
     return res.status(500).json({
       error: 'License generation failed',
-      details: err.message
+      details: 'Internal signing error.'
     });
   }
 };

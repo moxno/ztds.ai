@@ -744,4 +744,70 @@ console.log('--> Test 9: Tabpanel Wiring, hidden="until-found" Find-in-Page, Tab
   console.log(`    [PASS] 22/22 tablists wired to tabpanels, hidden="until-found" + beforematch active, 100% table captions & img loading=, and link graph verified (${inboundCounts.get('/accessibility/')} links to /accessibility/).`);
 }
 
-console.log('\n[SUMMARY] ALL 9 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
+// Test 10: Full Site-Wide Audit Regression Guard (Anti-Forgery, Rate-Limit Spoofing, Constant-Time Auth, Statutory Safe Harbor & Artifact Integrity)
+console.log('--> Test 10: Certificate Anti-Forgery, Rate-Limit Spoofing, Constant-Time Auth, Statutory Safe Harbor & Artifact Integrity');
+{
+  const scanDomainSrc = fs.readFileSync(path.join(ROOT, 'api/scan-domain.js'), 'utf8');
+  const certManagerSrc = fs.readFileSync(path.join(ROOT, 'lib/certificate-manager.js'), 'utf8');
+  const mintLicenseSrc = fs.readFileSync(path.join(ROOT, 'api/mint-license.js'), 'utf8');
+  const leadCaptureSrc = fs.readFileSync(path.join(ROOT, 'api/lead-capture.js'), 'utf8');
+  const cisoCliSrc = fs.readFileSync(path.join(ROOT, 'bin/ztds-ciso.js'), 'utf8');
+  const governanceHtml = fs.readFileSync(path.join(ROOT, 'governance/index.html'), 'utf8');
+  const scannerJsSrc = fs.readFileSync(path.join(ROOT, 'assets/js/scanner-engine.js'), 'utf8');
+  const mcpJsSrc = fs.readFileSync(path.join(ROOT, 'assets/js/pages/mcp.js'), 'utf8');
+  const secSpecMd = fs.readFileSync(path.join(ROOT, 'docs/security/ZTDS_Third_Party_Security_Audit_Specification.md'), 'utf8');
+  const secSpecTxt = fs.readFileSync(path.join(ROOT, 'docs/security/ZTDS_Third_Party_Security_Audit_Specification.txt'), 'utf8');
+
+  // 1. No unverified dynamic certificate minting in scan-domain & .pem.example gated by VERCEL_ENV !== production
+  assert(!scanDomainSrc.includes('mintCertificate('), 'api/scan-domain.js must NEVER mint certificates dynamically for unverified external domains');
+  assert(scanDomainSrc.includes("error: 'Restricted redirect target (SSRF Protection)'"), 'api/scan-domain.js must return HTTP 400 on unsafe SSRF redirects');
+  assert(certManagerSrc.includes('process.env.VERCEL_ENV !== "production"'), 'lib/certificate-manager.js must guard .pem.example fallback behind VERCEL_ENV !== "production"');
+
+  // 2. Carbon V4 & V6: constant-time Bearer auth & non-leaky 500 error in api/mint-license.js; HTML escaping in api/lead-capture.js
+  assert(mintLicenseSrc.includes('crypto.timingSafeEqual'), 'api/mint-license.js must verify admin Bearer secrets with crypto.timingSafeEqual');
+  assert(!/authHeader === `Bearer/.test(mintLicenseSrc), 'api/mint-license.js must not compare admin Bearer secret with ===');
+  assert(!mintLicenseSrc.includes('details: err.message'), 'api/mint-license.js must not leak raw err.message in 500 responses');
+  assert(leadCaptureSrc.includes('escapeHtml(payload.email)'), 'api/lead-capture.js must HTML-escape payload.email in transactional HTML templates');
+
+  // 3. Rate-limit sentinels never trusted from HTTP headers
+  for (const [label, src] of [
+    ['api/scan-domain.js', scanDomainSrc],
+    ['api/mint-license.js', mintLicenseSrc],
+    ['api/lead-capture.js', leadCaptureSrc]
+  ]) {
+    assert(src.includes('!fromHeader &&'), `${label} checkRateLimit must require !fromHeader before honoring internal test-runner bypass`);
+  }
+
+  // 4. Statutory Risk Minimization phrasing & broken/dead artifact cleanup
+  const forbiddenClaims = [
+    'complete immunity',
+    'eliminates data controller liability',
+    'Eliminates data processor liabilities',
+    'legally eliminating Business Associate Agreement',
+    'eliminates GDPR Article 28 data processor obligations'
+  ];
+  for (const [label, content] of [
+    ['api/scan-domain.js', scanDomainSrc],
+    ['assets/js/scanner-engine.js', scannerJsSrc],
+    ['bin/ztds-ciso.js', cisoCliSrc],
+    ['docs/security/ZTDS_Third_Party_Security_Audit_Specification.md', secSpecMd],
+    ['docs/security/ZTDS_Third_Party_Security_Audit_Specification.txt', secSpecTxt]
+  ]) {
+    for (const phrase of forbiddenClaims) {
+      assert(!content.includes(phrase), `${label} must use Statutory Risk Minimization phrasing instead of "${phrase}"`);
+    }
+  }
+
+  assert(!cisoCliSrc.includes('WIPO_MADRID_TRADEMARK_FILING_DOSSIER.txt'), 'bin/ztds-ciso.js must not point to gitignored 404 WIPO dossier URL');
+  assert(!cisoCliSrc.includes('`mlock`'), 'bin/ztds-ciso.js must not expose OS mlock implementation details');
+  for (const deadRef of ['/docs/rfc-v1-crypto-proofs.md', '/docs/ciso-procurement-pack.md', '/packages/ztds-sdk-core']) {
+    assert(!governanceHtml.includes(deadRef), `governance/index.html must not cite non-existent artifact path ${deadRef}`);
+  }
+
+  // 5. MCP simulator version matches package manifest (1.2.2)
+  assert(mcpJsSrc.includes('version: "1.2.2"') && mcpJsSrc.includes('v1.2.2 (Healthy)'), 'assets/js/pages/mcp.js simulator status version must match 1.2.2');
+
+  console.log('    [PASS] Certificate anti-forgery, rate-limit header spoofing block, timingSafeEqual auth, SSRF redirect guard, statutory copy, and artifact integrity verified.');
+}
+
+console.log('\n[SUMMARY] ALL 10 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');

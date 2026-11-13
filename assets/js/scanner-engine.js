@@ -270,7 +270,7 @@
       const ind = ev?.industry || {};
       const profileName = ind.name || 'Enterprise General';
       const statute = ind.statute || 'GDPR Recital 26';
-      const citation = ind.cisoCitation || 'Eliminates data processor liabilities under GDPR Article 28.';
+      const citation = ind.cisoCitation || 'Excludes sanitization subprocessor scope under GDPR Article 28 and establishes GDPR Article 32 technical safe harbor.';
       const entitiesList = (ind.targetEntities || ['Email', 'Phone', 'Corporate IDs']).map(e => `  * ${e}`).join('\n');
 
       return `# Institutional ZTDS Compliance & Regulatory Exemption Memorandum

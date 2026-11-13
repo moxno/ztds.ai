@@ -94,7 +94,7 @@ const dossier = `# Executive Information Security & Statutory Compliance Brief
 
 This memorandum provides the Information Security, Compliance, and Legal Risk Committees of **${company}** with the empirical, technical, and statutory justification for deploying Zero-Trust Data Sanitization (**ZTDS**) across enterprise AI pipelines (LangChain, LlamaIndex, CrewAI, MCP, and custom RAG applications).
 
-By executing sanitization strictly inside client volatile RAM prior to network socket dispatch, ${company} achieves complete immunity against confidential data leakage while eliminating vendor subprocessor liability.
+By executing sanitization strictly inside client volatile RAM prior to network socket dispatch, ${company} achieves statutory risk minimization and technical safe harbor against confidential data leakage while excluding vendor sanitization subprocessor scope.
 
 ---
 
@@ -112,7 +112,7 @@ By executing sanitization strictly inside client volatile RAM prior to network s
 | :--- | :--- | :--- |
 | **Invariant 1: Zero External Egress** | 0.00 bytes of raw cleartext PII/PHI cross host network interfaces unmasked. | Verified via OS socket traps (\`npx ztds-audit\`). |
 | **Invariant 2: Reversible Tokenization** | Syntactic bracketed surrogates preserve attention weights; private mapping tables stay in RAM. | Verified via in-memory loopback reveal. |
-| **Invariant 3: Volatile RAM Isolation** | Secrets reside exclusively in non-swappable volatile RAM (\`mlock\`) zeroized on execution completion. | Verified via physical memory dumps. |
+| **Invariant 3: Volatile RAM Isolation** | Secrets reside exclusively in non-swappable volatile RAM zeroized on execution completion. | Verified via physical memory dumps. |
 | **Invariant 4: Zero Subprocessors** | Software operates as an air-gapped utility, excluding vendor from GDPR Art. 28. | Formal DPA Exemption Memo. |
 
 ---
@@ -123,7 +123,7 @@ By executing sanitization strictly inside client volatile RAM prior to network s
   *Live Datatracker:* https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/ | *Text Mirror:* https://ztds.ai/docs/ietf/draft-sibiryakov-ztds-protocol-02.txt
 * **Patent Status:** U.S. & International Patents Pending (Paris Convention & 35 U.S.C. § 119 Priority). Full claims tree and priority dossier provided to authorized institutional counterparties under mutual NDA.
 * **WIPO International Trademark:** ILPO Order **#182655957** (Nice Classes 9 & 42, Madrid System Form MM2).  
-  *Madrid Dossier:* https://ztds.ai/docs/legal/WIPO_MADRID_TRADEMARK_FILING_DOSSIER.txt
+  *IP & Governance:* https://ztds.ai/governance/
 * **Independent Security Audit:** Evaluated by third-party white-box auditors with a **Clean Bill of Health (0 Critical, 0 High Vulnerabilities)** across all 5 test modules.  
   *Full Audit Report:* https://ztds.ai/docs/security/ZTDS_Independent_Security_Audit_Report.txt
 
@@ -141,8 +141,8 @@ ${company}'s security team does not need to trust vendor claims. Every compliant
 
 ## 6. Procurement & Commercial Integration Terms
 
-* **Standard DPA Exemption Memo:** https://ztds.ai/ciso/memo.html
-* **Turnkey Enterprise Order Form & Schedule A:** https://ztds.ai/docs/legal/order-form.html
+* **Standard DPA Exemption Memo:** https://ztds.ai/ciso/memo/
+* **Turnkey Enterprise Order Form & Schedule A:** https://ztds.ai/docs/legal/order-form/
 * **Master Standardization Hub:** https://ztds.ai/certification/
 
 **Recommended Commercial Tier:** Departmental Developer SDK or Air-Gapped Enterprise License via Certified Implementation (https://privacyscrubber.com/pricing/).

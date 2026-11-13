@@ -23,22 +23,23 @@ const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 10;
 const rateLimitHistory = new Map();
 
-function checkRateLimit(ip) {
-  if (!ip || ip === 'test-runner-bypass') {
+function checkRateLimit(ip, fromHeader = true) {
+  if (!fromHeader && process.env.VERCEL_ENV !== 'production' && (!ip || ip === 'test-runner' || ip === 'test-runner-bypass')) {
     return { limited: false };
   }
+  const bucketKey = String(ip || 'unknown');
   const now = Date.now();
   if (rateLimitHistory.size > 5000) {
     rateLimitHistory.clear();
   }
-  const timestamps = rateLimitHistory.get(ip) || [];
+  const timestamps = rateLimitHistory.get(bucketKey) || [];
   const valid = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW_MS);
   if (valid.length >= RATE_LIMIT_MAX_REQUESTS) {
-    rateLimitHistory.set(ip, valid);
+    rateLimitHistory.set(bucketKey, valid);
     return { limited: true };
   }
   valid.push(now);
-  rateLimitHistory.set(ip, valid);
+  rateLimitHistory.set(bucketKey, valid);
   return { limited: false };
 }
 
@@ -48,6 +49,17 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-
 function sanitizeInput(str, maxLen = 120) {
   if (typeof str !== 'string') return '';
   return str.trim().replace(/[<>'"&]/g, '').slice(0, maxLen);
+}
+
+function escapeHtml(str) {
+  return String(str || '').replace(/[&<>"'`]/g, (ch) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+    '`': '&#96;'
+  }[ch]));
 }
 
 function dispatchWebhook(webhookUrl, payload) {
@@ -138,22 +150,24 @@ async function dispatchResendEmail(apiKey, payload) {
         ? `[ZTDS Accreditation Intake] ${payload.role} - ${payload.domain || payload.email} (${payload.leadId})`
         : `[ZTDS Lead] New Compliance Lead: ${payload.role || 'CISO'} - ${payload.domain || payload.email} (${payload.leadId})`;
 
+    const safeEmail = escapeHtml(payload.email);
+    const safeEmailUri = encodeURIComponent(payload.email || '');
     const html = `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
         <h2 style="color: #0f172a; margin-top: 0;">${isAgency ? 'BrandMeWeb Enterprise Architecture Intake' : (isAccreditation ? 'ZTDS GitOps Accreditation Intake' : 'New ZTDS CISO Compliance Lead')}</h2>
         <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Lead ID:</strong></td><td style="padding: 6px 0; color: #0f172a; font-family: monospace;">${payload.leadId}</td></tr>
-          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Email:</strong></td><td style="padding: 6px 0; color: #0f172a;"><a href="mailto:${payload.email}">${payload.email}</a></td></tr>
-          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Domain:</strong></td><td style="padding: 6px 0; color: #0f172a;">${payload.domain || 'N/A'}</td></tr>
-          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Role:</strong></td><td style="padding: 6px 0; color: #0f172a;">${payload.role || 'N/A'}</td></tr>
-          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Industry Profile:</strong></td><td style="padding: 6px 0; color: #0f172a;">${payload.industryProfile}</td></tr>
-          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Risk Score:</strong></td><td style="padding: 6px 0; color: #0f172a;">${payload.riskScore}/100</td></tr>
-          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Source:</strong></td><td style="padding: 6px 0; color: #0f172a;">${payload.source}</td></tr>
-          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Timestamp:</strong></td><td style="padding: 6px 0; color: #0f172a;">${payload.timestamp}</td></tr>
-          ${payload.notes ? `<tr><td style="padding: 6px 0; color: #64748b;"><strong>Notes:</strong></td><td style="padding: 6px 0; color: #0f172a;">${payload.notes}</td></tr>` : ''}
+          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Lead ID:</strong></td><td style="padding: 6px 0; color: #0f172a; font-family: monospace;">${escapeHtml(payload.leadId)}</td></tr>
+          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Email:</strong></td><td style="padding: 6px 0; color: #0f172a;"><a href="mailto:${safeEmail}">${safeEmail}</a></td></tr>
+          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Domain:</strong></td><td style="padding: 6px 0; color: #0f172a;">${escapeHtml(payload.domain || 'N/A')}</td></tr>
+          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Role:</strong></td><td style="padding: 6px 0; color: #0f172a;">${escapeHtml(payload.role || 'N/A')}</td></tr>
+          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Industry Profile:</strong></td><td style="padding: 6px 0; color: #0f172a;">${escapeHtml(payload.industryProfile)}</td></tr>
+          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Risk Score:</strong></td><td style="padding: 6px 0; color: #0f172a;">${escapeHtml(payload.riskScore)}/100</td></tr>
+          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Source:</strong></td><td style="padding: 6px 0; color: #0f172a;">${escapeHtml(payload.source)}</td></tr>
+          <tr><td style="padding: 6px 0; color: #64748b;"><strong>Timestamp:</strong></td><td style="padding: 6px 0; color: #0f172a;">${escapeHtml(payload.timestamp)}</td></tr>
+          ${payload.notes ? `<tr><td style="padding: 6px 0; color: #64748b;"><strong>Notes:</strong></td><td style="padding: 6px 0; color: #0f172a;">${escapeHtml(payload.notes)}</td></tr>` : ''}
         </table>
         <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0;">
-          <a href="mailto:${payload.email}?subject=BrandMeWeb%20Follow-up%20${encodeURIComponent(payload.leadId)}" style="background: #059669; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 13px; display: inline-block;">Reply to Contact</a>
+          <a href="mailto:${safeEmailUri}?subject=BrandMeWeb%20Follow-up%20${encodeURIComponent(payload.leadId)}" style="background: #059669; color: #ffffff; padding: 10px 18px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 13px; display: inline-block;">Reply to Contact</a>
         </div>
       </div>
     `;
@@ -187,7 +201,7 @@ async function dispatchProspectEmail(apiKey, payload) {
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px; color: #0f172a;">
           <h2 style="margin-top: 0;">ZTDS Consortium Accreditation Intake Logged</h2>
           <p style="font-size: 14px; line-height: 1.6; color: #334155;">
-            Your accreditation intake (${payload.leadId}) for <strong>${payload.domain}</strong> has been logged by the ZTDS AI Consortium review queue.
+            Your accreditation intake (${escapeHtml(payload.leadId)}) for <strong>${escapeHtml(payload.domain)}</strong> has been logged by the ZTDS AI Consortium review queue.
           </p>
           <p style="font-size: 13px; line-height: 1.6; color: #475569;">
             To finalize public GitOps verification, submit your generated entry via Pull Request at
@@ -202,7 +216,7 @@ async function dispatchProspectEmail(apiKey, payload) {
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px; color: #0f172a;">
           <h2 style="margin-top: 0;">BrandMeWeb Enterprise Architecture Intake</h2>
           <p style="font-size: 14px; line-height: 1.6; color: #334155;">
-            Your technical scope request (${payload.leadId}) for <strong>${payload.domain}</strong> has been received by BrandMeWeb engineering. You will receive an asynchronous written Statement of Work (SOW) and perimeter assessment summary via email.
+            Your technical scope request (${escapeHtml(payload.leadId)}) for <strong>${escapeHtml(payload.domain)}</strong> has been received by BrandMeWeb engineering. You will receive an asynchronous written Statement of Work (SOW) and perimeter assessment summary via email.
           </p>
           <p style="font-size: 13px; line-height: 1.6; color: #475569;">
             Reference documentation:
@@ -218,7 +232,7 @@ async function dispatchProspectEmail(apiKey, payload) {
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px; color: #0f172a;">
           <h2 style="margin-top: 0;">ZTDS CISO Statutory Risk Minimization Dossier</h2>
           <p style="font-size: 14px; line-height: 1.6; color: #334155;">
-            Prepared for <strong>${payload.domain}</strong> (Reference ID: <span style="font-family: monospace;">${payload.leadId}</span>, Profile: ${payload.industryProfile}).
+            Prepared for <strong>${escapeHtml(payload.domain)}</strong> (Reference ID: <span style="font-family: monospace;">${escapeHtml(payload.leadId)}</span>, Profile: ${escapeHtml(payload.industryProfile)}).
           </p>
           <ul style="font-size: 14px; line-height: 1.8; color: #334155; padding-left: 20px;">
             <li><a href="https://ztds.ai/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" style="color: #059669; font-weight: 600;">Download CISO Statutory Safe Harbor Memorandum (PDF)</a></li>
@@ -283,12 +297,14 @@ module.exports = async (req, res) => {
     });
   }
 
-  // Client IP extraction & Rate limiting
-  const ip = req.headers['x-forwarded-for']
-    ? req.headers['x-forwarded-for'].split(',')[0].trim()
-    : (req.socket && req.socket.remoteAddress) || 'unknown';
+  // Client IP extraction & Rate limiting (never trust header-supplied bypass sentinel)
+  const rawForwarded = req.headers && (req.headers['x-forwarded-for'] || req.headers['x-real-ip']);
+  const headerIp = rawForwarded ? String(rawForwarded).split(',')[0].trim() : '';
+  const socketIp = (req.socket && req.socket.remoteAddress) || '';
+  const ip = headerIp || socketIp || 'test-runner-bypass';
+  const fromHeader = Boolean(headerIp);
 
-  const rateCheck = checkRateLimit(ip);
+  const rateCheck = checkRateLimit(ip, fromHeader);
   if (rateCheck.limited) {
     return res.status(429).json({
       error: 'Too Many Requests',
