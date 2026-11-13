@@ -1366,7 +1366,7 @@ li > p:last-of-type:only-child {
     overflow-x: hidden;
     max-width: 100%;
   }
-  pre, .sourcecode, .artwork {
+  pre, .sourcecode, .artwork, #token-table {
     overflow-x: auto;
     max-width: 100%;
     box-sizing: border-box;
@@ -1385,6 +1385,24 @@ li > p:last-of-type:only-child {
   }
   details > summary {
     padding-block: 0.625rem;
+  }
+}
+
+@media (pointer: coarse), (max-width: 640px) {
+  body > div:first-of-type a {
+    display: inline-flex !important;
+    align-items: center;
+    min-height: 44px;
+    box-sizing: border-box;
+  }
+  #toc nav {
+    max-height: calc(100dvh - 4rem);
+  }
+  #toc.active nav li a {
+    display: inline-block;
+    padding-block: 0.5rem;
+    min-height: 44px;
+    box-sizing: border-box;
   }
 }
 </style>

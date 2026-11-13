@@ -1458,4 +1458,97 @@ console.log('[17/17] Verifying Wave 9 universal 44px button coverage, 24x44px sw
   console.log(`    [PASS] Universal 44px button coverage across ${prodHtmlFiles.length} pages, 24x44px switch + hit-area, .code-header wrap & virtual keyboard hints verified.`);
 }
 
-console.log('\n[SUMMARY] ALL 17 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
+// ============================================================================
+// 18. 360–420px Header CTA, Universal Range Slider Parity, Footer/Main <a> 44px, Tablist Fallback, Dual Sticky Sync & 320px Card Padding — Wave 10
+// ============================================================================
+console.log('[18/18] Verifying Wave 10 header CTA fix, CISO ztds-slider parity, footer/pill <a> 44px targets, tablist fallback, sticky subnav sync & 320px card padding...');
+{
+  const inputCss = fs.readFileSync(path.join(ROOT, 'src/input.css'), 'utf8');
+  assert(
+    !/min-height:\s*38px/.test(inputCss) &&
+      /@media\s*\(max-width:\s*420px\)\s*\{[\s\S]*header \.btn-trust\s*\{[\s\S]*min-height:\s*44px\s*!important;/.test(inputCss),
+    'src/input.css @media (max-width: 420px) must keep header .btn-trust at min-height: 44px !important (never 38px)'
+  );
+
+  assert(
+    /@supports not \(animation-timeline:\s*scroll\(\)\)\s*\{[\s\S]*\.tablist-scroll\.more-start[\s\S]*\.tablist-scroll\.more-end/.test(inputCss),
+    'src/input.css must define @supports not (animation-timeline: scroll()) fallback fades (.more-start / .more-end) on .tablist-scroll'
+  );
+  assert(
+    inputCss.includes('scroll-margin-top: 8.25rem;') &&
+      inputCss.includes('body:has(> .ztds-sticky-header.is-hidden:not(:focus-within)) :is(nav[aria-label="Page Sections"].sticky, #auditorModeTabsContainer.sticky)'),
+    'src/input.css must expand scroll-margin-top to 8.25rem and sync secondary sticky bars when .ztds-sticky-header auto-hides'
+  );
+
+  const coarseMatches = [...inputCss.matchAll(/@media\s*\(pointer:\s*coarse\),\s*\(max-width:\s*640px\)\s*\{([\s\S]*?)\n\}/g)];
+  const coarseText = coarseMatches.map((m) => m[1]).join('\n');
+  for (const sel of [
+    'body > footer ul li > a',
+    'body > footer div.mt-6 a',
+    'section[aria-label="Related Ecosystem Resources"] a',
+    'main a:is(.py-0\\.5, .py-1, .py-1\\.5, .py-2, .py-2\\.5)',
+    '#badgePreviewLink',
+    '.cert-verify-link',
+  ]) {
+    assert(coarseText.includes(sel), `src/input.css coarse/mobile 44px block missing Wave 10 selector: ${sel}`);
+  }
+
+  const navJs = fs.readFileSync(path.join(ROOT, 'nav.js'), 'utf8');
+  assert(
+    navJs.includes("CSS.supports('animation-timeline', 'scroll()')") &&
+      navJs.includes("scroller.classList.toggle('more-start'") &&
+      navJs.includes("scroller.classList.toggle('more-end'") &&
+      navJs.includes("prevSelectedTab !== selectedTab") &&
+      navJs.includes("selectedTab.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' })"),
+    'nav.js must implement non-scroll-timeline tablist fade fallback and programmatic selection scrollIntoView'
+  );
+
+  const uncoveredSliders = [];
+  const rawMobileCardPadding = [];
+  for (const relPath of HTML_FILES) {
+    const html = fs.readFileSync(path.join(ROOT, relPath), 'utf8');
+    for (const m of html.matchAll(/<input\b[^>]*type=["']range["'][^>]*>/gi)) {
+      if (!/\bztds-slider\b/.test(m[0])) {
+        uncoveredSliders.push(`${relPath}: ${m[0]}`);
+      }
+    }
+    if (!relPath.startsWith('ietf/draft-sibiryakov-ztds-protocol-')) {
+      for (const m of html.matchAll(/class="([^"]+)"/gi)) {
+        const cls = m[1];
+        if (!/\bprint-only\b/.test(cls) && /(?:^|\s)p-(?:8|10|12)(?:\s|$)/.test(cls)) {
+          rawMobileCardPadding.push(`${relPath}: ${cls}`);
+        }
+      }
+    }
+  }
+  assert.strictEqual(
+    uncoveredSliders.length,
+    0,
+    `Every <input type="range"> across HTML pages must carry class="ztds-slider":\n${uncoveredSliders.join('\n')}`
+  );
+  assert.strictEqual(
+    rawMobileCardPadding.length,
+    0,
+    `Non-print cards must use compact mobile padding (e.g. p-5 sm:p-8) instead of bare p-8/p-10/p-12:\n${rawMobileCardPadding.join('\n')}`
+  );
+
+  for (const draftRel of [
+    'ietf/draft-sibiryakov-ztds-protocol-01/index.html',
+    'ietf/draft-sibiryakov-ztds-protocol-01.html',
+    'ietf/draft-sibiryakov-ztds-protocol-02/index.html',
+    'ietf/draft-sibiryakov-ztds-protocol-02.html',
+  ]) {
+    const draftHtml = fs.readFileSync(path.join(ROOT, draftRel), 'utf8');
+    assert(
+      draftHtml.includes('#token-table') &&
+        draftHtml.includes('body > div:first-of-type a') &&
+        draftHtml.includes('calc(100dvh - 4rem)') &&
+        draftHtml.includes('#toc.active nav li a'),
+      `${draftRel} must guard #token-table overflow, top-bar 44px links, dvh TOC height & mobile TOC links`
+    );
+  }
+
+  console.log(`    [PASS] Wave 10 360-420px header CTA, range sliders, footer/pill <a> 44px, tablist fallback, dual sticky sync, IETF mobile polish & 320px card padding verified across ${HTML_FILES.length} pages.`);
+}
+
+console.log('\n[SUMMARY] ALL 18 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');

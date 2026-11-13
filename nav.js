@@ -1041,6 +1041,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const getTabs = () => Array.from(tablist.querySelectorAll('[role="tab"]'))
         .filter((tab) => tab.closest('[role="tablist"]') === tablist);
 
+      let lastSelectedTab = null;
       let syncingTablist = false;
       const syncTabIndexes = () => {
         if (syncingTablist) return;
@@ -1058,6 +1059,16 @@ document.addEventListener('DOMContentLoaded', () => {
           if (!selectedTab) {
             selectedTab = tabs[0];
             selectedTab.setAttribute('aria-selected', 'true');
+          }
+          const prevSelectedTab = lastSelectedTab;
+          lastSelectedTab = selectedTab;
+          if (
+            prevSelectedTab &&
+            prevSelectedTab !== selectedTab &&
+            tablist.classList.contains('tablist-scroll') &&
+            typeof selectedTab.scrollIntoView === 'function'
+          ) {
+            selectedTab.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' });
           }
           tabs.forEach((tab) => {
             tab.tabIndex = tab === selectedTab ? 0 : -1;
@@ -1130,6 +1141,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.ztdsBindTablist = bindTablist;
     document.querySelectorAll('[role="tablist"]').forEach(bindTablist);
+
+    const supportsScrollTimeline =
+      typeof CSS !== 'undefined' &&
+      typeof CSS.supports === 'function' &&
+      CSS.supports('animation-timeline', 'scroll()');
+    if (!supportsScrollTimeline) {
+      const syncTablistFades = (scroller) => {
+        if (!scroller) return;
+        const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+        if (maxScroll <= 2) {
+          scroller.classList.remove('more-start', 'more-end');
+          return;
+        }
+        const sl = Math.abs(scroller.scrollLeft);
+        scroller.classList.toggle('more-start', sl > 2);
+        scroller.classList.toggle('more-end', sl < maxScroll - 2);
+      };
+      document.querySelectorAll('.tablist-scroll').forEach((scroller) => {
+        syncTablistFades(scroller);
+        scroller.addEventListener('scroll', () => syncTablistFades(scroller), { passive: true });
+        if (typeof ResizeObserver === 'function') {
+          const ro = new ResizeObserver(() => syncTablistFades(scroller));
+          ro.observe(scroller);
+        }
+      });
+    }
   } catch (_) {}
 
   // Global UX 11: Auto-Expand Closed <details> Disclosures Targeted by URL Hash Deep-Links
