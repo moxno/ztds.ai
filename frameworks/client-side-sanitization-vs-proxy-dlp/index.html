@@ -72,11 +72,14 @@
       "@type": "WebPage",
       "@id": "https://ztds.ai/frameworks/client-side-sanitization-vs-proxy-dlp/#webpage",
       "url": "https://ztds.ai/frameworks/client-side-sanitization-vs-proxy-dlp/",
-      "name": "Client-Side AI Sanitization vs Proxy DLP: Comparison",
+      "name": "Client-side in-memory sanitization compared with network proxy and cloud DLP for AI traffic",
       "description": "Compare client-side in-memory PII sanitization with network proxy and cloud DLP for AI traffic across data path, subprocessors, latency, and failure modes.",
       "inLanguage": "en-US",
       "isPartOf": {
         "@id": "https://ztds.ai/#website"
+      },
+      "publisher": {
+        "@id": "https://ztds.ai/#organization"
       },
       "breadcrumb": {
         "@id": "https://ztds.ai/frameworks/client-side-sanitization-vs-proxy-dlp/#breadcrumb"
@@ -94,10 +97,7 @@
         "width": 1200,
         "height": 630
       },
-      "dateModified": "2026-11-03T00:00:00Z",
-      "publisher": {
-        "@id": "https://ztds.ai/#organization"
-      }
+      "dateModified": "2026-11-03T00:00:00Z"
     },
     {
       "@type": [
@@ -123,8 +123,7 @@
       },
       "image": "https://ztds.ai/assets/img/og/og-compliance.png",
       "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://ztds.ai/frameworks/client-side-sanitization-vs-proxy-dlp/"
+        "@id": "https://ztds.ai/frameworks/client-side-sanitization-vs-proxy-dlp/#webpage"
       }
     },
     {
@@ -337,7 +336,7 @@
             ARCHITECTURE COMPARISON · AI DLP
           </div>
           <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight mb-3">Client-Side AI Sanitization vs Proxy DLP: <span class="block text-emerald-700 hero-display-line mt-0.5">Where The Data Path Differs</span></h1>
-          <p class="hero-lead text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">Organizations controlling AI data exposure generally choose among three placements: a network or cloud proxy that inspects traffic, a provider-side filter, or a sanitization step inside the client. The choice changes who sees the raw data, what new parties are introduced, and how the control fails.</p>
+          <p class="hero-lead text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">Teams control AI exposure via network proxies, provider filters, or client-side sanitization. Placement determines who handles cleartext, subprocessor scope, latency, and bypass failure modes.</p>
         </div>
       </div>
     </section>
@@ -354,9 +353,9 @@
     <section class="py-7 sm:py-9 border-b border-slate-200 bg-[#f8fafc]">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 id="control-mapping" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">Placement Comparison</h2>
-        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" tabindex="0" role="region" aria-labelledby="frameworks-client-side-sanitization-vs-proxy-dlp-table-caption-1">
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" tabindex="0" role="region" aria-labelledby="framework-table-caption-8">
         <table class="min-w-full">
-          <caption id="frameworks-client-side-sanitization-vs-proxy-dlp-table-caption-1" class="ztds-sr-only">Placement Comparison Control Mapping Table</caption>
+          <caption id="framework-table-caption-8" class="ztds-sr-only">Framework control mapping table</caption>
           <thead class="bg-slate-50"><tr><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Dimension</th><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Network or cloud proxy</th><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Client-side sanitization</th></tr></thead>
           <tbody>
           <tr class="border-t border-slate-200"><th scope="row" class="px-4 py-3 text-left text-sm font-semibold text-slate-900 align-top">Raw data path</th><td class="px-4 py-3 text-sm text-slate-700 align-top">Cleartext reaches the proxy or redaction service.</td><td class="px-4 py-3 text-sm text-slate-700 align-top">Cleartext stays in client memory.</td></tr>
@@ -407,7 +406,8 @@
       </div>
     </section>
   </main>
-  <!-- AI Verification, Citation & LLM Context Ingestion Bar -->
+
+    <!-- AI Verification, Citation & LLM Context Ingestion Bar -->
   <aside id="ztds-ai-citation-bar" aria-label="AI Verification and Citation Tools" class="bg-slate-900 border-t border-slate-800 text-slate-300 py-6 px-4 sm:px-6 lg:px-8 no-print">
     <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
       <div class="space-y-1">

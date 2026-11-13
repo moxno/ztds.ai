@@ -33,7 +33,7 @@ const PAGES = [
     headline: 'OWASP LLM02:2025 Sensitive Information Disclosure mapped to ZTDS pre-egress sanitization',
     badge: 'OWASP LLM TOP 10 2025 · LLM02',
     h1: 'OWASP LLM02 Sensitive Information Disclosure: <span class="block text-emerald-700 hero-display-line mt-0.5">Controlling PII Before It Reaches the Model</span>',
-    lead: 'OWASP lists Sensitive Information Disclosure as LLM02 in the 2025 edition of its Top 10 for LLM Applications. ZTDS addresses the input side of that risk: personal data, secrets, and confidential identifiers are tokenized in client memory before a prompt, document, or tool result is sent to any model provider.',
+    lead: 'OWASP classifies Sensitive Information Disclosure as LLM02 (2025). ZTDS tokenizes personal data, secrets, and identifiers in volatile client memory before any prompt leaves the host.',
     summary: [
       'LLM02:2025 describes applications that expose confidential data, proprietary information, or private user details because sensitive content was not sanitized or filtered. In practice, much of that exposure begins upstream: employees and agents paste customer records, credentials, and case files into prompts that leave the organization.',
       'ZTDS RFC v1.0 places a deterministic sanitization step inside the client, so the provider only receives surrogate tokens. The original values never cross the network boundary and the token map is destroyed with the session.'
@@ -76,7 +76,7 @@ const PAGES = [
     headline: 'NIST AI RMF Generative AI Profile (AI 600-1) data privacy risk mapped to ZTDS',
     badge: 'NIST AI RMF · AI 600-1 GENERATIVE AI PROFILE',
     h1: 'NIST AI RMF Generative AI Profile: <span class="block text-emerald-700 hero-display-line mt-0.5">Where PII Sanitization Fits</span>',
-    lead: 'NIST published AI 600-1, the Generative Artificial Intelligence Profile, in July 2024 as a companion to the AI Risk Management Framework. It lists data privacy among its generative AI risk categories. This page shows where a client-side sanitization control supports each of the four AI RMF functions.',
+    lead: 'NIST AI 600-1 defines generative AI privacy risks under the AI Risk Management Framework. This guide maps client-side tokenization controls across Govern, Map, Measure, and Manage.',
     summary: [
       'The AI RMF is voluntary. It organizes risk work into GOVERN, MAP, MEASURE, and MANAGE, and the Generative AI Profile applies those functions to risks that are new or amplified by generative systems, including data privacy.',
       'ZTDS is a technical control that sits mostly in MANAGE, produces evidence for MEASURE, and depends on data-flow knowledge from MAP and policy from GOVERN. It does not make an organization NIST compliant, because the framework is not a certification scheme.'
@@ -121,9 +121,10 @@ const PAGES = [
     headline: 'EU AI Act Article 10 data governance and the role of pre-ingestion PII sanitization',
     badge: 'EU AI ACT · ARTICLE 10 · DATA GOVERNANCE',
     h1: 'EU AI Act Article 10 Data Governance: <span class="block text-emerald-700 hero-display-line mt-0.5">What Sanitization Contributes</span>',
-    lead: 'Article 10 of the EU AI Act sets data and data governance requirements for high-risk AI systems that use training, validation, and testing datasets. Sanitizing personal data before it enters a dataset or a model pipeline is one practical way to support those practices. It does not replace the provider obligations.',
+    lead: 'EU AI Act Article 10 governs training, validation, and testing datasets for high-risk systems. Sanitizing personal data before ingestion supports these practices without transferring provider obligations.',
     summary: [
-      'Article 10 requires providers of high-risk AI systems to apply appropriate data governance and management practices to the datasets they use, including attention to data collection processes and the origin of data, data-preparation operations such as annotation, labelling, cleaning, and aggregation, an assessment of the availability, quantity, and suitability of the data sets, and examination for possible biases. These duties apply to training, validation, and testing data sets where a high-risk system is developed using techniques that train AI models; for systems that do not train models, they apply to the testing data sets.',
+      'Article 10 requires providers of high-risk AI systems to apply data governance across collection, annotation, labelling, cleaning, aggregation, suitability checks, and bias examination.',
+      'These duties cover training, validation, and testing sets for trained models, and testing sets alone for non-training systems.',
       'Where datasets are assembled from operational records, removing direct identifiers before the data reaches annotation tools, fine-tuning jobs, or external model services reduces the personal data in scope. ZTDS provides that step as a deterministic, reversible, client-side operation.'
     ],
     mapTitle: 'Dataset Lifecycle Mapping',
@@ -164,7 +165,7 @@ const PAGES = [
     headline: 'GDPR Articles 25 and 32 applied to prompts sent to AI providers through client-side pseudonymization',
     badge: 'GDPR · ARTICLE 25 · ARTICLE 32 · RECITAL 26',
     h1: 'GDPR Articles 25 and 32 for AI Prompts: <span class="block text-emerald-700 hero-display-line mt-0.5">Pseudonymization Before Egress</span>',
-    lead: 'When staff or agents send personal data to an AI provider, GDPR obligations on minimization, data protection by design, and security of processing apply to the controller. Replacing identifiers with surrogates in client memory before transmission is a technical measure that supports those obligations. It does not turn personal data into anonymous data.',
+    lead: 'Client-side surrogate tokenization before AI egress supports GDPR minimization, data protection by design (Art. 25), and security (Art. 32). Pseudonymized prompts remain personal data under Recital 26.',
     summary: [
       'Article 5(1)(c) requires data minimisation. Article 25 requires data protection by design and by default and names pseudonymisation as an example of an appropriate measure. Article 32 requires appropriate technical and organisational measures and names pseudonymisation as an example.',
       'ZTDS tokenizes identifiers in client memory so the provider receives surrogates. Because the controller can reverse the mapping, the result is pseudonymised data, which Recital 26 says remains personal data when additional information exists. The benefit is a smaller disclosure to the provider and a stronger Article 32 posture, not an exemption.'
@@ -211,10 +212,11 @@ const PAGES = [
     headline: 'HIPAA Safe Harbor de-identification applied to clinical text sent to language models',
     badge: 'HIPAA · 45 CFR 164.514(b)(2) · SAFE HARBOR',
     h1: 'HIPAA Safe Harbor for LLM Prompts: <span class="block text-emerald-700 hero-display-line mt-0.5">Removing the 18 Identifiers Before Egress</span>',
-    lead: 'The HIPAA Safe Harbor method in 45 CFR 164.514(b)(2) treats health information as de-identified when 18 listed identifier categories are removed and the covered entity has no actual knowledge that the remainder could identify a person. This page explains how that applies when clinical text is prepared for a language model.',
+    lead: 'HIPAA Safe Harbor (45 CFR 164.514(b)(2)) de-identifies clinical data by removing 18 identifier categories when no re-identification knowledge exists. Client-side tokenization prepares notes before model egress.',
     summary: [
       'Safe Harbor is a rule-based method. It lists identifier categories of the individual and of relatives, employers, and household members that must be removed, including names, geographic subdivisions smaller than a state, date elements other than year, contact numbers, and record numbers.',
-      'Section 164.514(c) allows a covered entity to assign a code to permit re-identification, provided the code is not derived from or related to information about the individual and is not otherwise capable of being translated to identify the individual, and the covered entity does not use or disclose the code for any other purpose and does not disclose the mechanism for re-identification. Random per-session surrogates whose mapping is held only in local memory fit that constraint; surrogates derived from the original values would not.'
+      'Section 164.514(c) lets a covered entity assign a re-identification code unrelated to patient attributes, kept unshared with any external party.',
+      'Ephemeral session surrogates mapped strictly in volatile client memory satisfy that constraint, whereas deterministic hashes derived from patient values do not.'
     ],
     mapTitle: 'Identifier Handling in Clinical Text',
     mapHeaders: ['Identifier category', 'Typical form in prompts', 'Required handling'],
@@ -258,7 +260,7 @@ const PAGES = [
     headline: 'Sanitizing Model Context Protocol stdio traffic with a local in-memory gateway',
     badge: 'MODEL CONTEXT PROTOCOL · STDIO · JSON-RPC',
     h1: 'MCP Server Security: <span class="block text-emerald-700 hero-display-line mt-0.5">PII Sanitization on the stdio Transport</span>',
-    lead: 'The Model Context Protocol uses JSON-RPC 2.0 messages. Its stdio transport has the client launch the server as a subprocess and exchange newline-delimited messages over standard input and output. That local boundary is a natural place to sanitize traffic before it reaches a model.',
+    lead: 'The Model Context Protocol exchanges newline-delimited JSON-RPC 2.0 messages over local stdio subprocess pipes. Wrapping this boundary tokenizes tool outputs and restores arguments before model egress.',
     summary: [
       'With stdio, the MCP client starts the server as a child process and writes JSON-RPC messages to its stdin while reading responses from its stdout. The server may write logs to stderr. Nothing other than valid MCP messages may be written to stdin or stdout.',
       'A ZTDS gateway wraps that boundary. Tool results that flow back toward the model are tokenized before the client forwards them, and tool arguments that come back from the model are restored locally. The model sees surrogates; the local tools operate on real values.'
@@ -304,7 +306,7 @@ const PAGES = [
     headline: 'PII sanitization stages in a retrieval-augmented generation pipeline',
     badge: 'RAG · VECTOR STORES · PROMPT ASSEMBLY',
     h1: 'RAG Pipeline PII Sanitization: <span class="block text-emerald-700 hero-display-line mt-0.5">Three Places To Intervene</span>',
-    lead: 'A retrieval-augmented generation pipeline moves personal data through ingestion, embedding, storage, retrieval, and prompt assembly before any model sees it. Each stage is an opportunity to exclude identifiers. This page lists where a deterministic sanitization step reduces exposure and where it does not.',
+    lead: 'RAG pipelines handle personal data across ingestion, embedding, storage, retrieval, and prompt assembly. Deterministic client-side tokenization intervenes before storage and egress, within documented retrieval limits.',
     summary: [
       'Source documents often contain identifiers that the retrieval task does not need. If they are embedded as-is, the vector store becomes a second copy of sensitive data, and retrieved chunks carry those identifiers into every prompt.',
       'Tokenizing at ingestion keeps the vector store free of raw identifiers. Tokenizing at prompt assembly protects the case where the store already holds raw text. Both use the same reversible surrogate contract.'
@@ -351,7 +353,7 @@ const PAGES = [
     headline: 'Client-side in-memory sanitization compared with network proxy and cloud DLP for AI traffic',
     badge: 'ARCHITECTURE COMPARISON · AI DLP',
     h1: 'Client-Side AI Sanitization vs Proxy DLP: <span class="block text-emerald-700 hero-display-line mt-0.5">Where The Data Path Differs</span>',
-    lead: 'Organizations controlling AI data exposure generally choose among three placements: a network or cloud proxy that inspects traffic, a provider-side filter, or a sanitization step inside the client. The choice changes who sees the raw data, what new parties are introduced, and how the control fails.',
+    lead: 'Teams control AI exposure via network proxies, provider filters, or client-side sanitization. Placement determines who handles cleartext, subprocessor scope, latency, and bypass failure modes.',
     summary: [
       'A network proxy or cloud redaction service must receive the raw content to inspect it. That adds a processing party and a data path that carries cleartext. A client-side step removes identifiers before any outbound call, so no additional party receives the raw values.',
       'Neither placement is universally better. Proxies give central visibility and policy for managed traffic. Client-side sanitization gives a smaller disclosure boundary and works where traffic cannot be inspected. Many programs use both.'
@@ -394,7 +396,7 @@ const HUB = {
   keywords: 'ZTDS framework mappings, OWASP LLM02, NIST AI RMF, EU AI Act Article 10, GDPR Article 32, HIPAA Safe Harbor, MCP security, RAG privacy',
   headline: 'ZTDS Framework Mappings: how a client-side sanitization control maps to published security and privacy frameworks',
   h1: 'ZTDS Framework Mappings: <span class="block text-emerald-700 hero-display-line mt-0.5">One Control, Many Frameworks</span>',
-  lead: 'Each page maps the ZTDS RFC v1.0 client-side sanitization control to one framework or architecture topic, states what the control contributes, and lists what it does not cover. The mappings are written for security, privacy, and engineering teams that need to justify the control to auditors.',
+  lead: 'Audit-ready control mappings from ZTDS RFC v1.0 to OWASP LLM02, NIST AI RMF, EU AI Act, GDPR, HIPAA, MCP, and RAG—stating exact coverage limits.',
   method: [
     'Every mapping follows the same structure: a summary, a control-mapping table, how ZTDS applies, and an explicit list of limits. The four ZTDS invariants are the common vocabulary:',
     [

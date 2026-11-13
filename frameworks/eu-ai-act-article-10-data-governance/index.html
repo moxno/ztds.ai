@@ -72,11 +72,14 @@
       "@type": "WebPage",
       "@id": "https://ztds.ai/frameworks/eu-ai-act-article-10-data-governance/#webpage",
       "url": "https://ztds.ai/frameworks/eu-ai-act-article-10-data-governance/",
-      "name": "EU AI Act Article 10 Data Governance: PII Sanitization Role",
+      "name": "EU AI Act Article 10 data governance and the role of pre-ingestion PII sanitization",
       "description": "How sanitizing personal data before dataset assembly and model ingestion supports EU AI Act Article 10 data governance, and where obligations remain.",
       "inLanguage": "en-US",
       "isPartOf": {
         "@id": "https://ztds.ai/#website"
+      },
+      "publisher": {
+        "@id": "https://ztds.ai/#organization"
       },
       "breadcrumb": {
         "@id": "https://ztds.ai/frameworks/eu-ai-act-article-10-data-governance/#breadcrumb"
@@ -94,10 +97,7 @@
         "width": 1200,
         "height": 630
       },
-      "dateModified": "2026-11-03T00:00:00Z",
-      "publisher": {
-        "@id": "https://ztds.ai/#organization"
-      }
+      "dateModified": "2026-11-03T00:00:00Z"
     },
     {
       "@type": [
@@ -123,8 +123,7 @@
       },
       "image": "https://ztds.ai/assets/img/og/og-compliance.png",
       "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://ztds.ai/frameworks/eu-ai-act-article-10-data-governance/"
+        "@id": "https://ztds.ai/frameworks/eu-ai-act-article-10-data-governance/#webpage"
       }
     },
     {
@@ -337,14 +336,15 @@
             EU AI ACT · ARTICLE 10 · DATA GOVERNANCE
           </div>
           <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight mb-3">EU AI Act Article 10 Data Governance: <span class="block text-emerald-700 hero-display-line mt-0.5">What Sanitization Contributes</span></h1>
-          <p class="hero-lead text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">Article 10 of the EU AI Act sets data and data governance requirements for high-risk AI systems that use training, validation, and testing datasets. Sanitizing personal data before it enters a dataset or a model pipeline is one practical way to support those practices. It does not replace the provider obligations.</p>
+          <p class="hero-lead text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">EU AI Act Article 10 governs training, validation, and testing datasets for high-risk systems. Sanitizing personal data before ingestion supports these practices without transferring provider obligations.</p>
         </div>
       </div>
     </section>
     <section class="py-7 sm:py-9 border-b border-slate-200 bg-white">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 id="summary" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">Summary</h2>
-        <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">Article 10 requires providers of high-risk AI systems to apply appropriate data governance and management practices to the datasets they use, including attention to data collection processes and the origin of data, data-preparation operations such as annotation, labelling, cleaning, and aggregation, an assessment of the availability, quantity, and suitability of the data sets, and examination for possible biases. These duties apply to training, validation, and testing data sets where a high-risk system is developed using techniques that train AI models; for systems that do not train models, they apply to the testing data sets.</p>
+        <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">Article 10 requires providers of high-risk AI systems to apply data governance across collection, annotation, labelling, cleaning, aggregation, suitability checks, and bias examination.</p>
+        <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">These duties cover training, validation, and testing sets for trained models, and testing sets alone for non-training systems.</p>
         <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">Where datasets are assembled from operational records, removing direct identifiers before the data reaches annotation tools, fine-tuning jobs, or external model services reduces the personal data in scope. ZTDS provides that step as a deterministic, reversible, client-side operation.</p>
         <div class="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 leading-relaxed">
           <strong>Scope notice.</strong> This page maps a technical control to a published framework as a Statutory Risk Minimization and Defense-in-Depth measure. It is not legal advice, not a certification by the framework owner, and not a statement that any regulation is fully satisfied. Consult qualified counsel for jurisdiction-specific determinations.
@@ -354,9 +354,9 @@
     <section class="py-7 sm:py-9 border-b border-slate-200 bg-[#f8fafc]">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 id="control-mapping" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">Dataset Lifecycle Mapping</h2>
-        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" tabindex="0" role="region" aria-labelledby="frameworks-eu-ai-act-article-10-data-governance-table-caption-1">
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" tabindex="0" role="region" aria-labelledby="framework-table-caption-3">
         <table class="min-w-full">
-          <caption id="frameworks-eu-ai-act-article-10-data-governance-table-caption-1" class="ztds-sr-only">Dataset Lifecycle Mapping Control Mapping Table</caption>
+          <caption id="framework-table-caption-3" class="ztds-sr-only">Framework control mapping table</caption>
           <thead class="bg-slate-50"><tr><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Lifecycle stage</th><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Governance concern</th><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">ZTDS position</th></tr></thead>
           <tbody>
           <tr class="border-t border-slate-200"><th scope="row" class="px-4 py-3 text-left text-sm font-semibold text-slate-900 align-top">Collection and export</th><td class="px-4 py-3 text-sm text-slate-700 align-top">Operational records contain direct identifiers that the dataset does not need.</td><td class="px-4 py-3 text-sm text-slate-700 align-top">Tokenize identifiers at export time so the dataset carries surrogates only.</td></tr>
@@ -406,7 +406,8 @@
       </div>
     </section>
   </main>
-  <!-- AI Verification, Citation & LLM Context Ingestion Bar -->
+
+    <!-- AI Verification, Citation & LLM Context Ingestion Bar -->
   <aside id="ztds-ai-citation-bar" aria-label="AI Verification and Citation Tools" class="bg-slate-900 border-t border-slate-800 text-slate-300 py-6 px-4 sm:px-6 lg:px-8 no-print">
     <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
       <div class="space-y-1">

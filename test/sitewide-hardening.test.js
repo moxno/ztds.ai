@@ -817,13 +817,29 @@ console.log('--> Test 11: Perceptual Clarity, no-slop, Hero Lead Brevity, CTA De
   const slopCheckedPages = [
     'index.html',
     'scanner/index.html',
+    'inspector/index.html',
     'ciso/index.html',
+    'ciso/memo/index.html',
+    'ciso/memo.html',
     'sdk/index.html',
     'mcp/index.html',
     'agency/index.html',
     'roi/index.html',
     'governance/index.html',
+    'compliance/index.html',
+    'accessibility/index.html',
+    'benchmarks/index.html',
+    'apply/index.html',
+    'deck/index.html',
     'frameworks/index.html',
+    'frameworks/owasp-llm02-sensitive-information-disclosure/index.html',
+    'frameworks/nist-ai-rmf-generative-ai-profile-pii/index.html',
+    'frameworks/eu-ai-act-article-10-data-governance/index.html',
+    'frameworks/gdpr-article-25-32-ai-prompts/index.html',
+    'frameworks/hipaa-safe-harbor-llm-prompts/index.html',
+    'frameworks/mcp-stdio-pii-sanitization/index.html',
+    'frameworks/rag-pipeline-pii-sanitization/index.html',
+    'frameworks/client-side-sanitization-vs-proxy-dlp/index.html',
     'standard/index.html',
     'whitepaper/index.html',
     'verify/index.html'
@@ -838,12 +854,27 @@ console.log('--> Test 11: Perceptual Clarity, no-slop, Hero Lead Brevity, CTA De
   const heroBriefPages = [
     'index.html',
     'scanner/index.html',
+    'inspector/index.html',
     'ciso/index.html',
     'sdk/index.html',
     'agency/index.html',
     'roi/index.html',
     'governance/index.html',
-    'frameworks/index.html'
+    'compliance/index.html',
+    'accessibility/index.html',
+    'benchmarks/index.html',
+    'standard/index.html',
+    'whitepaper/index.html',
+    'deck/index.html',
+    'frameworks/index.html',
+    'frameworks/owasp-llm02-sensitive-information-disclosure/index.html',
+    'frameworks/nist-ai-rmf-generative-ai-profile-pii/index.html',
+    'frameworks/eu-ai-act-article-10-data-governance/index.html',
+    'frameworks/gdpr-article-25-32-ai-prompts/index.html',
+    'frameworks/hipaa-safe-harbor-llm-prompts/index.html',
+    'frameworks/mcp-stdio-pii-sanitization/index.html',
+    'frameworks/rag-pipeline-pii-sanitization/index.html',
+    'frameworks/client-side-sanitization-vs-proxy-dlp/index.html'
   ];
   for (const rel of heroBriefPages) {
     const content = fs.readFileSync(path.join(ROOT, rel), 'utf8');
@@ -859,6 +890,26 @@ console.log('--> Test 11: Perceptual Clarity, no-slop, Hero Lead Brevity, CTA De
     assert(wordCount <= 32, `${rel} .hero-lead must be <= 32 words for Screen-1 clarity (found ${wordCount})`);
   }
 
+  const statutoryClaimPages = [
+    'standard/index.html',
+    'deck/index.html',
+    'ciso/memo/index.html',
+    'ciso/memo.html'
+  ];
+  for (const rel of statutoryClaimPages) {
+    const content = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    assert(
+      !/100%\s+DPA\s*(?:&amp;|&)\s*BAA\s+exempt(?:ion)?/i.test(content),
+      `${rel} must use Statutory Safe Harbor / Subprocessor Exclusion phrasing instead of overbroad "100% DPA & BAA exempt"`
+    );
+  }
+
+  const inspectorHtml = fs.readFileSync(path.join(ROOT, 'inspector/index.html'), 'utf8');
+  assert(
+    inspectorHtml.includes('grid-cols-2 lg:grid-cols-4') && inspectorHtml.includes('id="dagPipelineContainer"'),
+    'inspector/index.html #dagPipelineContainer must use compact 2x2 mobile grid (grid-cols-2 lg:grid-cols-4)'
+  );
+
   const cisoHtml = fs.readFileSync(path.join(ROOT, 'ciso/index.html'), 'utf8');
   const heroBlockMatch = cisoHtml.match(/<div id="cisoHeroHeader"[\s\S]*?<\/div>\s*<!-- Sticky Section Navigation Bar/);
   assert(heroBlockMatch, 'ciso/index.html must wrap hero controls in #cisoHeroHeader');
@@ -873,11 +924,15 @@ console.log('--> Test 11: Perceptual Clarity, no-slop, Hero Lead Brevity, CTA De
 
   const inputCss = fs.readFileSync(path.join(ROOT, 'src/input.css'), 'utf8');
   assert(
-    inputCss.includes('@media (pointer: coarse), (max-width: 640px)') && inputCss.includes('min-block-size: 40px'),
-    'src/input.css must enforce >= 40px ergonomic touch targets on coarse/mobile viewports'
+    inputCss.includes('@media (pointer: coarse), (max-width: 640px)') &&
+      inputCss.includes('min-block-size: 40px') &&
+      inputCss.includes('.preset-btn') &&
+      inputCss.includes('.scan-preset-btn') &&
+      inputCss.includes('#btnWipeRAM'),
+    'src/input.css must enforce >= 40px ergonomic touch targets across primary workbench and inspector controls'
   );
 
-  console.log('    [PASS] Zero no-slop terms across 12 pages, hero leads <= 32 words, CISO hero CTA focus, SDK card surface contrast, and coarse-pointer touch targets verified.');
+  console.log('    [PASS] Zero no-slop terms across 28 pages, 23 hero leads <= 32 words, statutory safe harbor wording, mobile 2x2 DAG, CISO hero CTA focus, and >= 40px touch targets verified.');
 }
 
 console.log('\n[SUMMARY] ALL 11 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');

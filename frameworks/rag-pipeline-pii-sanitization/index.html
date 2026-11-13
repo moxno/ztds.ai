@@ -72,11 +72,14 @@
       "@type": "WebPage",
       "@id": "https://ztds.ai/frameworks/rag-pipeline-pii-sanitization/#webpage",
       "url": "https://ztds.ai/frameworks/rag-pipeline-pii-sanitization/",
-      "name": "RAG Pipeline PII Sanitization: Ingestion to Prompt Assembly",
+      "name": "PII sanitization stages in a retrieval-augmented generation pipeline",
       "description": "Where to sanitize PII in a retrieval-augmented generation pipeline: at ingestion, in the vector store, and at prompt assembly, with coverage limits stated.",
       "inLanguage": "en-US",
       "isPartOf": {
         "@id": "https://ztds.ai/#website"
+      },
+      "publisher": {
+        "@id": "https://ztds.ai/#organization"
       },
       "breadcrumb": {
         "@id": "https://ztds.ai/frameworks/rag-pipeline-pii-sanitization/#breadcrumb"
@@ -94,10 +97,7 @@
         "width": 1200,
         "height": 630
       },
-      "dateModified": "2026-11-03T00:00:00Z",
-      "publisher": {
-        "@id": "https://ztds.ai/#organization"
-      }
+      "dateModified": "2026-11-03T00:00:00Z"
     },
     {
       "@type": [
@@ -123,8 +123,7 @@
       },
       "image": "https://ztds.ai/assets/img/og/og-compliance.png",
       "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://ztds.ai/frameworks/rag-pipeline-pii-sanitization/"
+        "@id": "https://ztds.ai/frameworks/rag-pipeline-pii-sanitization/#webpage"
       }
     },
     {
@@ -337,7 +336,7 @@
             RAG · VECTOR STORES · PROMPT ASSEMBLY
           </div>
           <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight mb-3">RAG Pipeline PII Sanitization: <span class="block text-emerald-700 hero-display-line mt-0.5">Three Places To Intervene</span></h1>
-          <p class="hero-lead text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">A retrieval-augmented generation pipeline moves personal data through ingestion, embedding, storage, retrieval, and prompt assembly before any model sees it. Each stage is an opportunity to exclude identifiers. This page lists where a deterministic sanitization step reduces exposure and where it does not.</p>
+          <p class="hero-lead text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">RAG pipelines handle personal data across ingestion, embedding, storage, retrieval, and prompt assembly. Deterministic client-side tokenization intervenes before storage and egress, within documented retrieval limits.</p>
         </div>
       </div>
     </section>
@@ -354,9 +353,9 @@
     <section class="py-7 sm:py-9 border-b border-slate-200 bg-[#f8fafc]">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 id="control-mapping" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">Pipeline Stage Mapping</h2>
-        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" tabindex="0" role="region" aria-labelledby="frameworks-rag-pipeline-pii-sanitization-table-caption-1">
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" tabindex="0" role="region" aria-labelledby="framework-table-caption-7">
         <table class="min-w-full">
-          <caption id="frameworks-rag-pipeline-pii-sanitization-table-caption-1" class="ztds-sr-only">Pipeline Stage Mapping Control Mapping Table</caption>
+          <caption id="framework-table-caption-7" class="ztds-sr-only">Framework control mapping table</caption>
           <thead class="bg-slate-50"><tr><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Stage</th><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Exposure</th><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Sanitization option</th></tr></thead>
           <tbody>
           <tr class="border-t border-slate-200"><th scope="row" class="px-4 py-3 text-left text-sm font-semibold text-slate-900 align-top">Ingestion</th><td class="px-4 py-3 text-sm text-slate-700 align-top">Raw documents loaded for chunking and embedding.</td><td class="px-4 py-3 text-sm text-slate-700 align-top">Tokenize before chunking so stored chunks and embeddings derive from surrogates.</td></tr>
@@ -406,7 +405,8 @@
       </div>
     </section>
   </main>
-  <!-- AI Verification, Citation & LLM Context Ingestion Bar -->
+
+    <!-- AI Verification, Citation & LLM Context Ingestion Bar -->
   <aside id="ztds-ai-citation-bar" aria-label="AI Verification and Citation Tools" class="bg-slate-900 border-t border-slate-800 text-slate-300 py-6 px-4 sm:px-6 lg:px-8 no-print">
     <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
       <div class="space-y-1">

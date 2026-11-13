@@ -538,8 +538,11 @@
             N = 5,000 Docs &middot; 30,000 Entities
           </span>
         </div>
+        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-2">
+          Evaluated across a held-out <strong>300-document enterprise corpus (1,925 occurrences)</strong> and <strong>PIIBench-5000 (5,000 documents, 30,000 entities)</strong> spanning clinical, treasury wire, DevOps, and HR records.
+        </p>
         <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
-          Evaluated across a held-out <strong>300-document enterprise corpus (1,925 annotated occurrences)</strong> and the multi-domain <strong>PIIBench-5000 benchmark (5,000 documents, 30,000 entities)</strong> spanning clinical consults, treasury wire memos, DevOps incident logs, and HR onboarding records. Unlike neural NER pipelines that misclassify domain identifiers (<code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">ICD-10</code> codes, medication dosages, financial ledger figures) and degrade downstream task accuracy, deterministic client-RAM ZTDS+ARC executes <strong>26.4&times;&ndash;83.5&times; faster</strong> while preserving <strong>100.00% downstream classification accuracy</strong>, <strong>1.0000 post-rehydration QA Token F1 (100.00% Exact Match)</strong>, and <strong>1.0000 summarization ROUGE-L</strong>.
+          Unlike neural NER pipelines that misclassify <code class="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">ICD-10</code> codes or ledger figures, client-RAM ZTDS+ARC executes <strong>26.4&times;&ndash;83.5&times; faster</strong> with <strong>100.00% downstream accuracy</strong>, <strong>1.0000 QA Token F1</strong>, and <strong>1.0000 ROUGE-L</strong>.
         </p>
 
         <div class="border border-slate-200 rounded-xl overflow-x-auto" tabindex="0" role="region" aria-label="PIIBench-5000 SOTA comparison table">

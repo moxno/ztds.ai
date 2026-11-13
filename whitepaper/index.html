@@ -352,7 +352,7 @@
             <span>ZTDS<sup class="text-emerald-700 font-bold text-sm sm:text-lg ml-0.5">&trade;</sup>: A Data&#8209;Plane Primitive</span>
             <span class="hero-display-line block text-emerald-700 mt-1 font-extrabold tracking-tight">for Zero&#8209;Trust Enterprise AI</span>
           </h1>
-          <p class="text-lg sm:text-xl text-slate-600 font-normal mt-3 leading-relaxed">
+          <p class="hero-lead text-lg sm:text-xl text-slate-600 font-normal mt-3 leading-relaxed">
             Formal Specification, Cryptographic Isolation, and Subprocessor Elimination in Enterprise Generative Workloads
           </p>
 
@@ -425,7 +425,10 @@
               The accelerated adoption of generative artificial intelligence (GenAI) and autonomous agentic workflows has broken the foundational assumptions of traditional enterprise cybersecurity. While transport encryption (TLS 1.3) protects bits across the wire, generative architectures require third-party model inference engines to compute over decrypted, plaintext user payloads. This architecture exposes enterprise data to server-side model retention, training corpus contamination, telemetry logging, and indirect prompt injection attacks.
             </p>
             <p class="text-sm text-slate-800 leading-relaxed italic font-serif mt-3">
-              This paper presents <strong>Zero-Trust Data Sanitization (ZTDS RFC v1.0)</strong>, a data-plane primitive designed to guarantee zero unmitigated external sensitive data egress. Operating strictly within isolated client-side memory or hardware-attested Nitro Enclaves, ZTDS introduces deterministic, reversible tokenization that preserves syntactic and semantic context for downstream large language models (LLMs) while maintaining the private token mapping exclusively in volatile client RAM. We mathematically prove using Shannon information entropy that sanitized prompt payloads contain zero mutual information regarding underlying identifiers. In parallel, we establish the legal framework under EU GDPR Recital 26, Article 28, and Article 32 demonstrating that ZTDS-conforming pipelines eliminate intermediary sanitization subprocessors and establish a verifiable Technical Safe Harbor (Statutory Risk Minimization).
+              This paper presents <strong>Zero-Trust Data Sanitization (ZTDS RFC v1.0)</strong>, a data-plane primitive isolating sensitive data in client memory or Nitro Enclaves. Reversible tokenization preserves syntax for LLMs while keeping the token map strictly in volatile host RAM.
+            </p>
+            <p class="text-sm text-slate-800 leading-relaxed italic font-serif mt-2.5">
+              We prove via Shannon entropy that sanitized payloads leak zero mutual information on direct identifiers. Under GDPR Recital 26, Article 28, and Article 32, ZTDS removes intermediary sanitization subprocessors and establishes verifiable Technical Safe Harbor (Statutory Risk Minimization).
             </p>
           </div>
         </section>
@@ -700,7 +703,10 @@
             <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
               <div class="font-bold text-slate-900 text-sm font-mono">EU GDPR Article 28 &amp; Recital 26 (Subprocessor Elimination Doctrine)</div>
               <p class="text-xs text-slate-600 leading-relaxed">
-                Article 28 mandates that controllers execute formal Data Processing Agreements (DPAs) with any entity processing personal data on their behalf. Under the doctrine established by the Court of Justice of the European Union in Case C-582/14 (<em>Breyer</em>) and ratified in EDPB Guidelines 07/2020, information constitutes personal data for a third-party recipient only if that party possesses reasonable means likely to be used to identify the data subject. Because ZTDS-conforming software operates strictly as an in-memory client utility (with private token maps remaining in local volatile RAM), external AI model providers receive zero direct or indirect identifiers and possess no legal or technical means to de-anonymize the synthetic tokens. Downstream model vendors therefore fall outside statutory Data Processor classification under GDPR Article 4(8), exempting enterprise deployments from Article 28 DPA overhead and cross-border data transfer liabilities (Chapter V).
+                Article 28 mandates formal Data Processing Agreements (DPAs) with entities processing personal data on a controller&rsquo;s behalf. Under CJEU Case C-582/14 (<em>Breyer</em>) and EDPB Guidelines 07/2020, information is personal data for a recipient only when reasonable identification means exist.
+              </p>
+              <p class="text-xs text-slate-600 leading-relaxed mt-2">
+                Because ZTDS-conforming utilities tokenize in volatile local RAM without transmitting mapping tables, the utility vendor acts as zero subprocessor under GDPR Article 4(8), reducing Article 28 DPA overhead while supporting Article 32 Risk Minimization and Chapter V safeguards.
               </p>
             </div>
 

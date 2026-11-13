@@ -72,11 +72,14 @@
       "@type": "WebPage",
       "@id": "https://ztds.ai/frameworks/owasp-llm02-sensitive-information-disclosure/#webpage",
       "url": "https://ztds.ai/frameworks/owasp-llm02-sensitive-information-disclosure/",
-      "name": "OWASP LLM02 Sensitive Information Disclosure: PII Controls",
+      "name": "OWASP LLM02:2025 Sensitive Information Disclosure mapped to ZTDS pre-egress sanitization",
       "description": "How client-side PII tokenization reduces exposure under OWASP LLM02:2025 Sensitive Information Disclosure, with a control map and explicit coverage limits.",
       "inLanguage": "en-US",
       "isPartOf": {
         "@id": "https://ztds.ai/#website"
+      },
+      "publisher": {
+        "@id": "https://ztds.ai/#organization"
       },
       "breadcrumb": {
         "@id": "https://ztds.ai/frameworks/owasp-llm02-sensitive-information-disclosure/#breadcrumb"
@@ -94,10 +97,7 @@
         "width": 1200,
         "height": 630
       },
-      "dateModified": "2026-11-03T00:00:00Z",
-      "publisher": {
-        "@id": "https://ztds.ai/#organization"
-      }
+      "dateModified": "2026-11-03T00:00:00Z"
     },
     {
       "@type": [
@@ -123,8 +123,7 @@
       },
       "image": "https://ztds.ai/assets/img/og/og-compliance.png",
       "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://ztds.ai/frameworks/owasp-llm02-sensitive-information-disclosure/"
+        "@id": "https://ztds.ai/frameworks/owasp-llm02-sensitive-information-disclosure/#webpage"
       }
     },
     {
@@ -337,7 +336,7 @@
             OWASP LLM TOP 10 2025 · LLM02
           </div>
           <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight mb-3">OWASP LLM02 Sensitive Information Disclosure: <span class="block text-emerald-700 hero-display-line mt-0.5">Controlling PII Before It Reaches the Model</span></h1>
-          <p class="hero-lead text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">OWASP lists Sensitive Information Disclosure as LLM02 in the 2025 edition of its Top 10 for LLM Applications. ZTDS addresses the input side of that risk: personal data, secrets, and confidential identifiers are tokenized in client memory before a prompt, document, or tool result is sent to any model provider.</p>
+          <p class="hero-lead text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">OWASP classifies Sensitive Information Disclosure as LLM02 (2025). ZTDS tokenizes personal data, secrets, and identifiers in volatile client memory before any prompt leaves the host.</p>
         </div>
       </div>
     </section>
@@ -354,9 +353,9 @@
     <section class="py-7 sm:py-9 border-b border-slate-200 bg-[#f8fafc]">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 id="control-mapping" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">Control Map: LLM02 Exposure Paths and ZTDS Position</h2>
-        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" tabindex="0" role="region" aria-labelledby="frameworks-owasp-llm02-sensitive-information-dis-table-caption-1">
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" tabindex="0" role="region" aria-labelledby="framework-table-caption-1">
         <table class="min-w-full">
-          <caption id="frameworks-owasp-llm02-sensitive-information-dis-table-caption-1" class="ztds-sr-only">Control Map: LLM02 Exposure Paths and ZTDS Position Control Mapping Table</caption>
+          <caption id="framework-table-caption-1" class="ztds-sr-only">Framework control mapping table</caption>
           <thead class="bg-slate-50"><tr><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Exposure path</th><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Risk</th><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">ZTDS position</th></tr></thead>
           <tbody>
           <tr class="border-t border-slate-200"><th scope="row" class="px-4 py-3 text-left text-sm font-semibold text-slate-900 align-top">Pasted prompts</th><td class="px-4 py-3 text-sm text-slate-700 align-top">Customer or employee identifiers reach a third-party provider and its retention systems.</td><td class="px-4 py-3 text-sm text-slate-700 align-top">Directly addressed. Identifiers are tokenized in RAM before transmission (Invariants 1 and 2).</td></tr>
@@ -407,7 +406,8 @@
       </div>
     </section>
   </main>
-  <!-- AI Verification, Citation & LLM Context Ingestion Bar -->
+
+    <!-- AI Verification, Citation & LLM Context Ingestion Bar -->
   <aside id="ztds-ai-citation-bar" aria-label="AI Verification and Citation Tools" class="bg-slate-900 border-t border-slate-800 text-slate-300 py-6 px-4 sm:px-6 lg:px-8 no-print">
     <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
       <div class="space-y-1">

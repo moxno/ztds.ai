@@ -72,11 +72,14 @@
       "@type": "WebPage",
       "@id": "https://ztds.ai/frameworks/hipaa-safe-harbor-llm-prompts/#webpage",
       "url": "https://ztds.ai/frameworks/hipaa-safe-harbor-llm-prompts/",
-      "name": "HIPAA Safe Harbor for LLM Prompts: 18 Identifier Removal",
+      "name": "HIPAA Safe Harbor de-identification applied to clinical text sent to language models",
       "description": "How the 45 CFR 164.514(b)(2) Safe Harbor 18-identifier method applies to clinical text sent to language models, with re-identification code rules and limits.",
       "inLanguage": "en-US",
       "isPartOf": {
         "@id": "https://ztds.ai/#website"
+      },
+      "publisher": {
+        "@id": "https://ztds.ai/#organization"
       },
       "breadcrumb": {
         "@id": "https://ztds.ai/frameworks/hipaa-safe-harbor-llm-prompts/#breadcrumb"
@@ -94,10 +97,7 @@
         "width": 1200,
         "height": 630
       },
-      "dateModified": "2026-11-03T00:00:00Z",
-      "publisher": {
-        "@id": "https://ztds.ai/#organization"
-      }
+      "dateModified": "2026-11-03T00:00:00Z"
     },
     {
       "@type": [
@@ -123,8 +123,7 @@
       },
       "image": "https://ztds.ai/assets/img/og/og-compliance.png",
       "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://ztds.ai/frameworks/hipaa-safe-harbor-llm-prompts/"
+        "@id": "https://ztds.ai/frameworks/hipaa-safe-harbor-llm-prompts/#webpage"
       }
     },
     {
@@ -337,7 +336,7 @@
             HIPAA · 45 CFR 164.514(b)(2) · SAFE HARBOR
           </div>
           <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight mb-3">HIPAA Safe Harbor for LLM Prompts: <span class="block text-emerald-700 hero-display-line mt-0.5">Removing the 18 Identifiers Before Egress</span></h1>
-          <p class="hero-lead text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">The HIPAA Safe Harbor method in 45 CFR 164.514(b)(2) treats health information as de-identified when 18 listed identifier categories are removed and the covered entity has no actual knowledge that the remainder could identify a person. This page explains how that applies when clinical text is prepared for a language model.</p>
+          <p class="hero-lead text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">HIPAA Safe Harbor (45 CFR 164.514(b)(2)) de-identifies clinical data by removing 18 identifier categories when no re-identification knowledge exists. Client-side tokenization prepares notes before model egress.</p>
         </div>
       </div>
     </section>
@@ -345,7 +344,8 @@
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 id="summary" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">Summary</h2>
         <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">Safe Harbor is a rule-based method. It lists identifier categories of the individual and of relatives, employers, and household members that must be removed, including names, geographic subdivisions smaller than a state, date elements other than year, contact numbers, and record numbers.</p>
-        <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">Section 164.514(c) allows a covered entity to assign a code to permit re-identification, provided the code is not derived from or related to information about the individual and is not otherwise capable of being translated to identify the individual, and the covered entity does not use or disclose the code for any other purpose and does not disclose the mechanism for re-identification. Random per-session surrogates whose mapping is held only in local memory fit that constraint; surrogates derived from the original values would not.</p>
+        <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">Section 164.514(c) lets a covered entity assign a re-identification code unrelated to patient attributes, kept unshared with any external party.</p>
+        <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4">Ephemeral session surrogates mapped strictly in volatile client memory satisfy that constraint, whereas deterministic hashes derived from patient values do not.</p>
         <div class="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 leading-relaxed">
           <strong>Scope notice.</strong> This page maps a technical control to a published framework as a Statutory Risk Minimization and Defense-in-Depth measure. It is not legal advice, not a certification by the framework owner, and not a statement that any regulation is fully satisfied. Consult qualified counsel for jurisdiction-specific determinations.
         </div>
@@ -354,9 +354,9 @@
     <section class="py-7 sm:py-9 border-b border-slate-200 bg-[#f8fafc]">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 id="control-mapping" class="text-xl sm:text-2xl font-bold text-slate-900 mb-3.5 scroll-mt-24">Identifier Handling in Clinical Text</h2>
-        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" tabindex="0" role="region" aria-labelledby="frameworks-hipaa-safe-harbor-llm-prompts-table-caption-1">
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white" tabindex="0" role="region" aria-labelledby="framework-table-caption-5">
         <table class="min-w-full">
-          <caption id="frameworks-hipaa-safe-harbor-llm-prompts-table-caption-1" class="ztds-sr-only">Identifier Handling in Clinical Text Control Mapping Table</caption>
+          <caption id="framework-table-caption-5" class="ztds-sr-only">Framework control mapping table</caption>
           <thead class="bg-slate-50"><tr><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Identifier category</th><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Typical form in prompts</th><th scope="col" class="px-4 py-3 text-left text-xs font-mono uppercase tracking-wider text-slate-600">Required handling</th></tr></thead>
           <tbody>
           <tr class="border-t border-slate-200"><th scope="row" class="px-4 py-3 text-left text-sm font-semibold text-slate-900 align-top">Names</th><td class="px-4 py-3 text-sm text-slate-700 align-top">Patient, relative, and clinician names in notes.</td><td class="px-4 py-3 text-sm text-slate-700 align-top">Replace with a surrogate such as [NAME_1].</td></tr>
@@ -406,7 +406,8 @@
       </div>
     </section>
   </main>
-  <!-- AI Verification, Citation & LLM Context Ingestion Bar -->
+
+    <!-- AI Verification, Citation & LLM Context Ingestion Bar -->
   <aside id="ztds-ai-citation-bar" aria-label="AI Verification and Citation Tools" class="bg-slate-900 border-t border-slate-800 text-slate-300 py-6 px-4 sm:px-6 lg:px-8 no-print">
     <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
       <div class="space-y-1">
