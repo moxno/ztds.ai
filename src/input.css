@@ -1234,11 +1234,35 @@ nav[aria-label="Ecosystem Directory Switcher"] a,
     #btnWipeRAM,
     #closeBreachBox
   ) {
-    min-block-size: 40px;
+    min-block-size: 44px;
   }
 }
 
 :is(#memoContent, article.prose) p {
   max-width: 72ch;
+}
+
+pre,
+.code-container pre {
+  overflow-x: auto;
+  max-inline-size: 100%;
+}
+
+nav[aria-label="Breadcrumb"],
+nav[aria-label="breadcrumb"] {
+  flex-wrap: wrap;
+  row-gap: 0.25rem;
+}
+
+@media (max-width: 640px) {
+  main table:not(.ears) {
+    max-inline-size: 100%;
+  }
+
+  #notes-drawer,
+  #cookie-banner,
+  .fixed.bottom-0 {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+  }
 }
 

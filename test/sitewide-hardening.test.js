@@ -903,7 +903,7 @@ console.log('--> Test 11: Perceptual Clarity, no-slop, Universal Hero Lead Brevi
   const inputCss = fs.readFileSync(path.join(ROOT, 'src/input.css'), 'utf8');
   assert(
     inputCss.includes('@media (pointer: coarse), (max-width: 640px)') &&
-      inputCss.includes('min-block-size: 40px') &&
+      inputCss.includes('min-block-size: 44px') &&
       inputCss.includes('.preset-btn') &&
       inputCss.includes('.scan-preset-btn') &&
       inputCss.includes('.filter-btn') &&
@@ -1016,4 +1016,54 @@ console.log('--> Test 12: Information Architecture, Contextual Silo Connectivity
   console.log(`    [PASS] Unique titles (30..68 chars), 8/8 hub ItemLists, zero duplicate BreadcrumbList URLs, and >= 2 contextual <main> inbound/outbound links verified across ${canonicalPages.length} pages.`);
 }
 
-console.log('\n[SUMMARY] ALL 12 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
+// ============================================================================
+// 13. Mobile Viewport Ergonomics, iOS Auto-Zoom Guard & Responsive Grid/Pre Bounds — Wave 5
+// ============================================================================
+console.log('[13/13] Verifying mobile viewport ergonomics, 44px touch targets & responsive grid bounds...');
+{
+  const homeHtml = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const homeInputMatch = homeHtml.match(/<textarea\b[^>]*id="homeInputArea"[^>]*>/i);
+  assert(homeInputMatch, 'index.html must contain #homeInputArea');
+  assert(
+    /\btext-base\b/.test(homeInputMatch[0]) && !/\btext-xs\b/.test(homeInputMatch[0]),
+    'index.html #homeInputArea must use text-base (>= 16px on mobile) to prevent iOS Safari auto-zoom'
+  );
+
+  const inputCss = fs.readFileSync(path.join(ROOT, 'src/input.css'), 'utf8');
+  assert(
+    /@media\s*\(pointer:\s*coarse\),\s*\(max-width:\s*640px\)\s*\{[\s\S]*min-block-size:\s*44px;/i.test(inputCss),
+    'src/input.css must enforce min-block-size: 44px inside coarse/mobile media query (WCAG 2.5.5)'
+  );
+  assert(
+    /nav\[aria-label="Breadcrumb"\][\s\S]*flex-wrap:\s*wrap;/i.test(inputCss),
+    'src/input.css must wrap breadcrumbs cleanly on 320px viewports'
+  );
+  assert(
+    /pre,[\s\S]*overflow-x:\s*auto;/i.test(inputCss),
+    'src/input.css must enforce overflow-x: auto on <pre> blocks'
+  );
+  assert(
+    /env\(safe-area-inset-bottom,\s*0px\)/i.test(inputCss),
+    'src/input.css must apply safe-area-inset-bottom padding on mobile bottom drawers/banners'
+  );
+
+  const gridPages = [
+    { rel: 'companies/index.html', check: (h) => !/\bgrid-cols-4\b/.test(h.replace(/grid-cols-2\s+sm:grid-cols-4/g, '')), msg: 'companies/index.html has bare grid-cols-4 without sm: breakpoint' },
+    { rel: 'case-studies/index.html', check: (h) => !/mt-4 grid grid-cols-3\b/.test(h), msg: 'case-studies/index.html has bare grid-cols-3 metric cards' },
+    { rel: 'agency/index.html', check: (h) => !/<div class="grid grid-cols-3\b/.test(h), msg: 'agency/index.html has bare grid-cols-3 metric strip' },
+    { rel: 'roi/index.html', check: (h) => !/\bgrid-cols-4\b/.test(h.replace(/grid-cols-2\s+sm:grid-cols-4/g, '')) && !/<div class="grid grid-cols-3\b/.test(h), msg: 'roi/index.html has bare grid-cols-3/grid-cols-4 without sm: breakpoint' },
+    { rel: 'deck/index.html', check: (h) => !/<div class="grid grid-cols-3\b/.test(h) && !/max-h-\[40vh\]/.test(h) && /max-h-\[40dvh\]/.test(h), msg: 'deck/index.html must use sm:grid-cols-3 and max-h-[40dvh]' },
+  ];
+  for (const gp of gridPages) {
+    const html = fs.readFileSync(path.join(ROOT, gp.rel), 'utf8');
+    assert(gp.check(html), gp.msg);
+  }
+
+  const bpHtml = fs.readFileSync(path.join(ROOT, 'blueprints/index.html'), 'utf8');
+  const barePres = (bpHtml.match(/<pre><code>/g) || []).length;
+  assert.strictEqual(barePres, 0, 'blueprints/index.html <pre> elements must carry overflow-x-auto bounds');
+
+  console.log('    [PASS] iOS >= 16px input guard, 44px touch targets, breadcrumb flex-wrap, responsive grids, dvh drawer, and <pre> bounds verified.');
+}
+
+console.log('\n[SUMMARY] ALL 13 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
