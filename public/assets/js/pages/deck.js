@@ -107,7 +107,7 @@
         notesContentEl.replaceChildren(...nodes);
       }
 
-      function showSlide(index) {
+      function showSlide(index, options) {
         if (index < 0) index = 0;
         if (index >= totalSlides) index = totalSlides - 1;
         currentIndex = index;
@@ -130,6 +130,11 @@
 
         // Update Hash
         history.replaceState(null, null, '#' + (currentIndex + 1));
+
+        // Reset vertical scroll on stacked mobile/tablet viewports between slide transitions
+        if (!(options && options.skipScrollReset) && window.matchMedia && window.matchMedia('(max-width: 1023px)').matches && window.scrollY > 0) {
+          window.scrollTo({ top: 0, behavior: 'instant' });
+        }
       }
 
       function nextSlide() {
@@ -164,6 +169,43 @@
       toggleNotesBtn.addEventListener('click', toggleNotes);
       closeNotesBtn.addEventListener('click', () => notesDrawer.classList.remove('open'));
       fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+      // Horizontal touch swipe navigation (respect horizontal table/code scroll regions)
+      const slideStage = document.getElementById('main-content');
+      let swipeStartX = 0;
+      let swipeStartY = 0;
+      let swipeStartTime = 0;
+      let swipeTracking = false;
+      if (slideStage) {
+        slideStage.addEventListener('touchstart', (e) => {
+          if (!e.touches || e.touches.length !== 1) {
+            swipeTracking = false;
+            return;
+          }
+          const target = e.target;
+          if (target && target.closest && target.closest('a, button, input, textarea, select, pre, code, table, .overflow-x-auto, #notes-drawer')) {
+            swipeTracking = false;
+            return;
+          }
+          swipeStartX = e.touches[0].clientX;
+          swipeStartY = e.touches[0].clientY;
+          swipeStartTime = Date.now();
+          swipeTracking = true;
+        }, { passive: true });
+
+        slideStage.addEventListener('touchend', (e) => {
+          if (!swipeTracking || !e.changedTouches || e.changedTouches.length !== 1) return;
+          swipeTracking = false;
+          const dt = Date.now() - swipeStartTime;
+          if (dt > 600) return;
+          const dx = e.changedTouches[0].clientX - swipeStartX;
+          const dy = e.changedTouches[0].clientY - swipeStartY;
+          if (Math.abs(dx) >= 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+            if (dx < 0) nextSlide();
+            else prevSlide();
+          }
+        }, { passive: true });
+      }
 
       document.addEventListener('keydown', (e) => {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -210,9 +252,9 @@
         const hash = window.location.hash.replace('#', '') || params.get('slide') || '';
         const slideNum = parseInt(hash, 10);
         if (!isNaN(slideNum) && slideNum >= 1 && slideNum <= totalSlides) {
-          showSlide(slideNum - 1);
+          showSlide(slideNum - 1, { skipScrollReset: true });
         } else {
-          showSlide(0);
+          showSlide(0, { skipScrollReset: true });
         }
       }
 

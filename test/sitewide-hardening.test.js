@@ -1264,6 +1264,7 @@ console.log('[16/16] Verifying Wave 8 text-size-adjust, touch-action, <summary> 
     ['fellows/index.html', 'fellowBadgeModal', /max-h-\[90dvh\]/, /\bp-4 sm:p-6\b/],
     ['registry/index.html', 'certModal', /max-h-\[90dvh\]/, /\bp-4 sm:p-6\b/],
     ['roi/index.html', 'memoPreviewModal', /max-h-\[92dvh\]/, /\bp-4 sm:p-8\b/],
+    ['scanner/index.html', 'modalCisoAuditReport', /max-h-\[92dvh\]/, /\bp-4 sm:p-(?:6|7)\b/],
     ['scanner/index.html', 'cisoLeadModal', /max-h-\[90dvh\]/, /\bp-4 sm:p-6\b/],
     ['sdk/index.html', 'checkoutModal', /max-h-\[90dvh\]/, /\bp-4 sm:p-6\b/],
     ['verify/index.html', 'modalCertificatePrint', /max-h-\[95dvh\]/, /\bpx-4 sm:px-6\b/],
@@ -1551,4 +1552,159 @@ console.log('[18/18] Verifying Wave 10 header CTA fix, CISO ztds-slider parity, 
   console.log(`    [PASS] Wave 10 360-420px header CTA, range sliders, footer/pill <a> 44px, tablist fallback, dual sticky sync, IETF mobile polish & 320px card padding verified across ${HTML_FILES.length} pages.`);
 }
 
-console.log('\n[SUMMARY] ALL 18 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
+// ============================================================================
+// 19. Deck Mobile Responsive Overhaul, Sub-44px Override Removal, IETF Viewport, Hover Gating & Scroll Chaining — Wave 11
+// ============================================================================
+console.log('[19/19] Verifying Wave 11 /deck/ responsive overhaul, sub-44px override removal, IETF viewport, hover gating, overscroll containment & modal/form polish...');
+{
+  const missingViewportWidth = [];
+  const bareSub44Interactive = [];
+
+  for (const relPath of HTML_FILES) {
+    const html = fs.readFileSync(path.join(ROOT, relPath), 'utf8');
+
+    const viewportTag = html.match(/<meta\b[^>]*name=["']viewport["'][^>]*>/i);
+    if (!viewportTag || !/\bwidth=device-width\b/i.test(viewportTag[0])) {
+      missingViewportWidth.push(relPath);
+    }
+
+    for (const m of html.matchAll(/<(?:button|a|input|select|textarea)\b[^>]*>/gi)) {
+      const tag = m[0];
+      const clsMatch = tag.match(/\bclass=["']([^"']+)["']/i);
+      if (!clsMatch) continue;
+      const tokens = clsMatch[1].split(/\s+/).filter(Boolean);
+      for (const tok of tokens) {
+        const sub44Match = tok.match(/^min-h-\[(\d+)px\]$/);
+        if (sub44Match && Number(sub44Match[1]) < 44) {
+          bareSub44Interactive.push(`${relPath}: ${tok} in ${tag.slice(0, 120)}`);
+        }
+      }
+    }
+  }
+
+  assert.strictEqual(
+    missingViewportWidth.length,
+    0,
+    `All ${HTML_FILES.length} HTML pages must declare width=device-width in <meta name="viewport">: ${missingViewportWidth.join(', ')}`
+  );
+  assert.strictEqual(
+    bareSub44Interactive.length,
+    0,
+    `Interactive controls must never carry bare sub-44px min-h-[<44px] utilities:\n${bareSub44Interactive.join('\n')}`
+  );
+
+  const cisoHtml = fs.readFileSync(path.join(ROOT, 'ciso/index.html'), 'utf8');
+  const closeProcMatch = cisoHtml.match(/<button\b[^>]*id="btnCloseProcurementModal"[^>]*>/i);
+  assert(
+    closeProcMatch && closeProcMatch[0].includes('min-w-[44px]') && closeProcMatch[0].includes('min-h-[44px]'),
+    'ciso/index.html #btnCloseProcurementModal must enforce min-w-[44px] min-h-[44px] on touch viewports'
+  );
+
+  const inputCss = fs.readFileSync(path.join(ROOT, 'src/input.css'), 'utf8');
+  assert(
+    /@media\s*\(hover:\s*hover\)\s*\{\s*\.ztds-card:hover/i.test(inputCss) &&
+      /@media\s*\(hover:\s*hover\)\s*\{\s*\.btn-trust:hover:not\(:disabled\)/i.test(inputCss) &&
+      /@media\s*\(prefers-reduced-motion:\s*no-preference\)\s*\{[\s\S]*?:active:not\(:disabled\)[\s\S]*?scale\(0\.98\)/i.test(inputCss),
+    'src/input.css must gate sticky :hover rules behind @media (hover: hover) and provide :active tactile feedback'
+  );
+  assert(
+    /dialog:modal,\s*\[role="dialog"\][\s\S]*?overscroll-behavior:\s*contain;/i.test(inputCss) &&
+      /dialog::backdrop\s*\{[\s\S]*?overscroll-behavior:\s*contain;/i.test(inputCss),
+    'src/input.css must enforce overscroll-behavior: contain on dialog:modal, [role="dialog"], drawers & backdrop'
+  );
+  assert(
+    /@supports\s*\(padding-left:\s*env\(safe-area-inset-left\)\)\s*\{[\s\S]*?env\(safe-area-inset-left,\s*0px\)[\s\S]*?env\(safe-area-inset-right,\s*0px\)/i.test(inputCss),
+    'src/input.css must apply horizontal safe-area insets for notched landscape devices'
+  );
+
+  const coarseMatches = [...inputCss.matchAll(/@media\s*\(pointer:\s*coarse\),\s*\(max-width:\s*640px\)\s*\{([\s\S]*?)\n\}/g)];
+  const coarseText = coarseMatches.map((m) => m[1]).join('\n');
+  for (const sel of [
+    '#copyCliCommandBtn',
+    '#copyMarkdownBtn',
+    '#downloadJsonBtn',
+    '#copyMarkdownSnippetBtn',
+    '#copyHtmlSnippetBtn',
+    '#downloadBadgeSvgBtn',
+    '.canvas-bg-btn',
+    '.canvas-zoom-btn',
+    '.preset-label-chip',
+    '#btnPrintCisoReport',
+    '#btnModalDownloadJson',
+    '#btnCopyCisoReportSummary',
+    '#simulateHashBtn',
+    '#close-notes-btn',
+    '[role="dialog"] button[aria-label*="Close" i]',
+    '#mobile-drawer button[aria-label*="Close" i]',
+    'nav[aria-label="Breadcrumb"] a',
+    ':is(main, [role="dialog"], header.no-print) a:is(.flex, .inline-flex):not(.ztds-card)',
+    ':is(main, [role="dialog"]) div.border-t.flex.justify-between > a:not(.ztds-card)',
+    '[role="button"].order-tier-card',
+  ]) {
+    assert(coarseText.includes(sel), `src/input.css coarse/mobile 44px rule missing Wave 11 selector: ${sel}`);
+  }
+  assert(
+    /@media\s*\(max-width:\s*640px\)\s*\{[\s\S]*?:is\(main,\s*\[role="dialog"\]\)\s*div\.border-t\.flex\.justify-between\s*\{[\s\S]*?flex-wrap:\s*wrap;/i.test(inputCss),
+    'src/input.css @media (max-width: 640px) must wrap card/modal div.border-t.flex.justify-between rows'
+  );
+
+  const deckHtml = fs.readFileSync(path.join(ROOT, 'deck/index.html'), 'utf8');
+  assert(
+    /\.deck-viewport\s*\{[^}]*width:\s*100%;[^}]*min-height:\s*100dvh;/i.test(deckHtml) &&
+      /\.slide-stage\s*\{[^}]*flex-direction:\s*column;/i.test(deckHtml) &&
+      /@media screen and \(max-width:\s*1023px\),\s*screen and \(max-height:\s*780px\)\s*\{[\s\S]*?\.slide\s*\{[^}]*aspect-ratio:\s*auto;\s*max-height:\s*none;/i.test(deckHtml) &&
+      deckHtml.includes('text-2xl sm:text-4xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight mb-4 text-balance') &&
+      deckHtml.includes('grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-4') &&
+      deckHtml.includes('<footer class="sticky bottom-0 z-30') &&
+      deckHtml.includes('max-h-[65dvh] sm:max-h-[40dvh]'),
+    'deck/index.html must implement responsive mobile/tablet stack, flex-direction: column stage, sticky controls & Slide 1/8 grids'
+  );
+  const slideHeadersUnwrapped = [];
+  for (const slideMatch of deckHtml.matchAll(/<article class="slide[^"]*"[\s\S]*?<\/article>/gi)) {
+    for (const flexMatch of slideMatch[0].matchAll(/<div class="([^"]*justify-between[^"]*)"/gi)) {
+      const cls = flexMatch[1];
+      if (/\bflex\b/.test(cls) && !/\bflex-wrap\b/.test(cls) && !/\bflex-col\b/.test(cls) && !/\bmd:min-w-\[750px\]\b/.test(cls)) {
+        slideHeadersUnwrapped.push(cls);
+      }
+    }
+  }
+  assert.strictEqual(
+    slideHeadersUnwrapped.length,
+    0,
+    `All justify-between bars inside deck/index.html slides must include flex-wrap or flex-col:\n${slideHeadersUnwrapped.join('\n')}`
+  );
+
+  const deckJs = fs.readFileSync(path.join(ROOT, 'assets/js/pages/deck.js'), 'utf8');
+  assert(
+    deckJs.includes("'touchstart'") && deckJs.includes("'touchend'") && deckJs.includes('window.scrollTo('),
+    'assets/js/pages/deck.js must bind touchstart/touchend horizontal swipe gestures and mobile scroll-top reset'
+  );
+
+  const mcpHtml = fs.readFileSync(path.join(ROOT, 'mcp/index.html'), 'utf8');
+  assert(
+    mcpHtml.includes('grid-cols-1 sm:grid-cols-2 gap-1.5 p-1 bg-slate-50 border border-slate-200 rounded-xl') &&
+      mcpHtml.includes('flex flex-wrap flex-row lg:flex-col gap-2 text-xs font-mono pb-1'),
+    'mcp/index.html Package Edition switcher and env toggles must avoid 320px overflow'
+  );
+
+  const orderFormHtml = fs.readFileSync(path.join(ROOT, 'docs/legal/order-form/index.html'), 'utf8');
+  assert(
+    !/\smin-h-\[9\.8in\]/.test(orderFormHtml) &&
+      orderFormHtml.includes('sm:min-h-[9.8in] print:min-h-[9.8in]') &&
+      !/\bpy-0\.2\b/.test(orderFormHtml),
+    'docs/legal/order-form/index.html must scope 9.8in height to sm:/print: and replace py-0.2 with py-0.5'
+  );
+
+  const scannerHtml = fs.readFileSync(path.join(ROOT, 'scanner/index.html'), 'utf8');
+  const indexHtml = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  assert(
+    scannerHtml.includes('id="cisoReportPrintableArea" class="p-4 sm:p-7 overflow-y-auto') &&
+      scannerHtml.includes('pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-slate-500') &&
+      indexHtml.includes('pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-slate-500'),
+    'scanner/index.html #modalCisoAuditReport and both #cisoLeadModal bypass rows must enforce compact padding & flex-wrap'
+  );
+
+  console.log(`    [PASS] Wave 11 /deck/ responsive overhaul, 60/60 viewport width=device-width, 0 sub-44px overrides, hover gating, overscroll containment & modal/form polish verified.`);
+}
+
+console.log('\n[SUMMARY] ALL 19 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');

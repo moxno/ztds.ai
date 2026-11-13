@@ -257,9 +257,11 @@ main p {
     position: relative;
   }
 
-  .ztds-card:hover:not(.bg-slate-900):not(.bg-slate-950) {
-    border-color: var(--border-subtle-hover);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+  @media (hover: hover) {
+    .ztds-card:hover:not(.bg-slate-900):not(.bg-slate-950) {
+      border-color: var(--border-subtle-hover);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+    }
   }
 
   .ztds-card-elevated {
@@ -291,10 +293,12 @@ main p {
     border: none;
   }
 
-  .btn-trust:hover:not(:disabled) {
-    background-color: #065f46;
-    box-shadow: 0 4px 12px rgba(4, 120, 87, 0.25);
-    transform: translateY(-1px);
+  @media (hover: hover) {
+    .btn-trust:hover:not(:disabled) {
+      background-color: #065f46;
+      box-shadow: 0 4px 12px rgba(4, 120, 87, 0.25);
+      transform: translateY(-1px);
+    }
   }
 
   .btn-navy {
@@ -318,10 +322,12 @@ main p {
     border: none;
   }
 
-  .btn-navy:hover:not(:disabled) {
-    background-color: #1e293b;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
-    transform: translateY(-1px);
+  @media (hover: hover) {
+    .btn-navy:hover:not(:disabled) {
+      background-color: #1e293b;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+      transform: translateY(-1px);
+    }
   }
 
   .btn-outline {
@@ -344,10 +350,12 @@ main p {
     cursor: pointer;
   }
 
-  .btn-outline:hover:not(:disabled) {
-    background-color: #f8fafc;
-    border-color: #94a3b8;
-    transform: translateY(-1px);
+  @media (hover: hover) {
+    .btn-outline:hover:not(:disabled) {
+      background-color: #f8fafc;
+      border-color: #94a3b8;
+      transform: translateY(-1px);
+    }
   }
 
   /* Dark Outline Button for dark cards and headers */
@@ -370,11 +378,13 @@ main p {
     cursor: pointer;
   }
 
-  .btn-outline-dark:hover:not(:disabled) {
-    background-color: #334155;
-    border-color: #475569;
-    color: #ffffff !important;
-    transform: translateY(-1px);
+  @media (hover: hover) {
+    .btn-outline-dark:hover:not(:disabled) {
+      background-color: #334155;
+      border-color: #475569;
+      color: #ffffff !important;
+      transform: translateY(-1px);
+    }
   }
 
   /* Backward compatibility button mappings */
@@ -395,9 +405,18 @@ main p {
     cursor: pointer;
     border: none;
   }
-  .btn-mint:hover:not(:disabled) {
-    background-color: #065f46;
-    transform: translateY(-1px);
+
+  @media (hover: hover) {
+    .btn-mint:hover:not(:disabled) {
+      background-color: #065f46;
+      transform: translateY(-1px);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :is(.btn-trust, .btn-navy, .btn-outline, .btn-outline-dark, .btn-mint):active:not(:disabled) {
+      transform: translateY(0) scale(0.98);
+    }
   }
 
   /* Pill Badges */
@@ -717,8 +736,8 @@ details:not([open])::details-content {
 /* Mobile Compact (320px–420px) Header & Touch Ergonomics */
 @media (max-width: 420px) {
   header > div {
-    padding-left: 0.75rem !important;
-    padding-right: 0.75rem !important;
+    padding-left: max(0.75rem, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(0.75rem, env(safe-area-inset-right, 0px)) !important;
     gap: 0.5rem !important;
   }
   header a[href="/"] {
@@ -769,6 +788,8 @@ details:not([open])::details-content {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  overflow: hidden;
+  overscroll-behavior: contain;
   transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
@@ -798,8 +819,10 @@ details:not([open])::details-content {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 1.5rem;
   padding-top: max(1.5rem, env(safe-area-inset-top));
+  padding-right: max(1.5rem, env(safe-area-inset-right, 0px));
   padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
 }
 
@@ -808,6 +831,20 @@ details:not([open])::details-content {
   transform: translateX(0);
   visibility: visible;
   pointer-events: auto;
+}
+
+dialog:modal,
+[role="dialog"],
+[role="dialog"] .overflow-y-auto,
+#mobile-drawer,
+#ztds-cmd-backdrop,
+#notes-drawer {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
 }
 
 /* Custom Range Sliders */
@@ -835,9 +872,22 @@ details:not([open])::details-content {
   transition: transform 0.1s ease, background 0.15s ease;
 }
 
-.ztds-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
+@media (hover: hover) {
+  .ztds-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    background: #047857;
+  }
+
+  .ztds-slider::-moz-range-thumb:hover {
+    transform: scale(1.15);
+    background: #047857;
+  }
+}
+
+.ztds-slider:active::-webkit-slider-thumb,
+.ztds-slider:active::-moz-range-thumb {
   background: #047857;
+  transform: scale(1.08);
 }
 
 .ztds-slider::-moz-range-thumb {
@@ -1541,7 +1591,21 @@ nav[aria-label="Page Sections"] a {
     #btnCopyJson,
     #btnCopyBadgeMd,
     #btnCopyBadgeHtml,
-    #btnCopyBadgeCode
+    #btnCopyBadgeCode,
+    #copyCliCommandBtn,
+    #copyMarkdownBtn,
+    #downloadJsonBtn,
+    #copyMarkdownSnippetBtn,
+    #copyHtmlSnippetBtn,
+    #downloadBadgeSvgBtn,
+    .canvas-bg-btn,
+    .canvas-zoom-btn,
+    .preset-label-chip,
+    #btnPrintCisoReport,
+    #btnModalDownloadJson,
+    #btnCopyCisoReportSummary,
+    #simulateHashBtn,
+    #close-notes-btn
   ) {
     min-block-size: 44px;
   }
@@ -1549,7 +1613,11 @@ nav[aria-label="Page Sections"] a {
   #btnCloseProcurementModal,
   #btnCloseCisoLeadModal,
   #btnCloseCheckoutModal,
-  #bcSearchClear {
+  #bcSearchClear,
+  [role="dialog"] button[aria-label*="Close" i],
+  #mobile-drawer button[aria-label*="Close" i],
+  #close-notes-btn {
+    min-block-size: 44px;
     min-inline-size: 44px;
   }
 
@@ -1609,6 +1677,26 @@ nav[aria-label="Page Sections"] a {
   .cert-verify-link {
     min-block-size: 44px;
   }
+
+  nav[aria-label="Breadcrumb"] a,
+  nav[aria-label="breadcrumb"] a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+  }
+
+  :is(main, [role="dialog"], header.no-print) a:is(.flex, .inline-flex):not(.ztds-card),
+  :is(main, [role="dialog"]) div.border-t.flex.justify-between > a:not(.ztds-card) {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+  }
+
+  [role="button"].order-tier-card,
+  [role="button"].step-indicator,
+  [role="radio"].track-choice-card {
+    min-block-size: 44px;
+  }
 }
 
 :is(#memoContent, article.prose) p {
@@ -1637,9 +1725,24 @@ nav[aria-label="breadcrumb"] {
   }
 }
 
+@supports (padding-left: env(safe-area-inset-left)) {
+  body > header > div,
+  #ztds-ai-citation-bar,
+  body > footer > div {
+    padding-left: max(1rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1rem, env(safe-area-inset-right, 0px));
+  }
+}
+
 @media (max-width: 640px) {
   main .grid > * {
     min-width: 0;
+  }
+
+  :is(main, [role="dialog"]) div.border-t.flex.justify-between {
+    flex-wrap: wrap;
+    column-gap: 0.5rem;
+    row-gap: 0.25rem;
   }
 
   main table:not(.ears) {
@@ -1660,6 +1763,7 @@ nav[aria-label="breadcrumb"] {
 
   #ztds-back-to-top {
     bottom: max(1.25rem, calc(env(safe-area-inset-bottom, 0px) + 0.5rem));
+    right: max(1.25rem, calc(env(safe-area-inset-right, 0px) + 0.5rem));
   }
 
   #notes-drawer,
@@ -1675,7 +1779,8 @@ nav[aria-label="breadcrumb"] {
   }
 
   body > header > div {
-    padding-inline: 0.75rem;
+    padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
+    padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
   }
 
   body > header > div > div:last-child {

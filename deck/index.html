@@ -157,17 +157,18 @@
       font-family: var(--font-sans);
       background-color: #070b14;
       color: #f1f5f9;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
       margin: 0;
       padding: 0;
-      user-select: none;
     }
     .mono { font-family: var(--font-mono); }
-    
+
     /* Slide Frame */
     .deck-viewport {
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -176,18 +177,23 @@
     .slide-stage {
       flex: 1;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      padding: 1rem;
       position: relative;
-      overflow: hidden;
+    }
+    @media (min-width: 640px) {
+      .slide-stage {
+        padding: 1.5rem;
+      }
     }
     .slide {
       display: none;
       width: 100%;
       max-width: 1380px;
       aspect-ratio: 16 / 9;
-      max-height: calc(100vh - 120px);
+      max-height: calc(100dvh - 120px);
       background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.08), transparent 45%),
                   radial-gradient(circle at bottom left, rgba(56, 189, 248, 0.06), transparent 40%),
                   #0c1322;
@@ -206,6 +212,24 @@
       display: flex;
       opacity: 1;
       transform: scale(1);
+    }
+    @media screen and (max-width: 1023px), screen and (max-height: 780px) {
+      .slide-stage {
+        justify-content: flex-start;
+      }
+      .slide {
+        aspect-ratio: auto;
+        max-height: none;
+        min-height: 0;
+        border-radius: 1rem;
+        padding: 1.25rem 1rem;
+        gap: 1rem;
+      }
+    }
+    @media screen and (min-width: 640px) and (max-width: 1023px) {
+      .slide {
+        padding: 1.75rem 2rem;
+      }
     }
 
     /* Print / PDF Mode */
@@ -346,14 +370,14 @@
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-400 text-xs font-mono mb-4">
             <span>Deterministic Client-Side Computational Standard</span>
           </div>
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight mb-4">
+          <h1 class="text-2xl sm:text-4xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight mb-4 text-balance">
             Zero-Trust Data Sanitization <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-sky-400">(ZTDS)</span> in Enterprise GenAI
           </h1>
-          <p class="hero-lead text-lg sm:text-xl text-slate-300 max-w-4xl font-normal leading-relaxed mb-8">
+          <p class="hero-lead text-sm sm:text-lg lg:text-xl text-slate-300 max-w-4xl font-normal leading-relaxed mb-6 sm:mb-8">
             Deploy LLMs, agents, and RAG pipelines with <strong class="text-white font-semibold">Provable Zero Cleartext Egress</strong>, <strong class="text-emerald-400 font-semibold">Zero Sanitization Subprocessors</strong>, and <strong class="text-white font-semibold">GDPR Art. 32 Safe Harbor</strong>.
           </p>
 
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-white/10">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-4 border-t border-white/10">
             <div class="p-3.5 rounded-xl bg-white/[0.03] border border-white/5">
               <div class="text-xs font-mono uppercase text-slate-400">Data Egress</div>
               <div class="text-xl font-bold font-mono text-emerald-400 mt-0.5">0.00 Bytes</div>
@@ -377,7 +401,7 @@
           </div>
         </div>
 
-        <div class="flex items-center justify-between border-t border-white/10 pt-4 text-xs text-slate-400 font-mono">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-t border-white/10 pt-4 text-xs text-slate-400 font-mono">
           <div>Presenter: <span class="text-slate-200 font-semibold">Ilya Sibiryakov</span> (ORCID: 0009-0002-0642-5985) &middot; Chief Architect</div>
           <div>Ecosystem: <span class="text-slate-200">BrandMeWeb</span> &middot; <span class="text-emerald-400">ZTDS.ai</span></div>
         </div>
@@ -387,8 +411,8 @@
       <!-- SLIDE 2: The Enterprise GenAI Dilemma -->
       <!-- ==================================================================== -->
       <article class="slide" data-slide="2" data-title="The Enterprise GenAI Dilemma: 4 Statutory Chokepoints">
-        <div class="flex items-center justify-between border-b border-white/10 pb-4">
-          <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
+          <div class="flex flex-wrap items-center gap-2 sm:gap-3">
             <span class="px-2.5 py-1 rounded bg-amber-500/10 border border-amber-500/30 text-amber-400 font-mono text-xs font-bold uppercase tracking-wider">Statutory Risk Analysis</span>
             <span class="text-xs font-mono text-slate-400">The Conflict Between Business Velocity &amp; CISO Fines</span>
           </div>
@@ -405,7 +429,7 @@
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="p-4 rounded-xl bg-red-950/20 border border-red-500/20">
-              <div class="flex items-center justify-between mb-2">
+              <div class="flex flex-wrap items-center justify-between gap-1.5 mb-2">
                 <span class="font-mono text-xs font-bold text-red-400 uppercase tracking-wider">Chokepoint 01</span>
                 <span class="text-xs font-mono text-slate-400">EU Regulation 2016/679</span>
               </div>
@@ -416,7 +440,7 @@
             </div>
 
             <div class="p-4 rounded-xl bg-red-950/20 border border-red-500/20">
-              <div class="flex items-center justify-between mb-2">
+              <div class="flex flex-wrap items-center justify-between gap-1.5 mb-2">
                 <span class="font-mono text-xs font-bold text-red-400 uppercase tracking-wider">Chokepoint 02</span>
                 <span class="text-xs font-mono text-slate-400">GDPR Art. 17 / Data Erasure</span>
               </div>
@@ -427,7 +451,7 @@
             </div>
 
             <div class="p-4 rounded-xl bg-amber-950/20 border border-amber-500/20">
-              <div class="flex items-center justify-between mb-2">
+              <div class="flex flex-wrap items-center justify-between gap-1.5 mb-2">
                 <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">Chokepoint 03</span>
                 <span class="text-xs font-mono text-slate-400">EU AI Act (2024/1689)</span>
               </div>
@@ -438,7 +462,7 @@
             </div>
 
             <div class="p-4 rounded-xl bg-amber-950/20 border border-amber-500/20">
-              <div class="flex items-center justify-between mb-2">
+              <div class="flex flex-wrap items-center justify-between gap-1.5 mb-2">
                 <span class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">Chokepoint 04</span>
                 <span class="text-xs font-mono text-slate-400">US HIPAA &amp; FRE Rule 502</span>
               </div>
@@ -450,7 +474,7 @@
           </div>
         </div>
 
-        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex flex-wrap items-center justify-between gap-2 font-mono">
           <span>ZTDS Resolution: Eliminates cleartext data transmission entirely.</span>
           <span class="text-emerald-400">Result: 0 Subprocessors Added</span>
         </div>
@@ -460,8 +484,8 @@
       <!-- SLIDE 3: Why Existing Cloud DLP Fails -->
       <!-- ==================================================================== -->
       <article class="slide" data-slide="3" data-title="The Failure of Cloud DLP &amp; In-Line Proxies">
-        <div class="flex items-center justify-between border-b border-white/10 pb-4">
-          <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
+          <div class="flex flex-wrap items-center gap-2 sm:gap-3">
             <span class="px-2.5 py-1 rounded bg-sky-500/10 border border-sky-500/30 text-sky-400 font-mono text-xs font-bold uppercase tracking-wider">Comparative Architecture</span>
             <span class="text-xs font-mono text-slate-400">Legacy Cloud DLP vs. Zero-Trust In-Memory Engine</span>
           </div>
@@ -517,14 +541,14 @@
           </div>
 
           <div class="p-3 rounded-lg bg-white/[0.03] border border-white/5 flex items-center gap-3">
-            <div class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></div>
+            <div class="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0"></div>
             <span class="text-xs text-slate-300">
               <strong class="text-white font-semibold">The 10-Agent Latency Tax:</strong> A multi-agent loop with 12 sequential LLM steps wastes <strong>6,000 ms</strong> with cloud proxies vs. <strong>21 ms</strong> with ZTDS.
             </span>
           </div>
         </div>
 
-        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex flex-wrap items-center justify-between gap-2 font-mono">
           <span>Zero cloud proxies. Zero SaaS middleman. Zero data custody.</span>
           <span class="text-sky-400">100x Faster Performance</span>
         </div>
@@ -534,8 +558,8 @@
       <!-- SLIDE 4: The Core Innovation: ZTDS RFC v1.0 Standard -->
       <!-- ==================================================================== -->
       <article class="slide" data-slide="4" data-title="The Standard: ZTDS RFC v1.0 &amp; 4 Invariants">
-        <div class="flex items-center justify-between border-b border-white/10 pb-4">
-          <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
+          <div class="flex flex-wrap items-center gap-2 sm:gap-3">
             <span class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider">Formal Standard</span>
             <span class="text-xs font-mono text-slate-400">Open Technical Consortium &amp; Mathematical Proofs</span>
           </div>
@@ -543,12 +567,12 @@
         </div>
 
         <div class="my-auto py-4">
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <h2 id="the-4-fundamental-invariants-rfc-v1-0" class="text-2xl sm:text-3xl font-extrabold text-white scroll-mt-24">
               The 4 Fundamental Invariants (RFC v1.0)
             </h2>
-            <div class="flex items-center gap-2 font-mono text-xs text-slate-400">
-              <span>DOI: 10.5281/zenodo.22058770 &middot; OSF: 10.17605/OSF.IO/5BYJF &middot; RS: 10.21203/rs.3.rs-11117457/v1 &middot; SSRN: 7335581</span>
+            <div class="flex items-center gap-2 font-mono text-xs text-slate-400 min-w-0">
+              <span class="break-words">DOI: 10.5281/zenodo.22058770 &middot; OSF: 10.17605/OSF.IO/5BYJF &middot; RS: 10.21203/rs.3.rs-11117457/v1 &middot; SSRN: 7335581</span>
             </div>
           </div>
 
@@ -607,7 +631,7 @@
           </div>
         </div>
 
-        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex flex-wrap items-center justify-between gap-2 font-mono">
           <span>Published openly at ztds.ai/standard/ &middot; License: Apache 2.0 / CC BY 4.0</span>
           <span class="text-emerald-400">Verifiable Codebase Audit</span>
         </div>
@@ -617,8 +641,8 @@
       <!-- SLIDE 5: Technical Engine Architecture & Latency Benchmark -->
       <!-- ==================================================================== -->
       <article class="slide" data-slide="5" data-title="Technical Engine Architecture &amp; Latency Benchmark">
-        <div class="flex items-center justify-between border-b border-white/10 pb-4">
-          <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
+          <div class="flex flex-wrap items-center gap-2 sm:gap-3">
             <span class="px-2.5 py-1 rounded bg-sky-500/10 border border-sky-500/30 text-sky-400 font-mono text-xs font-bold uppercase tracking-wider">Runtime Pipeline</span>
             <span class="text-xs font-mono text-slate-400">End-to-End In-Memory Data Flow Sequence</span>
           </div>
@@ -680,7 +704,7 @@
           </div>
         </div>
 
-        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex flex-wrap items-center justify-between gap-2 font-mono">
           <span>Package: @privacyscrubber/sdk &middot; Zero runtime dependencies</span>
           <span class="text-sky-400">WASM / Node / Python stdio</span>
         </div>
@@ -690,8 +714,8 @@
       <!-- SLIDE 6: Statutory Safe Harbor & Subprocessor Scope Exclusion -->
       <!-- ==================================================================== -->
       <article class="slide" data-slide="6" data-title="Statutory Safe Harbor &amp; Subprocessor Scope Exclusion">
-        <div class="flex items-center justify-between border-b border-white/10 pb-4">
-          <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
+          <div class="flex flex-wrap items-center gap-2 sm:gap-3">
             <span class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider">CISO Legal Shield</span>
             <span class="text-xs font-mono text-slate-400">Accelerating Enterprise Security &amp; DPO Review</span>
           </div>
@@ -732,15 +756,15 @@
             </div>
           </div>
 
-          <div class="p-3 rounded-lg bg-emerald-950/30 border border-emerald-500/30 flex items-center justify-between">
+          <div class="p-3 rounded-lg bg-emerald-950/30 border border-emerald-500/30 flex flex-wrap items-center justify-between gap-2">
             <div class="text-xs text-slate-300">
               <strong class="text-white">Turnkey Deliverable:</strong> Official 1-Page CISO Exemption Memorandum ready for your General Counsel and DPO sign-off.
             </div>
-            <span class="text-xs font-mono text-emerald-400 font-bold shrink-0 ml-4">Zero DPA Overhead</span>
+            <span class="text-xs font-mono text-emerald-400 font-bold shrink-0 sm:ml-4">Zero DPA Overhead</span>
           </div>
         </div>
 
-        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex flex-wrap items-center justify-between gap-2 font-mono">
           <span>Reference: docs/legal/README_LEGAL_PROCUREMENT_GUIDE.md</span>
           <span class="text-emerald-400">Zero Custody &middot; Zero Liability</span>
         </div>
@@ -750,8 +774,8 @@
       <!-- SLIDE 7: Air-Gapped Operation & Cryptographic Licensing (Ed25519) -->
       <!-- ==================================================================== -->
       <article class="slide" data-slide="7" data-title="Air-Gapped Operation &amp; Cryptographic Licensing (Ed25519)">
-        <div class="flex items-center justify-between border-b border-white/10 pb-4">
-          <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
+          <div class="flex flex-wrap items-center gap-2 sm:gap-3">
             <span class="px-2.5 py-1 rounded bg-sky-500/10 border border-sky-500/30 text-sky-400 font-mono text-xs font-bold uppercase tracking-wider">Air-Gapped Architecture</span>
             <span class="text-xs font-mono text-slate-400">Zero-Telemetry Asymmetric Cryptographic Enforcement</span>
           </div>
@@ -804,7 +828,7 @@
           </div>
         </div>
 
-        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex flex-wrap items-center justify-between gap-2 font-mono">
           <span>Validated: test/license.test.js &middot; 1,000 runs in 111.76 ms</span>
           <span class="text-sky-400">100% Air-Gapped</span>
         </div>
@@ -814,8 +838,8 @@
       <!-- SLIDE 8: 30 enterprise-grade Specialized Industry Profiles -->
       <!-- ==================================================================== -->
       <article class="slide" data-slide="8" data-title="30 enterprise-grade Specialized Industry Profiles">
-        <div class="flex items-center justify-between border-b border-white/10 pb-4">
-          <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
+          <div class="flex flex-wrap items-center gap-2 sm:gap-3">
             <span class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider">Enterprise Entities</span>
             <span class="text-xs font-mono text-slate-400">Algorithmic Heuristics Beyond Generic Regex</span>
           </div>
@@ -827,10 +851,10 @@
             The 30 enterprise-grade Specialized Industry Profiles
           </h2>
           <p class="text-slate-400 text-xs mb-4">
-            Generic regex produces unacceptable false positives. ZTDS combines context heuristics with algorithmic checksum validation (deterministic financial & national ID checksum verification):
+            Generic regex produces unacceptable false positives. ZTDS combines context heuristics with algorithmic checksum validation (deterministic financial &amp; national ID checksum verification):
           </p>
 
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-4">
             <div class="p-3 rounded-xl bg-slate-900/80 border border-white/10">
               <div class="text-xs font-mono text-emerald-400 font-bold mb-1">HEALTHCARE / PHI</div>
               <ul class="text-xs text-slate-300 space-y-1">
@@ -876,13 +900,13 @@
             </div>
           </div>
 
-          <div class="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 text-xs text-slate-300 flex items-center justify-between">
+          <div class="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 text-xs text-slate-300 flex flex-wrap items-center justify-between gap-2">
             <span><strong>Two-Tier Domain Isolation Model:</strong> Free standard handles basic consumer PII. The 30 specialized enterprise profiles require signed Enterprise tokens.</span>
             <span class="text-emerald-400 font-mono text-xs">Quarterly Regulatory Taxonomy Updates</span>
           </div>
         </div>
 
-        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex flex-wrap items-center justify-between gap-2 font-mono">
           <span>Specification: docs/ZTDS_Entity_Taxonomy_and_25_Profiles_SSOT.md</span>
           <span class="text-emerald-400">Enterprise Exclusive</span>
         </div>
@@ -892,8 +916,8 @@
       <!-- SLIDE 9: Commercial Licensing & TCO Comparison -->
       <!-- ==================================================================== -->
       <article class="slide" data-slide="9" data-title="Commercial Licensing Tiers &amp; ROI Economics">
-        <div class="flex items-center justify-between border-b border-white/10 pb-4">
-          <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
+          <div class="flex flex-wrap items-center gap-2 sm:gap-3">
             <span class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider">Commercial Packaging</span>
             <span class="text-xs font-mono text-slate-400">Turnkey B2B Investment &amp; TCO ROI Comparison</span>
           </div>
@@ -957,18 +981,18 @@
             </div>
           </div>
 
-          <div class="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 text-xs text-slate-300 flex items-center justify-between">
+          <div class="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 text-xs text-slate-300 flex flex-wrap items-center justify-between gap-2">
             <span><strong>TCO Comparison:</strong> In-house custom build: $350k+ in salaries. Cloud DLP SaaS: $120k+/yr + 400ms latency. ZTDS: turnkey local RAM deployment.</span>
             <span class="text-emerald-400 font-mono text-xs">Net 30 &middot; Schedule A</span>
           </div>
 
-          <div class="mt-2 p-2 rounded-lg bg-emerald-950/20 border border-emerald-500/20 text-xs text-slate-300 flex items-center justify-between">
+          <div class="mt-2 p-2 rounded-lg bg-emerald-950/20 border border-emerald-500/20 text-xs text-slate-300 flex flex-wrap items-center justify-between gap-2">
             <span><strong>Two-Brand Isolation:</strong> ZTDS RFC v1.0 is an open standard. Commercial licensing is powered by reference engine <strong>PrivacyScrubber</strong> (@privacyscrubber/sdk).</span>
-            <a href="https://privacyscrubber.com?utm_source=ztds.ai&utm_medium=enterprise_pitch_deck&utm_campaign=canonical_pioneer&utm_content=slide9_isolation" target="_blank" rel="noopener" class="text-slate-400 hover:text-emerald-400 font-mono text-xs underline">privacyscrubber.com &rarr;</a>
+            <a href="https://privacyscrubber.com?utm_source=ztds.ai&utm_medium=enterprise_pitch_deck&utm_campaign=canonical_pioneer&utm_content=slide9_isolation" target="_blank" rel="noopener" class="text-slate-400 hover:text-emerald-400 font-mono text-xs underline inline-flex items-center min-h-[44px] sm:min-h-0">privacyscrubber.com &rarr;</a>
           </div>
         </div>
 
-        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex flex-wrap items-center justify-between gap-2 font-mono">
           <span>Standard Form: docs/legal/ENTERPRISE_ORDER_FORM_TEMPLATE.md</span>
           <span class="text-emerald-400">Fixed Annual Price</span>
         </div>
@@ -978,8 +1002,8 @@
       <!-- SLIDE 10: 14-Day Enterprise Evaluation & Turnkey Onboarding -->
       <!-- ==================================================================== -->
       <article class="slide" data-slide="10" data-title="14-Day Enterprise Evaluation &amp; Procurement Roadmap">
-        <div class="flex items-center justify-between border-b border-white/10 pb-4">
-          <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
+          <div class="flex flex-wrap items-center gap-2 sm:gap-3">
             <span class="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider">Evaluation Protocol</span>
             <span class="text-xs font-mono text-slate-400">Frictionless 14-Day Sandbox Pilot to Production</span>
           </div>
@@ -1033,13 +1057,13 @@
               <div class="text-sm font-bold text-white">Initiate 14-Day Enterprise Sandbox Pilot Today</div>
               <div class="text-xs text-slate-400 mt-0.5">Direct contact with Chief Architect Ilya Sibiryakov &middot; BrandMeWeb Ecosystem</div>
             </div>
-            <a href="mailto:security@ztds.ai?subject=ZTDS%20Enterprise%2014-Day%20Pilot%20Request" class="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-mono font-bold text-xs transition shrink-0 sm:ml-4 text-center">
+            <a href="mailto:security@ztds.ai?subject=ZTDS%20Enterprise%2014-Day%20Pilot%20Request" class="inline-flex items-center justify-center min-h-[44px] px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-mono font-bold text-xs transition shrink-0 sm:ml-4 text-center">
               Request Sandbox Token &rarr;
             </a>
           </div>
         </div>
 
-        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex items-center justify-between font-mono">
+        <div class="border-t border-white/10 pt-3 text-xs text-slate-400 flex flex-wrap items-center justify-between gap-2 font-mono">
           <span>Portal: https://ztds.ai &middot; Patents Pending &middot; TM #182655957 &middot; npx ztds-audit</span>
           <span class="text-emerald-400">Zero-Trust Data Sanitization</span>
         </div>
@@ -1096,18 +1120,21 @@
     </div>
   </aside>
 
-  <footer class="h-14 px-6 flex items-center justify-between border-t border-white/10 bg-[#090f1d]/80 backdrop-blur-md no-print shrink-0">
+  <footer class="sticky bottom-0 z-30 min-h-[56px] px-3 sm:px-6 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] flex items-center justify-between gap-2 border-t border-white/10 bg-[#090f1d]/90 backdrop-blur-md no-print shrink-0">
       <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
-        <span class="hidden sm:inline">Use</span>
-        <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-white">&larr;</kbd>
-        <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-white">&rarr;</kbd>
-        <span class="hidden sm:inline">or</span>
-        <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-white">Space</kbd>
-        <span class="hidden sm:inline">to navigate</span>
+        <span class="sm:hidden">Swipe or tap</span>
+        <span class="hidden sm:inline-flex items-center gap-2">
+          <span>Use</span>
+          <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-white">&larr;</kbd>
+          <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-white">&rarr;</kbd>
+          <span>or</span>
+          <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-white">Space</kbd>
+          <span>to navigate</span>
+        </span>
       </div>
 
       <!-- Navigation Arrows -->
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 shrink-0">
         <button id="prev-btn" type="button" class="touch-target px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-200 transition flex items-center gap-1">
           &larr; Prev
         </button>
@@ -1118,10 +1145,10 @@
     </footer>
 
     <!-- Presenter Notes Drawer (Slide-up) -->
-    <div id="notes-drawer" class="notes-drawer fixed bottom-0 left-0 right-0 max-h-[40dvh] bg-slate-900 border-t-2 border-emerald-500 shadow-2xl p-6 transform translate-y-full overflow-y-auto z-50 text-slate-200 no-print">
+    <div id="notes-drawer" class="notes-drawer fixed bottom-0 left-0 right-0 max-h-[65dvh] sm:max-h-[40dvh] bg-slate-900 border-t-2 border-emerald-500 shadow-2xl p-4 sm:p-6 transform translate-y-full overflow-y-auto z-50 text-slate-200 no-print">
       <div class="max-w-5xl mx-auto">
-        <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-3">
-          <div class="flex items-center gap-2">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3 mb-3">
+          <div class="flex flex-wrap items-center gap-2">
             <span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-400 font-mono text-xs font-bold uppercase">Presenter Notes</span>
             <span id="notes-slide-title" class="text-xs font-mono text-slate-400 font-semibold"></span>
           </div>

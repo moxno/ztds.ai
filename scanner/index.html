@@ -1299,7 +1299,7 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
       <!-- Modal Header (no-print) -->
       <div class="p-4 sm:p-6 border-b border-slate-800 bg-slate-950 flex items-start justify-between gap-4 no-print">
         <div>
-          <div class="flex items-center gap-2 mb-1.5">
+          <div class="flex flex-wrap items-center gap-2 mb-1.5">
             <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
             <span class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">ZTDS RFC v1.0 Attestation Dossier</span>
             <span class="text-xs font-mono px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-300">STATUTORY AUDIT READY</span>
@@ -1319,15 +1319,15 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
       <!-- Action Toolbar (no-print) -->
       <div class="px-4 sm:px-6 py-2.5 bg-slate-950/90 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 text-xs font-mono no-print">
         <div class="flex flex-wrap items-center gap-2">
-          <button type="button" id="btnPrintCisoReport" class="btn-trust py-2 px-3 text-xs font-semibold flex items-center gap-1.5 cursor-pointer min-h-[38px]">
+          <button type="button" id="btnPrintCisoReport" class="btn-trust py-2 px-3 text-xs font-semibold flex items-center gap-1.5 cursor-pointer min-h-[44px] sm:min-h-[38px]">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
             <span>Print / Save as PDF</span>
           </button>
-          <button type="button" id="btnModalDownloadJson" class="btn-outline py-2 px-3 text-xs font-mono text-slate-200 border-slate-700 hover:bg-slate-800 flex items-center gap-1.5 cursor-pointer min-h-[38px]">
+          <button type="button" id="btnModalDownloadJson" class="btn-outline py-2 px-3 text-xs font-mono text-slate-200 border-slate-700 hover:bg-slate-800 flex items-center gap-1.5 cursor-pointer min-h-[44px] sm:min-h-[38px]">
             <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
             <span>Download JSON Audit Pack</span>
           </button>
-          <button type="button" id="btnCopyCisoReportSummary" class="btn-outline py-2 px-3 text-xs font-mono text-slate-300 border-slate-700 hover:bg-slate-800 flex items-center gap-1.5 cursor-pointer min-h-[38px]">
+          <button type="button" id="btnCopyCisoReportSummary" class="btn-outline py-2 px-3 text-xs font-mono text-slate-300 border-slate-700 hover:bg-slate-800 flex items-center gap-1.5 cursor-pointer min-h-[44px] sm:min-h-[38px]">
             <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
             <span id="copyReportBtnText">Copy Executive Text</span>
           </button>
@@ -1338,12 +1338,12 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
       </div>
 
       <!-- Printable Report Body Container -->
-      <div id="cisoReportPrintableArea" class="p-5 sm:p-7 overflow-y-auto space-y-6 text-xs leading-relaxed font-sans flex-1 bg-slate-900 printable-document">
+      <div id="cisoReportPrintableArea" class="p-4 sm:p-7 overflow-y-auto space-y-6 text-xs leading-relaxed font-sans flex-1 bg-slate-900 printable-document">
         
         <!-- Header Banner / Document Identity -->
         <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div class="space-y-1">
-            <div class="flex items-center gap-2">
+            <div class="flex flex-wrap items-center gap-2">
               <span class="text-xs font-mono font-extrabold text-emerald-400 tracking-wider">ZERO-TRUST DATA SANITIZATION (ZTDS)</span>
               <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">RFC v1.0</span>
             </div>
@@ -1359,7 +1359,7 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
 
         <!-- Section 1: Executive Attestation & Cryptographic Proof -->
         <div class="space-y-3">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div class="flex flex-wrap items-center justify-between gap-1.5 border-b border-slate-800 pb-2">
             <h3 class="font-mono text-xs font-bold text-emerald-400 uppercase tracking-wider">
               1. Executive Attestation &amp; Cryptographic Proof
             </h3>
@@ -1390,7 +1390,7 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
 
         <!-- Section 2: 4 Core Invariants Verification Matrix -->
         <div class="space-y-3">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div class="flex flex-wrap items-center justify-between gap-1.5 border-b border-slate-800 pb-2">
             <h3 class="font-mono text-xs font-bold text-emerald-400 uppercase tracking-wider">
               2. ZTDS RFC v1.0 4 Invariants Conformance Table
             </h3>
@@ -1439,7 +1439,7 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
 
         <!-- Section 3: Entity Masking & Quantitative Breakdown -->
         <div class="space-y-3">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div class="flex flex-wrap items-center justify-between gap-1.5 border-b border-slate-800 pb-2">
             <h3 class="font-mono text-xs font-bold text-emerald-400 uppercase tracking-wider">
               3. Sanitization Metrics &amp; Entity Taxonomy Breakdown
             </h3>
@@ -1448,11 +1448,11 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center font-mono text-xs">
             <div class="p-2.5 rounded bg-slate-950/60 border border-slate-800">
               <div class="text-xs text-slate-500 uppercase">Input Payload</div>
-              <div class="text-white font-bold mt-0.5" id="reportInputBytes">0 B (0 chars)</div>
+              <div class="text-white font-bold mt-0.5 break-words" id="reportInputBytes">0 B (0 chars)</div>
             </div>
             <div class="p-2.5 rounded bg-slate-950/60 border border-slate-800">
               <div class="text-xs text-slate-500 uppercase">Sanitized Output</div>
-              <div class="text-emerald-300 font-bold mt-0.5" id="reportOutputBytes">0 B (0 chars)</div>
+              <div class="text-emerald-300 font-bold mt-0.5 break-words" id="reportOutputBytes">0 B (0 chars)</div>
             </div>
             <div class="p-2.5 rounded bg-slate-950/60 border border-slate-800">
               <div class="text-xs text-slate-500 uppercase">RAM Latency</div>
@@ -1460,7 +1460,7 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
             </div>
             <div class="p-2.5 rounded bg-slate-950/60 border border-slate-800">
               <div class="text-xs text-slate-500 uppercase">Masking Ratio</div>
-              <div class="text-emerald-400 font-bold mt-0.5" id="reportMaskingRatio">100% Zero Egress</div>
+              <div class="text-emerald-400 font-bold mt-0.5 break-words" id="reportMaskingRatio">100% Zero Egress</div>
             </div>
           </div>
           <div id="reportEntitiesDetailContainer" class="p-3 rounded-lg bg-slate-950 border border-slate-800 font-mono text-xs space-y-1">
@@ -1473,7 +1473,7 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
 
         <!-- Section 4: Network Socket Interception Evidence Log -->
         <div class="space-y-3">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div class="flex flex-wrap items-center justify-between gap-1.5 border-b border-slate-800 pb-2">
             <h3 class="font-mono text-xs font-bold text-rose-400 uppercase tracking-wider flex items-center gap-1.5">
               <span>4. Intercepted Network Sockets &amp; Threat Vector Evidence Log</span>
             </h3>
@@ -1527,13 +1527,13 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
         </div>
 
         <!-- Section 6: Official Audit Attestation Sign-off -->
-        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-400 font-mono text-xs">
+        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-slate-400 font-mono text-xs">
           <div class="space-y-0.5">
             <div class="text-white font-bold">Standard Ratified by ZTDS Consortium Authority</div>
             <div>Author &amp; Chief Architect: Ilya Sibiryakov (draft-sibiryakov-ztds-protocol)</div>
             <div>Engineering &amp; Research: BrandMeWeb Digital Systems</div>
           </div>
-          <div class="text-right">
+          <div class="text-left sm:text-right">
             <div class="text-emerald-400 font-bold">&check; CRYPTOGRAPHICALLY ATTESTED</div>
             <div class="text-xs text-slate-500">Public Verification: ztds.ai/verify/</div>
           </div>
@@ -1542,9 +1542,9 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
       </div>
 
       <!-- Modal Footer (no-print) -->
-      <div class="px-4 sm:px-6 py-3 border-t border-slate-800 bg-slate-950 flex items-center justify-between text-xs font-mono no-print">
+      <div class="px-4 sm:px-6 py-3 border-t border-slate-800 bg-slate-950 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 text-xs font-mono no-print">
         <span class="text-slate-500 text-xs">File this audit report into your GRC / Vendor Risk Management register (SIG Lite, CAIQ, SOC 2).</span>
-        <button type="button" id="btnCloseCisoReportBottom" class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors cursor-pointer min-h-[44px]">
+        <button type="button" id="btnCloseCisoReportBottom" class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors cursor-pointer min-h-[44px] shrink-0">
           Close Report
         </button>
       </div>
@@ -1627,7 +1627,7 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
         </form>
 
         <!-- Frictionless Developer Bypass -->
-        <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-xs font-mono text-slate-500">
+        <div class="pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-slate-500">
           <span>Need raw file immediately?</span>
           <button type="button" id="btnBypassCisoLead" class="text-slate-600 hover:text-emerald-700 underline font-medium cursor-pointer">
             Skip email &amp; download raw .md
