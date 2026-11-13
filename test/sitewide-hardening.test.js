@@ -1144,4 +1144,72 @@ console.log('[14/14] Verifying universal 44px touch coverage, dvh modals, >= 24p
   console.log(`    [PASS] Zero legacy max-h-[...vh] across ${canonicalFiles.length} canonical pages, >= 24px/28px sliders, 44px drawer/modal controls, and 100dvh upgrade verified.`);
 }
 
-console.log('\n[SUMMARY] ALL 14 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
+// ============================================================================
+// 15. Runtime Command Palette iOS Auto-Zoom Guard, 320px Header Reflow, Dynamic JS Touch Targets & Code Copy Clearance — Wave 7
+// ============================================================================
+console.log('[15/15] Verifying runtime Command Palette iOS auto-zoom guard, 320px header reflow, dynamic JS touch targets & copy clearance...');
+{
+  const navJs = fs.readFileSync(path.join(ROOT, 'nav.js'), 'utf8');
+  assert(
+    navJs.includes("input.className = 'w-full bg-transparent text-slate-900 placeholder-slate-400 text-base sm:text-sm focus:outline-none font-sans'"),
+    'nav.js #ztds-cmd-input must use text-base sm:text-sm (>= 16px on mobile) to prevent iOS Safari auto-zoom'
+  );
+  assert(
+    navJs.includes('max-h-[50dvh] sm:max-h-80'),
+    'nav.js #ztds-cmd-list must use max-h-[50dvh] sm:max-h-80 to stay visible above mobile keyboard'
+  );
+  assert(
+    navJs.includes('pt-4 sm:pt-24'),
+    'nav.js #ztds-cmd-palette must use pt-4 sm:pt-24 for compact mobile top clearance'
+  );
+  const optMatches = (navJs.match(/min-h-\[44px\] rounded-xl text-xs transition-colors/g) || []).length;
+  assert.strictEqual(optMatches, 2, 'nav.js Command Palette options must apply min-h-[44px] on initial render and active highlight update');
+
+  for (const dynCls of [
+    'ztds-cmd-esc',
+    'ztds-pre-copy-btn',
+    'ztds-heading-anchor-btn',
+    'ztds-faq-copy-btn',
+    'ztds-faq-toggle-all-btn',
+    'ztds-table-copy-btn',
+  ]) {
+    assert(navJs.includes(dynCls), `nav.js must assign dynamic touch-target helper class: ${dynCls}`);
+  }
+
+  const inputCss = fs.readFileSync(path.join(ROOT, 'src/input.css'), 'utf8');
+  const coarseMatches = [...inputCss.matchAll(/@media\s*\(pointer:\s*coarse\),\s*\(max-width:\s*640px\)\s*\{([\s\S]*?)\n\}/g)];
+  const coarseText = coarseMatches.map((m) => m[1]).join('\n');
+  for (const sel of [
+    '.ztds-cmd-esc',
+    '.ztds-pre-copy-btn',
+    '.ztds-heading-anchor-btn',
+    '.ztds-faq-copy-btn',
+    '.ztds-faq-toggle-all-btn',
+    '.ztds-table-copy-btn',
+    '.trial-target-pill',
+    '.snippet-tab-btn',
+    '.m0-tab-btn',
+    '#btnCopyEmbed',
+    '#modalDoneBtn',
+    'body > header .btn-trust',
+  ]) {
+    assert(coarseText.includes(sel), `src/input.css coarse/mobile 44px rule missing selector: ${sel}`);
+  }
+  assert(
+    /main pre\[data-ztds-copy-init="1"\]\s*\{[\s\S]*padding-inline-end:\s*4\.5rem;/i.test(inputCss),
+    'src/input.css must reserve right padding on main pre[data-ztds-copy-init="1"] for floating copy button'
+  );
+  assert(
+    /@media\s*\(max-width:\s*420px\)\s*\{[\s\S]*body > header a\[href="\/"\] span\.text-xs\.font-mono/.test(inputCss) &&
+      /@media\s*\(max-width:\s*359px\)\s*\{[\s\S]*body > header \.btn-trust/.test(inputCss),
+    'src/input.css must enforce @media (max-width: 420px) and (max-width: 359px) header overflow protection'
+  );
+
+  const bpHtml = fs.readFileSync(path.join(ROOT, 'blueprints/index.html'), 'utf8');
+  const clearedPres = (bpHtml.match(/<pre class="overflow-x-auto max-w-full pr-16"><code>/g) || []).length;
+  assert.strictEqual(clearedPres, 10, `blueprints/index.html must have 10 <pre> blocks with pr-16 copy clearance (found ${clearedPres})`);
+
+  console.log('    [PASS] Cmd+K iOS >= 16px guard, dvh list, 320px header reflow, dynamic 44px JS touch targets & pr-16 code clearance verified.');
+}
+
+console.log('\n[SUMMARY] ALL 15 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');

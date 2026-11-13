@@ -502,7 +502,7 @@
             </p>
             <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
               <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs cursor-pointer">Copy</button>
-              <pre class="overflow-x-auto max-w-full"><code>import { PrivacyScrubberEngine } from "@privacyscrubber/sdk";
+              <pre class="overflow-x-auto max-w-full pr-16"><code>import { PrivacyScrubberEngine } from "@privacyscrubber/sdk";
 import { RunnableLambda } from "@langchain/core/runnables";
 
 const engine = new PrivacyScrubberEngine({ profile: "finance" });
@@ -537,7 +537,7 @@ export async function invokeZeroTrustChain(chain, rawPrompt) {
             </p>
             <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
               <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs cursor-pointer">Copy</button>
-              <pre class="overflow-x-auto max-w-full"><code>from ztds import ZtdsSession
+              <pre class="overflow-x-auto max-w-full pr-16"><code>from ztds import ZtdsSession
 
 def zero_trust_rag_query(query_engine, raw_query: str, nodes: list) -> str:
     with ZtdsSession(profile="medical") as session:
@@ -568,7 +568,7 @@ def zero_trust_rag_query(query_engine, raw_query: str, nodes: list) -> str:
             </p>
             <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
               <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs cursor-pointer">Copy</button>
-              <pre class="overflow-x-auto max-w-full"><code>{
+              <pre class="overflow-x-auto max-w-full pr-16"><code>{
   "mcpServers": {
     "privacyscrubber-ztds": {
       "command": "npx",
@@ -601,7 +601,7 @@ def zero_trust_rag_query(query_engine, raw_query: str, nodes: list) -> str:
             </p>
             <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
               <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs cursor-pointer">Copy</button>
-              <pre class="overflow-x-auto max-w-full"><code>const { sanitizedText, receipt } = engine.sanitize(rawDocumentChunk, {
+              <pre class="overflow-x-auto max-w-full pr-16"><code>const { sanitizedText, receipt } = engine.sanitize(rawDocumentChunk, {
   profile: "legal"
 });
 
@@ -638,7 +638,7 @@ await pineconeIndex.upsert([{
             </p>
             <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
               <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs cursor-pointer">Copy</button>
-              <pre class="overflow-x-auto max-w-full"><code>from ztds import ZtdsSession
+              <pre class="overflow-x-auto max-w-full pr-16"><code>from ztds import ZtdsSession
 
 with ZtdsSession(profile="legal") as crew_session:
     sanitized_brief = crew_session.sanitize(client_dossier)
@@ -667,7 +667,7 @@ with ZtdsSession(profile="legal") as crew_session:
             </p>
             <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
               <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs cursor-pointer">Copy</button>
-              <pre class="overflow-x-auto max-w-full"><code>const { sanitizedText, tokenMap } = engine.sanitize(rawLogPayload, {
+              <pre class="overflow-x-auto max-w-full pr-16"><code>const { sanitizedText, tokenMap } = engine.sanitize(rawLogPayload, {
   profile: "security"
 });
 
@@ -699,7 +699,7 @@ engine.destroy(tokenMap);</code></pre>
             </p>
             <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
               <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs cursor-pointer">Copy</button>
-              <pre class="overflow-x-auto max-w-full"><code>// Outbound VPC Egress Interceptor
+              <pre class="overflow-x-auto max-w-full pr-16"><code>// Outbound VPC Egress Interceptor
 app.use("/v1/chat/completions", (req, res, next) => {
   const { sanitizedPayload, tokenMap, receipt } = engine.sanitizeChatMessages(
     req.body.messages,
@@ -731,7 +731,7 @@ app.use("/v1/chat/completions", (req, res, next) => {
             </p>
             <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
               <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs cursor-pointer">Copy</button>
-              <pre class="overflow-x-auto max-w-full"><code>const ztdsStream = engine.createRestoreStream(tokenMap, {
+              <pre class="overflow-x-auto max-w-full pr-16"><code>const ztdsStream = engine.createRestoreStream(tokenMap, {
   zeroizeOnClose: true
 });
 
@@ -765,7 +765,7 @@ return new Response(upstreamResponse.body.pipeThrough(ztdsStream), {
             </p>
             <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
               <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs cursor-pointer">Copy</button>
-              <pre class="overflow-x-auto max-w-full"><code>const { sanitizedBlob, frameReceipt } = await engine.sanitizeImageInRAM(fileBlob, {
+              <pre class="overflow-x-auto max-w-full pr-16"><code>const { sanitizedBlob, frameReceipt } = await engine.sanitizeImageInRAM(fileBlob, {
   profile: "medical",
   paddingPx: 6,
   fillColor: "#000000",
@@ -793,7 +793,7 @@ return new Response(upstreamResponse.body.pipeThrough(ztdsStream), {
             </p>
             <div class="relative rounded-xl bg-slate-950 border border-slate-800 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
               <button type="button" class="bp-copy-btn absolute top-3 right-3 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs cursor-pointer">Copy</button>
-              <pre class="overflow-x-auto max-w-full"><code>document.addEventListener("keydown", (event) => {
+              <pre class="overflow-x-auto max-w-full pr-16"><code>document.addEventListener("keydown", (event) => {
   if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
     const promptEl = document.querySelector("textarea, [contenteditable='true']");
     if (!promptEl) return;

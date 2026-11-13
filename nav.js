@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.setAttribute('aria-label', 'Copy code snippet');
-      btn.className = 'no-print absolute top-2.5 right-2.5 z-10 px-2.5 py-1 rounded bg-slate-800/90 hover:bg-emerald-600 text-slate-200 hover:text-white border border-slate-700 hover:border-emerald-500 font-mono text-xs font-semibold transition-colors shadow-sm cursor-pointer';
+      btn.className = 'ztds-pre-copy-btn no-print absolute top-2.5 right-2.5 z-10 px-2.5 py-1 rounded bg-slate-800/90 hover:bg-emerald-600 text-slate-200 hover:text-white border border-slate-700 hover:border-emerald-500 font-mono text-xs font-semibold transition-colors shadow-sm cursor-pointer';
       btn.textContent = 'Copy';
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
       anchorBtn.type = 'button';
       anchorBtn.setAttribute('aria-label', 'Copy link to section');
       anchorBtn.setAttribute('title', 'Copy link to section');
-      anchorBtn.className = 'no-print ml-2 inline-flex items-center justify-center px-1.5 py-0.5 rounded text-xs font-mono text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity cursor-pointer align-middle';
+      anchorBtn.className = 'ztds-heading-anchor-btn no-print ml-2 inline-flex items-center justify-center px-1.5 py-0.5 rounded text-xs font-mono text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity cursor-pointer align-middle';
       anchorBtn.textContent = '#';
       anchorBtn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -397,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const copyBtn = document.createElement('button');
       copyBtn.type = 'button';
       copyBtn.setAttribute('aria-label', 'Copy direct link to section');
-      copyBtn.className = 'px-2 py-0.5 rounded text-xs font-mono text-slate-400 hover:text-emerald-700 hover:bg-emerald-50 transition-colors cursor-pointer';
+      copyBtn.className = 'ztds-faq-copy-btn px-2 py-0.5 rounded text-xs font-mono text-slate-400 hover:text-emerald-700 hover:bg-emerald-50 transition-colors cursor-pointer';
       copyBtn.textContent = 'Copy link #';
       copyBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -431,7 +431,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toolbar.className = 'no-print flex items-center justify-end gap-2 mb-2 text-xs font-mono';
         const toggleAllBtn = document.createElement('button');
         toggleAllBtn.type = 'button';
-        toggleAllBtn.className = 'px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 font-semibold transition-colors cursor-pointer shadow-2xs';
+        toggleAllBtn.className = 'ztds-faq-toggle-all-btn px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 font-semibold transition-colors cursor-pointer shadow-2xs';
 
         function syncLabel() {
           const allOpen = childDetails.every((d) => d.open);
@@ -592,7 +592,7 @@ document.addEventListener('DOMContentLoaded', () => {
       modal.setAttribute('role', 'dialog');
       modal.setAttribute('aria-modal', 'true');
       modal.setAttribute('aria-label', 'Quick Jump Command Palette');
-      modal.className = 'no-print hidden fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-slate-900/60 backdrop-blur-xs';
+      modal.className = 'no-print hidden fixed inset-0 z-50 flex items-start justify-center pt-4 sm:pt-24 px-4 bg-slate-900/60 backdrop-blur-xs';
 
       const panel = document.createElement('div');
       panel.className = 'w-full max-w-xl rounded-2xl bg-white border border-slate-200 shadow-2xl overflow-hidden';
@@ -617,11 +617,11 @@ document.addEventListener('DOMContentLoaded', () => {
       input.setAttribute('autocapitalize', 'none');
       input.setAttribute('spellcheck', 'false');
       input.placeholder = 'Jump to specification, CISO memo, SDK, scanner, or section...';
-      input.className = 'w-full bg-transparent text-slate-900 placeholder-slate-400 text-sm focus:outline-none font-sans';
+      input.className = 'w-full bg-transparent text-slate-900 placeholder-slate-400 text-base sm:text-sm focus:outline-none font-sans';
 
       const escBtn = document.createElement('button');
       escBtn.type = 'button';
-      escBtn.className = 'px-2 py-0.5 rounded bg-slate-200/80 text-slate-600 font-mono text-xs font-semibold hover:bg-slate-300 cursor-pointer shrink-0';
+      escBtn.className = 'ztds-cmd-esc px-2.5 py-1 rounded bg-slate-200/80 text-slate-600 font-mono text-xs font-semibold hover:bg-slate-300 cursor-pointer shrink-0';
       escBtn.textContent = 'ESC';
       escBtn.addEventListener('click', () => window.ztdsModal.close(modal));
 
@@ -633,7 +633,7 @@ document.addEventListener('DOMContentLoaded', () => {
       list.id = 'ztds-cmd-list';
       list.setAttribute('role', 'listbox');
       list.setAttribute('aria-label', 'Search results');
-      list.className = 'max-h-80 overflow-y-auto divide-y divide-slate-100 p-1.5';
+      list.className = 'max-h-[50dvh] sm:max-h-80 overflow-y-auto divide-y divide-slate-100 p-1.5';
 
       const footer = document.createElement('div');
       footer.className = 'px-4 py-2 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs font-mono text-slate-500';
@@ -701,7 +701,7 @@ document.addEventListener('DOMContentLoaded', () => {
           a.href = item.url;
           a.setAttribute('role', 'option');
           a.setAttribute('aria-selected', idx === activeIdx ? 'true' : 'false');
-          a.className = 'flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl text-xs transition-colors ' +
+          a.className = 'flex items-center justify-between gap-3 px-3 py-2.5 min-h-[44px] rounded-xl text-xs transition-colors ' +
             (idx === activeIdx ? 'bg-emerald-50 text-emerald-950 font-semibold' : 'text-slate-700 hover:bg-slate-50');
 
           const left = document.createElement('div');
@@ -730,7 +730,7 @@ document.addEventListener('DOMContentLoaded', () => {
         opts.forEach((el, idx) => {
           const isAct = idx === activeIdx;
           el.setAttribute('aria-selected', isAct ? 'true' : 'false');
-          el.className = 'flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl text-xs transition-colors ' +
+          el.className = 'flex items-center justify-between gap-3 px-3 py-2.5 min-h-[44px] rounded-xl text-xs transition-colors ' +
             (isAct ? 'bg-emerald-50 text-emerald-950 font-semibold' : 'text-slate-700 hover:bg-slate-50');
           if (isAct && typeof el.scrollIntoView === 'function') {
             el.scrollIntoView({ block: 'nearest' });
@@ -874,7 +874,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.setAttribute('aria-label', 'Copy table as Markdown');
-      btn.className = 'px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold transition-colors cursor-pointer';
+      btn.className = 'ztds-table-copy-btn px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-600 hover:text-slate-900 font-mono text-xs font-semibold transition-colors cursor-pointer';
       btn.textContent = 'Copy Table (MD)';
 
       btn.addEventListener('click', () => {
