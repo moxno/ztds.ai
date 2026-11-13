@@ -1020,7 +1020,7 @@
               <span>What public key is used to authenticate official ZTDS-CERT-v1 certificates?</span>
               <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
             </summary>
-            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3 break-words">
               All official ZTDS conformance certificates are verified against the consortium SPKI Ed25519 root public key (MCowBQYDK2VwAyEAg3N98ZgL4Uqbu0PmqvG8KN8vUicYkgKfUNVgwlLObr4=), which is published in the open specification and machine-readable llms.txt corpus for independent air-gapped verification.
             </div>
           </details>
@@ -1230,10 +1230,10 @@
   </footer>
 
   <!-- Official Printable Certificate Modal (A4 Print Engine) -->
-  <div id="modalCertificatePrint" role="dialog" aria-modal="true" aria-labelledby="certModalHeading" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm transition-opacity">
+  <div id="modalCertificatePrint" role="dialog" aria-modal="true" aria-labelledby="certModalHeading" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-sm transition-opacity">
     <div class="max-w-4xl w-full bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[95dvh]">
       <!-- Modal Top Action Bar (hidden on print) -->
-      <div class="no-print flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50 shrink-0">
+      <div class="no-print flex flex-wrap items-center justify-between gap-2.5 px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-200 bg-slate-50 shrink-0">
         <div class="flex items-center gap-2">
           <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
           <span class="text-xs font-mono font-bold uppercase tracking-wider text-slate-700">Official Certificate of Conformance (A4)</span>
@@ -1262,9 +1262,9 @@
       <!-- Scrollable Container for Preview -->
       <div class="overflow-y-auto p-4 sm:p-8 bg-slate-100 flex justify-center">
         <!-- Printable Certificate Sheet (Strict A4 Layout) -->
-        <div id="certificatePrintArea" class="w-full max-w-[794px] bg-white border-2 border-slate-900 p-8 sm:p-12 shadow-md relative text-slate-900 font-sans flex flex-col justify-between min-h-[1050px]">
+        <div id="certificatePrintArea" class="w-full max-w-[794px] bg-white border-2 border-slate-900 p-4 sm:p-12 print:p-10 shadow-md relative text-slate-900 font-sans flex flex-col justify-between min-h-[1050px]">
           <!-- Inner Decorative Border -->
-          <div class="border border-slate-300 p-6 flex flex-col justify-between h-full relative">
+          <div class="border border-slate-300 p-4 sm:p-6 print:p-6 flex flex-col justify-between h-full relative">
             
             <!-- Header -->
             <div class="text-center pb-6 border-b border-slate-200">

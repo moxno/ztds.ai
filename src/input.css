@@ -55,6 +55,8 @@ html {
   overflow-x: hidden;
   overflow-x: clip;
   max-width: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 :target,
@@ -89,6 +91,10 @@ main {
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
+}
+
+:where(a, button, summary, input, select, textarea, [role="button"], [role="tab"], [role="switch"]) {
+  touch-action: manipulation;
 }
 
 h1, h2, h3 {
@@ -1078,10 +1084,23 @@ main .overflow-x-auto {
   max-inline-size: 100%;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
+  scrollbar-width: thin;
 }
 
 main .overflow-x-auto:has(> table) {
   container-type: inline-size;
+}
+
+main .overflow-x-auto:has(> table:not(.table-responsive-cards)) {
+  background-image:
+    linear-gradient(to right, var(--bg-surface) 30%, rgba(255, 255, 255, 0)),
+    linear-gradient(to left, var(--bg-surface) 30%, rgba(255, 255, 255, 0)),
+    radial-gradient(farthest-side at 0 50%, rgba(15, 23, 42, 0.12), rgba(15, 23, 42, 0)),
+    radial-gradient(farthest-side at 100% 50%, rgba(15, 23, 42, 0.12), rgba(15, 23, 42, 0));
+  background-position: left center, right center, left center, right center;
+  background-repeat: no-repeat;
+  background-size: 24px 100%, 24px 100%, 10px 100%, 10px 100%;
+  background-attachment: local, local, scroll, scroll;
 }
 
 main table td,
@@ -1121,7 +1140,7 @@ main .overflow-x-auto > table > thead {
   min-inline-size: 36px;
 }
 
-@media (pointer: coarse) {
+@media (pointer: coarse), (max-width: 640px) {
   #ztds-cmd-trigger {
     min-block-size: 44px;
     min-inline-size: 44px;
@@ -1243,7 +1262,15 @@ input[type="search"]::-webkit-search-cancel-button {
   .m0-tab-btn,
   #btnCopyEmbed,
   #modalDoneBtn,
-  body > header .btn-trust
+  body > header .btn-trust,
+  #btnEmptyReset,
+  #modalVerifyBtn,
+  #modalDownloadCertBtn,
+  #modalCopyTokenBtn,
+  #btnCopySha,
+  .checkout-tab-btn,
+  [data-ztds-print],
+  header.no-print a
 ) {
   min-block-size: 34px;
 }
@@ -1359,7 +1386,15 @@ nav[aria-label="Ecosystem Directory Switcher"] a,
     .m0-tab-btn,
     #btnCopyEmbed,
     #modalDoneBtn,
-    body > header .btn-trust
+    body > header .btn-trust,
+    #btnEmptyReset,
+    #modalVerifyBtn,
+    #modalDownloadCertBtn,
+    #modalCopyTokenBtn,
+    #btnCopySha,
+    .checkout-tab-btn,
+    [data-ztds-print],
+    header.no-print a
   ) {
     min-block-size: 44px;
   }
@@ -1369,6 +1404,14 @@ nav[aria-label="Ecosystem Directory Switcher"] a,
   #btnCloseCheckoutModal,
   #bcSearchClear {
     min-inline-size: 44px;
+  }
+
+  main details > summary.flex {
+    min-block-size: 44px;
+  }
+
+  main details > summary:not(.flex) {
+    padding-block: 0.625rem;
   }
 }
 
@@ -1399,6 +1442,10 @@ nav[aria-label="breadcrumb"] {
 }
 
 @media (max-width: 640px) {
+  main .grid > * {
+    min-width: 0;
+  }
+
   main table:not(.ears) {
     max-inline-size: 100%;
   }
@@ -1406,6 +1453,13 @@ nav[aria-label="breadcrumb"] {
   main :not(pre) > code {
     overflow-wrap: break-word;
     word-break: break-word;
+  }
+
+  main p,
+  main li,
+  main dd,
+  main td:not(.whitespace-nowrap) {
+    overflow-wrap: break-word;
   }
 
   #ztds-back-to-top {

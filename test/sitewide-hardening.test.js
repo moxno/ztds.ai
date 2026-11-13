@@ -1212,4 +1212,105 @@ console.log('[15/15] Verifying runtime Command Palette iOS auto-zoom guard, 320p
   console.log('    [PASS] Cmd+K iOS >= 16px guard, dvh list, 320px header reflow, dynamic 44px JS touch targets & pr-16 code clearance verified.');
 }
 
-console.log('\n[SUMMARY] ALL 15 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
+// ============================================================================
+// 16. Deep 320px Token Reflow, <summary> 44px Touch Sizing, Scroll-Shadow Affordance, Modal dvh/Padding & text-size-adjust — Wave 8
+// ============================================================================
+console.log('[16/16] Verifying Wave 8 text-size-adjust, touch-action, <summary> 44px touch sizing, scroll-shadow tables, modal dvh/padding & 320px unbroken token reflow...');
+{
+  const inputCss = fs.readFileSync(path.join(ROOT, 'src/input.css'), 'utf8');
+  assert(
+    inputCss.includes('-webkit-text-size-adjust: 100%') && inputCss.includes('text-size-adjust: 100%'),
+    'src/input.css html rule must enforce -webkit-text-size-adjust: 100% and text-size-adjust: 100%'
+  );
+  assert(
+    inputCss.includes('touch-action: manipulation'),
+    'src/input.css interactive controls must enforce touch-action: manipulation'
+  );
+  assert(
+    /main \.overflow-x-auto:has\(> table:not\(\.table-responsive-cards\)\)\s*\{[\s\S]*background-attachment:\s*local,\s*local,\s*scroll,\s*scroll;/i.test(inputCss),
+    'src/input.css scrollable data tables must define scroll-shadow background-attachment affordance'
+  );
+
+  const coarseMatches = [...inputCss.matchAll(/@media\s*\(pointer:\s*coarse\),\s*\(max-width:\s*640px\)\s*\{([\s\S]*?)\n\}/g)];
+  const coarseText = coarseMatches.map((m) => m[1]).join('\n');
+  assert(
+    coarseText.includes('#ztds-cmd-trigger') &&
+      /main details > summary\.flex\s*\{\s*min-block-size:\s*44px;/i.test(coarseText) &&
+      /main details > summary:not\(\.flex\)\s*\{\s*padding-block:\s*0\.625rem;/i.test(coarseText),
+    'src/input.css coarse/mobile block must enforce 44px #ztds-cmd-trigger and <summary> touch sizing'
+  );
+  for (const sel of [
+    '#btnEmptyReset',
+    '#modalVerifyBtn',
+    '#modalDownloadCertBtn',
+    '#modalCopyTokenBtn',
+    '#btnCopySha',
+    '.checkout-tab-btn',
+    '[data-ztds-print]',
+    'header.no-print a',
+  ]) {
+    assert(coarseText.includes(sel), `src/input.css coarse/mobile 44px rule missing Wave 8 selector: ${sel}`);
+  }
+  assert(
+    /@media\s*\(max-width:\s*640px\)\s*\{[\s\S]*main \.grid > \*\s*\{\s*min-width:\s*0;/.test(inputCss),
+    'src/input.css @media (max-width: 640px) must enforce main .grid > * { min-width: 0; }'
+  );
+
+  for (const [rel, modalId, capRegex, padRegex] of [
+    ['index.html', 'cisoLeadModal', /max-h-\[90dvh\]/, /\bp-4 sm:p-6\b/],
+    ['ciso/index.html', 'procurementModal', /max-h-\[90dvh\]/, /\bp[x]?-4 sm:p[x]?-6\b/],
+    ['companies/index.html', 'caseStudyModal', /max-h-\[92dvh\]/, /\bp-4 sm:p-8\b/],
+    ['companies/index.html', 'badgeModal', /max-h-\[90dvh\]/, /\bp-4 sm:p-6\b/],
+    ['fellows/index.html', 'fellowBadgeModal', /max-h-\[90dvh\]/, /\bp-4 sm:p-6\b/],
+    ['registry/index.html', 'certModal', /max-h-\[90dvh\]/, /\bp-4 sm:p-6\b/],
+    ['roi/index.html', 'memoPreviewModal', /max-h-\[92dvh\]/, /\bp-4 sm:p-8\b/],
+    ['scanner/index.html', 'cisoLeadModal', /max-h-\[90dvh\]/, /\bp-4 sm:p-6\b/],
+    ['sdk/index.html', 'checkoutModal', /max-h-\[90dvh\]/, /\bp-4 sm:p-6\b/],
+    ['verify/index.html', 'modalCertificatePrint', /max-h-\[95dvh\]/, /\bpx-4 sm:px-6\b/],
+  ]) {
+    const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    const idx = html.indexOf(`id="${modalId}"`);
+    assert(idx !== -1, `${rel} missing dialog #${modalId}`);
+    const slice = html.slice(idx, idx + 2500);
+    assert(capRegex.test(slice), `${rel} #${modalId} missing dynamic viewport cap ${capRegex}`);
+    assert(padRegex.test(slice), `${rel} #${modalId} missing compact mobile padding ${padRegex}`);
+  }
+
+  const orderFormHtml = fs.readFileSync(path.join(ROOT, 'docs/legal/order-form/index.html'), 'utf8');
+  assert(!/_{20,}/.test(orderFormHtml), 'docs/legal/order-form/index.html must not contain >= 20-underscore lines that overflow 320px viewports');
+
+  assert(
+    fs.readFileSync(path.join(ROOT, 'companies/learningcenterusa/index.html'), 'utf8').includes('break-all">ZTDS-CERT-2026-LEARNINGCENTERUSA-38DDD1'),
+    'companies/learningcenterusa/index.html certificate ID must carry break-all'
+  );
+  assert(
+    fs.readFileSync(path.join(ROOT, 'verify/index.html'), 'utf8').includes('pt-3 break-words">\n              All official ZTDS conformance certificates are verified against the consortium SPKI Ed25519 root public key (MCowBQYDK2Vw'),
+    'verify/index.html FAQ Ed25519 root public key answer must carry break-words'
+  );
+  assert(
+    fs.readFileSync(path.join(ROOT, 'ietf/index.html'), 'utf8').includes('pt-3 break-words">\n              Implementers can read the full HTML editions at ztds.ai/ietf/draft-sibiryakov-ztds-protocol-02/,'),
+    'ietf/index.html FAQ draft URL answer must carry break-words'
+  );
+  assert(
+    fs.readFileSync(path.join(ROOT, 'governance/index.html'), 'utf8').includes('class="text-slate-400 break-all">Opening Pull Request: https://github.com/moxno/ztds.ai/pulls'),
+    'governance/index.html PR URL must carry break-all'
+  );
+  assert(
+    fs.readFileSync(path.join(ROOT, 'registry/index.html'), 'utf8').includes('hover:underline break-all">wordpress.org/plugins/privacyscrubber-ztds-guard/'),
+    'registry/index.html WordPress URL must carry break-all'
+  );
+  for (const draftRel of [
+    'ietf/draft-sibiryakov-ztds-protocol-01/index.html',
+    'ietf/draft-sibiryakov-ztds-protocol-02/index.html',
+  ]) {
+    const draftHtml = fs.readFileSync(path.join(ROOT, draftRel), 'utf8');
+    assert(
+      draftHtml.includes('overflow-wrap: anywhere;') && draftHtml.includes('padding-block: 0.625rem;'),
+      `${draftRel} @media (max-width: 640px) must guard long <a> URLs and <summary> touch height`
+    );
+  }
+
+  console.log('    [PASS] Wave 8 text-size-adjust, touch-action, <summary> 44px, scroll-shadow tables, modal dvh/padding & 320px token reflow verified.');
+}
+
+console.log('\n[SUMMARY] ALL 16 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
