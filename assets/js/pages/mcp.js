@@ -86,6 +86,7 @@
         if (enableDebug) env.DEBUG = 'true';
         if (enableTimeout) env.ZTDS_SESSION_TIMEOUT_MS = '1800000';
         if (currentEdition === 'commercial') {
+          env.ZTDS_LICENSE = 'ZTDS-LIC-v1.<YOUR_SIGNED_KEY>';
           env.ZTDS_PROFILES = 'financial,healthcare,dev_secrets';
         }
 
@@ -102,7 +103,11 @@
           }
           codeOutput = cmd;
         } else if (currentClient === 'antigravity') {
-          codeOutput = `# Install directly in Google Antigravity:\nagy plugin install https://github.com/moxno/ztds.ai\n\n# Or auto-configure locally in 1 click:\nnpx ztds-mcp init --antigravity`;
+          if (currentEdition === 'commercial') {
+            codeOutput = `# Auto-configure @privacyscrubber/mcp-server for Google Antigravity ztds-guard:\nnpx -y @privacyscrubber/mcp-server init --antigravity`;
+          } else {
+            codeOutput = `# Install directly in Google Antigravity:\nagy plugin install https://github.com/moxno/ztds.ai\n\n# Or auto-configure locally in 1 click:\nnpx ztds-mcp init --antigravity`;
+          }
         } else if (currentClient === 'zed') {
           const zedObj = {
             context_servers: {
@@ -139,7 +144,9 @@
           if (currentClient === 'cli') {
             terminalHint.textContent = 'Run directly in terminal where claude CLI is authenticated';
           } else if (currentClient === 'antigravity') {
-            terminalHint.textContent = 'Run in terminal to install plugin or run "npx ztds-mcp init --antigravity"';
+            terminalHint.textContent = currentEdition === 'commercial'
+              ? 'Run in terminal to configure Antigravity ztds-guard with @privacyscrubber/mcp-server'
+              : 'Run in terminal to install plugin or run "npx ztds-mcp init --antigravity"';
           } else {
             terminalHint.textContent = `Terminal Open: ${currentOpen}`;
           }
