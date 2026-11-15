@@ -149,6 +149,16 @@ const SECRET_RULES = [
     id: 'HARDCODED_ENV_SECRET',
     desc: 'Hardcoded secret assignment to sensitive environment variable',
     regex: /\b(?:SERPER_API_KEY|SUPABASE_SERVICE_ROLE_KEY|OPENAI_API_KEY|ANTHROPIC_API_KEY|PADDLE_API_KEY|STRIPE_SECRET|RESEND_API_KEY)\s*=\s*["'][^"']+/
+  },
+  {
+    id: 'DB_URI_CREDENTIAL',
+    desc: 'Database or broker connection URI with inline password literal',
+    regex: new RegExp(
+      '\\b(?:' +
+        ['postgres(?:ql)?', 'mongodb(?:\\+srv)?', 'mysql', 'mariadb', 'redis(?:s)?', 'amqp(?:s)?'].join('|') +
+        '):\\/\\/[^"\'`\\s:@\\/]+:(?!(?:pass|password|pwd|secret|xxx+|\\*+)@)[^"\'`\\s@\\/<>\\[\\]{}$]{5,}@[^"\'`\\s]+',
+      'i'
+    )
   }
 ];
 

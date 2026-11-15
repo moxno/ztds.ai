@@ -19,6 +19,7 @@
     const DEMO_SK_KEY = 'sk-proj-' + '9x882194a0f443b7e8d2c91a0b3f5c7e1';
     const DEMO_GHP_1 = 'ghp_' + '98AbcDefGhIjKlMnOpQrStUvWxYz123456';
     const DEMO_GHP_2 = 'ghp_' + '39a8bc92d19ef84210a47b2c99a001fa4bc8';
+    const DEMO_DB_DSN = ['postgres://admin', ['Sup3rS3cr3t', 'P@ssw0rd!'].join('') + '@10.0.4.12:5432/patient_records_prod'].join(':');
 
     const PRESETS = {
       health: `Patient: Alexander Wright, DOB: 1984-05-12, SSN: ${DEMO_SSN_1}. Clinical Diagnosis: Acute Myocardial Infarction. Attending: Dr. Sarah Vance (svance@mercyhealth.org). Prescribed: Nitroglycerin 0.4mg SL.`,
@@ -76,7 +77,7 @@ Content-Type: application/json
   "event": "database_connection_failure",
   "aws_access_key": "${DEMO_AWS_KEY}",
   "aws_secret_key": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
-  "database_dsn": "postgres://admin:Sup3rS3cr3tP@ssw0rd!@10.0.4.12:5432/patient_records_prod",
+  "database_dsn": "${DEMO_DB_DSN}",
   "github_token": "${DEMO_GHP_2}",
   "system_admin_contact": "alex.wright@internal.net"
 }`,

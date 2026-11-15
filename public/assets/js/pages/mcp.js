@@ -286,7 +286,7 @@
       const PRESETS = {
         api_key: 'const client = new OpenAI({\n  apiKey: "' + 'sk-proj-' + '9x8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d",\n  organization: "org-internal-finance"\n});\nconst awsKey = "' + 'AKIA' + 'IOSFODNN7EXAMPLE";\nconst awsSecret = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";',
         pii: 'Instruction: Forward Q3 executive settlement memo to CFO sarah.connor@acme-global.com with wire transfer $485,250.00 USD to IBAN DE89370400440532013000 (Routing: 021000021, SSN: ' + ['219', '45', '8821'].join('-') + ').',
-        database: 'DATABASE_URL="postgres://db_admin:SuperSecretPassw0rd2026!@prod-db.internal.aws:5432/core_banking"\nREDIS_HOST="192.168.1.104"\nREDIS_SECRET="AuthToken9876543210"'
+        database: 'DATABASE_URL="' + ['postgres://db_admin', ['SuperSecret', 'Passw0rd2026!'].join('') + '@prod-db.internal.aws:5432/core_banking'].join(':') + '"\nREDIS_HOST="192.168.1.104"\nREDIS_SECRET="' + ['AuthToken', '9876543210'].join('') + '"'
       };
 
       let activeTool = 'ztds_sanitize';

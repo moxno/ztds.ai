@@ -120,19 +120,21 @@ console.log('--> Test 3: Adversarial Leak Detection & Large-Payload Regression C
     execFileSync('git', ['rm', '-f', '--cached', '-q', 'large-bundle.js'], { cwd: tmpDir });
     fs.unlinkSync(path.join(tmpDir, 'large-bundle.js'));
 
-    // Case C: Secret token, commercial engine identifier, private repo URL & unpublished patent detail
+    // Case C: Secret token, DB URI, commercial engine identifier, private repo URL & unpublished patent detail
     const fakeSk = ['sk', 'proj', 'AbCdEfGhIjKlMnOpQrStUvWxYz012345'].join('-');
+    const fakeDbUri = ['postgres://admin', ['S3cr3tPass', '2026!'].join('') + '@10.0.4.12:5432/db'].join(':');
     const fakeEngine = ['pii', 'engine', 'core'].join('-');
     const fakeRepo = ['github.com', 'moxno', 'PrivacyScrubber'].join('/');
     const fakePatent = ['IL ', '331', '905'].join('');
     fs.writeFileSync(
       path.join(tmpDir, 'leaks.js'),
-      `const k = "${fakeSk}";\nimport "${fakeEngine}";\n// ${fakeRepo} ${fakePatent}\n`
+      `const k = "${fakeSk}";\nconst dsn = "${fakeDbUri}";\nimport "${fakeEngine}";\n// ${fakeRepo} ${fakePatent}\n`
     );
     execFileSync('git', ['add', 'leaks.js'], { cwd: tmpDir });
     const resLeaks = auditRepository({ rootDir: tmpDir, includeStaged: true });
     const triggeredRules = new Set(resLeaks.violations.map(v => v.rule));
     assert(triggeredRules.has('API_KEY_SK'), 'Must detect sk-* secret token');
+    assert(triggeredRules.has('DB_URI_CREDENTIAL'), 'Must detect database connection URI with inline password');
     assert(triggeredRules.has('COMMERCIAL_ENGINE_ID'), 'Must detect commercial engine identifier');
     assert(triggeredRules.has('PRIVATE_REPO_URL'), 'Must detect private repository URL');
     assert(triggeredRules.has('UNPUBLISHED_PATENT_DETAIL'), 'Must detect unpublished patent detail');
