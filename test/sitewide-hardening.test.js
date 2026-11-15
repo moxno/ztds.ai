@@ -371,8 +371,8 @@ console.log('--> Test 6: Zero External <img> Pings, Zero Orphan <label> Elements
   console.log(`    [PASS] All ${HTML_FILES.length} HTML pages contain 0 external <img> pings and 0 orphan <label> elements.`);
 }
 
-// Test 7: Wave 3 Screen-1 DOM Order, Skip-Link Deduplication, Light Theme-Color, Sitemap/GEO/CmdK 55/55 Parity & WAI-ARIA Widgets
-console.log('--> Test 7: Screen-1 Main-Before-Aside Order, Single Skip-Link, Theme-Color #f8fafc, 55/55 Sitemap Parity & WAI-ARIA Widgets');
+// Test 7: Wave 3 Screen-1 DOM Order, Skip-Link Deduplication, Light Theme-Color, Sitemap/GEO/CmdK 45/45 Parity & WAI-ARIA Widgets
+console.log('--> Test 7: Screen-1 Main-Before-Aside Order, Single Skip-Link, Theme-Color #f8fafc, 45/45 Sitemap Parity & WAI-ARIA Widgets');
 {
   const duplicateSkipLinks = [];
   const unhiddenBackdrops = [];
@@ -437,10 +437,10 @@ console.log('--> Test 7: Screen-1 Main-Before-Aside Order, Single Skip-Link, The
     );
   }
 
-  // Verify 100% parity (55/55 routes) across sitemap.xml, llms.txt, and nav.js SITE_INDEX
+  // Verify 100% parity (45/45 curated indexable routes) across sitemap.xml, llms.txt, and nav.js SITE_INDEX
   const sitemapXml = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
   const sitemapUrls = [...sitemapXml.matchAll(/<loc>(https:\/\/ztds\.ai[^<]+)<\/loc>/g)].map(m => m[1]);
-  assert(sitemapUrls.length >= 55, `Expected >= 55 URLs in sitemap.xml, found ${sitemapUrls.length}`);
+  assert.strictEqual(sitemapUrls.length, 45, `Expected exactly 45 curated URLs in sitemap.xml, found ${sitemapUrls.length}`);
 
   const llmsTxt = fs.readFileSync(path.join(ROOT, 'llms.txt'), 'utf8');
   const navCode = fs.readFileSync(path.join(ROOT, 'nav.js'), 'utf8');
@@ -1048,10 +1048,10 @@ console.log('[13/13] Verifying mobile viewport ergonomics, 44px touch targets & 
   );
 
   const gridPages = [
-    { rel: 'companies/index.html', check: (h) => !/\bgrid-cols-4\b/.test(h.replace(/grid-cols-2\s+sm:grid-cols-4/g, '')), msg: 'companies/index.html has bare grid-cols-4 without sm: breakpoint' },
+    { rel: 'companies/index.html', check: (h) => !/(?:^|[\s"'])grid-cols-4\b/.test(h.replace(/grid-cols-2\s+sm:grid-cols-4/g, '')), msg: 'companies/index.html has bare grid-cols-4 without sm: breakpoint' },
     { rel: 'case-studies/index.html', check: (h) => !/mt-4 grid grid-cols-3\b/.test(h), msg: 'case-studies/index.html has bare grid-cols-3 metric cards' },
     { rel: 'agency/index.html', check: (h) => !/<div class="grid grid-cols-3\b/.test(h), msg: 'agency/index.html has bare grid-cols-3 metric strip' },
-    { rel: 'roi/index.html', check: (h) => !/\bgrid-cols-4\b/.test(h.replace(/grid-cols-2\s+sm:grid-cols-4/g, '')) && !/<div class="grid grid-cols-3\b/.test(h), msg: 'roi/index.html has bare grid-cols-3/grid-cols-4 without sm: breakpoint' },
+    { rel: 'roi/index.html', check: (h) => !/(?:^|[\s"'])grid-cols-4\b/.test(h.replace(/grid-cols-2\s+sm:grid-cols-4/g, '')) && !/<div class="grid grid-cols-3\b/.test(h), msg: 'roi/index.html has bare grid-cols-3/grid-cols-4 without sm: breakpoint' },
     { rel: 'deck/index.html', check: (h) => !/<div class="grid grid-cols-3\b/.test(h) && !/max-h-\[40vh\]/.test(h) && /max-h-\[40dvh\]/.test(h), msg: 'deck/index.html must use sm:grid-cols-3 and max-h-[40dvh]' },
   ];
   for (const gp of gridPages) {
@@ -1707,4 +1707,78 @@ console.log('[19/19] Verifying Wave 11 /deck/ responsive overhaul, sub-44px over
   console.log(`    [PASS] Wave 11 /deck/ responsive overhaul, 60/60 viewport width=device-width, 0 sub-44px overrides, hover gating, overscroll containment & modal/form polish verified.`);
 }
 
-console.log('\n[SUMMARY] ALL 19 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');
+// ============================================================================
+// 20. SEO Index Compression, Pyramid Footer Hierarchy & Security De-Dorking
+// ============================================================================
+console.log('[20/20] Verifying 45-URL sitemap compression, 10x noindex exclusions, <=22-link pyramid footer & security de-dorking...');
+{
+  const excludedNoindexFiles = [
+    'companies/apex-health-ai/index.html',
+    'companies/lex-veritas-legal/index.html',
+    'companies/aegis-fintech/index.html',
+    'companies/cloudscale-saas/index.html',
+    'companies/valkyrie-defense/index.html',
+    'companies/cybershield-siem/index.html',
+    'companies/talenthub-hr/index.html',
+    'ietf/draft-sibiryakov-ztds-protocol-01/index.html',
+    'ietf/draft-sibiryakov-ztds-protocol-01.html',
+    'docs/legal/order-form/index.html',
+    'docs/legal/order-form.html',
+    'deck/index.html'
+  ];
+  const excludedSitemapUrls = [
+    'https://ztds.ai/companies/apex-health-ai/',
+    'https://ztds.ai/companies/lex-veritas-legal/',
+    'https://ztds.ai/companies/aegis-fintech/',
+    'https://ztds.ai/companies/cloudscale-saas/',
+    'https://ztds.ai/companies/valkyrie-defense/',
+    'https://ztds.ai/companies/cybershield-siem/',
+    'https://ztds.ai/companies/talenthub-hr/',
+    'https://ztds.ai/ietf/draft-sibiryakov-ztds-protocol-01/',
+    'https://ztds.ai/docs/legal/order-form/',
+    'https://ztds.ai/deck/'
+  ];
+
+  for (const smRel of ['sitemap.xml', 'public/sitemap.xml']) {
+    const sm = fs.readFileSync(path.join(ROOT, smRel), 'utf8');
+    const locs = [...sm.matchAll(/<loc>(https:\/\/ztds\.ai[^<]+)<\/loc>/g)].map((m) => m[1]);
+    assert.strictEqual(locs.length, 45, `${smRel} must contain exactly 45 <url> entries (found ${locs.length})`);
+    for (const u of excludedSitemapUrls) {
+      assert(!sm.includes(u), `${smRel} must exclude noindex URL ${u}`);
+    }
+    const lastmods = new Set([...sm.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map((m) => m[1]));
+    assert(lastmods.size >= 2, `${smRel} must expose differentiated per-URL <lastmod> dates (found ${lastmods.size})`);
+  }
+
+  for (const rel of excludedNoindexFiles) {
+    const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    assert(
+      /<meta\s+[^>]*name=["']robots["'][^>]*content=["']noindex,\s*follow["']/i.test(html),
+      `${rel} must enforce <meta name="robots" content="noindex, follow">`
+    );
+  }
+
+  let checkedFooters = 0;
+  for (const rel of HTML_FILES) {
+    if (SPECIALIZED_LAYOUT_PAGES.has(rel)) continue;
+    const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    const footerMatch = html.match(/<footer\b[^>]*>[\s\S]*?<\/footer>/i);
+    assert(footerMatch, `${rel} missing <footer>`);
+    assert(!footerMatch[0].includes('Sector Reference Blueprints:'), `${rel} footer still contains pruned Sector Reference Blueprints strip`);
+    const internalFooterLinks = [...footerMatch[0].matchAll(/href=["'](\/[^"']+)["']/gi)];
+    assert(
+      internalFooterLinks.length <= 22,
+      `${rel} footer exceeds 22 internal link budget (found ${internalFooterLinks.length})`
+    );
+    checkedFooters++;
+  }
+
+  const securityHtml = fs.readFileSync(path.join(ROOT, 'security/index.html'), 'utf8');
+  const secMain = (securityHtml.match(/<main\b[\s\S]*?<\/main>/i) || [''])[0];
+  assert(!/\b(?:bounty|reward|bugcrowd|hackerone)\b/i.test(secMain), 'security/index.html must not contain bug-bounty Google-dork bait terms');
+  assert(!secMain.includes('Submit Vulnerability Report'), 'security/index.html must not contain "Submit Vulnerability Report" dork heading');
+
+  console.log(`    [PASS] 45/45 compressed sitemap parity, 12 noindex exclusions, ${checkedFooters} pyramid footers (<=22 links), and /security/ de-dorking verified.`);
+}
+
+console.log('\n[SUMMARY] ALL 20 SITE-WIDE CLARITY, SEO & BROWSER SECURITY INVARIANT TESTS PASSED.\n');

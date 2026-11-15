@@ -258,7 +258,7 @@ function generateProfileHtml(company) {
   <link rel="canonical" href="https://ztds.ai/companies/${slug}/">
   <link rel="alternate" hreflang="en" href="https://ztds.ai/companies/${slug}/">
   <link rel="alternate" hreflang="x-default" href="https://ztds.ai/companies/${slug}/">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="robots" content="${isBlueprint ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}">
   <meta name="theme-color" content="#f8fafc">
   <link rel="alternate" type="text/plain" href="/llms.txt" title="ZTDS LLM Knowledge Base">
   <link rel="alternate" type="text/plain" href="/llms-full.txt" title="ZTDS Full Normative LLM Compendium">
@@ -377,11 +377,11 @@ function generateProfileHtml(company) {
       <!-- Navigation Links -->
       <nav class="hidden lg:flex items-center gap-3.5 xl:gap-5 text-sm font-medium text-slate-600" id="desktop-nav">
         <a href="/standard/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Standard</a>
-        <a href="/registry/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Registry</a>
-        <a href="/fellows/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Fellows</a>
-        <a href="/companies/" class="nav-link text-emerald-700 font-bold py-1 whitespace-nowrap">Adopters</a>
+        <a href="/mcp/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">MCP</a>
+        <a href="/sdk/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">SDK</a>
         <a href="/scanner/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Scanner</a>
-        <a href="/sdk/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">SDK &amp; Connectors</a>
+        <a href="/frameworks/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Frameworks</a>
+        <a href="/compliance/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">Compliance</a>
         <a href="/ciso/" class="nav-link hover:text-slate-900 transition-colors py-1 whitespace-nowrap">CISO &amp; Trust</a>
       </nav>
 

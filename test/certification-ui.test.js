@@ -134,11 +134,11 @@ console.log('\n--> Test 4: Desktop Navigation Invariant (7 Canonical Links)');
 
   const expectedLinks = [
     { href: '/standard/', label: 'Standard' },
-    { href: '/registry/', label: 'Registry' },
-    { href: '/fellows/', label: 'Fellows' },
-    { href: '/companies/', label: 'Adopters' },
+    { href: '/mcp/', label: 'MCP' },
+    { href: '/sdk/', label: 'SDK' },
     { href: '/scanner/', label: 'Scanner' },
-    { href: '/sdk/', label: 'SDK & Connectors' },
+    { href: '/frameworks/', label: 'Frameworks' },
+    { href: '/compliance/', label: 'Compliance' },
     { href: '/ciso/', label: 'CISO & Trust' }
   ];
 

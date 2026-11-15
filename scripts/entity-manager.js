@@ -225,13 +225,16 @@ function runAudit() {
   for (const company of companiesData.companies) {
     totalEntities++;
     const slug = company.slug;
-    const isProductionEntity = true;
+    const isBlueprint = Boolean(company.tier && company.tier.includes('Sandbox'));
     const errors = [];
 
-    // Facet 2: Standalone Profile (for production verified entities)
-    if (isProductionEntity) {
-      if (!fileExists(`companies/${slug}/index.html`)) {
-        errors.push(`Missing profile page: companies/${slug}/index.html`);
+    // Facet 2: Standalone Profile (all 10 companies)
+    if (!fileExists(`companies/${slug}/index.html`)) {
+      errors.push(`Missing profile page: companies/${slug}/index.html`);
+    } else if (isBlueprint) {
+      const profileHtml = readFileSafe(`companies/${slug}/index.html`) || '';
+      if (!/<meta\s+[^>]*name=["']robots["'][^>]*content=["']noindex,\s*follow["']/i.test(profileHtml)) {
+        errors.push(`Sandbox blueprint profile companies/${slug}/index.html must carry noindex, follow`);
       }
     }
 
@@ -248,23 +251,30 @@ function runAudit() {
       errors.push(`Missing public badge: public/badge/${slug}.svg`);
     }
 
-    // Facet 7: Sitemaps (for production entities)
-    if (isProductionEntity) {
-      const urlPattern = `https://ztds.ai/companies/${slug}/`;
+    // Facet 7: Sitemaps (strictly production real adopters; exclude synthetic Sandbox blueprints)
+    const urlPattern = `https://ztds.ai/companies/${slug}/`;
+    if (isBlueprint) {
+      if (sitemapXml.includes(urlPattern)) {
+        errors.push(`Synthetic Sandbox blueprint must NOT be in sitemap.xml: ${urlPattern}`);
+      }
+      if (publicSitemapXml.includes(urlPattern)) {
+        errors.push(`Synthetic Sandbox blueprint must NOT be in public/sitemap.xml: ${urlPattern}`);
+      }
+    } else {
       if (!sitemapXml.includes(urlPattern)) {
         errors.push(`URL missing from sitemap.xml: ${urlPattern}`);
       }
       if (!publicSitemapXml.includes(urlPattern)) {
         errors.push(`URL missing from public/sitemap.xml: ${urlPattern}`);
       }
+    }
 
-      // Facet 8: LLMs Corpora
-      if (!llmsTxt.includes(urlPattern)) {
-        errors.push(`URL missing from llms.txt: ${urlPattern}`);
-      }
-      if (!llmsFullTxt.includes(urlPattern)) {
-        errors.push(`URL missing from llms-full.txt: ${urlPattern}`);
-      }
+    // Facet 8: LLMs Corpora
+    if (!llmsTxt.includes(urlPattern)) {
+      errors.push(`URL missing from llms.txt: ${urlPattern}`);
+    }
+    if (!llmsFullTxt.includes(urlPattern)) {
+      errors.push(`URL missing from llms-full.txt: ${urlPattern}`);
     }
 
     if (errors.length > 0) {

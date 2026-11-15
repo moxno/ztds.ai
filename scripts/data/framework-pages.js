@@ -391,11 +391,11 @@ const PAGES = [
 ];
 
 const HUB = {
-  title: 'ZTDS Framework Mappings: OWASP, NIST, EU AI Act, GDPR, HIPAA',
+  title: 'OWASP LLM02, NIST AI RMF, GDPR & HIPAA Mappings | ZTDS.ai',
   desc: 'Technical control mappings from the ZTDS client-side sanitization standard to OWASP LLM02, NIST AI RMF, EU AI Act Art. 10, GDPR, HIPAA, MCP, and RAG.',
   keywords: 'ZTDS framework mappings, OWASP LLM02, NIST AI RMF, EU AI Act Article 10, GDPR Article 32, HIPAA Safe Harbor, MCP security, RAG privacy',
   headline: 'ZTDS Framework Mappings: how a client-side sanitization control maps to published security and privacy frameworks',
-  h1: 'ZTDS Framework Mappings: <span class="block text-emerald-700 hero-display-line mt-0.5">One Control, Many Frameworks</span>',
+  h1: 'AI Security &amp; Privacy Framework Mappings <span class="block text-emerald-700 hero-display-line mt-0.5">OWASP LLM02, NIST AI RMF, EU AI Act, GDPR &amp; HIPAA</span>',
   lead: 'Audit-ready control mappings from ZTDS RFC v1.0 to OWASP LLM02, NIST AI RMF, EU AI Act, GDPR, HIPAA, MCP, and RAG—stating exact coverage limits.',
   method: [
     'Every mapping follows the same structure: a summary, a control-mapping table, how ZTDS applies, and an explicit list of limits. The four ZTDS invariants are the common vocabulary:',

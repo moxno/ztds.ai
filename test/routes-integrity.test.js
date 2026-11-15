@@ -88,10 +88,22 @@ for (const relPath of prodPages) {
   assert(/<meta\s+[^>]*property=["']og:description["']/i.test(html), `Missing og:description in ${relPath}`);
 
   // Robots, theme-color & raster icon checks
-  if (relPath === '404.html') {
+  const noindexProdPages = new Set([
+    '404.html',
+    'deck/index.html',
+    'ietf/draft-sibiryakov-ztds-protocol-01/index.html',
+    'companies/apex-health-ai/index.html',
+    'companies/lex-veritas-legal/index.html',
+    'companies/aegis-fintech/index.html',
+    'companies/cloudscale-saas/index.html',
+    'companies/valkyrie-defense/index.html',
+    'companies/cybershield-siem/index.html',
+    'companies/talenthub-hr/index.html'
+  ]);
+  if (noindexProdPages.has(relPath)) {
     assert(
       /<meta\s+[^>]*name=["']robots["'][^>]*content=["']noindex,\s*follow["']/i.test(html),
-      `404.html must have robots="noindex, follow"`
+      `${relPath} must have robots="noindex, follow"`
     );
   } else {
     assert(
@@ -199,11 +211,11 @@ console.log(`    [PASS] All ${criticalAssets.length} critical assets verified an
 console.log('--> Test 5: Desktop Navigation & Mobile Drawer Structural Invariant');
 const canonicalNavLinks = [
   '/standard/',
-  '/registry/',
-  '/fellows/',
-  '/companies/',
-  '/scanner/',
+  '/mcp/',
   '/sdk/',
+  '/scanner/',
+  '/frameworks/',
+  '/compliance/',
   '/ciso/'
 ];
 

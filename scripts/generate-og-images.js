@@ -651,7 +651,21 @@ function syncHtmlOgMeta() {
     let html = orig;
     const ogUrl = resolveOgImageForFile(relPath);
     const is404 = relPath === '404.html' || relPath.endsWith('/404.html');
-    const desiredRobots = is404
+    const NOINDEX_ROUTES = new Set([
+      'deck/index.html',
+      'ietf/draft-sibiryakov-ztds-protocol-01/index.html',
+      'ietf/draft-sibiryakov-ztds-protocol-01.html',
+      'docs/legal/order-form/index.html',
+      'docs/legal/order-form.html',
+      'companies/apex-health-ai/index.html',
+      'companies/lex-veritas-legal/index.html',
+      'companies/aegis-fintech/index.html',
+      'companies/cloudscale-saas/index.html',
+      'companies/valkyrie-defense/index.html',
+      'companies/cybershield-siem/index.html',
+      'companies/talenthub-hr/index.html'
+    ]);
+    const desiredRobots = (is404 || NOINDEX_ROUTES.has(relPath))
       ? 'noindex, follow'
       : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 
