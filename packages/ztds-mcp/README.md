@@ -3,6 +3,7 @@
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![NPM Downloads](https://img.shields.io/npm/dm/ztds-mcp.svg?color=6366f1&label=NPM%20Downloads)](https://www.npmjs.com/package/ztds-mcp)
+[![Docker Hub](https://img.shields.io/docker/v/brandmeweb/ztds-mcp?color=2496ED&label=Docker%20Hub&logo=docker&logoColor=white)](https://hub.docker.com/r/brandmeweb/ztds-mcp)
 [![GitHub Stars](https://img.shields.io/github/stars/moxno/ztds-mcp.svg?style=social&label=Star)](https://github.com/moxno/ztds-mcp)
 [![Specification: RFC v1.0](https://img.shields.io/badge/Specification-RFC_v1.0-emerald.svg)](https://ztds.ai/standard/)
 [![IETF Standards Track](https://img.shields.io/badge/IETF_Standards_Track-sibiryakov--ztds--protocol-purple.svg)](https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/)
@@ -38,6 +39,29 @@ To verify existing client configurations:
 
 ```bash
 npx ztds-mcp status
+```
+
+---
+
+## Docker Container Quickstart (Isolated Stdio Runtime)
+
+Run the containerized `ztds-mcp` image (`linux/amd64` and `linux/arm64`) with zero host filesystem access:
+
+```bash
+docker pull brandmeweb/ztds-mcp:latest
+```
+
+Configure in `claude_desktop_config.json` or `.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "ztds": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "brandmeweb/ztds-mcp:latest"]
+    }
+  }
+}
 ```
 
 ---
@@ -169,6 +193,27 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
 
 ---
 
+## Compliance Frameworks & Architectural Reference
+
+Explore the vendor-neutral specification, security boundaries, and regulatory blueprints on [ztds.ai](https://ztds.ai):
+
+- [MCP In-RAM Security & Tool-Call Boundary Architecture](https://ztds.ai/mcp/)
+- [ZTDS Headless Developer SDK & RAG Integration Guide](https://ztds.ai/sdk/)
+- [ZTDS Protocol Specification RFC v1.0](https://ztds.ai/standard/)
+- [Enterprise Regulatory Compliance & Zero-Subprocessor Matrix](https://ztds.ai/compliance/)
+- [Zero-Trust Network Egress Scanner & CLI Auditor](https://ztds.ai/scanner/)
+- [Compliance Implementation Blueprints Hub](https://ztds.ai/frameworks/)
+- [MCP Stdio PII Sanitization & Tool Poisoning Mitigation](https://ztds.ai/frameworks/mcp-stdio-pii-sanitization/)
+- [HIPAA Safe Harbor De-Identification for LLM Prompts](https://ztds.ai/frameworks/hipaa-safe-harbor-llm-prompts/)
+- [GDPR Articles 25 & 32 Technical Safe Harbor for AI Prompts](https://ztds.ai/frameworks/gdpr-article-25-32-ai-prompts/)
+- [EU AI Act Article 10 Data Governance & Prompt Hygiene](https://ztds.ai/frameworks/eu-ai-act-article-10-data-governance/)
+- [NIST AI RMF Generative AI Profile PII Controls](https://ztds.ai/frameworks/nist-ai-rmf-generative-ai-profile-pii/)
+- [OWASP LLM02 Sensitive Information Disclosure Defense](https://ztds.ai/frameworks/owasp-llm02-sensitive-information-disclosure/)
+- [RAG Pipeline Client-Side PII Sanitization](https://ztds.ai/frameworks/rag-pipeline-pii-sanitization/)
+- [Client-Side RAM Sanitization vs. Cloud Proxy DLP](https://ztds.ai/frameworks/client-side-sanitization-vs-proxy-dlp/)
+
+---
+
 ## Certified Commercial Reference Implementation (PrivacyScrubber)
 
 ZTDS is an open, vendor-neutral standard. The open-source `ztds-mcp` package serves as the reference implementation covering universal baseline entities (Email, Phone, SSN, Credit Cards, IPv4, IBAN, API Secrets).
@@ -191,6 +236,11 @@ npm install @privacyscrubber/sdk
 ```
 
 Website: [https://privacyscrubber.com](https://privacyscrubber.com)
+
+Commercial integration references:
+- [Production MCP Server & Tool-Call Boundary Redaction](https://privacyscrubber.com/pii-mcp/)
+- [Headless Node.js, TypeScript & Python RAG SDK](https://privacyscrubber.com/sdk/)
+- [HIPAA Safe Harbor AI Scrubber for Healthcare](https://privacyscrubber.com/solutions/medical/hipaa-ai-scrubber/)
 
 ---
 
