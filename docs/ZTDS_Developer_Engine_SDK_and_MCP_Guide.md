@@ -94,6 +94,11 @@ For modern AI IDEs (Cursor, Windsurf) and desktop agents (Claude Desktop), ZTDS 
 2. `reveal_response`: Restores surrogate tokens back to original cleartext within the IDE interface.
 3. `verify_ztds_compliance`: Runs real-time static check on active files to detect hardcoded secrets or unmasked PII.
 
+### November 2026 Empirical Threat Boundary (CVE-2026-120779, Unit 42 & AAIF)
+- **Cascading Trust Protection (Unit 42 78.3%):** Unit 42 measured a 78.3% attack success rate when five MCP servers share cascading trust. In-RAM tokenization ensures compromised downstream tool calls encounter `[API_KEY_1]` surrogates rather than raw credentials (paired with prompt-injection defenses).
+- **Client Advisory Scope (`CVE-2026-120779`):** Patching VS Code to `1.145.3+` remediates the MCP Elicitation Notifications IDE command-injection flaw (CVSS 9.6 in `<= 1.145.2`); pre-egress `stdio` sanitization limits secret exposure if an external MCP server is malicious or compromised.
+- **Linux Foundation AAIF Alignment (`MCP`, `goose`, `AGENTS.md`, `A2A`):** Sits in host RAM ahead of open transport protocols where core AAIF specs define connectivity rather than semantic PII de-identification, avoiding cloud proxy subprocessor chains.
+
 ---
 
 ## 5. RAG Pipeline De-Identification Architecture

@@ -723,6 +723,34 @@
 
         </div>
 
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <div class="ztds-card p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+            <div class="text-xxs font-mono font-bold uppercase tracking-wider text-red-700">CVE-2026-120779 · CVSS 9.6</div>
+            <h3 id="cve-2026-120779-untrusted-mcp-servers" class="text-base font-bold text-slate-900 scroll-mt-24">CVE-2026-120779 &amp; Untrusted MCP Servers</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Microsoft&rsquo;s Nov 2026 advisory (CVE-2026-120779 in VS Code &le; 1.145.2 MCP Elicitation Notifications) shows external MCP servers act as untrusted inputs. Patch VS Code to 1.145.3+ for IDE command execution flaws, and tokenize credentials in RAM so untrusted servers receive surrogates.
+            </p>
+          </div>
+
+          <div class="ztds-card p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+            <div class="text-xxs font-mono font-bold uppercase tracking-wider text-amber-800">Unit 42 · Cascading Trust</div>
+            <h3 id="unit-42-cascading-trust-78-3" class="text-base font-bold text-slate-900 scroll-mt-24">Unit 42 Cascading Trust (78.3%)</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Unit 42 measured a 78.3% attack success rate across five connected MCP servers as poisoned tool outputs propagate to clean tools. Pre-egress tokenization ensures downstream exfiltration chains carry only <code>[API_KEY_1]</code> surrogates rather than raw credentials.
+            </p>
+          </div>
+
+          <div class="ztds-card p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+            <div class="text-xxs font-mono font-bold uppercase tracking-wider text-emerald-700">Linux Foundation AAIF</div>
+            <h3 id="linux-foundation-aaif-stack" class="text-base font-bold text-slate-900 scroll-mt-24">AAIF Standard Stack (MCP, goose, A2A)</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              As the Agentic AI Foundation standardizes MCP, goose, AGENTS.md, and A2A without native protocol-level PII redaction, ZTDS supplies the pre-transport in-RAM sanitization layer across local stdio pipes and cross-agent A2A message flows.
+            </p>
+          </div>
+
+        </div>
+
       </div>
     </section>
 

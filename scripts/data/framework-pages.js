@@ -225,7 +225,8 @@ const PAGES = [
       ['Dates', 'Admission, discharge, and birth dates.', 'Remove all date elements except year. Ages over 89, and any year indicating such an age, must be removed or aggregated into a single category of 90 or older.'],
       ['Contact and record numbers', 'Telephone, email, medical record and account numbers.', 'Replace with typed surrogates.'],
       ['Geographic data', 'Street addresses, small-area locations.', 'Remove below the state level except as the rule permits.'],
-      ['Free-text context', 'Narrative details that could single out a person.', 'Specialized profiles reduce risk; residual review remains required.']
+      ['Free-text context', 'Narrative details that could single out a person.', 'Specialized profiles reduce risk; residual review remains required.'],
+      ['Excluded desktop agent modes', 'Enterprise BAAs often exclude desktop agentic modes such as Claude Cowork.', 'Strip all 18 Safe Harbor identifiers in workstation RAM before clinical text enters non-BAA agent contexts.']
     ],
     apply: [
       'To keep the re-identification code consistent with Section 164.514(c):',
@@ -239,13 +240,15 @@ const PAGES = [
     limits: [
       'Safe Harbor requires no actual knowledge that the remaining information could identify an individual. A tool cannot establish that on its own.',
       'Clinical narratives can contain details that identify a person outside the 18 categories; expert determination is the alternative method for those cases.',
+      'European regulators treat longitudinal server-side pseudonymization as personal data under GDPR Recital 26 when linkability persists (Garante €7M and CNIL €5M IQVIA rulings); reversible tokenization remains a technical safeguard, not blanket GDPR exemption.',
       'This page is not a legal opinion and does not constitute a determination by HHS.',
       'Business associate and contractual questions remain separate from the de-identification method.'
     ],
     faq: [
       { q: 'What does the HIPAA Safe Harbor method require?', a: 'Under 45 CFR 164.514(b)(2), the covered entity removes 18 listed categories of identifiers and has no actual knowledge that the remaining information could identify an individual. If both hold, the information is treated as de-identified.' },
       { q: 'Can reversible surrogates be used under Safe Harbor?', a: 'A code that permits re-identification is allowed under 164.514(c) if it is not derived from or related to information about the individual, is not otherwise capable of being translated to identify the individual, the code is not used or disclosed for other purposes, and the covered entity does not disclose the mechanism for re-identification. Random session surrogates whose mapping stays only on the covered entity side meet that design constraint.' },
-      { q: 'Is Safe Harbor enough for free-text clinical notes?', a: 'Not always. Free text can carry identifying details beyond the listed categories. Where residual risk remains, the expert determination method or additional review is the appropriate route.' }
+      { q: 'Is Safe Harbor enough for free-text clinical notes?', a: 'Not always. Free text can carry identifying details beyond the listed categories. Where residual risk remains, the expert determination method or additional review is the appropriate route.' },
+      { q: 'Why does pre-egress Safe Harbor matter for desktop agents like Claude Cowork?', a: 'Standard enterprise AI BAAs cover core web chat while excluding agentic desktop or connector modes such as Claude Cowork. Removing all 18 identifiers in local memory keeps raw ePHI out of non-BAA channels, backed by a local SHA-256 execution receipt.' }
     ],
     related: [REL_COMP, REL_STD, REL_SCAN]
   },
@@ -263,7 +266,8 @@ const PAGES = [
     lead: 'The Model Context Protocol exchanges newline-delimited JSON-RPC 2.0 messages over local stdio subprocess pipes. Wrapping this boundary tokenizes tool outputs and restores arguments before model egress.',
     summary: [
       'With stdio, the MCP client starts the server as a child process and writes JSON-RPC messages to its stdin while reading responses from its stdout. The server may write logs to stderr. Nothing other than valid MCP messages may be written to stdin or stdout.',
-      'A ZTDS gateway wraps that boundary. Tool results that flow back toward the model are tokenized before the client forwards them, and tool arguments that come back from the model are restored locally. The model sees surrogates; the local tools operate on real values.'
+      'A ZTDS gateway wraps that boundary. Tool results that flow back toward the model are tokenized before the client forwards them, and tool arguments that come back from the model are restored locally. The model sees surrogates; the local tools operate on real values.',
+      'Empirical 2026 disclosures reinforce this boundary: Unit 42 recorded a 78.3% cascading-trust attack success rate across five connected MCP servers, and CVE-2026-120779 (CVSS 9.6 in VS Code <= 1.145.2) demonstrated untrusted server risk. While IDE RCE requires patching VS Code 1.145.3+, stdio tokenization keeps raw secrets out of MCP, goose, and A2A payloads.'
     ],
     mapTitle: 'Message Flow and Sanitization Points',
     mapHeaders: ['Flow', 'Content', 'Gateway action'],
@@ -291,7 +295,8 @@ const PAGES = [
     faq: [
       { q: 'How does the MCP stdio transport work?', a: 'The client launches the MCP server as a subprocess, writes newline-delimited JSON-RPC messages to its standard input, and reads responses from its standard output. The server can write diagnostic text to standard error.' },
       { q: 'Where should PII sanitization sit in an MCP setup?', a: 'At the local boundary between the tool output and the model context, so surrogates reach the model while tools keep working with real values.' },
-      { q: 'Does stdio sanitization protect against malicious tool output?', a: 'No. It reduces personal data exposure. Injection and tool authorization risks need separate controls.' }
+      { q: 'Does stdio sanitization protect against malicious tool output?', a: 'No. It reduces personal data exposure. Injection and tool authorization risks need separate controls.' },
+      { q: 'Does stdio sanitization stop CVE-2026-120779 or Unit 42 cascading-trust attacks?', a: 'CVE-2026-120779 is an IDE command-injection flaw in VS Code 1.145.2 and earlier that requires updating to 1.145.3+. ZTDS addresses the data-exposure side of untrusted or cascading MCP chains (78.3% success across five servers in Unit 42 testing) so external tools and prompts only see surrogate tokens.' }
     ],
     related: [REL_MCP, REL_BLUE, REL_STD]
   },
@@ -366,7 +371,8 @@ const PAGES = [
       ['Central policy and visibility', 'Strong for managed network traffic.', 'Depends on how the client is deployed and reported.'],
       ['Unmanaged or encrypted channels', 'Can miss traffic that bypasses the proxy.', 'Applies wherever the client runs.'],
       ['Failure mode', 'Proxy outage or bypass changes what is exposed.', 'A client that skips the step sends raw data.'],
-      ['Latency', 'Adds a network hop.', 'Local, in-memory operation.']
+      ['Latency', 'Adds a network hop.', 'Local, in-memory operation.'],
+      ['Local desktop and stdio agents', 'Cannot inspect local subprocess pipes (Claude Cowork, Cursor, VS Code, goose) without breaking local execution.', 'Wraps stdio and browser memory at the source before outbound sockets open.']
     ],
     apply: [
       'A pragmatic pairing:',
@@ -384,7 +390,8 @@ const PAGES = [
     faq: [
       { q: 'Is client-side sanitization a replacement for a DLP proxy?', a: 'No. They address different placements. A proxy gives central visibility for managed traffic, while client-side sanitization shrinks the data that leaves the endpoint. Many programs combine them.' },
       { q: 'Why does a proxy add a processing party?', a: 'To inspect content it must receive the cleartext. The operator of that proxy or redaction service then handles the raw data, which a client-side step avoids.' },
-      { q: 'What is the main failure mode of client-side sanitization?', a: 'A client that does not run the step sends raw data. Deployment coverage and network-level detection of bypass are the compensating controls.' }
+      { q: 'What is the main failure mode of client-side sanitization?', a: 'A client that does not run the step sends raw data. Deployment coverage and network-level detection of bypass are the compensating controls.' },
+      { q: 'How does in-RAM stdio sanitization differ from MCP DLP proxies like Strac?', a: 'Reverse-proxy MCP connectors route raw payloads through an external vendor service, adding a GDPR Article 28 processor or HIPAA BAA dependency while remaining blind to local desktop stdio pipes. Client-side ZTDS tokenizes in host RAM with zero external subprocessors.' }
     ],
     related: [REL_SCAN, REL_CISO, REL_COMP]
   }
