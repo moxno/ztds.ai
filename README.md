@@ -295,7 +295,7 @@ Full report: [ZTDS AI Safety Benchmark Report (2026)](docs/security/ZTDS_AI_SAFE
 | :--- | :--- | :--- | :--- |
 | **Open Reference Core** | `@ztds/core` ([`packages/ztds-core`](packages/ztds-core)) | Apache-2.0 | Vendor-neutral in-memory TypeScript/JS baseline. Universal regex rules (Email, Phone, PAN, SSN, API Keys). [Docs](https://ztds.ai/sdk/) |
 | **Open Reference MCP** | `ztds-mcp` ([`packages/ztds-mcp`](packages/ztds-mcp)) | Apache-2.0 | Official zero-dependency reference MCP server (`io.github.moxno/ztds` on Anthropic Registry) for Cursor, Claude Desktop, and Zed. [MCP Guide](https://ztds.ai/sdk/) |
-| **Certified Pioneer SDK** | `@privacyscrubber/sdk` | Commercial / Air-Gapped | High-throughput WASM engine with 30 Specialized Industry Profiles (HIPAA, PCI-DSS, Legal FRE-502), multi-threaded pipeline bindings, offline Ed25519 node licensing. [Get SDK](https://privacyscrubber.com/sdk/?utm_source=ztds.ai&utm_medium=readme&utm_campaign=certified_pioneer) |
+| **Certified Pioneer SDK** | `@privacyscrubber/sdk` | Commercial / Air-Gapped | High-throughput WASM engine with 30 Specialized Industry Profiles (HIPAA, PCI-DSS, Legal FRE-502), multi-threaded pipeline bindings, offline Ed25519 node licensing. [Get SDK](https://privacyscrubber.com/sdk/) |
 | **Air-Gapped IDE MCP** | `@privacyscrubber/mcp-server` | Commercial / Stdio | Stdio MCP proxy (`io.github.moxno/privacyscrubber-mcp`) for Cursor, Windsurf, Claude Code, and autonomous developer agents with 30 enterprise profiles. [MCP Guide](https://ztds.ai/sdk/) |
 
 ---
