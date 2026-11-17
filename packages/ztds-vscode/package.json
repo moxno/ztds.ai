@@ -1,0 +1,70 @@
+{
+  "name": "ztds-guard",
+  "displayName": "ZTDS Guard — Local In-RAM PII & Secret Sanitizer (MCP & AI Firewall)",
+  "description": "Zero-Trust Data Sanitization (ZTDS RFC v1.0) for VS Code, Copilot & MCP agents. Mask PII and secrets in volatile RAM, audit files with SHA-256 receipts, and configure ztds-mcp.",
+  "version": "1.0.0",
+  "publisher": "ztds",
+  "license": "Apache-2.0",
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Linters",
+    "Machine Learning",
+    "Testing",
+    "Other"
+  ],
+  "keywords": [
+    "ztds",
+    "mcp",
+    "pii",
+    "security",
+    "sanitization",
+    "redaction",
+    "hipaa",
+    "gdpr",
+    "copilot",
+    "zero-trust"
+  ],
+  "homepage": "https://ztds.ai/mcp/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moxno/ztds.ai.git",
+    "directory": "packages/ztds-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/moxno/ztds.ai/issues"
+  },
+  "main": "./extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "ztds.sanitizeSelection",
+        "title": "ZTDS: Sanitize Selection in Volatile RAM"
+      },
+      {
+        "command": "ztds.restoreSelection",
+        "title": "ZTDS: Restore Surrogate Tokens from RAM"
+      },
+      {
+        "command": "ztds.auditDocument",
+        "title": "ZTDS: Audit Active File for PII & Secret Egress"
+      },
+      {
+        "command": "ztds.resetSession",
+        "title": "ZTDS: Zeroize Volatile Token Session (Theorem 2)"
+      },
+      {
+        "command": "ztds.configureMcp",
+        "title": "ZTDS: Configure Local MCP Firewall (.vscode/mcp.json)"
+      }
+    ]
+  },
+  "scripts": {
+    "test": "node test.js"
+  }
+}

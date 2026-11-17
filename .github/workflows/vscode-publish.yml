@@ -1,0 +1,33 @@
+name: Publish VS Code Extension
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/ztds-vscode/**'
+      - '.github/workflows/vscode-publish.yml'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Publish ztds-guard to VS Code Marketplace
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run ZTDS VS Code extension unit tests
+        run: node packages/ztds-vscode/test.js
+
+      - name: Publish to Visual Studio Marketplace via OIDC
+        working-directory: packages/ztds-vscode
+        run: npx --yes @vscode/vsce publish --no-dependencies --skip-duplicate --oidc
