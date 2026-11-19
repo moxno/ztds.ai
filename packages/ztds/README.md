@@ -179,6 +179,7 @@ The open reference implementation (`ztds`) provides the universal baseline engin
 
 ## 📜 Intellectual Property & Standards
 
+- **Documentation (Read the Docs)**: [https://ztds.readthedocs.io/en/latest/](https://ztds.readthedocs.io/en/latest/)
 - **IETF Specification**: [draft-sibiryakov-ztds-protocol-02](https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/)
 - **Consortium & RFC Registry**: [https://ztds.ai](https://ztds.ai)
 - **IPR Disclosure**: Filed under IETF RFC 8179 rules (Royalty-Free grant for Open-Source implementations with Defensive Termination).

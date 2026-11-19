@@ -21,7 +21,7 @@ from .core import (
     zeroize,
 )
 
-__version__ = "1.1.2"
+__version__ = "1.1.3"
 __author__ = "Ilya Sibiryakov & ZTDS AI Consortium"
 __license__ = "MIT"
 
