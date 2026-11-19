@@ -71,6 +71,14 @@ class TestZtdsCore(unittest.TestCase):
         # Outside context, session memory is wiped
         self.assertEqual(self.engine.restore(sanitized, saved_sess_id), sanitized)
 
+    def test_alphanumeric_entity_type_ipv4_roundtrip(self):
+        text = "Host 198.51.100.42"
+        with self.engine.session() as s:
+            sanitized, minted = s.sanitize(text)
+            self.assertEqual(sanitized, "Host [IPV4_1]")
+            self.assertEqual(minted["[IPV4_1]"], "198.51.100.42")
+            self.assertEqual(s.reveal(sanitized), text)
+
 
 if __name__ == "__main__":
     unittest.main()

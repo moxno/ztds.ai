@@ -20,7 +20,7 @@ from types import MappingProxyType
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 
-TOKEN_PATTERN: re.Pattern = re.compile(r"\[([A-Z_]+)_([0-9]+)\]")
+TOKEN_PATTERN: re.Pattern = re.compile(r"\[([A-Z0-9_]+)_([0-9]+)\]")
 
 BASELINE_PATTERNS: MappingProxyType = MappingProxyType({
     "API_SECRET": re.compile(
