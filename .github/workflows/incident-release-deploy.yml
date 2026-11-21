@@ -23,17 +23,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
 
       - name: Setup Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install dependencies & Run Full Verification
-        run: |
-          npm ci
-          npm test
+      - name: Run Full Verification Suite
+        env:
+          NODE_ENV: test
+          ZTDS_CERT_PRIVATE_KEY: ${{ secrets.ZTDS_CERT_PRIVATE_KEY }}
+        run: npm test
 
       - name: Trigger Vercel Deploy Hook
         env:

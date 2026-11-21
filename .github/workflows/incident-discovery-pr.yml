@@ -51,6 +51,9 @@ jobs:
           node scripts/discover-incident-candidate.js $SOURCE_FLAG --max-candidates=1 --summary-out=/tmp/ztds-incident-pr-summary.md
 
       - name: Verify Full Suite & Security Gates Before PR
+        env:
+          NODE_ENV: test
+          ZTDS_CERT_PRIVATE_KEY: ${{ secrets.ZTDS_CERT_PRIVATE_KEY }}
         run: |
           if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
             echo "No new incident candidate generated."
