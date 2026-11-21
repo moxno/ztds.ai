@@ -27,6 +27,7 @@ const mirrorPairs = [
   ['assets/img/cliford-fanyuy.jpg', 'public/assets/img/cliford-fanyuy.jpg'],
   ['site.webmanifest', 'public/site.webmanifest'],
   ['og-image.png', 'public/og-image.png'],
+  ['assets/img/og/og-incidents.png', 'public/assets/img/og/og-incidents.png'],
   ['mcp_config.json', 'public/mcp_config.json'],
   ['plugin.json', 'public/plugin.json'],
   ['server-card.json', 'public/server-card.json'],

@@ -88,6 +88,12 @@ const docs = [
     title: 'Perimeter Scanner, Network Egress Leak Emulation Presets & Dynamic Vector Badge Foundry Specification',
     relPath: 'docs/ZTDS_Scanner_and_Badge_Foundry_Spec.md',
     url: 'https://ztds.ai/badge/'
+  },
+  {
+    part: 'PART 15: INCIDENT COUNTERFACTUALS & PROTOCOL POST-MORTEMS (FIREWORKS AI / NOTION, CURSOR, WORKOS)',
+    title: 'Verified Oct-Nov 2026 AI Security Incident Counterfactuals Evaluated Against ZTDS RFC v1.0 Invariants',
+    relPath: 'docs/ZTDS_Incident_Counterfactual_Compendium.md',
+    url: 'https://ztds.ai/incidents/'
   }
 ];
 

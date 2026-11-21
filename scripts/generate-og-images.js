@@ -215,6 +215,28 @@ const CARDS = [
       { badge: 'DOI-2', code: 'OSF: 10.17605/OSF.IO/5BYJF · SSRN', status: 'INDEXED', statusColor: '#10b981' },
       { badge: 'EVAL', code: 'Empirical Validation Working Group', status: 'ACCREDITED', statusColor: '#a78bfa' }
     ]
+  },
+  {
+    filename: 'og-incidents.png',
+    kicker: 'ZTDS™ INCIDENT COUNTERFACTUALS · RFC V1.0 POST-MORTEMS',
+    routeLabel: 'ztds.ai/incidents',
+    accent: '#10b981',
+    accentSecondary: '#f59e0b',
+    title: 'AI Breach Counterfactuals & Protocol Defenses',
+    subtitle: 'Primary-Source Technical Post-Mortems Proving How In-RAM Zero-Trust Data Sanitization Collapses Cleartext Blast Radius Across AI Vendors & Agents.',
+    metrics: [
+      { value: '0.00 B', label: 'Cleartext Network Egress' },
+      { value: '4 Invariants', label: 'Kill-Chain Verification' },
+      { value: 'Reproducible', label: 'CLI & Python Vectors' }
+    ],
+    diagramTitle: 'BLAST-RADIUS COLLAPSE // RFC V1.0 COUNTERFACTUAL',
+    diagramRows: [
+      { badge: 'INCIDENT', code: 'Third-Party Subprocessor / Agent Trace', status: 'VERIFIED SOURCE', statusColor: '#f59e0b' },
+      { badge: 'FAILURE', code: 'Raw Prompts & Env Keys Sent Upstream', status: 'BLAST RADIUS', statusColor: '#ef4444' },
+      { badge: 'INV-1+2', code: 'Local RAM Surrogates: [EMAIL_1], [ID_1]', status: 'ZERO EGRESS', statusColor: '#10b981' },
+      { badge: 'EXPOSED', code: 'External Vendor Bucket / Escaped Tool', status: '0.00 B CLEARTEXT', statusColor: '#10b981' },
+      { badge: 'RECEIPT', code: 'npx ztds-audit · SHA-256 Attestation', status: 'REPRODUCIBLE', statusColor: '#38bdf8' }
+    ]
   }
 ];
 
@@ -611,6 +633,7 @@ function buildCardHtml(card) {
 function resolveOgImageForFile(relPath) {
   const p = relPath.replace(/\\/g, '/');
   if (p.startsWith('blueprints/')) return 'https://ztds.ai/assets/img/og/og-blueprints.png';
+  if (p.startsWith('incidents/')) return 'https://ztds.ai/assets/img/og/og-incidents.png';
   if (
     p.startsWith('compliance/') ||
     p.startsWith('ciso/') ||

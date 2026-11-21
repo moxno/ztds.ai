@@ -440,7 +440,7 @@ console.log('--> Test 7: Screen-1 Main-Before-Aside Order, Single Skip-Link, The
   // Verify 100% parity (45/45 curated indexable routes) across sitemap.xml, llms.txt, and nav.js SITE_INDEX
   const sitemapXml = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
   const sitemapUrls = [...sitemapXml.matchAll(/<loc>(https:\/\/ztds\.ai[^<]+)<\/loc>/g)].map(m => m[1]);
-  assert.strictEqual(sitemapUrls.length, 45, `Expected exactly 45 curated URLs in sitemap.xml, found ${sitemapUrls.length}`);
+  assert.strictEqual(sitemapUrls.length, 49, `Expected exactly 49 curated URLs in sitemap.xml, found ${sitemapUrls.length}`);
 
   const llmsTxt = fs.readFileSync(path.join(ROOT, 'llms.txt'), 'utf8');
   const navCode = fs.readFileSync(path.join(ROOT, 'nav.js'), 'utf8');
@@ -943,6 +943,7 @@ console.log('--> Test 12: Information Architecture, Contextual Silo Connectivity
     'blueprints/index.html',
     'frameworks/index.html',
     'compliance/index.html',
+    'incidents/index.html',
     'ietf/index.html'
   ]);
   const expectedUrls = canonicalPages.map(relToUrl);
@@ -1742,7 +1743,7 @@ console.log('[20/20] Verifying 45-URL sitemap compression, 10x noindex exclusion
   for (const smRel of ['sitemap.xml', 'public/sitemap.xml']) {
     const sm = fs.readFileSync(path.join(ROOT, smRel), 'utf8');
     const locs = [...sm.matchAll(/<loc>(https:\/\/ztds\.ai[^<]+)<\/loc>/g)].map((m) => m[1]);
-    assert.strictEqual(locs.length, 45, `${smRel} must contain exactly 45 <url> entries (found ${locs.length})`);
+    assert.strictEqual(locs.length, 49, `${smRel} must contain exactly 49 <url> entries (found ${locs.length})`);
     for (const u of excludedSitemapUrls) {
       assert(!sm.includes(u), `${smRel} must exclude noindex URL ${u}`);
     }
