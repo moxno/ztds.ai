@@ -1,0 +1,68 @@
+name: Incident Release Deploy & IndexNow Broadcast
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'incidents/**'
+      - 'data/incidents.json'
+      - 'sitemap.xml'
+      - 'llms*.txt'
+      - 'assets/img/og/**'
+  workflow_dispatch:
+
+jobs:
+  deploy-and-index:
+    name: Verify, Trigger Vercel Production & Notify IndexNow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies & Run Full Verification
+        run: |
+          npm ci
+          npm test
+
+      - name: Trigger Vercel Deploy Hook
+        env:
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$VERCEL_DEPLOY_HOOK_URL" ]; then
+            echo "VERCEL_DEPLOY_HOOK_URL not configured — skipping remote Vercel deploy trigger."
+            echo "DEPLOYED=false" >> "$GITHUB_ENV"
+            exit 0
+          fi
+          curl -fsS -X POST "$VERCEL_DEPLOY_HOOK_URL"
+          echo "DEPLOYED=true" >> "$GITHUB_ENV"
+
+      - name: Wait for Live Edge HTTP 200 on Latest Incident
+        if: env.DEPLOYED == 'true'
+        run: |
+          LATEST_URL=$(node -e "const d=require('./data/incidents.json'); console.log(d.incidents[0]?.url || 'https://ztds.ai/incidents/');")
+          for attempt in $(seq 1 18); do
+            CODE_HUB=$(curl -sL -o /dev/null -w "%{http_code}" "https://ztds.ai/incidents/")
+            CODE_LATEST=$(curl -sL -o /dev/null -w "%{http_code}" "$LATEST_URL")
+            echo "Attempt $attempt: hub=$CODE_HUB latest=$CODE_LATEST ($LATEST_URL)"
+            if [ "$CODE_HUB" = "200" ] && [ "$CODE_LATEST" = "200" ]; then
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "Timed out waiting for live HTTP 200 on $LATEST_URL"
+          exit 1
+
+      - name: Submit Sitemap to IndexNow
+        if: env.DEPLOYED == 'true'
+        run: npm run indexnow

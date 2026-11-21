@@ -28,6 +28,14 @@ const mirrorPairs = [
   ['site.webmanifest', 'public/site.webmanifest'],
   ['og-image.png', 'public/og-image.png'],
   ['assets/img/og/og-incidents.png', 'public/assets/img/og/og-incidents.png'],
+  ...(() => {
+    const ogDir = path.join(rootDir, 'assets/img/og');
+    if (!fs.existsSync(ogDir)) return [];
+    return fs.readdirSync(ogDir)
+      .filter(f => /^og-incident-.+\.png$/.test(f))
+      .sort()
+      .map(f => [`assets/img/og/${f}`, `public/assets/img/og/${f}`]);
+  })(),
   ['mcp_config.json', 'public/mcp_config.json'],
   ['plugin.json', 'public/plugin.json'],
   ['server-card.json', 'public/server-card.json'],

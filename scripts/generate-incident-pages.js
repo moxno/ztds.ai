@@ -6,17 +6,22 @@
  *   - /incidents/index.html
  *   - /incidents/{slug}/index.html
  *   - /docs/ZTDS_Incident_Counterfactual_Compendium.md
- * Updates idempotently:
+ * Synchronizes idempotently:
  *   - /sitemap.xml
  *   - /llms.txt
+ *   - /nav.js (SITE_INDEX AUTO-INCIDENTS block)
+ *   - #ztds-ai-citation-bar on generated incident pages
+ *   - Live Python reference replay verification against packages/ztds/src
  */
 
 const fs = require('fs');
 const path = require('path');
-const { HUB, INCIDENTS } = require('./data/incident-pages');
+const { execFileSync } = require('child_process');
+const { loadIncidentData } = require('./data/incident-pages');
+const { buildPromptForPage, buildCitationBarHtml, cleanTitle } = require('./sync-citation-bar');
 
 const ROOT = path.resolve(__dirname, '..');
-const OG_IMAGE_URL = 'https://ztds.ai/assets/img/og/og-incidents.png';
+const HUB_OG_URL = 'https://ztds.ai/assets/img/og/og-incidents.png';
 
 function escHtml(str) {
   return String(str)
@@ -26,7 +31,16 @@ function escHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
-function loadChrome() {
+function escJsSingle(str) {
+  return String(str || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
+
+function getPageOgImage(page, isHub) {
+  if (isHub) return page.ogImage || HUB_OG_URL;
+  return page.ogImage || HUB_OG_URL;
+}
+
+function loadChrome(badgeText) {
   const src = fs.readFileSync(path.join(ROOT, 'compliance', 'index.html'), 'utf8');
   const skipIdx = src.indexOf('<!-- Skip to main content -->');
   const mainIdx = src.indexOf('<main id="main-content"');
@@ -38,7 +52,7 @@ function loadChrome() {
   }
 
   let header = src.slice(skipIdx, mainIdx);
-  header = header.replace(/FRAMEWORK MAPPINGS/g, HUB.badgeText);
+  header = header.replace(/FRAMEWORK MAPPINGS/g, badgeText);
 
   const footer = src.slice(footerStart, footerEnd);
   return { header, footer };
@@ -128,8 +142,9 @@ function buildFaqHtml(faqs) {
       </section>`;
 }
 
-function buildJsonLd(page, isHub) {
+function buildJsonLd(page, isHub, HUB, INCIDENTS) {
   const canonical = page.url;
+  const ogImg = getPageOgImage(page, isHub);
   const breadcrumbs = [
     { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ztds.ai/' },
     { '@type': 'ListItem', position: 2, name: 'Incident Counterfactuals', item: HUB.url }
@@ -179,7 +194,7 @@ function buildJsonLd(page, isHub) {
       },
       primaryImageOfPage: {
         '@type': 'ImageObject',
-        url: OG_IMAGE_URL,
+        url: ogImg,
         width: 1200,
         height: 630
       },
@@ -199,7 +214,7 @@ function buildJsonLd(page, isHub) {
       proficiencyLevel: 'Expert',
       author: { '@id': 'https://ztds.ai/#ilya-sibiryakov' },
       publisher: { '@id': 'https://ztds.ai/#organization' },
-      image: OG_IMAGE_URL,
+      image: ogImg,
       mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
       citation: page.primarySources.map(s => s.url)
     },
@@ -221,7 +236,7 @@ function buildJsonLd(page, isHub) {
       },
       primaryImageOfPage: {
         '@type': 'ImageObject',
-        url: OG_IMAGE_URL,
+        url: ogImg,
         width: 1200,
         height: 630
       },
@@ -255,8 +270,14 @@ function buildJsonLd(page, isHub) {
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2);
 }
 
-function wrapDocument(page, isHub, mainHtml, chrome) {
+function wrapDocument(page, isHub, mainHtml, chrome, HUB, INCIDENTS) {
   const ogType = isHub ? 'website' : 'article';
+  const ogImg = getPageOgImage(page, isHub);
+  const relPath = isHub ? 'incidents/index.html' : `incidents/${page.slug}/index.html`;
+  const shortTitle = cleanTitle(page.title);
+  const promptText = buildPromptForPage(relPath, page.url, shortTitle);
+  const citationBar = buildCitationBarHtml(shortTitle, page.url, promptText);
+
   return `<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -287,7 +308,7 @@ function wrapDocument(page, isHub, mainHtml, chrome) {
   <meta property="og:description" content="${escHtml(page.metaDescription)}">
   <meta property="og:site_name" content="ZTDS.ai">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="${OG_IMAGE_URL}">
+  <meta property="og:image" content="${escHtml(ogImg)}">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -297,7 +318,7 @@ function wrapDocument(page, isHub, mainHtml, chrome) {
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escHtml(page.title)}">
   <meta name="twitter:description" content="${escHtml(page.metaDescription)}">
-  <meta name="twitter:image" content="${OG_IMAGE_URL}">
+  <meta name="twitter:image" content="${escHtml(ogImg)}">
   <meta name="twitter:image:alt" content="${escHtml(page.title)}">
 
   <!-- Fonts & Styles -->
@@ -307,7 +328,7 @@ function wrapDocument(page, isHub, mainHtml, chrome) {
 
   <!-- JSON-LD Knowledge Graph -->
   <script type="application/ld+json">
-${buildJsonLd(page, isHub)}
+${buildJsonLd(page, isHub, HUB, INCIDENTS)}
   </script>
 </head>
 <body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans antialiased">
@@ -315,6 +336,9 @@ ${buildJsonLd(page, isHub)}
   <main id="main-content" class="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
 ${mainHtml}
   </main>
+
+${citationBar}
+
   ${chrome.footer}
   <script src="/nav.js" defer></script>
 </body>
@@ -322,7 +346,7 @@ ${mainHtml}
 `;
 }
 
-function renderHubMain() {
+function renderHubMain(HUB, INCIDENTS) {
   return `
     <nav aria-label="Breadcrumb" class="mb-6 text-xs font-mono text-slate-500">
       <ol class="flex flex-wrap items-center gap-2">
@@ -354,17 +378,19 @@ function renderHubMain() {
     </section>
 
     <section class="mb-10" aria-labelledby="spokes-heading">
-      <h2 id="spokes-heading" class="text-2xl font-bold text-slate-900 mb-4">Verified Oct–Nov 2026 Post-Mortems</h2>
+      <h2 id="spokes-heading" class="text-2xl font-bold text-slate-900 mb-4">Verified AI Incident Post-Mortems</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         ${INCIDENTS.map(
-          (inc, idx) => `
+          (inc, idx) => {
+            const caseNum = String(idx + 1).padStart(2, '0');
+            return `
         <article class="ztds-card bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between shadow-sm hover:border-emerald-300 transition-colors">
           <div>
             <div class="flex items-center justify-between gap-2 text-xs font-mono text-emerald-700 font-bold mb-2">
-              <span>CASE 0${idx + 1}</span>
+              <span>CASE ${caseNum}</span>
               <span class="text-slate-500">${escHtml(inc.dateLabel)}</span>
             </div>
-            <h3 id="case-0${idx + 1}" class="text-lg font-bold text-slate-900 mb-2">
+            <h3 id="case-${caseNum}" class="text-lg font-bold text-slate-900 mb-2">
               <a href="${escHtml(inc.path)}" class="hover:text-emerald-700 transition-colors">${escHtml(inc.headline)}</a>
             </h3>
             <p class="text-sm text-slate-600 leading-relaxed mb-4">${escHtml(inc.heroLead)}</p>
@@ -373,7 +399,8 @@ function renderHubMain() {
             <a href="${escHtml(inc.path)}" class="font-bold text-emerald-700 hover:text-emerald-900 underline">Read Post-Mortem &rarr;</a>
             <a href="${escHtml(inc.primarySources[0].url)}" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-slate-900 underline">Primary Bulletin</a>
           </div>
-        </article>`
+        </article>`;
+          }
         ).join('')}
         <article class="ztds-card bg-slate-50 rounded-2xl border border-dashed border-slate-300 p-6 flex flex-col justify-between">
           <div>
@@ -396,7 +423,7 @@ function renderHubMain() {
       <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Cross-incident counterfactual matrix">
         <table class="w-full text-left border-collapse text-sm">
           <caption class="text-xs text-slate-500 font-mono text-left mb-3">
-            Comparison of verified Oct–Nov 2026 exposure paths, ZTDS local invariant coverage, and remaining perimeter controls.
+            Comparison of verified vendor incident exposure paths, ZTDS local invariant coverage, and remaining perimeter controls.
           </caption>
           <thead>
             <tr class="border-b border-slate-200 text-xs font-mono uppercase text-slate-500">
@@ -471,7 +498,42 @@ function renderHubMain() {
   `;
 }
 
-function renderIncidentMain(inc) {
+function buildSiblingAndRelatedLinks(inc, idx, allIncidents) {
+  const seen = new Set([inc.path, '/incidents/', '/standard/']);
+  const combined = [];
+  const total = allIncidents.length;
+
+  // Deterministic incoming-link ring: guarantee every incident links to 2 cyclic neighbors
+  // so every new spoke automatically gets >= 3 inbound <main> links (Hub + 2 siblings).
+  for (let offset = 1; offset <= Math.min(2, total - 1); offset++) {
+    const neighbor = allIncidents[(idx + offset) % total];
+    if (neighbor && !seen.has(neighbor.path)) {
+      seen.add(neighbor.path);
+      combined.push({ label: `${neighbor.shortLabel} Post-Mortem`, url: neighbor.path });
+    }
+  }
+
+  for (const l of inc.relatedLinks || []) {
+    if (l && l.url && !seen.has(l.url)) {
+      seen.add(l.url);
+      combined.push(l);
+    }
+  }
+
+  return combined;
+}
+
+function renderIncidentMain(inc, idx, allIncidents) {
+  const companionHtml =
+    inc.companionAdvisory && inc.companionAdvisory.url
+      ? `
+          <a href="${escHtml(inc.companionAdvisory.url)}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 font-semibold">
+            ${escHtml(inc.companionAdvisory.title)} &rarr;
+          </a>`
+      : '';
+
+  const related = buildSiblingAndRelatedLinks(inc, idx, allIncidents);
+
   return `
     <nav aria-label="Breadcrumb" class="mb-6 text-xs font-mono text-slate-500">
       <ol class="flex flex-wrap items-center gap-2">
@@ -515,10 +577,7 @@ function renderIncidentMain(inc) {
             ${escHtml(s.label)} &rarr;
           </a>`
             )
-            .join('')}
-          <a href="${escHtml(inc.companionAdvisory.url)}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 font-semibold">
-            ${escHtml(inc.companionAdvisory.title)} &rarr;
-          </a>
+            .join('')}${companionHtml}
         </div>
 
         <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Verified primary advisory timeline">
@@ -633,7 +692,7 @@ function renderIncidentMain(inc) {
           <a href="/standard/" class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 hover:border-emerald-300 font-semibold text-slate-900">
             ZTDS RFC v1.0 Protocol Standard &rarr;
           </a>
-          ${inc.relatedLinks
+          ${related
             .map(
               l => `
           <a href="${escHtml(l.url)}" class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 hover:border-emerald-300 font-semibold text-slate-900">
@@ -649,11 +708,11 @@ function renderIncidentMain(inc) {
   `;
 }
 
-function writeCompendiumMarkdown() {
+function writeCompendiumMarkdown(HUB, INCIDENTS) {
   const lines = [
     '# ZTDS Incident Counterfactual Compendium (RFC v1.0 Post-Mortems)',
     '',
-    'This compendium grounds verified Oct–Nov 2026 primary vendor security advisories against the four ZTDS RFC v1.0 invariants, including explicit perimeter boundaries where client-side tokenization stops.',
+    'This compendium grounds verified primary vendor security advisories against the four ZTDS RFC v1.0 invariants, including explicit perimeter boundaries where client-side tokenization stops.',
     '',
     '## Hub Overview',
     `- Canonical URL: ${HUB.url}`,
@@ -666,7 +725,9 @@ function writeCompendiumMarkdown() {
     lines.push(`- Canonical URL: ${inc.url}`);
     lines.push(`- Protocol Answer: ${inc.directAnswer}`);
     lines.push(`- Primary Sources: ${inc.primarySources.map(s => `${s.label} (${s.url})`).join('; ')}`);
-    lines.push(`- Companion Commercial Advisory: ${inc.companionAdvisory.title} (${inc.companionAdvisory.url})`);
+    if (inc.companionAdvisory && inc.companionAdvisory.url) {
+      lines.push(`- Companion Commercial Advisory: ${inc.companionAdvisory.title} (${inc.companionAdvisory.url})`);
+    }
     lines.push('- Timeline:');
     for (const t of inc.timeline) {
       lines.push(`  - ${t.window} (${t.event}): ${t.verifiedDetail}`);
@@ -687,42 +748,67 @@ function writeCompendiumMarkdown() {
   );
 }
 
-function updateSitemapXml() {
+function updateSitemapXml(HUB, INCIDENTS) {
   const sitemapPath = path.join(ROOT, 'sitemap.xml');
   let xml = fs.readFileSync(sitemapPath, 'utf8');
+  const hubLastmod = (HUB.modifiedIso || '2026-11-21').slice(0, 10);
+
   const entries = [
-    { url: HUB.url, title: HUB.title, priority: '0.8' },
-    ...INCIDENTS.map(i => ({ url: i.url, title: i.title, priority: '0.8' }))
+    { url: HUB.url, title: HUB.title, priority: '0.8', lastmod: hubLastmod, ogImage: getPageOgImage(HUB, true) },
+    ...INCIDENTS.map(i => ({
+      url: i.url,
+      title: i.title,
+      priority: '0.8',
+      lastmod: (i.modifiedIso || i.publishedIso || '2026-11-21').slice(0, 10),
+      ogImage: getPageOgImage(i, false)
+    }))
   ];
 
   let added = 0;
+  let updated = 0;
+
   for (const item of entries) {
-    if (xml.includes(`<loc>${item.url}</loc>`)) continue;
-    const block = [
-      '  <url>',
-      `    <loc>${item.url}</loc>`,
-      '    <lastmod>2026-11-21</lastmod>',
-      '    <changefreq>weekly</changefreq>',
-      `    <priority>${item.priority}</priority>`,
-      '    <image:image>',
-      `      <image:loc>${OG_IMAGE_URL}</image:loc>`,
-      `      <image:title>${escHtml(item.title)}</image:title>`,
-      '    </image:image>',
-      '  </url>'
-    ].join('\n');
-    xml = xml.replace('</urlset>', `${block}\n</urlset>`);
-    added++;
+    const escapedUrl = item.url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const urlBlockRe = new RegExp(`<url>\\s*<loc>${escapedUrl}</loc>[\\s\\S]*?</url>`, 'm');
+    const match = xml.match(urlBlockRe);
+
+    if (!match) {
+      const block = [
+        '  <url>',
+        `    <loc>${item.url}</loc>`,
+        `    <lastmod>${item.lastmod}</lastmod>`,
+        '    <changefreq>weekly</changefreq>',
+        `    <priority>${item.priority}</priority>`,
+        '    <image:image>',
+        `      <image:loc>${escHtml(item.ogImage)}</image:loc>`,
+        `      <image:title>${escHtml(item.title)}</image:title>`,
+        '    </image:image>',
+        '  </url>'
+      ].join('\n');
+      xml = xml.replace('</urlset>', `${block}\n</urlset>`);
+      added++;
+    } else {
+      let updatedBlock = match[0]
+        .replace(/<lastmod>[^<]+<\/lastmod>/, `<lastmod>${item.lastmod}</lastmod>`)
+        .replace(/<image:loc>[^<]+<\/image:loc>/, `<image:loc>${escHtml(item.ogImage)}</image:loc>`)
+        .replace(/<image:title>[^<]+<\/image:title>/, `<image:title>${escHtml(item.title)}</image:title>`);
+      if (updatedBlock !== match[0]) {
+        xml = xml.replace(match[0], updatedBlock);
+        updated++;
+      }
+    }
   }
+
   fs.writeFileSync(sitemapPath, xml, 'utf8');
-  return added;
+  return { added, updated };
 }
 
-function updateLlmsTxt() {
+function updateLlmsTxt(HUB, INCIDENTS) {
   const llmsPath = path.join(ROOT, 'llms.txt');
   let txt = fs.readFileSync(llmsPath, 'utf8');
 
   const linesToInsert = [
-    `- [AI Breach Post-Mortems & ZTDS Counterfactuals](${HUB.url}): Protocol post-mortems testing Fireworks AI/Notion, Cursor traces/extensions, and WorkOS escaped-agent incidents against ZTDS RFC v1.0 invariants and control limits.`,
+    `- [AI Breach Post-Mortems & ZTDS Counterfactuals](${HUB.url}): ${HUB.metaDescription}`,
     ...INCIDENTS.map(i => `- [${i.title}](${i.url}): ${i.metaDescription}`)
   ];
 
@@ -743,7 +829,59 @@ function updateLlmsTxt() {
   return missing.length;
 }
 
-function validateGeneratedData() {
+function updateNavJs(HUB, INCIDENTS) {
+  const navPath = path.join(ROOT, 'nav.js');
+  let nav = fs.readFileSync(navPath, 'utf8');
+  const startMarker = '// AUTO-INCIDENTS-START';
+  const endMarker = '// AUTO-INCIDENTS-END';
+  const startIdx = nav.indexOf(startMarker);
+  const endIdx = nav.indexOf(endMarker);
+
+  if (startIdx === -1 || endIdx === -1 || endIdx <= startIdx) {
+    throw new Error('nav.js missing // AUTO-INCIDENTS-START .. // AUTO-INCIDENTS-END markers');
+  }
+
+  const rows = [
+    `      { title: 'AI Incident Counterfactuals & Post-Mortems', cat: 'Incidents', url: '${escJsSingle(HUB.path)}', kw: '${escJsSingle(HUB.keywords || 'breach post-mortems counterfactuals incidents')}' }`,
+    ...INCIDENTS.map(inc => {
+      const navTitle = inc.shortLabel || inc.title;
+      const kw = inc.keywords || `${inc.slug.replace(/-/g, ' ')} incident counterfactual`;
+      return `      { title: '${escJsSingle(navTitle)}', cat: 'Incidents', url: '${escJsSingle(inc.path)}', kw: '${escJsSingle(kw)}' }`;
+    })
+  ];
+
+  const block = `${startMarker}\n${rows.join(',\n')},\n      ${endMarker}`;
+  const updated = nav.slice(0, startIdx) + block + nav.slice(endIdx + endMarker.length);
+  if (updated !== nav) {
+    fs.writeFileSync(navPath, updated, 'utf8');
+    return true;
+  }
+  return false;
+}
+
+function verifyPythonReplays(INCIDENTS) {
+  if (process.argv.includes('--skip-python')) return 0;
+  const pythonSrc = path.join(ROOT, 'packages', 'ztds', 'src');
+  if (!fs.existsSync(pythonSrc)) return 0;
+
+  let verified = 0;
+  for (const inc of INCIDENTS) {
+    const out = execFileSync('python3', ['-c', inc.replay.pythonCode], {
+      cwd: ROOT,
+      env: { ...process.env, PYTHONPATH: pythonSrc },
+      encoding: 'utf8'
+    });
+    if (!out.includes(inc.replay.sampleOutput)) {
+      throw new Error(
+        `Python replay mismatch for ${inc.slug}: expected output containing "${inc.replay.sampleOutput}", got:\n${out}`
+      );
+    }
+    verified++;
+  }
+  return verified;
+}
+
+function validateGeneratedData(HUB, INCIDENTS) {
   const all = [HUB, ...INCIDENTS];
   const badWords = /\b(empower\w*|paradigm\w*|delve|testament|tapestry|game-changer|cutting-edge|synergy)\b/i;
   for (const p of all) {
@@ -767,27 +905,37 @@ function validateGeneratedData() {
 }
 
 function main() {
-  validateGeneratedData();
-  const chrome = loadChrome();
+  const { HUB, INCIDENTS } = loadIncidentData();
+  validateGeneratedData(HUB, INCIDENTS);
+  const pyVerified = verifyPythonReplays(INCIDENTS);
+  const chrome = loadChrome(HUB.badgeText || 'INCIDENT COUNTERFACTUALS');
 
-  // Write hub
   const hubDir = path.join(ROOT, 'incidents');
   fs.mkdirSync(hubDir, { recursive: true });
-  fs.writeFileSync(path.join(hubDir, 'index.html'), wrapDocument(HUB, true, renderHubMain(), chrome), 'utf8');
+  fs.writeFileSync(
+    path.join(hubDir, 'index.html'),
+    wrapDocument(HUB, true, renderHubMain(HUB, INCIDENTS), chrome, HUB, INCIDENTS),
+    'utf8'
+  );
 
-  // Write spokes
-  for (const inc of INCIDENTS) {
+  for (let i = 0; i < INCIDENTS.length; i++) {
+    const inc = INCIDENTS[i];
     const dir = path.join(hubDir, inc.slug);
     fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, 'index.html'), wrapDocument(inc, false, renderIncidentMain(inc), chrome), 'utf8');
+    fs.writeFileSync(
+      path.join(dir, 'index.html'),
+      wrapDocument(inc, false, renderIncidentMain(inc, i, INCIDENTS), chrome, HUB, INCIDENTS),
+      'utf8'
+    );
   }
 
-  writeCompendiumMarkdown();
-  const sitemapAdded = updateSitemapXml();
-  const llmsAdded = updateLlmsTxt();
+  writeCompendiumMarkdown(HUB, INCIDENTS);
+  const sm = updateSitemapXml(HUB, INCIDENTS);
+  const llmsAdded = updateLlmsTxt(HUB, INCIDENTS);
+  const navChanged = updateNavJs(HUB, INCIDENTS);
 
   console.log(
-    `[ZTDS Incidents] Generated hub + ${INCIDENTS.length} spokes, compendium doc, sitemap (+${sitemapAdded}), llms.txt (+${llmsAdded}).`
+    `[ZTDS Incidents] Generated hub + ${INCIDENTS.length} spokes (Python replays=${pyVerified}), compendium doc, sitemap (+${sm.added}/~${sm.updated}), llms.txt (+${llmsAdded}), nav.js=${navChanged ? 'updated' : 'ok'}.`
   );
 }
 

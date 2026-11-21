@@ -1,0 +1,52 @@
+name: Incident +24h Canonical API Syndication
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: 'Optional incident slug to target'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  syndicate-24h:
+    name: +24h Delayed Canonical Syndication (DEV.to & Hashnode)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Run +24h Canonical Syndicator
+        env:
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+          HASHNODE_TOKEN: ${{ secrets.HASHNODE_TOKEN }}
+          HASHNODE_PUBLICATION_ID: ${{ secrets.HASHNODE_PUBLICATION_ID }}
+        run: |
+          SLUG_ARG=""
+          if [ -n "${{ inputs.slug }}" ]; then
+            SLUG_ARG="--slug=${{ inputs.slug }}"
+          fi
+          node scripts/syndicate-incidents.js $SLUG_ARG
+
+      - name: Persist Verified Syndication URLs to SSOT
+        run: |
+          if git diff --quiet data/incidents.json; then
+            echo "No new syndication URLs persisted."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/incidents.json
+          git commit -m "chore(incidents): record verified +24h canonical syndication URLs [skip ci]"
+          git push origin main

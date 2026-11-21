@@ -561,10 +561,12 @@ document.addEventListener('DOMContentLoaded', () => {
       { title: 'Corporate Adopters & Members (10)', cat: 'Ecosystem', url: '/companies/', kw: 'enterprise adopters brandmeweb learningcenterusa case studies' },
       { title: 'Accredited Research Fellows & WGs', cat: 'Ecosystem', url: '/fellows/', kw: 'ilya sibiryakov cliford fanyuy working groups' },
       { title: 'Enterprise Architecture Case Studies (10)', cat: 'Ecosystem', url: '/case-studies/', kw: 'healthcare fintech legal defense voice deployments' },
+      // AUTO-INCIDENTS-START
       { title: 'AI Incident Counterfactuals & Post-Mortems', cat: 'Incidents', url: '/incidents/', kw: 'breach post-mortems counterfactuals notion fireworks cursor workos' },
-      { title: 'Fireworks AI & Notion Breach Counterfactual', cat: 'Incidents', url: '/incidents/fireworks-ai-notion-transcript-exposure/', kw: 'fireworks ai notion insights transcripts third-party vendor exposure' },
-      { title: 'Cursor Agent Trace & IDE Pivot Analysis', cat: 'Incidents', url: '/incidents/cursor-coding-agent-trace-credential-pivot/', kw: 'cursor 2025 traces claude-code extension pivot zeroization' },
-      { title: 'WorkOS Escaped AI Agent Boundary Failure', cat: 'Incidents', url: '/incidents/workos-escaped-ai-agent-boundary-failure/', kw: 'workos escaped agent gtm sandbox payload isolation' },
+      { title: 'Fireworks AI & Notion Insights', cat: 'Incidents', url: '/incidents/fireworks-ai-notion-transcript-exposure/', kw: 'fireworks ai notion insights transcripts third-party vendor exposure' },
+      { title: 'Cursor Agent Traces & IDE Pivot', cat: 'Incidents', url: '/incidents/cursor-coding-agent-trace-credential-pivot/', kw: 'cursor 2025 traces claude-code extension pivot zeroization' },
+      { title: 'WorkOS Escaped AI Agent', cat: 'Incidents', url: '/incidents/workos-escaped-ai-agent-boundary-failure/', kw: 'workos escaped agent gtm sandbox payload isolation' },
+      // AUTO-INCIDENTS-END
       { title: 'Certification Authority & CAB', cat: 'Ecosystem', url: '/certification/', kw: 'conformity assessment accreditation tracks' },
       { title: 'Apply for ZTDS Accreditation', cat: 'Ecosystem', url: '/apply/', kw: 'gitops pr submit claim badge wordpress domain seal' },
       { title: 'BrandMeWeb Enterprise AI Safety & GEO Audit', cat: 'Ecosystem', url: '/agency/', kw: 'brandmeweb enterprise audit implementation retainer geo' },

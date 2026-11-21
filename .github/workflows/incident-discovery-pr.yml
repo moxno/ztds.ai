@@ -1,0 +1,88 @@
+name: Incident Discovery & Option A Review PR
+
+on:
+  schedule:
+    - cron: '0 7 * * 1,4'
+  workflow_dispatch:
+    inputs:
+      source_url:
+        description: 'Optional primary vendor advisory URL to analyze (HTTPS)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  discover-and-propose-pr:
+    name: Discover Verified Incident & Open Review PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run Primary-Source Discovery & Extraction Gate
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "GEMINI_API_KEY secret is not configured — skipping candidate extraction."
+            exit 0
+          fi
+          SOURCE_FLAG=""
+          if [ -n "${{ inputs.source_url }}" ]; then
+            SOURCE_FLAG="--source-url=${{ inputs.source_url }}"
+          fi
+          node scripts/discover-incident-candidate.js $SOURCE_FLAG --max-candidates=1 --summary-out=/tmp/ztds-incident-pr-summary.md
+
+      - name: Verify Full Suite & Security Gates Before PR
+        run: |
+          if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
+            echo "No new incident candidate generated."
+            exit 0
+          fi
+          git add data/incidents.json assets/img/og public/assets/img/og incidents docs sitemap.xml public/sitemap.xml llms.txt public/llms.txt llms-full.txt public/llms-full.txt nav.js styles.css scripts/
+          npm test
+          node bin/ztds-audit.js --dir .
+          node scripts/ip-leak-gate.js
+
+      - name: Open Option A Review Pull Request
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --cached --quiet && git diff --quiet; then
+            echo "Working tree clean — no PR needed."
+            exit 0
+          fi
+          BRANCH="incidents/auto-$(date -u +%Y%m%d-%H%M%S)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add data/incidents.json assets/img/og public/assets/img/og incidents docs sitemap.xml public/sitemap.xml llms.txt public/llms.txt llms-full.txt public/llms-full.txt nav.js styles.css
+          git commit -m "feat(incidents): add verified counterfactual post-mortem candidate"
+          git push origin "$BRANCH"
+          BODY_FILE="/tmp/ztds-incident-pr-summary.md"
+          if [ ! -f "$BODY_FILE" ]; then
+            echo "Automated ZTDS RFC v1.0 incident candidate ready for 30-second CISO fact-check before merge." > "$BODY_FILE"
+          fi
+          gh pr create \
+            --title "feat(incidents): review new ZTDS RFC v1.0 counterfactual post-mortem" \
+            --body-file "$BODY_FILE" \
+            --base main \
+            --head "$BRANCH"

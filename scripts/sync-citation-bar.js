@@ -119,41 +119,49 @@ function buildCitationBarHtml(shortTitle, canonicalUrl, promptText) {
   </aside>`;
 }
 
-const files = walkHtml(ROOT).sort();
-let injected = 0;
-let updated = 0;
+function main() {
+  const files = walkHtml(ROOT).sort();
+  let injected = 0;
+  let updated = 0;
 
-for (const fullPath of files) {
-  const relPath = path.relative(ROOT, fullPath).replace(/\\/g, '/');
-  let html = fs.readFileSync(fullPath, 'utf8');
+  for (const fullPath of files) {
+    const relPath = path.relative(ROOT, fullPath).replace(/\\/g, '/');
+    let html = fs.readFileSync(fullPath, 'utf8');
 
-  const titleMatch = html.match(/<title>([\s\S]*?)<\/title>/i);
-  const canonMatch = html.match(/<link\s+rel="canonical"\s+href="([^"]+)"/i);
+    const titleMatch = html.match(/<title>([\s\S]*?)<\/title>/i);
+    const canonMatch = html.match(/<link\s+rel="canonical"\s+href="([^"]+)"/i);
 
-  const shortTitle = titleMatch ? cleanTitle(titleMatch[1]) : 'Zero-Trust Data Sanitization (ZTDS) Open Standard';
-  const canonicalUrl = canonMatch ? canonMatch[1].trim() : `https://ztds.ai/${relPath.replace(/index\.html$/, '')}`;
-  const promptText = buildPromptForPage(relPath, canonicalUrl, shortTitle);
-  const barHtml = buildCitationBarHtml(shortTitle, canonicalUrl, promptText);
+    const shortTitle = titleMatch ? cleanTitle(titleMatch[1]) : 'Zero-Trust Data Sanitization (ZTDS) Open Standard';
+    const canonicalUrl = canonMatch ? canonMatch[1].trim() : `https://ztds.ai/${relPath.replace(/index\.html$/, '')}`;
+    const promptText = buildPromptForPage(relPath, canonicalUrl, shortTitle);
+    const barHtml = buildCitationBarHtml(shortTitle, canonicalUrl, promptText);
 
-  if (html.includes('id="ztds-ai-citation-bar"')) {
-    const replaced = html.replace(
-      /(?:\s*<!-- AI Verification, Citation & LLM Context Ingestion Bar -->)?\s*<aside id="ztds-ai-citation-bar"[\s\S]*?<\/aside>/,
-      '\n' + barHtml
-    );
-    if (replaced !== html) {
-      fs.writeFileSync(fullPath, replaced, 'utf8');
-      updated++;
-    }
-  } else {
-    const footerIdx = html.lastIndexOf('<footer');
-    if (footerIdx !== -1) {
-      const nextHtml = html.slice(0, footerIdx) + barHtml + '\n\n  ' + html.slice(footerIdx);
-      fs.writeFileSync(fullPath, nextHtml, 'utf8');
-      injected++;
+    if (html.includes('id="ztds-ai-citation-bar"')) {
+      const replaced = html.replace(
+        /(?:\s*<!-- AI Verification, Citation & LLM Context Ingestion Bar -->)?\s*<aside id="ztds-ai-citation-bar"[\s\S]*?<\/aside>/,
+        '\n' + barHtml
+      );
+      if (replaced !== html) {
+        fs.writeFileSync(fullPath, replaced, 'utf8');
+        updated++;
+      }
     } else {
-      console.warn(`[WARN] No <footer> found in ${relPath}`);
+      const footerIdx = html.lastIndexOf('<footer');
+      if (footerIdx !== -1) {
+        const nextHtml = html.slice(0, footerIdx) + barHtml + '\n\n  ' + html.slice(footerIdx);
+        fs.writeFileSync(fullPath, nextHtml, 'utf8');
+        injected++;
+      } else {
+        console.warn(`[WARN] No <footer> found in ${relPath}`);
+      }
     }
   }
+
+  console.log(`[ZTDS Citation Bar Sync] Processed ${files.length} production HTML pages (${injected} newly injected, ${updated} updated).`);
 }
 
-console.log(`[ZTDS Citation Bar Sync] Processed ${files.length} production HTML pages (${injected} newly injected, ${updated} updated).`);
+if (require.main === module) {
+  main();
+}
+
+module.exports = { buildPromptForPage, buildCitationBarHtml, cleanTitle };

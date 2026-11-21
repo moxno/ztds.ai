@@ -633,6 +633,13 @@ function buildCardHtml(card) {
 function resolveOgImageForFile(relPath) {
   const p = relPath.replace(/\\/g, '/');
   if (p.startsWith('blueprints/')) return 'https://ztds.ai/assets/img/og/og-blueprints.png';
+  const incMatch = p.match(/^incidents\/([^/]+)\/index\.html$/);
+  if (incMatch) {
+    const candidate = path.join(ROOT, 'assets', 'img', 'og', `og-incident-${incMatch[1]}.png`);
+    if (fs.existsSync(candidate)) {
+      return `https://ztds.ai/assets/img/og/og-incident-${incMatch[1]}.png`;
+    }
+  }
   if (p.startsWith('incidents/')) return 'https://ztds.ai/assets/img/og/og-incidents.png';
   if (
     p.startsWith('compliance/') ||
@@ -831,4 +838,6 @@ function main() {
 if (require.main === module) {
   main();
 }
+
+module.exports = { buildCardHtml, findChrome, resolveOgImageForFile };
 

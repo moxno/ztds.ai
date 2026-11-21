@@ -53,6 +53,7 @@ const TASKS = [
   ['test/badge-ui.test.js'],
   ['test/trial-workbench.test.js'],
   ['test/sitewide-hardening.test.js'],
+  ['test/incidents-pipeline.test.js'],
   ['test/ip-leak-gate.test.js']
 ];
 
