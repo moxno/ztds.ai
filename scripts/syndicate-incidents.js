@@ -172,11 +172,12 @@ async function publishToHashnode(inc, bodyMarkdown, token, pubId) {
       }
     }
   `;
-  const res = await fetch('https://gql.hashnode.com', {
+  const res = await fetch('https://gql-beta.hashnode.com', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: token
+      Authorization: `Bearer ${token}`,
+      'x-hashnode-client': 'ztds-syndicator'
     },
     body: JSON.stringify({
       query: mutation,
@@ -199,6 +200,17 @@ async function publishToHashnode(inc, bodyMarkdown, token, pubId) {
     signal: AbortSignal.timeout(20000)
   });
   const data = await res.json();
+  const isProGated =
+    Array.isArray(data.errors) &&
+    data.errors.some(
+      e => e?.extensions?.code === 'FORBIDDEN' || /active Pro plan/i.test(e?.message || '')
+    );
+  if (isProGated) {
+    console.warn(
+      `[Syndicate] Hashnode API skipped for ${inc.slug}: publication ${pubId} requires an active Hashnode Pro plan (upgrade in Hashnode dashboard or publish manually via web UI).`
+    );
+    return null;
+  }
   const postUrl = data?.data?.publishPost?.post?.url;
   if (!res.ok || data.errors || !postUrl) {
     throw new Error(`Hashnode GraphQL error: ${JSON.stringify(data.errors || data)}`);
@@ -271,10 +283,13 @@ async function main() {
       if (!hashnodeToken) {
         console.log(`[Syndicate] HASHNODE_TOKEN unset — skipping Hashnode for ${inc.slug}.`);
       } else {
-        syn.hashnodeUrl = await publishToHashnode(inc, md, hashnodeToken, hashnodePubId);
-        syn.syndicatedAt = new Date().toISOString();
-        mutated = true;
-        console.log(`[Syndicate] Published Hashnode -> ${syn.hashnodeUrl}`);
+        const hashnodeUrl = await publishToHashnode(inc, md, hashnodeToken, hashnodePubId);
+        if (hashnodeUrl) {
+          syn.hashnodeUrl = hashnodeUrl;
+          syn.syndicatedAt = new Date().toISOString();
+          mutated = true;
+          console.log(`[Syndicate] Published Hashnode -> ${syn.hashnodeUrl}`);
+        }
       }
     }
 
