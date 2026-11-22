@@ -242,4 +242,47 @@ console.log('--> Test 8: Zero-Emoji Compliance & BrandMeWeb Spelling Rule');
   console.log('    [PASS] Zero-emoji and BrandMeWeb single word spelling verified.');
 }
 
+// 9. Executive-First Collapsible Appendices, Inline Dossier Dispatch & Neutrality Guardrails
+console.log('  - Test 9: Executive-first collapsible appendices, inline B2B dossier dispatch & Safe Harbor copy');
+{
+  const appendixIds = [
+    'memo-appendix-penalties',
+    'memo-appendix-subprocessor',
+    'memo-appendix-liability',
+    'memo-appendix-forensics',
+    'memo-appendix-verticals',
+    'memo-appendix-license'
+  ];
+  for (const id of appendixIds) {
+    assert(html.includes(`id="${id}"`), `Missing collapsible appendix id="${id}"`);
+  }
+  assert(html.includes('id="btnToggleAppendices"'), 'Missing Expand/Collapse All Appendices button');
+
+  assert(html.includes('id="email-dossier"'), 'Missing #email-dossier dispatch section');
+  assert(html.includes('id="cisoDossierForm"') && html.includes('method="POST"'), 'Missing #cisoDossierForm with method="POST"');
+  assert(html.includes('id="cisoLeadEmail"') && html.includes('id="cisoLeadDomain"'), 'Missing CISO lead inputs');
+  assert(html.includes('id="cisoLeadSubmitBtn"') && html.includes('id="cisoLeadStatus"'), 'Missing CISO submit button or status region');
+  assert(
+    html.includes('name="website_url_confirm"') &&
+    html.includes('name="org_fax_ext"') &&
+    html.includes('name="botcheck"'),
+    'Missing H1/H6 honeypot decoys inside #cisoDossierForm'
+  );
+  assert(html.includes('/assets/js/pages/ciso.js?v=20261122'), 'Missing cache-busted ciso.js?v=20261122 reference');
+
+  const cisoJs = fs.readFileSync(path.join(__dirname, '..', 'assets', 'js', 'pages', 'ciso.js'), 'utf8');
+  assert(cisoJs.includes("fetch('/api/lead-capture/'"), 'Missing /api/lead-capture/ fetch wiring in ciso.js');
+  assert(!cisoJs.includes('innerHTML'), 'Strict CSP forbids innerHTML in ciso.js');
+  assert(!cisoJs.includes('assumedEnterpriseTcoUsd'), 'Replace assumedEnterpriseTcoUsd with industryDlpBaselineUsd');
+  assert(cisoJs.includes('industryDlpBaselineUsd: 12000'), 'Missing industryDlpBaselineUsd JSON field');
+  assert(
+    !cisoJs.includes('eliminating Business Associate Agreement (BAA) requirements') &&
+    !html.includes('eliminating BAA requirements') &&
+    !html.includes('>NO BAA NEEDED<'),
+    'Use Safe Harbor subject-to-counsel framing instead of blanket BAA elimination claims'
+  );
+
+  console.log('    [PASS] Collapsible appendices, #cisoDossierForm, cache-buster & Safe Harbor neutrality verified.');
+}
+
 console.log('\n[ALL TESTS PASSED] ciso/index.html successfully verified against all criteria.');

@@ -93,7 +93,7 @@ STATUTORY AUTHORITIES: 45 CFR § 164.514(b)(2), FRE 502(b), ABA Model Rule 1.6(c
 ## 1. HIPAA Safe Harbor De-Identification Doctrine (45 CFR § 164.514(b)(2))
 Under 45 CFR § 164.514(b)(2), health information is not Individually Identifiable Health Information if all 18 enumerated categories of identifiers are removed.
 ZTDS deterministic client-side tokenization removes all 18 PHI identifiers (names, geographic subdivisions, dates, phone numbers, email addresses, SSNs, MRNs, health plan numbers, account numbers, certificate/license numbers, vehicle IDs, device serials, URLs, IP addresses, biometric identifiers, photos, and any unique characteristic) strictly within volatile client RAM before outbound network transmission.
-Consequently, downstream cloud LLM providers (OpenAI, Anthropic, Google) receive only de-identified surrogate tokens, eliminating Business Associate Agreement (BAA) requirements.
+Consequently, downstream cloud LLM providers (OpenAI, Anthropic, Google) receive only non-identifying surrogate tokens, supporting HIPAA Safe Harbor de-identification analysis under 45 CFR § 164.514(b)(2) (subject to independent legal counsel verification).
 
 ## 2. Federal Rule of Evidence 502(b) Non-Waiver Privilege Defense
 Inadvertent disclosure of attorney-client privileged material or corporate work product to an external LLM prompt does not constitute a waiver under FRE 502(b) if:
@@ -613,7 +613,7 @@ ${licenseContent}`;
                 regulatoryMitigationBufferUsd: regimeFine,
                 totalAnnualExposureAvoidanceUsd: Math.round(totalExposure),
                 projectedRoiMultiple: roiMultiple + 'x',
-                assumedEnterpriseTcoUsd: 12000
+                industryDlpBaselineUsd: 12000
               },
               statutoryExemptionGrounds: [
                 "EU GDPR Article 28: Zero external data custody; DPA disengaged",
@@ -636,6 +636,162 @@ ${licenseContent}`;
 
         // Run initial calculation
         calculateCisoEstimator();
+      }
+
+      // Memo Appendices Expand/Collapse All + Auto-Expand on Print or Deep Hash
+      const toggleAppendicesBtn = document.getElementById('btnToggleAppendices');
+      const appendixDetails = Array.from(document.querySelectorAll('details[id^="memo-appendix-"]'));
+      if (toggleAppendicesBtn && appendixDetails.length > 0) {
+        const syncAppendicesButton = () => {
+          const allOpen = appendixDetails.every((el) => el.open);
+          toggleAppendicesBtn.setAttribute('aria-expanded', allOpen ? 'true' : 'false');
+          const labelSpan = toggleAppendicesBtn.querySelector('span');
+          if (labelSpan) {
+            labelSpan.textContent = allOpen ? 'Collapse All Appendices' : 'Expand All Appendices';
+          } else {
+            toggleAppendicesBtn.textContent = allOpen ? 'Collapse All Appendices' : 'Expand All Appendices';
+          }
+        };
+
+        const openAppendixIfTargeted = () => {
+          const rawHash = window.location.hash ? window.location.hash.slice(1) : '';
+          if (!rawHash) return;
+          const targetEl = document.getElementById(rawHash);
+          if (!targetEl) return;
+          const parentDetails = targetEl.closest('details[id^="memo-appendix-"]');
+          if (parentDetails && !parentDetails.open) {
+            parentDetails.open = true;
+            syncAppendicesButton();
+          }
+        };
+
+        toggleAppendicesBtn.addEventListener('click', () => {
+          const allOpen = appendixDetails.every((el) => el.open);
+          const nextState = !allOpen;
+          appendixDetails.forEach((el) => {
+            el.open = nextState;
+          });
+          syncAppendicesButton();
+        });
+
+        appendixDetails.forEach((el) => {
+          el.addEventListener('toggle', syncAppendicesButton);
+        });
+
+        window.addEventListener('beforeprint', () => {
+          appendixDetails.forEach((el) => {
+            el.open = true;
+          });
+          syncAppendicesButton();
+        });
+
+        window.addEventListener('hashchange', openAppendixIfTargeted);
+        openAppendixIfTargeted();
+      }
+
+      // Inline Asynchronous B2B Dossier Email Dispatch
+      const dossierForm = document.getElementById('cisoDossierForm');
+      if (dossierForm) {
+        const emailInput = document.getElementById('cisoLeadEmail');
+        const domainInput = document.getElementById('cisoLeadDomain');
+        const submitBtn = document.getElementById('cisoLeadSubmitBtn');
+        const statusBox = document.getElementById('cisoLeadStatus');
+        const hpWebsite = document.getElementById('cisoWebsiteConfirm');
+        const hpFax = document.getElementById('cisoFaxExt');
+        const hpBot = document.getElementById('cisoBotCheck');
+
+        const setStatus = (tone, message) => {
+          if (!statusBox) return;
+          const toneClasses = {
+            error: 'rounded-lg p-3 text-xs border bg-rose-950/60 border-rose-500/50 text-rose-200',
+            warn: 'rounded-lg p-3 text-xs border bg-amber-950/60 border-amber-500/50 text-amber-200',
+            success: 'rounded-lg p-3 text-xs border bg-emerald-950/60 border-emerald-500/50 text-emerald-200'
+          };
+          statusBox.className = toneClasses[tone] || toneClasses.error;
+          statusBox.textContent = message;
+        };
+
+        const setBtnLabel = (label) => {
+          if (!submitBtn) return;
+          const labelSpan = submitBtn.querySelector('span');
+          if (labelSpan) {
+            labelSpan.textContent = label;
+          } else {
+            submitBtn.textContent = label;
+          }
+        };
+
+        dossierForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const email = emailInput ? emailInput.value.trim() : '';
+          const domainVal = domainInput ? domainInput.value.trim() : '';
+
+          if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            setStatus('error', 'Enter a valid work or legal counsel email address to receive the CISO dossier.');
+            if (emailInput) emailInput.focus();
+            return;
+          }
+
+          const estCallsEl = document.getElementById('estCallsInput');
+          const estVendorsEl = document.getElementById('estVendorsInput');
+          const estRegimeEl = document.getElementById('estRegimeSelect');
+          const estExposureEl = document.getElementById('estExposureOut');
+
+          const payload = {
+            email,
+            domain: domainVal || (email.includes('@') ? email.split('@')[1] : ''),
+            role: 'CISO / Legal Counsel',
+            industryProfile: estRegimeEl ? estRegimeEl.value : 'GDPR_EU_DPA',
+            riskScore: estExposureEl ? estExposureEl.textContent.trim() : '',
+            source: 'ciso_procurement_hub',
+            notes: `CISO Safe Harbor pack dispatch (calls=${estCallsEl ? estCallsEl.value : '10000'}, vendors=${estVendorsEl ? estVendorsEl.value : '3'})`,
+            website_url_confirm: hpWebsite ? hpWebsite.value : '',
+            org_fax_ext: hpFax ? hpFax.value : '',
+            botcheck: hpBot ? Boolean(hpBot.checked) : false
+          };
+
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            setBtnLabel('Dispatching Pack...');
+          }
+          if (statusBox) {
+            statusBox.className = 'hidden rounded-lg p-3 text-xs border';
+            statusBox.textContent = '';
+          }
+
+          try {
+            const res = await fetch('/api/lead-capture/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+
+            let data = null;
+            try {
+              data = await res.json();
+            } catch (_) {
+              data = null;
+            }
+
+            if (res.ok && data && data.status === 'success') {
+              const refCode = data.leadId ? ` (Ref: ${data.leadId})` : '';
+              setStatus('success', `Signed Safe Harbor Dossier queued for ${email}${refCode}. Direct PDF and ZIP downloads below remain available offline.`);
+              if (emailInput) emailInput.value = '';
+              if (domainInput) domainInput.value = '';
+            } else if (res.status === 429) {
+              setStatus('warn', (data && data.error) || 'Dispatch rate limit reached. Download the CISO Memo PDF or Security Pack ZIP directly below.');
+            } else {
+              setStatus('error', (data && data.error) || 'Email gateway temporarily unavailable. Download the CISO Memo PDF or Security Pack ZIP directly below.');
+            }
+          } catch (_) {
+            setStatus('error', 'Network error reaching email gateway. Download the CISO Memo PDF or Security Pack ZIP directly below.');
+          } finally {
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              setBtnLabel('Send Dossier Pack \u2192');
+            }
+          }
+        });
       }
     });
 })();
