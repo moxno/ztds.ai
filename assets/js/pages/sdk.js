@@ -653,13 +653,14 @@ document.addEventListener('DOMContentLoaded', () => {
         all: 'Wildcard [*] All 30 Profiles'
       };
 
+      const PILL_INACTIVE_CLASS = 'trial-target-pill px-3 py-1.5 min-h-[44px] sm:min-h-[34px] rounded-lg border border-slate-700 bg-slate-900 text-slate-400 hover:text-slate-200 text-xs font-mono font-medium transition-all cursor-pointer';
+      const PILL_ACTIVE_CLASS = 'trial-target-pill px-3 py-1.5 min-h-[44px] sm:min-h-[34px] rounded-lg border border-emerald-500 bg-emerald-500/20 text-emerald-300 text-xs font-mono font-bold transition-all cursor-pointer';
+
       // Target Pills Switcher
       targetPills.forEach(pill => {
         pill.addEventListener('click', () => {
-          targetPills.forEach(p => {
-            p.className = 'trial-target-pill px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-400 hover:text-slate-200 text-xs font-mono font-medium transition-all cursor-pointer';
-          });
-          pill.className = 'trial-target-pill px-3 py-1.5 rounded-lg border border-emerald-500 bg-emerald-500/20 text-emerald-300 text-xs font-mono font-bold transition-all cursor-pointer';
+          targetPills.forEach(p => { p.className = PILL_INACTIVE_CLASS; });
+          pill.className = PILL_ACTIVE_CLASS;
           currentWorkbenchTarget = pill.getAttribute('data-target') || 'mcp';
           updateWorkbenchSnippetTab(currentWorkbenchTarget);
         });
@@ -704,108 +705,125 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
           const t = btn.getAttribute('data-target');
           if (t) {
-            // Also sync target pills if present
             targetPills.forEach(p => {
-              if (p.getAttribute('data-target') === t) {
-                p.className = 'trial-target-pill px-3 py-1.5 rounded-lg border border-emerald-500 bg-emerald-500/20 text-emerald-300 text-xs font-mono font-bold transition-all cursor-pointer';
-              } else {
-                p.className = 'trial-target-pill px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-400 hover:text-slate-200 text-xs font-mono font-medium transition-all cursor-pointer';
-              }
+              p.className = p.getAttribute('data-target') === t ? PILL_ACTIVE_CLASS : PILL_INACTIVE_CLASS;
             });
             updateWorkbenchSnippetTab(t);
           }
         });
       });
 
-      // Mint 14-Day Evaluation Key (Workbench)
-      if (btnMintWorkbench) {
-        btnMintWorkbench.addEventListener('click', async () => {
-          const company = (trialCompanyInput?.value || '').trim();
-          const email = (trialEmailInput?.value || '').trim();
-          const profile = trialProfileSelect?.value || 'universal';
+      // Mint 14-Day Evaluation Key (Workbench Form)
+      const trialWorkbenchForm = document.getElementById('trialWorkbenchForm');
+      const submitWorkbenchMint = async () => {
+        if (!btnMintWorkbench) return;
+        const company = (trialCompanyInput?.value || '').trim();
+        const email = (trialEmailInput?.value || '').trim();
+        const profile = trialProfileSelect?.value || 'universal';
 
-          if (!company || company.length < 2) {
-            if (trialMintStatus) {
-              trialMintStatus.classList.remove('hidden');
-              trialMintStatus.textContent = 'Please enter your company or developer name (at least 2 characters).';
-            }
-            trialCompanyInput?.focus();
-            return;
+        if (!company || company.length < 2) {
+          if (trialMintStatus) {
+            trialMintStatus.className = 'text-xs font-mono p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-300';
+            trialMintStatus.textContent = 'Please enter your company or developer name (at least 2 characters).';
           }
+          trialCompanyInput?.focus();
+          return;
+        }
 
-          if (!email || !email.includes('@') || !email.split('@')[1]?.includes('.')) {
-            if (trialMintStatus) {
-              trialMintStatus.classList.remove('hidden');
-              trialMintStatus.textContent = 'Please enter a valid corporate work email address (e.g., engineer@company.com) to receive your signed 14-day evaluation key.';
-            }
-            trialEmailInput?.focus();
-            return;
+        if (!email || !email.includes('@') || !email.split('@')[1]?.includes('.')) {
+          if (trialMintStatus) {
+            trialMintStatus.className = 'text-xs font-mono p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-300';
+            trialMintStatus.textContent = 'Please enter a valid corporate work email address (e.g., engineer@company.com) to receive your signed 14-day evaluation key.';
           }
+          trialEmailInput?.focus();
+          return;
+        }
 
-          if (trialMintStatus) trialMintStatus.classList.add('hidden');
-          const savedWorkbenchBtnNodes = Array.from(btnMintWorkbench.childNodes).map(n => n.cloneNode(true));
-          btnMintWorkbench.disabled = true;
-          if (btnMintWorkbenchText) btnMintWorkbenchText.textContent = 'Dispatching Signed Ed25519 Key...';
+        if (trialMintStatus) trialMintStatus.className = 'hidden text-xs font-mono p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-300';
+        const savedWorkbenchBtnNodes = Array.from(btnMintWorkbench.childNodes).map(n => n.cloneNode(true));
+        btnMintWorkbench.disabled = true;
+        if (btnMintWorkbenchText) btnMintWorkbenchText.textContent = 'Dispatching Signed Ed25519 Key...';
 
+        try {
+          const res = await fetch('/api/mint-license/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              customerName: company,
+              email: email,
+              tier: 'developer_eval',
+              days: 14,
+              profile: profile,
+              website_url_confirm: document.getElementById('trialWbWebsiteConfirm')?.value || '',
+              org_fax_ext: document.getElementById('trialWbFaxExt')?.value || '',
+              botcheck: Boolean(document.getElementById('trialWbBotCheck')?.checked)
+            })
+          });
+
+          let data = null;
           try {
-            const res = await fetch('/api/mint-license/', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                customerName: company,
-                email: email,
-                tier: 'developer_eval',
-                days: 14,
-                profile: profile
-              })
-            });
-
-            const data = await res.json();
-            if (res.ok && (data.token || data.deliveryMode === 'email_dispatched')) {
-              currentWorkbenchData = data;
-              currentWorkbenchSnippets = data.quickstart;
-
-              if (trialWorkbenchResults) trialWorkbenchResults.classList.remove('hidden');
-              if (workbenchLicenseId) workbenchLicenseId.textContent = data.licenseId;
-              if (workbenchCustomerName) workbenchCustomerName.textContent = data.customerName;
-              if (workbenchExpiresAt) workbenchExpiresAt.textContent = 'Valid through ' + (data.expiresAt ? data.expiresAt.split('T')[0] : '14 days');
-              if (workbenchMaxNodes) workbenchMaxNodes.textContent = `${data.maxNodes || 2} Microservice Nodes`;
-              if (workbenchProfileBadge) workbenchProfileBadge.textContent = PROFILE_LABELS[data.profile] || data.profile;
-              if (workbenchTokenDisplay) {
-                workbenchTokenDisplay.textContent = data.token
-                  ? data.token
-                  : `DISPATCHED TO VERIFIED INBOX (${data.emailSentTo || email}) — License ID ${data.licenseId} (Universal PII 14-Day Eval). Check your work inbox for the signed ZTDS-LIC-v1 token.`;
-              }
-
-              updateWorkbenchSnippetTab(currentWorkbenchTarget);
-
-              // Smoothly scroll to results
-              trialWorkbenchResults.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } else {
-              if (trialMintStatus) {
-                trialMintStatus.classList.remove('hidden');
-                trialMintStatus.textContent = 'License generation error: ' + (data.details || data.error || 'Server error');
-              }
-            }
-          } catch (err) {
-            if (trialMintStatus) {
-              trialMintStatus.classList.remove('hidden');
-              trialMintStatus.textContent = 'Network error during license minting: ' + err.message;
-            }
-          } finally {
-            btnMintWorkbench.disabled = false;
-            btnMintWorkbench.replaceChildren(...savedWorkbenchBtnNodes);
+            data = await res.json();
+          } catch (_) {
+            data = null;
           }
+
+          if (res.ok && data && (data.token || data.deliveryMode === 'email_dispatched')) {
+            currentWorkbenchData = data;
+            currentWorkbenchSnippets = data.quickstart;
+
+            if (trialWorkbenchResults) trialWorkbenchResults.classList.remove('hidden');
+            if (workbenchLicenseId) workbenchLicenseId.textContent = data.licenseId || '';
+            if (workbenchCustomerName) workbenchCustomerName.textContent = data.customerName || company;
+            if (workbenchExpiresAt) workbenchExpiresAt.textContent = 'Valid through ' + (data.expiresAt ? data.expiresAt.split('T')[0] : '14 days');
+            if (workbenchMaxNodes) workbenchMaxNodes.textContent = `${data.maxNodes || 2} Microservice Nodes`;
+            if (workbenchProfileBadge) workbenchProfileBadge.textContent = PROFILE_LABELS[data.profile] || data.profile || 'Universal PII';
+            if (workbenchTokenDisplay) {
+              workbenchTokenDisplay.textContent = data.token
+                ? data.token
+                : `DISPATCHED TO VERIFIED INBOX (${data.emailSentTo || email}) — License ID ${data.licenseId} (Universal PII 14-Day Eval). Check your work inbox for the signed ZTDS-LIC-v1 token.`;
+            }
+            if (btnCopyWorkbenchToken) {
+              const labelEl = btnCopyWorkbenchToken.querySelector('span') || btnCopyWorkbenchToken;
+              labelEl.textContent = data.token ? 'Copy Token' : 'Copy License ID';
+            }
+
+            updateWorkbenchSnippetTab(currentWorkbenchTarget);
+            trialWorkbenchResults?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          } else {
+            if (trialMintStatus) {
+              trialMintStatus.className = 'text-xs font-mono p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-300';
+              trialMintStatus.textContent = 'License generation error: ' + ((data && (data.details || data.error)) || 'Server error');
+            }
+          }
+        } catch (err) {
+          if (trialMintStatus) {
+            trialMintStatus.className = 'text-xs font-mono p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-300';
+            trialMintStatus.textContent = 'Network error during license minting: ' + err.message;
+          }
+        } finally {
+          btnMintWorkbench.disabled = false;
+          btnMintWorkbench.replaceChildren(...savedWorkbenchBtnNodes);
+        }
+      };
+
+      if (trialWorkbenchForm) {
+        trialWorkbenchForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          submitWorkbenchMint();
         });
+      } else if (btnMintWorkbench) {
+        btnMintWorkbench.addEventListener('click', submitWorkbenchMint);
       }
 
-      // Copy Token
+      // Copy Token or License ID (supports email_dispatched mode where token is null)
       if (btnCopyWorkbenchToken) {
         btnCopyWorkbenchToken.addEventListener('click', () => {
-          if (!currentWorkbenchData || !currentWorkbenchData.token) return;
+          const copyValue = currentWorkbenchData ? (currentWorkbenchData.token || currentWorkbenchData.licenseId) : '';
+          if (!copyValue) return;
+          const hadToken = Boolean(currentWorkbenchData && currentWorkbenchData.token);
           const savedNodes = Array.from(btnCopyWorkbenchToken.childNodes).map(n => n.cloneNode(true));
-          window.ztdsCopy(currentWorkbenchData.token, () => {
-            btnCopyWorkbenchToken.textContent = 'Copied!';
+          window.ztdsCopy(copyValue, () => {
+            btnCopyWorkbenchToken.textContent = hadToken ? 'Copied!' : 'License ID Copied!';
             setTimeout(() => { btnCopyWorkbenchToken.replaceChildren(...savedNodes); }, 2000);
           });
         });
@@ -883,79 +901,157 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      // Mint 14-Day Evaluation Key via Serverless API
+      // Mint 14-Day Evaluation Key via Serverless API (Modal Form)
+      const modalTrialForm = document.getElementById('modalTrialForm');
       const btnMintTrial = document.getElementById('btnMintTrialLicense');
-      if (btnMintTrial) {
-        btnMintTrial.addEventListener('click', async () => {
-          const company = (document.getElementById('trialCompany')?.value || '').trim();
-          const email = (document.getElementById('trialEmail')?.value || '').trim();
+      const modalTrialStatus = document.getElementById('modalTrialStatus');
+      const setModalTrialStatus = (tone, message) => {
+        if (!modalTrialStatus) return;
+        if (!tone || !message) {
+          modalTrialStatus.className = 'hidden text-xs font-mono p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-800';
+          modalTrialStatus.textContent = '';
+          return;
+        }
+        modalTrialStatus.className = tone === 'success'
+          ? 'text-xs font-mono p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900'
+          : 'text-xs font-mono p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-800';
+        modalTrialStatus.textContent = message;
+      };
 
-          if (!company || company.length < 2) {
-            alert('Please provide a company or developer name.');
-            document.getElementById('trialCompany')?.focus();
-            return;
-          }
-          if (!email || !email.includes('@') || !email.split('@')[1]?.includes('.')) {
-            alert('Please provide a valid corporate work email address to receive your signed 14-day evaluation key.');
-            document.getElementById('trialEmail')?.focus();
-            return;
-          }
+      const submitModalTrialMint = async () => {
+        if (!btnMintTrial) return;
+        const companyEl = document.getElementById('trialCompany');
+        const emailEl = document.getElementById('trialEmail');
+        const company = (companyEl?.value || '').trim();
+        const email = (emailEl?.value || '').trim();
 
-          const savedTrialBtnNodes = Array.from(btnMintTrial.childNodes).map(n => n.cloneNode(true));
-          btnMintTrial.disabled = true;
-          const pulseDot = document.createElement('span');
-          pulseDot.className = 'pulse-dot mr-1';
-          btnMintTrial.replaceChildren(pulseDot, document.createTextNode(' Dispatching Signed Ed25519 Key...'));
+        if (!company || company.length < 2) {
+          setModalTrialStatus('error', 'Please provide a company or developer name (at least 2 characters).');
+          companyEl?.focus();
+          return;
+        }
+        if (!email || !email.includes('@') || !email.split('@')[1]?.includes('.')) {
+          setModalTrialStatus('error', 'Please provide a valid corporate work email address to receive your signed 14-day evaluation key.');
+          emailEl?.focus();
+          return;
+        }
 
+        setModalTrialStatus(null, '');
+        const savedTrialBtnNodes = Array.from(btnMintTrial.childNodes).map(n => n.cloneNode(true));
+        btnMintTrial.disabled = true;
+        const pulseDot = document.createElement('span');
+        pulseDot.className = 'pulse-dot mr-1';
+        btnMintTrial.replaceChildren(pulseDot, document.createTextNode(' Dispatching Signed Ed25519 Key...'));
+
+        try {
+          const res = await fetch('/api/mint-license/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              customerName: company,
+              email: email,
+              tier: 'developer_eval',
+              days: 14,
+              website_url_confirm: document.getElementById('modalTrialWebsiteConfirm')?.value || '',
+              org_fax_ext: document.getElementById('modalTrialFaxExt')?.value || '',
+              botcheck: Boolean(document.getElementById('modalTrialBotCheck')?.checked)
+            })
+          });
+
+          let data = null;
           try {
-            const res = await fetch('/api/mint-license/', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                customerName: company,
-                email: email,
-                tier: 'developer_eval',
-                days: 14
-              })
-            });
-
-            const data = await res.json();
-            if (res.ok && (data.token || data.deliveryMode === 'email_dispatched')) {
-              const resultBox = document.getElementById('trialResultBox');
-              const licenseIdEl = document.getElementById('trialLicenseId');
-              const expiryEl = document.getElementById('trialExpiryDate');
-              const tokenDisplay = document.getElementById('trialTokenDisplay');
-              const quickstartCmd = document.getElementById('trialQuickstartCmd');
-              const displayedToken = data.token || `Dispatched to ${data.emailSentTo || email} (check work inbox)`;
-
-              if (resultBox) resultBox.classList.remove('hidden');
-              if (licenseIdEl) licenseIdEl.textContent = data.licenseId;
-              if (expiryEl) expiryEl.textContent = `Valid through ${data.expiresAt.split('T')[0]}`;
-              if (tokenDisplay) tokenDisplay.textContent = displayedToken;
-              if (quickstartCmd) quickstartCmd.textContent = data.token ? `export ZTDS_LICENSE="${data.token}"` : 'export ZTDS_LICENSE="<PASTE_TOKEN_FROM_WORK_EMAIL>"';
-
-              const copyBtn = document.getElementById('btnCopyTrialToken');
-              if (copyBtn) {
-                copyBtn.onclick = () => {
-                  if (typeof window.ztdsCopy === 'function') {
-                    window.ztdsCopy(data.token, copyBtn, 'Token Copied!');
-                  } else if (navigator.clipboard) {
-                    navigator.clipboard.writeText(data.token).then(() => {
-                      copyBtn.textContent = 'Token Copied!';
-                      setTimeout(() => { copyBtn.textContent = 'Copy Token'; }, 2000);
-                    });
-                  }
-                };
-              }
-            } else {
-              alert(`Error minting token: ${data.details || data.error || 'Server error'}`);
-            }
-          } catch (err) {
-            alert(`Network error during license minting: ${err.message}`);
-          } finally {
-            btnMintTrial.disabled = false;
-            btnMintTrial.replaceChildren(...savedTrialBtnNodes);
+            data = await res.json();
+          } catch (_) {
+            data = null;
           }
+
+          if (res.ok && data && (data.token || data.deliveryMode === 'email_dispatched')) {
+            const resultBox = document.getElementById('trialResultBox');
+            const licenseIdEl = document.getElementById('trialLicenseId');
+            const expiryEl = document.getElementById('trialExpiryDate');
+            const tokenDisplay = document.getElementById('trialTokenDisplay');
+            const quickstartCmd = document.getElementById('trialQuickstartCmd');
+            const hasToken = Boolean(data.token);
+            const displayedToken = hasToken ? data.token : `Dispatched to ${data.emailSentTo || email} (check work inbox)`;
+
+            if (resultBox) resultBox.classList.remove('hidden');
+            if (licenseIdEl) licenseIdEl.textContent = data.licenseId || '';
+            if (expiryEl) expiryEl.textContent = `Valid through ${data.expiresAt ? data.expiresAt.split('T')[0] : '14 days'}`;
+            if (tokenDisplay) tokenDisplay.textContent = displayedToken;
+            if (quickstartCmd) quickstartCmd.textContent = hasToken ? `export ZTDS_LICENSE="${data.token}"` : 'export ZTDS_LICENSE="<PASTE_TOKEN_FROM_WORK_EMAIL>"';
+            if (!hasToken) {
+              setModalTrialStatus('success', `Signed 14-day evaluation key dispatched to ${data.emailSentTo || email}. Check your work inbox.`);
+            }
+
+            const copyBtn = document.getElementById('btnCopyTrialToken');
+            if (copyBtn) {
+              const copyVal = data.token || data.licenseId || '';
+              const resetText = hasToken ? 'Copy Token' : 'Copy License ID';
+              const copiedText = hasToken ? 'Token Copied!' : 'License ID Copied!';
+              copyBtn.textContent = resetText;
+              copyBtn.onclick = () => {
+                if (!copyVal) return;
+                if (typeof window.ztdsCopy === 'function') {
+                  window.ztdsCopy(copyVal, () => {
+                    copyBtn.textContent = copiedText;
+                    setTimeout(() => { copyBtn.textContent = resetText; }, 2000);
+                  });
+                } else if (navigator.clipboard) {
+                  navigator.clipboard.writeText(copyVal).then(() => {
+                    copyBtn.textContent = copiedText;
+                    setTimeout(() => { copyBtn.textContent = resetText; }, 2000);
+                  });
+                }
+              };
+            }
+          } else {
+            setModalTrialStatus('error', `Error minting token: ${(data && (data.details || data.error)) || 'Server error'}`);
+          }
+        } catch (err) {
+          setModalTrialStatus('error', `Network error during license minting: ${err.message}`);
+        } finally {
+          btnMintTrial.disabled = false;
+          btnMintTrial.replaceChildren(...savedTrialBtnNodes);
+        }
+      };
+
+      if (modalTrialForm) {
+        modalTrialForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          submitModalTrialMint();
+        });
+      } else if (btnMintTrial) {
+        btnMintTrial.addEventListener('click', submitModalTrialMint);
+      }
+
+      // Reference Appendices Expand/Collapse All + Auto-Expand on Print
+      const toggleSdkAppendicesBtn = document.getElementById('btnToggleSdkAppendices');
+      const sdkAppendixDetails = Array.from(document.querySelectorAll('details[id^="sdk-appendix-"]'));
+      if (toggleSdkAppendicesBtn && sdkAppendixDetails.length > 0) {
+        const syncSdkAppendicesButton = () => {
+          const allOpen = sdkAppendixDetails.every((el) => el.open);
+          toggleSdkAppendicesBtn.setAttribute('aria-expanded', allOpen ? 'true' : 'false');
+          const labelSpan = toggleSdkAppendicesBtn.querySelector('span');
+          if (labelSpan) {
+            labelSpan.textContent = allOpen ? 'Collapse All Reference' : 'Expand All Reference';
+          } else {
+            toggleSdkAppendicesBtn.textContent = allOpen ? 'Collapse All Reference' : 'Expand All Reference';
+          }
+        };
+
+        toggleSdkAppendicesBtn.addEventListener('click', () => {
+          const nextState = !sdkAppendixDetails.every((el) => el.open);
+          sdkAppendixDetails.forEach((el) => { el.open = nextState; });
+          syncSdkAppendicesButton();
+        });
+
+        sdkAppendixDetails.forEach((el) => {
+          el.addEventListener('toggle', syncSdkAppendicesButton);
+        });
+
+        window.addEventListener('beforeprint', () => {
+          sdkAppendixDetails.forEach((el) => { el.open = true; });
+          syncSdkAppendicesButton();
         });
       }
     });

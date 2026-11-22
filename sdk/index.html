@@ -42,7 +42,7 @@
   <!-- Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/styles.css?v=20261122">
 
   <script type="application/ld+json">
 {
@@ -74,7 +74,7 @@
         "width": 1200,
         "height": 630
       },
-      "dateModified": "2026-09-21T00:00:00Z",
+      "dateModified": "2026-11-22T00:00:00Z",
       "publisher": {
         "@id": "https://ztds.ai/#organization"
       }
@@ -92,7 +92,7 @@
         "JavaScript"
       ],
       "datePublished": "2026-09-18T00:00:00Z",
-      "dateModified": "2026-09-21T00:00:00Z",
+      "dateModified": "2026-11-22T00:00:00Z",
       "publisher": {
         "@type": "Organization",
         "name": "ZTDS AI Consortium",
@@ -111,7 +111,7 @@
         "Python"
       ],
       "datePublished": "2026-09-16T00:00:00Z",
-      "dateModified": "2026-09-21T00:00:00Z",
+      "dateModified": "2026-11-22T00:00:00Z",
       "publisher": {
         "@type": "Organization",
         "name": "ZTDS AI Consortium",
@@ -169,7 +169,7 @@
       "description": "Technical documentation, API specifications, Model Context Protocol (MCP) stdio setup, and framework blueprints for in-memory zero-trust data sanitization.",
       "url": "https://ztds.ai/sdk/",
       "datePublished": "2026-09-16T00:00:00Z",
-      "dateModified": "2026-10-27T00:00:00Z",
+      "dateModified": "2026-11-22T00:00:00Z",
       "author": {
         "@type": "Person",
         "name": "Ilya Sibiryakov",
@@ -386,7 +386,7 @@
   <main id="main-content" class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7 w-full space-y-12">
     
     <!-- Hero Header & Package Manager Switcher -->
-    <div class="text-center max-w-4xl mx-auto">
+    <div id="quickstart-top" class="text-center max-w-4xl mx-auto scroll-mt-24">
       <nav aria-label="Breadcrumb" class="no-print mb-2">
         <ol class="flex flex-wrap items-center justify-center gap-1.5 text-xs font-mono text-slate-500"><li><a href="/" class="hover:text-slate-900 transition-colors">Home</a></li><li aria-hidden="true" class="text-slate-300">/</li><li class="text-emerald-700 font-semibold" aria-current="page">Developer Engine &amp; SDK</li></ol>
       </nav>
@@ -431,16 +431,16 @@
 
         <!-- 30-Second Minimal Quickstart (Immediate Developer Value) -->
         <div class="rounded-xl border border-slate-800 bg-slate-950 text-left shadow-lg overflow-hidden font-mono text-xs">
-          <div class="flex items-center justify-between px-3.5 py-2 bg-slate-900 border-b border-slate-800 text-xs">
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-              <span class="text-slate-200 font-bold font-sans">30&#8209;Second Quickstart</span>
-              <span class="text-slate-400 font-normal hidden sm:inline">&middot; Local Volatile RAM</span>
+          <div class="flex flex-wrap items-center justify-between gap-2 px-3.5 py-2 bg-slate-900 border-b border-slate-800 text-xs">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
+              <span class="text-slate-200 font-bold font-sans whitespace-nowrap">30&#8209;Second Quickstart</span>
+              <span class="text-slate-400 font-normal hidden sm:inline whitespace-nowrap">&middot; Local Volatile RAM</span>
             </div>
-            <div class="flex items-center gap-1.5" id="quickstart-lang-tabs">
-              <button type="button" class="quickstart-tab-btn px-2 py-0.5 rounded text-xs bg-slate-800 text-emerald-400 font-bold transition-colors cursor-pointer" data-lang="ts">Node / TS</button>
-              <button type="button" class="quickstart-tab-btn px-2 py-0.5 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-lang="py">Python</button>
-              <button type="button" id="copyQuickstartBtn" class="ml-2 text-slate-300 hover:text-emerald-300 text-xs font-sans font-semibold transition-colors cursor-pointer">Copy</button>
+            <div class="flex items-center gap-1.5 shrink-0" id="quickstart-lang-tabs">
+              <button type="button" class="quickstart-tab-btn px-2.5 py-1 rounded text-xs bg-slate-800 text-emerald-400 font-bold whitespace-nowrap shrink-0 transition-colors cursor-pointer" data-lang="ts">Node / TS</button>
+              <button type="button" class="quickstart-tab-btn px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 whitespace-nowrap shrink-0 transition-colors cursor-pointer" data-lang="py">Python</button>
+              <button type="button" id="copyQuickstartBtn" class="ml-1 px-2 py-1 text-slate-300 hover:text-emerald-300 text-xs font-sans font-semibold whitespace-nowrap shrink-0 transition-colors cursor-pointer">Copy</button>
             </div>
           </div>
           <div class="p-3 overflow-x-auto leading-snug text-slate-200">
@@ -461,20 +461,287 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
           </div>
         </div>
         <!-- Hero Action Bar -->
-        <div class="pt-1 flex flex-wrap flex-balance items-center justify-center gap-2.5">
-          <a href="#trial" class="btn-trust text-xs py-2 px-4 shadow-sm font-bold flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Mint 14-Day Evaluation Key (Instant RAM) &rarr;</span>
+        <div class="pt-1 grid grid-cols-1 sm:flex sm:flex-wrap items-center justify-center gap-2.5">
+          <a href="#trial" class="btn-trust w-full sm:w-auto justify-center min-h-[44px] touch-target text-xs py-2.5 px-4 shadow-sm font-bold flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+            <span>Request 14&#8209;Day Evaluation Key (Offline Ed25519) &rarr;</span>
           </a>
-          <a href="#connectors" class="btn-outline text-xs py-2 px-4 font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300">
+          <a href="#connectors" class="btn-outline w-full sm:w-auto justify-center min-h-[44px] touch-target text-xs py-2.5 px-4 font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 flex items-center">
             Browse 10 Connectors &rarr;
           </a>
-          <a href="#licensing" class="btn-outline text-xs py-2 px-4 font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300">
+          <a href="#licensing" class="btn-outline w-full sm:w-auto justify-center min-h-[44px] touch-target text-xs py-2.5 px-4 font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 flex items-center">
             Editions &amp; Licensing &rarr;
           </a>
         </div>
       </div>
     </div>
+
+    <!-- Sticky Section Navigation Bar (Unclipped 7-Section Single Row) -->
+    <nav class="tablist-scroll sticky top-16 z-30 bg-slate-900 text-white rounded-xl p-1.5 shadow-md border border-slate-800 items-center lg:justify-between gap-1 text-xs no-print" aria-label="Page Sections">
+      <a href="#quickstart-top" class="px-2 py-2 lg:px-2.5 min-h-[44px] sm:min-h-[36px] inline-flex items-center rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white font-medium whitespace-nowrap transition-colors">1. Quickstart</a>
+      <a href="#trial" class="px-2 py-2 lg:px-2.5 min-h-[44px] sm:min-h-[36px] rounded-lg hover:bg-slate-800 text-emerald-400 font-semibold whitespace-nowrap transition-colors inline-flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>2. 14-Day Key</span>
+      </a>
+      <a href="#connectors" class="px-2 py-2 lg:px-2.5 min-h-[44px] sm:min-h-[36px] inline-flex items-center rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white font-medium whitespace-nowrap transition-colors">3. 10 Connectors</a>
+      <a href="#mcp" class="px-2 py-2 lg:px-2.5 min-h-[44px] sm:min-h-[36px] inline-flex items-center rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white font-medium whitespace-nowrap transition-colors">4. MCP Gateway</a>
+      <a href="#licensing" class="px-2 py-2 lg:px-2.5 min-h-[44px] sm:min-h-[36px] inline-flex items-center rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white font-medium whitespace-nowrap transition-colors">5. Licensing</a>
+      <a href="#sdk-reference-appendices" class="px-2 py-2 lg:px-2.5 min-h-[44px] sm:min-h-[36px] inline-flex items-center rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white font-medium whitespace-nowrap transition-colors">6. Architecture</a>
+      <a href="#faq" class="px-2 py-2 lg:px-2.5 min-h-[44px] sm:min-h-[36px] inline-flex items-center rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white font-medium whitespace-nowrap transition-colors">7. FAQ</a>
+    </nav>
+
+    <!-- 14-Day Full Evaluation Workbench & Token Minting -->
+    <div class="ztds-card bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-8 shadow-xl space-y-6 text-white scroll-mt-24" id="trial">
+      <span id="trial-workbench" class="scroll-mt-24 pointer-events-none block h-0"></span>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider mb-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            14-Day Full Evaluation Workbench
+          </div>
+          <h2 id="instant-ed25519-token-minting-onboarding" class="text-2xl sm:text-3xl font-bold text-white tracking-tight scroll-mt-24">Instant Ed25519 Token Minting &amp; Onboarding</h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1 max-w-3xl leading-relaxed">
+            Request a signed, offline&#8209;verifiable 14&#8209;day Ed25519 evaluation license dispatched to your corporate inbox. Verified 100% in local RAM with zero credit card, zero runtime phone&#8209;home, and full air&#8209;gap compatibility.
+          </p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <a href="#licensing" class="inline-flex items-center justify-center min-h-[44px] sm:min-h-[36px] px-3.5 py-2 rounded-lg border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-xs text-slate-200 hover:text-white font-mono font-semibold transition-colors">
+            View Commercial Tiers &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Workbench Form -->
+      <form id="trialWorkbenchForm" method="POST" class="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-5 bg-slate-950/60 p-4 sm:p-5 rounded-xl border border-slate-800/80" novalidate>
+        <!-- H1/H6 Honeypot Decoys (A11y & Autofill Safe) -->
+        <div class="sr-only" aria-hidden="true">
+          <input type="text" id="trialWbWebsiteConfirm" name="website_url_confirm" tabindex="-1" autocomplete="new-password" aria-hidden="true" value="">
+          <input type="text" id="trialWbFaxExt" name="org_fax_ext" tabindex="-1" autocomplete="new-password" aria-hidden="true" value="">
+          <input type="checkbox" id="trialWbBotCheck" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+        </div>
+        
+        <!-- Company / Developer Name -->
+        <div class="md:col-span-4 space-y-1.5">
+          <label for="trialWorkbenchCompany" class="block text-xs font-semibold text-slate-300 font-mono">Company / Developer Name *</label>
+          <input type="text" id="trialWorkbenchCompany" value="" placeholder="e.g. Acme Corp / Alex Mercer" class="w-full min-h-[44px] px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-base sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-sans" autocomplete="organization">
+        </div>
+
+        <!-- Work Email -->
+        <div class="md:col-span-4 space-y-1.5">
+          <label for="trialWorkbenchEmail" class="block text-xs font-semibold text-slate-300 font-mono">Corporate Work Email * (Token Dispatch)</label>
+          <input type="email" id="trialWorkbenchEmail" required placeholder="engineer@company.com" class="w-full min-h-[44px] px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-base sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-sans" inputmode="email" enterkeyhint="send" autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false">
+        </div>
+
+        <!-- Evaluation Vertical / Regulatory Profile -->
+        <div class="md:col-span-4 space-y-1.5">
+          <label for="trialWorkbenchProfile" class="block text-xs font-semibold text-slate-300 font-mono">Target Vertical Interest *</label>
+          <select id="trialWorkbenchProfile" class="w-full min-h-[44px] px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-base sm:text-xs text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-sans">
+            <option value="universal" selected>Universal PII Baseline (14-Day Eval)</option>
+            <option value="fintech">Fintech / PCI-DSS &amp; IBAN (Commercial)</option>
+            <option value="healthcare">Healthcare / HIPAA PHI (Commercial)</option>
+            <option value="legal">Legal / FRE 502 Privilege (Commercial)</option>
+            <option value="all">All 30 Sector Profiles (Enterprise)</option>
+          </select>
+        </div>
+
+        <!-- Integration Target Quick Select -->
+        <div class="md:col-span-8 flex flex-col justify-center space-y-1.5">
+          <div class="text-xs font-mono text-slate-400 font-semibold uppercase tracking-wider">Primary Integration Target</div>
+          <div class="flex flex-wrap items-center gap-2" id="trialTargetPills">
+            <button type="button" class="trial-target-pill px-3 py-1.5 min-h-[44px] sm:min-h-[34px] rounded-lg border border-emerald-500 bg-emerald-500/20 text-emerald-300 text-xs font-mono font-bold transition-all cursor-pointer" data-target="mcp">
+              Cursor &amp; Claude MCP
+            </button>
+            <button type="button" class="trial-target-pill px-3 py-1.5 min-h-[44px] sm:min-h-[34px] rounded-lg border border-slate-700 bg-slate-900 text-slate-400 hover:text-slate-200 text-xs font-mono font-medium transition-all cursor-pointer" data-target="node">
+              Node.js / TS SDK
+            </button>
+            <button type="button" class="trial-target-pill px-3 py-1.5 min-h-[44px] sm:min-h-[34px] rounded-lg border border-slate-700 bg-slate-900 text-slate-400 hover:text-slate-200 text-xs font-mono font-medium transition-all cursor-pointer" data-target="python">
+              Python RAG Pipeline
+            </button>
+            <button type="button" class="trial-target-pill px-3 py-1.5 min-h-[44px] sm:min-h-[34px] rounded-lg border border-slate-700 bg-slate-900 text-slate-400 hover:text-slate-200 text-xs font-mono font-medium transition-all cursor-pointer" data-target="docker">
+              Docker / K8s Enclave
+            </button>
+          </div>
+        </div>
+
+        <!-- Mint CTA Button -->
+        <div class="md:col-span-4 flex items-end">
+          <button type="submit" id="btnMintWorkbench" class="btn-trust w-full min-h-[44px] py-2.5 px-4 text-xs font-bold shadow-lg flex items-center justify-center gap-2 cursor-pointer touch-target">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+            <span id="btnMintWorkbenchText">Dispatch 14-Day Eval Key to Work Email &rarr;</span>
+          </button>
+        </div>
+
+        <!-- Statutory Privacy Disclosure (GDPR Art. 13 / Israel PPL Sec. 11) -->
+        <div class="md:col-span-12 pt-1 border-t border-slate-800/80 text-xs text-slate-400 leading-relaxed">
+          Statutory Notice (GDPR Art. 13 &amp; Israel Protection of Privacy Law Sec. 11): Providing a work email is voluntary, though required to dispatch an automated 14-day Universal PII evaluation token and technical onboarding notes. Controller: BrandMeWeb (Ilya Sibiryakov). Transactional delivery via Resend; zero ad-network sharing. Access, correction, and deletion rights under Sec. 13&ndash;14 apply.
+          <div class="mt-1 flex flex-wrap items-center gap-x-4 gap-y-0.5 font-mono">
+            <a href="mailto:security@ztds.ai" class="inline-flex items-center min-h-[44px] sm:min-h-[28px] py-1 sm:py-0 text-emerald-400 hover:underline">security@ztds.ai</a>
+            <a href="/privacy/#statutory-form-notice" class="inline-flex items-center min-h-[44px] sm:min-h-[28px] py-1 sm:py-0 text-emerald-400 hover:underline">Privacy Declaration &rarr;</a>
+          </div>
+        </div>
+      </form>
+
+      <!-- Live Minting Status Message (Errors / Loading) -->
+      <div id="trialMintStatus" class="hidden text-xs font-mono p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-300" role="status" aria-live="polite"></div>
+
+      <!-- Generated License Results Container (Initially Hidden) -->
+      <div id="trialWorkbenchResults" class="hidden space-y-6 pt-2">
+        
+        <!-- Metadata Row -->
+        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
+            <div class="flex items-center gap-2">
+              <span id="workbenchStatusBadge" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                PASS: ED25519 CRYPTOGRAPHIC SIGNATURE (RFC 8032)
+              </span>
+              <span class="text-xs font-mono text-slate-400">Zero Socket Telemetry</span>
+            </div>
+            <div class="text-xs font-mono text-emerald-400 font-semibold" id="workbenchExpiresAt">
+              Valid for 14 days
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
+            <div class="p-2.5 rounded bg-black/50 border border-slate-800/80">
+              <span class="text-slate-500 block text-xs">LICENSE ID</span>
+              <span id="workbenchLicenseId" class="text-white font-bold">&mdash;</span>
+            </div>
+            <div class="p-2.5 rounded bg-black/50 border border-slate-800/80">
+              <span class="text-slate-500 block text-xs">ORGANIZATION</span>
+              <span id="workbenchCustomerName" class="text-emerald-400 font-bold truncate block">&mdash;</span>
+            </div>
+            <div class="p-2.5 rounded bg-black/50 border border-slate-800/80">
+              <span class="text-slate-500 block text-xs">MAX NODES</span>
+              <span id="workbenchMaxNodes" class="text-amber-400 font-bold">2 Microservice Nodes</span>
+            </div>
+            <div class="p-2.5 rounded bg-black/50 border border-slate-800/80">
+              <span class="text-slate-500 block text-xs">VERTICAL PROFILES</span>
+              <span id="workbenchProfileBadge" class="text-sky-400 font-bold truncate block">Universal PII</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Token Box -->
+        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between text-xs pb-1.5 border-b border-slate-800 font-mono">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span class="text-slate-300 font-semibold">Offline Asymmetric License Token (RFC 8032)</span>
+            </div>
+            <button type="button" id="btnCopyWorkbenchToken" class="text-emerald-400 hover:text-emerald-300 font-bold transition-colors cursor-pointer text-xs flex items-center gap-1">
+              <span>Copy Token</span>
+            </button>
+          </div>
+          <div id="workbenchTokenDisplay" class="font-mono text-xs text-emerald-300 bg-black/60 p-3 rounded-lg border border-slate-800/80 break-all select-all max-h-24 overflow-y-auto"></div>
+        </div>
+
+        <!-- Multiplatform Quickstart Snippets -->
+        <div class="rounded-xl border border-slate-800 bg-slate-950 overflow-hidden font-mono text-xs">
+          <div class="flex flex-wrap items-center justify-between px-4 py-2.5 bg-slate-900 border-b border-slate-800 gap-2">
+            <div class="tablist-scroll items-center gap-1.5 max-w-full" role="tablist" aria-label="Quickstart Target" data-tabpanel="workbenchSnippetPanel">
+              <button type="button" role="tab" aria-selected="true" id="tabSnippetMcp" class="snippet-tab-btn active whitespace-nowrap px-2.5 py-1 rounded text-xs bg-slate-800 text-emerald-400 font-bold transition-colors cursor-pointer" data-target="mcp">Cursor &amp; Claude MCP</button>
+              <button type="button" role="tab" aria-selected="false" id="tabSnippetNode" class="snippet-tab-btn whitespace-nowrap px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="node">Node.js / TS SDK</button>
+              <button type="button" role="tab" aria-selected="false" id="tabSnippetPython" class="snippet-tab-btn whitespace-nowrap px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="python">Python RAG</button>
+              <button type="button" role="tab" aria-selected="false" id="tabSnippetDocker" class="snippet-tab-btn whitespace-nowrap px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="docker">Docker / K8s Env</button>
+            </div>
+            <button type="button" id="btnCopyWorkbenchSnippet" class="text-slate-300 hover:text-emerald-300 text-xs font-sans font-semibold transition-colors flex items-center gap-1 cursor-pointer">
+              <span>Copy Snippet</span>
+            </button>
+          </div>
+          <div id="workbenchSnippetPanel" role="tabpanel" aria-labelledby="tabSnippetMcp" class="p-4 overflow-x-auto leading-relaxed text-slate-200 bg-black/40">
+            <pre id="workbenchSnippetPre"><code id="workbenchSnippetCode">// Quickstart snippet will render here</code></pre>
+          </div>
+        </div>
+
+        <!-- Utility Action Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <button type="button" id="btnDownloadWorkbenchLicenseJson" class="btn-outline text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 font-semibold text-slate-300 border-slate-700 hover:bg-slate-800 hover:text-white cursor-pointer">
+            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            <span>Download ztds-license.json</span>
+          </button>
+          <button type="button" id="btnVerifyWorkbenchInDecoder" class="btn-trust text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 font-semibold cursor-pointer">
+            <span>Verify in Local RAM Decoder &rarr;</span>
+          </button>
+        </div>
+
+        <!-- B2B Commercial Upgrade Transition Box (Conversion Flywheel) -->
+        <div class="p-5 rounded-xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border border-emerald-500/30 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+            <div>
+              <div class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold">Commercial Conversion Flywheel</div>
+              <h3 id="ready-for-team-rollout-or-production-deployment" class="text-base font-bold text-white mt-0.5 scroll-mt-24">Ready for Team Rollout or Production Deployment?</h3>
+            </div>
+            <span class="text-xs text-slate-400">100% Offline Licensing &middot; Zero DPA Required</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            
+            <!-- Tier 1: TEAMS -->
+            <div class="p-3.5 rounded-lg bg-slate-900/90 border border-slate-800 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-mono font-bold text-slate-400 uppercase">ZTDS TEAMS</span>
+                  <span class="text-emerald-400 font-mono font-bold text-xs">Certified Tier</span>
+                </div>
+                <div class="text-xs font-semibold text-white mt-1">Multi-Seat &middot; 10 Nodes</div>
+                <p class="text-xs text-slate-400 mt-1 leading-normal">Ideal for engineering squads standardizing Cursor &amp; Claude MCP de-identification.</p>
+              </div>
+              <a href="https://privacyscrubber.com/pricing/?tier=TEAMS&utm_source=ztds.ai&utm_medium=trial_workbench" target="_blank" rel="noopener" class="btn-outline text-xs py-1.5 px-2.5 text-center text-emerald-400 border-emerald-500/40 hover:bg-emerald-950/40 font-semibold rounded">
+                View on PrivacyScrubber &rarr;
+              </a>
+            </div>
+
+            <!-- Tier 2: Developer Pro SDK -->
+            <div class="p-3.5 rounded-lg bg-emerald-950/20 border border-emerald-500/40 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-mono font-bold text-emerald-300 uppercase">Developer Pro SDK</span>
+                  <span class="text-emerald-400 font-mono font-bold text-xs">Certified SDK</span>
+                </div>
+                <div class="text-xs font-semibold text-white mt-1">Unlimited Pipeline Nodes</div>
+                <p class="text-xs text-slate-400 mt-1 leading-normal">Full headless SDK for Node.js, Python, and RAG pipelines with offline validation.</p>
+              </div>
+              <a href="https://privacyscrubber.com/pricing/?tier=SDK&utm_source=ztds.ai&utm_medium=trial_workbench" target="_blank" rel="noopener" class="btn-trust text-xs py-1.5 px-2.5 text-center font-bold rounded">
+                View on PrivacyScrubber &rarr;
+              </a>
+            </div>
+
+            <!-- Tier 3: Enterprise Air-Gapped -->
+            <div class="p-3.5 rounded-lg bg-slate-900/90 border border-slate-800 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-mono font-bold text-sky-400 uppercase">Enterprise</span>
+                  <span class="text-sky-300 font-mono font-bold text-xs">Air-Gapped</span>
+                </div>
+                <div class="text-xs font-semibold text-white mt-1">Air-Gapped &middot; Custom MSA</div>
+                <p class="text-xs text-slate-400 mt-1 leading-normal">All 30 regulatory profiles, dedicated SLA, custom legal rider, and corporate procurement.</p>
+              </div>
+              <a href="/ciso/#procurement" class="btn-outline text-xs py-1.5 px-2.5 text-center text-sky-300 border-sky-500/40 hover:bg-sky-950/40 font-semibold rounded">
+                Enterprise Scope &rarr;
+              </a>
+            </div>
+
+            <!-- Tier 4: BrandMeWeb Advisory Retainer -->
+            <div class="p-3.5 rounded-lg bg-slate-900/90 border border-slate-800 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-mono font-bold text-purple-400 uppercase">Advisory SOW</span>
+                  <span class="text-purple-300 font-mono font-bold text-xs">Turn-Key SOW</span>
+                </div>
+                <div class="text-xs font-semibold text-white mt-1">BrandMeWeb Advisory</div>
+                <p class="text-xs text-slate-400 mt-1 leading-normal">Turn-key implementation, pipeline audit, CISO exemption packet, and ongoing GEO optimization.</p>
+              </div>
+              <a href="/agency/" class="btn-outline text-xs py-1.5 px-2.5 text-center text-purple-300 border-purple-500/40 hover:bg-purple-950/40 font-semibold rounded">
+                BrandMeWeb Retainer &rarr;
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- End 14-Day Evaluation Workbench -->
 
     <!-- GEO / LLM Canonical Definition Snippet Card -->
     <div class="max-w-4xl mx-auto p-5 rounded-xl bg-white text-slate-700 border border-slate-200 border-l-4 border-l-emerald-600 shadow-xs">
@@ -539,408 +806,6 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
         <div class="text-xs font-bold uppercase text-slate-400 font-mono">Statutory Safe Harbor</div>
         <div class="text-2xl font-bold text-blue-600 mt-1">Art. 32 / Art. 28</div>
         <div class="text-xs text-slate-500 mt-1">Processor path elimination &amp; defense-in-depth</div>
-      </div>
-    </div>
-
-    <!-- In-Memory Data Plane Architectural Flow Diagram -->
-    <div class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
-        <div>
-          <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Data Plane Primitive</div>
-          <h2 id="in-memory-execution-architecture" class="text-xl font-bold text-slate-900 scroll-mt-24">In-Memory Execution Architecture</h2>
-        </div>
-        <span class="text-xs font-mono px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold w-fit">
-          Invariant 1 &middot; 0.00 Bytes Egress
-        </span>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-stretch text-xs">
-        
-        <!-- Step 1 -->
-        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between space-y-3">
-          <div>
-            <div class="font-mono text-xs text-slate-400 font-bold uppercase">Step 01 &middot; Client Host</div>
-            <div class="font-bold text-slate-900 text-sm mt-1">Raw Ingestion in RAM</div>
-            <p class="text-slate-600 text-xs mt-1.5 leading-relaxed">Cleartext PII, PHI, API secrets, or proprietary code loaded into process volatile memory before dispatch.</p>
-          </div>
-          <div class="font-mono text-xs px-2 py-1 rounded bg-slate-200 text-slate-800 w-fit font-semibold">Client Volatile Memory</div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="p-5 rounded-xl bg-emerald-50/70 border border-emerald-200 flex flex-col justify-between space-y-3">
-          <div>
-            <div class="font-mono text-xs text-emerald-800 font-bold uppercase">Step 02 &middot; Local Tokenizer</div>
-            <div class="font-bold text-emerald-950 text-sm mt-1">In-Memory Sanitization</div>
-            <p class="text-emerald-900 text-xs mt-1.5 leading-relaxed">Generates deterministic surrogates ([NAME_1], [IBAN_1]) in &lt;0.8ms. Maps cleartext keys in volatile client RAM.</p>
-          </div>
-          <div class="font-mono text-xs px-2 py-1 rounded bg-emerald-200 text-emerald-900 font-bold w-fit">&lt; 0.8ms &middot; Invariant 2</div>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between space-y-3">
-          <div>
-            <div class="font-mono text-xs text-slate-400 font-bold uppercase">Step 03 &middot; Egress Wire</div>
-            <div class="font-bold text-slate-900 text-sm mt-1">External AI Provider</div>
-            <p class="text-slate-600 text-xs mt-1.5 leading-relaxed">OpenAI, Claude, Gemini, or Pinecone processes sanitized context. Zero bytes cleartext cross the socket perimeter.</p>
-          </div>
-          <div class="font-mono text-xs px-2 py-1 rounded bg-rose-100 text-rose-800 font-bold w-fit">0 Bytes Egress Exposure</div>
-        </div>
-
-        <!-- Step 4 -->
-        <div class="p-5 rounded-xl bg-blue-50/70 border border-blue-200 flex flex-col justify-between space-y-3">
-          <div>
-            <div class="font-mono text-xs text-blue-800 font-bold uppercase">Step 04 &middot; Client Host</div>
-            <div class="font-bold text-blue-950 text-sm mt-1">Local Lossless Reversal</div>
-            <p class="text-blue-900 text-xs mt-1.5 leading-relaxed">Surrogate tokens restored to cleartext locally in volatile memory. Mapping destroyed on process termination.</p>
-          </div>
-          <div class="font-mono text-xs px-2 py-1 rounded bg-blue-200 text-blue-900 font-bold w-fit">Zero Disk Persistence</div>
-        </div>
-
-      </div>
-
-      <!-- Deterministic Airplane Mode & Zero-Egress Terminal Audit -->
-      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300 space-y-2">
-        <div class="flex items-center justify-between text-xs pb-1 border-b border-slate-800">
-          <span class="text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            Independent Zero-Egress Audit Protocol (Airplane Mode Test)
-          </span>
-          <span class="text-slate-500 font-sans text-xs">RFC v1.0 Section 4</span>
-        </div>
-        <p class="text-slate-400 text-xs font-sans leading-relaxed">
-          To mathematically verify Invariant 1 (0.00 bytes socket egress), disconnect your host from Wi-Fi/Ethernet or run with kernel socket tracing. The ZTDS runtime executes completely with zero socket bind/connect syscalls:
-        </p>
-        <div class="bg-black/60 p-2.5 rounded-lg border border-slate-800 text-xs text-emerald-300 overflow-x-auto select-all">
-          AIRPLANE_MODE=1 strace -e trace=network node -e "const { ZTDSEngine } = require('@privacyscrubber/sdk'); const e = new ZTDSEngine(); console.log(e.sanitize('Patient John Doe SSN 000-12-3456'));"
-        </div>
-        <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 pt-1 font-sans">
-          <span>Syscall verification: <strong class="text-slate-200">0 network sockets opened</strong> &middot; Latency: <strong class="text-emerald-400">&lt; 0.8ms</strong></span>
-          <a href="/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" target="_blank" rel="noopener" class="text-emerald-400 hover:underline font-semibold font-mono">Download CISO Verification Memo (PDF) &rarr;</a>
-        </div>
-      </div>
-
-      <!-- Statutory Compliance & Safe Harbor Crosswalk -->
-      <div class="rounded-xl border border-slate-200 overflow-hidden">
-        <div class="bg-slate-100 px-4 py-2 border-b border-slate-200 flex items-center justify-between text-xs font-bold text-slate-800">
-          <span>Statutory Compliance &amp; Safe Harbor Crosswalk (GDPR Art. 32 &amp; Art. 28)</span>
-          <span class="text-xs font-mono text-emerald-700 font-semibold">Safe Harbor Certified</span>
-        </div>
-        <div class="overflow-x-auto" tabindex="0" role="region" aria-labelledby="sdk-table-caption-1">
-          <table class="min-w-full text-xs text-left text-slate-600">
-          <caption id="sdk-table-caption-1" class="ztds-sr-only">Developer SDK Regulatory Provision and ZTDS Invariant Mapping</caption>
-            <thead class="bg-slate-50 text-xs font-mono uppercase text-slate-500 border-b border-slate-200">
-              <tr>
-                <th scope="col" class="p-2.5">Regulation</th>
-                <th scope="col" class="p-2.5">Statutory Provision</th>
-                <th scope="col" class="p-2.5">ZTDS Invariant Mechanism</th>
-                <th scope="col" class="p-2.5">Legal &amp; GRC Impact</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100 font-sans text-xs">
-              <tr>
-                <td class="p-2.5 font-bold text-slate-900">GDPR (EU)</td>
-                <td class="p-2.5 font-mono text-slate-700">Art. 32 &amp; Art. 28</td>
-                <td class="p-2.5">In-RAM surrogate tokenization before network transmission</td>
-                <td class="p-2.5 text-emerald-700 font-semibold">Eliminates processor role under Art. 28; establishes Art. 32 safe harbor</td>
-              </tr>
-              <tr>
-                <td class="p-2.5 font-bold text-slate-900">HIPAA (US)</td>
-                <td class="p-2.5 font-mono text-slate-700">45 CFR &sect; 164.514(b)</td>
-                <td class="p-2.5">Deterministic masking of all 18 Safe Harbor PHI identifiers</td>
-                <td class="p-2.5 text-emerald-700 font-semibold">BAA with third-party LLMs excluded from PHI scope</td>
-              </tr>
-              <tr>
-                <td class="p-2.5 font-bold text-slate-900">EU AI Act</td>
-                <td class="p-2.5 font-mono text-slate-700">Art. 50 &amp; Art. 10(5)</td>
-                <td class="p-2.5">Eliminates raw PII exposure to foundation model training feeds</td>
-                <td class="p-2.5 text-emerald-700 font-semibold">Zero training memorization risk</td>
-              </tr>
-              <tr>
-                <td class="p-2.5 font-bold text-slate-900">PCI-DSS v4.0</td>
-                <td class="p-2.5 font-mono text-slate-700">Req. 3.4 &amp; 3.5</td>
-                <td class="p-2.5">Client-side PAN/CVV cryptographic substitution</td>
-                <td class="p-2.5 text-emerald-700 font-semibold">LLM APIs desensitized from PCI audit boundary</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- 6 Physical Execution Surfaces Matrix -->
-    <div id="form-factors" class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-5">
-        <div>
-          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-semibold text-blue-800 mb-1.5">
-            <span>PHYSICAL DEPLOYMENT TOPOLOGIES</span>
-          </div>
-          <h2 id="5-physical-execution-surfaces" class="text-xl sm:text-2xl font-bold text-slate-900 scroll-mt-24">6 Physical Execution Surfaces</h2>
-          <p class="text-xs sm:text-sm text-slate-500 mt-1">ZTDS does not mandate hosting models; it enforces an in-RAM execution perimeter across six physical runtime execution surfaces.</p>
-        </div>
-        <span class="text-xs font-mono px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold w-fit shrink-0">
-          Zero Cloud Proxies
-        </span>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        <!-- Surface 1: Web & Browser Client -->
-        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Surface 01</span>
-              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-mono font-bold">&lt; 0.20 ms</span>
-            </div>
-            <h3 id="client-side-web-application" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">Client-Side Web Application</h3>
-            <p class="text-xs text-slate-600 leading-relaxed mb-4">
-              Executes in-memory directly on the end-user device before data leaves the browser window. Zero cleartext hits web servers, reverse proxies, or external clouds.
-            </p>
-            <div class="space-y-2 text-xs border-t border-slate-200 pt-3 text-slate-700">
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Target:</span>
-                <span class="font-semibold text-slate-900">SPAs, SaaS Portals, CRM UI</span>
-              </div>
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Distribution:</span>
-                <span class="font-semibold text-slate-900">V8 / WebWorker / WASM</span>
-              </div>
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Perimeter:</span>
-                <span class="font-semibold text-emerald-700">Client Device RAM</span>
-              </div>
-            </div>
-          </div>
-          <div class="mt-5 pt-3 border-t border-slate-200 font-mono text-xs text-slate-500">
-            <code>privacyscrubber.com</code>
-          </div>
-        </div>
-
-        <!-- Surface 2: Browser DOM Interceptor Extension -->
-        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Surface 02</span>
-              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-mono font-bold">&lt; 0.25 ms</span>
-            </div>
-            <h3 id="browser-dom-extension-mv3" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">Browser DOM Extension (MV3)</h3>
-            <p class="text-xs text-slate-600 leading-relaxed mb-4">
-              Manifest V3 content scripts intercepting user prompts directly inside ChatGPT, Claude, and Gemini before network packet serialization.
-            </p>
-            <div class="space-y-2 text-xs border-t border-slate-200 pt-3 text-slate-700">
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Target:</span>
-                <span class="font-semibold text-slate-900">Chrome, Edge, Brave, Opera</span>
-              </div>
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Distribution:</span>
-                <span class="font-semibold text-slate-900">Chrome Web Store (MV3)</span>
-              </div>
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Perimeter:</span>
-                <span class="font-semibold text-emerald-700">Isolated DOM Context</span>
-              </div>
-            </div>
-          </div>
-          <div class="mt-5 pt-3 border-t border-slate-200 font-mono text-xs text-slate-500">
-            <code>privacyscrubber-extension</code>
-          </div>
-        </div>
-
-        <!-- Surface 3: Process-Isolated MCP Stdio Server -->
-        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Surface 03</span>
-              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-xs font-mono font-bold">&lt; 0.50 ms</span>
-            </div>
-            <h3 id="process-isolated-mcp-server" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">Process-Isolated MCP Server</h3>
-            <p class="text-xs text-slate-600 leading-relaxed mb-4">
-              Model Context Protocol stdio daemon for AI IDEs and desktop agents. Strips code secrets, tokens, and DB credentials over local stdio JSON-RPC pipes.
-            </p>
-            <div class="space-y-2 text-xs border-t border-slate-200 pt-3 text-slate-700">
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Target:</span>
-                <span class="font-semibold text-slate-900">Cursor, Windsurf, Claude Desktop</span>
-              </div>
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Distribution:</span>
-                <span class="font-semibold text-slate-900">npx ztds-mcp / @privacyscrubber/mcp-server</span>
-              </div>
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Perimeter:</span>
-                <span class="font-semibold text-emerald-700">Stdio Process Sandbox</span>
-              </div>
-            </div>
-          </div>
-          <div class="mt-5 pt-3 border-t border-slate-200 flex items-center justify-between font-mono text-xs text-slate-500">
-            <code>JSON-RPC 2.0 stdio</code>
-            <a href="#mcp" class="text-blue-700 font-sans font-semibold hover:underline">Config &rarr;</a>
-          </div>
-        </div>
-
-        <!-- Surface 4: Headless Runtime SDK & CLI -->
-        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Surface 04</span>
-              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-xs font-mono font-bold">&lt; 0.80 ms</span>
-            </div>
-            <h3 id="headless-runtime-sdk-cli" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">Headless Runtime SDK &amp; CLI</h3>
-            <p class="text-xs text-slate-600 leading-relaxed mb-4">
-              Embedded privacy fiduciary for backend microservices, LangChain/LlamaIndex RAG pipelines, and automated pre-merge CI/CD audit gates.
-            </p>
-            <div class="space-y-2 text-xs border-t border-slate-200 pt-3 text-slate-700">
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Target:</span>
-                <span class="font-semibold text-slate-900">Node.js, Python, RAG Ingestion</span>
-              </div>
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Distribution:</span>
-                <span class="font-semibold text-slate-900">npm / npx ztds-audit</span>
-              </div>
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Perimeter:</span>
-                <span class="font-semibold text-emerald-700">Host Runtime RAM</span>
-              </div>
-            </div>
-          </div>
-          <div class="mt-5 pt-3 border-t border-slate-200 font-mono text-xs text-slate-500">
-            <code>npm install @privacyscrubber/sdk</code>
-          </div>
-        </div>
-
-        <!-- Surface 5: Air-Gapped Enclaves & Edge Proxy -->
-        <div class="p-6 rounded-xl bg-emerald-50/40 border border-emerald-300 flex flex-col justify-between shadow-xs">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-mono font-bold text-emerald-800 uppercase tracking-wider">Surface 05</span>
-              <span class="px-2 py-0.5 rounded bg-emerald-200 text-emerald-900 text-xs font-mono font-bold">&lt; 0.05 ms</span>
-            </div>
-            <h3 id="air-gapped-enclaves-proxy" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">Air-Gapped Enclaves &amp; Proxy</h3>
-            <p class="text-xs text-slate-700 leading-relaxed mb-4">
-              Hardware-attested sovereign execution in AWS Nitro Enclaves, military SCIF networks, and Proxy-WASM filters (Envoy/Istio) with offline Ed25519 token licensing.
-            </p>
-            <div class="space-y-2 text-xs border-t border-emerald-200 pt-3 text-slate-700">
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Target:</span>
-                <span class="font-semibold text-slate-900">Defense, Banks, SCIF, Private VPC</span>
-              </div>
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Distribution:</span>
-                <span class="font-semibold text-slate-900">Nitro Enclaves / Proxy-WASM</span>
-              </div>
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Perimeter:</span>
-                <span class="font-semibold text-emerald-700">Hardware Enclave Boundary</span>
-              </div>
-            </div>
-          </div>
-          <div class="mt-5 pt-3 border-t border-emerald-200 font-mono text-xs text-emerald-800">
-            <code>ZTDS-LIC-v1 (Ed25519)</code>
-          </div>
-        </div>
-
-        <!-- Surface 6: CMS & Web Form Intake Guard -->
-        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Surface 06</span>
-              <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 text-xs font-mono font-bold">&lt; 0.40 ms</span>
-            </div>
-            <h3 id="cms-web-form-intake-guard" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">CMS &amp; Web Form Guard</h3>
-            <p class="text-xs text-slate-600 leading-relaxed mb-4">
-              Official WordPress.org DOM capture interceptor masking high-risk inputs in visitor RAM prior to POST, storing 100% Zero-PII MySQL records, and sealing 1-Tap <code class="font-mono">#ztds_seal</code> Lead Cards.
-            </p>
-            <div class="space-y-2 text-xs border-t border-slate-200 pt-3 text-slate-700">
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Target:</span>
-                <span class="font-semibold text-slate-900">WordPress, CF7, WPForms, Elementor</span>
-              </div>
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Distribution:</span>
-                <span class="font-semibold text-slate-900">WordPress.org Directory</span>
-              </div>
-              <div class="flex justify-between font-mono text-xs">
-                <span class="text-slate-500">Perimeter:</span>
-                <span class="font-semibold text-emerald-700">Browser RAM &amp; Zero-PII MySQL</span>
-              </div>
-            </div>
-          </div>
-          <div class="mt-5 pt-3 border-t border-slate-200 flex items-center justify-between font-mono text-xs text-slate-500">
-            <code>privacyscrubber-ztds-guard</code>
-            <a href="https://wordpress.org/plugins/privacyscrubber-ztds-guard/" target="_blank" rel="noopener" class="text-sky-700 font-sans font-semibold hover:underline">Plugin &nearr;</a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Intellectual Property & Patent Protection Block -->
-    <div id="intellectual-property" class="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-850 to-slate-950 text-white border border-slate-800 shadow-xl space-y-6">
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-5">
-        <div>
-          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-xs font-mono text-emerald-300 uppercase tracking-wider mb-2">
-            <span>PATENT PENDING &middot; WIPO PRIORITY LOCKED</span>
-          </div>
-          <h2 id="intellectual-property-protection-commercial-licensing" class="text-xl sm:text-2xl font-bold text-white tracking-tight scroll-mt-24">Intellectual Property Protection &amp; Commercial Licensing</h2>
-          <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-3xl leading-relaxed">
-            The ZTDS standard maintains absolute separation between public specification openness and proprietary implementation technology.
-          </p>
-        </div>
-        <div class="flex flex-wrap items-center gap-2 shrink-0">
-          <span class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 font-mono text-xs text-slate-200">
-            Patent: <strong class="text-emerald-400">Patents Pending</strong>
-          </span>
-          <span class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 font-mono text-xs text-slate-200">
-            Trademark: <strong class="text-emerald-400">ZTDS&trade;</strong>
-          </span>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-300">
-        
-        <!-- Column 1: Patent & Legal Monopoly -->
-        <div class="space-y-4 p-5 rounded-xl bg-black/40 border border-slate-800">
-          <div class="flex items-center gap-2 text-emerald-400 font-mono font-bold text-sm">
-            <span>01 &middot; Patent Monopoly &amp; International Priority</span>
-          </div>
-          <p class="leading-relaxed">
-            The deterministic, in-RAM zero-trust data sanitization mechanism, volatile session mapping, and cryptographic attestation topology are protected under <strong class="text-white">U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. § 119 Priority). The word mark <strong class="text-white">ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42).
-          </p>
-          <div class="p-3 bg-slate-900/90 rounded-lg border border-slate-800 font-mono text-xs text-slate-400 space-y-1">
-            <div><span class="text-slate-500">Open Specification:</span> Public domain &middot; Apache 2.0 / CC BY 4.0</div>
-            <div><span class="text-slate-500">Commercial Runtimes:</span> Proprietary licensed implementation</div>
-            <div><span class="text-slate-500">Canonical Pioneer:</span> PrivacyScrubber (Product #001)</div>
-          </div>
-        </div>
-
-        <!-- Column 2: Offline Zero-Telemetry Licensing & Continuous Rule Feeds -->
-        <div class="space-y-4 p-5 rounded-xl bg-black/40 border border-slate-800">
-          <div class="flex items-center gap-2 text-blue-400 font-mono font-bold text-sm">
-            <span>02 &middot; Air-Gapped Licensing &amp; Dynamic Rule Updates</span>
-          </div>
-          <p class="leading-relaxed">
-            Enterprise and TEAMS tiers operate on an entirely air-gapped cryptographic model: license validation utilizes local <strong class="text-white">Ed25519 digital signatures</strong> embedded directly into deployment tokens. Your instances never ping license activation servers, safeguarding air-gapped networks from phone-home telemetry.
-          </p>
-          <div class="p-3 bg-slate-900/90 rounded-lg border border-slate-800 font-mono text-xs text-slate-400 space-y-1">
-            <div><span class="text-slate-500">License Verification:</span> Offline Ed25519 &middot; Zero Network Calls</div>
-            <div><span class="text-slate-500">Compliance Feeds:</span> Continuous dynamic updates (30+ Industry Profiles)</div>
-            <div><span class="text-slate-500">Regulatory Coverage:</span> HIPAA Safe Harbor, PCI-DSS v4.0, GDPR Recital 26</div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
-        <div class="text-slate-300">
-          <strong class="text-white">Need an Air-Gapped Enterprise Deployment License?</strong>
-          <span class="text-slate-400 block sm:inline sm:ml-1">Certified Developer SDK and TEAMS implementations (via PrivacyScrubber.com) include offline Ed25519 tokens with instant fulfillment.</span>
-        </div>
-        <div class="flex items-center gap-3 shrink-0">
-          <a href="#licensing" data-ztds-scroll-to="licensing" class="btn-trust text-xs py-2 px-4 shadow-sm font-semibold">
-            View License Options &rarr;
-          </a>
-        </div>
       </div>
     </div>
 
@@ -1374,10 +1239,10 @@ static_resources:
           </div>
           <h2 id="model-context-protocol-mcp-stdio-gateway" class="text-xl sm:text-2xl font-bold text-slate-900 scroll-mt-24">Model Context Protocol (MCP) Stdio Gateway</h2>
           <p class="text-xs text-slate-500 mt-1">Air-gapped integration for Cursor IDE, Claude Desktop, and Claude Code CLI with 0.00 bytes external telemetry.</p>
-          <div class="flex flex-wrap items-center gap-2 mt-2 text-xs">
-            <a href="/mcp/" class="text-emerald-700 hover:text-emerald-800 font-bold hover:underline inline-flex items-center gap-1">Full /mcp/ RFC Specification &amp; Threat Model &rarr;</a>
-            <span class="text-slate-300">&middot;</span>
-            <a href="https://mcpservers.org/servers/ztds-ai" target="_blank" rel="noopener" class="text-slate-600 hover:text-slate-900 font-medium hover:underline inline-flex items-center gap-1">mcpservers.org Directory &rarr;</a>
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-0.5 mt-2 text-xs">
+            <a href="/mcp/" class="text-emerald-700 hover:text-emerald-800 font-bold hover:underline inline-flex items-center min-h-[44px] sm:min-h-[32px] py-1.5 gap-1">Full /mcp/ RFC Specification &amp; Threat Model &rarr;</a>
+            <span class="hidden sm:inline text-slate-300" aria-hidden="true">&middot;</span>
+            <a href="https://mcpservers.org/servers/ztds-ai" target="_blank" rel="noopener" class="text-slate-600 hover:text-slate-900 font-medium hover:underline inline-flex items-center min-h-[44px] sm:min-h-[32px] py-1.5 gap-1">mcpservers.org Directory &rarr;</a>
           </div>
         </div>
         <div class="flex flex-col sm:items-end gap-1.5">
@@ -1493,324 +1358,6 @@ static_resources:
         </div>
       </div>
     </section>
-    <!-- AI Framework Compatibility Matrix Table -->
-    <div class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24" id="compatibility">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
-        <div>
-          <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Ecosystem Coverage</div>
-          <h2 id="ai-framework-compatibility-matrix" class="text-xl font-bold text-slate-900 scroll-mt-24">AI Framework Compatibility Matrix</h2>
-        </div>
-        <span class="text-xs font-mono text-slate-500">6 Supported Environments</span>
-      </div>
-
-      <div class="overflow-x-auto" tabindex="0" role="region" aria-labelledby="sdk-table-caption-2">
-        <table class="min-w-full text-xs text-left border border-slate-200 rounded-xl overflow-hidden">
-          <caption id="sdk-table-caption-2" class="ztds-sr-only">AI Agent and RAG Framework Compatibility and Latency Matrix</caption>
-          <thead class="bg-slate-100 text-slate-700 uppercase font-mono font-bold text-xs">
-            <tr>
-              <th scope="col" class="p-3 border-b">Framework / Tool</th>
-              <th scope="col" class="p-3 border-b">Integration Method</th>
-              <th scope="col" class="p-3 border-b">Latency Budget</th>
-              <th scope="col" class="p-3 border-b">Token Reversibility</th>
-              <th scope="col" class="p-3 border-b">Air-Gap Status</th>
-              <th scope="col" class="p-3 border-b">Audit Trail</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-200 text-slate-700 font-sans">
-            <tr>
-              <td class="p-3 font-semibold text-slate-900">LangChain &amp; LangGraph</td>
-              <td class="p-3 font-mono text-xs">ZTDSCallbackHandler</td>
-              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 1.1 ms</td>
-              <td class="p-3 text-emerald-700 font-semibold">Lossless Reversible</td>
-              <td class="p-3 text-emerald-700 font-semibold">100% Offline</td>
-              <td class="p-3 font-mono text-xs">Session Hash</td>
-            </tr>
-            <tr>
-              <td class="p-3 font-semibold text-slate-900">LlamaIndex (RAG Pipelines)</td>
-              <td class="p-3 font-mono text-xs">ZTDSTransformation</td>
-              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 0.9 ms</td>
-              <td class="p-3 text-emerald-700 font-semibold">Vector Immunized</td>
-              <td class="p-3 text-emerald-700 font-semibold">100% Offline</td>
-              <td class="p-3 font-mono text-xs">SHA-256 Checksum</td>
-            </tr>
-            <tr>
-              <td class="p-3 font-semibold text-slate-900">Cursor &amp; Claude Code CLI</td>
-              <td class="p-3 font-mono text-xs">MCP Stdio Gateway</td>
-              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 1.5 ms</td>
-              <td class="p-3 text-emerald-700 font-semibold">Interactive In-IDE</td>
-              <td class="p-3 text-emerald-700 font-semibold">Local Stdio Only</td>
-              <td class="p-3 font-mono text-xs">Local Audit Log</td>
-            </tr>
-            <tr>
-              <td class="p-3 font-semibold text-slate-900">Ollama &amp; Local vLLM</td>
-              <td class="p-3 font-mono text-xs">Reverse Proxy Loopback</td>
-              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 0.8 ms</td>
-              <td class="p-3 text-emerald-700 font-semibold">Streaming Reversal</td>
-              <td class="p-3 text-emerald-700 font-semibold">Fully Air-Gapped</td>
-              <td class="p-3 font-mono text-xs">Invariant Proof</td>
-            </tr>
-            <tr>
-              <td class="p-3 font-semibold text-slate-900">Vercel AI SDK</td>
-              <td class="p-3 font-mono text-xs">Stream Transform Hook</td>
-              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 1.2 ms</td>
-              <td class="p-3 text-emerald-700 font-semibold">Bidirectional Stream</td>
-              <td class="p-3 text-emerald-700 font-semibold">Edge Runtime Safe</td>
-              <td class="p-3 font-mono text-xs">Zero-Telemetry</td>
-            </tr>
-            <tr>
-              <td class="p-3 font-semibold text-slate-900">CrewAI &amp; AutoGen</td>
-              <td class="p-3 font-mono text-xs">Inter-Agent Role Filter</td>
-              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 1.0 ms</td>
-              <td class="p-3 text-emerald-700 font-semibold">Per-Agent Session</td>
-              <td class="p-3 text-emerald-700 font-semibold">Localhost Only</td>
-              <td class="p-3 font-mono text-xs">State Isolation</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- 14-Day Full Evaluation Workbench & Token Minting -->
-    <div class="ztds-card bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl space-y-6 text-white scroll-mt-24" id="trial">
-      <span id="trial-workbench" class="scroll-mt-24 pointer-events-none block h-0"></span>
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
-        <div>
-          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider mb-2">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            14-Day Full Evaluation Workbench
-          </div>
-          <h2 id="instant-ed25519-token-minting-onboarding" class="text-2xl sm:text-3xl font-bold text-white tracking-tight scroll-mt-24">Instant Ed25519 Token Minting &amp; Onboarding</h2>
-          <p class="text-xs sm:text-sm text-slate-400 mt-1 max-w-3xl leading-relaxed">
-            Generate an authentic, offline-verifiable 14-day evaluation license directly in local RAM. Zero credit card required, zero telemetric phone-home, 100% air-gap ready.
-          </p>
-        </div>
-        <div class="flex items-center gap-2 shrink-0">
-          <a href="#licensing" class="btn-outline text-xs py-2 px-3.5 text-slate-300 border-slate-700 hover:bg-slate-800 hover:text-white font-mono">
-            View Commercial Tiers &rarr;
-          </a>
-        </div>
-      </div>
-
-      <!-- Workbench Form -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-5 bg-slate-950/60 p-5 rounded-xl border border-slate-800/80">
-        
-        <!-- Company / Developer Name -->
-        <div class="md:col-span-4 space-y-1.5">
-          <label for="trialWorkbenchCompany" class="block text-xs font-semibold text-slate-300 font-mono">Company / Developer Name *</label>
-          <input type="text" id="trialWorkbenchCompany" value="Acme AI Technologies" placeholder="e.g. Acme Corp / Alex Mercer" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-base sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-sans" autocomplete="organization">
-        </div>
-
-        <!-- Work Email -->
-        <div class="md:col-span-4 space-y-1.5">
-          <label for="trialWorkbenchEmail" class="block text-xs font-semibold text-slate-300 font-mono">Corporate Work Email * (Token Dispatch)</label>
-          <input type="email" id="trialWorkbenchEmail" required placeholder="engineer@company.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-base sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-sans" inputmode="email" enterkeyhint="send" autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false">
-        </div>
-
-        <!-- Evaluation Vertical / Regulatory Profile -->
-        <div class="md:col-span-4 space-y-1.5">
-          <label for="trialWorkbenchProfile" class="block text-xs font-semibold text-slate-300 font-mono">Target Vertical Interest *</label>
-          <select id="trialWorkbenchProfile" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-base sm:text-xs text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-sans">
-            <option value="universal" selected>Universal PII / Sensitive Tokens (14-Day Eval Included)</option>
-            <option value="fintech">Financial Services / PCI-DSS v4 &amp; IBAN (Commercial Scope)</option>
-            <option value="healthcare">Healthcare / HIPAA Safe Harbor PHI (Commercial Scope)</option>
-            <option value="legal">Legal Workflows / FRE 502 &amp; Privilege (Commercial Scope)</option>
-            <option value="all">All Vertical Regulatory Profiles (Enterprise Scope)</option>
-          </select>
-        </div>
-
-        <!-- Integration Target Quick Select -->
-        <div class="md:col-span-8 flex flex-col justify-center space-y-1.5">
-          <div class="text-xs font-mono text-slate-400 font-semibold uppercase tracking-wider">Primary Integration Target</div>
-          <div class="flex flex-wrap items-center gap-2" id="trialTargetPills">
-            <button type="button" class="trial-target-pill px-3 py-1.5 rounded-lg border border-emerald-500 bg-emerald-500/20 text-emerald-300 text-xs font-mono font-bold transition-all cursor-pointer" data-target="mcp">
-              Cursor &amp; Claude MCP
-            </button>
-            <button type="button" class="trial-target-pill px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-400 hover:text-slate-200 text-xs font-mono font-medium transition-all cursor-pointer" data-target="node">
-              Node.js / TS SDK
-            </button>
-            <button type="button" class="trial-target-pill px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-400 hover:text-slate-200 text-xs font-mono font-medium transition-all cursor-pointer" data-target="python">
-              Python RAG Pipeline
-            </button>
-            <button type="button" class="trial-target-pill px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-400 hover:text-slate-200 text-xs font-mono font-medium transition-all cursor-pointer" data-target="docker">
-              Docker / K8s Enclave
-            </button>
-          </div>
-        </div>
-
-        <!-- Mint CTA Button -->
-        <div class="md:col-span-4 flex items-end">
-          <button type="button" id="btnMintWorkbench" class="btn-trust w-full py-2.5 px-4 text-xs font-bold shadow-lg flex items-center justify-center gap-2 cursor-pointer touch-target">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span id="btnMintWorkbenchText">Dispatch 14-Day Eval Key to Work Email &rarr;</span>
-          </button>
-        </div>
-
-        <!-- Statutory Privacy Disclosure (GDPR Art. 13 / Israel PPL Sec. 11) -->
-        <div class="md:col-span-12 pt-1 border-t border-slate-800/80 text-xs text-slate-400 leading-relaxed">
-          Statutory Notice (GDPR Art. 13 &amp; Israel Protection of Privacy Law Sec. 11): Providing a work email is voluntary, though required to dispatch an automated 14-day Universal PII evaluation token and technical onboarding notes. Controller: BrandMeWeb (Ilya Sibiryakov, <a href="mailto:security@ztds.ai" class="text-emerald-400 hover:underline">security@ztds.ai</a>). Transactional delivery via Resend; zero ad-network sharing. Access, correction, and deletion rights under Sec. 13&ndash;14 apply (<a href="/privacy/#statutory-form-notice" class="text-emerald-400 hover:underline">Privacy Declaration</a>).
-        </div>
-      </div>
-
-      <!-- Live Minting Status Message (Errors / Loading) -->
-      <div id="trialMintStatus" class="hidden text-xs font-mono p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-300"></div>
-
-      <!-- Generated License Results Container (Initially Hidden) -->
-      <div id="trialWorkbenchResults" class="hidden space-y-6 pt-2">
-        
-        <!-- Metadata Row -->
-        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
-            <div class="flex items-center gap-2">
-              <span id="workbenchStatusBadge" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                PASS: ED25519 CRYPTOGRAPHIC SIGNATURE (RFC 8032)
-              </span>
-              <span class="text-xs font-mono text-slate-400">Zero Socket Telemetry</span>
-            </div>
-            <div class="text-xs font-mono text-emerald-400 font-semibold" id="workbenchExpiresAt">
-              Valid for 14 days
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
-            <div class="p-2.5 rounded bg-black/50 border border-slate-800/80">
-              <span class="text-slate-500 block text-xs">LICENSE ID</span>
-              <span id="workbenchLicenseId" class="text-white font-bold">&mdash;</span>
-            </div>
-            <div class="p-2.5 rounded bg-black/50 border border-slate-800/80">
-              <span class="text-slate-500 block text-xs">ORGANIZATION</span>
-              <span id="workbenchCustomerName" class="text-emerald-400 font-bold truncate block">&mdash;</span>
-            </div>
-            <div class="p-2.5 rounded bg-black/50 border border-slate-800/80">
-              <span class="text-slate-500 block text-xs">MAX NODES</span>
-              <span id="workbenchMaxNodes" class="text-amber-400 font-bold">2 Microservice Nodes</span>
-            </div>
-            <div class="p-2.5 rounded bg-black/50 border border-slate-800/80">
-              <span class="text-slate-500 block text-xs">VERTICAL PROFILES</span>
-              <span id="workbenchProfileBadge" class="text-sky-400 font-bold truncate block">Universal PII</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Token Box -->
-        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-          <div class="flex items-center justify-between text-xs pb-1.5 border-b border-slate-800 font-mono">
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-              <span class="text-slate-300 font-semibold">Offline Asymmetric License Token (RFC 8032)</span>
-            </div>
-            <button type="button" id="btnCopyWorkbenchToken" class="text-emerald-400 hover:text-emerald-300 font-bold transition-colors cursor-pointer text-xs flex items-center gap-1">
-              <span>Copy Token</span>
-            </button>
-          </div>
-          <div id="workbenchTokenDisplay" class="font-mono text-xs text-emerald-300 bg-black/60 p-3 rounded-lg border border-slate-800/80 break-all select-all max-h-24 overflow-y-auto"></div>
-        </div>
-
-        <!-- Multiplatform Quickstart Snippets -->
-        <div class="rounded-xl border border-slate-800 bg-slate-950 overflow-hidden font-mono text-xs">
-          <div class="flex flex-wrap items-center justify-between px-4 py-2.5 bg-slate-900 border-b border-slate-800 gap-2">
-            <div class="tablist-scroll items-center gap-1.5 max-w-full" role="tablist" aria-label="Quickstart Target" data-tabpanel="workbenchSnippetPanel">
-              <button type="button" role="tab" aria-selected="true" id="tabSnippetMcp" class="snippet-tab-btn active whitespace-nowrap px-2.5 py-1 rounded text-xs bg-slate-800 text-emerald-400 font-bold transition-colors cursor-pointer" data-target="mcp">Cursor &amp; Claude MCP</button>
-              <button type="button" role="tab" aria-selected="false" id="tabSnippetNode" class="snippet-tab-btn whitespace-nowrap px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="node">Node.js / TS SDK</button>
-              <button type="button" role="tab" aria-selected="false" id="tabSnippetPython" class="snippet-tab-btn whitespace-nowrap px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="python">Python RAG</button>
-              <button type="button" role="tab" aria-selected="false" id="tabSnippetDocker" class="snippet-tab-btn whitespace-nowrap px-2.5 py-1 rounded text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" data-target="docker">Docker / K8s Env</button>
-            </div>
-            <button type="button" id="btnCopyWorkbenchSnippet" class="text-slate-300 hover:text-emerald-300 text-xs font-sans font-semibold transition-colors flex items-center gap-1 cursor-pointer">
-              <span>Copy Snippet</span>
-            </button>
-          </div>
-          <div id="workbenchSnippetPanel" role="tabpanel" aria-labelledby="tabSnippetMcp" class="p-4 overflow-x-auto leading-relaxed text-slate-200 bg-black/40">
-            <pre id="workbenchSnippetPre"><code id="workbenchSnippetCode">// Quickstart snippet will render here</code></pre>
-          </div>
-        </div>
-
-        <!-- Utility Action Buttons -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <button type="button" id="btnDownloadWorkbenchLicenseJson" class="btn-outline text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 font-semibold text-slate-300 border-slate-700 hover:bg-slate-800 hover:text-white cursor-pointer">
-            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-            <span>Download ztds-license.json</span>
-          </button>
-          <button type="button" id="btnVerifyWorkbenchInDecoder" class="btn-trust text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 font-semibold cursor-pointer">
-            <span>Verify in Local RAM Decoder &rarr;</span>
-          </button>
-        </div>
-
-        <!-- B2B Commercial Upgrade Transition Box (Conversion Flywheel) -->
-        <div class="p-5 rounded-xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border border-emerald-500/30 space-y-4">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
-            <div>
-              <div class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold">Commercial Conversion Flywheel</div>
-              <h3 id="ready-for-team-rollout-or-production-deployment" class="text-base font-bold text-white mt-0.5 scroll-mt-24">Ready for Team Rollout or Production Deployment?</h3>
-            </div>
-            <span class="text-xs text-slate-400">100% Offline Licensing &middot; Zero DPA Required</span>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-            
-            <!-- Tier 1: TEAMS -->
-            <div class="p-3.5 rounded-lg bg-slate-900/90 border border-slate-800 flex flex-col justify-between space-y-3">
-              <div>
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-mono font-bold text-slate-400 uppercase">ZTDS TEAMS</span>
-                  <span class="text-emerald-400 font-mono font-bold text-xs">Certified Tier</span>
-                </div>
-                <div class="text-xs font-semibold text-white mt-1">Multi-Seat &middot; 10 Nodes</div>
-                <p class="text-xs text-slate-400 mt-1 leading-normal">Ideal for engineering squads standardizing Cursor &amp; Claude MCP de-identification.</p>
-              </div>
-              <a href="https://privacyscrubber.com/pricing/?tier=TEAMS&utm_source=ztds.ai&utm_medium=trial_workbench" target="_blank" rel="noopener" class="btn-outline text-xs py-1.5 px-2.5 text-center text-emerald-400 border-emerald-500/40 hover:bg-emerald-950/40 font-semibold rounded">
-                View on PrivacyScrubber &rarr;
-              </a>
-            </div>
-
-            <!-- Tier 2: Developer Pro SDK -->
-            <div class="p-3.5 rounded-lg bg-emerald-950/20 border border-emerald-500/40 flex flex-col justify-between space-y-3">
-              <div>
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-mono font-bold text-emerald-300 uppercase">Developer Pro SDK</span>
-                  <span class="text-emerald-400 font-mono font-bold text-xs">Certified SDK</span>
-                </div>
-                <div class="text-xs font-semibold text-white mt-1">Unlimited Pipeline Nodes</div>
-                <p class="text-xs text-slate-400 mt-1 leading-normal">Full headless SDK for Node.js, Python, and RAG pipelines with offline validation.</p>
-              </div>
-              <a href="https://privacyscrubber.com/pricing/?tier=SDK&utm_source=ztds.ai&utm_medium=trial_workbench" target="_blank" rel="noopener" class="btn-trust text-xs py-1.5 px-2.5 text-center font-bold rounded">
-                View on PrivacyScrubber &rarr;
-              </a>
-            </div>
-
-            <!-- Tier 3: Enterprise Air-Gapped -->
-            <div class="p-3.5 rounded-lg bg-slate-900/90 border border-slate-800 flex flex-col justify-between space-y-3">
-              <div>
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-mono font-bold text-sky-400 uppercase">Enterprise</span>
-                  <span class="text-sky-300 font-mono font-bold text-xs">Air-Gapped</span>
-                </div>
-                <div class="text-xs font-semibold text-white mt-1">Air-Gapped &middot; Custom MSA</div>
-                <p class="text-xs text-slate-400 mt-1 leading-normal">All 30 regulatory profiles, dedicated SLA, custom legal rider, and corporate procurement.</p>
-              </div>
-              <a href="/ciso/#procurement" class="btn-outline text-xs py-1.5 px-2.5 text-center text-sky-300 border-sky-500/40 hover:bg-sky-950/40 font-semibold rounded">
-                Enterprise Scope &rarr;
-              </a>
-            </div>
-
-            <!-- Tier 4: BrandMeWeb Advisory Retainer -->
-            <div class="p-3.5 rounded-lg bg-slate-900/90 border border-slate-800 flex flex-col justify-between space-y-3">
-              <div>
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-mono font-bold text-purple-400 uppercase">Advisory SOW</span>
-                  <span class="text-purple-300 font-mono font-bold text-xs">Turn-Key SOW</span>
-                </div>
-                <div class="text-xs font-semibold text-white mt-1">BrandMeWeb Advisory</div>
-                <p class="text-xs text-slate-400 mt-1 leading-normal">Turn-key implementation, pipeline audit, CISO exemption packet, and ongoing GEO optimization.</p>
-              </div>
-              <a href="/agency/" class="btn-outline text-xs py-1.5 px-2.5 text-center text-purple-300 border-purple-500/40 hover:bg-purple-950/40 font-semibold rounded">
-                BrandMeWeb Retainer &rarr;
-              </a>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
 
     <!-- Commercial Licensing & Support Tiers -->
     <div class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24" id="licensing">
@@ -1820,7 +1367,7 @@ static_resources:
           <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Open Standard vs. Certified Implementations</div>
           <h2 id="conformance-levels-certified-distribution" class="text-xl font-bold text-slate-900 scroll-mt-24">Conformance Levels &amp; Certified Distribution</h2>
         </div>
-        <a href="/roi/" class="text-xs font-mono text-emerald-700 font-semibold hover:underline">Calculate Enterprise ROI &rarr;</a>
+        <a href="/roi/" class="inline-flex items-center min-h-[44px] sm:min-h-[32px] py-1.5 text-xs font-mono text-emerald-700 font-semibold hover:underline">Calculate Enterprise ROI &rarr;</a>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -2039,20 +1586,535 @@ const sanitized = await engine.sanitize(patientPrompt);</code></pre>
       </div>
     </div>
 
-    <!-- CI/CD GitHub Actions Invariant Pipeline Showcase -->
-    <div class="ztds-card bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24" id="cicd">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+    <!-- Reference Appendices Container -->
+    <div id="sdk-reference-appendices" class="space-y-4 scroll-mt-24">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-1">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-slate-500">Deep Engineering Reference</span>
+          <h2 id="reference-architecture-and-ci-cd" class="text-lg sm:text-xl font-bold text-slate-900 scroll-mt-24">Architecture, Execution Surfaces, IP &amp; CI/CD Reference</h2>
+        </div>
+        <button type="button" id="btnToggleSdkAppendices" aria-expanded="false" class="px-3 py-1.5 min-h-[44px] sm:min-h-[34px] touch-target rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-semibold text-slate-700 inline-flex items-center gap-1.5 transition-colors cursor-pointer self-start sm:self-auto">
+          <span>Expand All Reference</span>
+        </button>
+      </div>
+
+    <!-- In-Memory Data Plane Architectural Flow Diagram (Collapsible Appendix) -->
+    <details id="sdk-appendix-architecture" class="group ztds-card bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+      <summary class="cursor-pointer list-none flex flex-wrap items-center justify-between gap-3 p-4 sm:p-6 select-none min-h-[44px]">
+        <div>
+          <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Data Plane Primitive</div>
+          <h2 id="in-memory-execution-architecture" data-ztds-anchor-init="1" class="text-lg sm:text-xl font-bold text-slate-900 scroll-mt-24">In-Memory Execution Architecture</h2>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <span class="text-xs font-mono px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">
+            Invariant 1 &middot; 0.00 Bytes Egress
+          </span>
+          <span aria-hidden="true" class="text-xs font-mono text-slate-600 transition-transform group-open:rotate-180">&darr;</span>
+        </div>
+      </summary>
+      <div class="px-4 sm:px-8 pb-6 sm:pb-8 pt-4 border-t border-slate-100 space-y-6">
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-stretch text-xs">
+        
+        <!-- Step 1 -->
+        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="font-mono text-xs text-slate-400 font-bold uppercase">Step 01 &middot; Client Host</div>
+            <div class="font-bold text-slate-900 text-sm mt-1">Raw Ingestion in RAM</div>
+            <p class="text-slate-600 text-xs mt-1.5 leading-relaxed">Cleartext PII, PHI, API secrets, or proprietary code loaded into process volatile memory before dispatch.</p>
+          </div>
+          <div class="font-mono text-xs px-2 py-1 rounded bg-slate-200 text-slate-800 w-fit font-semibold">Client Volatile Memory</div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="p-5 rounded-xl bg-emerald-50/70 border border-emerald-200 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="font-mono text-xs text-emerald-800 font-bold uppercase">Step 02 &middot; Local Tokenizer</div>
+            <div class="font-bold text-emerald-950 text-sm mt-1">In-Memory Sanitization</div>
+            <p class="text-emerald-900 text-xs mt-1.5 leading-relaxed">Generates deterministic surrogates ([NAME_1], [IBAN_1]) in &lt;0.8ms. Maps cleartext keys in volatile client RAM.</p>
+          </div>
+          <div class="font-mono text-xs px-2 py-1 rounded bg-emerald-200 text-emerald-900 font-bold w-fit">&lt; 0.8ms &middot; Invariant 2</div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="font-mono text-xs text-slate-400 font-bold uppercase">Step 03 &middot; Egress Wire</div>
+            <div class="font-bold text-slate-900 text-sm mt-1">External AI Provider</div>
+            <p class="text-slate-600 text-xs mt-1.5 leading-relaxed">OpenAI, Claude, Gemini, or Pinecone processes sanitized context. Zero bytes cleartext cross the socket perimeter.</p>
+          </div>
+          <div class="font-mono text-xs px-2 py-1 rounded bg-rose-100 text-rose-800 font-bold w-fit">0 Bytes Egress Exposure</div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="p-5 rounded-xl bg-blue-50/70 border border-blue-200 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="font-mono text-xs text-blue-800 font-bold uppercase">Step 04 &middot; Client Host</div>
+            <div class="font-bold text-blue-950 text-sm mt-1">Local Lossless Reversal</div>
+            <p class="text-blue-900 text-xs mt-1.5 leading-relaxed">Surrogate tokens restored to cleartext locally in volatile memory. Mapping destroyed on process termination.</p>
+          </div>
+          <div class="font-mono text-xs px-2 py-1 rounded bg-blue-200 text-blue-900 font-bold w-fit">Zero Disk Persistence</div>
+        </div>
+
+      </div>
+
+      <!-- Deterministic Airplane Mode & Zero-Egress Terminal Audit -->
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300 space-y-2">
+        <div class="flex items-center justify-between text-xs pb-1 border-b border-slate-800">
+          <span class="text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            Independent Zero-Egress Audit Protocol (Airplane Mode Test)
+          </span>
+          <span class="text-slate-500 font-sans text-xs">RFC v1.0 Section 4</span>
+        </div>
+        <p class="text-slate-400 text-xs font-sans leading-relaxed">
+          To mathematically verify Invariant 1 (0.00 bytes socket egress), disconnect your host from Wi-Fi/Ethernet or run with kernel socket tracing. The ZTDS runtime executes completely with zero socket bind/connect syscalls:
+        </p>
+        <div class="bg-black/60 p-2.5 rounded-lg border border-slate-800 text-xs text-emerald-300 overflow-x-auto select-all">
+          AIRPLANE_MODE=1 strace -e trace=network node -e "const { ZTDSEngine } = require('@privacyscrubber/sdk'); const e = new ZTDSEngine(); console.log(e.sanitize('Patient John Doe SSN 000-12-3456'));"
+        </div>
+        <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 pt-1 font-sans">
+          <span>Syscall verification: <strong class="text-slate-200">0 network sockets opened</strong> &middot; Latency: <strong class="text-emerald-400">&lt; 0.8ms</strong></span>
+          <a href="/docs/ZTDS_CISO_DPA_Exemption_Memo.pdf" target="_blank" rel="noopener" class="inline-flex items-center min-h-[44px] sm:min-h-[32px] py-1.5 text-emerald-400 hover:underline font-semibold font-mono">Download CISO Verification Memo (PDF) &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Statutory Compliance & Safe Harbor Crosswalk -->
+      <div class="rounded-xl border border-slate-200 overflow-hidden">
+        <div class="bg-slate-100 px-4 py-2 border-b border-slate-200 flex items-center justify-between text-xs font-bold text-slate-800">
+          <span>Statutory Compliance &amp; Safe Harbor Crosswalk (GDPR Art. 32 &amp; Art. 28)</span>
+          <span class="text-xs font-mono text-emerald-700 font-semibold">Safe Harbor Certified</span>
+        </div>
+        <div class="overflow-x-auto" tabindex="0" role="region" aria-labelledby="sdk-table-caption-1">
+          <table class="min-w-full text-xs text-left text-slate-600">
+          <caption id="sdk-table-caption-1" class="ztds-sr-only">Developer SDK Regulatory Provision and ZTDS Invariant Mapping</caption>
+            <thead class="bg-slate-50 text-xs font-mono uppercase text-slate-500 border-b border-slate-200">
+              <tr>
+                <th scope="col" class="p-2.5">Regulation</th>
+                <th scope="col" class="p-2.5">Statutory Provision</th>
+                <th scope="col" class="p-2.5">ZTDS Invariant Mechanism</th>
+                <th scope="col" class="p-2.5">Legal &amp; GRC Impact</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 font-sans text-xs">
+              <tr>
+                <td class="p-2.5 font-bold text-slate-900">GDPR (EU)</td>
+                <td class="p-2.5 font-mono text-slate-700">Art. 32 &amp; Art. 28</td>
+                <td class="p-2.5">In-RAM surrogate tokenization before network transmission</td>
+                <td class="p-2.5 text-emerald-700 font-semibold">Eliminates processor role under Art. 28; establishes Art. 32 safe harbor</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-bold text-slate-900">HIPAA (US)</td>
+                <td class="p-2.5 font-mono text-slate-700">45 CFR &sect; 164.514(b)</td>
+                <td class="p-2.5">Deterministic masking of all 18 Safe Harbor PHI identifiers</td>
+                <td class="p-2.5 text-emerald-700 font-semibold">Supports HIPAA Safe Harbor de&#8209;identification analysis (subject to counsel review)</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-bold text-slate-900">EU AI Act</td>
+                <td class="p-2.5 font-mono text-slate-700">Art. 50 &amp; Art. 10(5)</td>
+                <td class="p-2.5">Eliminates raw PII exposure to foundation model training feeds</td>
+                <td class="p-2.5 text-emerald-700 font-semibold">Zero training memorization risk</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-bold text-slate-900">PCI-DSS v4.0</td>
+                <td class="p-2.5 font-mono text-slate-700">Req. 3.4 &amp; 3.5</td>
+                <td class="p-2.5">Client-side PAN/CVV cryptographic substitution</td>
+                <td class="p-2.5 text-emerald-700 font-semibold">LLM APIs desensitized from PCI audit boundary</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+    </details>
+
+    <!-- 6 Physical Execution Surfaces Matrix (Collapsible Appendix) -->
+    <details id="sdk-appendix-surfaces" class="group ztds-card bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden scroll-mt-24">
+      <summary class="cursor-pointer list-none flex flex-wrap items-center justify-between gap-3 p-4 sm:p-6 select-none min-h-[44px]">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-mono font-semibold text-blue-800 mb-1.5">
+            <span>PHYSICAL DEPLOYMENT TOPOLOGIES</span>
+          </div>
+          <h2 id="5-physical-execution-surfaces" data-ztds-anchor-init="1" class="text-lg sm:text-xl font-bold text-slate-900 scroll-mt-24">6 Physical Execution Surfaces</h2>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <span class="text-xs font-mono px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">
+            Zero Cloud Proxies
+          </span>
+          <span aria-hidden="true" class="text-xs font-mono text-slate-600 transition-transform group-open:rotate-180">&darr;</span>
+        </div>
+      </summary>
+      <div class="px-4 sm:px-8 pb-6 sm:pb-8 pt-4 border-t border-slate-100 space-y-6">
+        <span id="form-factors" class="scroll-mt-24 pointer-events-none block h-0"></span>
+        <p class="text-xs sm:text-sm text-slate-500">ZTDS does not mandate hosting models; it enforces an in-RAM execution perimeter across six physical runtime execution surfaces.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Surface 1: Web & Browser Client -->
+        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Surface 01</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-mono font-bold">&lt; 0.20 ms</span>
+            </div>
+            <h3 id="client-side-web-application" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">Client-Side Web Application</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Executes in-memory directly on the end-user device before data leaves the browser window. Zero cleartext hits web servers, reverse proxies, or external clouds.
+            </p>
+            <div class="space-y-2 text-xs border-t border-slate-200 pt-3 text-slate-700">
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Target:</span>
+                <span class="font-semibold text-slate-900">SPAs, SaaS Portals, CRM UI</span>
+              </div>
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Distribution:</span>
+                <span class="font-semibold text-slate-900">V8 / WebWorker / WASM</span>
+              </div>
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Perimeter:</span>
+                <span class="font-semibold text-emerald-700">Client Device RAM</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-slate-200 font-mono text-xs text-slate-500">
+            <code>privacyscrubber.com</code>
+          </div>
+        </div>
+
+        <!-- Surface 2: Browser DOM Interceptor Extension -->
+        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Surface 02</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-xs font-mono font-bold">&lt; 0.25 ms</span>
+            </div>
+            <h3 id="browser-dom-extension-mv3" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">Browser DOM Extension (MV3)</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Manifest V3 content scripts intercepting user prompts directly inside ChatGPT, Claude, and Gemini before network packet serialization.
+            </p>
+            <div class="space-y-2 text-xs border-t border-slate-200 pt-3 text-slate-700">
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Target:</span>
+                <span class="font-semibold text-slate-900">Chrome, Edge, Brave, Opera</span>
+              </div>
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Distribution:</span>
+                <span class="font-semibold text-slate-900">Chrome Web Store (MV3)</span>
+              </div>
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Perimeter:</span>
+                <span class="font-semibold text-emerald-700">Isolated DOM Context</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-slate-200 font-mono text-xs text-slate-500">
+            <code>privacyscrubber-extension</code>
+          </div>
+        </div>
+
+        <!-- Surface 3: Process-Isolated MCP Stdio Server -->
+        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Surface 03</span>
+              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-xs font-mono font-bold">&lt; 0.50 ms</span>
+            </div>
+            <h3 id="process-isolated-mcp-server" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">Process-Isolated MCP Server</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Model Context Protocol stdio daemon for AI IDEs and desktop agents. Strips code secrets, tokens, and DB credentials over local stdio JSON-RPC pipes.
+            </p>
+            <div class="space-y-2 text-xs border-t border-slate-200 pt-3 text-slate-700">
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Target:</span>
+                <span class="font-semibold text-slate-900">Cursor, Windsurf, Claude Desktop</span>
+              </div>
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Distribution:</span>
+                <span class="font-semibold text-slate-900">npx ztds-mcp / @privacyscrubber/mcp-server</span>
+              </div>
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Perimeter:</span>
+                <span class="font-semibold text-emerald-700">Stdio Process Sandbox</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-slate-200 flex items-center justify-between font-mono text-xs text-slate-500">
+            <code>JSON-RPC 2.0 stdio</code>
+            <a href="#mcp" class="text-blue-700 font-sans font-semibold hover:underline">Config &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Surface 4: Headless Runtime SDK & CLI -->
+        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Surface 04</span>
+              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-xs font-mono font-bold">&lt; 0.80 ms</span>
+            </div>
+            <h3 id="headless-runtime-sdk-cli" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">Headless Runtime SDK &amp; CLI</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Embedded privacy fiduciary for backend microservices, LangChain/LlamaIndex RAG pipelines, and automated pre-merge CI/CD audit gates.
+            </p>
+            <div class="space-y-2 text-xs border-t border-slate-200 pt-3 text-slate-700">
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Target:</span>
+                <span class="font-semibold text-slate-900">Node.js, Python, RAG Ingestion</span>
+              </div>
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Distribution:</span>
+                <span class="font-semibold text-slate-900">npm / npx ztds-audit</span>
+              </div>
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Perimeter:</span>
+                <span class="font-semibold text-emerald-700">Host Runtime RAM</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-slate-200 font-mono text-xs text-slate-500">
+            <code>npm install @privacyscrubber/sdk</code>
+          </div>
+        </div>
+
+        <!-- Surface 5: Air-Gapped Enclaves & Edge Proxy -->
+        <div class="p-6 rounded-xl bg-emerald-50/40 border border-emerald-300 flex flex-col justify-between shadow-xs">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-mono font-bold text-emerald-800 uppercase tracking-wider">Surface 05</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-200 text-emerald-900 text-xs font-mono font-bold">&lt; 0.05 ms</span>
+            </div>
+            <h3 id="air-gapped-enclaves-proxy" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">Air-Gapped Enclaves &amp; Proxy</h3>
+            <p class="text-xs text-slate-700 leading-relaxed mb-4">
+              Hardware-attested sovereign execution in AWS Nitro Enclaves, military SCIF networks, and Proxy-WASM filters (Envoy/Istio) with offline Ed25519 token licensing.
+            </p>
+            <div class="space-y-2 text-xs border-t border-emerald-200 pt-3 text-slate-700">
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Target:</span>
+                <span class="font-semibold text-slate-900">Defense, Banks, SCIF, Private VPC</span>
+              </div>
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Distribution:</span>
+                <span class="font-semibold text-slate-900">Nitro Enclaves / Proxy-WASM</span>
+              </div>
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Perimeter:</span>
+                <span class="font-semibold text-emerald-700">Hardware Enclave Boundary</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-emerald-200 font-mono text-xs text-emerald-800">
+            <code>ZTDS-LIC-v1 (Ed25519)</code>
+          </div>
+        </div>
+
+        <!-- Surface 6: CMS & Web Form Intake Guard -->
+        <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between hover:border-slate-300 transition-colors">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Surface 06</span>
+              <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 text-xs font-mono font-bold">&lt; 0.40 ms</span>
+            </div>
+            <h3 id="cms-web-form-intake-guard" class="text-base font-bold text-slate-900 mb-2 scroll-mt-24">CMS &amp; Web Form Guard</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Official WordPress.org DOM capture interceptor masking high-risk inputs in visitor RAM prior to POST, storing 100% Zero-PII MySQL records, and sealing 1-Tap <code class="font-mono">#ztds_seal</code> Lead Cards.
+            </p>
+            <div class="space-y-2 text-xs border-t border-slate-200 pt-3 text-slate-700">
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Target:</span>
+                <span class="font-semibold text-slate-900">WordPress, CF7, WPForms, Elementor</span>
+              </div>
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Distribution:</span>
+                <span class="font-semibold text-slate-900">WordPress.org Directory</span>
+              </div>
+              <div class="flex justify-between font-mono text-xs">
+                <span class="text-slate-500">Perimeter:</span>
+                <span class="font-semibold text-emerald-700">Browser RAM &amp; Zero-PII MySQL</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-slate-200 flex items-center justify-between font-mono text-xs text-slate-500">
+            <code>privacyscrubber-ztds-guard</code>
+            <a href="https://wordpress.org/plugins/privacyscrubber-ztds-guard/" target="_blank" rel="noopener" class="inline-flex items-center min-h-[44px] sm:min-h-[28px] py-1 sm:py-0 text-sky-700 font-sans font-semibold hover:underline">Plugin &nearr;</a>
+          </div>
+        </div>
+
+      </div>
+      </div>
+    </details>
+
+    <!-- Intellectual Property & Patent Protection Block (Collapsible Appendix) -->
+    <details id="sdk-appendix-ip" class="group rounded-2xl bg-gradient-to-br from-slate-900 via-slate-850 to-slate-950 text-white border border-slate-800 shadow-xl overflow-hidden scroll-mt-24">
+      <summary class="cursor-pointer list-none flex flex-wrap items-center justify-between gap-3 p-4 sm:p-6 select-none min-h-[44px]">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-xs font-mono text-emerald-300 uppercase tracking-wider mb-1.5">
+            <span>PATENT PENDING &middot; WIPO PRIORITY LOCKED</span>
+          </div>
+          <h2 id="intellectual-property-protection-commercial-licensing" data-ztds-anchor-init="1" class="text-lg sm:text-xl font-bold text-white tracking-tight scroll-mt-24">Intellectual Property Protection &amp; Commercial Licensing</h2>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 shrink-0">
+          <span class="px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 font-mono text-xs text-slate-200">
+            Patent: <strong class="text-emerald-400">Patents Pending</strong>
+          </span>
+          <span class="hidden sm:inline px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 font-mono text-xs text-slate-200">
+            Trademark: <strong class="text-emerald-400">ZTDS&trade;</strong>
+          </span>
+          <span aria-hidden="true" class="text-xs font-mono text-slate-300 transition-transform group-open:rotate-180">&darr;</span>
+        </div>
+      </summary>
+      <div class="px-4 sm:px-8 pb-6 sm:pb-8 pt-4 border-t border-slate-800 space-y-6">
+        <span id="intellectual-property" class="scroll-mt-24 pointer-events-none block h-0"></span>
+        <p class="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
+          The ZTDS standard maintains absolute separation between public specification openness and proprietary implementation technology.
+        </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-300">
+        
+        <!-- Column 1: Patent & Legal Monopoly -->
+        <div class="space-y-4 p-5 rounded-xl bg-black/40 border border-slate-800">
+          <div class="flex items-center gap-2 text-emerald-400 font-mono font-bold text-sm">
+            <span>01 &middot; Patent Monopoly &amp; International Priority</span>
+          </div>
+          <p class="leading-relaxed">
+            The deterministic, in-RAM zero-trust data sanitization mechanism, volatile session mapping, and cryptographic attestation topology are protected under <strong class="text-white">U.S. &amp; International Patents Pending</strong> (Paris Convention &amp; 35 U.S.C. § 119 Priority). The word mark <strong class="text-white">ZTDS&trade;</strong> is registered under ILPO Order #182655957 (Classes 9 &amp; 42).
+          </p>
+          <div class="p-3 bg-slate-900/90 rounded-lg border border-slate-800 font-mono text-xs text-slate-400 space-y-1">
+            <div><span class="text-slate-500">Open Specification:</span> Public domain &middot; Apache 2.0 / CC BY 4.0</div>
+            <div><span class="text-slate-500">Commercial Runtimes:</span> Proprietary licensed implementation</div>
+            <div><span class="text-slate-500">Canonical Pioneer:</span> PrivacyScrubber (Product #001)</div>
+          </div>
+        </div>
+
+        <!-- Column 2: Offline Zero-Telemetry Licensing & Continuous Rule Feeds -->
+        <div class="space-y-4 p-5 rounded-xl bg-black/40 border border-slate-800">
+          <div class="flex items-center gap-2 text-blue-400 font-mono font-bold text-sm">
+            <span>02 &middot; Air-Gapped Licensing &amp; Dynamic Rule Updates</span>
+          </div>
+          <p class="leading-relaxed">
+            Enterprise and TEAMS tiers operate on an entirely air-gapped cryptographic model: license validation utilizes local <strong class="text-white">Ed25519 digital signatures</strong> embedded directly into deployment tokens. Your instances never ping license activation servers, safeguarding air-gapped networks from phone-home telemetry.
+          </p>
+          <div class="p-3 bg-slate-900/90 rounded-lg border border-slate-800 font-mono text-xs text-slate-400 space-y-1">
+            <div><span class="text-slate-500">License Verification:</span> Offline Ed25519 &middot; Zero Network Calls</div>
+            <div><span class="text-slate-500">Compliance Feeds:</span> Continuous dynamic updates (30+ Industry Profiles)</div>
+            <div><span class="text-slate-500">Regulatory Coverage:</span> HIPAA Safe Harbor, PCI-DSS v4.0, GDPR Recital 26</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
+        <div class="text-slate-300">
+          <strong class="text-white">Need an Air-Gapped Enterprise Deployment License?</strong>
+          <span class="text-slate-400 block sm:inline sm:ml-1">Certified Developer SDK and TEAMS implementations (via PrivacyScrubber.com) include offline Ed25519 tokens with instant fulfillment.</span>
+        </div>
+        <div class="flex items-center gap-3 shrink-0">
+          <a href="#licensing" data-ztds-scroll-to="licensing" class="btn-trust min-h-[44px] sm:min-h-[36px] inline-flex items-center text-xs py-2 px-4 shadow-sm font-semibold">
+            View License Options &rarr;
+          </a>
+        </div>
+      </div>
+      </div>
+    </details>
+
+    <!-- AI Framework Compatibility Matrix Table (Collapsible Appendix) -->
+    <details id="sdk-appendix-compatibility" class="group ztds-card bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden scroll-mt-24">
+      <summary class="cursor-pointer list-none flex flex-wrap items-center justify-between gap-3 p-4 sm:p-6 select-none min-h-[44px]">
+        <div>
+          <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Ecosystem Coverage</div>
+          <h2 id="ai-framework-compatibility-matrix" data-ztds-anchor-init="1" class="text-lg sm:text-xl font-bold text-slate-900 scroll-mt-24">AI Framework Compatibility Matrix</h2>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <span class="text-xs font-mono text-slate-500">6 Supported Environments</span>
+          <span aria-hidden="true" class="text-xs font-mono text-slate-600 transition-transform group-open:rotate-180">&darr;</span>
+        </div>
+      </summary>
+      <div class="px-4 sm:px-8 pb-6 sm:pb-8 pt-4 border-t border-slate-100 space-y-6">
+        <span id="compatibility" class="scroll-mt-24 pointer-events-none block h-0"></span>
+
+      <div class="overflow-x-auto" tabindex="0" role="region" aria-labelledby="sdk-table-caption-2">
+        <table class="min-w-full text-xs text-left border border-slate-200 rounded-xl overflow-hidden">
+          <caption id="sdk-table-caption-2" class="ztds-sr-only">AI Agent and RAG Framework Compatibility and Latency Matrix</caption>
+          <thead class="bg-slate-100 text-slate-700 uppercase font-mono font-bold text-xs">
+            <tr>
+              <th scope="col" class="p-3 border-b">Framework / Tool</th>
+              <th scope="col" class="p-3 border-b">Integration Method</th>
+              <th scope="col" class="p-3 border-b">Latency Budget</th>
+              <th scope="col" class="p-3 border-b">Token Reversibility</th>
+              <th scope="col" class="p-3 border-b">Air-Gap Status</th>
+              <th scope="col" class="p-3 border-b">Audit Trail</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-slate-700 font-sans">
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">LangChain &amp; LangGraph</td>
+              <td class="p-3 font-mono text-xs">ZTDSCallbackHandler</td>
+              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 1.1 ms</td>
+              <td class="p-3 text-emerald-700 font-semibold">Lossless Reversible</td>
+              <td class="p-3 text-emerald-700 font-semibold">100% Offline</td>
+              <td class="p-3 font-mono text-xs">Session Hash</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">LlamaIndex (RAG Pipelines)</td>
+              <td class="p-3 font-mono text-xs">ZTDSTransformation</td>
+              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 0.9 ms</td>
+              <td class="p-3 text-emerald-700 font-semibold">Vector Immunized</td>
+              <td class="p-3 text-emerald-700 font-semibold">100% Offline</td>
+              <td class="p-3 font-mono text-xs">SHA-256 Checksum</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">Cursor &amp; Claude Code CLI</td>
+              <td class="p-3 font-mono text-xs">MCP Stdio Gateway</td>
+              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 1.5 ms</td>
+              <td class="p-3 text-emerald-700 font-semibold">Interactive In-IDE</td>
+              <td class="p-3 text-emerald-700 font-semibold">Local Stdio Only</td>
+              <td class="p-3 font-mono text-xs">Local Audit Log</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">Ollama &amp; Local vLLM</td>
+              <td class="p-3 font-mono text-xs">Reverse Proxy Loopback</td>
+              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 0.8 ms</td>
+              <td class="p-3 text-emerald-700 font-semibold">Streaming Reversal</td>
+              <td class="p-3 text-emerald-700 font-semibold">Fully Air-Gapped</td>
+              <td class="p-3 font-mono text-xs">Invariant Proof</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">Vercel AI SDK</td>
+              <td class="p-3 font-mono text-xs">Stream Transform Hook</td>
+              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 1.2 ms</td>
+              <td class="p-3 text-emerald-700 font-semibold">Bidirectional Stream</td>
+              <td class="p-3 text-emerald-700 font-semibold">Edge Runtime Safe</td>
+              <td class="p-3 font-mono text-xs">Zero-Telemetry</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">CrewAI &amp; AutoGen</td>
+              <td class="p-3 font-mono text-xs">Inter-Agent Role Filter</td>
+              <td class="p-3 font-mono text-emerald-700 font-bold">&lt; 1.0 ms</td>
+              <td class="p-3 text-emerald-700 font-semibold">Per-Agent Session</td>
+              <td class="p-3 text-emerald-700 font-semibold">Localhost Only</td>
+              <td class="p-3 font-mono text-xs">State Isolation</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </details>
+
+    <!-- CI/CD GitHub Actions Invariant Pipeline Showcase (Collapsible Appendix) -->
+    <details id="sdk-appendix-cicd" class="group ztds-card bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden scroll-mt-24">
+      <summary class="cursor-pointer list-none flex flex-wrap items-center justify-between gap-3 p-4 sm:p-6 select-none min-h-[44px]">
         <div>
           <div class="text-xs font-mono font-bold text-emerald-700 uppercase tracking-wider">Automated Pre-Merge Assurance</div>
-          <h2 id="continuous-compliance-in-ci-cd-github-workflows" class="text-xl font-bold text-slate-900 mt-0.5 scroll-mt-24">Continuous Compliance in CI/CD (.github/workflows)</h2>
-          <p class="text-xs text-slate-500 mt-1">Prevent regression by failing pull requests that transmit unmasked PII or introduce network egress prior to sanitization.</p>
+          <h2 id="continuous-compliance-in-ci-cd-github-workflows" data-ztds-anchor-init="1" class="text-lg sm:text-xl font-bold text-slate-900 mt-0.5 scroll-mt-24">Continuous Compliance in CI/CD (.github/workflows)</h2>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 shrink-0">
           <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-mono font-bold border border-emerald-200">
             GitOps Verified
           </span>
+          <span aria-hidden="true" class="text-xs font-mono text-slate-600 transition-transform group-open:rotate-180">&darr;</span>
         </div>
-      </div>
+      </summary>
+      <div class="px-4 sm:px-8 pb-6 sm:pb-8 pt-4 border-t border-slate-100 space-y-6">
+        <span id="cicd" class="scroll-mt-24 pointer-events-none block h-0"></span>
+        <p class="text-xs text-slate-500">Prevent regression by failing pull requests that transmit unmasked PII or introduce network egress prior to sanitization.</p>
 
       <div class="rounded-xl border border-slate-800 bg-slate-950 overflow-hidden font-mono text-xs">
         <div class="flex items-center justify-between px-4 py-2 bg-slate-900 border-b border-slate-800 text-slate-400 text-xs">
@@ -2108,7 +2170,10 @@ jobs:
           SOC 2 Evidence Controls &rarr;
         </a>
       </div>
+      </div>
+    </details>
     </div>
+    <!-- End Reference Appendices Container -->
 
     <!-- Benchmark & Testing Section -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -2125,7 +2190,7 @@ jobs:
           <span class="text-slate-400 text-xs">Free CLI</span>
         </div>
         <div>
-          <a href="/scanner/" class="text-xs font-semibold text-emerald-700 hover:underline">
+          <a href="/scanner/" class="inline-flex items-center min-h-[44px] sm:min-h-[32px] py-1.5 text-xs font-semibold text-emerald-700 hover:underline">
             View Perimeter Scanner Documentation &rarr;
           </a>
         </div>
@@ -2148,9 +2213,9 @@ jobs:
             <span>RAM Overhead</span>
             <strong class="text-slate-900">&lt; 4 MB</strong>
           </div>
-          <div class="flex justify-between">
+          <div class="flex flex-wrap items-center justify-between gap-2">
             <span>OSF Benchmark Archive</span>
-            <a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="text-blue-600 hover:underline">DOI: 10.17605/OSF.IO/5BYJF &rarr;</a>
+            <a href="https://osf.io/5byjf/" target="_blank" rel="noopener" class="inline-flex items-center min-h-[44px] sm:min-h-[32px] py-1.5 text-blue-600 hover:underline">DOI: 10.17605/OSF.IO/5BYJF &rarr;</a>
           </div>
         </div>
       </div>
@@ -2375,7 +2440,7 @@ jobs:
   </footer>
 
   <script src="/nav.js" defer></script>
-  <script src="/assets/js/pages/sdk.js" defer></script>
+  <script src="/assets/js/pages/sdk.js?v=20261122" defer></script>
 
   <!-- COMMERCIAL GATEWAY & INSTANT EVALUATION LICENSE MODAL -->
   <div id="checkoutModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/70 backdrop-blur-sm hidden" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle">
@@ -2490,26 +2555,37 @@ jobs:
         <!-- PANE 2: Instant 14-Day Evaluation Key -->
         <div id="paneCheckoutTrial" role="tabpanel" aria-labelledby="tabCheckoutTrial" class="space-y-4 hidden">
           <p class="text-xs text-slate-600 leading-relaxed">
-            Generate an authentic, cryptographically signed 14-day evaluation license token (<code class="font-mono text-emerald-700 bg-emerald-50 px-1 py-0.5 rounded">ZTDS-LIC-v1...</code>) immediately in local RAM. Zero credit card required.
+            Request a signed, offline&#8209;verifiable 14&#8209;day Ed25519 evaluation token (<code class="font-mono text-emerald-700 bg-emerald-50 px-1 py-0.5 rounded">ZTDS&#8209;LIC&#8209;v1...</code>) dispatched to your corporate inbox for local RAM verification. Zero credit card required.
           </p>
 
-          <div class="space-y-3">
-            <div>
-              <label for="trialCompany" class="block text-xs font-semibold text-slate-700 mb-1">Company / Developer Name *</label>
-              <input type="text" id="trialCompany" placeholder="e.g. Acme Dev Team" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" autocomplete="organization">
+          <form id="modalTrialForm" method="POST" class="space-y-4" novalidate>
+            <!-- H1/H6 Honeypot Decoys (A11y & Autofill Safe) -->
+            <div class="sr-only" aria-hidden="true">
+              <input type="text" id="modalTrialWebsiteConfirm" name="website_url_confirm" tabindex="-1" autocomplete="new-password" aria-hidden="true" value="">
+              <input type="text" id="modalTrialFaxExt" name="org_fax_ext" tabindex="-1" autocomplete="new-password" aria-hidden="true" value="">
+              <input type="checkbox" id="modalTrialBotCheck" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
             </div>
-            <div>
-              <label for="trialEmail" class="block text-xs font-semibold text-slate-700 mb-1">Corporate Work Email * (Token Dispatch)</label>
-              <input type="email" id="trialEmail" required placeholder="engineer@company.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" inputmode="email" enterkeyhint="send" autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false">
-            </div>
-            <p class="text-xs text-slate-500 leading-relaxed">
-              Statutory Notice (GDPR Art. 13 &amp; Israel PPL Sec. 11): Work email is required to dispatch your 14-day evaluation token via Resend. Controller: BrandMeWeb (<a href="mailto:security@ztds.ai" class="text-emerald-700 hover:underline">security@ztds.ai</a>). Sec. 13&ndash;14 access/deletion rights apply (<a href="/privacy/#statutory-form-notice" class="text-emerald-700 hover:underline">Privacy Declaration</a>).
-            </p>
-          </div>
 
-          <button type="button" id="btnMintTrialLicense" class="btn-navy w-full py-2.5 text-xs font-bold shadow-sm flex items-center justify-center gap-2 cursor-pointer">
-            <span>Mint 14-Day Evaluation Token &rarr;</span>
-          </button>
+            <div class="space-y-3">
+              <div>
+                <label for="trialCompany" class="block text-xs font-semibold text-slate-700 mb-1">Company / Developer Name *</label>
+                <input type="text" id="trialCompany" placeholder="e.g. Acme Dev Team" class="w-full min-h-[44px] px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" autocomplete="organization">
+              </div>
+              <div>
+                <label for="trialEmail" class="block text-xs font-semibold text-slate-700 mb-1">Corporate Work Email * (Token Dispatch)</label>
+                <input type="email" id="trialEmail" required placeholder="engineer@company.com" class="w-full min-h-[44px] px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" inputmode="email" enterkeyhint="send" autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false">
+              </div>
+              <p class="text-xs text-slate-500 leading-relaxed">
+                Statutory Notice (GDPR Art. 13 &amp; Israel PPL Sec. 11): Work email is required to dispatch your 14-day evaluation token via Resend. Controller: BrandMeWeb (<a href="mailto:security@ztds.ai" class="text-emerald-700 hover:underline">security@ztds.ai</a>). Sec. 13&ndash;14 access/deletion rights apply (<a href="/privacy/#statutory-form-notice" class="text-emerald-700 hover:underline">Privacy Declaration</a>).
+              </p>
+            </div>
+
+            <button type="submit" id="btnMintTrialLicense" class="btn-navy w-full min-h-[44px] touch-target py-2.5 text-xs font-bold shadow-sm flex items-center justify-center gap-2 cursor-pointer">
+              <span>Mint 14-Day Evaluation Token &rarr;</span>
+            </button>
+
+            <div id="modalTrialStatus" class="hidden text-xs font-mono p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-800" role="status" aria-live="polite"></div>
+          </form>
 
           <!-- Generated Token Container -->
           <div id="trialResultBox" class="hidden space-y-3 pt-2">

@@ -262,7 +262,7 @@ async function runTests() {
   console.log("[TEST 6] Auditing Zero-Emoji & BrandMeWeb single-word rule...");
 
   // Extract the #trial section
-  const trialSectionMatch = sdkHtml.match(/<div class="ztds-card[^>]+id="trial"[\s\S]*?<!-- Commercial Licensing/);
+  const trialSectionMatch = sdkHtml.match(/<div class="ztds-card[^>]+id="trial"[\s\S]*?<!-- End 14-Day Evaluation Workbench -->/);
   assert.ok(trialSectionMatch, "Could not isolate #trial section in sdk/index.html");
   const trialContent = trialSectionMatch[0];
 
@@ -327,6 +327,40 @@ async function runTests() {
   assert.strictEqual(clampedRes.data.maxNodes, 2, "Public HTTP mint must cap nodes to 2");
   assert.ok(!clampedRes.data.quickstart.docker.includes("agent-gateway"), "Docker snippet must not reference nonexistent agent-gateway image");
   console.log("  PASS: Public HTTP mint escalation guard and valid Docker snippet verified.");
+
+  // ========================================================
+  // Test 8: Funnel Lift, Honeypot Forms, Appendices & JS Safety
+  // ========================================================
+  console.log("[TEST 8] Verifying Sticky Nav, collapsible reference, honeypots, and sdk.js runtime safety...");
+  assert.ok(sdkHtml.includes('id="trialWorkbenchForm"') && sdkHtml.includes('id="modalTrialForm"'), "Must wrap trial controls in semantic <form> tags");
+  assert.ok(sdkHtml.includes('id="trialWbWebsiteConfirm"') && sdkHtml.includes('id="modalTrialWebsiteConfirm"'), "Both trial forms must include H1/H6 website_url_confirm honeypots");
+  assert.ok(sdkHtml.includes('name="website_url_confirm"') && sdkHtml.includes('name="org_fax_ext"') && sdkHtml.includes('name="botcheck"'), "Missing H1/H6 honeypot field names in sdk/index.html");
+  assert.ok(!sdkHtml.includes('value="Acme AI Technologies"'), "Must not prefill #trialWorkbenchCompany with synthetic Acme value");
+  assert.ok(sdkHtml.includes('aria-label="Page Sections"') && sdkHtml.includes('href="#sdk-reference-appendices"'), "Missing Sticky Section Nav in sdk/index.html");
+
+  const sdkAppendixIds = [
+    "sdk-appendix-architecture",
+    "sdk-appendix-surfaces",
+    "sdk-appendix-ip",
+    "sdk-appendix-compatibility",
+    "sdk-appendix-cicd"
+  ];
+  for (const id of sdkAppendixIds) {
+    assert.ok(sdkHtml.includes(`id="${id}"`), `Missing collapsible reference appendix id="${id}"`);
+  }
+  assert.ok(sdkHtml.includes('id="btnToggleSdkAppendices"'), "Missing #btnToggleSdkAppendices control");
+  assert.ok(sdkHtml.includes('/styles.css?v=20261122') && sdkHtml.includes('/assets/js/pages/sdk.js?v=20261122'), "Missing cache-busted ?v=20261122 assets");
+
+  const trialPos = sdkHtml.indexOf('id="trial"');
+  const connectorsPos = sdkHtml.indexOf('id="connectors"');
+  assert.ok(trialPos > 0 && connectorsPos > trialPos, "#trial workbench must sit ahead of #connectors in funnel order");
+
+  const sdkJs = fs.readFileSync(path.join(__dirname, "../assets/js/pages/sdk.js"), "utf8");
+  assert.ok(!sdkJs.includes("alert("), "sdk.js must not use blocking browser alert() dialogs");
+  assert.ok(!sdkJs.includes("innerHTML"), "Strict CSP forbids innerHTML in sdk.js");
+  assert.ok(sdkJs.includes("website_url_confirm") && sdkJs.includes("org_fax_ext") && sdkJs.includes("botcheck"), "sdk.js must transmit H1/H6 honeypot fields");
+  assert.ok(sdkJs.includes("window.ztdsCopy(copyVal, () =>"), "sdk.js must pass function callback to window.ztdsCopy");
+  console.log("  PASS: Funnel lift, collapsible reference, honeypots, cache-busters, and sdk.js safety verified.");
 
   console.log("\n[SUCCESS] All Trial Workbench verification tests passed with 100% compliance.");
 }
