@@ -74,9 +74,20 @@
       const pathDisplay = document.getElementById('cfgActivePath');
       const codeDisplay = document.getElementById('cfgGeneratedCode');
       const terminalHint = document.getElementById('cfgTerminalHint');
+      const enterpriseKeyNotice = document.getElementById('cfgEnterpriseKeyNotice');
       const btnCopyPath = document.getElementById('btnCopyConfigPath');
       const debugToggle = document.getElementById('cfgToggleDebug');
       const timeoutToggle = document.getElementById('cfgToggleTimeout');
+
+      function copyText(text, onDone) {
+        if (!text) return;
+        const done = typeof onDone === 'function' ? onDone : () => {};
+        if (typeof window.ztdsCopy === 'function') {
+          window.ztdsCopy(text, done, done);
+        } else if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done).catch(done);
+        }
+      }
 
       function updateConfig() {
         const pkg = currentEdition === 'open' ? 'ztds-mcp@latest' : '@privacyscrubber/mcp-server@latest';
@@ -140,6 +151,9 @@
         const currentOpen = (pathInfo.openCmd && pathInfo.openCmd[currentOS]) || `open ${currentPath}`;
 
         if (pathDisplay) pathDisplay.textContent = currentPath;
+        if (enterpriseKeyNotice) {
+          enterpriseKeyNotice.classList.toggle('hidden', currentEdition !== 'commercial');
+        }
         if (terminalHint) {
           if (currentClient === 'cli') {
             terminalHint.textContent = 'Run directly in terminal where claude CLI is authenticated';
@@ -158,19 +172,21 @@
         btn.addEventListener('click', () => {
           currentEdition = btn.getAttribute('data-edition');
           document.querySelectorAll('.edition-toggle-btn').forEach(b => {
+            b.setAttribute('aria-checked', 'false');
             b.classList.remove('active', 'bg-slate-900', 'text-white', 'shadow-sm');
-            b.classList.add('text-slate-600');
-            const sub = b.querySelector('.text-\\[10px\\]');
+            b.classList.add('text-slate-700');
+            const sub = b.querySelector('.edition-sub') || b.children[1];
             if (sub) {
-              sub.classList.remove('text-slate-300');
-              sub.classList.add('text-slate-500');
+              sub.classList.remove('text-slate-300', 'text-emerald-300', 'text-slate-500');
+              sub.classList.add('text-slate-600');
             }
           });
+          btn.setAttribute('aria-checked', 'true');
           btn.classList.add('active', 'bg-slate-900', 'text-white', 'shadow-sm');
-          btn.classList.remove('text-slate-600');
-          const activeSub = btn.querySelector('.text-\\[10px\\]');
+          btn.classList.remove('text-slate-700', 'text-slate-600');
+          const activeSub = btn.querySelector('.edition-sub') || btn.children[1];
           if (activeSub) {
-            activeSub.classList.remove('text-slate-500');
+            activeSub.classList.remove('text-slate-600', 'text-slate-500');
             activeSub.classList.add('text-slate-300');
           }
           updateConfig();
@@ -182,9 +198,11 @@
         btn.addEventListener('click', () => {
           currentOS = btn.getAttribute('data-os');
           document.querySelectorAll('.os-toggle-btn').forEach(b => {
+            b.setAttribute('aria-checked', 'false');
             b.classList.remove('active', 'bg-slate-900', 'text-white', 'shadow-sm');
             b.classList.add('text-slate-600');
           });
+          btn.setAttribute('aria-checked', 'true');
           btn.classList.add('active', 'bg-slate-900', 'text-white', 'shadow-sm');
           btn.classList.remove('text-slate-600');
           updateConfig();
@@ -229,13 +247,13 @@
         btnCopyPath.addEventListener('click', () => {
           const pathText = pathDisplay ? pathDisplay.textContent : '';
           if (pathText) {
-            navigator.clipboard.writeText(pathText).then(() => {
+            copyText(pathText, () => {
               const orig = btnCopyPath.textContent;
               btnCopyPath.textContent = 'Path Copied!';
               setTimeout(() => {
                 btnCopyPath.textContent = orig;
               }, 2000);
-            }).catch(() => {});
+            });
           }
         });
       }
@@ -246,13 +264,13 @@
           const targetId = btn.getAttribute('data-target');
           const codeEl = document.getElementById(targetId);
           if (codeEl) {
-            navigator.clipboard.writeText(codeEl.innerText || codeEl.textContent).then(() => {
+            copyText(codeEl.innerText || codeEl.textContent, () => {
               const orig = btn.textContent;
               btn.textContent = 'Copied!';
               setTimeout(() => {
                 btn.textContent = orig;
               }, 2000);
-            }).catch(() => {});
+            });
           }
         });
       });
@@ -813,12 +831,17 @@
           else if (activeOutTab === 'session' && sessionDisplay) textToCopy = sessionDisplay.textContent;
           else if (activeOutTab === 'masked' && maskedDisplay) textToCopy = maskedDisplay.innerText || maskedDisplay.textContent;
 
-          navigator.clipboard.writeText(textToCopy).then(() => {
+          const doneCopy = () => {
             if (copyBtnText) copyBtnText.textContent = 'Copied!';
             setTimeout(() => {
               if (copyBtnText) copyBtnText.textContent = 'Copy Output';
             }, 2000);
-          }).catch(() => {});
+          };
+          if (typeof window.ztdsCopy === 'function') {
+            window.ztdsCopy(textToCopy, doneCopy, doneCopy);
+          } else if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(textToCopy).then(doneCopy).catch(doneCopy);
+          }
         });
       }
 

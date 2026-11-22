@@ -81,11 +81,11 @@
       tabScan.setAttribute('aria-selected', isRam ? 'false' : 'true');
 
       tabRam.className = isRam
-        ? 'whitespace-nowrap px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white shadow-xs transition-colors cursor-pointer inline-flex items-center gap-1.5'
-        : 'whitespace-nowrap px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer inline-flex items-center gap-1.5';
+        ? 'flex-1 sm:flex-none justify-center whitespace-nowrap px-2.5 sm:px-3.5 py-2 sm:py-1.5 min-h-[44px] sm:min-h-[38px] rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white shadow-xs transition-colors cursor-pointer inline-flex items-center gap-1.5'
+        : 'flex-1 sm:flex-none justify-center whitespace-nowrap px-2.5 sm:px-3.5 py-2 sm:py-1.5 min-h-[44px] sm:min-h-[38px] rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer inline-flex items-center gap-1.5';
       tabScan.className = !isRam
-        ? 'whitespace-nowrap px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white shadow-xs transition-colors cursor-pointer inline-flex items-center gap-1.5'
-        : 'whitespace-nowrap px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer inline-flex items-center gap-1.5';
+        ? 'flex-1 sm:flex-none justify-center whitespace-nowrap px-2.5 sm:px-3.5 py-2 sm:py-1.5 min-h-[44px] sm:min-h-[38px] rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white shadow-xs transition-colors cursor-pointer inline-flex items-center gap-1.5'
+        : 'flex-1 sm:flex-none justify-center whitespace-nowrap px-2.5 sm:px-3.5 py-2 sm:py-1.5 min-h-[44px] sm:min-h-[38px] rounded-lg text-xs font-mono font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer inline-flex items-center gap-1.5';
 
       const ramDot = tabRam.querySelector('span');
       const scanDot = tabScan.querySelector('span');
@@ -521,7 +521,7 @@
         ]),
         el('a', {
           href: '/scanner/?domain=' + encodeURIComponent(currentDomain),
-          className: 'btn-trust text-xs py-1.5 px-3 whitespace-nowrap',
+          className: 'btn-trust text-xs py-1.5 px-3 whitespace-nowrap min-h-[44px] sm:min-h-[36px] inline-flex items-center justify-center',
           textContent: 'Full Perimeter Dossier \u2192'
         })
       ]);
@@ -569,13 +569,13 @@
       const cisoCitationEl = el('p', { className: 'text-xs text-slate-600 mt-1 leading-relaxed', textContent: ind.cisoCitation || 'Eliminates intermediary sanitization subprocessors under GDPR Art. 28 and establishes GDPR Art. 32 technical safe harbor.' });
       const applyLinkEl = el('a', {
         href: '/apply/?domain=' + encodeURIComponent(currentDomain) + '&profile=' + encodeURIComponent(activeProfileKey),
-        className: 'text-xs font-mono font-semibold text-emerald-700 hover:underline',
+        className: 'text-xs font-mono font-semibold text-emerald-700 hover:underline min-h-[44px] sm:min-h-[36px] inline-flex items-center',
         textContent: 'Apply for Conformance Seal \u2192'
       });
 
       const downloadMemoBtn = el('button', {
         type: 'button',
-        className: 'btn-trust text-xs py-2 px-3.5 font-semibold cursor-pointer',
+        className: 'btn-trust text-xs py-2 px-3.5 font-semibold cursor-pointer min-h-[44px] sm:min-h-[38px] inline-flex items-center justify-center',
         textContent: 'Download CISO Memo (.md)',
         onClick: () => {
           currentHeroMemoData = {
@@ -598,7 +598,7 @@
       });
       const copyCodeBtn = el('button', {
         type: 'button',
-        className: 'text-xs font-mono font-semibold text-emerald-400 hover:text-emerald-300 underline cursor-pointer',
+        className: 'px-2.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-mono font-semibold text-emerald-400 hover:text-emerald-300 whitespace-nowrap shrink-0 cursor-pointer',
         textContent: 'Copy Snippet'
       });
       copyWithFeedback(copyCodeBtn, () => codeSnippetEl.textContent || '', 'Copy Snippet', 'Copied!');
@@ -615,7 +615,7 @@
       const industrySelect = el('select', {
         id: 'heroIndustrySelect',
         'aria-label': 'Select target compliance sector',
-        className: 'bg-white text-slate-900 border border-slate-300 text-xs font-mono rounded-lg px-2.5 py-1.5 focus:border-emerald-600 focus:outline-none',
+        className: 'bg-white text-slate-900 border border-slate-300 text-xs font-mono rounded-lg px-2.5 py-2 focus:border-emerald-600 focus:outline-none w-full sm:w-auto max-w-full min-w-0 min-h-[44px] sm:min-h-[38px]',
         onChange: (eChange) => {
           const profKey = eChange.target.value;
           const targetProf = (ind.allProfiles || {})[profKey];
@@ -633,10 +633,10 @@
         }
       }, profileOptions);
 
-      const actionCard = el('div', { className: 'p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3' }, [
-        el('div', { className: 'flex flex-col sm:flex-row sm:items-center justify-between gap-2.5' }, [
-          el('div', { className: 'flex items-center gap-2 flex-wrap' }, [
-            el('label', { for: 'heroIndustrySelect', className: 'text-xs font-mono font-bold text-slate-700 uppercase', textContent: 'Sector:' }),
+      const actionCard = el('div', { className: 'p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3 overflow-hidden min-w-0' }, [
+        el('div', { className: 'flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 min-w-0' }, [
+          el('div', { className: 'flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 min-w-0 w-full sm:w-auto' }, [
+            el('label', { for: 'heroIndustrySelect', className: 'text-xs font-mono font-bold text-slate-700 uppercase shrink-0', textContent: 'Sector:' }),
             industrySelect
           ]),
           el('div', { className: 'flex items-center gap-3 flex-wrap' }, [
@@ -646,7 +646,7 @@
         ]),
         cisoCitationEl,
         el('div', { className: 'rounded-xl bg-slate-950 border border-slate-800 p-3' }, [
-          el('div', { className: 'flex items-center justify-between mb-2 text-xs font-mono text-slate-400' }, [
+          el('div', { className: 'flex items-center justify-between gap-2 mb-2 text-xs font-mono text-slate-400' }, [
             el('span', { textContent: 'Recommended In-RAM Enclave (' + (ev.recommendedVector || 'nextjs') + ')' }),
             copyCodeBtn
           ]),
@@ -657,7 +657,7 @@
 
       // Progressive Disclosure: Before vs After DAG Flow Comparison
       const dagNode = buildDagComparisonNode(ev.dagComparison, sinksCount, ind.statute || 'GDPR Art. 32');
-      const detailsDag = el('details', { className: 'group mt-3 rounded-xl border border-slate-200 bg-white overflow-hidden' }, [
+      const detailsDag = el('details', { id: 'heroDagComparison', className: 'group mt-3 rounded-xl border border-slate-200 bg-white overflow-hidden' }, [
         el('summary', { className: 'flex items-center justify-between p-3 cursor-pointer text-xs font-mono font-bold text-slate-700 hover:text-slate-900 select-none' }, [
           el('span', { textContent: 'Architectural Flow Comparison (Cloud Proxy vs. ZTDS In-RAM Enclave)' }),
           el('span', { className: 'text-slate-400 group-open:rotate-180 transition-transform', textContent: '\u2193' })
