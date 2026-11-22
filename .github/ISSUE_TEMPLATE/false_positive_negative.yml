@@ -1,0 +1,58 @@
+name: False Positive / False Negative Report
+description: Report a missed detection or over-redacted false positive in open ZTDS reference engines using strictly synthetic samples.
+title: "[Detection]: "
+labels: ["detection-quality", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **ZERO-PII SAFETY NOTICE:** Provide **strictly fabricated/synthetic** sample strings (for example `alice.test@example.invalid`). Real credentials or personal records will be deleted immediately.
+  - type: dropdown
+    id: detection_type
+    attributes:
+      label: Report Classification
+      options:
+        - False Positive (non-sensitive technical/English prose was masked)
+        - False Negative (baseline PII or secret was missed)
+        - Token Restoration / Round-Trip Mismatch
+    validations:
+      required: true
+  - type: dropdown
+    id: engine
+    attributes:
+      label: Reference Engine
+      options:
+        - ztds-mcp (npm v1.2.2)
+        - ztds (PyPI v1.1.3)
+        - ztds-audit CLI
+        - ztds.ai Homepage / MCP Simulator
+    validations:
+      required: true
+  - type: textarea
+    id: synthetic_input
+    attributes:
+      label: 100% Synthetic Sample Input
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected_output
+    attributes:
+      label: Expected Sanitized / Restored Output
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: actual_output
+    attributes:
+      label: Actual Observed Output
+      render: text
+    validations:
+      required: true
+  - type: checkboxes
+    id: zero_pii_confirm
+    attributes:
+      label: Zero-PII Confirmation
+      options:
+        - label: I confirm the sample above is 100% synthetic and contains zero real secrets, PII, or proprietary customer data.
+          required: true

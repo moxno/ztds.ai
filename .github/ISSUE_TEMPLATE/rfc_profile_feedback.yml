@@ -1,0 +1,35 @@
+name: RFC v1.0 / Framework / Profile Feedback
+description: Suggest an improvement to ZTDS RFC v1.0 invariants, regulatory framework mappings, documentation clarity, or vertical coverage.
+title: "[RFC / Feature]: "
+labels: ["enhancement", "rfc"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Help improve the open ZTDS RFC v1.0 standard, IDE integrations, or regulatory compliance mappings. Never include confidential company data.
+  - type: input
+    id: persona_role
+    attributes:
+      label: Your Role / Persona
+      placeholder: "e.g. CISO, AI Platform Engineer, DPO, Security Researcher"
+    validations:
+      required: true
+  - type: input
+    id: regulatory_standard
+    attributes:
+      label: Relevant Framework, Protocol, or Runtime (Optional)
+      placeholder: "e.g. OWASP LLM02, EU AI Act Art. 10, HIPAA Safe Harbor, Cursor MCP, LangGraph"
+  - type: textarea
+    id: enhancement_details
+    attributes:
+      label: Problem Statement & Proposed Enhancement
+      description: Describe what was unclear, missing, or friction-heavy on ztds.ai or in the open reference tools.
+    validations:
+      required: true
+  - type: checkboxes
+    id: zero_pii_confirm
+    attributes:
+      label: Zero-PII Confirmation
+      options:
+        - label: I confirm this feedback contains no real personal data or confidential trade secrets.
+          required: true

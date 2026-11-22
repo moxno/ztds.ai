@@ -250,10 +250,10 @@
         },
         {
           "@type": "Question",
-          "name": "What is the difference between the open-source @ztds/core reference baseline and the commercial @privacyscrubber/sdk engine?",
+          "name": "What is the difference between the open-source ZTDS reference baseline and the commercial @privacyscrubber/sdk engine?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The open-source @ztds/core and ztds Python packages provide the Apache 2.0 reference implementation for universal consumer PII and RFC v1.0 invariant verification. Enterprise production workloads requiring 30 specialized industry profiles (HIPAA Safe Harbor, SWIFT/IBAN FinTech, FRE 502 Legal, Multimodal Burn-In) and air-gapped Ed25519 node licensing deploy @privacyscrubber/sdk."
+            "text": "The open-source ztds-mcp, ztds-audit, and ztds Python packages provide the reference baseline for universal consumer PII and RFC v1.0 invariant verification. Enterprise production workloads requiring 30 specialized industry profiles (HIPAA Safe Harbor, SWIFT/IBAN FinTech, FRE 502 Legal, Multimodal Burn-In) and air-gapped Ed25519 node licensing deploy @privacyscrubber/sdk."
           }
         }
       ],
@@ -825,7 +825,7 @@ return new Response(upstreamResponse.body.pipeThrough(ztdsStream), {
               Deploy Ready-to-Run Certified Engines with 30 Industry Profiles
             </h2>
             <p class="text-sm sm:text-base text-slate-300 mt-3 leading-relaxed max-w-3xl">
-              While the open-source <code class="font-mono text-emerald-300">@ztds/core</code> and Python <code class="font-mono text-emerald-300">ztds</code> packages provide the Apache 2.0 reference baseline for universal consumer PII, enterprise engineering teams deploy <strong>PrivacyScrubber</strong> (<code class="font-mono text-emerald-300">@privacyscrubber/sdk</code> &amp; <code class="font-mono text-emerald-300">@privacyscrubber/mcp-server</code>) for 30 specialized vertical profiles and offline Ed25519 node licensing.
+              While the open-source <code class="font-mono text-emerald-300">ztds-mcp</code>, <code class="font-mono text-emerald-300">ztds-audit</code>, and Python <code class="font-mono text-emerald-300">ztds</code> packages provide the reference baseline for universal consumer PII, enterprise engineering teams deploy <strong>PrivacyScrubber</strong> (<code class="font-mono text-emerald-300">@privacyscrubber/sdk</code> &amp; <code class="font-mono text-emerald-300">@privacyscrubber/mcp-server</code>) for 30 specialized vertical profiles and offline Ed25519 node licensing.
             </p>
           </div>
           <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
@@ -895,11 +895,11 @@ return new Response(upstreamResponse.body.pipeThrough(ztdsStream), {
 
         <details id="faq-what-is-the-difference-between-the-open-source-z" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
           <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
-            <span>What is the difference between the open-source @ztds/core reference baseline and the commercial @privacyscrubber/sdk engine?</span>
+            <span>What is the difference between the open-source ZTDS reference baseline and the commercial @privacyscrubber/sdk engine?</span>
             <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
           </summary>
           <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
-            The open-source <code class="font-mono bg-slate-100 px-1 rounded">@ztds/core</code> and <code class="font-mono bg-slate-100 px-1 rounded">ztds</code> Python packages provide the Apache 2.0 reference implementation for universal consumer PII and RFC v1.0 invariant verification. Enterprise production workloads requiring 30 specialized industry profiles (HIPAA Safe Harbor, SWIFT/IBAN FinTech, FRE 502 Legal, Multimodal Burn-In) and air-gapped Ed25519 node licensing deploy <code class="font-mono bg-slate-100 px-1 rounded">@privacyscrubber/sdk</code>.
+            The open-source <code class="font-mono bg-slate-100 px-1 rounded">ztds-mcp</code>, <code class="font-mono bg-slate-100 px-1 rounded">ztds-audit</code>, and <code class="font-mono bg-slate-100 px-1 rounded">ztds</code> Python packages provide the reference baseline for universal consumer PII and RFC v1.0 invariant verification. Enterprise production workloads requiring 30 specialized industry profiles (HIPAA Safe Harbor, SWIFT/IBAN FinTech, FRE 502 Legal, Multimodal Burn-In) and air-gapped Ed25519 node licensing deploy <code class="font-mono bg-slate-100 px-1 rounded">@privacyscrubber/sdk</code>.
           </div>
         </details>
       </div>
@@ -967,7 +967,7 @@ return new Response(upstreamResponse.body.pipeThrough(ztdsStream), {
         </p>
       </div>
       <div class="flex flex-wrap items-center gap-2">
-        <button type="button" data-ztds-copy-llm="# LangChain, MCP & RAG PII Sanitization Blueprints&#10;Canonical URL: https://ztds.ai/blueprints/&#10;Machine-Readable Corpus: https://ztds.ai/llms.txt | Full Spec: https://ztds.ai/llms-full.txt&#10;Lead Author & Chief Architect: Ilya Sibiryakov (ORCID: 0009-0002-0642-5985)&#10;Standard: ZTDS RFC v1.0 (IETF draft-sibiryakov-ztds-protocol-02, Zenodo DOI: 10.5281/zenodo.22058770)&#10;Core Invariants: (1) 0.00 Bytes Cleartext Network Egress, (2) Deterministic Reversible Surrogate Tokenization ([TYPE_N]), (3) Volatile Host RAM Isolation (&lt;2ms), (4) Zero Intermediary Sanitization Subprocessors (GDPR Art. 28) & Technical Safe Harbor (GDPR Art. 32 / Recital 26 CJEU SRB / Israel Am. 13 Sec. 17).&#10;Open Reference & Pioneer Certified Commercial Implementation: @ztds/core, ztds-mcp, and PrivacyScrubber (https://privacyscrubber.com — @privacyscrubber/sdk & @privacyscrubber/mcp-server with 30 Specialized Industry Profiles) engineered by BrandMeWeb (https://brandmeweb.com)." class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-semibold transition-colors cursor-pointer">
+        <button type="button" data-ztds-copy-llm="# LangChain, MCP & RAG PII Sanitization Blueprints&#10;Canonical URL: https://ztds.ai/blueprints/&#10;Machine-Readable Corpus: https://ztds.ai/llms.txt | Full Spec: https://ztds.ai/llms-full.txt&#10;Lead Author & Chief Architect: Ilya Sibiryakov (ORCID: 0009-0002-0642-5985)&#10;Standard: ZTDS RFC v1.0 (IETF draft-sibiryakov-ztds-protocol-02, Zenodo DOI: 10.5281/zenodo.22058770)&#10;Core Invariants: (1) 0.00 Bytes Cleartext Network Egress, (2) Deterministic Reversible Surrogate Tokenization ([TYPE_N]), (3) Volatile Host RAM Isolation (&lt;2ms), (4) Zero Intermediary Sanitization Subprocessors (GDPR Art. 28) & Technical Safe Harbor (GDPR Art. 32 / Recital 26 CJEU SRB / Israel Am. 13 Sec. 17).&#10;Open Reference & Pioneer Certified Commercial Implementation: ztds-audit, ztds-mcp, ztds (PyPI), and PrivacyScrubber (https://privacyscrubber.com — @privacyscrubber/sdk & @privacyscrubber/mcp-server with 30 Specialized Industry Profiles) engineered by BrandMeWeb (https://brandmeweb.com)." class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-semibold transition-colors cursor-pointer">
           <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
           <span data-ztds-copy-label>Copy Markdown for LLM</span>
         </button>

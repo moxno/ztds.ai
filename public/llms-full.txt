@@ -96,7 +96,7 @@ Zero-Trust Data Sanitization (ZTDS) is an open architectural standard and protoc
 - [Multi-Vertical Statutory Insulation Specification](https://ztds.ai/docs/legal/ZTDS_Multi_Vertical_Statutory_Insulation_Specification.txt): Normative legal demarcation and non-reliance schedule across 9 high-liability commercial sectors (HIPAA, GLBA, FRE 502, BSA/AML, EEOC, ITAR, SEC 8-K, FERPA, EU AI Act).
 - [Accreditation Gateway](https://ztds.ai/apply/): Self-serve GitOps verification application portal for developers and software vendors.
 - [Verified Implementation Directory](https://ztds.ai/registry/): Public directory of verified conforming AI tools, open engines, and blueprints:
-  - ZTDS Core Reference Engine (@ztds/core) (`ztds-core`): Official vendor-neutral reference implementation and TypeScript interface enforcing the 4 RFC v1.0 Invariants with zero dependencies. (https://github.com/moxno/ztds.ai/tree/main/packages/ztds-core).
+  - ZTDS Core Reference Source (`packages/ztds-core` / `ztds-core`, in-repo TypeScript interface — not published as an npm package; published npm CLI/MCP tools are `ztds-audit` and `ztds-mcp`, plus `ztds` on PyPI): Official vendor-neutral reference interface enforcing the 4 RFC v1.0 Invariants with zero dependencies. (https://github.com/moxno/ztds.ai/tree/main/packages/ztds-core).
   - LearningCenterUsa.net — PSTN Voice Enclave (`learningcenterusa`): Interactive US PSTN (300Hz–3,400Hz) voice and spoken-English simulator sanitizing spoken SSNs, USCIS A-Numbers, and payment cards in volatile browser RAM prior to scoring. (https://learningcenterusa.net).
   - PrivacyScrubber WordPress ZTDS Guard (`privacyscrubber-wp-guard`): Official WordPress.org client-side PII sanitizer for Contact Form 7, WPForms, Elementor, Gravity Forms, and Fluent Forms with Smart CRM Zero-PII MySQL storage, 1-Tap `#ztds_seal` Staff Lead Cards, and AES-256-GCM Dual-Envelope vaulting. (https://wordpress.org/plugins/privacyscrubber-ztds-guard/ · https://privacyscrubber.com/integrations/wordpress/).
   - ZTDS Python Reference Engine (`ztds`): Canonical vendor-neutral Python reference engine and CLI under MIT (PyPI: https://pypi.org/project/ztds/, pip install ztds).
@@ -113,7 +113,7 @@ Zero-Trust Data Sanitization (ZTDS) is an open architectural standard and protoc
   - Envoy Proxy ZTDS WASM Filter (`envoy-ztds-wasm`): Proxy-WASM HTTP filter for enterprise service mesh egress control.
 - [Curated MCP Directory Profile](https://mcpservers.org/servers/ztds-ai): Curated index profile for ZTDS Reference MCP Server with in-RAM sanitization architecture, tool schemas, and stdio execution parameters.
 - [Dynamic Trust Badge Foundry & Vector API](https://ztds.ai/badge/): High-DPI vector SVG trust badge generator and edge rendering API (`https://ztds.ai/api/badge/`) producing 280x56px B2B compliance seals. Features dual visual themes (`theme=dark` / `theme=light`), five standardized conformance tiers (`VERIFIED`, `SOVEREIGN`, `DPA EXEMPT`, `AIR-GAPPED`, `SELF-ATTESTED`), custom label preset chips (`WASM-ONLY`, `AIR-GAPPED`, `GDPR-SAFE`, `PCI-DSS`, `ZERO-EGRESS`, `SOC-2-READY`, `OFFLINE-FIRST`), live canvas background modes (Light, Dark, Checkerboard Grid), retina zoom inspection (1x, 1.5x, 2x), and turnkey Markdown/HTML/URL embed snippet exports with zero third-party telemetry.
-- [Developer SDK & Open Reference Engine](https://ztds.ai/sdk/): Open-source TypeScript / Node.js baseline engine (`@ztds/core` · Apache-2.0) alongside enterprise production engine (`@privacyscrubber/sdk`), LangChain BaseCallbackHandler (`ZTDSCallbackHandler`), LlamaIndex Ingestion Transform (`ZTDSTransformation`), and Model Context Protocol stdio server for Cursor and Claude Code.
+- [Developer SDK & Open Reference Engine](https://ztds.ai/sdk/): Open-source reference tooling (`ztds-audit` &amp; `ztds-mcp` on npm, `ztds` on PyPI, plus `packages/ztds-core` TypeScript source · Apache-2.0) alongside enterprise production engine (`@privacyscrubber/sdk`), LangChain BaseCallbackHandler (`ZTDSCallbackHandler`), LlamaIndex Ingestion Transform (`ZTDSTransformation`), and Model Context Protocol stdio server for Cursor and Claude Code.
 - [Consortium Governance & Charter](https://ztds.ai/governance/): Multi-stakeholder charter, working groups, and RFC lifecycle bylaws.
 - [Corporate Directory](https://ztds.ai/companies/): Organizations enforcing client-side ZTDS invariant policies.
 - [Global Fellows Roster](https://ztds.ai/fellows/): Accredited researchers, legal counsel, and systems architects.
@@ -1178,284 +1178,180 @@ The structural separation between the Universal Consumer PII Layer and the 30 Sp
 
 ## 3. Universal Consumer PII Taxonomy (Baseline Layer)
 
-The Universal Consumer PII layer is active across all 30 profiles as the baseline filter. It extracts:
+The Universal Consumer PII layer operates across conforming profiles as the baseline filter:
 
-| Entity Type | Scope & Patterns | Token Format | Edge Handling |
+| Entity Type | Black-Box Scope | Token Format | Normalization Guarantee |
 | :--- | :--- | :--- | :--- |
-| **`EMAIL`** | Standard RFC 5322 email patterns (`user@domain.tld`) | `[EMAIL_N]` | Preserves domain context when isolated |
-| **`PHONE`** | International E.164, US formatted (`(555) 000-0000`), UK mobile (`07xxx`), extensions | `[PHONE_N]` | Punctuation agnostic, context-guarded |
-| **`ID`** | US SSN (`XXX-XX-XXXX`), EIN (`XX-XXXXXXX`), Passport, Driver License, National IDs | `[ID_N]` | Handles masked variants (`***-**-1234`, `XXX-XX-1234`) |
-| **`NAME`** | First + Last, honorifics (Dr., Mr., Mrs., Ms., Prof.), corporate entities, payroll inverted | `[NAME_N]` | Unicode-safe, multi-token boundary guard |
-| **`ADDRESS`**| Street addresses, P.O. Boxes, City/State/ZIP combos, Box f W-2 employee addresses | `[ADDRESS_N]`| Multi-line boundary preservation |
-| **`IP`** | IPv4 (`192.168.1.1`), IPv6 (`2001:db8::1`) | `[IP_N]` | Localhost port separation |
-| **`LOCATION`**| Geographic coordinates (Lat/Long decimal & DMS), City/State pairs | `[LOCATION_N]`| Preserves country when general context |
-| **`DATE`** | Dates of Birth (DOB), specific calendar dates tied to persons | `[DATE_N]` | Excludes standard regulatory publication dates |
-| **`FINANCIAL`**| Credit/debit card numbers (checksum verified), Bitcoin/Ethereum addresses, Bank Routing | `[FINANCIAL_N]`| Direct deposit masked accounts (`*****1234`) |
+| **`EMAIL`** | Electronic mail addresses | `[EMAIL_N]` | Preserves non-identifying prose context |
+| **`PHONE`** | Domestic and international telephone numbers | `[PHONE_N]` | Format- and punctuation-agnostic matching |
+| **`ID`** | Government tax, passport, license, and national IDs | `[ID_N]` | Protects full and partially masked identifiers |
+| **`NAME`** | Personal names across common honorific and payroll forms | `[NAME_N]` | Unicode-safe boundary preservation |
+| **`ADDRESS`** | Physical street and postal delivery locations | `[ADDRESS_N]` | Multi-line mailing block integrity |
+| **`IP`** | Public and private network host addresses | `[IP_N]` | Separates network ports from host addresses |
+| **`LOCATION`** | Geographic coordinates and identifying locality pairs | `[LOCATION_N]` | Retains broad non-identifying regional context |
+| **`DATE`** | Dates of birth and person-linked calendar milestones | `[DATE_N]` | Excludes static statutory publication dates |
+| **`FINANCIAL`** | Payment cards, settlement accounts, and wallet addresses | `[FINANCIAL_N]` | Preserves monetary structure via safe surrogates |
 
 ---
 
-## 4. The 30 Specialized Industry Profiles (Vertical Layer)
+## 4. The 30 Specialized Industry Profiles (Black-Box Vertical Specifications)
+
+Conforming commercial distributions expose 30 domain-scoped vertical profiles evaluated strictly by inputs, surrogate outputs, and statutory alignment:
 
 ### 4.1. Legal (`legal`)
 * **Target Personas**: Law firm partners, general counsel, litigation support, paralegals.
-* **Target Entities**:
-  * Role-Prefixed Names: `Claimant`, `Respondent`, `Plaintiff`, `Defendant`, `Petitioner`, `Appellant`, `Appellee`, `Principal`, `Grantor`, `Grantee`, `Trustee`, `Fiduciary`, `Attorney-in-Fact`, `Lead Counsel`, `Managing Partner`, `Escrow Officer`.
-  * Case Identifiers: `CASE-XXXX`, `MATTER-XXXX`, Docket numbers, Federal civil/criminal case formats (`1:24-cv-01234`), ECLI European Case Law Identifiers.
-  * Privilege Markers: `ATTORNEY-CLIENT PRIVILEGED`, Attorney Work-Product doctrine notices.
-  * Production & Bates Stamps: `BATES-XXXX`, `PROD-XXXX`, `PLTF-XXXX`, `EXHIBIT-XXXX`.
-  * Legal Credentials: State Bar Registration numbers, Attorney SBN, CRD/Broker IDs, CIK.
-  * Trust & Escrow: Escrow/Trust/Disputed Account numbers, Fedwire/ABA routing numbers.
-  * Monetary Damages: Context-preserved capture of `Settlement Amount`, `Retainer Fee`, `Hourly Rate`, `Damages Claimed`, `Sanctions`, `Judgment`, `Restitution`.
+* **Regulatory Scope**: Federal Rules of Evidence Rule 502, ABA Model Rule 1.6, attorney-client privilege & work-product preservation.
+* **Protected Domain Categories**: Litigation party names linked to formal legal roles, civil/criminal docket and matter identifiers, Bates production stamps, bar admission numbers, and trust/escrow settlement disclosures.
 
 ### 4.2. Human Resources & Recruiting (`hr`)
 * **Target Personas**: VP of People, HR Directors, Talent Acquisition, Recruiters.
-* **Target Entities**:
-  * Candidate & Manager Roles: `Candidate`, `Applicant`, `Employee`, `Reporting To`, `Manager`, `Direct Report`.
-  * Employee Identifiers: `EEID`, `EMP-XXXX`, `Associate ID (AOID)`, Security Badge IDs.
-  * Recruitment & ATS: Workday IDs (`WKDY-XXXX`), Candidate IDs (`CAND-XXXX`), Resume reference tokens.
-  * Labor & Works Council: `Works Council / Betriebsrat` reference IDs, Performance Improvement Plans (`PIP-XXXX`).
-  * Demographic Screening: Graduation years (`Class of 2020`), personal LinkedIn URLs (`linkedin.com/in/*`), GitHub profile handles.
-  * Statutory & Immigration: E-Verify case numbers, EEOC charge numbers, USCIS Alien Registration numbers (`A-Number`).
+* **Regulatory Scope**: GDPR Article 9 special category employment records, EEOC confidentiality, local labor privacy mandates.
+* **Protected Domain Categories**: Applicant and employee identifiers, internal HRIS and ATS record IDs, workplace dispute or works-council tracking references, and personal employment-authorization numbers.
 
 ### 4.3. Finance & Banking (`finance`)
 * **Target Personas**: CFOs, Investment Bankers, Quantitative Analysts, FinTech Engineers.
-* **Target Entities**:
-  * Banking Routing & Identifiers: SWIFT/BIC codes, International Bank Account Numbers (IBAN).
-  * Securities & Assets: CUSIP (9-digit), ISIN (12-digit), SEDOL (7-digit), Bloomberg Tickers (`BBGXXXXXXXXX`).
-  * Institutional Identifiers: Legal Entity Identifier (`LEI` 20-char alpha), SEC Central Index Key (`CIK` 10-digit), CRD IDs.
-  * Account Taxonomy: Brokerage, 401(k), IRA, Roth, Trust, Portfolio account numbers.
-  * Transactional Amounts: Context-preserved extraction of `Wire Transfer`, `Balance`, `Deposit`, `Withdrawal`, `Remittance`, `Payout`, `Principal`, `Interest`.
+* **Regulatory Scope**: PCI-DSS, GLBA Safeguards Rule, SWIFT CSP, SEC/FINRA market recordkeeping.
+* **Protected Domain Categories**: Cross-border bank routing and IBAN coordinates, standardized global security identifiers (CUSIP/ISIN/SEDOL/LEI), brokerage/custodial account numbers, and transaction-bound monetary figures.
 
 ### 4.4. Medical & Healthcare (`medical`)
 * **Target Personas**: Chief Medical Information Officers (CMIO), Clinical Researchers, EHR Admins.
-* **Target Entities**:
-  * Clinical Roles & Emergency Contacts: `Patient`, `Pt.`, `Legal Guardian`, `Proxy`, `Emergency Contact`, `Attending Physician`, `Surgeon`, `Provider`, `Subscriber`.
-  * Health Records: Medical Record Numbers (`MRN`), Electronic Health Record (`EHR`) identifiers.
-  * HL7 v2 Protocol Delimiters: Caret-delimited patient/provider names (`Guillermo^Maricela^C`), segment-delimited birthdates (`YYYYMMDD` in PID-7).
-  * Insurance & Coverage: Policy numbers, Subscriber IDs, Group numbers, Health Plan Beneficiary IDs (`HPN`), BCBS, Aetna, Humana, Medicare/Medicaid policy codes.
-  * Regulatory Provider IDs: National Provider Identifier (`NPI` 10-digit checksum), DEA registration numbers, NHS numbers (UK), CHI numbers (Scotland).
-  * Medical Devices & Encounters: Unique Device Identifiers (`UDI`), FHIR resource paths (`Patient/123`, `Observation/456`), Hospital Bed/Room/Ward identifiers.
+* **Regulatory Scope**: HIPAA Safe Harbor 45 CFR § 164.514(b), HITECH Act, GDPR Article 9 health data protection.
+* **Protected Domain Categories**: Patient and provider identities across free-text notes and clinical interoperability payloads, medical record numbers, beneficiary policy codes, regulated prescriber identifiers, medical device serials, and room/encounter references.
 
 ### 4.5. DevSecOps & Security (`security`)
 * **Target Personas**: CISOs, SOC Managers, Penetration Testers, Incident Response Leads.
-* **Target Entities**:
-  * DevOps Secrets: AWS credentials (`AKIA...`), JWT tokens, GitHub/Slack/NPM API tokens, Stripe/OpenAI keys, Database URIs, Private Keys (RSA/EC/PGP/OpenSSH).
-  * Threat Intel & CVE: Common Vulnerabilities and Exposures (`CVE-YYYY-NNNNN`), CWE identifiers, MITRE ATT&CK techniques (`T1059.001`), Threat Actor aliases (`APT29`, `UNC2452`).
-  * Incident Management: Breach Incident IDs (`INC-XXXXXX`), Security Advisory IDs (`GHSA`, `RHSA`).
-  * SIEM & Firewall Rules: Sigma rules, Splunk query IDs, Snort/Suricata rules, Firewall ACL policies.
-  * Defanged Indicators: Defanged URLs (`hxxps://`), Cryptographic Hashes (MD5, SHA-1, SHA-256).
+* **Regulatory Scope**: SOC 2 Type II confidentiality criteria, ISO 27001, NIS2 incident handling.
+* **Protected Domain Categories**: Cryptographic private keys and platform bearer tokens, confidential incident and breach tracking numbers, internal detection policies, and proprietary IOC artifacts.
 
 ### 4.6. Software Development (`dev`)
 * **Target Personas**: Software Architects, Full-Stack Engineers, DevOps Engineers.
-* **Target Entities**:
-  * Cloud API Keys: Anthropic keys (`sk-ant-api03-*`), OpenAI project keys (`sk-proj-*`), Google API keys (`AIza*`), Twilio, SendGrid (`SG.*`), Docker PATs.
-  * Internal Endpoints: Private RFC 1918 IP addresses with ports (`10.x.x.x:8080`, `192.168.x.x:3000`), localhost bindings.
-  * Webhook Secrets: Stripe webhook secrets (`whsec_*`), generic signing secrets.
-  * Database Connection Strings: Full connection URIs with embedded user/pass authentication.
+* **Regulatory Scope**: OWASP LLM02:2025 Sensitive Information Disclosure, pre-commit secret hygiene.
+* **Protected Domain Categories**: Frontier AI and cloud API credentials, internal private-subnet endpoints and ports, webhook signing secrets, and credential-bearing database connection strings.
 
 ### 4.7. Marketing & AdTech (`marketing`)
 * **Target Personas**: CMOs, Growth Hackers, Performance Marketing Leads.
-* **Target Entities**:
-  * Ad Tracking Identifiers: Google Click IDs (`GCLID`), Facebook Click IDs (`FBCLID`), Campaign IDs.
-  * Web Analytics: Google Analytics Measurement IDs (`G-XXXXXX`, `UA-XXXXX-X`), GA Client IDs (`_ga` cookies).
-  * Marketing Automation: HubSpot Contact IDs, Marketo Lead IDs, Klaviyo Profile IDs, Pardot prospects.
-  * Unit Economics: Customer Acquisition Cost (`CAC`), Lifetime Value (`LTV`) amounts.
-  * Campaign URLs: Detailed UTM parameter strings (`utm_source`, `utm_campaign`, `utm_term`).
+* **Regulatory Scope**: ePrivacy Directive, GDPR Consent Mode, CCPA behavioral tracking limits.
+* **Protected Domain Categories**: Click and session attribution tokens, analytics client and measurement identifiers, CRM/automation contact IDs, and internal customer-acquisition financial metrics.
 
 ### 4.8. Business Operations & M&A (`bizops`)
 * **Target Personas**: COOs, VPs of Strategy, Private Equity Associates, Corporate Development.
-* **Target Entities**:
-  * Corporate Registries: D-U-N-S numbers (`XX-XXX-XXXX`), SEC Central Index Keys (`CIK`).
-  * M&A Confidentiality: Virtual Data Room IDs (`VDR-XXXX`), Term Sheet reference codes, Letter of Intent (`LOI`) IDs.
-  * Equity & Cap Tables: Equity option grants, Safe notes, Convertible notes, Shareholder IDs (`RSU-XXXX`, `SAFE-XXXX`).
-  * Financial KPIs: EBITDA amounts, Net Profit margins, ARR metrics tied to undisclosed deals.
+* **Regulatory Scope**: SEC Regulation FD, MNPI confidentiality, corporate fiduciary non-disclosure.
+* **Protected Domain Categories**: Corporate registry identifiers, virtual data room and deal-room tracking numbers, cap-table/equity grant records, and non-public M&A financial KPIs.
 
 ### 4.9. Sales & Revenue Operations (`sales`)
 * **Target Personas**: CROs, VPs of Sales, RevOps Managers, Account Executives.
-* **Target Entities**:
-  * CRM Records: Salesforce IDs (15/18 char alphanumeric), HubSpot Deal IDs.
-  * Contracts & E-Signatures: DocuSign envelope UUIDs, Order Form numbers, Master Services Agreement (`MSA`) codes.
-  * Conversation Intelligence: Gong call recording IDs, Chorus transcripts, SalesLoft cadence steps.
-  * Commercial Quotas: Individual rep quotas, pipeline deal values, annual recurring revenue numbers.
+* **Regulatory Scope**: B2B commercial confidentiality, enterprise procurement privacy.
+* **Protected Domain Categories**: CRM opportunity and account object IDs, e-signature envelope and MSA contract references, recorded call-intelligence IDs, and rep-level commercial pipeline values.
 
 ### 4.10. Customer Support & Care (`support`)
 * **Target Personas**: VPs of Customer Experience, Tier 3 Support Leads, Contact Center Managers.
-* **Target Entities**:
-  * Helpdesk Tickets: ServiceNow Incident/Request IDs (`INCXXXXXXX`, `RITMXXXXXXX`), Jira tickets, Zendesk tickets.
-  * Hardware & Returns: Return Merchandise Authorization (`RMA-XXXX`), Refund reference IDs.
-  * Feedback & CSAT: CSAT survey tokens, Net Promoter Score (`NPS`) respondent hashes.
-  * Loyalty Programs: Rewards card numbers, Customer loyalty account IDs.
+* **Regulatory Scope**: GDPR Art. 5 data minimization, SOC 2 customer data isolation.
+* **Protected Domain Categories**: Helpdesk incident and service-request tickets, return merchandise and refund tracking numbers, respondent feedback tokens, and customer loyalty account IDs.
 
 ### 4.11. Real Estate & Title (`realestate`)
 * **Target Personas**: Title Agents, Real Estate Brokers, Escrow Officers, Underwriters.
-* **Target Entities**:
-  * Property Identification: Multiple Listing Service (`MLS`) numbers, Assessor Parcel Numbers (`APN`), Parcel IDs.
-  * Closing & Title: Escrow file numbers, Title insurance commitment IDs, FHA case numbers (`XXX-XXXXXXX`).
-  * Tenant & Leases: Tenant profile IDs, Lease agreement IDs, Gate/Lobby access PIN codes.
-  * Real Estate Values: Contextual extraction of `Purchase Price`, `Listing Price`, `Down Payment`, `Closing Costs`, `Rent`.
+* **Regulatory Scope**: GLBA title/escrow safeguards, CFPB TRID borrower confidentiality.
+* **Protected Domain Categories**: Property parcel and MLS listing identifiers, escrow closing and mortgage insurance file numbers, tenant/lease credentials, and transaction price disclosures.
 
 ### 4.12. Regulatory Compliance & GRC (`compliance`)
 * **Target Personas**: Chief Compliance Officers, DPOs, Audit Managers, Risk Officers.
-* **Target Entities**:
-  * Data Subject Requests: GDPR/CCPA Data Subject Access Request IDs (`DSAR-XXXX`, `SAR-XXXX`).
-  * International VAT Registrations: Full EU VIES VAT numbers (AT, BE, DE, FR, IT, NL, PL, ES, etc.), UK VAT, Swiss TVA.
-  * Cross-Border Data Transfers: Standard Contractual Clauses (`SCC 2021/914`), Binding Corporate Rules (`BCR`).
-  * Regulatory Registrations: UK Information Commissioner's Office registration numbers (`ICO ZXXXXXXX`), Data Protection Officer IDs.
-  * Security Controls: NIST SP 800-53 control identifiers (`AC-2`, `SC-28`), FedRAMP package numbers.
+* **Regulatory Scope**: GDPR Art. 15/28/32, EU AI Act Art. 10, NIST SP 800-53, FedRAMP.
+* **Protected Domain Categories**: Data subject access/erasure request dockets, international VAT and supervisory authority registration numbers, and internal governance or audit tracking codes.
 
 ### 4.13. California Privacy / CCPA (`ccpa`)
 * **Target Personas**: California Privacy Officers, Consumer Rights Managers.
-* **Target Entities**:
-  * California Identifiers: California Driver's Licenses, State ID numbers.
-  * Consumer Rights Requests: CPRA Opt-Out records, "Do Not Sell My Info" inquiry tokens.
-  * Biometric Templates: Face recognition template hashes, voiceprints, fingerprint vectors.
-  * Precise Geolocation: Latitude and longitude coordinates within California jurisdiction.
+* **Regulatory Scope**: California Consumer Privacy Act (CCPA) & CPRA statutory categories.
+* **Protected Domain Categories**: California state identification numbers, opt-out and consumer-request tracking tokens, biometric template digests, and precise California geolocation coordinates.
 
 ### 4.14. Cloud Infrastructure Engineering (`engineering`)
 * **Target Personas**: Cloud Engineers, SREs, Kubernetes Operators.
-* **Target Entities**:
-  * Container Architecture: Docker image tags, Container digest SHA-256 hashes, Kubernetes cluster-internal DNS (`*.svc.cluster.local`).
-  * Cloud Resource Names: AWS Amazon Resource Names (`arn:aws:iam::123456789012:role/*`), Azure Resource IDs.
-  * Git Commits: Full 40-character Git commit SHAs, internal private repository paths.
+* **Regulatory Scope**: Cloud topology protection, zero-disclosure infrastructure posture.
+* **Protected Domain Categories**: Container digests and internal cluster DNS topologies, cloud IAM resource ARNs and tenant paths, commit provenance hashes, and private repository locations.
 
 ### 4.15. Autonomous AI Agents (`agents`)
 * **Target Personas**: AI Engineers, LLM Pipeline Developers, Agent Framework Builders.
-* **Target Entities**:
-  * OpenAI Platform IDs: Assistant IDs (`asst_*`), Thread IDs (`thread_*`), Run IDs (`run_*`), Batch IDs (`msgbatch_*`), Vector Store IDs (`vs_*`).
-  * Vector Database Collections: Pinecone index names, Weaviate collections, Qdrant cluster namespaces.
-  * Open Source Weights: Hugging Face user tokens (`hf_*`), model fine-tuning job IDs (`ftjob-*`).
+* **Regulatory Scope**: Agentic telemetry isolation, RAG memory tenant separation.
+* **Protected Domain Categories**: Model platform assistant/run/vector-store handles, vector database namespace identifiers, and hosted model-hub access credentials.
 
 ### 4.16. Academic & Research (`academic`)
 * **Target Personas**: University Registrars, Institutional Review Board (IRB) Chairs, Grant PIs.
-* **Target Entities**:
-  * Institutional Governance: IRB protocol numbers, FERPA student record IDs, Student/Alumni numbers.
-  * Academic Identifiers: Researcher ORCID iDs (`0000-0002-1825-0097`), PubMed IDs (`PMID`), PubMed Central (`PMC`).
-  * Academic Publications: Digital Object Identifiers (`10.xxxx/...`), arXiv preprint IDs.
-  * Transcripts & Grades: Specific course grade attributions, diploma registration serials.
+* **Regulatory Scope**: FERPA student privacy, NIH/IRB human-subjects confidentiality.
+* **Protected Domain Categories**: IRB protocol and student/alumni identifiers, researcher ORCID handles linked to non-public review dossiers, and protected academic transcript records.
 
 ### 4.17. Creative & Entertainment (`creative`)
 * **Target Personas**: Entertainment Lawyers, Production Executives, Talent Agents.
-* **Target Entities**:
-  * Guild Registrations: Writers Guild of America (`WGAW`/`WGAE`) registration numbers.
-  * Talent Management: SAG-AFTRA member IDs, Talent/Model release form numbers.
-  * Music & Royalties: International Standard Recording Codes (`ISRC`), ASCAP/BMI party IDs, IPI/CAE numbers.
-  * Media Standards: International Standard Audiovisual Numbers (`ISAN`), International Standard Book Numbers (`ISBN`).
+* **Regulatory Scope**: Pre-release IP embargo, guild & royalty accounting confidentiality.
+* **Protected Domain Categories**: Guild registrations and talent release numbers, standard audio/visual royalty and publishing codes, and embargoed production accounting identifiers.
 
 ### 4.18. Core Technology & IT (`tech`)
 * **Target Personas**: IT Directors, Systems Administrators, Cloud Admins.
-* **Target Entities**:
-  * Cloud Compute: AWS EC2 Instance IDs (`i-0123456789abcdef0`), VPC IDs, Subnet IDs, Security Group IDs.
-  * GCP & Azure Tenants: Google Cloud Project IDs, Azure Subscription IDs, Azure Tenant GUIDs.
-  * Infrastructure State: Terraform state file identifiers (`tfstate`), Kubernetes configuration tokens.
+* **Regulatory Scope**: Enterprise asset confidentiality, SOC 2 IT general controls.
+* **Protected Domain Categories**: Cloud compute instance, VPC, subnet, and security-group identifiers, multi-cloud tenant GUIDs, and infrastructure-state tracking tokens.
 
 ### 4.19. Personal & Executive Protection (`personal`)
 * **Target Personas**: Family Offices, High-Net-Worth Individuals, Executive Assistants.
-* **Target Entities**:
-  * Family Relational Records: Kinship-tied emergency contact names (`Wife: ...`, `Child: ...`).
-  * Personal Credentials: Safe/Alarm passcodes, Master device PINs, Home Wi-Fi credentials.
-  * Travel & Loyalty: Passport numbers, Airline Frequent Flyer numbers (Delta SkyMiles, United MileagePlus), Hotel loyalty numbers.
+* **Regulatory Scope**: Executive threat-surface minimization, household physical/travel security.
+* **Protected Domain Categories**: Kinship-linked family and household emergency contacts, personal device/access passcodes, passport details, and private travel loyalty accounts.
 
 ### 4.20. Wealth Management & Family Office (`wealthmgmt`)
 * **Target Personas**: Private Wealth Managers, Estate Planning Attorneys, Family Office Principals.
-* **Target Entities**:
-  * Trust Architecture: Living, Revocable, and Irrevocable Trust legal entities (`THE JOHN DOE IRREVOCABLE TRUST`).
-  * Advisory Governance: SEC Form ADV registration files (`801-XXXXX`), FINRA Series 7/65/66 license numbers.
-  * Retirement Accounts: Custodial accounts, SEP-IRA, 401(k) plan numbers, Required Minimum Distribution (`RMD`) amounts.
-  * Portfolio Assets: Total Net Worth, Assets Under Management (`AUM`), Market Value contextual amounts.
+* **Regulatory Scope**: SEC Advisers Act fiduciary privacy, FINRA Rule 4512, Regulation S-P.
+* **Protected Domain Categories**: Named trust entities and estate instruments, advisory/broker license references, tax-advantaged custodial accounts, and client net-worth/AUM disclosures.
 
 ### 4.21. Insurance & Risk Management (`insurance`)
 * **Target Personas**: Underwriters, Claims Adjusters, Actuaries.
-* **Target Entities**:
-  * Claims & Policies: Insurance Claim numbers (`CLM-XXXXX`), Policy numbers (`POL-XXXXX`), Insurance Binder IDs.
-  * Regulatory Codes: National Association of Insurance Commissioners (`NAIC`) company codes (5-digit), Lloyd's Syndicate numbers, UK FCA FRN.
-  * Financial Reserves: Contextual extraction of `Claim Settlement`, `Loss Reserve`, `Indemnity`, `Deductible`, `Premium`.
-  * Physical Assets: Vehicle Identification Numbers (`VIN` 17-char ISO 3779), Certificate of Insurance (`COI`) numbers.
+* **Regulatory Scope**: NAIC Insurance Data Security Model Law, GLBA, HIPAA (health plans).
+* **Protected Domain Categories**: Policy, binder, and claim dossier numbers, carrier regulatory codes, insured vehicle/asset identifiers, and reserve or settlement valuations.
 
 ### 4.22. Accounting & Tax Preparation (`accounting`)
 * **Target Personas**: CPAs, Tax Preparers, Corporate Controllers.
-* **Target Entities**:
-  * Tax Filings: IRS Form numbers (Form 1040, W-2, 1099-MISC, K-1, Form 941).
-  * Preparer Credentials: Preparer Tax Identification Number (`PTIN`), Electronic Filing Identification Number (`EFIN`), Centralized Authorization File (`CAF`).
-  * Ledger & Invoices: General Ledger account numbers (`GL-6010-CLOUD`), Purchase Order (`PO`) numbers, Invoice identifiers.
-  * Tax Calculations: Adjusted Gross Income (`AGI`), Taxable Income, Balance Due, Refund amounts.
+* **Regulatory Scope**: IRS Publication 4557, IRC § 7216 taxpayer confidentiality, SOX financial controls.
+* **Protected Domain Categories**: Tax return and information-filing identifiers, licensed preparer/electronic-filer numbers, general-ledger and invoice codes, and taxpayer income or refund figures.
 
 ### 4.23. Pharmaceuticals & Life Sciences (`pharma`)
 * **Target Personas**: Clinical Data Managers, Bio-statisticians, Regulatory Affairs Specialists.
-* **Target Entities**:
-  * Clinical Trial Registries: ClinicalTrials.gov identifiers (`NCTXXXXXXXX`), European Clinical Trials Database (`EudraCT`).
-  * Regulatory Submissions: Investigational New Drug (`IND`), New Drug Application (`NDA`), Biologics License Application (`BLA`).
-  * Clinical Subjects: Subject Unique Identifier (`USUBJID`), Patient randomization codes, Medication kit serial numbers.
-  * Drug Safety: Individual Case Safety Reports (`ICSR`), Council for International Organizations of Medical Sciences (`CIOMS`) report IDs.
+* **Regulatory Scope**: 21 CFR Part 11, GDPR clinical trial blinding, EMA Policy 0070.
+* **Protected Domain Categories**: Registered trial and regulatory submission IDs, blinded subject randomization codes, medication kit serials, and pharmacovigilance adverse-event reports.
 
 ### 4.24. Underwriting & Mortgage Underwriting (`underwriting`)
 * **Target Personas**: Mortgage Underwriters, Credit Analysts, Loan Processors.
-* **Target Entities**:
-  * W-2 Calibration: Box c (Employer name/address), Box d (Control number), Box e (Employee Name), Box f (Employee Address).
-  * Loan Files: Loan application numbers, Underwriting file numbers, Fannie Mae / Freddie Mac reference IDs.
-  * Banking Verification: Direct deposit account verification codes, Paystub check advice numbers, Pay group codes.
+* **Regulatory Scope**: GLBA, Fair Credit Reporting Act (FCRA), agency underwriting security.
+* **Protected Domain Categories**: Wage and tax-statement employer/employee blocks, loan origination and agency underwriting dossier numbers, and payroll verification instruments.
 
 ### 4.25. Automotive & Telematics (`automotive`)
 * **Target Personas**: Fleet Managers, Connected Vehicle Engineers, Telematics Analysts, EV Infrastructure Operators.
-* **Target Entities**:
-  * Vehicle Identifiers: 17-character VIN (ISO 3779), License Plate numbers, Vehicle Registration Numbers.
-  * In-Vehicle Systems: Electronic Control Unit IDs (`ECU-*`), CAN bus message IDs, OBD-II Diagnostic Trouble Codes (`DTC P0300`, etc.).
-  * Telematics & Charging: EV Charging Station IDs, EVSE IDs, GPS telematics device serials, In-cabin safety driver logs.
+* **Regulatory Scope**: UNECE R155 connected-vehicle cybersecurity, GDPR location/telematics privacy.
+* **Protected Domain Categories**: Vehicle identification numbers and registration plates, embedded controller and diagnostic fault codes, charging infrastructure session IDs, and driver telemetry logs.
 
 ### 4.26. Energy & Utilities (`energy`)
 * **Target Personas**: SCADA Operators, Substation Engineers, Grid Dispatchers, NERC CIP Compliance Leads.
-* **Target Entities**:
-  * Grid Infrastructure: Smart Meter IDs, RTU (Remote Terminal Unit) IDs, Substation codes, Feeder line identifiers.
-  * Supervisory Control: SCADA tag names, PLC serial numbers, DNP3/Modbus addressing, EMS point IDs.
-  * Compliance & Safety: NERC CIP facility identifiers, Power Plant Outage notice IDs, High-voltage switching order numbers.
+* **Regulatory Scope**: NERC CIP critical cyber asset protection, Critical Infrastructure Security.
+* **Protected Domain Categories**: Smart meter and substation asset identifiers, industrial telemetry control tags and hardware serials, and grid switching or compliance facility codes.
 
 ### 4.27. Hospitality & Travel (`hospitality`)
 * **Target Personas**: Hotel Revenue Managers, Front Desk Leads, Passenger Services, Travel Counselors.
-* **Target Entities**:
-  * Passenger Records: Passenger Name Records (6-char alphanumeric PNR / Record Locators), E-Ticket numbers.
-  * Reservations & Folios: Guest Folio numbers, Hotel confirmation codes, Room/Cabin electronic keycards.
-  * Loyalty Programs: Airline frequent flyer numbers, Hotel rewards member IDs, Travel agency booking vouchers.
+* **Regulatory Scope**: EU PNR Directive, PCI-DSS hospitality cardholder protection, GDPR travel privacy.
+* **Protected Domain Categories**: Passenger name records and airline e-tickets, reservation folios and electronic room-access tokens, and traveler loyalty membership identifiers.
 
 ### 4.28. Biotechnology & Genomics (`biotech`)
 * **Target Personas**: Bioinformaticians, Molecular Biologists, Genomic Research PIs, Biobank Curators.
-* **Target Entities**:
-  * Genomic Databases: OMIM disease codes, Orphanet IDs (`ORPHA*`), Human Phenotype Ontology (`HP:0000000`), Cytogenetic karyotypes.
-  * Specimens & Samples: Biobank sample IDs, Cryotube barcodes, Aliquot tracking IDs, FFPE tissue block codes.
-  * Sequencing Platforms: Next-Gen Sequencing run IDs (Illumina NovaSeq, NextSeq, MiSeq, Oxford Nanopore MinION, PacBio), FACS sorting identifiers.
+* **Regulatory Scope**: GINA genetic privacy, GDPR Art. 9 genetic/biometric protection, HIPAA Safe Harbor.
+* **Protected Domain Categories**: Rare-disease ontology codes linked to individuals, biobank specimen/aliquot tracking barcodes, and sequencing instrument run identifiers tied to donor cohorts.
 
 ### 4.29. Telecommunications & Contact Centers (`telecom`)
 * **Target Personas**: Telecom Network Engineers, Contact Center Directors, VoIP Architects, CDR Analysts.
-* **Target Entities**:
-  * Mobile Hardware & SIM: IMSI (14-15 digit), IMEI/IMEISV (15-16 digit), ICCID SIM card numbers (89-prefix), MSISDN.
-  * Cellular Infrastructure: Cell Global Identity (`CGI`), eNodeB/gNodeB IDs, Physical Cell IDs (`PCI`), Tracking Area Codes (`TAC`).
-  * Telephony & VoIP: Session Initiation Protocol URIs (`sip:user@host`), SIP Call-IDs, CTI interaction sessions, IVR payment tokens.
-  * Call Detail Records: CDR record UUIDs, Trunk Group IDs, Point of Interconnect (`POI`) codes, RADIUS/Diameter shared session IDs.
+* **Regulatory Scope**: FCC Customer Proprietary Network Information (CPNI), ePrivacy Directive, PCI-DSS IVR scoping.
+* **Protected Domain Categories**: Mobile subscriber and hardware device identifiers, cellular tower/sector topology codes, VoIP session URIs and interaction records, and call-detail network session IDs.
 
 ### 4.30. General / Universal Baseline (`general`)
-* **Target Personas**: Consumer users, generic AI prompt sanitization.
-* **Target Entities**: Relies purely on the zero-trust universal consumer PII baseline (15,000 character allowance).
+* **Target Personas**: Individual users, general-purpose AI prompt sanitization.
+* **Regulatory Scope**: Universal baseline PII protection under GDPR Art. 32 / Israel PPL Sec. 17.
+* **Protected Domain Categories**: Applies the universal consumer PII baseline layer with standard quota boundaries.
 
 ### 4.31. Crypto Forensics, Web3 AML & Evidentiary Investigations (`crypto_forensics`)
 * **Target Personas**: Crypto AML Officers, Blockchain Forensic Analysts, Financial Intelligence Units (FIU), Risk Managers, Fraud Investigators, Sanctions Compliance Officers.
-* **Target Entities**:
-  * Blockchain Public Addresses:
-    * Bitcoin: Base58 P2PKH/P2SH (Base58 P2PKH/P2SH and Bech32/Bech32m SegWit standard formats).
-    * Ethereum & EVM Chains: Hexadecimal account & contract addresses (40-character hexadecimal account and contract address format).
-    * Solana: Base58 public keys (Base58 public key format).
-    * TRON: Base58 addresses (Base58 address format).
-    * Monero: Stealth addresses (Primary stealth and subaddress formats).
-    * Ripple / XRP: Base58 accounts (Base58 classic account format).
-  * On-Chain Transaction & State Identifiers:
-    * Transaction Hashes: 64-character hexadecimal EVM/Bitcoin TxHashes (64-character hexadecimal transaction digest format).
-    * Block Hashes & Heights: Raw block hashes, internal UTXO references (`txid:vout`).
-    * Solana Signatures: 88-character Base58 transaction signatures.
-  * Forensic Attribution & Clustering Labels:
-    * Intelligence Cluster Tags: Chainalysis Reactor cluster IDs (`Cluster #XXXXXX`), Elliptic entity risk IDs, TRM Labs entity attribution labels, Crystal Intelligence tags.
-    * Mixer & Hop Identifiers: Peel chain hop sequence markers, Wasabi/Tornado Cash anonymity pool identifiers, bridge contract routing hops.
-  * Statutory AML Filings & Investigation Dockets:
-    * FinCEN / FIU Identifiers: Suspicious Activity Report filing IDs (`SAR-XXXX`, `BSA-XXXX`), Suspicious Transaction Reports (`STR-XXXX`).
-    * Investigative Case Numbers: Financial crimes docket numbers (`CASE-FININT-XXXX`, `MLO-XXXX`).
-    * Sanctions & Watchlists: OFAC Specially Designated Nationals (SDN) match identifiers, Interpol red notice references.
-
+* **Regulatory Scope**: BSA 31 U.S.C. § 5318(g)(2) SAR non-disclosure, FRE 901/902/502, OFAC sanctions screening, EU AMLR/MiCA Travel Rule.
+* **Protected Domain Categories**: Multi-chain public wallet/contract addresses, transaction digests and UTXO/signature links, proprietary forensic intelligence cluster attributions, mixer/bridge hop labels, statutory AML filing numbers, and sanctions watchlist match identifiers.
 
 ---
 

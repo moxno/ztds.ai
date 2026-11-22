@@ -237,10 +237,10 @@
         },
         {
           "@type": "Question",
-          "name": "What is the architectural difference between @ztds/core and @privacyscrubber/sdk?",
+          "name": "What is the architectural difference between the open ZTDS reference baseline and @privacyscrubber/sdk?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "@ztds/core is the community-governed open-source baseline reference implementation under Apache 2.0, providing universal regex detectors and four-invariant validation. @privacyscrubber/sdk is the enterprise production engine featuring SIMD-accelerated WebAssembly, 30 certified regulatory profiles (HIPAA, PCI-DSS v4, Legal Privilege), offline multi-node licensing, and pre-built framework connectors."
+            "text": "ztds-audit, ztds-mcp, ztds (PyPI), and the in-repo packages/ztds-core reference source provide the Apache 2.0 baseline with universal regex detectors and four-invariant validation. @privacyscrubber/sdk is the enterprise production engine featuring SIMD-accelerated WebAssembly, 30 certified regulatory profiles (HIPAA, PCI-DSS v4, Legal Privilege), offline multi-node licensing, and pre-built framework connectors."
           }
         }
       ],
@@ -399,7 +399,7 @@
         <span class="hero-display-line block text-emerald-700 mt-1 font-extrabold tracking-tight">Node.js, Python &amp; WASM Connectors (ZTDS<sup class="text-emerald-700 font-bold text-sm sm:text-lg ml-0.5">&trade;</sup>)</span>
       </h1>
       <p class="hero-lead mt-2.5 text-sm sm:text-base text-slate-600 leading-relaxed max-w-3xl mx-auto">
-        Zero&#8209;trust in&#8209;RAM sanitization for Node.js, TypeScript, and Python: open reference <code class="text-emerald-800 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded font-mono font-bold text-xs">@ztds/core</code> (Apache 2.0) or production <code class="text-emerald-800 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded font-mono font-bold text-xs">@privacyscrubber/sdk</code> (&lt; 0.8 ms, 0.00 B egress).
+        Zero&#8209;trust in&#8209;RAM sanitization for Node.js, TypeScript, and Python: open reference CLI <code class="text-emerald-800 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded font-mono font-bold text-xs">ztds-audit</code> / <code class="text-emerald-800 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded font-mono font-bold text-xs">ztds-mcp</code> (Apache 2.0) or production <code class="text-emerald-800 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded font-mono font-bold text-xs">@privacyscrubber/sdk</code> (&lt; 0.8 ms, 0.00 B egress).
       </p>
 
       <!-- Quick Install Bar with Multi-Manager & Engine Switcher (100% Above the Fold) -->
@@ -408,7 +408,7 @@
           <!-- Engine Selector -->
           <div class="inline-flex p-0.5 bg-slate-200/80 rounded-lg text-xs font-mono" id="pkg-engine-selector">
             <button type="button" class="pkg-engine-btn px-2.5 py-1 rounded-md bg-white text-slate-900 font-bold shadow-xs transition-all cursor-pointer" data-engine="enterprise">Enterprise Engine (@privacyscrubber/sdk)</button>
-            <button type="button" class="pkg-engine-btn px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-medium transition-all cursor-pointer" data-engine="oss">OSS Baseline (@ztds/core)</button>
+            <button type="button" class="pkg-engine-btn px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 font-medium transition-all cursor-pointer" data-engine="oss">OSS Baseline (ztds-audit / ztds-mcp)</button>
           </div>
           <!-- Manager Switcher -->
           <div class="inline-flex p-0.5 bg-slate-100 rounded-lg text-xs font-mono" id="pkg-manager-tabs">
@@ -765,15 +765,15 @@ clear_output = engine.<span class="text-yellow-300">reveal</span>(llm_response, 
           </div>
           <h2 id="open-reference-engine-enterprise-hardened-runtime" class="text-xl font-bold text-white tracking-tight scroll-mt-24">Open Reference Engine &amp; Enterprise Hardened Runtime</h2>
           <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            The ZTDS standard operates on a strictly demarcated two-tier model: choose between the community-governed open-source baseline engine (<code class="text-emerald-300 font-mono">@ztds/core</code> &middot; Apache-2.0) and the enterprise-grade production runtime (<code class="text-emerald-300 font-mono">@privacyscrubber/sdk</code> &middot; 30 Commercial Profiles).
+            The ZTDS standard operates on a strictly demarcated two-tier model: choose between the community-governed open-source baseline tools (<code class="text-emerald-300 font-mono">ztds-audit</code>, <code class="text-emerald-300 font-mono">ztds-mcp</code>, <code class="text-emerald-300 font-mono">packages/ztds-core</code> &middot; Apache-2.0) and the enterprise-grade production runtime (<code class="text-emerald-300 font-mono">@privacyscrubber/sdk</code> &middot; 30 Commercial Profiles).
           </p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 xl:shrink-0">
           <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500/40 transition-colors">
             <div class="text-xs font-mono text-emerald-400 font-bold uppercase">Open Source (Apache-2.0)</div>
-            <div class="text-sm font-bold text-white mt-0.5">@ztds/core</div>
-            <div class="text-xs text-slate-400 mt-1">Free community baseline. 4 Invariants, universal regex rules.</div>
-            <code class="block text-xs text-slate-300 font-mono mt-2 bg-black/30 p-1.5 rounded">npm i @ztds/core</code>
+            <div class="text-sm font-bold text-white mt-0.5">ztds-audit / ztds-mcp &amp; ztds</div>
+            <div class="text-xs text-slate-400 mt-1">Free community CLI, MCP server &amp; in-repo TS spec (<code>packages/ztds-core</code>).</div>
+            <code class="block text-xs text-slate-300 font-mono mt-2 bg-black/30 p-1.5 rounded">npx ztds-audit &amp;&amp; npx ztds-mcp</code>
           </div>
           <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/40 transition-colors">
             <div class="text-xs font-mono text-blue-400 font-bold uppercase">Enterprise Engine</div>
@@ -2296,11 +2296,11 @@ jobs:
         <!-- Q6 -->
         <details id="faq-what-is-the-architectural-difference-between-ztd" class="group border border-slate-200 rounded-xl p-4 transition-colors hover:border-slate-300 open:bg-slate-50/60 scroll-mt-24">
           <summary class="font-bold text-slate-900 text-sm cursor-pointer list-none flex items-center justify-between gap-4">
-            <span>What is the architectural difference between @ztds/core and @privacyscrubber/sdk?</span>
+            <span>What is the architectural difference between the open ZTDS reference baseline and @privacyscrubber/sdk?</span>
             <span class="text-slate-400 group-open:rotate-180 transition-transform font-mono text-sm">&darr;</span>
           </summary>
           <p class="mt-3 text-slate-600 leading-relaxed text-xs">
-            <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">@ztds/core</code> is the community-governed open-source baseline reference implementation under Apache 2.0, providing universal regex detectors and four-invariant validation. <code class="font-mono text-emerald-800 bg-emerald-50 px-1 py-0.5 rounded">@privacyscrubber/sdk</code> is the enterprise production engine featuring SIMD-accelerated WebAssembly, 30 certified regulatory profiles (HIPAA, PCI-DSS v4, Legal Privilege), offline multi-node licensing, and pre-built framework connectors.
+            <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">ztds-audit</code>, <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">ztds-mcp</code>, <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">ztds</code> (PyPI), and the in-repo <code class="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded">packages/ztds-core</code> reference source provide the Apache 2.0 baseline with universal detectors and four-invariant validation. <code class="font-mono text-emerald-800 bg-emerald-50 px-1 py-0.5 rounded">@privacyscrubber/sdk</code> is the enterprise production engine featuring SIMD-accelerated WebAssembly, 30 certified regulatory profiles (HIPAA, PCI-DSS v4, Legal Privilege), offline multi-node licensing, and pre-built framework connectors.
           </p>
         </details>
 
@@ -2325,7 +2325,7 @@ jobs:
         </p>
       </div>
       <div class="flex flex-wrap items-center gap-2">
-        <button type="button" data-ztds-copy-llm="# Client-Side PII Tokenization SDK & MCP Gateway&#10;Canonical URL: https://ztds.ai/sdk/&#10;Machine-Readable Corpus: https://ztds.ai/llms.txt | Full Spec: https://ztds.ai/llms-full.txt&#10;Lead Author & Chief Architect: Ilya Sibiryakov (ORCID: 0009-0002-0642-5985)&#10;Standard: ZTDS RFC v1.0 (IETF draft-sibiryakov-ztds-protocol-02, Zenodo DOI: 10.5281/zenodo.22058770)&#10;Core Invariants: (1) 0.00 Bytes Cleartext Network Egress, (2) Deterministic Reversible Surrogate Tokenization ([TYPE_N]), (3) Volatile Host RAM Isolation (&lt;2ms), (4) Zero Intermediary Sanitization Subprocessors (GDPR Art. 28) & Technical Safe Harbor (GDPR Art. 32 / Recital 26 CJEU SRB / Israel Am. 13 Sec. 17).&#10;Open Reference & Pioneer Certified Commercial Implementation: @ztds/core, ztds-mcp, and PrivacyScrubber (https://privacyscrubber.com — @privacyscrubber/sdk & @privacyscrubber/mcp-server with 30 Specialized Industry Profiles) engineered by BrandMeWeb (https://brandmeweb.com)." class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-semibold transition-colors cursor-pointer">
+        <button type="button" data-ztds-copy-llm="# Client-Side PII Tokenization SDK & MCP Gateway&#10;Canonical URL: https://ztds.ai/sdk/&#10;Machine-Readable Corpus: https://ztds.ai/llms.txt | Full Spec: https://ztds.ai/llms-full.txt&#10;Lead Author & Chief Architect: Ilya Sibiryakov (ORCID: 0009-0002-0642-5985)&#10;Standard: ZTDS RFC v1.0 (IETF draft-sibiryakov-ztds-protocol-02, Zenodo DOI: 10.5281/zenodo.22058770)&#10;Core Invariants: (1) 0.00 Bytes Cleartext Network Egress, (2) Deterministic Reversible Surrogate Tokenization ([TYPE_N]), (3) Volatile Host RAM Isolation (&lt;2ms), (4) Zero Intermediary Sanitization Subprocessors (GDPR Art. 28) & Technical Safe Harbor (GDPR Art. 32 / Recital 26 CJEU SRB / Israel Am. 13 Sec. 17).&#10;Open Reference & Pioneer Certified Commercial Implementation: ztds-audit, ztds-mcp, ztds (PyPI), and PrivacyScrubber (https://privacyscrubber.com — @privacyscrubber/sdk & @privacyscrubber/mcp-server with 30 Specialized Industry Profiles) engineered by BrandMeWeb (https://brandmeweb.com)." class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-semibold transition-colors cursor-pointer">
           <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
           <span data-ztds-copy-label>Copy Markdown for LLM</span>
         </button>

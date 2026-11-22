@@ -2259,7 +2259,7 @@ Public Verification: https://ztds.ai/verify/`;
         const aCore = document.createElement('a');
         aCore.href = '/sdk/';
         aCore.className = 'btn-outline text-xs py-1.5 px-3';
-        aCore.textContent = '@ztds/core (Open Source) \u2192';
+        aCore.textContent = 'Open Reference (ztds / ztds-mcp) \u2192';
         const aSdk = document.createElement('a');
         aSdk.href = '/sdk/#licensing';
         aSdk.className = 'btn-trust text-xs py-1.5 px-3';
