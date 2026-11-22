@@ -72,7 +72,7 @@
           "main h2"
         ]
       },
-      "dateModified": "2026-10-27T00:00:00Z",
+      "dateModified": "2026-11-22T00:00:00Z",
       "primaryImageOfPage": {
         "@type": "ImageObject",
         "url": "https://ztds.ai/assets/img/og/og-default.png",
@@ -98,7 +98,7 @@
       "publisher": {
         "@id": "https://ztds.ai/#organization"
       },
-      "dateModified": "2026-10-27T00:00:00Z",
+      "dateModified": "2026-11-22T00:00:00Z",
       "primaryImageOfPage": {
         "@type": "ImageObject",
         "url": "https://ztds.ai/assets/img/og/og-default.png",
@@ -151,7 +151,7 @@
           "name": "How long does ZTDS GitOps accreditation and verification take?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Automated CTS invariant verification via `npx ztds-audit` completes locally in under 60 seconds. Once a GitOps Pull Request or attestation payload is submitted with a valid SHA-256 compliance receipt, the Consortium Review Board merges verified entries into the public registry within 48 hours."
+            "text": "Automated CTS invariant verification via npx ztds-audit completes locally in under 60 seconds. Once a GitOps Pull Request or web form submission is logged, the Consortium Review Board merges verified entries into the public registry within 48 hours."
           }
         },
         {
@@ -160,6 +160,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Track A certifies software products, SDKs, and MCP servers meeting the four RFC v1.0 invariants; Track B accredits Corporate Adopters enforcing client-side sanitization across internal AI workflows; and Track C inducts Research Fellows contributing peer-reviewed cryptography, GRC legal treatises, or runtime engineering."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is ZTDS accreditation free, and do I need a GitHub account to apply?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Accreditation across all three tracks is 100% free and vendor-neutral. Developers can submit via pre-filled GitHub intake or Pull Request, while CISOs and academic nominees can submit directly through this web form or asynchronously via security@ztds.ai without a GitHub account."
           }
         }
       ]
@@ -205,8 +213,8 @@
 
       <!-- Actions -->
       <div class="flex items-center gap-3">
-        <a href="/apply/" class="btn-trust text-xs py-2 px-4 shadow-sm font-semibold whitespace-nowrap">
-          Get Certified &rarr;
+        <a href="/registry/" class="btn-trust text-xs py-2 px-4 shadow-sm font-semibold whitespace-nowrap">
+          View Registry &rarr;
         </a>
         <button id="mobile-menu-toggle" type="button" aria-label="Open Navigation Menu" aria-expanded="false" class="lg:hidden touch-target p-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -275,259 +283,100 @@
     </div>
 
     <div class="mt-auto pt-4 border-t border-slate-200">
-      <a href="/apply/" class="btn-trust w-full text-center text-xs py-2.5">
-        Apply for ZTDS Verified&trade; Seal &rarr;
+      <a href="/registry/" class="btn-trust w-full text-center text-xs py-2.5">
+        Browse Verified Registry &rarr;
       </a>
     </div>
   </aside>
 
   <!-- Main Apply Content -->
-  <main id="main-content" class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7 w-full">
-    
+  <main id="main-content" class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 w-full">
+
     <!-- Hero Header -->
-    <div class="text-center max-w-3xl mx-auto mb-4">
+    <div class="text-center max-w-3xl mx-auto mb-5 sm:mb-6">
       <nav aria-label="Breadcrumb" class="no-print mb-2">
         <ol class="flex flex-wrap items-center justify-center gap-1.5 text-xs font-mono text-slate-500"><li><a href="/" class="hover:text-slate-900 transition-colors">Home</a></li><li aria-hidden="true" class="text-slate-300">/</li><li class="text-emerald-700 font-semibold" aria-current="page">Accreditation Application</li></ol>
       </nav>
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-mono font-semibold text-emerald-800 mb-2.5 shadow-xs">
         <span class="pulse-dot shrink-0"></span>
-        <span>Accreditation Gateway &middot; 3&#8209;Track GitOps Verification</span>
+        <span>Open Standard &middot; Free Review &middot; 48h Turnaround</span>
       </div>
-      <h1 class="text-2xl sm:text-4xl lg:text-[2.6rem] font-extrabold text-slate-900 tracking-tight leading-[1.14]">
-        <span>ZTDS<sup class="text-emerald-700 font-bold text-xs sm:text-base ml-0.5">&trade;</sup> Accreditation</span>
-        <span class="hero-display-line block text-emerald-700 mt-1 font-extrabold tracking-tight">3&#8209;Track GitOps Governance Gateway</span>
+      <h1 class="text-2xl sm:text-4xl lg:text-[2.6rem] font-extrabold text-slate-900 tracking-tight leading-[1.14] text-balance">
+        <span>Get ZTDS<sup class="text-emerald-700 font-bold text-xs sm:text-base ml-0.5">&trade;</sup> Accredited</span>
+        <span class="hero-display-line block text-emerald-700 mt-1 font-extrabold tracking-tight">Software, Enterprise &amp; Research Verification</span>
       </h1>
       <p class="hero-lead mt-2.5 text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
-        Certify software against RFC v1.0, register enterprise Zero&#8209;Trust adoption, or nominate research contributors to mint an Ed25519&#8209;signed verification record.
+        Register your AI software, enterprise zero&#8209;egress policy, or research fellowship in 2 minutes. Free, vendor&#8209;neutral Board review within 48 hours &mdash; no GitHub account required.
       </p>
     </div>
 
-    <!-- 3 Tracks Overview Visual (Compact Interactive Quick-Select) -->
-    <div class="hidden grid grid-cols-1 md:grid-cols-3 gap-3.5 mb-3.5" id="trackOverviewCards">
-      <div class="track-card ztds-card p-3.5 bg-white border-2 border-emerald-600 ring-2 ring-emerald-500/20 rounded-xl flex flex-col justify-between cursor-pointer shadow-md text-left transition-all" data-track-card="product" role="button" tabindex="0" aria-label="Select Track A: Product Certification" aria-selected="true">
-        <div>
-          <div class="flex items-center justify-between mb-1.5">
-            <span class="w-6 h-6 rounded-full bg-slate-900 text-white font-bold text-xs flex items-center justify-center">A</span>
-            <span class="text-xs font-mono text-emerald-700 font-semibold uppercase">Software &amp; Tools</span>
-          </div>
-          <div class="text-sm font-bold text-slate-900 mb-0.5">Product Certification &middot; B2B Enabler</div>
-          <div class="text-xs text-slate-600 leading-snug">
-            Certify AI apps, MCP servers, and SDKs against RFC v1.0 to earn the ZTDS Verified&trade; seal and Ed25519 certificate.
-          </div>
-        </div>
-        <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
-          <span>data/registry.json</span>
-          <span class="text-emerald-700 font-semibold font-sans">Active Track &rarr;</span>
-        </div>
-      </div>
+    <!-- Main Intake Form & Audience Sidebar -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 mb-12" id="applyFormSection">
 
-      <div class="track-card ztds-card p-3.5 bg-white border border-slate-200 rounded-xl flex flex-col justify-between cursor-pointer hover:border-slate-300 hover:shadow-sm text-left opacity-90 hover:opacity-100 transition-all" data-track-card="company" role="button" tabindex="0" aria-label="Select Track B: Corporate Adopter" aria-selected="false">
-        <div>
-          <div class="flex items-center justify-between mb-1.5">
-            <span class="w-6 h-6 rounded-full bg-blue-900 text-white font-bold text-xs flex items-center justify-center">B</span>
-            <span class="text-xs font-mono text-blue-700 font-semibold uppercase">Enterprise CISO</span>
-          </div>
-          <div class="text-sm font-bold text-slate-900 mb-0.5">Corporate Adopter &middot; Safe Harbor</div>
-          <div class="text-xs text-slate-600 leading-snug">
-            Register client&#8209;RAM Zero&#8209;Trust isolation to document GDPR Art. 32 and Israel Amendment 13 Sec. 17 due diligence.
-          </div>
-        </div>
-        <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
-          <span>data/companies.json</span>
-          <span class="text-blue-700 font-semibold font-sans">Select Track &rarr;</span>
-        </div>
-      </div>
-
-      <div class="track-card ztds-card p-3.5 bg-white border border-slate-200 rounded-xl flex flex-col justify-between cursor-pointer hover:border-slate-300 hover:shadow-sm text-left opacity-90 hover:opacity-100 transition-all" data-track-card="fellow" role="button" tabindex="0" aria-label="Select Track C: Research Fellow Council" aria-selected="false">
-        <div>
-          <div class="flex items-center justify-between mb-1.5">
-            <span class="w-6 h-6 rounded-full bg-emerald-700 text-white font-bold text-xs flex items-center justify-center">C</span>
-            <span class="text-xs font-mono text-emerald-800 font-semibold uppercase">Academic &amp; Research</span>
-          </div>
-          <div class="text-sm font-bold text-slate-900 mb-0.5">Research Fellow Council</div>
-          <div class="text-xs text-slate-600 leading-snug">
-            Nominate researchers and architects contributing peer&#8209;reviewed cryptography, legal frameworks, or open runtimes.
-          </div>
-        </div>
-        <div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
-          <span>data/fellows.json</span>
-          <span class="text-purple-700 font-semibold font-sans">Select Track &rarr;</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Track Selector Tabs -->
-    <div class="flex flex-wrap items-center justify-center gap-2 mb-5">
-      <div class="tablist-scroll items-center gap-1.5 max-w-full pb-0.5" role="tablist" aria-label="Accreditation Tracks" data-tabpanel="applyFormContainer">
-        <button type="button" id="trackProductBtn" class="track-btn px-3.5 py-2 rounded-lg text-xs font-bold bg-slate-900 text-white shadow-sm min-h-[44px] touch-target whitespace-nowrap" data-track="product" role="tab" aria-selected="true">
-          Track A: Product Certification
-        </button>
-        <button type="button" id="trackCompanyBtn" class="track-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 min-h-[44px] touch-target whitespace-nowrap" data-track="company" role="tab" aria-selected="false">
-          Track B: Corporate Adopter
-        </button>
-        <button type="button" id="trackFellowBtn" class="track-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 min-h-[44px] touch-target whitespace-nowrap" data-track="fellow" role="tab" aria-selected="false">
-          Track C: Research Fellow
-        </button>
-      </div>
-      <a href="https://privacyscrubber.com/sdk/" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm flex items-center gap-1.5 transition-colors min-h-[44px] touch-target whitespace-nowrap">
-        <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
-        <span>Certified Developer SDK &rarr;</span>
-      </a>
-    </div>
-
-    <!-- Main Intake Form & Live Badge Preview -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16" id="applyFormSection">
-      
       <!-- Form Panel (Left 7 cols) -->
-      <div id="applyFormContainer" role="tabpanel" aria-labelledby="trackProductBtn" class="lg:col-span-7 ztds-card p-7 bg-white border border-slate-200 rounded-xl shadow-sm">
-        <div class="pb-5 mb-5 border-b border-slate-200 flex items-center justify-between">
-          <div>
-            <h2 class="text-xl font-bold text-slate-900" id="formTitle">Product Certification Application</h2>
-            <p class="text-xs text-slate-500 mt-1" id="formSubtitle">Self-serve GitOps intake for software applications, browser extensions, and developer libraries.</p>
-          </div>
-          <span class="pill-trust shrink-0" id="trackBadge">Track A</span>
-        </div>
+      <div id="applyFormContainer" role="tabpanel" aria-labelledby="trackProductBtn" class="lg:col-span-7 ztds-card p-4 sm:p-6 lg:p-7 bg-white border border-slate-200 rounded-xl shadow-sm">
 
-        <!-- 3-Step Progressive Wizard Navigation Header -->
-        <nav id="wizardStepsBar" class="mb-6" aria-label="Accreditation Wizard Steps">
-          <ol class="grid grid-cols-3 gap-2 sm:gap-3">
-            <!-- Step 1 Tab -->
-            <li id="stepIndicator1" class="step-indicator p-2.5 sm:p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 text-emerald-950 cursor-pointer transition-all shadow-xs flex flex-col items-center sm:items-start justify-center min-h-[44px]" data-step="1" role="button" tabindex="0" aria-current="step" aria-label="Step 1: Select Accreditation Track">
+        <!-- Compact 2-Step Wizard Progress Bar -->
+        <nav id="wizardStepsBar" class="mb-5" aria-label="Accreditation Wizard Steps">
+          <ol class="grid grid-cols-2 gap-2.5">
+            <li id="stepIndicator1" class="step-indicator p-2.5 sm:p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 text-emerald-950 cursor-pointer transition-all shadow-xs flex flex-col items-start justify-center min-h-[44px]" data-step="1" role="button" tabindex="0" aria-current="step" aria-label="Step 1: Role and Details">
               <div class="flex items-center gap-2">
                 <span class="step-num w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0">1</span>
-                <span class="step-title text-xs font-bold text-slate-900 hidden sm:inline">Track</span>
+                <span class="step-title text-xs sm:text-sm font-bold text-slate-900">Role &amp; Details</span>
               </div>
-              <p class="text-xs text-emerald-800 font-medium mt-1 truncate max-w-full hidden sm:block" id="step1Subtitle">Product Certification</p>
-              <span class="text-xs font-bold text-slate-900 sm:hidden block mt-0.5 text-center">Track</span>
+              <p class="text-xs text-emerald-800 font-medium mt-1 truncate max-w-full" id="step1Subtitle">Product Certification</p>
             </li>
 
-            <!-- Step 2 Tab -->
-            <li id="stepIndicator2" class="step-indicator p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white text-slate-600 cursor-pointer transition-all opacity-80 hover:opacity-100 flex flex-col items-center sm:items-start justify-center min-h-[44px]" data-step="2" role="button" tabindex="0" aria-label="Step 2: Entity Profile & Blueprint">
+            <li id="stepIndicator2" class="step-indicator p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white text-slate-600 cursor-pointer transition-all opacity-80 hover:opacity-100 flex flex-col items-start justify-center min-h-[44px]" data-step="2" role="button" tabindex="0" aria-label="Step 2: Verify and Submit">
               <div class="flex items-center gap-2">
                 <span class="step-num w-6 h-6 rounded-full bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0">2</span>
-                <span class="step-title text-xs font-semibold text-slate-700 hidden sm:inline">Profile</span>
+                <span class="step-title text-xs sm:text-sm font-semibold text-slate-700">Verify &amp; Submit</span>
               </div>
-              <p class="text-xs text-slate-500 mt-1 truncate max-w-full hidden sm:block" id="step2Subtitle">Entity Details</p>
-              <span class="text-xs font-semibold text-slate-600 sm:hidden block mt-0.5 text-center">Profile</span>
-            </li>
-
-            <!-- Step 3 Tab -->
-            <li id="stepIndicator3" class="step-indicator p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white text-slate-600 cursor-pointer transition-all opacity-80 hover:opacity-100 flex flex-col items-center sm:items-start justify-center min-h-[44px]" data-step="3" role="button" tabindex="0" aria-label="Step 3: Verification & GitOps Submission">
-              <div class="flex items-center gap-2">
-                <span class="step-num w-6 h-6 rounded-full bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0">3</span>
-                <span class="step-title text-xs font-semibold text-slate-700 hidden sm:inline">Verification</span>
-              </div>
-              <p class="text-xs text-slate-500 mt-1 truncate max-w-full hidden sm:block">Audit &amp; PR</p>
-              <span class="text-xs font-semibold text-slate-600 sm:hidden block mt-0.5 text-center">Verify</span>
+              <p class="text-xs text-slate-500 mt-1 truncate max-w-full" id="step2Subtitle">Review &amp; Dispatch</p>
             </li>
           </ol>
         </nav>
 
-        <form id="applyForm" class="space-y-6">
-          <!-- STEP 1 PANEL: Track Selection -->
-          <div id="step1Panel" class="wizard-panel space-y-5">
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">Step 1 of 3</span>
-                <span class="text-xs text-slate-500">Accreditation Path</span>
-              </div>
-              <h3 id="select-accreditation-track" class="text-base sm:text-lg font-bold text-slate-900 scroll-mt-24">Select Accreditation Track</h3>
-              <p class="text-xs text-slate-600 mt-0.5">Choose your participation track to configure corresponding technical matrices, audit scopes, and registry destination.</p>
-            </div>
-
-            <!-- Visual Track Radio Cards -->
-            <div class="grid grid-cols-1 gap-3" id="step1TrackCards" role="radiogroup" aria-label="Select Accreditation Track">
-              <!-- Track A Option -->
-              <div class="track-choice-card p-3.5 sm:p-4 rounded-xl border-2 border-emerald-600 bg-emerald-50/40 cursor-pointer transition-all flex items-start justify-between gap-2.5 sm:gap-3 shadow-xs touch-target min-h-[56px]" data-track-choice="product" role="radio" aria-checked="true" tabindex="0" aria-label="Select Track A: Product and Software Certification">
-                <div class="flex items-start gap-2.5 sm:gap-3 min-w-0">
-                  <div class="w-8 h-8 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 font-mono">A</div>
-                  <div class="min-w-0">
-                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                      <h4 class="text-sm font-bold text-slate-900">Track A: Product &amp; Software Certification</h4>
-                      <span class="text-xs font-mono uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">Standard</span>
-                    </div>
-                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">
-                      For AI applications, SaaS platforms, and SDKs. Turn enterprise InfoSec objections into 48-hour sign-offs with an official A4 Certificate of Conformance and verified trust seal.
-                    </p>
-                    <div class="text-xs font-mono text-emerald-700 mt-2 flex flex-wrap items-center gap-1">
-                      <span>Registry File:</span> <code class="bg-white px-1.5 py-0.5 rounded border border-emerald-200">data/registry.json</code>
-                    </div>
-                  </div>
-                </div>
-                <div class="w-5 h-5 rounded-full border-2 border-emerald-600 flex items-center justify-center shrink-0 mt-1">
-                  <div class="w-2.5 h-2.5 rounded-full bg-emerald-600 track-radio-dot"></div>
-                </div>
-              </div>
-
-              <!-- Track B Option -->
-              <div class="track-choice-card p-3.5 sm:p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition-all flex items-start justify-between gap-2.5 sm:gap-3 opacity-90 hover:opacity-100 touch-target min-h-[56px]" data-track-choice="company" role="radio" aria-checked="false" tabindex="0" aria-label="Select Track B: Corporate Enterprise Adopter">
-                <div class="flex items-start gap-2.5 sm:gap-3 min-w-0">
-                  <div class="w-8 h-8 rounded-lg bg-blue-900 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 font-mono">B</div>
-                  <div class="min-w-0">
-                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                      <h4 class="text-sm font-bold text-slate-900">Track B: Corporate Enterprise Adopter</h4>
-                      <span class="text-xs font-mono uppercase bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-semibold">Enterprise</span>
-                    </div>
-                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">
-                      For enterprises enforcing client-side Zero-Trust data isolation. Shield corporate officers from personal liability under GDPR Art. 32 and Israel Amendment 13 with verified technical controls.
-                    </p>
-                    <div class="text-xs font-mono text-blue-700 mt-2 flex flex-wrap items-center gap-1">
-                      <span>Registry File:</span> <code class="bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200">data/companies.json</code>
-                    </div>
-                  </div>
-                </div>
-                <div class="w-5 h-5 rounded-full border-2 border-slate-300 flex items-center justify-center shrink-0 mt-1">
-                  <div class="w-2.5 h-2.5 rounded-full bg-transparent track-radio-dot"></div>
-                </div>
-              </div>
-
-              <!-- Track C Option -->
-              <div class="track-choice-card p-3.5 sm:p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition-all flex items-start justify-between gap-2.5 sm:gap-3 opacity-90 hover:opacity-100 touch-target min-h-[56px]" data-track-choice="fellow" role="radio" aria-checked="false" tabindex="0" aria-label="Select Track C: Research Fellow and Contributor">
-                <div class="flex items-start gap-2.5 sm:gap-3 min-w-0">
-                  <div class="w-8 h-8 rounded-lg bg-purple-900 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 font-mono">C</div>
-                  <div class="min-w-0">
-                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                      <h4 class="text-sm font-bold text-slate-900">Track C: Research Fellow &amp; Contributor</h4>
-                      <span class="text-xs font-mono uppercase bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold">Academic</span>
-                    </div>
-                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">
-                      For cryptographers, security architects, and academic researchers authoring papers, benchmarks, or WASM enclaves for the open standard.
-                    </p>
-                    <div class="text-xs font-mono text-purple-700 mt-2 flex flex-wrap items-center gap-1">
-                      <span>Registry File:</span> <code class="bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200">data/fellows.json</code>
-                    </div>
-                  </div>
-                </div>
-                <div class="w-5 h-5 rounded-full border-2 border-slate-300 flex items-center justify-center shrink-0 mt-1">
-                  <div class="w-2.5 h-2.5 rounded-full bg-transparent track-radio-dot"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Step 1 Action Button -->
-            <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <span class="text-xs text-slate-500 font-mono" id="step1SelectedTrackLabel">Selected: Track A (Product Certification)</span>
-              <button type="button" id="btnStep1Continue" class="btn-trust w-full sm:w-auto px-6 py-3 text-xs sm:text-sm font-bold shadow-sm min-h-[48px] touch-target flex items-center justify-center gap-2">
-                <span>Continue to Entity Profile &rarr;</span>
-              </button>
-            </div>
+        <form id="applyForm" method="POST" class="space-y-5" novalidate>
+          <!-- H1/H6 Honeypot Decoys (A11y & Autofill Safe) -->
+          <div class="sr-only" aria-hidden="true">
+            <input type="text" id="applyWebsiteConfirm" name="website_url_confirm" tabindex="-1" autocomplete="new-password" aria-hidden="true" value="">
+            <input type="text" id="applyFaxExt" name="org_fax_ext" tabindex="-1" autocomplete="new-password" aria-hidden="true" value="">
+            <input type="checkbox" id="applyBotCheck" name="botcheck" tabindex="-1" aria-hidden="true">
           </div>
 
-          <!-- STEP 2 PANEL: Entity Profile & Blueprint -->
-          <div id="step2Panel" class="wizard-panel space-y-5 hidden">
+          <!-- STEP 1 PANEL: Unified Role Switcher + Core Details -->
+          <div id="step1Panel" class="wizard-panel space-y-5">
             <div>
-              <div class="flex items-center justify-between mb-1">
-                <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">Step 2 of 3</span>
-                <span class="text-xs text-slate-500 font-mono" id="step2TrackBadge">Track A</span>
+              <span class="block text-xs font-bold text-slate-700 mb-2">Who is applying?</span>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5" role="tablist" aria-label="Accreditation Tracks" data-tabpanel="applyFormContainer">
+                <button type="button" id="trackProductBtn" class="track-btn text-left p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 text-slate-900 shadow-xs min-h-[56px] touch-target transition-all flex flex-col justify-center" data-track="product" role="tab" aria-selected="true">
+                  <span class="text-xs font-bold font-mono text-emerald-700">Track A &middot; Software</span>
+                  <span class="text-xs font-semibold text-slate-900 mt-0.5">AI App, SDK or MCP</span>
+                </button>
+                <button type="button" id="trackCompanyBtn" class="track-btn text-left p-3 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 min-h-[56px] touch-target transition-all flex flex-col justify-center" data-track="company" role="tab" aria-selected="false">
+                  <span class="text-xs font-bold font-mono text-blue-700">Track B &middot; Enterprise</span>
+                  <span class="text-xs font-semibold text-slate-900 mt-0.5">Company / CISO Policy</span>
+                </button>
+                <button type="button" id="trackFellowBtn" class="track-btn text-left p-3 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 min-h-[56px] touch-target transition-all flex flex-col justify-center" data-track="fellow" role="tab" aria-selected="false">
+                  <span class="text-xs font-bold font-mono text-purple-700">Track C &middot; Academic</span>
+                  <span class="text-xs font-semibold text-slate-900 mt-0.5">Research Fellow</span>
+                </button>
               </div>
-              <h3 class="text-base sm:text-lg font-bold text-slate-900" id="step2Heading">Entity Profile &amp; Architecture</h3>
-              <p class="text-xs text-slate-600 mt-0.5" id="step2Subheading">Provide entity metadata, public URL, and target configuration.</p>
+            </div>
+
+            <div class="pb-3 border-b border-slate-200 flex items-center justify-between gap-3">
+              <div class="min-w-0">
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900" id="formTitle">Product Certification Application</h2>
+                <p class="text-xs text-slate-500 mt-0.5" id="formSubtitle">For AI applications, SaaS tools, browser extensions, SDKs, and MCP servers.</p>
+              </div>
+              <span class="pill-trust shrink-0" id="trackBadge">Track A</span>
             </div>
 
             <!-- Validation Error Alert -->
-            <div id="step2Error" class="hidden p-3.5 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-800 flex items-center gap-2">
+            <div id="step1Error" class="hidden p-3.5 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-800 flex items-center gap-2" role="alert">
               <span class="font-bold">Missing or invalid input:</span>
-              <span id="step2ErrorText">Please fill in all required fields and provide a valid contact email.</span>
+              <span id="step1ErrorText">Please fill in all required fields and provide a valid contact email.</span>
             </div>
 
             <!-- Row 1: Name & URL -->
@@ -550,8 +399,7 @@
               </div>
               <div>
                 <label for="contactEmail" class="block text-xs font-semibold text-slate-700 mb-1" id="labelContactEmail">Contact Email *</label>
-                <input type="email" id="contactEmail" name="contactEmail" required aria-label="Contact Email" placeholder="ciso@example.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]" inputmode="email" enterkeyhint="next" autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false">
-                <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Statutory Notice (GDPR Art. 13 &amp; Israel PPL Sec. 11): Voluntary submission (non-provision prevents email dispatch of your accreditation receipt). Controller: BrandMeWeb (Ilya Sibiryakov, <a href="mailto:security@ztds.ai" class="underline">security@ztds.ai</a>); processors: Vercel &amp; Resend; Secs. 13&ndash;14 rights in <a href="/privacy/#statutory-form-notice" class="underline">Privacy Declaration</a>.</p>
+                <input type="email" id="contactEmail" name="contactEmail" required aria-label="Contact Email" placeholder="security@example.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]" inputmode="email" enterkeyhint="next" autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false">
               </div>
             </div>
 
@@ -569,13 +417,13 @@
                   </select>
                 </div>
                 <div>
-                  <label for="appProfile" class="block text-xs font-semibold text-slate-700 mb-1">Industry Profile &amp; Rule Matrix (30 Profiles)</label>
-                  <select id="appProfile" name="appProfile" aria-label="Industry Profile &amp; Rule Matrix" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
+                  <label for="appProfile" class="block text-xs font-semibold text-slate-700 mb-1">Primary Industry Profile (30 Presets)</label>
+                  <select id="appProfile" name="appProfile" aria-label="Primary Industry Profile" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]">
                     <optgroup label="General &amp; Cross-Industry">
-                      <option value="general">00. Enterprise General (GDPR Recital 26, CCPA, Core PII &amp; Secrets)</option>
+                      <option value="general" selected>00. Enterprise General (GDPR Recital 26, CCPA, Core PII &amp; Secrets)</option>
                     </optgroup>
                     <optgroup label="Clinical &amp; Healthcare">
-                      <option value="medical" selected>04. Medical &amp; Clinical EHR (18 PHI Identifiers, HL7, NPI)</option>
+                      <option value="medical">04. Medical &amp; Clinical EHR (18 PHI Identifiers, HL7, NPI)</option>
                       <option value="biotech">22. Biotech &amp; Genomics (FASTA, CRISPR Targets, Formulations)</option>
                       <option value="insurance">18. Insurance &amp; Actuarial (Claims, Policies, VIN Numbers)</option>
                     </optgroup>
@@ -641,8 +489,8 @@
                 </div>
               </div>
               <div>
-                <label for="companyScope" class="block text-xs font-semibold text-slate-700 mb-1">Primary Internal AI Mandate</label>
-                <input type="text" id="companyScope" name="companyScope" aria-label="Primary Internal AI Mandate" placeholder="e.g. Workstation coding agents (Cursor), Internal LLM chat, RAG ingestion" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]" autocomplete="off">
+                <label for="companyScope" class="block text-xs font-semibold text-slate-700 mb-1">Internal AI Policy Scope</label>
+                <input type="text" id="companyScope" name="companyScope" aria-label="Internal AI Policy Scope" placeholder="e.g. Workstation coding agents, Internal LLM chat, RAG ingestion" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 min-h-[44px]" autocomplete="off">
               </div>
             </div>
 
@@ -665,102 +513,123 @@
               </div>
               <div>
                 <label for="fellowContribution" class="block text-xs font-semibold text-slate-700 mb-1">Research / Engineering Contribution</label>
-                <textarea id="fellowContribution" name="fellowContribution" rows="2" aria-label="Research / Engineering Contribution" placeholder="Summary of publications, mathematical proofs, or open-source tooling contributed to zero-trust sanitization..." class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"></textarea>
+                <textarea id="fellowContribution" name="fellowContribution" rows="2" aria-label="Research / Engineering Contribution" placeholder="Summary of publications, benchmarks, or open-source tooling contributed to zero-trust sanitization..." class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"></textarea>
               </div>
             </div>
 
-            <!-- Step 2 Navigation Buttons -->
-            <div class="pt-4 border-t border-slate-100 flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
-              <button type="button" id="btnStep2Back" class="btn-outline w-full sm:w-auto px-5 py-2.5 text-xs sm:text-sm font-semibold min-h-[44px] touch-target flex items-center justify-center gap-1.5">
-                <span>&larr; Back to Track</span>
-              </button>
-              <button type="button" id="btnStep2Continue" class="btn-trust w-full sm:w-auto px-6 py-3 text-xs sm:text-sm font-bold shadow-sm min-h-[48px] touch-target flex items-center justify-center gap-2">
+            <!-- Statutory Notice (Full Width) -->
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Voluntary submission (GDPR Art. 13 &amp; Israel PPL Sec. 11) used solely to dispatch your accreditation receipt. Controller: BrandMeWeb (Ilya Sibiryakov, <a href="mailto:security@ztds.ai" class="underline">security@ztds.ai</a>); processors: Vercel &amp; Resend; rights in <a href="/privacy/#statutory-form-notice" class="underline">Privacy Declaration</a>.
+            </p>
+
+            <!-- Step 1 Action Row -->
+            <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <span class="text-xs text-slate-500 font-mono" id="step1SelectedTrackLabel">Track A &middot; Product Certification</span>
+              <button type="button" id="btnStep1Continue" class="btn-trust w-full sm:w-auto px-6 py-3 text-xs sm:text-sm font-bold shadow-sm min-h-[48px] touch-target flex items-center justify-center gap-2">
                 <span>Continue to Verification &rarr;</span>
               </button>
             </div>
           </div>
 
-          <!-- STEP 3 PANEL: Verification & GitOps Submission -->
-          <div id="step3Panel" class="wizard-panel space-y-5 hidden">
+          <!-- STEP 2 PANEL: Verification & Submission -->
+          <div id="step2Panel" class="wizard-panel space-y-5 hidden">
             <div>
               <div class="flex items-center justify-between mb-1">
-                <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">Step 3 of 3</span>
-                <span class="text-xs text-slate-500 font-mono" id="step3TrackBadge">Verification &amp; PR</span>
+                <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">Step 2 of 2</span>
+                <span class="text-xs text-slate-500 font-mono" id="step2TrackBadge">Track A Verification</span>
               </div>
-              <h3 id="cryptographic-verification-invariant-affirmation" class="text-base sm:text-lg font-bold text-slate-900 scroll-mt-24">Cryptographic Verification &amp; Invariant Affirmation</h3>
-              <p class="text-xs text-slate-600 mt-0.5">Audit external network sockets, verify cryptographic receipt, and generate your GitOps submission record.</p>
+              <h3 id="cryptographic-verification-invariant-affirmation" class="text-base sm:text-lg font-bold text-slate-900 scroll-mt-24">Verification &amp; Final Submission</h3>
+              <p class="text-xs text-slate-600 mt-0.5" id="step2Subheading">Attach an optional local audit receipt, confirm your architecture, and submit for 48-hour Board review.</p>
+            </div>
+
+            <!-- Applicant Summary Pill -->
+            <div id="step2SummaryBar" class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-wrap items-center justify-between gap-2 text-xs">
+              <div class="min-w-0">
+                <span class="font-bold text-slate-900" id="summaryEntityName">Pending Entity</span>
+                <span class="text-slate-400 mx-1.5">&middot;</span>
+                <span class="font-mono text-slate-600 break-all" id="summaryEntityUrl">https://example.com</span>
+              </div>
+              <button type="button" id="btnEditDetails" class="text-emerald-700 hover:text-emerald-800 font-semibold underline touch-target min-h-[44px] sm:min-h-[32px] px-2 shrink-0">
+                Edit Details
+              </button>
             </div>
 
             <!-- Track A Verification Controls -->
-            <div id="step3ProductVerification" class="space-y-4">
-              <!-- Automated CLI Verification Command Generator Box -->
+            <div id="step2ProductVerification" class="space-y-4">
+              <!-- Mobile-Fixed CLI Audit Command Box -->
               <div class="p-4 bg-slate-900 text-slate-200 rounded-xl border border-slate-800 space-y-2.5">
-                <div class="flex items-center justify-between text-xs">
-                  <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                    <span class="font-bold text-emerald-400 font-mono text-xs">Automated Invariant Auditor (CLI)</span>
+                <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+                  <div class="flex items-center gap-2 min-w-0">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                    <span class="font-bold text-emerald-400 font-mono text-xs">Local CLI Audit (Optional)</span>
                   </div>
-                  <span class="text-xs font-mono text-slate-400">Zero-Egress Protocol</span>
-                </div>
-                <p class="text-xs text-slate-400 leading-relaxed">
-                  Run this command in your repository to audit for external egress, verify volatile RAM zeroization, and compute your verifiable SHA-256 hash:
-                </p>
-                <div class="flex items-center gap-2 bg-black/60 p-2.5 rounded-lg border border-slate-800 font-mono text-xs overflow-x-auto">
-                  <code id="cliAuditCommand" class="text-emerald-300 flex-1 select-all whitespace-nowrap">npx ztds-audit --target https://example.com --dir ./src --profile medical</code>
-                  <button type="button" id="copyCliCommandBtn" aria-label="Copy CLI command" class="shrink-0 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-sans font-medium transition-colors touch-target min-h-[44px] sm:min-h-[32px]">
+                  <button type="button" id="copyCliCommandBtn" aria-label="Copy CLI command" class="shrink-0 px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-100 text-xs font-sans font-semibold transition-colors touch-target min-h-[44px] sm:min-h-[32px]">
                     Copy CLI
                   </button>
                 </div>
-                <div class="flex flex-wrap items-center justify-between gap-2 pt-1.5 border-t border-slate-800 text-xs">
-                  <span class="text-slate-400">Need an immediate verification hash for local testing?</span>
-                  <button type="button" id="simulateHashBtn" class="text-emerald-400 hover:text-emerald-300 underline font-mono text-xs touch-target">
-                    Simulate Local Hash &rarr;
-                  </button>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                  Have Node.js access to your repo? Run this read-only local check for instant self-verification, or leave the hash blank and our Review Board will run the audit for you:
+                </p>
+                <div class="bg-black/60 p-3 rounded-lg border border-slate-800 font-mono text-xs overflow-x-auto">
+                  <code id="cliAuditCommand" class="text-emerald-300 select-all whitespace-nowrap">npx ztds-audit --target https://example.com --dir ./src --profile general</code>
                 </div>
               </div>
 
               <div>
-                <label for="auditHash" class="block text-xs font-semibold text-slate-700 mb-1">Cryptographic Verification Hash *</label>
-                <input type="text" id="auditHash" name="auditHash" required aria-label="Cryptographic Verification Hash" placeholder="e.g. sha256:7f83b1659a72d3e1104e6c70b8a245d8b76c94fa10b981e7d23f46a81e9d0c24" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-xs text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono min-h-[44px]" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
-                <p class="text-xs text-slate-500 mt-1">Generated automatically via <code class="font-mono bg-slate-100 px-1 py-0.5 rounded border border-slate-200 text-slate-700">npx ztds-audit</code> or simulated above.</p>
+                <label for="auditHash" class="block text-xs font-semibold text-slate-700 mb-1">
+                  CLI Verification Hash <span class="text-slate-400 font-normal">(Optional &mdash; leave blank for Consortium Board audit)</span>
+                </label>
+                <input type="text" id="auditHash" name="auditHash" aria-label="CLI Verification Hash" placeholder="sha256:... (output of npx ztds-audit)" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-xs text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono min-h-[44px]" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
               </div>
 
               <div>
-                <span id="labelComplianceScope" class="block text-xs font-semibold text-slate-700 mb-1.5">Compliance Scope &amp; Target Frameworks</span>
+                <span id="labelComplianceScope" class="block text-xs font-semibold text-slate-700 mb-1.5">Target Compliance Frameworks</span>
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs" role="group" aria-labelledby="labelComplianceScope">
-                  <label for="fwGdpr" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
+                  <label for="fwGdpr" class="flex items-center gap-2 p-2.5 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
                     <input type="checkbox" id="fwGdpr" checked class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
-                    <span>GDPR Recital 26</span>
+                    <span>GDPR Art. 28 / 32</span>
                   </label>
-                  <label for="fwHipaa" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
-                    <input type="checkbox" id="fwHipaa" checked class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
-                    <span>HIPAA Safe Harbor</span>
-                  </label>
-                  <label for="fwAiAct" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
+                  <label for="fwAiAct" class="flex items-center gap-2 p-2.5 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
                     <input type="checkbox" id="fwAiAct" checked class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
                     <span>EU AI Act Art. 50</span>
                   </label>
-                  <label for="fwSoc2" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
+                  <label for="fwSoc2" class="flex items-center gap-2 p-2.5 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
                     <input type="checkbox" id="fwSoc2" checked class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
                     <span>SOC 2 Type II</span>
                   </label>
-                  <label for="fwFre502" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
+                  <label for="fwHipaa" class="flex items-center gap-2 p-2.5 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
+                    <input type="checkbox" id="fwHipaa" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                    <span>HIPAA Safe Harbor</span>
+                  </label>
+                  <label for="fwFre502" class="flex items-center gap-2 p-2.5 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
                     <input type="checkbox" id="fwFre502" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
                     <span>US FRE 502(b)</span>
                   </label>
-                  <label for="fwPciDss" class="flex items-center gap-2 p-2 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
+                  <label for="fwPciDss" class="flex items-center gap-2 p-2.5 bg-slate-50 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
                     <input type="checkbox" id="fwPciDss" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
                     <span>PCI-DSS v4.0</span>
                   </label>
                 </div>
               </div>
-              <div>
-                <label for="fastTrackLicense" class="block text-xs font-semibold text-slate-700 mb-1">
-                  Fast-Track License Key / Accreditation Code <span class="text-slate-400 font-normal">(Optional)</span>
-                </label>
-                <input type="text" id="fastTrackLicense" name="fastTrackLicense" placeholder="e.g. ZTDS-PRO-..., PS-TEAMS-..., or Ecosystem Partner Key" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-base sm:text-xs text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono min-h-[44px]" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
-                <p class="text-xs text-slate-500 mt-1">Certified PrivacyScrubber / BrandMeWeb ecosystem licensees receive automated Priority 1 queue review and zero-friction registry accreditation.</p>
-              </div>
+
+              <details id="fastTrackDisclosure" class="rounded-lg border border-slate-200 bg-slate-50/70 p-3">
+                <summary class="cursor-pointer text-xs font-semibold text-slate-700 select-none">
+                  Have a PrivacyScrubber or Partner Fast-Track Key? (Optional)
+                </summary>
+                <div class="mt-2.5 space-y-1.5">
+                  <label for="fastTrackLicense" class="block text-xs font-semibold text-slate-700">Fast-Track License Key / Accreditation Code</label>
+                  <input type="text" id="fastTrackLicense" name="fastTrackLicense" placeholder="e.g. ZTDS-PRO-..., PS-TEAMS-..., or Ecosystem Partner Key" class="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-300 text-base sm:text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono min-h-[44px]" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">
+                  <p class="text-xs text-slate-500">Certified PrivacyScrubber / BrandMeWeb ecosystem licensees receive Priority 1 queue review.</p>
+                </div>
+              </details>
+            </div>
+
+            <!-- Non-Product Guidance (Track B & Track C) -->
+            <div id="step2NonProductNote" class="hidden p-4 rounded-xl bg-blue-50/70 border border-blue-200 text-xs text-slate-700 space-y-1.5">
+              <div class="font-bold text-slate-900" id="nonProductNoteTitle">No CLI or GitHub account required</div>
+              <p class="leading-relaxed" id="nonProductNoteBody">
+                Submit directly using this form. The ZTDS Review Board verifies corporate Safe Harbor adoption asynchronously within 48 hours and issues your public directory record and badge.
+              </p>
             </div>
 
             <!-- Confirmation Checkbox -->
@@ -773,45 +642,49 @@
               </div>
             </div>
 
-            <!-- Validation Error Alert for Step 3 -->
-            <div id="step3Error" class="hidden p-3.5 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-800 flex items-center gap-2">
+            <!-- Validation Error Alert for Step 2 -->
+            <div id="step2Error" class="hidden p-3.5 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-800 flex items-center gap-2" role="alert">
               <span class="font-bold">Affirmation required:</span>
-              <span id="step3ErrorText">Please confirm the zero-egress affirmation checkbox before generating your GitOps submission.</span>
+              <span id="step2ErrorText">Please confirm the attestation checkbox before submitting your application.</span>
             </div>
 
-            <!-- Step 3 Navigation Buttons -->
+            <!-- Step 2 Navigation Buttons -->
             <div class="pt-4 border-t border-slate-100 flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
-              <button type="button" id="btnStep3Back" class="btn-outline w-full sm:w-auto px-5 py-2.5 text-xs sm:text-sm font-semibold min-h-[44px] touch-target flex items-center justify-center gap-1.5">
-                <span>&larr; Back to Profile</span>
+              <button type="button" id="btnStep2Back" class="btn-outline w-full sm:w-auto px-5 py-2.5 text-xs sm:text-sm font-semibold min-h-[44px] touch-target flex items-center justify-center gap-1.5">
+                <span>&larr; Back to Details</span>
               </button>
               <button type="submit" id="submitBtn" class="btn-trust w-full sm:w-auto px-6 py-3.5 text-xs sm:text-base font-bold shadow-sm min-h-[48px] touch-target flex items-center justify-center gap-2">
-                <span>Generate GitOps Submission &amp; Claim Badge &rarr;</span>
+                <span>Submit Application &amp; Generate Record &rarr;</span>
               </button>
             </div>
           </div>
         </form>
 
         <!-- Dynamic Success Confirmation Container -->
-        <div id="submissionSuccess" class="hidden mt-6 p-6 bg-slate-900 text-white rounded-xl space-y-4 border border-slate-800">
-          <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div id="submissionSuccess" class="hidden mt-6 p-5 sm:p-6 bg-slate-900 text-white rounded-xl space-y-4 border border-slate-800">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-800">
             <div class="flex items-center gap-2 font-bold text-sm text-emerald-400">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
-              <span id="successHeading">GitOps Accreditation Payload Ready</span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shrink-0"></span>
+              <span id="successHeading">Accreditation Record Ready</span>
             </div>
             <span class="text-xs font-mono text-slate-400">RFC v1.0 Attestation</span>
           </div>
 
+          <div id="serverIntakeStatus" class="p-3 rounded-lg bg-emerald-950/70 border border-emerald-700/60 text-xs text-emerald-200 leading-relaxed" role="status">
+            Logging intake receipt with Consortium Review Board...
+          </div>
+
           <p class="text-xs text-slate-300 leading-relaxed">
-            Your verification payload has been structured in compliance with the ZTDS specification. Choose an action below to complete your submission:
+            For public registry listing within 48 hours, submit your structured record via pre-filled GitHub intake or direct email below (no GitHub account required for email):
           </p>
 
           <!-- Dual Primary Actions -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-            <a id="githubIssueLink" href="https://github.com/moxno/ztds.ai/pulls" target="_blank" rel="noopener" class="btn-trust text-xs py-2.5 px-4 text-center justify-center font-bold touch-target min-h-[44px] flex items-center">
-              Submit Institutional GitOps PR Intake &rarr;
+            <a id="githubIssueLink" href="https://github.com/moxno/ztds.ai/issues/new" target="_blank" rel="noopener" class="btn-trust text-xs py-2.5 px-4 text-center justify-center font-bold touch-target min-h-[44px] flex items-center">
+              Open Pre-Filled GitHub Intake &rarr;
             </a>
             <a id="mailtoLink" href="mailto:security@ztds.ai?subject=ZTDS%20Accreditation%20Inquiry" class="btn-outline text-xs py-2.5 px-4 text-center justify-center font-semibold bg-slate-800 border-slate-700 text-white hover:bg-slate-700 touch-target min-h-[44px] flex items-center">
-              Dispatch Direct Email (security@ztds.ai) &rarr;
+              Send via Email (security@ztds.ai) &rarr;
             </a>
           </div>
 
@@ -819,20 +692,23 @@
           <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800 text-xs">
             <div class="flex flex-wrap items-center gap-2">
               <button id="copyMarkdownBtn" type="button" class="btn-outline text-xs py-1.5 px-3 bg-slate-800 border-slate-700 text-slate-200 hover:text-white touch-target min-h-[44px] sm:min-h-[36px]">
-                Copy PR Description (.md)
+                Copy Markdown
               </button>
               <button id="copyJsonBtn" type="button" class="btn-outline text-xs py-1.5 px-3 bg-slate-800 border-slate-700 text-slate-200 hover:text-white touch-target min-h-[44px] sm:min-h-[36px]">
                 Copy JSON
               </button>
+              <button id="downloadJsonBtn" type="button" class="text-xs text-emerald-400 hover:text-emerald-300 font-mono underline touch-target min-h-[44px] sm:min-h-[36px] px-1">
+                Download .json
+              </button>
             </div>
-            <button id="downloadJsonBtn" type="button" class="text-xs text-emerald-400 hover:text-emerald-300 font-mono underline touch-target min-h-[44px] sm:min-h-[36px]">
-              Download Entry (.json)
-            </button>
+            <a href="https://github.com/moxno/ztds.ai/pulls" target="_blank" rel="noopener" class="text-xs text-slate-400 hover:text-slate-200 underline font-mono touch-target min-h-[44px] sm:min-h-[36px] inline-flex items-center">
+              or open a Pull Request &rarr;
+            </a>
           </div>
 
           <!-- Pre-formatted JSON Box -->
           <div class="space-y-1.5 pt-1">
-            <div class="flex items-center justify-between text-xs text-slate-400">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
               <span class="font-mono text-xs" id="jsonTargetFile">Target File: data/registry.json</span>
               <span class="text-xs text-emerald-400 font-mono">Schema Validated</span>
             </div>
@@ -841,81 +717,114 @@
         </div>
       </div>
 
-      <!-- Live Badge Preview & Dynamic Embedder (Right 5 cols) -->
-      <div class="lg:col-span-5 space-y-6">
-        
-        <!-- Live Badge Card -->
-        <div class="ztds-card p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-          <div class="flex items-center justify-between mb-3">
-            <div class="text-xs font-semibold uppercase tracking-wider text-slate-400">Live Trust Badge Preview (22px)</div>
+      <!-- Audience-First Deliverables & Live Badge Preview (Right 5 cols) -->
+      <div class="lg:col-span-5 space-y-5">
+
+        <!-- Card 1: What You Receive (Dynamic per Track) -->
+        <div id="trackBenefitsCard" class="ztds-card p-5 sm:p-6 bg-white border border-slate-200 rounded-xl shadow-sm space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-xs font-mono uppercase tracking-wider text-emerald-700 font-bold" id="benefitsTrackLabel">Track A &middot; Software</span>
+            <span class="text-xs font-mono bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded">Free &middot; 48h</span>
+          </div>
+          <h3 id="what-accredited-entities-receive" class="text-base font-bold text-slate-900 scroll-mt-24">
+            <span id="benefitsTitle">What Certified Software Gets</span>
+          </h3>
+          <ul id="benefitsList" class="space-y-2 text-xs text-slate-600 leading-relaxed">
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Permanent listing in the public <a href="/registry/" class="underline font-semibold text-slate-800">ZTDS Verified Registry</a>.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Ed25519 cryptographic receipt and public <a href="/verify/" class="underline font-semibold text-slate-800">validator link</a> for enterprise InfoSec reviews.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Dynamic SVG trust badge for GitHub READMEs, docs, and pricing pages.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span>Machine-readable citation across <a href="/llms.txt" class="underline font-semibold text-slate-800">llms.txt</a> for AI answer engines.</span>
+            </li>
+          </ul>
+          <div class="pt-3 border-t border-slate-100 text-xs text-slate-500 flex items-center justify-between">
+            <span>Asynchronous review &mdash; zero sales calls</span>
+            <a href="/governance/" class="text-emerald-700 font-semibold hover:underline">Charter &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Card 2: Live Badge Preview (Clean Preview + Collapsible Embed Snippets) -->
+        <div id="badgePreviewCard" class="ztds-card p-5 sm:p-6 bg-white border border-slate-200 rounded-xl shadow-sm space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <div class="text-xs font-semibold uppercase tracking-wider text-slate-500">Trust Badge Preview</div>
             <span class="text-xs font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200" id="badgeTrackPill">Track A: Verified</span>
           </div>
-          
-          <div class="min-h-[64px] flex items-center justify-center p-4 bg-slate-50 border border-slate-200 rounded-lg mb-4 shadow-inner" id="badgePreviewContainer">
+
+          <div class="min-h-[60px] flex items-center justify-center p-3.5 bg-slate-50 border border-slate-200 rounded-lg shadow-inner" id="badgePreviewContainer">
             <div id="badgePreviewMount"></div>
           </div>
 
-          <div class="space-y-3">
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label for="badgeMarkdownSnippet" class="text-xs font-semibold text-slate-700">GitHub README Embed (.md)</label>
-                <button id="copyMarkdownSnippetBtn" type="button" aria-label="Copy Markdown embed snippet" class="text-xs text-emerald-700 font-semibold hover:underline touch-target py-0.5 px-1.5 rounded hover:bg-emerald-50">Copy</button>
-              </div>
-              <input type="text" id="badgeMarkdownSnippet" readonly aria-label="GitHub README Embed Markdown" class="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-base sm:text-xs font-mono text-slate-800 focus:outline-none min-h-[44px] sm:min-h-[38px]">
-            </div>
+          <p class="text-xs text-slate-500" id="badgeHintText">
+            Enter your product or entity name in Step 1 to generate personalized embed snippets.
+          </p>
 
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label for="badgeHtmlSnippet" class="text-xs font-semibold text-slate-700">HTML Website Embed</label>
-                <button id="copyHtmlSnippetBtn" type="button" aria-label="Copy HTML embed snippet" class="text-xs text-emerald-700 font-semibold hover:underline touch-target py-0.5 px-1.5 rounded hover:bg-emerald-50">Copy</button>
+          <details id="badgeEmbedDetails" class="pt-1">
+            <summary class="cursor-pointer text-xs font-semibold text-emerald-700 hover:underline select-none py-1">
+              Show Markdown, HTML &amp; SVG Embed Code
+            </summary>
+            <div class="mt-3 space-y-3">
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <label for="badgeMarkdownSnippet" class="text-xs font-semibold text-slate-700">GitHub README Embed (.md)</label>
+                  <button id="copyMarkdownSnippetBtn" type="button" aria-label="Copy Markdown embed snippet" class="text-xs text-emerald-700 font-semibold hover:underline touch-target py-0.5 px-2 rounded hover:bg-emerald-50 min-h-[44px] sm:min-h-[32px]">Copy</button>
+                </div>
+                <input type="text" id="badgeMarkdownSnippet" readonly aria-label="GitHub README Embed Markdown" class="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-base sm:text-xs font-mono text-slate-800 focus:outline-none min-h-[44px] sm:min-h-[38px]">
               </div>
-              <input type="text" id="badgeHtmlSnippet" readonly aria-label="HTML Website Embed" class="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-base sm:text-xs font-mono text-slate-800 focus:outline-none min-h-[44px] sm:min-h-[38px]">
-            </div>
 
-            <div class="pt-1">
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <label for="badgeHtmlSnippet" class="text-xs font-semibold text-slate-700">HTML Website Embed</label>
+                  <button id="copyHtmlSnippetBtn" type="button" aria-label="Copy HTML embed snippet" class="text-xs text-emerald-700 font-semibold hover:underline touch-target py-0.5 px-2 rounded hover:bg-emerald-50 min-h-[44px] sm:min-h-[32px]">Copy</button>
+                </div>
+                <input type="text" id="badgeHtmlSnippet" readonly aria-label="HTML Website Embed" class="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-base sm:text-xs font-mono text-slate-800 focus:outline-none min-h-[44px] sm:min-h-[38px]">
+              </div>
+
               <button id="downloadBadgeSvgBtn" type="button" class="w-full btn-outline text-xs py-2.5 flex items-center justify-center gap-1.5 touch-target min-h-[44px]">
-                <svg class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                Download Vector Badge (.svg)
+                <svg class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                Download Preview Badge (.svg)
               </button>
             </div>
-          </div>
+          </details>
 
-          <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
             <a href="/badge/" class="text-emerald-700 font-semibold hover:underline flex items-center gap-1">
-              Open Full Badge &amp; Seal Foundry &rarr;
+              Open Badge Foundry &rarr;
             </a>
             <span class="text-slate-400 font-mono text-xs">Vector SVG</span>
           </div>
         </div>
 
-        <!-- CISO / Trust Center Card -->
-        <div class="ztds-card p-6 bg-slate-900 text-white rounded-xl border border-slate-800 shadow-sm text-xs space-y-3">
+        <!-- Card 3: Instant CISO & Certified SDK Resources -->
+        <div class="ztds-card p-5 sm:p-6 bg-slate-900 text-white rounded-xl border border-slate-800 shadow-sm text-xs space-y-3">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">Instant CISO Resources</span>
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider font-mono">Ecosystem Shortcuts</span>
             <span class="px-2 py-0.5 rounded bg-emerald-900/60 text-emerald-300 border border-emerald-700 font-mono text-xs">Safe Harbor</span>
           </div>
           <p class="text-slate-300 leading-relaxed">
-            Need executive sign-off before deploying? Download the turnkey CISO procurement pack, Statutory Safe Harbor memorandum, and vendor security assessment questionnaire.
+            Need executive procurement docs before applying, or a ready-made client-RAM sanitization engine for your stack?
           </p>
-          <div class="pt-2 flex flex-col gap-2">
-            <a href="/ciso/" class="btn-trust text-xs py-2 px-3 text-center justify-center touch-target">
-              Download CISO Procurement Pack &rarr;
+          <div class="pt-1 flex flex-col gap-2">
+            <a href="/ciso/" class="btn-trust text-xs py-2.5 px-3 text-center justify-center touch-target min-h-[44px] flex items-center">
+              CISO Safe Harbor &amp; Legal Pack &rarr;
             </a>
-            <a href="/soc2/" class="text-slate-300 hover:text-white font-medium underline text-center pt-1 touch-target">
-              View SOC 2 &amp; Continuous Trust Center &rarr;
+            <a href="https://privacyscrubber.com/sdk/" target="_blank" rel="noopener" class="btn-outline text-xs py-2.5 px-3 text-center justify-center bg-slate-800 border-slate-700 text-slate-100 hover:bg-slate-700 touch-target min-h-[44px] flex items-center">
+              Certified Developer SDK (PrivacyScrubber) &rarr;
             </a>
+            <div class="flex items-center justify-between pt-1 text-xs">
+              <a href="/soc2/" class="text-slate-300 hover:text-white underline touch-target py-1">SOC 2 &amp; Trust Center</a>
+              <a href="mailto:security@ztds.ai?subject=ZTDS%20Registry%20Intake" class="text-emerald-400 hover:text-emerald-300 underline touch-target py-1">Email Review Board</a>
+            </div>
           </div>
-        </div>
-
-        <!-- Direct Consortium Review Notice -->
-        <div class="ztds-card p-5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600 space-y-2">
-          <div class="font-bold text-slate-900 text-sm">Automated Test Auditing</div>
-          <p class="leading-relaxed">
-            All applications are verified against reproducible automated network inspection test suites (<code class="font-mono bg-white px-1 py-0.5 rounded border border-slate-200">npx ztds-audit</code>). Entries meeting all 4 RFC Invariants are merged into the public GitOps registry within 48 hours.
-          </p>
-          <a href="mailto:security@ztds.ai?subject=ZTDS%20Registry%20Intake" class="text-emerald-700 font-semibold hover:underline block pt-1">
-            Email Consortium Review Board &rarr;
-          </a>
         </div>
 
       </div>
@@ -930,7 +839,7 @@
           Protecting public website forms? Install <a href="https://wordpress.org/plugins/privacyscrubber-ztds-guard/" target="_blank" rel="noopener" class="font-bold text-emerald-800 underline">PrivacyScrubber ZTDS Guard</a> from the Official WordPress.org Directory to activate Smart CRM Zero-PII MySQL storage, 1-Tap <code class="font-mono text-slate-900">#ztds_seal</code> Lead Cards, and an instant opt-in verification link (<code class="font-mono text-slate-900">ztds.ai/verify/?domain=your-site.com</code>).
         </p>
       </div>
-      <a href="/verify/?domain=barrelswood.com" class="btn-outline text-xs py-2 px-3.5 shrink-0 whitespace-nowrap font-semibold bg-white">
+      <a href="/verify/?domain=barrelswood.com" class="btn-outline w-full sm:w-auto text-center text-xs py-2.5 px-4 shrink-0 whitespace-nowrap font-semibold bg-white min-h-[44px] touch-target flex items-center justify-center">
         Inspect Live Domain Cert &rarr;
       </a>
     </div>
@@ -1011,7 +920,7 @@
               <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
             </summary>
             <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
-              Automated CTS invariant verification via `npx ztds-audit` completes locally in under 60 seconds. Once a GitOps Pull Request or attestation payload is submitted with a valid SHA-256 compliance receipt, the Consortium Review Board merges verified entries into the public registry within 48 hours.
+              Automated CTS invariant verification via <code class="font-mono bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200 text-slate-800">npx ztds-audit</code> completes locally in under 60 seconds. Once a GitOps Pull Request or web form submission is logged, the Consortium Review Board merges verified entries into the public registry within 48 hours.
             </div>
           </details>
 
@@ -1022,6 +931,16 @@
             </summary>
             <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
               Track A certifies software products, SDKs, and MCP servers meeting the four RFC v1.0 invariants; Track B accredits Corporate Adopters enforcing client-side sanitization across internal AI workflows; and Track C inducts Research Fellows contributing peer-reviewed cryptography, GRC legal treatises, or runtime engineering.
+            </div>
+          </details>
+
+          <details id="faq-is-ztds-accreditation-free-and-do-i-need-a-githu" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
+            <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
+              <span>Is ZTDS accreditation free, and do I need a GitHub account to apply?</span>
+              <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
+            </summary>
+            <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+              Yes. Accreditation across all three tracks is 100% free and vendor-neutral. Developers can submit via pre-filled GitHub intake or Pull Request, while CISOs and academic nominees can submit directly through this web form or asynchronously via <a href="mailto:security@ztds.ai" class="text-emerald-700 underline font-semibold">security@ztds.ai</a> without a GitHub account.
             </div>
           </details>
       </div>
