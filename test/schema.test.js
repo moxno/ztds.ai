@@ -130,6 +130,43 @@ for (const page of articlePages) {
 }
 console.log(`    [PASS] All ${articlePages.length} article pages feature valid ISO-8601 timestamps and mainEntityOfPage.`);
 
+function findDuplicateJsonKeys(raw) {
+  const duplicates = [];
+  const stack = [];
+  let i = 0;
+  while (i < raw.length) {
+    const ch = raw[i];
+    if (ch === '{') {
+      stack.push(new Set());
+      i++;
+    } else if (ch === '}') {
+      stack.pop();
+      i++;
+    } else if (ch === '"') {
+      let j = i + 1;
+      while (j < raw.length && raw[j] !== '"') {
+        if (raw[j] === '\\') {
+          j += 2;
+          continue;
+        }
+        j++;
+      }
+      const key = raw.slice(i + 1, j);
+      let k = j + 1;
+      while (k < raw.length && /\s/.test(raw[k])) k++;
+      if (raw[k] === ':' && stack.length > 0) {
+        const scope = stack[stack.length - 1];
+        if (scope.has(key)) duplicates.push(key);
+        scope.add(key);
+      }
+      i = j + 1;
+    } else {
+      i++;
+    }
+  }
+  return duplicates;
+}
+
 // Test 5: SoftwareApplication & WebApplication Rich Results offers + Universal ISO-8601 Date & WebPage Graph Validation
 console.log('--> Test 5: SoftwareApplication Offers & Universal Graph Completeness');
 let appEntitiesChecked = 0;
@@ -140,6 +177,8 @@ for (const page of prodPages) {
   let match;
   const pageTypes = [];
   while ((match = regex.exec(html)) !== null) {
+    const dupKeys = findDuplicateJsonKeys(match[1]);
+    assert(dupKeys.length === 0, `Duplicate JSON-LD property key(s) in ${page}: ${dupKeys.join(', ')}`);
     const data = JSON.parse(match[1]);
     const items = data['@graph'] || [data];
     for (const node of items) {
