@@ -279,7 +279,7 @@ console.log('--> Test 11: Live-Verified Presets, Mobile Mode 0 Ordering, H1/H6 H
   assert(
     html.includes('/styles.css?v=20261122') &&
       html.includes('/assets/js/scanner-engine.js?v=20261122') &&
-      html.includes('/assets/js/pages/scanner.js?v=20261122'),
+      html.includes('/assets/js/pages/scanner.js?v=20261122b'),
     'scanner/index.html must reference cache-busted ?v=20261122 stylesheet and scripts'
   );
 

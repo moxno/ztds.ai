@@ -1863,11 +1863,11 @@ Public Verification: https://ztds.ai/verify/`;
         m0Frag.appendChild(cardsGrid);
 
         // Industry Selector Bar
-        const indBar = mk('div', 'p-3.5 sm:p-4 rounded-xl bg-slate-900 text-white border border-slate-800 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs');
-        const indLeft = mk('div', 'flex items-center gap-2 flex-wrap');
+        const indBar = mk('div', 'p-3.5 sm:p-4 rounded-xl bg-slate-900 text-white border border-slate-800 mb-6 flex flex-col lg:flex-row lg:items-center justify-between gap-3 shadow-xs min-w-0 overflow-hidden');
+        const indLeft = mk('div', 'w-full lg:w-auto min-w-0 flex flex-wrap items-center gap-2');
         const indLabel = mk('label', 'text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold', 'Target Industry:');
         indLabel.setAttribute('for', 'm0IndustrySelect');
-        const indSelect = mk('select', 'bg-slate-950 text-white border border-slate-700 text-base sm:text-xs font-mono rounded-lg px-2.5 py-1.5 focus:border-emerald-500 focus:outline-none');
+        const indSelect = mk('select', 'w-full sm:w-auto max-w-full min-w-0 min-h-[44px] sm:min-h-[34px] bg-slate-950 text-white border border-slate-700 text-base sm:text-xs font-mono rounded-lg px-2.5 py-1.5 focus:border-emerald-500 focus:outline-none');
         indSelect.id = 'm0IndustrySelect';
         [
           ['medical', 'Healthcare & HIPAA (Safe Harbor \u00a7 164.514)'],
@@ -1886,7 +1886,7 @@ Public Verification: https://ztds.ai/verify/`;
         confPill.id = 'm0ProfileConfidence';
         indLeft.append(indLabel, indSelect, confPill);
 
-        const indRight = mk('div', 'flex items-center gap-2 text-xs font-mono');
+        const indRight = mk('div', 'flex flex-wrap items-center gap-2 text-xs font-mono min-w-0');
         const statSpan = mk('span', 'text-emerald-400 font-semibold', ind.statute || 'GDPR Recital 26');
         statSpan.id = 'm0ProfileStatute';
         const dpaSpan = mk('span', 'px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-300 text-xs font-bold', ind.dpaStatus || 'DPA-EXEMPT');
