@@ -269,6 +269,10 @@ console.log('  - Test 9: Executive-first collapsible appendices, inline B2B doss
     'Missing H1/H6 honeypot decoys inside #cisoDossierForm'
   );
   assert(html.includes('/assets/js/pages/ciso.js?v=20261122'), 'Missing cache-busted ciso.js?v=20261122 reference');
+  assert(html.includes('/styles.css?v=20261122'), 'Missing cache-busted styles.css?v=20261122 reference');
+
+  const navJs = fs.readFileSync(path.join(__dirname, '..', 'nav.js'), 'utf8');
+  assert(navJs.includes("heading.closest('summary')"), 'nav.js anchor helper must skip headings inside <summary>');
 
   const cisoJs = fs.readFileSync(path.join(__dirname, '..', 'assets', 'js', 'pages', 'ciso.js'), 'utf8');
   assert(cisoJs.includes("fetch('/api/lead-capture/'"), 'Missing /api/lead-capture/ fetch wiring in ciso.js');

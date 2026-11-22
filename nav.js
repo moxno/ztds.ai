@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Global UX 4: Deep-link anchor copy (#) on section & subsection headings (h2[id], section[id] > h2, h3[id])
   try {
     document.querySelectorAll('main h2[id], main section[id] > h2:not([id]), main h3[id]').forEach((heading) => {
-      if (heading.dataset.ztdsAnchorInit || heading.querySelector('a, button')) return;
+      if (heading.dataset.ztdsAnchorInit || heading.querySelector('a, button') || heading.closest('summary')) return;
       const targetId = heading.id || (heading.parentElement && heading.parentElement.id);
       if (!targetId) return;
       heading.dataset.ztdsAnchorInit = '1';
