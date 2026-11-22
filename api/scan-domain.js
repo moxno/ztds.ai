@@ -246,7 +246,7 @@ const INDUSTRY_PROFILES = {
   medical: {
     id: 'medical',
     name: 'Healthcare & Life Sciences',
-    regulatoryFocus: 'HIPAA Safe Harbor (§ 164.514), HITECH, Zero-BAA Doctrine',
+    regulatoryFocus: 'HIPAA Safe Harbor (§ 164.514(b)(2)), HITECH, Statutory Risk Minimization',
     statute: 'HIPAA Privacy Rule & HITECH Act',
     sdkProfiles: ['medical', 'hipaa'],
     targetEntities: [
@@ -257,7 +257,7 @@ const INDUSTRY_PROFILES = {
       'HL7 / FHIR Resource Paths',
       'Prescription & DEA Numbers'
     ],
-    dpaStatus: 'BAA-EXEMPT / DPA-EXEMPT (HIPAA Safe Harbor § 164.514)',
+    dpaStatus: 'HIPAA SAFE HARBOR (§ 164.514(b)(2)) / BAA-MINIMIZATION (Subject to Counsel Review)',
     cisoCitation: 'Complies with HIPAA Privacy Rule § 164.514(b) by irreversibly de-identifying all 18 statutory PHI elements inside volatile RAM prior to external model egress, supporting HIPAA Safe Harbor (§ 164.514(b)) de-identification prior to external model egress to minimize BAA subprocessor scope.',
     tierGuidance: 'Baseline Open Standard (Apache 2.0); 30 Specialized Industry Profiles via Certified Implementations (PrivacyScrubber.com)'
   },

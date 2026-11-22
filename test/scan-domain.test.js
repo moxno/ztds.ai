@@ -212,7 +212,7 @@ async function runTests() {
     assert.strictEqual(ev.industry.activeProfile, 'medical');
     assert.ok(ev.industry.statute.includes('HIPAA'));
     assert.ok(ev.industry.targetEntities.some(e => e.includes('MRN') || e.includes('Safe Harbor')));
-    assert.ok(ev.recommendedBlueprint.dpaStatus.includes('BAA-EXEMPT'));
+    assert.ok(ev.recommendedBlueprint.dpaStatus.includes('HIPAA SAFE HARBOR'));
 
     // Verify blueprints code includes medical profile initialization
     assert.ok(ev.blueprints.nextjs.codeSnippet.includes("profiles: ['medical', 'hipaa']"));

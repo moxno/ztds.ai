@@ -243,4 +243,47 @@ console.log('--> Test 10: CISO Executive Compliance Audit Report Exporter & Prin
   console.log('    [PASS] CISO executive compliance audit report exporter and print styles verified.');
 }
 
-console.log('\n[SUMMARY] ALL 10 SCANNER IN-RAM SANITIZER TESTS PASSED WITH 100% SUCCESS.\n');
+// Test 11: Live-Verified Presets, Mobile Mode 0 Ordering, Sticky Tabbar, H1/H6 Honeypots & Cache-Bust
+console.log('--> Test 11: Live-Verified Presets, Mobile Mode 0 Ordering, H1/H6 Honeypots & Cache-Bust');
+{
+  assert(
+    html.includes('data-domain="privacyscrubber.com"') &&
+      html.includes('data-domain="ztds.ai"') &&
+      html.includes('data-domain="brandmeweb.com"'),
+    'scanner/index.html Mode 0 sample presets must use live-verified HTTP 200 domains'
+  );
+  assert(
+    !html.includes('demo-saas.io') &&
+      !html.includes('ai-startup.dev') &&
+      !html.includes('clinic-portal.health'),
+    'scanner/index.html must not contain broken or 404 sample preset domains'
+  );
+
+  const formIdx = html.indexOf('id="mode0ScanForm"');
+  const presetsIdx = html.indexOf('Sample Perimeters:');
+  assert(formIdx > 0 && presetsIdx > formIdx, '#mode0ScanForm must precede Sample Perimeters for above-the-fold mobile usability');
+
+  assert(
+    html.includes('id="cisoLeadForm" method="POST"') &&
+      html.includes('name="botcheck"') &&
+      html.includes('name="website_url_confirm"') &&
+      html.includes('name="org_fax_ext"'),
+    '#cisoLeadForm must specify method="POST" and all H1/H6 honeypot fields'
+  );
+
+  const engineJs = fs.readFileSync(path.join(ROOT, 'assets/js/scanner-engine.js'), 'utf8');
+  assert(engineJs.includes('org_fax_ext'), 'scanner-engine.js must forward org_fax_ext honeypot field');
+
+  assert(html.includes('max-w-5xl mx-auto sticky top-16'), '#auditorModeTabsContainer must use max-w-5xl to prevent 1440px clipping');
+  assert(html.includes('data-tabpanel="scannerAuditorWorkspace"'), 'Tablist container must declare data-tabpanel="scannerAuditorWorkspace"');
+  assert(
+    html.includes('/styles.css?v=20261122') &&
+      html.includes('/assets/js/scanner-engine.js?v=20261122') &&
+      html.includes('/assets/js/pages/scanner.js?v=20261122'),
+    'scanner/index.html must reference cache-busted ?v=20261122 stylesheet and scripts'
+  );
+
+  console.log('    [PASS] Live presets, mobile ordering, honeypots, sticky tabbar, and cache-busters verified.');
+}
+
+console.log('\n[SUMMARY] ALL 11 SCANNER IN-RAM SANITIZER TESTS PASSED WITH 100% SUCCESS.\n');

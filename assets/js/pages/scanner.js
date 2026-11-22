@@ -1900,10 +1900,10 @@ Public Verification: https://ztds.ai/verify/`;
         const tabList = mk('div', 'tablist-scroll inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200 font-mono text-xs');
         tabList.setAttribute('role', 'tablist');
         tabList.setAttribute('aria-label', 'Blueprint Audience');
-        const rBtnCiso = mk('button', 'px-3.5 py-1.5 rounded-lg font-bold transition-all bg-white text-slate-900 shadow-xs', 'Executive & CISO Brief');
-        rBtnCiso.type = 'button'; rBtnCiso.id = 'btnM0RoleCiso'; rBtnCiso.setAttribute('role', 'tab'); rBtnCiso.setAttribute('aria-selected', 'true');
-        const rBtnDev = mk('button', 'px-3.5 py-1.5 rounded-lg font-medium transition-all text-slate-600 hover:text-slate-900', 'Developer & Engineering Code');
-        rBtnDev.type = 'button'; rBtnDev.id = 'btnM0RoleDev'; rBtnDev.setAttribute('role', 'tab'); rBtnDev.setAttribute('aria-selected', 'false');
+        const rBtnCiso = mk('button', 'min-h-[44px] sm:min-h-[34px] inline-flex items-center px-3.5 py-1.5 rounded-lg font-bold transition-all bg-white text-slate-900 shadow-xs cursor-pointer', 'Executive & CISO Brief');
+        rBtnCiso.type = 'button'; rBtnCiso.id = 'btnM0RoleCiso'; rBtnCiso.setAttribute('role', 'tab'); rBtnCiso.setAttribute('aria-selected', 'true'); rBtnCiso.setAttribute('aria-controls', 'viewM0RoleCiso');
+        const rBtnDev = mk('button', 'min-h-[44px] sm:min-h-[34px] inline-flex items-center px-3.5 py-1.5 rounded-lg font-medium transition-all text-slate-600 hover:text-slate-900 cursor-pointer', 'Developer & Engineering Code');
+        rBtnDev.type = 'button'; rBtnDev.id = 'btnM0RoleDev'; rBtnDev.setAttribute('role', 'tab'); rBtnDev.setAttribute('aria-selected', 'false'); rBtnDev.setAttribute('aria-controls', 'viewM0RoleDev');
         tabList.append(rBtnCiso, rBtnDev);
         const roleHint = mk('span', 'text-xs font-mono text-slate-400 hidden sm:inline', 'Statutory Defense & DPA Shield');
         roleHint.id = 'm0RoleSummaryHint';
@@ -1928,9 +1928,9 @@ Public Verification: https://ztds.ai/verify/`;
           vcExec
         );
         const vcTopBtns = mk('div', 'flex flex-wrap items-center gap-2');
-        const dlMemoBtn = mk('button', 'btn-trust text-xs py-2 px-3.5 font-bold', 'Download CISO Memo (.md)');
+        const dlMemoBtn = mk('button', 'btn-trust min-h-[44px] sm:min-h-[34px] inline-flex items-center text-xs py-2 px-3.5 font-bold cursor-pointer', 'Download CISO Memo (.md)');
         dlMemoBtn.id = 'btnDownloadCisoMemo'; dlMemoBtn.type = 'button';
-        const prMemoBtn = mk('button', 'px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-mono font-medium transition-colors', 'Print Brief (PDF)');
+        const prMemoBtn = mk('button', 'min-h-[44px] sm:min-h-[34px] inline-flex items-center px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-mono font-medium transition-colors cursor-pointer', 'Print Brief (PDF)');
         prMemoBtn.id = 'btnPrintCisoMemo'; prMemoBtn.type = 'button';
         vcTopBtns.append(dlMemoBtn, prMemoBtn);
         vcTop.append(vcTopLeft, vcTopBtns);
@@ -1947,13 +1947,13 @@ Public Verification: https://ztds.ai/verify/`;
         vcGrid.append(vcG1, vcG2);
 
         const vcFoot1 = mk('div', 'mt-4 pt-3.5 border-t border-slate-800 flex flex-wrap items-center justify-between text-xs font-mono gap-3');
-        const linkApplyCiso = mk('a', 'text-emerald-400 hover:underline font-semibold', 'Attest & Apply for Conformance Seal \u2192');
+        const linkApplyCiso = mk('a', 'min-h-[44px] sm:min-h-[32px] inline-flex items-center text-emerald-400 hover:underline font-semibold', 'Attest & Apply for Conformance Seal \u2192');
         linkApplyCiso.id = 'm0ApplyLinkCiso';
         linkApplyCiso.href = `/apply/?domain=${encodeURIComponent(currentDomain)}&profile=${encodeURIComponent(activeProfileKey)}`;
         vcFoot1.append(mk('span', 'text-slate-400', 'Next Step: Formal Conformance Verification'), linkApplyCiso);
 
         const vcFoot2 = mk('div', 'mt-3 pt-2.5 border-t border-slate-800/50 flex flex-wrap items-center justify-between text-xs font-mono text-slate-400 gap-2');
-        const linkAgency = mk('a', 'text-emerald-400 hover:text-emerald-300 underline transition-colors', 'Enterprise Advisory Program \u2192');
+        const linkAgency = mk('a', 'min-h-[44px] sm:min-h-[32px] inline-flex items-center text-emerald-400 hover:text-emerald-300 underline transition-colors', 'Enterprise Advisory Program \u2192');
         linkAgency.id = 'm0AgencyPackageLink';
         linkAgency.href = `/agency/?domain=${encodeURIComponent(currentDomain)}&profile=${encodeURIComponent(activeProfileKey)}`;
         vcFoot2.append(mk('span', '', 'Need turnkey enterprise attestation & custom advisory?'), linkAgency);
@@ -1982,7 +1982,7 @@ Public Verification: https://ztds.ai/verify/`;
           ['wordpress', 'WordPress Guard']
         ].forEach(([vec, lbl]) => {
           const isRec = ev.recommendedVector === vec;
-          const b = mk('button', `m0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-colors ${isRec ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}`, lbl);
+          const b = mk('button', `m0-tab-btn min-h-[44px] sm:min-h-[34px] inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-colors cursor-pointer ${isRec ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300'}`, lbl);
           b.type = 'button';
           b.setAttribute('data-vector', vec);
           b.setAttribute('aria-pressed', String(isRec));
@@ -1995,7 +1995,7 @@ Public Verification: https://ztds.ai/verify/`;
         const instCmd = mk('span', '', (ev.blueprints && ev.blueprints[ev.recommendedVector]?.installCommand) || 'npm i @privacyscrubber/sdk');
         instCmd.id = 'm0InstallCmd';
         instLeft.append(mk('span', 'text-emerald-400 font-bold', '$'), instCmd);
-        const btnCopyInst = mk('button', 'text-xs font-mono text-emerald-400 hover:text-emerald-300 underline shrink-0', 'Copy Command');
+        const btnCopyInst = mk('button', 'min-h-[44px] sm:min-h-[34px] inline-flex items-center text-xs font-mono text-emerald-400 hover:text-emerald-300 underline shrink-0 cursor-pointer', 'Copy Command');
         btnCopyInst.id = 'btnCopyInstallCmd'; btnCopyInst.type = 'button';
         instBar.append(instLeft, btnCopyInst);
 
@@ -2014,13 +2014,13 @@ Public Verification: https://ztds.ai/verify/`;
 
         const vdFoot = mk('div', 'mt-4 pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs font-mono');
         const vdFootLeft = mk('div', 'flex flex-wrap items-center gap-2');
-        const btnCopyProd = mk('button', 'btn-trust text-xs py-2 px-4 font-bold', 'Copy Production Code');
+        const btnCopyProd = mk('button', 'btn-trust min-h-[44px] sm:min-h-[34px] inline-flex items-center text-xs py-2 px-4 font-bold cursor-pointer', 'Copy Production Code');
         btnCopyProd.id = 'btnCopyM0Code'; btnCopyProd.type = 'button';
-        const sdkExploreLink = mk('a', 'px-3 py-2 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition-colors font-bold flex items-center gap-1.5');
+        const sdkExploreLink = mk('a', 'min-h-[44px] sm:min-h-[34px] px-3 py-2 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition-colors font-bold flex items-center gap-1.5');
         sdkExploreLink.href = '/sdk/#licensing';
         sdkExploreLink.append(mk('span', 'w-1.5 h-1.5 rounded-full bg-emerald-400'), mk('span', '', 'Explore Certified SDK \u2192'));
         vdFootLeft.append(btnCopyProd, sdkExploreLink);
-        const linkApplyDev = mk('a', 'text-emerald-400 hover:underline', 'Register Conformance \u2192');
+        const linkApplyDev = mk('a', 'min-h-[44px] sm:min-h-[32px] inline-flex items-center text-emerald-400 hover:underline', 'Register Conformance \u2192');
         linkApplyDev.id = 'm0ApplyLinkDev';
         linkApplyDev.href = `/apply/?domain=${encodeURIComponent(currentDomain)}&profile=${encodeURIComponent(activeProfileKey)}`;
         vdFoot.append(vdFootLeft, linkApplyDev);
@@ -2030,7 +2030,7 @@ Public Verification: https://ztds.ai/verify/`;
 
         // LEVEL 3: TECHNICAL BREAKDOWN ACCORDION
         const detailsEl = mk('details', 'group rounded-2xl bg-white border border-slate-200 shadow-xs mb-6 overflow-hidden transition-colors');
-        const summaryEl = mk('summary', 'flex items-center justify-between p-4 sm:p-5 cursor-pointer text-xs sm:text-sm font-mono font-bold text-slate-800 hover:text-slate-900 select-none');
+        const summaryEl = mk('summary', 'min-h-[44px] flex items-center justify-between p-4 sm:p-5 cursor-pointer text-xs sm:text-sm font-mono font-bold text-slate-800 hover:text-slate-900 select-none');
         const sumLeft = mk('div', 'flex items-center gap-2');
         sumLeft.append(mk('span', 'w-2 h-2 rounded-full bg-emerald-500'), mk('span', '', 'Technical Breakdown: Architectural Topology Comparison & CI/CD Audit Gate'));
         summaryEl.append(sumLeft, mk('span', 'text-slate-400 group-open:rotate-180 transition-transform duration-200 font-bold', '\u2193'));
@@ -2042,7 +2042,7 @@ Public Verification: https://ztds.ai/verify/`;
         const cliCodeEl = mk('code', 'text-xs font-mono text-emerald-300 mt-0.5 block', `npx ztds-audit https://${currentDomain}`);
         cliCodeEl.id = 'm0CliCmd';
         cicdLeft.append(mk('div', 'text-xs font-mono text-slate-400 uppercase font-bold', 'Local & CI/CD Zero-Egress Terminal Audit:'), cliCodeEl);
-        const btnCopyCicd = mk('button', 'text-xs font-mono text-emerald-400 hover:text-emerald-300 underline shrink-0', 'Copy CI/CD Command');
+        const btnCopyCicd = mk('button', 'min-h-[44px] sm:min-h-[34px] inline-flex items-center text-xs font-mono text-emerald-400 hover:text-emerald-300 underline shrink-0 cursor-pointer', 'Copy CI/CD Command');
         btnCopyCicd.id = 'btnCopyCliCmd'; btnCopyCicd.type = 'button';
         cicdBox.append(cicdLeft, btnCopyCicd);
         detailsBody.appendChild(cicdBox);
@@ -2064,9 +2064,9 @@ Public Verification: https://ztds.ai/verify/`;
 
         if (btnM0RoleCiso && btnM0RoleDev) {
           btnM0RoleCiso.addEventListener('click', () => {
-            btnM0RoleCiso.className = 'px-3.5 py-1.5 rounded-lg font-bold transition-all bg-white text-slate-900 shadow-xs';
+            btnM0RoleCiso.className = 'min-h-[44px] sm:min-h-[34px] inline-flex items-center px-3.5 py-1.5 rounded-lg font-bold transition-all bg-white text-slate-900 shadow-xs cursor-pointer';
             btnM0RoleCiso.setAttribute('aria-selected', 'true');
-            btnM0RoleDev.className = 'px-3.5 py-1.5 rounded-lg font-medium transition-all text-slate-600 hover:text-slate-900';
+            btnM0RoleDev.className = 'min-h-[44px] sm:min-h-[34px] inline-flex items-center px-3.5 py-1.5 rounded-lg font-medium transition-all text-slate-600 hover:text-slate-900 cursor-pointer';
             btnM0RoleDev.setAttribute('aria-selected', 'false');
             viewM0RoleCiso.classList.remove('hidden');
             viewM0RoleDev.classList.add('hidden');
@@ -2074,9 +2074,9 @@ Public Verification: https://ztds.ai/verify/`;
           });
 
           btnM0RoleDev.addEventListener('click', () => {
-            btnM0RoleDev.className = 'px-3.5 py-1.5 rounded-lg font-bold transition-all bg-white text-slate-900 shadow-xs';
+            btnM0RoleDev.className = 'min-h-[44px] sm:min-h-[34px] inline-flex items-center px-3.5 py-1.5 rounded-lg font-bold transition-all bg-white text-slate-900 shadow-xs cursor-pointer';
             btnM0RoleDev.setAttribute('aria-selected', 'true');
-            btnM0RoleCiso.className = 'px-3.5 py-1.5 rounded-lg font-medium transition-all text-slate-600 hover:text-slate-900';
+            btnM0RoleCiso.className = 'min-h-[44px] sm:min-h-[34px] inline-flex items-center px-3.5 py-1.5 rounded-lg font-medium transition-all text-slate-600 hover:text-slate-900 cursor-pointer';
             btnM0RoleCiso.setAttribute('aria-selected', 'false');
             viewM0RoleDev.classList.remove('hidden');
             viewM0RoleCiso.classList.add('hidden');
@@ -2154,8 +2154,8 @@ Public Verification: https://ztds.ai/verify/`;
               const isAct = b.getAttribute('data-vector') === vec;
               b.setAttribute('aria-pressed', String(isAct));
               b.className = isAct
-                ? 'm0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white transition-colors'
-                : 'm0-tab-btn px-2.5 py-1 rounded-lg text-xs font-mono font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors';
+                ? 'm0-tab-btn min-h-[44px] sm:min-h-[34px] inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-emerald-600 text-white transition-colors cursor-pointer'
+                : 'm0-tab-btn min-h-[44px] sm:min-h-[34px] inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-mono font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors cursor-pointer';
             });
 
             document.getElementById('m0InstallCmd').textContent = targetBp.installCommand;

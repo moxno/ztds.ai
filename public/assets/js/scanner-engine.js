@@ -437,6 +437,7 @@ https://ztds.ai &middot; Patents Pending &middot; TM #182655957 &middot; CC BY 4
 
           try {
             const hpConfirm = form.querySelector('input[name="website_url_confirm"]');
+            const hpFax = form.querySelector('input[name="org_fax_ext"]');
             const hpBotcheck = form.querySelector('input[name="botcheck"]');
             const resData = await ZTDSScanner.submitLead({
               email,
@@ -446,6 +447,7 @@ https://ztds.ai &middot; Patents Pending &middot; TM #182655957 &middot; CC BY 4
               riskScore,
               source,
               website_url_confirm: hpConfirm ? hpConfirm.value : '',
+              org_fax_ext: hpFax ? hpFax.value : '',
               botcheck: hpBotcheck ? hpBotcheck.checked : false
             });
 

@@ -41,7 +41,7 @@
   <!-- Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/styles.css?v=20261122">
 
   <script type="application/ld+json">
 {
@@ -73,7 +73,7 @@
         "width": 1200,
         "height": 630
       },
-      "dateModified": "2026-10-27T00:00:00Z",
+      "dateModified": "2026-11-22T00:00:00Z",
       "publisher": {
         "@id": "https://ztds.ai/#organization"
       }
@@ -88,7 +88,7 @@
       "description": "Real-time zero-trust socket interceptor, Airplane Mode audit protocol, and in-browser code linter for Invariant 1 (Zero-Egress) verification.",
       "url": "https://ztds.ai/scanner/",
       "datePublished": "2026-09-15T00:00:00Z",
-      "dateModified": "2026-10-27T00:00:00Z",
+      "dateModified": "2026-11-22T00:00:00Z",
       "inLanguage": "en-US",
       "isPartOf": {
         "@id": "https://ztds.ai/#website"
@@ -409,18 +409,18 @@
 
       <!-- Compact Single-Row Live Telemetry Strip -->
       <div class="mt-2.5 inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 shadow-xs text-xs font-mono text-slate-600">
-        <span class="inline-flex items-center gap-1.5"><span class="text-slate-400">WAN Egress:</span> <strong class="text-emerald-700 font-bold">0.00 Bytes</strong></span>
-        <span class="text-slate-300" aria-hidden="true">&middot;</span>
-        <span class="inline-flex items-center gap-1.5"><span class="text-slate-400">Socket:</span> <strong id="metricSocketBoundary" class="text-slate-900 font-bold">Air-Gapped RAM</strong></span>
-        <span class="text-slate-300" aria-hidden="true">&middot;</span>
+        <span class="inline-flex items-center gap-1.5"><span class="text-slate-400">Modes 1&ndash;3 RAM:</span> <strong class="text-emerald-700 font-bold">0.00 Bytes Egress</strong></span>
+        <span class="hidden sm:inline text-slate-300" aria-hidden="true">&middot;</span>
+        <span class="inline-flex items-center gap-1.5"><span class="text-slate-400">Socket:</span> <strong id="metricSocketBoundary" class="text-slate-900 font-bold">Local Browser RAM</strong></span>
+        <span class="hidden sm:inline text-slate-300" aria-hidden="true">&middot;</span>
         <span class="inline-flex items-center gap-1.5"><span class="text-slate-400">Latency:</span> <strong id="metricRamLatency" class="text-emerald-700 font-bold">&lt; 0.20 ms</strong></span>
-        <span class="text-slate-300" aria-hidden="true">&middot;</span>
-        <span class="inline-flex items-center gap-1.5"><span class="text-slate-400">Airplane Mode:</span> <strong id="metricAirplaneState" class="text-sky-700 font-bold">100% Offline</strong></span>
+        <span class="hidden sm:inline text-slate-300" aria-hidden="true">&middot;</span>
+        <span class="inline-flex items-center gap-1.5"><span class="text-slate-400">Offline:</span> <strong id="metricAirplaneState" class="text-sky-700 font-bold">Modes 1&ndash;3 Ready</strong></span>
       </div>
     </div>
 
     <!-- AUDITOR MODE NAVIGATION TABS (SINGLE-ROW SCROLLABLE TABLIST) -->
-    <div class="mb-3.5 max-w-4xl mx-auto sticky top-16 z-30 py-1 bg-slate-50/95 backdrop-blur-md" id="auditorModeTabsContainer">
+    <div class="mb-3.5 max-w-5xl mx-auto sticky top-16 z-30 py-1 bg-slate-50/95 backdrop-blur-md" id="auditorModeTabsContainer">
       <div class="tablist-scroll bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm items-center justify-between gap-1" role="tablist" aria-label="Scanner Modes" data-tabpanel="scannerAuditorWorkspace">
         <button id="scanner-tab-mode0-domain-scanner-1" type="button" role="tab" aria-selected="true" class="auditor-mode-tab lg:flex-1 py-2 px-3 rounded-xl text-xs font-mono font-semibold transition-all text-center flex items-center justify-center gap-1.5 bg-slate-900 text-white shadow-xs border border-slate-900 cursor-pointer whitespace-nowrap" data-mode="mode0-domain-scanner">
           <span class="auditor-mode-dot w-2 h-2 rounded-full bg-emerald-400"></span>
@@ -453,41 +453,39 @@
     <section class="mb-12" id="mode0-domain-scanner">
       <div class="ztds-card p-4 sm:p-5 bg-white border border-slate-200 rounded-2xl shadow-sm">
         
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5 mb-3 border-b border-slate-200 pb-3">
-          <div>
-            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-mono font-semibold mb-1">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Mode 0 &middot; Live Domain Perimeter Auditor
-            </div>
-            <h2 id="one-scan-domain-perimeter-ztds-blueprint-generator" class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight scroll-mt-24">
-              One&#8209;Scan Domain Perimeter &amp; ZTDS Blueprint Generator
-            </h2>
-            <p class="text-xs text-slate-600 mt-0.5 max-w-2xl">
-              Inspect CSP, HSTS, <code class="font-mono text-slate-800">security.txt</code>, and <code class="font-mono text-slate-800">/.well-known/ztds.json</code> for any domain &mdash; plus instant integration blueprints in &lt; 1.5s.
-            </p>
+        <div class="mb-3 border-b border-slate-200 pb-3">
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-mono font-semibold mb-1">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Mode 0 &middot; Live Domain Perimeter Auditor
           </div>
-
-          <!-- Quick Presets -->
-          <div class="flex flex-wrap items-center gap-2 shrink-0" role="group" aria-label="Sample perimeter domains">
-            <span class="text-xs text-slate-500 font-mono">Sample Perimeters:</span>
-            <button type="button" aria-pressed="false" class="mode0-preset-btn px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-medium transition-colors cursor-pointer" data-domain="demo-saas.io">demo-saas.io</button>
-            <button type="button" aria-pressed="false" class="mode0-preset-btn px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-medium transition-colors cursor-pointer" data-domain="ai-startup.dev">ai-startup.dev</button>
-            <button type="button" aria-pressed="false" class="mode0-preset-btn px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-medium transition-colors cursor-pointer" data-domain="clinic-portal.health">clinic-portal.health</button>
-          </div>
+          <h2 id="one-scan-domain-perimeter-ztds-blueprint-generator" class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight scroll-mt-24">
+            One&#8209;Scan Domain Perimeter &amp; ZTDS Blueprint Generator
+          </h2>
+          <p class="text-xs text-slate-600 mt-0.5 max-w-2xl">
+            Inspect CSP, HSTS, <code class="font-mono text-slate-800">security.txt</code>, and <code class="font-mono text-slate-800">/.well-known/ztds.json</code> for any domain &mdash; plus instant integration blueprints in &lt; 1.5s.
+          </p>
         </div>
 
         <!-- High-Contrast Console Input Bar (100% Above the Fold) -->
         <form id="mode0ScanForm" class="p-2 rounded-xl bg-slate-900 border border-slate-800 shadow-md flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mb-3">
-          <div class="flex items-center gap-2.5 px-3.5 py-2.5 w-full bg-white rounded-lg border border-slate-200">
+          <div class="flex items-center gap-2.5 px-3.5 py-0.5 w-full bg-white rounded-lg border border-slate-200">
             <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
             </svg>
-            <input id="mode0DomainInput" type="text" inputmode="url" enterkeyhint="go" aria-label="Enter domain to scan" placeholder="Enter corporate domain to audit (e.g. app.yourcompany.com)..." class="w-full text-base sm:text-sm font-mono font-medium text-slate-900 placeholder:text-slate-400 bg-transparent focus:outline-none" required autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="none" />
+            <input id="mode0DomainInput" type="text" inputmode="url" enterkeyhint="go" aria-label="Enter domain to scan" placeholder="Enter corporate domain to audit (e.g. app.yourcompany.com)..." class="w-full min-h-[44px] text-base sm:text-sm font-mono font-medium text-slate-900 placeholder:text-slate-400 bg-transparent focus:outline-none" required autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="none" />
           </div>
-          <button id="mode0ScanSubmitBtn" type="submit" class="btn-trust w-full sm:w-auto text-xs py-2.5 px-5 whitespace-nowrap shadow-sm flex items-center justify-center gap-2 shrink-0 font-mono font-bold cursor-pointer">
+          <button id="mode0ScanSubmitBtn" type="submit" class="btn-trust w-full sm:w-auto min-h-[44px] touch-target text-xs py-2.5 px-5 whitespace-nowrap shadow-sm flex items-center justify-center gap-2 shrink-0 font-mono font-bold cursor-pointer">
             <span id="mode0BtnText">Execute Perimeter Audit &rarr;</span>
             <span id="mode0Spinner" class="hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
           </button>
         </form>
+
+        <!-- Quick Presets (Below Input Bar so Form Stays Above the Fold on Mobile) -->
+        <div class="flex flex-wrap items-center gap-2 mb-3" role="group" aria-label="Sample perimeter domains">
+          <span class="text-xs text-slate-500 font-mono">Sample Perimeters:</span>
+          <button type="button" aria-pressed="false" class="mode0-preset-btn min-h-[44px] sm:min-h-[34px] inline-flex items-center px-3 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-medium transition-colors cursor-pointer" data-domain="privacyscrubber.com">privacyscrubber.com</button>
+          <button type="button" aria-pressed="false" class="mode0-preset-btn min-h-[44px] sm:min-h-[34px] inline-flex items-center px-3 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-medium transition-colors cursor-pointer" data-domain="ztds.ai">ztds.ai</button>
+          <button type="button" aria-pressed="false" class="mode0-preset-btn min-h-[44px] sm:min-h-[34px] inline-flex items-center px-3 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-mono font-medium transition-colors cursor-pointer" data-domain="brandmeweb.com">brandmeweb.com</button>
+        </div>
 
         <!-- Mode 0 Progress Ticker -->
         <div id="mode0Progress" class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono hidden mb-4">
@@ -1235,10 +1233,10 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
   </footer>
 
   <script src="/nav.js" defer></script>
-  <script src="/assets/js/scanner-engine.js"></script>
+  <script src="/assets/js/scanner-engine.js?v=20261122"></script>
   
   <!-- Interactive Interception, Packet Monitor, Linter, and Airplane Protocol Logic -->
-  <script src="/assets/js/pages/scanner.js" defer></script>
+  <script src="/assets/js/pages/scanner.js?v=20261122" defer></script>
 
   <!-- CISO EXECUTIVE COMPLIANCE AUDIT REPORT MODAL (PDF / PRINT & JSON) -->
   <div id="modalCisoAuditReport" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-sm hidden" role="dialog" aria-modal="true" aria-labelledby="cisoReportModalTitle">
@@ -1514,10 +1512,10 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
             Download Official CISO Compliance Memorandum
           </h2>
           <p class="text-xs text-slate-500 mt-1" id="cisoLeadModalSubtitle">
-            Tailored for <strong id="cisoModalDomain" class="font-mono text-slate-800">your-domain.com</strong> &middot; Statutory Defense &amp; DPA Elimination
+            Tailored for <strong id="cisoModalDomain" class="font-mono text-slate-800">your-domain.com</strong> &middot; GDPR Art. 28 Subprocessor Exclusion &amp; Safe Harbor
           </p>
         </div>
-        <button type="button" id="btnCloseCisoLeadModal" class="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-200/60 transition-colors" aria-label="Close modal">
+        <button type="button" id="btnCloseCisoLeadModal" class="p-2 min-w-[44px] min-h-[44px] inline-flex items-center justify-center text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-200/60 transition-colors" aria-label="Close modal">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
@@ -1531,10 +1529,11 @@ All scanned files comply with ZTDS Invariant 1 (Zero-Egress) and Invariant 3 (RA
           Includes complete GDPR Recital 26 analysis, Article 28 data processor exemption doctrine, and Invariant 1 (0.00 B egress) cryptographic receipts for enterprise procurement.
         </div>
 
-        <form id="cisoLeadForm" class="space-y-4">
-          <div class="hidden" aria-hidden="true">
+        <form id="cisoLeadForm" method="POST" class="space-y-4">
+          <div class="sr-only" aria-hidden="true">
             <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <input type="text" name="website_url_confirm" tabindex="-1" autocomplete="new-password" aria-hidden="true">
+            <input type="text" name="website_url_confirm" tabindex="-1" autocomplete="new-password" aria-hidden="true" value="">
+            <input type="text" name="org_fax_ext" tabindex="-1" autocomplete="new-password" aria-hidden="true" value="">
           </div>
           <div>
             <label for="cisoWorkEmail" class="block text-xs font-bold text-slate-700 uppercase tracking-wider font-mono mb-1.5">
