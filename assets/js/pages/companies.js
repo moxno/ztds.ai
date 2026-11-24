@@ -493,7 +493,7 @@ export function CandidateScreeningForm() {
     <textarea {...inputProps} placeholder="Paste resume or candidate notes..." />
   );
 }`,
-          outcome: '100% compliance with Canadian PIPEDA and GDPR Article 9. Allowed continuous deployment of AI candidate screening without requiring individual applicant data processing consent forms.',
+          outcome: 'Enforced GDPR Art. 32 & Canadian PIPEDA data-minimization safeguards by masking direct applicant identifiers before AI screening while preserving controller governance and notice duties.',
           statutory: 'GDPR Article 9 (Special Categories of Data) & Canadian PIPEDA Schedule 1'
         }
       };

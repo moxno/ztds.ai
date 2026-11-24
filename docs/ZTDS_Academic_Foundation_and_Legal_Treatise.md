@@ -22,7 +22,7 @@ The Zero-Trust Data Sanitization (ZTDS) standard is not merely a commercial fram
 - **Archive Record:** https://zenodo.org/records/22058770
 - **Key Contributions:**
   - Mathematical formulation of ephemeral RAM isolation.
-  - Proof that Egress(S) === 0 bytes eliminates GDPR Article 28 Processor status.
+  - Proof that Egress(S) === 0 bytes avoids GDPR Article 28 processor status for the local sanitization tool itself.
   - Formal definition of the 4 Invariants.
 
 ### Tier-1 Empirical Benchmark Study 2: Center for Open Science / OSF

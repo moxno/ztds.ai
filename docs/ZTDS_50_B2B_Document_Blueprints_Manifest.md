@@ -376,7 +376,7 @@ This manifest codifies the 50 specialized B2B document blueprints implemented ac
 - **Spoke Guide URL**: https://privacyscrubber.com/solutions/court-doc-redaction/
 - **Target Persona**: Litigation Attorneys, Appellate Law Clerks & Legal Secretaries
 - **Primary Statutory Liability**: FRCP Rule 5.2, Federal Rules of Appellate Procedure Rule 25 & State Court Privacy Rules
-- **Direct Answer (Featured Snippet)**: Redacting civil and criminal court pleadings for AI drafting requires masking individual party names, SSNs, financial account numbers, dates of birth, and home addresses, while keeping legal causes of action (e.g. Breach of Contract, Fraud), jurisdictional grounds (e.g. 28 U.S.C. § 1332), prayers for relief, and procedural dates in cleartext. Local offline detokenization ensures 100% compliance with court filing privacy rules and prevents contempt of court sanctions.
+- **Direct Answer (Featured Snippet)**: Redacting civil and criminal court pleadings for AI drafting requires masking individual party names, SSNs, financial account numbers, dates of birth, and home addresses, while keeping legal causes of action (e.g. Breach of Contract, Fraud), jurisdictional grounds (e.g. 28 U.S.C. § 1332), prayers for relief, and procedural dates in cleartext. Local offline detokenization supports court filing privacy compliance (e.g., Fed. R. Civ. P. 5.2) and minimizes inadvertent PII disclosure risk.
 - **Decision Matrix Summary**:
   | Field / Element | Action | Token / Output | Legal & Quantitative Rationale |
   |---|---|---|---|

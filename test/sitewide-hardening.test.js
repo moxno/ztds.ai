@@ -759,6 +759,9 @@ console.log('--> Test 10: Certificate Anti-Forgery, Rate-Limit Spoofing, Constan
   const mcpJsSrc = fs.readFileSync(path.join(ROOT, 'assets/js/pages/mcp.js'), 'utf8');
   const secSpecMd = fs.readFileSync(path.join(ROOT, 'docs/security/ZTDS_Third_Party_Security_Audit_Specification.md'), 'utf8');
   const secSpecTxt = fs.readFileSync(path.join(ROOT, 'docs/security/ZTDS_Third_Party_Security_Audit_Specification.txt'), 'utf8');
+  const llmsFullTxt = fs.readFileSync(path.join(ROOT, 'llms-full.txt'), 'utf8');
+  const cisoHtml = fs.readFileSync(path.join(ROOT, 'ciso/index.html'), 'utf8');
+  const companiesHtml = fs.readFileSync(path.join(ROOT, 'companies/index.html'), 'utf8');
 
   // 1. No unverified dynamic certificate minting in scan-domain & .pem.example gated by VERCEL_ENV !== production
   assert(!scanDomainSrc.includes('mintCertificate('), 'api/scan-domain.js must NEVER mint certificates dynamically for unverified external domains');
@@ -786,14 +789,21 @@ console.log('--> Test 10: Certificate Anti-Forgery, Rate-Limit Spoofing, Constan
     'eliminates data controller liability',
     'Eliminates data processor liabilities',
     'legally eliminating Business Associate Agreement',
-    'eliminates GDPR Article 28 data processor obligations'
+    'eliminates GDPR Article 28 data processor obligations',
+    'fall outside GDPR personal data scope',
+    'You achieve 100% compliance',
+    'Zero data risk',
+    'GDPR Art. 9 Consent Waiver'
   ];
   for (const [label, content] of [
     ['api/scan-domain.js', scanDomainSrc],
     ['assets/js/scanner-engine.js', scannerJsSrc],
     ['bin/ztds-ciso.js', cisoCliSrc],
     ['docs/security/ZTDS_Third_Party_Security_Audit_Specification.md', secSpecMd],
-    ['docs/security/ZTDS_Third_Party_Security_Audit_Specification.txt', secSpecTxt]
+    ['docs/security/ZTDS_Third_Party_Security_Audit_Specification.txt', secSpecTxt],
+    ['llms-full.txt', llmsFullTxt],
+    ['ciso/index.html', cisoHtml],
+    ['companies/index.html', companiesHtml]
   ]) {
     for (const phrase of forbiddenClaims) {
       assert(!content.includes(phrase), `${label} must use Statutory Risk Minimization phrasing instead of "${phrase}"`);

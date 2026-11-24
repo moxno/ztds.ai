@@ -63,7 +63,7 @@ engine.flush();
 1. **Invariant 1: Zero External Egress Prior to Sanitization**: Raw sensitive cleartext never leaves host volatile RAM.
 2. **Invariant 2: Deterministic Reversible Tokenization**: Semantic context is preserved for LLM reasoning while mapping tables remain isolated locally.
 3. **Invariant 3: Cryptographic & In-Memory Isolation**: Volatile heap execution with zero disk spill and hardware enclave / WASM sandboxing.
-4. **Invariant 4: Continuous Subprocessor Exclusion**: Vendor operates strictly as a local computational utility, eliminating GDPR Article 28 data processor obligations.
+4. **Invariant 4: Continuous Subprocessor Exclusion**: Vendor operates strictly as a local computational utility, avoiding an additional GDPR Article 28 sanitization subprocessor.
 
 ---
 

@@ -145,7 +145,7 @@ The docket receipt must be minted prior to dispatching any prompt payload to an 
 | **US Federal Rules of Evidence** | **FRE Rule 502(b)** (Attorney-Client Privilege & Work Product) | Eliminates third-party disclosure waiver; raw attorney-client investigative theories are never transmitted to LLM infrastructure. |
 | **US Bank Secrecy Act (BSA)** | **31 U.S.C. § 5318(g)(2)** (Anti-Tipping Off & SAR Secrecy) | SAR draft narratives stripped of public addresses and case IDs do not constitute unauthorized disclosure under federal anti-tipping statutes. |
 | **EU Anti-Money Laundering Directive** | **AMLD6 (Directive 2018/1673)** & FIU Confidentiality | Preserves European Financial Intelligence Unit statutory confidentiality mandates during automated analytical workflows. |
-| **European Union GDPR** | **Article 28 & Recital 26** | Pure client-side tokenization eliminates external processor relationship; de-identified topological prompts fall outside GDPR personal data scope. |
+| **European Union GDPR** | **Art. 4(5), Art. 25, Art. 32 & Recital 26** | Local client-side tokenization avoids introducing an additional sanitization subprocessor (Art. 28) and enforces Art. 4(5)/32 pseudonymization with keys isolated in local RAM, materially reducing downstream exposure (see CJEU C-413/23 P) while controller obligations remain intact. |
 | **FATF Recommendation 15** | **Virtual Assets & New Technologies** | Establishes provable risk-based operational safeguards for the adoption of artificial intelligence in virtual asset investigations. |
 
 ---

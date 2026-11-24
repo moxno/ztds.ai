@@ -133,7 +133,7 @@
         },
         {
           "@type": "Question",
-          "name": "How does ZTDS eliminate GDPR Article 28 Data Processing Agreement (DPA) legal overhead?",
+          "name": "How does ZTDS avoid adding a GDPR Article 28 Data Processing Agreement (DPA) for the sanitization layer?",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Because ZTDS sanitization executes 100% locally inside client or host volatile RAM with 0.00 bytes of raw PII egress to external sanitization vendors, no third-party subprocessor is introduced into the data supply chain, eliminating external DPA negotiations and annual vendor re-audits."
@@ -144,7 +144,7 @@
           "name": "Why does in-RAM tokenization reduce vector database re-indexing costs under GDPR Article 17?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "When raw PII is embedded into vector databases (Pinecone, Milvus, pgvector), a single GDPR Article 17 Right-to-Erasure request requires purging and re-computing embeddings across the index. Tokenizing PII in RAM prior to embedding keeps vector stores permanently free of personal data."
+            "text": "When raw PII is embedded into vector databases (Pinecone, Milvus, pgvector), a single GDPR Article 17 Right-to-Erasure request requires purging and re-computing embeddings across the index. Pseudonymizing direct PII in RAM prior to embedding keeps direct personal identifiers out of vector stores, materially reducing Art. 17 re-indexing exposure."
           }
         },
         {
@@ -938,7 +938,7 @@
 
           <details id="faq-how-does-ztds-eliminate-gdpr-article-28-data-pro" class="group bg-white border border-slate-200 rounded-xl p-5 shadow-xs scroll-mt-24">
             <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-slate-900 text-sm sm:text-base select-none">
-              <span>How does ZTDS eliminate GDPR Article 28 Data Processing Agreement (DPA) legal overhead?</span>
+              <span>How does ZTDS avoid adding a GDPR Article 28 Data Processing Agreement (DPA) for the sanitization layer?</span>
               <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
             </summary>
             <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
@@ -952,7 +952,7 @@
               <span class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform shrink-0 ml-4 font-mono text-xs">&darr;</span>
             </summary>
             <div class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
-              When raw PII is embedded into vector databases (Pinecone, Milvus, pgvector), a single GDPR Article 17 Right-to-Erasure request requires purging and re-computing embeddings across the index. Tokenizing PII in RAM prior to embedding keeps vector stores permanently free of personal data.
+              When raw PII is embedded into vector databases (Pinecone, Milvus, pgvector), a single GDPR Article 17 Right-to-Erasure request requires purging and re-computing embeddings across the index. Pseudonymizing direct PII in RAM prior to embedding keeps direct personal identifiers out of vector stores, materially reducing Art. 17 re-indexing exposure.
             </div>
           </details>
 

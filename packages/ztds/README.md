@@ -21,7 +21,7 @@ ZTDS physically prevents PII, PHI, API tokens, and corporate secrets from crossi
 3. **Invariant 3: Ephemeral In-RAM Session Isolation & Zeroization (Theorem 2)**
    Cryptographic mapping tables reside strictly in volatile RAM, isolated per session, and are destructively overwritten upon session completion.
 4. **Invariant 4: Zero Subprocessors & Zero Telemetry**
-   No SaaS calls, no cloud APIs, and no telemetry side-channels. Eliminates GDPR Article 28 data processing agreements and vendor risk reviews.
+   No SaaS calls, no cloud APIs, and no telemetry side-channels. Avoids adding a third-party GDPR Article 28 sanitization subprocessor DPA.
 
 ---
 
