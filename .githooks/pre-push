@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PREFLIGHT_BIN="${HOME}/.gemini/antigravity/bin/vercel-preflight"
+if [ -x "$PREFLIGHT_BIN" ]; then
+  "$PREFLIGHT_BIN" --mode=full --cwd=.
+else
+  npm run build && npm test
+fi

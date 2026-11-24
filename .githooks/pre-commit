@@ -1,0 +1,8 @@
+#!/bin/sh
+# =============================================================================
+# ZTDS.ai Unified IP & Secret Leak Prevention — Git Pre-Commit Hook
+# =============================================================================
+set -eu
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+exec node "${REPO_ROOT}/scripts/ip-leak-gate.js" --staged
