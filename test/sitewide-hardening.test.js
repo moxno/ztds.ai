@@ -437,9 +437,9 @@ console.log('--> Test 7: Screen-1 Main-Before-Aside Order, Single Skip-Link, The
     );
   }
 
-  // Verify 100% parity (curated indexable routes = 46 base + INCIDENTS) across sitemap.xml, llms.txt, and nav.js SITE_INDEX
+  // Verify 100% parity (curated indexable routes = 48 base + INCIDENTS) across sitemap.xml, llms.txt, and nav.js SITE_INDEX
   const incidentsData = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'incidents.json'), 'utf8'));
-  const expectedSitemapCount = 46 + (incidentsData.incidents || []).length;
+  const expectedSitemapCount = 48 + (incidentsData.incidents || []).length;
   const sitemapXml = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
   const sitemapUrls = [...sitemapXml.matchAll(/<loc>(https:\/\/ztds\.ai[^<]+)<\/loc>/g)].map(m => m[1]);
   assert.strictEqual(sitemapUrls.length, expectedSitemapCount, `Expected exactly ${expectedSitemapCount} curated URLs in sitemap.xml, found ${sitemapUrls.length}`);
@@ -1752,7 +1752,7 @@ console.log('[20/20] Verifying 45-URL sitemap compression, 10x noindex exclusion
     'https://ztds.ai/deck/'
   ];
 
-  const expectedSitemapCount = 46 + (JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'incidents.json'), 'utf8')).incidents || []).length;
+  const expectedSitemapCount = 48 + (JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'incidents.json'), 'utf8')).incidents || []).length;
 
   for (const smRel of ['sitemap.xml', 'public/sitemap.xml']) {
     const sm = fs.readFileSync(path.join(ROOT, smRel), 'utf8');

@@ -49,6 +49,8 @@ const mirrorPairs = [
   ['ciso/memo/index.html', 'ciso/memo.html'],
   ['ietf/draft-sibiryakov-ztds-protocol-01/index.html', 'ietf/draft-sibiryakov-ztds-protocol-01.html'],
   ['ietf/draft-sibiryakov-ztds-protocol-02/index.html', 'ietf/draft-sibiryakov-ztds-protocol-02.html'],
+  ['docs/index.html', 'public/docs/index.html'],
+  ['docs/legal/index.html', 'public/docs/legal/index.html'],
   ['docs/legal/order-form/index.html', 'docs/legal/order-form.html'],
   ['docs/legal/order-form/index.html', 'public/docs/legal/order-form/index.html'],
   ['docs/legal/order-form/index.html', 'public/docs/legal/order-form.html'],

@@ -94,6 +94,14 @@
       "destination": "/public/.well-known/mcp/server-card.json"
     },
     {
+      "source": "/docs/",
+      "destination": "/public/docs/index.html"
+    },
+    {
+      "source": "/docs/legal/",
+      "destination": "/public/docs/legal/index.html"
+    },
+    {
       "source": "/docs/legal/order-form/",
       "destination": "/public/docs/legal/order-form/"
     },
@@ -261,6 +269,12 @@
         { "key": "Access-Control-Allow-Origin", "value": "*" },
         { "key": "Cross-Origin-Resource-Policy", "value": "cross-origin" },
         { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800" }
+      ]
+    },
+    {
+      "source": "/docs/legal/order-form(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, follow" }
       ]
     },
     {

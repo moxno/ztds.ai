@@ -57,6 +57,8 @@ const prodPages = [
   'ietf/index.html',
   'ietf/draft-sibiryakov-ztds-protocol-01/index.html',
   'ietf/draft-sibiryakov-ztds-protocol-02/index.html',
+  'docs/index.html',
+  'docs/legal/index.html',
   '404.html'
 ];
 

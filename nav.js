@@ -549,6 +549,8 @@ document.addEventListener('DOMContentLoaded', () => {
       { title: 'Client-Side In-RAM Sanitization vs. Cloud Proxy DLP', cat: 'Framework', url: '/frameworks/client-side-sanitization-vs-proxy-dlp/', kw: 'cloud dlp proxy vs client ram latency subprocessor comparison' },
       { title: 'AICPA SOC 2 Type II & Trust Center', cat: 'CISO & GRC', url: '/soc2/', kw: 'soc2 evidence binder controls audit' },
       { title: 'CISO Breach Liability & ROI Calculator', cat: 'CISO & GRC', url: '/roi/', kw: 'calculator savings breach fine cost' },
+      { title: 'ZTDS Documentation & Normative Artifact Index', cat: 'Documentation', url: '/docs/', kw: 'docs artifacts ietf security audit binder pdf zip' },
+      { title: 'ZTDS Legal, Statutory & Conformity Specifications', cat: 'Documentation', url: '/docs/legal/', kw: 'legal specifications multi vertical conformity forensics' },
       { title: 'Enterprise Order Form (Schedule A)', cat: 'CISO & GRC', url: '/docs/legal/order-form/', kw: 'contract msa po invoice procurement' },
       { title: 'Executive CISO Pitch Deck', cat: 'CISO & GRC', url: '/deck/', kw: 'slides presentation briefing board' },
       { title: 'Developer SDK & 6 Execution Surfaces', cat: 'Developers', url: '/sdk/', kw: 'npm pip typescript python wasm ed25519 trial wordpress form guard' },
