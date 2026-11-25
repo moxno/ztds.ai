@@ -1,7 +1,7 @@
 # ZTDS Enterprise Legal & Procurement Architecture Guide
 
 **Institutional Reference for Enterprise Legal Counsel, DPOs, and InfoSec Procurement Teams**  
-*ZTDS AI Consortium & Standards Authority (BrandMeWeb Ecosystem)*
+*ZTDS AI Consortium & Standards Authority*
 
 ---
 

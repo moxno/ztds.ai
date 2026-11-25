@@ -1,7 +1,7 @@
 # ZTDS.ai — Conformity Assessment, Certification & Revocation Policy
 ## Formal Governance, Invariant Audit Criteria, Cryptographic Attestation & Trademark Rules (RFC v1.0 SSOT)
 
-**Standards Authority:** ZTDS AI Consortium & Standards Authority (BrandMeWeb Ecosystem)  
+**Standards Authority:** ZTDS AI Consortium & Standards Authority  
 **Lead Author & Chief Architect:** Ilya Sibiryakov (ORCID: [0009-0002-0642-5985](https://orcid.org/0009-0002-0642-5985))  
 **Document ID:** ZTDS-POL-2026-CAP-V1  
 **Status:** Canonical Governance SSOT &middot; Legally Binding Policy  
@@ -125,7 +125,7 @@ ZTDS-CERT-v1.{canonical_payload_b64url}.{ed25519_signature_b64url}
   "certificate_id": "ZTDS-CERT-2026-PRODUCTNAME-XXXXXX",
   "standard": "ZTDS RFC v1.0",
   "specification_url": "https://ztds.ai/standard/",
-  "authority": "ZTDS AI Consortium & Standards Authority (BrandMeWeb Ecosystem)",
+  "authority": "ZTDS AI Consortium & Standards Authority",
   "level": "Level 1: Automated CTS Invariant Conformance",
   "subject": {
     "applicant": "Legal Entity or Maintainer Name",
@@ -212,5 +212,5 @@ Entities possessing an active, unexpired, and unrevoked ZTDS Certificate are gra
 
 *Authored and ratifying on behalf of the ZTDS AI Consortium & Standards Authority:*  
 **Ilya Sibiryakov**  
-Founder & Chief Architect &middot; BrandMeWeb Ecosystem  
+Lead Author &amp; Chief Architect &middot; ZTDS AI Consortium  
 *Lead Author, ZTDS RFC v1.0 (ORCID: 0009-0002-0642-5985)*

@@ -85,7 +85,7 @@ const dossier = `# Executive Information Security & Statutory Compliance Brief
 **Target Organization:** ${company}  
 **Attn:** ${cisoName}  
 **Date of Issuance:** ${currentDate}  
-**Standards Body:** ZTDS AI Consortium & BrandMeWeb Ecosystem  
+**Standards Body:** ZTDS AI Consortium & Standards Authority  
 **Classification:** Proprietary & Confidential / Commercial Procurement  
 
 ---

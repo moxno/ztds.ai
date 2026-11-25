@@ -35,7 +35,7 @@ Attestation tokens are digitally signed using the Edwards-curve Digital Signatur
 ```json
 {
   "certificate_id": "ZTDS-CERT-2026-PRIVACYSCRUBBER-WEB--B4F84A",
-  "authority": "ZTDS AI Consortium & Standards Authority (BrandMeWeb Ecosystem)",
+  "authority": "ZTDS AI Consortium & Standards Authority",
   "standard": "ZTDS RFC v1.0",
   "level": "Level 1: Automated CTS Invariant Conformance",
   "issued_at": "2026-09-26T19:26:11.409Z",

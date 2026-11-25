@@ -302,4 +302,51 @@ console.log('\n--> Test 5: Repository-Wide 7-Vector & Zero-Hebrew Ratchet (All T
   console.log(`    [PASS] Scanned ${checkedCount} tracked files across git index: 0 Hebrew characters, 0 IP/Date leaks, 0 internal keys.`);
 }
 
-console.log('\n[PASS] All 5 ZTDS Consortium Neutrality, Two-Brand Firewall & Black-Box Guard Tests Passed!\n');
+// Test 6: Ed25519 Certificate Authority Neutrality & Registry Commercial URLs
+console.log('\n--> Test 6: Ed25519 Certificate Authority Neutrality & Registry Commercial URLs');
+{
+  const EXPECTED_AUTHORITY = 'ZTDS AI Consortium & Standards Authority';
+  let certCount = 0;
+
+  const reg = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/registry.json'), 'utf8'));
+  for (const entity of reg.entities || []) {
+    if (entity.certificate && entity.certificate.token) {
+      const parts = entity.certificate.token.split('.');
+      assert.strictEqual(parts.length, 3, `Invalid cert token structure for entity '${entity.id}'`);
+      const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString('utf8'));
+      assert.strictEqual(
+        payload.authority,
+        EXPECTED_AUTHORITY,
+        `Certificate authority for '${entity.id}' must be strictly '${EXPECTED_AUTHORITY}', got '${payload.authority}'`
+      );
+      assert(!/BrandMeWeb/i.test(payload.authority), `BrandMeWeb leak inside certificate authority for '${entity.id}'`);
+      certCount++;
+    }
+    if (entity.id === 'privacyscrubber-mcp' || entity.id === 'privacyscrubber-sdk') {
+      assert(
+        !/^https:\/\/ztds\.ai\/sdk/i.test(entity.url || ''),
+        `Commercial entity '${entity.id}' must not point primary distribution url to ztds.ai/sdk: ${entity.url}`
+      );
+    }
+  }
+
+  const comps = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/companies.json'), 'utf8'));
+  for (const comp of comps.companies || []) {
+    if (comp.certificate && comp.certificate.token) {
+      const parts = comp.certificate.token.split('.');
+      assert.strictEqual(parts.length, 3, `Invalid cert token structure for company '${comp.id}'`);
+      const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString('utf8'));
+      assert.strictEqual(
+        payload.authority,
+        EXPECTED_AUTHORITY,
+        `Certificate authority for company '${comp.id}' must be strictly '${EXPECTED_AUTHORITY}', got '${payload.authority}'`
+      );
+      assert(!/BrandMeWeb/i.test(payload.authority), `BrandMeWeb leak inside certificate authority for company '${comp.id}'`);
+      certCount++;
+    }
+  }
+
+  console.log(`    [PASS] Verified ${certCount} Ed25519 certificates carry neutral consortium authority & commercial URLs are isolated.`);
+}
+
+console.log('\n[PASS] All 6 ZTDS Consortium Neutrality, Two-Brand Firewall & Black-Box Guard Tests Passed!\n');

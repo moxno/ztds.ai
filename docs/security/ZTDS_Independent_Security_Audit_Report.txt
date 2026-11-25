@@ -2,7 +2,7 @@
 ## Full White-Box Source Code Review, Invariant Conformance & Threat Simulation Assessment
 
 **Target System:** ZTDS Reference Architecture & `@privacyscrubber/sdk` Engine (v1.0.0)  
-**Standards Authority:** ZTDS AI Consortium & Standards Authority (BrandMeWeb Ecosystem)  
+**Standards Authority:** ZTDS AI Consortium & Standards Authority  
 **Lead Architect:** Ilya Sibiryakov (ORCID: [0009-0002-0642-5985](https://orcid.org/0009-0002-0642-5985))  
 **Document ID:** ZTDS-AUDIT-2026-REP-001  
 **Audit Standard:** CREST / ISO 27001 / SOC 2 Type II Aligned White-Box Assessment  
@@ -115,5 +115,5 @@ The ZTDS Reference Architecture (encompassing `@privacyscrubber/sdk` and `ztds.a
 
 *Certified and ratified by:*  
 **ZTDS AI Consortium & Standards Authority**  
-Lead Architect: **Ilya Sibiryakov** (BrandMeWeb Ecosystem)  
+Lead Architect: **Ilya Sibiryakov** (ZTDS AI Consortium)  
 *ORCID: 0009-0002-0642-5985*

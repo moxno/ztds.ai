@@ -10,7 +10,7 @@
  * 4. Machine-Readable Knowledge Corpora (llms.txt, llms-full.txt & public/ mirrors)
  * 5. Catalogs Registry Cross-Check (.agents/catalogs-registry.md)
  * 
- * Standards Authority: ZTDS AI Consortium & BrandMeWeb Ecosystem
+ * Standards Authority: ZTDS AI Consortium & Standards Authority
  * Lead Author: Ilya Sibiryakov (ORCID: 0009-0002-0642-5985)
  * Spec: IETF draft-sibiryakov-ztds-protocol-02 / RFC v1.0
  * 
@@ -168,7 +168,8 @@ function syncRegistry(options = { checkOnly: false }) {
       needsCert = true;
     } else {
       const verification = verifyCertificate(entity.certificate.token);
-      if (!verification.valid) {
+      const authStr = (verification && verification.payload && verification.payload.authority) || '';
+      if (!verification.valid || /BrandMeWeb/i.test(authStr)) {
         needsCert = true;
       }
     }
@@ -197,12 +198,18 @@ function syncRegistry(options = { checkOnly: false }) {
 
       entity.certificate = {
         id: minted.certificate_id,
+        level: minted.payload.level,
         token: minted.token,
+        issued_at: minted.payload.issued_at,
+        expires_at: minted.payload.expires_at,
         verify_url: `https://ztds.ai/verify/#cert=${encodeURIComponent(minted.token)}`,
         download_url: `https://ztds.ai/certs/${entity.id}.cert`
       };
 
       writeFile(`certs/${entity.id}.cert`, minted.token);
+      if (fs.existsSync(path.join(ROOT, 'public/certs'))) {
+        writeFile(`public/certs/${entity.id}.cert`, minted.token);
+      }
       modifiedRegistry = true;
       console.log(`         Cert ID: ${minted.certificate_id}`);
     } else {
@@ -237,7 +244,9 @@ function syncRegistry(options = { checkOnly: false }) {
         needsCert = true;
       } else {
         const verification = verifyCertificate(comp.certificate.token);
-        if (!verification.valid) {
+        const compAuthStr = (verification && verification.payload && verification.payload.authority) || '';
+        const needsBlueprintLevel = comp.tier === 'Sandbox Blueprint' && comp.certificate.level !== 'Reference Architecture Blueprint (Composite Simulation)';
+        if (!verification.valid || /BrandMeWeb/i.test(compAuthStr) || needsBlueprintLevel) {
           needsCert = true;
         }
       }
@@ -255,7 +264,9 @@ function syncRegistry(options = { checkOnly: false }) {
           ? 'Level 3: Founding Corporate Member'
           : (comp.tier === 'Canonical Reference Implementation'
             ? 'Level 2: Verified Reference Implementation'
-            : 'Level 2: Verified Corporate Adopter');
+            : (comp.tier === 'Sandbox Blueprint'
+              ? 'Reference Architecture Blueprint (Composite Simulation)'
+              : 'Level 2: Verified Corporate Adopter'));
 
         const minted = mintCertificate({
           applicant: comp.name,
@@ -277,6 +288,9 @@ function syncRegistry(options = { checkOnly: false }) {
         };
 
         writeFile(`certs/${comp.slug}.cert`, minted.token);
+        if (fs.existsSync(path.join(ROOT, 'public/certs'))) {
+          writeFile(`public/certs/${comp.slug}.cert`, minted.token);
+        }
         modifiedCompanies = true;
         console.log(`         Cert ID: ${minted.certificate_id}`);
       } else {
@@ -386,16 +400,23 @@ function syncRegistry(options = { checkOnly: false }) {
           }
         }
       } else {
-        // Ensure card attributes (token, verify-url) match registry.json
+        // Ensure card attributes (token, verify-url, cert-id) match registry.json
         if (entity.certificate && entity.certificate.token) {
-          const oldCertRegex = new RegExp(`data-name="${entity.name}"[\\s\\S]*?data-cert-token="([^"]+)"`);
+          const escName = entity.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const oldCertRegex = new RegExp(`data-name="${escName}"[\\s\\S]*?(?:data-cert-id="([^"]+)"[\\s\\S]*?)?data-cert-token="([^"]+)"`);
           const matchOldToken = registryHtml.match(oldCertRegex);
-          if (matchOldToken && matchOldToken[1] !== entity.certificate.token) {
+          if (matchOldToken && matchOldToken[2] !== entity.certificate.token) {
             if (options.checkOnly) {
               console.error(`  [DRIFT] Outdated certificate token in card '${entity.id}'`);
               driftCount++;
             } else {
-              registryHtml = registryHtml.replace(matchOldToken[1], entity.certificate.token);
+              const oldId = matchOldToken[1];
+              const oldTok = matchOldToken[2];
+              registryHtml = registryHtml.split(oldTok).join(entity.certificate.token);
+              registryHtml = registryHtml.split(encodeURIComponent(oldTok)).join(encodeURIComponent(entity.certificate.token));
+              if (oldId && entity.certificate.id && oldId !== entity.certificate.id) {
+                registryHtml = registryHtml.split(oldId).join(entity.certificate.id);
+              }
               modifiedHtml = true;
               console.log(`  [UPDATE] Synchronized certificate token for card '${entity.id}'.`);
             }

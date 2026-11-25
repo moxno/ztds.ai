@@ -2,7 +2,7 @@
 ## Comprehensive White-Box Source Code Review, Cryptographic Verification & Invariant Conformance Testing Protocol
 
 **Document ID:** ZTDS-SEC-2026-AUDIT-SPEC-V1  
-**Standards Authority:** ZTDS AI Consortium & Standards Authority (BrandMeWeb Ecosystem)  
+**Standards Authority:** ZTDS AI Consortium & Standards Authority  
 **Lead Author & Chief Architect:** Ilya Sibiryakov (ORCID: [0009-0002-0642-5985](https://orcid.org/0009-0002-0642-5985))  
 **Status:** Official Security Specification & RFP SSOT  
 **Effective Date:** 26 September 2026  
@@ -84,7 +84,7 @@ The audit must rigorously execute the following five adversarial testing modules
   3. Take active heap snapshots and core dumps. Perform automated string carving to verify that session maps are immediately dereferenced and garbage collected upon session termination.
 
 ### Module C: Algorithmic Complexity & ReDoS Fuzzing (Invariant 2 Verification)
-- **Objective:** Verify sub-2ms latency ceiling and complete immunity to Regular Expression Denial of Service (ReDoS).
+- **Objective:** Verify sub-2ms latency ceiling and deterministic O(n) resistance to Regular Expression Denial of Service (ReDoS).
 - **Methodology:**
   1. Subject all classification patterns to grammar-based algorithmic fuzzing using catastrophic backtracking payloads (e.g., deeply nested repeating characters, trailing non-matching tokens).
   2. Execute 10,000,000 permutations with input lengths up to 100,000 characters.

@@ -13,7 +13,7 @@
  * 7. Catalogs Registry (.agents/catalogs-registry.md)
  * 8. 8-Facet Automated Sync & CI Conformance Verification
  * 
- * Standards Authority: ZTDS AI Consortium & BrandMeWeb Ecosystem
+ * Standards Authority: ZTDS AI Consortium & Standards Authority
  * Lead Author: Ilya Sibiryakov (ORCID: 0009-0002-0642-5985)
  * 
  * Usage:

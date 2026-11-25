@@ -2,7 +2,7 @@
 ## Comprehensive White-Box Source Code Review, Cryptographic Verification & Invariant Conformance Testing Protocol
 
 **Document ID:** ZTDS-SEC-2026-AUDIT-SPEC-V1  
-**Standards Authority:** ZTDS AI Consortium & Standards Authority (BrandMeWeb Ecosystem)  
+**Standards Authority:** ZTDS AI Consortium & Standards Authority  
 **Lead Author & Chief Architect:** Ilya Sibiryakov (ORCID: [0009-0002-0642-5985](https://orcid.org/0009-0002-0642-5985))  
 **Status:** Official Security Specification & RFP SSOT  
 **Effective Date:** 26 September 2026  
