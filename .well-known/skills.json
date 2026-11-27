@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "name": "ZTDS Open Standard & Conformance Verification Skills",
+  "version": "1.2.2",
+  "description": "Vendor-neutral Zero-Trust Data Sanitization (ZTDS) protocol skills (IETF draft-sibiryakov-ztds-protocol-02, ZTDS RFC v1.0) covering Ed25519 conformance certificate verification, perimeter network egress scanning, and reference local-RAM sanitization.",
+  "standard_draft": "draft-sibiryakov-ztds-protocol-02",
+  "standard_specification_url": "https://datatracker.ietf.org/doc/draft-sibiryakov-ztds-protocol/",
+  "homepage": "https://ztds.ai/",
+  "mcp_manifest": "https://ztds.ai/.well-known/mcp.json",
+  "mcp_server_card": "https://ztds.ai/.well-known/mcp/server-card.json",
+  "agent_card": "https://ztds.ai/.well-known/agent-card.json",
+  "llms_txt": "https://ztds.ai/llms.txt",
+  "execution_surfaces": 7,
+  "skills": [
+    {
+      "id": "ztds_protocol_verification",
+      "name": "ZTDS RFC v1.0 Conformance, Certificate & Domain Seal Verification",
+      "description": "Verify Ed25519 conformance certificates (RFC 8785 + RFC 8032), Level 1 Protected Web Domain seals (/verify/?domain=...), audit receipts (audit-receipt.v1.json), and the 4 foundational ZTDS invariants across 15 certified implementations and 7 execution surfaces.",
+      "entrypoint": "https://ztds.ai/verify/",
+      "cli_command": "npx ztds-verify",
+      "zero_network_egress": true
+    },
+    {
+      "id": "ztds_reference_local_sanitization",
+      "name": "Reference Local RAM Sanitization, CLI Leakage Audit & Web Form Guard",
+      "description": "Sanitize unstructured prompts locally in volatile RAM via npx -y ztds-mcp or audit repositories and CI/CD pipelines for cleartext PII/secret leakage via npx ztds-audit with SHA-256 receipts.",
+      "entrypoint": "https://ztds.ai/mcp/",
+      "cli_command": "npx ztds-audit",
+      "zero_network_egress": true
+    },
+    {
+      "id": "ztds_perimeter_egress_scanner",
+      "name": "Browser Perimeter Network Egress Scanner & Conformance Badge Foundry",
+      "description": "Run local browser perimeter network leak diagnostics, benchmark 0.00B ZTDS In-RAM sanitization against cloud DLP proxies, and issue dynamic SVG conformance badges via /api/badge/.",
+      "entrypoint": "https://ztds.ai/scanner/",
+      "badge_foundry": "https://ztds.ai/badge/",
+      "zero_network_egress": true
+    }
+  ]
+}

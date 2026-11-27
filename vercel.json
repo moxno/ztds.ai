@@ -82,6 +82,10 @@
       "destination": "/public/.well-known/agent-card.json"
     },
     {
+      "source": "/.well-known/skills.json",
+      "destination": "/public/.well-known/skills.json"
+    },
+    {
       "source": "/.well-known/ai-plugin.json",
       "destination": "/public/.well-known/ai-plugin.json"
     },
@@ -260,7 +264,7 @@
         { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'report-sample'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; font-src 'self' data:; object-src 'none'; base-uri 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; require-trusted-types-for 'script'; trusted-types 'none'" },
         { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), interest-cohort=(), focus-without-user-activation=()" },
-        { "key": "Link", "value": "<https://ztds.ai/llms.txt>; rel=\"alternate\"; type=\"text/plain\"; title=\"ZTDS LLM Knowledge Base\", <https://ztds.ai/llms-full.txt>; rel=\"alternate\"; type=\"text/plain\"; title=\"ZTDS Full Normative LLM Compendium\", <https://ztds.ai/.well-known/mcp.json>; rel=\"service-desc\"; type=\"application/json\"; title=\"ZTDS MCP Server Manifest\", <https://ztds.ai/.well-known/agent.json>; rel=\"service-meta\"; type=\"application/json\"; title=\"ZTDS Google A2A Agent Card\", <https://ztds.ai/.well-known/agent-card.json>; rel=\"service-meta\"; type=\"application/json\"; title=\"ZTDS A2A v1.0 Agent Card\"" }
+        { "key": "Link", "value": "<https://ztds.ai/llms.txt>; rel=\"alternate\"; type=\"text/plain\"; title=\"ZTDS LLM Knowledge Base\", <https://ztds.ai/llms-full.txt>; rel=\"alternate\"; type=\"text/plain\"; title=\"ZTDS Full Normative LLM Compendium\", <https://ztds.ai/.well-known/mcp.json>; rel=\"service-desc\"; type=\"application/json\"; title=\"ZTDS MCP Server Manifest\", <https://ztds.ai/.well-known/skills.json>; rel=\"service-desc\"; type=\"application/json\"; title=\"ZTDS Agent Skills Index\", <https://ztds.ai/.well-known/agent.json>; rel=\"service-meta\"; type=\"application/json\"; title=\"ZTDS Google A2A Agent Card\", <https://ztds.ai/.well-known/agent-card.json>; rel=\"service-meta\"; type=\"application/json\"; title=\"ZTDS A2A v1.0 Agent Card\"" }
       ]
     },
     {
@@ -302,7 +306,7 @@
       ]
     },
     {
-      "source": "/.well-known/(mcp\\.json|mcp/server-card\\.json|agent\\.json|agent-card\\.json|ai-plugin\\.json)",
+      "source": "/.well-known/(mcp\\.json|mcp/server-card\\.json|agent\\.json|agent-card\\.json|skills\\.json|ai-plugin\\.json)",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
         { "key": "Cross-Origin-Resource-Policy", "value": "cross-origin" },

@@ -34,7 +34,7 @@ Attestation tokens are digitally signed using the Edwards-curve Digital Signatur
 ## 5. Canonical Certificate Payload Schema
 ```json
 {
-  "certificate_id": "ZTDS-CERT-2026-PRIVACYSCRUBBER-WEB--B4F84A",
+  "certificate_id": "ZTDS-CERT-2026-PRIVACYSCRUBBER-WEB-D0EA62",
   "authority": "ZTDS AI Consortium & Standards Authority",
   "standard": "ZTDS RFC v1.0",
   "level": "Level 1: Automated CTS Invariant Conformance",
